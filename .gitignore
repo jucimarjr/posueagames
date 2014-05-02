@@ -1,0 +1,15 @@
+
+# OS generated files #
+######################
+.DS_Store
+Thumbs.db
+
+# Eclipse #
+###########
+.metadata/
+.settings/
+.project
+
+# JavaScript #
+##############
+*.*~
