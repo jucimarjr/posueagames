@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Bandeira da Itália</title>
+</head>
+    
+<body onload="init()">
+
+<h1>Bandeira da Itália</h1>
+<canvas id="canvas" width="320" height="240">
+	Navegador não compatível com HTML5 Canvas
+</canvas>
+        
+<script>
+var canvas = document.getElementById("canvas");//identificar qual é o canvas
+var ctx = canvas.getContext("2d");//criando o contexto 2d dele ctx --> ambos são obrigatórios
+
+var width = canvas.width;//largura recebendo a largura do canvas canvas.width
+var height = canvas.height; //altura recebendo do proprio canvas
+var dx = 10, dy = 10; 
+
+var larguraPadrao = width/3;
+var alturaPadrao = height;
+
+function init() {
+	//desenhando as listras da bandeira da itália
+	ctx.fillStyle = "green"; 
+	ctx.fillRect(0,0,larguraPadrao,alturaPadrao); 
+	
+	ctx.fillStyle = "white"; 
+	ctx.fillRect(larguraPadrao,0,larguraPadrao,alturaPadrao); //posicao eixo X, posicao eixo Y, largura, altura 
+	
+	ctx.fillStyle = "red"; 
+	ctx.fillRect(larguraPadrao*2,0,larguraPadrao,alturaPadrao); //posicao eixo X, posicao eixo Y, largura, altura
+	
+	
+}
+
+
+</script>
+    </body>
+</html>
