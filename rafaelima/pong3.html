@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="UTF-8" />
-<title>Pong</title>
+<title>Pong3</title>
 <style type="text/css">
 canvas {
 	border: 1px dashed #000000;
@@ -20,7 +20,8 @@ canvas {
 		jogadorPosX, jogadorPosY, oponentePosX, oponentePosY, 
 		bolaRaio, bolaPosX, bolaPosY, pontosJogador, pontosOponente, 
 		velocidadeJogador, teclaCimaPressionada, teclaBaixoPressionada,
-		oponenteParaCima, velocidadeOponente;
+		oponenteParaCima, velocidadeOponente, teclaEsquerdaPressionada,
+		teclaDireitaPressionada;
 
 		//dados iniciais
 		function init() {
@@ -30,6 +31,8 @@ canvas {
 			//Variaveis
 			teclaCimaPressionada = false;
 			teclaBaixoPressionada = false;
+			teclaEsquerdaPressionada = false;
+			teclaDireitaPressionada = false;
 			oponenteParaCima = false;
 
 			barraWidth = 30;
@@ -57,35 +60,63 @@ canvas {
 		}
 
 		function keyDown(e) {
-			if (e.keyCode == 38) { // up
+			if (e.keyCode == 37) { // left
+				teclaEsquerdaPressionada = true;
+			} else if (e.keyCode == 38) { // up
 				teclaCimaPressionada = true;
+			} else if (e.keyCode == 39) { // right
+				teclaDireitaPressionada = true;
 			} else if (e.keyCode == 40) { // down
 				teclaBaixoPressionada = true;
 			}
 		}
 
 		function keyUp(e) {
-			if (e.keyCode == 38) { // up
-				teclaCimaPressionada = false; // jogador soltou tecla cima
+			//jogador solta a tela
+			if (e.keyCode == 37) { // left
+				teclaEsquerdaPressionada = false;
+			} else if (e.keyCode == 38) { // up
+				teclaCimaPressionada = false;
+			} else if (e.keyCode == 39) { // right
+				teclaDireitaPressionada = false;
 			} else if (e.keyCode == 40) { // down
-				teclaBaixoPressionada = false; // jogador soltou tecla baixo
+				teclaBaixoPressionada = false;
 			}
 		}
 
 		function gameLoop() {
 			// Ação do Jogador
-			if (teclaCimaPressionada != teclaBaixoPressionada) { // se o jogador estiver pressionando a tecla baixo ou cima
+			if (teclaCimaPressionada != teclaBaixoPressionada 
+					|| teclaBaixoPressionada != teclaDireitaPressionada 
+					|| teclaBaixoPressionada != teclaEsquerdaPressionada ) { // se o jogador estiver pressionando a tecla baixo ou cima
 				//Pressiona para cima    
-				if (teclaCimaPressionada) {
+				if (teclaEsquerdaPressionada) {
 					//ate o topo da tela
-					if (jogadorPosY > 0) {
-						jogadorPosY -= velocidadeJogador;// muda a posição
+					if (jogadorPosX > 0) {
+						jogadorPosX -= velocidadeJogador;// muda a posição
 					}
 				}
-				//Pressiona para baixo
 				else {
-					if (jogadorPosY < (canvas.height - barraHeight)) {
-						jogadorPosY += velocidadeJogador;// muda a posição
+					if (teclaCimaPressionada) {
+						//ate o topo da tela
+						if (jogadorPosY > 0) {
+							jogadorPosY -= velocidadeJogador;// muda a posição
+						}
+					}
+					else {
+					//Pressiona para direita   
+						if (teclaDireitaPressionada) {
+							//ate o meio
+							if ((jogadorPosX >= 0) &&(jogadorPosX < (canvas.width/2 - barraWidth))) {
+								jogadorPosX += velocidadeJogador;// muda a posição
+							}
+						}
+					//Pressiona para baixo
+						else {
+							if (jogadorPosY < (canvas.height - barraHeight)) {
+								jogadorPosY += velocidadeJogador;// muda a posição
+							}
+						}
 					}
 				}
 			}
