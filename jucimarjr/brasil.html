@@ -7,7 +7,7 @@
     
 <body onload="init()">
 <canvas id="canvas" width="320" height="240">
- Navegador não compatível com HTML5 Canvas
+	Navegador não compatível com HTML5 Canvas
 </canvas>
         
 <script>
@@ -19,7 +19,6 @@ var height = canvas.height;
 var dx = 10, dy = 10; 
 
 function init() {
-<<<<<<< HEAD
 	//fundo verde 
 	ctx.fillStyle = "green"; 
 	ctx.fillRect(0,0,width,height); 
@@ -37,31 +36,8 @@ function init() {
 	//circulo azul 
 	ctx.beginPath(); 
 	ctx.arc(width / 2,height / 2,80,0, 2*Math.PI,true); 
-	ctx.closePath();
 	ctx.fillStyle = "blue"; 
 	ctx.fill();
-	
-=======
- //fundo verde 
- ctx.fillStyle = "green"; 
- ctx.fillRect(0,0,width,height); 
- 
- //losango amarelo 
- ctx.beginPath(); 
- ctx.moveTo(dx,height / 2); 
- ctx.lineTo(width / 2,dy); 
- ctx.lineTo(width - dx,height / 2); 
- ctx.lineTo(width / 2,height - dy); 
- ctx.closePath(); 
- ctx.fillStyle = "yellow"; 
- ctx.fill(); 
- 
- //circulo azul 
- ctx.beginPath(); 
- ctx.arc(width / 2,height / 2,80,0, 2*Math.PI,true); 
- ctx.fillStyle = "blue"; 
- ctx.fill();
->>>>>>> 8613f4da2a04d38ba9263f8e2758afb1062b411b
 }
 
 </script>
