@@ -52,10 +52,10 @@ function init() {
 	pontosJogador = 0;
 	pontosOponente = 0;
 
-	velocidadeJogador= 5;
+	velocidadeJogador= 10;
 
 	oponenteParaEsquerda = true;
-	velocidadeOponente = 5;
+	velocidadeOponente = 10;
 
 	document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
 	document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
@@ -113,25 +113,33 @@ function gameLoop() {
 
 	// Bola
 	if (bolaTempo <= 0) {// se a bola estiver em jogo, o tempo é zero (após marcar ponto, a bola fica invisível por um tempo)
-		if ((bolaPosX - bolaRaio) <= (jogadorPosX + barraWidth)) {// se o jogador enconstar na bola (eixo X)...
-			if ((bolaPosY + bolaRaio > jogadorPosY) && (bolaPosY - bolaRaio < jogadorPosY + barraHeight)) {// se o jogador enconstar na bola (eixo Y)...
-				bolaParaDireita = true;// a bola muda de lado e é rebatida para o oponente
-				if (teclaEsquerdaPressionada) {// se o jogador estiver indo para cima quando tocar na bola...
-					bolaAngulo = Math.floor(Math.random() * 10) - 9;// mandamos a bola na diagonal pra cima
+		
+		if ((bolaPosY - bolaRaio) <= (jogadorPosY + barraHeight)) {// se o jogador enconstar na bola (eixo X)...
+			
+			if ((bolaPosX + bolaRaio > jogadorPosX) && (bolaPosX - bolaRaio < jogadorPosX + barraWidth)) {// se o jogador enconstar na bola (eixo Y)...
+				
+				bolaAngulo = bolaAngulo * -1;
+				//bolaParaDireita = true;// a bola muda de lado e é rebatida para o oponente
+				if (teclaEsquerdaPressionada) {// se o jogador estiver indo para left quando tocar na bola...
+					//bolaAngulo = Math.floor(Math.random() * 10) - 9;// mandamos a bola na diagonal pra cima
+					bolaParaDireita = false;
 				}
 				else {// se o jogador estiver indo para baixo quando tocar na bola...
-					bolaAngulo = Math.floor((Math.random() * 10));// mandamos a bola na diagonal pra baixo
+//					bolaAngulo = Math.floor((Math.random() * 10));// mandamos a bola na diagonal pra baixo
+					bolaParaDireita = true;
 				}                        
 			}                    
 		}
-		else if ((bolaPosX + bolaRaio) >= oponentePosX) {// se o oponente enconstar na bola (eixo X)...
-			if ((bolaPosY + bolaRaio > oponentePosY) && (bolaPosY - bolaRaio < oponentePosY + barraHeight)) {// se o oponente enconstar na bola (eixo Y)...
-				bolaParaDireita = false;// a bola muda de lado e é rebatida para o jogador
+		else if ((bolaPosY + bolaRaio) >= oponentePosY) {// se o oponente enconstar na bola (eixo X)...
+			
+			if ((bolaPosX + bolaRaio > oponentePosX) && (bolaPosX - bolaRaio < oponentePosX + barraWidth)) {// se o oponente enconstar na bola (eixo Y)...
+				
+				bolaAngulo = bolaAngulo * -1;
 				if (oponenteParaEsquerda) {// se o oponente estiver indo para cima quando tocar na bola...
-					bolaAngulo = Math.floor(Math.random() * 10) - 9;// mandamos a bola na diagonal pra cima
+					bolaParaDireita = false;
 				}
 				else {// se o oponente estiver indo para baixo quando tocar na bola...
-					bolaAngulo = Math.floor((Math.random() * 10));// mandamos a bola na diagonal pra baixo
+					bolaParaDireita = true;
 				}  
 			}
 		} 
