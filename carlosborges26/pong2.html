@@ -16,7 +16,7 @@
 
 <body onload="init()">
 
-	<canvas id="canvas" width="480" height="600">
+	<canvas id="canvas" width="480" height="480">
 		Navegador não compatível com HTML5 Canvas
 	</canvas>
 
@@ -24,7 +24,7 @@
 
 var canvas, context, 
 barraWidth, barraHeight, jogadorPosX, jogadorPosY, 
-teclaCimaPressionada, teclaBaixoPressionada, oponentePosX, 
+teclaEsquerdaPressionada, teclaDireitaPressionada, oponentePosX, 
 oponentePosY, oponenteParaCima, bolaRaio, bolaPosX, bolaPosY, bolaParaDireita, bolaAngulo, bolaTempo,
 velocidadeJogador, velocidadeOponente, velocidadeBola, pontosJogador, pontosOponente;
 
@@ -47,7 +47,52 @@ function init() {
 	
 	pontosJogador = 0;
     pontosOponente = 0;
+    
+    velocidadeJogador= 5;
+    
+    
+    document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
+    document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
+	setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
+    }
+    
+    function keyDown(e) {
+    	if (e.keyCode == 37) { // up
+    		teclaEsquerdaPressionada = true;
+    	}
+    	else if (e.keyCode == 39) { // down
+    		teclaDireitaPressionada = true;
+    	}
+    }
+                        
+                        
+    function keyUp(e) {
+    	if (e.keyCode == 37) { // up
+    		teclaEsquerdaPressionada = false; // jogador soltou tecla cima
+    	}
+    	else if (e.keyCode == 39) { // down
+    		teclaDireitaPressionada = false; // jogador soltou tecla baixo
+    	}
+    }
+    
+     function gameLoop() {
+     // Jogador
+    	 if (teclaEsquerdaPressionada!=teclaDireitaPressionada) { // se o jogador estiver pressionando a tecla baixo ou cima
+    		 if (teclaEsquerdaPressionada) { // se for para cima...
+    			 if (jogadorPosX > 0) { // se não sair da tela...
+    				 jogadorPosX -= velocidadeJogador;// muda a posição
+    			 }
+    		 }
+    		 else { // se for para baixo...
+    			 if (jogadorPosX < (canvas.width - barraWidth)) {// se não sair da tela...
+    				 jogadorPosX += velocidadeJogador;// muda a posição
+    			 }
+    		 }
+    	 }
 	
+    	// Desenha tudo na tela
+         context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+    	 
 	// Jogador e Oponente
 	context.fillStyle = "red"; 
 	context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);//desenha jogador
