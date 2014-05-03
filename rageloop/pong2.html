@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>HTML5 - Canvas API</title>
+        <style type="text/css">
+        	canvas {
+        		background-color:green;
+        		border:1px dashed #000000;
+        	}
+        </style>
+    </head>
+    <body onload="init()">
+    	<canvas id="canvas" width="600" height="480">
+            Navegador não compatível com HTML5 Canvas
+        </canvas>
+            
+        <script>
+        
+	        var canvas, context,
+	        barraWidth, barraHeight,
+	        jogadorPosX, jogadorPosY,
+	        oponentePosX, oponentePosY,
+	        bolaRaio, bolaPosX, bolaPosY,
+	        pontosJogador, pontosOponente;
+	        
+	        function init() {
+	        	canvas = document.getElementById("canvas"); // pegando o elemento canvas
+	        	context = canvas.getContext("2d");
+	        	
+	        	barraWidth = 90;
+	        	barraHeight = 30;
+	        	
+	        	jogadorPosX = (canvas.width - barraWidth) / 2;
+	        	jogadorPosY = (canvas.height - barraHeight);
+	        	
+	        	oponentePosX = (canvas.width - barraWidth) / 2;
+	        	oponentePosY = 0;
+	        	pontosJogador = 0;
+	        	pontosOponente = 0;
+	        	
+	        	bolaRaio = 10;
+	        	bolaPosX = canvas.width / 2;
+	        	bolaPosY = canvas.height / 2;
+	        	
+	        	// jogador e oponente
+	        	context.fillStyle = "blue"; 
+	        	context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
+	        	context.fillStyle = "red";
+	        	context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);
+	        	
+	        	var pontosA = pontosJogador;
+	        	var pontosB = pontosOponente;
+	        	
+	        	if (pontosA < 10) {
+	        		pontosA = "0" + pontosA;
+	        	}
+	        	
+	        	if (pontosB < 10) {
+	        		pontosB = "0" + pontosB;
+	        	}
+	        
+	        	context.font = "42pt Helvetica"; 
+	        	context.fillStyle = "white";
+	        	context.fillText(pontosA, 30, (canvas.height / 2)-30);
+	        	context.fillText(pontosB, 30, (canvas.height / 2)+60);
+	        	
+	        	
+	        	// linha divisoria
+	        	context.beginPath(); // inicia o desenho
+	        	context.moveTo(0, canvas.height / 2); // posiciona o lapis
+	        	context.lineTo(canvas.width, canvas.height / 2); // faz o xis
+	        	context.stroke(); // aplica o risco na tela, posso personalisar a cor - strokeStyle
+	        	context.closePath(); // finaliza o caminho
+	        	
+	        	//Bola
+	        	context.beginPath();// inicia o modo desenho
+	        	context.fillStyle = "yellow"; 
+	        	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, 2*Math.PI, true);
+	        	context.closePath();
+	        	context.fill();
+	        	
+	        
+	        	
+	        }
+        
+        </script>
+    </body>
+</html>    
