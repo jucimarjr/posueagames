@@ -6,7 +6,7 @@
 </head>
     
 <body onload="init()">
-<canvas id="canvas" width="320" height="240">
+<canvas id="canvas" width="400" height="400">
 	Navegador não compatível com HTML5 Canvas
 </canvas>
         
@@ -19,17 +19,20 @@ var height = canvas.height;
 var dx = 10, dy = 10; 
 
 function init() {
-	//fundo verde 
-	ctx.fillStyle = "green"; 
-	ctx.fillRect(0,0,width/3,height); 
-	
-	//fundo branco 
-	ctx.fillStyle = "white"; 
-	ctx.fillRect(width/3,0,width/3,height); 
-	
-	//fundo vermelho 
-	ctx.fillStyle = "red"; 
-	ctx.fillRect((width/3)*2,0,width/3,height); 
+  estrela(100);
+}
+
+function estrela (r) {
+  ctx.beginPath(); 
+  ctx.translate(100,100);
+  for(var x=0;x<5;x++) {
+	  ctx.rotate(Math.PI/5);
+	  ctx.lineTo(0,0-(r*0.5));
+	  ctx.rotate(Math.PI/5);
+	  ctx.lineTo(0,0-(r));
+  }
+  ctx.fillStyle = "yellow"; 
+	ctx.fill(); 
 }
 
 </script>

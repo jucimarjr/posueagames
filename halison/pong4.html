@@ -71,18 +71,29 @@ function keyDown(e){
 
 function gameLoop(){
 	
-	if (acertouCima){
-		barraPosX -= velocidadeBarra;
-	} else if (acertouEsquerda){
-		barraPosY += velocidadeBarra;
-	} else if (acertouBaixo){
-		barraPosX += velocidadeBarra;
-	} else if (acertouDireita){
-		barraPosY -= velocidadeBarra;
-	}
+	if (barraPosX == 0 ){              // acertou esquerda 
+		barraPosY += velocidadeBarra;  // mover baixo
+		//alert("esquerda");
+
+	} else if (barraPosX >= canvas.width - barraWidth){ // acertou direita
+		barraPosY -= velocidadeBarra;                     // mover cima
+		//alert("direita");
+	} else if (barraPosY >= canvas.height - barraHeight){ // acertou baixo
+		barraPosX += velocidadeBarra;                     // mover direita
+		//alert("baixo");
+
+	} else if (barraPosY == 0) {         // acertou cima
+		barraPosX -= velocidadeBarra;   // 
+		//alert("cima");
 	
-	colisao();
-		
+
+
+	} else {
+		barraPosY += velocidadeBarra;
+		//alert("nenhum");
+
+	}
+			
 	context.clearRect(0,0,canvas.width,canvas.height); // Limpar Tela
 	
 	// Barra
@@ -90,20 +101,6 @@ function gameLoop(){
 		
 }
 
-function colisao(){
-		
-	if (barraPosY <= 0){
-		acertouCima = true;
-	} else 	if (barraPosX >= 0  ){
-		acertouEsquerda = true; 
-	} else 	if (barraPosY >= canvas.height - barraHeight){
-		acertouBaixo = true;
-	} else 	if (barraPosX >= canvas.width - barraWidth ){
-		acertouDireita = true; 
-	} else {
-		acertouBaixo = true;
-	}
-}
 	</script>
 	
 </html>

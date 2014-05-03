@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>HTML5 - Canvas API</title>
+                <style type="text/css">
+                        canvas {
+                          border:1px dashed #000000;
+                        background: #00ff00;
+                        }
+                </style>
+    </head>   
+
+    <body onload="init()">
+	    <canvas id="canvas" width="600" height="480">
+	            Navegador não compatível com HTML5 Canvas
+	    </canvas>
+	    <script>
+	    	// Variaveis globais utilizadas no jogo
+	        var canvas, context, barraWidth, barraHeight, jogadorPosX, jogadorPosY, teclaCimaPressionada, teclaDireitaPressionada, teclaEsquerdaPressionada, teclaBaixoPressionada, oponentePosX, 
+	                   oponentePosY, oponenteParaCima, oponenteParaDireita, bolaRaio, bolaPosX, bolaPosY, bolaParaDireita, bolaAngulo, bolaTempo,
+	                   velocidadeJogador, velocidadeOponente, velocidadeBola, pontosJogador =0, pontosOponente=0;
+	            
+	        // metodo para iniciar o jogo, executado no onload da tag body
+	        function init() {
+	        	canvas = document.getElementById("canvas");// procura o canvas
+	        	context = canvas.getContext("2d");// recupera o contexto 2d
+	        	
+	        	barraWidth = 40;
+	        	barraHeight = 40;
+	        	
+	        	jogadorPosX = 0;
+	        	jogadorPosY = (canvas.height - barraHeight);
+	        	velocidadeJogador = 20;
+	        	
+	        	oponentePosX = canvas.width - barraWidth;
+	        	oponentePosY = (canvas.height - barraHeight);
+	        	
+	        	oponenteParaCima = false;
+	        	velocidadeOponente = 10;
+	        	
+	        	bolaRaio = 10;
+	        	bolaPosX = canvas.width/2;
+	        	bolaPosY = canvas.height-bolaRaio;
+	        	
+                document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
+                document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
+               
+                setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
+            }
+	        	
+	        function gameLoop() {	
+                // Jogador
+                if (teclaCimaPressionada!=teclaBaixoPressionada) { // se o jogador estiver pressionando a tecla baixo ou cima
+                        if (teclaCimaPressionada) { // se for para cima...
+                                if (jogadorPosY > 0) { // se não sair da tela...
+                                        jogadorPosY -= velocidadeJogador;// muda a posição
+                                }
+                        }
+                        else { // se for para baixo...
+                                if (jogadorPosY < (canvas.height - barraHeight)) {// se não sair da tela...
+                                        jogadorPosY += velocidadeJogador;// muda a posição
+                                }
+                        }
+                }
+                
+                if (teclaDireitaPressionada!=teclaEsquerdaPressionada) { // se o jogador estiver pressionando a tecla baixo ou cima
+                    if (teclaEsquerdaPressionada) { // se for para cima...
+                            if (jogadorPosX > 0) { // se não sair da tela...
+                                    jogadorPosX -= velocidadeJogador;// muda a posição
+                            }
+                    }
+                    else { // se for para baixo...
+                            if (jogadorPosX < (canvas.width - barraWidth)) {// se não sair da tela...
+                                    jogadorPosX += velocidadeJogador;// muda a posição
+                            }
+                    }
+            }
+                
+                // Oponente
+                if (oponenteParaCima) {// se o oponente estiver se movendo para cima...
+                        oponentePosY -= velocidadeOponente;// muda a posição
+                        if (oponentePosY <= 0) {// se estiver saindo da tela...
+                          	oponenteParaCima = false;// muda a direção
+                        }
+                }
+                else {// se o oponente estiver se movendo para baixo...
+                        oponentePosY += velocidadeOponente;// muda a posição
+                        if (oponentePosY >= canvas.height - barraHeight) {// se estiver saindo da tela...
+                                oponenteParaCima = true;// muda a direção
+                        }
+                }
+                
+                // Oponente
+                if (oponenteParaDireita) {// se o oponente estiver se movendo para cima...
+                        oponentePosX += velocidadeOponente;// muda a posição
+                        if (oponentePosX >= (canvas.width - barraWidth)) {// se estiver saindo da tela...
+                          	oponenteParaDireita = false;// muda a direção
+                        }
+                }
+                else {// se o oponente estiver se movendo para baixo...
+                        oponentePosX -= velocidadeOponente;// muda a posição
+                        if (oponentePosX <= 0) {// se estiver saindo da tela...
+                                oponenteParaDireita = true;// muda a direção
+                        }
+                }
+                
+                
+                context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+                
+	        	// jogador e oponente
+	        	context.fillStyle = "orange";
+	        	context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight); // desenha jogador
+	        	context.fillStyle = "blue";
+	        	context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);// desenha oponenete
+	        	
+	        	lula = new Image();
+	        	lula.src = 'img/lula.png';
+	        	context.drawImage(lula, oponentePosX, oponentePosY);
+	        
+	        	
+	        	//linha divisoria
+	        	context.beginPath();
+	        	context.moveTo(canvas.width/2,0);
+	        	context.lineTo(canvas.width/2, canvas.height);
+	        	context.strokeStyle = "#000000";
+	        	context.stroke();
+	        	context.closePath();
+	        	
+	        	// bola
+	        	context.beginPath();
+	        	context.arc(bolaPosX, bolaPosY, bolaRaio,0, 2*Math.PI,true); 
+	        	context.closePath();
+	        	context.fillStyle = "red";
+	        	context.fill();
+	        	
+	            // Placar
+                var pontosA = pontosJogador;// variavel temporaria para não alterar pontosJogador
+                var pontosB = pontosOponente;// variavel temporaria para não alterar pontosOponente
+                
+                if (pontosA < 10) {// se o numero de pontos for menor que 10, colocamos o zero a esquerda
+                    pontosA = "0" + pontosA;
+                }
+                if (pontosB < 10) {// se o numero de pontos for menor que 10, colocamos o zero a esquerda
+                    pontosB = "0" + pontosB;
+                }
+                
+                context.font = "42pt Helvetica";// tamanho e fonte para desenhar o texto
+                context.fillStyle = "#000000";// cor preta (opcional)
+                context.fillText(pontosA + " " + pontosB, (canvas.width / 2) - 70, 50); // escreve texto na tela na posição desejada
+                
+
+                if((oponentePosY> (jogadorPosY -20) && (oponentePosY < (jogadorPosY + 60) ))  
+                		&& (oponentePosX > (jogadorPosX-20) && oponentePosX < (jogadorPosX + 60))) {
+                	pontosJogador++;
+                }  
+                
+	        }
+	        
+            function keyDown(e) {
+                if (e.keyCode == 38) { // up
+                        teclaCimaPressionada = true;
+                }
+                else if (e.keyCode == 40) { // down
+                        teclaBaixoPressionada = true;
+                }
+                else if (e.keyCode == 39) { // up
+                    teclaDireitaPressionada = true; // jogador soltou tecla cima
+                }
+                else if (e.keyCode == 37) { // down
+                    teclaEsquerdaPressionada = true; // jogador soltou tecla baixo
+                }
+            }
+        
+            function keyUp(e) {
+                if (e.keyCode == 38) { // up
+                        teclaCimaPressionada = false; // jogador soltou tecla cima
+                }
+                else if (e.keyCode == 40) { // down
+                        teclaBaixoPressionada = false; // jogador soltou tecla baixo
+                }
+                else if (e.keyCode == 39) { // up
+                    teclaDireitaPressionada = false; // jogador soltou tecla cima
+                }
+                else if (e.keyCode == 37) { // down
+                    teclaEsquerdaPressionada = false; // jogador soltou tecla baixo
+                }
+            }	        
+            
+            function mudaSentido(){
+            	
+            }
+            
+               
+        	        
+	     </script>                   
+	             
+    </body>
+</html>
