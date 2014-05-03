@@ -2,11 +2,11 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Bandeira do Brasil em HTML5</title>
+    <title>Bandeira da Alemanha em HTML5</title>
 </head>
     
 <body onload="init()">
-<canvas id="canvas" width="400" height="400">
+<canvas id="canvas" width="320" height="240">
 	Navegador não compatível com HTML5 Canvas
 </canvas>
         
@@ -19,20 +19,12 @@ var height = canvas.height;
 var dx = 10, dy = 10; 
 
 function init() {
-  estrela(100);
-}
-
-function estrela (r) {
-  ctx.beginPath(); 
-  ctx.translate(100,100);
-  for(var x=0;x<5;x++) {
-	  ctx.rotate(Math.PI/5);
-	  ctx.lineTo(0,0-(r*0.5));
-	  ctx.rotate(Math.PI/5);
-	  ctx.lineTo(0,0-(r));
-  }
-  ctx.fillStyle = "yellow"; 
-	ctx.fill(); 
+	ctx.fillStyle = "black"; 
+	ctx.fillRect(0,0,width,height/3); 
+	ctx.fillStyle = "red"; 
+	ctx.fillRect(0,height/3,width,height/3);
+	ctx.fillStyle = "yellow"; 
+	ctx.fillRect(0,2*height/3,width,height/3);
 }
 
 </script>

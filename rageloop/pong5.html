@@ -24,7 +24,9 @@
 	        bolaRaio, bolaPosX, bolaPosY,
 	        pontosJogador, pontosOponente,
 	        teclaCimaPressionada = false, teclaBaixoPressionada = false, 
-	        velocidadeJogador, velocidadeOponente, oponenteParaCima = true;
+	        velocidadeJogador, velocidadeOponente, oponenteParaCima = true,
+	        oponenteParaCima, velocidadeOponente,
+		    bolaParaDireita, bolaAngulo, velocidadeBola;
 	        
 	        function init() {
 	        	canvas = document.getElementById("canvas"); // pegando o elemento canvas
@@ -48,8 +50,11 @@
 	        	pontosOponente = 0;
 	        	
 	        	bolaRaio = 10;
-	        	bolaPosX = canvas.width / 2;
-	        	bolaPosY = canvas.height - bolaRaio;
+	        	bolaPosX = canvas.width;
+	        	bolaPosY = canvas.height / 2;
+	        	bolaParaDireita = false;
+	            bolaAngulo = Math.floor(Math.random() * 21) - 10;
+	            velocidadeBola = 15;
 	        	
 	        	// jogador e oponente
 	        	context.fillStyle = "blue"; 
@@ -128,6 +133,20 @@
                         }
                 }
                 
+                if ((bolaPosY - bolaRaio <= 0) || (bolaPosY + bolaRaio > canvas.height)) {// se a bola bater em cima ou em baixo da tela...
+                    bolaAngulo = bolaAngulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
+                }
+                bolaPosY += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
+                
+                if (bolaParaDireita) {// se a bola estiver indo para a direita...
+                    bolaPosX += velocidadeBola;// movemos a bola para a direita
+                }
+                else {// se estiver indo para a esquerda...
+                    bolaPosX -= velocidadeBola;// movemos a bola para a esquerda
+                }
+                
+                
+                
                 
                 if (oponenteParaCima) {
                     oponentePosY -= velocidadeOponente;
@@ -144,8 +163,7 @@
                 
                 // Desenha tudo na tela
                 context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
-                
-                    
+                                    
                 // Jogador e Oponente
                 context.fillStyle = "blue";
                 context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);//desenha jogador
