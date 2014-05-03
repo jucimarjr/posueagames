@@ -31,17 +31,87 @@
 				barraHeight = 90;
 
 				jogadorPosX = 0;
-				jogadorPosY = (canvas.height - barraHeight);
+				jogadorPosY = (canvas.height - barraHeight) / 2;
+				velocidadeJogador = 15;
+
+				teclaCimaPressionada = false;
+				teclaBaixoPressionada = false;
 
 				oponentePosX = canvas.width - barraWidth;
-				oponentePosY = (canvas.height - barraHeight);
+				oponentePosY = 0;
+				oponenteParaCima = false;
+				velocidadeOponente = 20;
 
 				bolaRaio = 10;
-				bolaPosX = 2 * (canvas.width / 3);
-				bolaPosY = canvas.height - bolaRaio;
-				
+				bolaPosX = canvas.width / 2;
+				bolaPosY = canvas.height / 2;
+
 				pontosJogador = 0;
 				pontosOponente = 0;
+
+				document.addEventListener('keyup', keyUp, false);
+				// adiciona evento para keyup
+				document.addEventListener('keydown', keyDown, false);
+				// adiciona evento para keydown
+				setInterval(gameLoop, 30);
+				// chama a function gameLoop a cada 30 frames
+			}
+
+			function keyDown(e) {
+				if (e.keyCode == 38) {// up
+					teclaCimaPressionada = true;
+				} else if (e.keyCode == 40) {// down
+					teclaBaixoPressionada = true;
+				}
+			}
+
+			function keyUp(e) {
+				if (e.keyCode == 38) {// up
+					teclaCimaPressionada = false;
+					// jogador soltou tecla cima
+				} else if (e.keyCode == 40) {// down
+					teclaBaixoPressionada = false;
+					// jogador soltou tecla baixo
+				}
+			}
+
+			function gameLoop() {
+
+				// Jogador
+				if (teclaCimaPressionada != teclaBaixoPressionada) {// se o jogador estiver pressionando a tecla baixo ou cima
+					if (teclaCimaPressionada) {// se for para cima...
+						if (jogadorPosY > 0) {// se não sair da tela...
+							jogadorPosY -= velocidadeJogador;
+							// muda a posição
+						}
+					} else {// se for para baixo...
+						if (jogadorPosY < (canvas.height - barraHeight)) {// se não sair da tela...
+							jogadorPosY += velocidadeJogador;
+							// muda a posição
+						}
+					}
+				}
+
+				// Oponente
+				if (oponenteParaCima) {// se o oponente estiver se movendo para cima...
+					oponentePosY -= velocidadeOponente;
+					// muda a posição
+					if (oponentePosY <= 0) {// se estiver saindo da tela...
+						oponenteParaCima = false;
+						// muda a direção
+					}
+				} else {// se o oponente estiver se movendo para baixo...
+					oponentePosY += velocidadeOponente;
+					// muda a posição
+					if (oponentePosY >= canvas.height - barraHeight) {// se estiver saindo da tela...
+						oponenteParaCima = true;
+						// muda a direção
+					}
+				}
+
+				// Desenha tudo na tela
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				// limpa a tela antes de desenhar
 
 				// Jogador e Oponente
 				context.fillStyle = "red";
@@ -83,14 +153,12 @@
 				// escreve texto na tela na posi��o desejada
 
 				// Linha divisória
-				context.beginPath();
-				// inicia o modo de desenho
+				context.beginPath();// inicia o modo de desenho
 				context.moveTo(canvas.width / 2, 0);
 				// posiciona o "lapis" para desenhar
 				context.lineTo(canvas.width / 2, canvas.height);
 				// faz o "risco" na tela
 				context.strokeStyle = "#FFFFFF";
-				// cor preta (opcional)
 				context.stroke();
 				// aplica o risco na tela
 				context.closePath();
