@@ -1,0 +1,96 @@
+<!-- Baseado em: Jogo Pong (http://gamedeveloper.com.br/blog/2013/08/21/pong-html5-javascript/) -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>HTML5 - Canvas API</title>
+        <style type="text/css">
+               canvas {
+                    border:1px dashed #000000;
+                 }
+        </style>
+    </head>   
+    <body onload="init()">
+          <canvas id="canvas" width="600" height="480">
+                        Navegador não compatível com HTML5 Canvas
+          </canvas>
+          
+          <script>
+         	var canvas, context,
+         	barraWidth, barraHeight,
+         	jogadorPosX, jogadorPosY,
+         	bolaRaio, bolaPosX, bolaPosY,
+         	pontosJogador, pontosOponente;
+         	
+         	function init() {
+			
+					pontosJogador = 0;
+					pontosOponente = 0;
+					         	
+         	         canvas = document.getElementById("canvas");// procura o
+         	         context = canvas.getContext("2d"); 
+         	
+         	         barraWidth = 30;
+         	         barraHeight = 90;
+         	
+         	         jogadorPosX = 0;
+         	         jogadorPosY = (canvas.height - barraHeight) ;
+         	
+         	         oponentePosX = canvas.width - barraWidth;
+         	         oponentePosY = (canvas.height - barraHeight) ;
+         	         
+         	         bolaRaio = 10;
+         	         bolaPosX = canvas.width/2;
+         	         bolaPosY = canvas.height-bolaRaio;
+					 
+					 context.fillStyle = "green";
+					 context.fillRect(0 , 0, canvas.width, canvas.height);
+         	         
+					 
+         	         // jogador e oponente
+					 context.fillStyle = "blue";
+         	         context.fillRect(jogadorPosX , jogadorPosY , barraWidth, barraHeight);
+					 context.fillStyle = "red";
+                     context.fillRect(oponentePosX , oponentePosY , barraWidth , barraHeight);
+                     
+                     
+                     
+					 //linha divisoria
+					 context.beginPath(); 
+                     context.moveTo(canvas.width / 2, 0);
+					 context.lineTo(canvas.width / 2, canvas.height);
+					 context.strokeStyle = "#000000"; 
+					 context.stroke();
+					 context.closePath();
+					 
+					 // bola
+					 context.fillStyle = "yellow";
+                     context.beginPath(); 
+                     context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI *2, true);
+                     context.closePath(); 
+                     context.fill();
+					 
+					 //placar
+					 var pontosA = pontosJogador;
+					 var pontosB = pontosOponente;
+					 
+					 if (pontosA < 10) {
+					     pontosA = "0" + pontosA;
+					 }
+					 if (pontosB < 10) {
+					     pontosB = "0" + pontosB
+					 }
+					 context.font = "42pt Helvetica";
+					 context.fillStyle = "#000000";
+					 context.fillText(pontosA + " " + pontosB , (canvas.width / 2) -70, 50);
+					 
+					 
+   			}
+   			      	
+         
+         	 
+          </script>
+         	
+    </body>
+         
+</html>

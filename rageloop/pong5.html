@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>HTML5 - Canvas API</title>
+        <style type="text/css">
+        	canvas {
+        		background-color:green;
+        		border:1px dashed #000000;
+        	}
+        </style>
+    </head>
+    <body onload="init()">
+    	<canvas id="canvas" width="600" height="480">
+            Navegador não compatível com HTML5 Canvas
+        </canvas>
+            
+        <script>
+        
+	        var canvas, context,
+	        barraWidth, barraHeight,
+	        jogadorPosX, jogadorPosY,
+	        oponentePosX, oponentePosY,
+	        bolaRaio, bolaPosX, bolaPosY,
+	        pontosJogador, pontosOponente,
+	        teclaCimaPressionada = false, teclaBaixoPressionada = false, 
+	        velocidadeJogador, velocidadeOponente, oponenteParaCima = true,
+	        oponenteParaCima, velocidadeOponente,
+		    bolaParaDireita, bolaAngulo, velocidadeBola;
+	        
+	        function init() {
+	        	canvas = document.getElementById("canvas"); // pegando o elemento canvas
+	        	context = canvas.getContext("2d");
+	        	
+	        	barraWidth = 30;
+	        	barraHeight = 90;
+	        	
+	        	jogadorPosX = 0;
+	        	jogadorPosY = (canvas.height - barraHeight);
+	        	velocidadeJogador = 15;
+	            teclaCimaPressionada = false;
+	            teclaBaixoPressionada = false;
+
+	        	
+	        	oponentePosX = canvas.width - barraWidth;
+	        	oponentePosY = canvas.height - barraHeight;
+	        	velocidadeOponente = 15;
+	        	
+	        	pontosJogador = 0;
+	        	pontosOponente = 0;
+	        	
+	        	bolaRaio = 10;
+	        	bolaPosX = canvas.width;
+	        	bolaPosY = canvas.height / 2;
+	        	bolaParaDireita = false;
+	            bolaAngulo = Math.floor(Math.random() * 21) - 10;
+	            velocidadeBola = 15;
+	        	
+	        	// jogador e oponente
+	        	context.fillStyle = "blue"; 
+	        	context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
+	        	context.fillStyle = "red";
+	        	context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);
+	        	
+	        	var pontosA = pontosJogador;
+	        	var pontosB = pontosOponente;
+	        	
+	        	if (pontosA < 10) {
+	        		pontosA = "0" + pontosA;
+	        	}
+	        	
+	        	if (pontosB < 10) {
+	        		pontosB = "0" + pontosB;
+	        	}
+	        
+	        	context.font = "42pt Helvetica"; 
+	        	context.fillStyle = "white";
+	        	context.fillText(pontosA + " " + pontosB, (canvas.width / 2)-70, 50);
+	        	
+	        	
+	        	// linha divisoria
+	        	context.beginPath(); // inicia o desenho
+	        	context.moveTo(canvas.width / 2, 0); // posiciona o lapis
+	        	context.lineTo(canvas.width / 2, canvas.height); // faz o xis
+	        	context.stroke(); // aplica o risco na tela, posso personalisar a cor - strokeStyle
+	        	context.closePath(); // finaliza o caminho
+	        	
+	        	//Bola
+	        	context.beginPath();// inicia o modo desenho
+	        	context.fillStyle = "yellow"; 
+	        	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, 2*Math.PI, true);
+	        	context.closePath();
+	        	context.fill();
+	        	
+	        	document.addEventListener('keyup', keyUp, false);
+	        	document.addEventListener('keydown', keyDown, false);
+	        	setInterval (gameLoop, 30);
+	        }
+	        
+            function keyDown(e) {
+                if (e.keyCode == 38) { // up
+                		//alert("keyup");
+                        teclaCimaPressionada = true;
+                }
+                else if (e.keyCode == 40) { // down
+                        teclaBaixoPressionada = true;
+                }
+	        }
+	        
+	        function keyUp(e) {
+	                if (e.keyCode == 38) { // up
+	                        teclaCimaPressionada = false; // jogador soltou tecla cima
+	                }
+	                else if (e.keyCode == 40) { // down
+	                        teclaBaixoPressionada = false; // jogador soltou tecla baixo
+	                }
+	        }
+	        
+	        function gameLoop() {
+                // Jogador
+	        	
+                if (teclaCimaPressionada!=teclaBaixoPressionada) { // se o jogador estiver pressionando a tecla baixo ou cima
+                        if (teclaCimaPressionada) { // se for para cima...
+                                if (jogadorPosY > 0) { // se não sair da tela...
+                                	//alert("keyup");
+                                    jogadorPosY -= 15;// muda a posição
+                                }
+                        }
+                        else { // se for para baixo...
+                                if (jogadorPosY < (canvas.height - barraHeight)) {// se não sair da tela...
+                                        jogadorPosY += velocidadeJogador;// muda a posição
+                                }
+                        }
+                }
+                
+                if ((bolaPosY - bolaRaio <= 0) || (bolaPosY + bolaRaio > canvas.height)) {// se a bola bater em cima ou em baixo da tela...
+                    bolaAngulo = bolaAngulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
+                }
+                bolaPosY += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
+                
+                if (bolaParaDireita) {// se a bola estiver indo para a direita...
+                    bolaPosX += velocidadeBola;// movemos a bola para a direita
+                }
+                else {// se estiver indo para a esquerda...
+                    bolaPosX -= velocidadeBola;// movemos a bola para a esquerda
+                }
+                
+                
+                
+                
+                if (oponenteParaCima) {
+                    oponentePosY -= velocidadeOponente;
+                    if (oponentePosY <= 0) {
+                        oponenteParaCima = false;
+                    }
+	            }
+	            else {
+                    oponentePosY += velocidadeOponente;
+                    if (oponentePosY >= canvas.height - barraHeight) {
+                        oponenteParaCima = true;
+                    }
+	            }
+                
+                // Desenha tudo na tela
+                context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+                                    
+                // Jogador e Oponente
+                context.fillStyle = "blue";
+                context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);//desenha jogador
+                context.fillStyle = "red";
+                context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);//desenha oponente
+                                
+                var pontosA = pontosJogador;
+	        	var pontosB = pontosOponente;
+	        	
+	        	if (pontosA < 10) {
+	        		pontosA = "0" + pontosA;
+	        	}
+	        	
+	        	if (pontosB < 10) {
+	        		pontosB = "0" + pontosB;
+	        	}
+	        
+	        	context.font = "42pt Helvetica"; 
+	        	context.fillStyle = "white";
+	        	context.fillText(pontosA + " " + pontosB, (canvas.width / 2)-70, 50);
+                
+             // linha divisoria
+	        	context.beginPath(); // inicia o desenho
+	        	context.moveTo(canvas.width / 2, 0); // posiciona o lapis
+	        	context.lineTo(canvas.width / 2, canvas.height); // faz o xis
+	        	context.stroke(); // aplica o risco na tela, posso personalisar a cor - strokeStyle
+	        	context.closePath(); // finaliza o caminho
+                
+	        	// Bola
+                context.beginPath();// inicia o modo de desenho
+                context.fillStyle = "yellow";
+                context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
+                context.closePath();// finaliza o caminho (opcional)
+                context.fill();
+                
+	        }
+	        
+	        
+        /*
+	        	
+	        	barraWidth = 30;
+	        	barraHeight = 90;
+	        	
+	        	jogadorPosX = 0;
+	        	jogadorPosY = (canvas.height - barraHeight);
+	        	
+	        	oponentePosX = canvas.width - barraWidth;
+	        	oponentePosY = canvas.height - barraHeight;
+	        	pontosJogador = 0;
+	        	pontosOponente = 0;
+	        	
+	        	bolaRaio = 10;
+	        	bolaPosX = canvas.width / 2;
+	        	bolaPosY = canvas.height - bolaRaio;
+	        	
+	        	// jogador e oponente
+	        	context.fillStyle = "blue"; 
+	        	context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
+	        	context.fillStyle = "red";
+	        	context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);
+	        	
+	        	var pontosA = pontosJogador;
+	        	var pontosB = pontosOponente;
+	        	
+	        	if (pontosA < 10) {
+	        		pontosA = "0" + pontosA;
+	        	}
+	        	
+	        	if (pontosB < 10) {
+	        		pontosB = "0" + pontosB;
+	        	}
+	        
+	        	context.font = "42pt Helvetica"; 
+	        	context.fillStyle = "white";
+	        	context.fillText(pontosA + " " + pontosB, (canvas.width / 2)-70, 50);
+	        	
+	        	
+	        	// linha divisoria
+	        	context.beginPath(); // inicia o desenho
+	        	context.moveTo(canvas.width / 2, 0); // posiciona o lapis
+	        	context.lineTo(canvas.width / 2, canvas.height); // faz o xis
+	        	context.stroke(); // aplica o risco na tela, posso personalisar a cor - strokeStyle
+	        	context.closePath(); // finaliza o caminho
+	        	
+	        	//Bola
+	        	context.beginPath();// inicia o modo desenho
+	        	context.fillStyle = "yellow"; 
+	        	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, 2*Math.PI, true);
+	        	context.closePath();
+	        	context.fill();
+	        	
+	        
+	        	
+	        }*/
+        
+        </script>
+    </body>
+</html>    

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Bandeira da Alemanha em HTML5</title>
+</head>
+
+<body onload="init()">
+	<canvas id="canvas" width="320" height="240">
+	Navegador não compatível com HTML5 Canvas
+</canvas>
+
+	<script>
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+
+		var width = canvas.width;
+		var height = canvas.height;
+
+		function init() {
+			//lista horizontal preta 
+			ctx.fillStyle = "black";
+			ctx.fillRect(0, 0, width, 1 / 3 * height);
+
+			//lista horizontal vermelho 
+			ctx.fillStyle = "red";
+			ctx.fillRect(0, 1 / 3 * height, width, 1 / 3 * height);
+
+			//lista horizontal amarelo 
+			ctx.fillStyle = "gold";
+			ctx.fillRect(0, 2 / 3 * height, width, 1 / 3 * height);
+
+		}
+	</script>
+</body>
+</html>

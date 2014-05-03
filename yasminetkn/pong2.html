@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>HTML5 - Canvas API</title>
+    <style type="text/css">
+        canvas {
+            border:1px dashed #000000;
+            background-color: green;
+        }
+    </style>
+</head>
+<body onload="init()">
+<canvas id="canvas" width="480" height="600">
+    Navegador não compatível com HTML5 Canvas
+</canvas>
+<script>
+    // Variáveis globais utilizadas no jogo
+    var canvas, context,
+            barraWidth, barraHeight,
+            jogadorPosX, jogadorPosY,
+            oponentePosX,oponentePosY,
+            bolaRaio, bolaPosX,bolaPosY,
+            pontosJogador = 0,pontosOponente=0;
+
+    function init(){
+
+        canvas = document.getElementById("canvas");
+        context = canvas.getContext("2d");
+
+        barraWidth = 90;
+        barraHeight = 30;
+
+
+        jogadorPosX = 0;
+        jogadorPosY = canvas.height - barraHeight;
+
+        oponentePosX = canvas.width - barraWidth;
+        oponentePosY = 0;
+
+        bolaRaio = 10;
+        bolaPosX = canvas.width/2;
+        bolaPosY = canvas.height/2;
+
+
+//        jogadorPosX = 0;
+//        jogadorPosY = (canvas.height - barraHeight);//posicao maxima baixo
+//
+//        oponentePosX = canvas.width - barraWidth;
+//        oponentePosY = (canvas.height - barraHeight);
+//
+//        bolaRaio = 10;
+//        bolaPosX = canvas.width/2;
+//        bolaPosY = canvas.height - bolaRaio;//posicão maxima baixo
+
+        //jogador e oponente
+        context.fillStyle="red";
+        context.fillRect(jogadorPosX,jogadorPosY,barraWidth,barraHeight);//desenha jogador
+
+        context.fillStyle="yellow";
+        context.fillRect(oponentePosX,oponentePosY,barraWidth,barraHeight);//desenhando oponente
+
+        //jogador e oponente na posicao baixa maxima
+
+
+
+        //bola
+        context.beginPath();
+        context.arc(bolaPosX,bolaPosY,bolaRaio,0,Math.PI*2,true);
+        context.fillStyle = "blue";
+        context.closePath();
+        context.fill();
+
+        //linha Divisória
+        context.beginPath()//inicia o metodo de desenho
+        context.moveTo(0,canvas.height/2);//primeiro x, depois y
+        context.lineTo(canvas.height,canvas.height/2);//começo da linha, final linha
+        context.strokeStyle = "#000000";// definindo a cor da linha
+        context.stroke();//aplica risco na tela
+        context.closePath();//final
+
+        //placar
+        var pontosA = pontosJogador; //variável temporária para não alterar
+        var pontosB = pontosOponente;
+
+
+        if (pontosA<10){
+
+            pontosA = "0"+pontosA;
+        }if (pontosB<10){
+
+            pontosB = "0"+pontosB;
+        }
+
+        context.font = "42pt Helvetica"
+        context.fillStyle = "#000000";
+//        context.fillText(pontosA + " " + pontosB, (canvas.height/2) -70,50);
+        context.fillText(pontosA, canvas.width/2 - 30, canvas.height/2);
+        context.fillText(pontosB, canvas.width/2 - 30, canvas.height/2);
+    }
+
+</script>
+</body>
+</html>

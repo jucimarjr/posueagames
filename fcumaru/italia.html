@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Bandeira do It&aacute;lia em HTML5</title>
+</head>
+
+<body onload="init()">
+	<canvas id="canvas" width="320" height="240">
+	Navegador não compatível com HTML5 Canvas
+</canvas>
+
+	<script>
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+
+		var width = canvas.width;
+		var height = canvas.height;
+		var dx = 10, dy = 10;
+
+		function init() {
+			//lista verde 
+			ctx.fillStyle = "green";
+			ctx.fillRect(0, 0, width / 3, height);
+
+			//lista vermelho
+			ctx.fillStyle = "red";
+			ctx.fillRect(2 / 3 * width, 0, width, height);
+
+		}
+	</script>
+</body>
+</html>

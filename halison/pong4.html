@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+	    <meta charset="UTF-8" />
+	    <title>Pong 4!</title>
+	    <style type="text/css">
+	    	canvas {
+			  border:1px dashed #000;
+
+	    	}
+	    </style>
+	</head>
+    
+	<body onload="init()">
+	    <canvas id="canvas" width="600" height="480">
+			Navegador não compatível com HTML5 Canvas
+	    </canvas>
+	
+	</body>
+	
+	<script>
+	
+
+var canvas, context, 
+ 	barraWidth, barraHeight,
+	barraPosX, barraPosY;
+	
+var velocidadeBarra;
+
+var teclaEnterPressionada;
+
+var acertouCima;
+var acertouBaixo;
+var acertouEsquerda;
+var acertouDireita;
+
+var canvas = document.getElementById("canvas"); 
+var context = canvas.getContext("2d"); 
+
+function init() {
+
+	barraWidth = 50;
+	barraHeight = 50;
+
+    barraPosX = (canvas.width - barraWidth) / 2;
+    barraPosY = (canvas.height - barraHeight) / 2;;
+    
+    velocidadeBarra = 5;
+
+	document.addEventListener('keyup', keyUp, false);     // Adiciona evento para o teclado
+	document.addEventListener('keydown', keyDown, false); // Adiciona evento para o teclado
+	
+	setInterval(gameLoop, 30);                            // Executa gameLoop a cada 30 frames
+	
+}
+
+
+function keyUp(e){
+	if (e.keyCode == 13){
+		teclaEnterPressionada = false; // Soltou tecla ENTER
+	} 
+}
+
+function keyDown(e){
+	if (e.keyCode == 13){
+		teclaEnterPressionada = true; // Acertou a tecla ENTER
+	} 
+}
+
+function gameLoop(){
+	
+	if (acertouCima){
+		barraPosX -= velocidadeBarra;
+	} else if (acertouEsquerda){
+		barraPosY += velocidadeBarra;
+	} else if (acertouBaixo){
+		barraPosX += velocidadeBarra;
+	} else if (acertouDireita){
+		barraPosY -= velocidadeBarra;
+	}
+	
+	colisao();
+		
+	context.clearRect(0,0,canvas.width,canvas.height); // Limpar Tela
+	
+	// Barra
+	context.fillRect(barraPosX, barraPosY, barraWidth, barraHeight);   // desenho do jogador
+		
+}
+
+function colisao(){
+		
+	if (barraPosY <= 0){
+		acertouCima = true;
+	} else 	if (barraPosX >= 0  ){
+		acertouEsquerda = true; 
+	} else 	if (barraPosY >= canvas.height - barraHeight){
+		acertouBaixo = true;
+	} else 	if (barraPosX >= canvas.width - barraWidth ){
+		acertouDireita = true; 
+	} else {
+		acertouBaixo = true;
+	}
+}
+	</script>
+	
+</html>
