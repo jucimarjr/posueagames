@@ -1,0 +1,145 @@
+<!-- Baseado em: Jogo Pong (http://gamedeveloper.com.br/blog/2013/08/21/pong-html5-javascript/) -->
+	<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>HTML5 - Canvas API</title>
+	
+	<style type="text/css">
+	canvas {
+		border:1px dashed #000000;
+		background-color: green;
+	}
+	</style>
+	
+</head>   
+
+<body onload="init()">
+
+	<canvas id="canvas" width="480" height="480">
+		Navegador não compatível com HTML5 Canvas
+	</canvas>
+
+<script>
+
+var canvas, context, 
+barraWidth, barraHeight, jogadorPosX, jogadorPosY, 
+teclaEsquerdaPressionada, teclaDireitaPressionada, oponentePosX, 
+oponentePosY, oponenteParaCima, bolaRaio, bolaPosX, bolaPosY, bolaParaDireita, bolaAngulo, bolaTempo,
+velocidadeJogador, velocidadeOponente, velocidadeBola, pontosJogador, pontosOponente;
+
+function init() {
+	
+	canvas = document.getElementById("canvas");// procura o canvas
+	context = canvas.getContext("2d");// recupera o contexto 2d
+
+	barraWidth = 90;
+	barraHeight = 30;
+	jogadorPosX = (canvas.width - barraWidth);
+	jogadorPosY = 0;
+	
+	oponentePosX = canvas.width - barraWidth;
+	oponentePosY = canvas.height - barraHeight;
+	
+	bolaRaio = 10;
+	bolaPosX = canvas.width / 2;
+	bolaPosY = canvas.height / 2;
+	
+	pontosJogador = 0;
+    pontosOponente = 0;
+    
+    velocidadeJogador= 5;
+    
+    
+    document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
+    document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
+	setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
+    }
+    
+    function keyDown(e) {
+    	if (e.keyCode == 37) { // up
+    		teclaEsquerdaPressionada = true;
+    	}
+    	else if (e.keyCode == 39) { // down
+    		teclaDireitaPressionada = true;
+    	}
+    }
+                        
+                        
+    function keyUp(e) {
+    	if (e.keyCode == 37) { // up
+    		teclaEsquerdaPressionada = false; // jogador soltou tecla cima
+    	}
+    	else if (e.keyCode == 39) { // down
+    		teclaDireitaPressionada = false; // jogador soltou tecla baixo
+    	}
+    }
+    
+     function gameLoop() {
+     // Jogador
+    	 if (teclaEsquerdaPressionada!=teclaDireitaPressionada) { // se o jogador estiver pressionando a tecla baixo ou cima
+    		 if (teclaEsquerdaPressionada) { // se for para cima...
+    			 if (jogadorPosX > 0) { // se não sair da tela...
+    				 jogadorPosX -= velocidadeJogador;// muda a posição
+    			 }
+    		 }
+    		 else { // se for para baixo...
+    			 if (jogadorPosX < (canvas.width - barraWidth)) {// se não sair da tela...
+    				 jogadorPosX += velocidadeJogador;// muda a posição
+    			 }
+    		 }
+    	 }
+	
+    	// Desenha tudo na tela
+         context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+    	 
+	// Jogador e Oponente
+	context.fillStyle = "red"; 
+	context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);//desenha jogador
+	context.fillStyle = "blue"; 
+	context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);//desenha oponente
+	
+	 // Placar
+    var pontosA = pontosJogador;// variável temporária para não alterar pontosJogador
+    var pontosB = pontosOponente;// variável temporária para não alterar pontosOponente
+    
+    if (pontosA < 10) {// se o número de pontos for menor que 10, colocamos o zero á esquerda
+        pontosA = "0" + pontosA;
+    }
+    if (pontosB < 10) {// se o número de pontos for menor que 10, colocamos o zero á esquerda
+        pontosB = "0" + pontosB;
+    }
+    
+    context.font = "42pt Helvetica";// tamanho e fonte para desenhar o texto
+    context.fillStyle = "#000000";// cor preta (opcional)
+    context.fillText(pontosA, 10, (canvas.height / 2) - 10); // escreve texto na tela na posição desejada
+    context.fillText(pontosB, 10, (canvas.height / 2) + 48); // escreve texto na tela na posição desejada
+	
+	// Linha divisória
+	context.beginPath();// inicia o modo de desenho
+	context.moveTo(0, canvas.height / 2);// posiciona o "lapiz" para desenhar
+	context.lineTo(canvas.width , canvas.height / 2);// faz o "risco" na tela
+	context.strokeStyle = "#000000";// cor preta (opcional)
+	context.stroke();// aplica o risco na tela
+	context.closePath();// finaliza o caminho (opcional)
+	
+	// Bola
+	context.strokeStyle = "black"; 
+	context.beginPath();// inicia o modo de desenho
+	context.arc(bolaPosX, bolaPosY, 90, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
+	context.closePath();// finaliza o caminho (opcional)
+	context.stroke();
+	
+	// Bola
+	context.fillStyle = "white"; 
+	context.beginPath();// inicia o modo de desenho
+	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
+	context.closePath();// finaliza o caminho (opcional)
+	context.fill();
+	
+
+	
+}
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Bandeira da Italia em HTML5</title>
+    <title>Bandeira do Brasil em HTML5</title>
 </head>
     
 <body onload="init()">
@@ -11,7 +11,7 @@
 </canvas>
         
 <script>
-var canvas = document.getElementById("canvas");
+var canvas = document.getElementById("canvas"); 
 var ctx = canvas.getContext("2d"); 
 
 var width = canvas.width; 
@@ -19,18 +19,12 @@ var height = canvas.height;
 var dx = 10, dy = 10; 
 
 function init() {
-	//bandeira italia
-	
-	ctx.beginPath(); 
-	ctx.fillStyle = "green"; 
-	ctx.fillRect(0,0,106,height);
-	 
-	ctx.fillStyle = "white"; 
-	ctx.fillRect(106,0,106,height);
-	
+	ctx.fillStyle = "black"; 
+	ctx.fillRect(0,0,width,height/3);
 	ctx.fillStyle = "red"; 
-	ctx.fillRect(212,0,106,height);
-	ctx.fill(); 
+	ctx.fillRect(0, height/3, width, 0.66 * height);
+	ctx.fillStyle = "yellow"; 
+	ctx.fillRect(0,0.66 * height, width ,height);
 }
 
 </script>

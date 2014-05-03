@@ -11,26 +11,26 @@
 </canvas>
         
 <script>
-var canvas = document.getElementById("canvas");
+var canvas = document.getElementById("canvas"); 
 var ctx = canvas.getContext("2d"); 
 
 var width = canvas.width; 
 var height = canvas.height; 
 var dx = 10, dy = 10; 
 
+var tam= width/3;
+
+
 function init() {
-	//bandeira italia
-	
-	ctx.beginPath(); 
-	ctx.fillStyle = "green"; 
-	ctx.fillRect(0,0,106,height);
-	 
+//fundo verde 
 	ctx.fillStyle = "white"; 
-	ctx.fillRect(106,0,106,height);
-	
+	ctx.fillRect(0,0,width,height); 
+	//fundo verde 
+	ctx.fillStyle = "green"; 
+	ctx.fillRect(0,0,tam,height); 
+	//fundo vermelho 
 	ctx.fillStyle = "red"; 
-	ctx.fillRect(212,0,106,height);
-	ctx.fill(); 
+	ctx.fillRect(width-tam,0,tam,height); 
 }
 
 </script>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Pong em HTML5</title>
+    <style type="text/css">
+		canvas{
+			border:1px solid #000000;
+		}
+    </style>
+</head>
+    
+<body onload="init()">
+    <canvas id="canvas" width="600" height="480">
+        Navegador não compatível com HTML5 Canvas
+    </canvas>
+        
+	<script>
+        var canvas, context,
+        barraWidth,barraHeight,
+        jogadorPosX, jogadorPosY,
+        oponentePosX, oponentePosY,
+        bolaRaio, bolaPosX, bolaPosY,
+        pontosJogador, pontosOponente;
+
+        function init() {
+
+			   canvas = document.getElementById("canvas");
+				context = canvas.getContext("2d");
+
+				barraWidth = 30;
+				barraHeight = 90;
+				
+				jogadorPosX = 0;
+				jogadorPosY = (canvas.height - barraHeight) / 2;
+				
+				oponentePosX = canvas.width - barraWidth;
+				oponentePosY = 0;
+				
+				
+				jogadorPosX = 0;
+				jogadorPosY = canvas.height - barraHeight;
+				
+				oponentePosX = canvas.width - barraWidth;
+				oponentePosY = canvas.height - barraHeight; 
+				
+
+                bolaRaio = 10;
+                bolaPosX = canvas.width / 2;
+                bolaPosY = canvas.height / 2;
+				
+				bolaPosX = canvas.width / 2;
+                bolaPosY = canvas.height - bolaRaio;
+				
+				pontosJogador = "00";
+                pontosOponente = "00";
+				
+				var pontosA = pontosJogador;
+                var pontosB = pontosOponente;
+				
+				
+				context.fillStyle = "green"; 
+				context.fillRect(0,0,canvas.width,canvas.height);
+		
+				context.fillStyle = "yellow";
+				context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
+				context.fillStyle = "blue";
+                context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);
+			
+			
+			    context.beginPath();
+                context.moveTo(canvas.width / 2, 0);
+                context.lineTo(canvas.width / 2, canvas.height);
+                context.strokeStyle = "black";
+                context.stroke();
+                context.closePath();             
+
+				
+                context.beginPath();
+				context.fillStyle = "red";
+                context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true);
+                context.closePath();
+                context.fill();
+				
+				context.font = "42pt Helvetica";
+                context.fillStyle = "#000000";
+                context.fillText(pontosA + " " + pontosB, (canvas.width / 2) - 70, 50); 
+        }
+    </script>
+    </body>
+</html>
