@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Estrela de 5 Pontas</title>
+</head>
+    
+<body onload="init()">
+<canvas id="canvas" width="320" height="240">
+	Navegador não compatível com HTML5 Canvas
+</canvas>
+        
+<script>
+var canvas = document.getElementById("canvas"); 
+var ctx = canvas.getContext("2d"); 
+
+var x = canvas.width/2; 
+var y = canvas.height/2; 
+var r = Math.min(canvas.width/2, canvas.height/2);
+// var r = Math.min(20, 20);
+var p = 5;
+var m = 0.5;
+
+function init()
+{
+	star(ctx, x, y, r, p, m);	
+}
+
+function star(ctx, x, y, r, p, m)
+{
+	ctx.fillStyle = "black"; 
+	ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.save();
+    ctx.beginPath();
+    ctx.translate(x, y);
+    ctx.moveTo(0,0-r);
+    for (var i = 0; i < p; i++)
+    {
+        ctx.rotate(Math.PI / p);
+        ctx.lineTo(0, 0 - (r*m));
+        ctx.rotate(Math.PI / p);
+        ctx.lineTo(0, 0 - r);
+    }
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+    ctx.restore();
+}
+
+</script>
+    </body>
+</html>
