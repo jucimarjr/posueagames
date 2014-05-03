@@ -11,7 +11,7 @@
         </style>
     </head>   
     <body onload="init()">
-          <canvas id="canvas" width="600" height="480">
+          <canvas id="canvas" width="480" height="600">
                         Navegador não compatível com HTML5 Canvas
           </canvas>
           
@@ -30,18 +30,18 @@
          	         canvas = document.getElementById("canvas");// procura o
          	         context = canvas.getContext("2d"); 
          	
-         	         barraWidth = 30;
-         	         barraHeight = 90;
+         	         barraWidth = 90;
+         	         barraHeight = 30;
          	
-         	         jogadorPosX = 0;
-         	         jogadorPosY = (canvas.height - barraHeight) ;
-         	
+         	         jogadorPosX = (canvas.width - barraWidth) / 2;
+         	         jogadorPosY = 0;
+					          	
          	         oponentePosX = canvas.width - barraWidth;
          	         oponentePosY = (canvas.height - barraHeight) ;
          	         
          	         bolaRaio = 10;
-         	         bolaPosX = canvas.width/2;
-         	         bolaPosY = canvas.height-bolaRaio;
+         	         bolaPosX = canvas.width / 2;
+         	         bolaPosY = canvas.height / 2;
 					 
 					 context.fillStyle = "green";
 					 context.fillRect(0 , 0, canvas.width, canvas.height);
@@ -57,9 +57,9 @@
                      
 					 //linha divisoria
 					 context.beginPath(); 
-                     context.moveTo(canvas.width / 2, 0);
-					 context.lineTo(canvas.width / 2, canvas.height);
-					 context.strokeStyle = "#000000"; 
+                     context.moveTo(0, canvas.height / 2);
+					 context.lineTo(canvas.width, canvas.height / 2);
+					 context.strokeStyle = "white"; 
 					 context.stroke();
 					 context.closePath();
 					 
@@ -81,8 +81,10 @@
 					     pontosB = "0" + pontosB
 					 }
 					 context.font = "42pt Helvetica";
-					 context.fillStyle = "#000000";
-					 context.fillText(pontosA + " " + pontosB , (canvas.width / 2) -70, 50);
+					 context.fillStyle = "blue"; 
+					 context.fillText(pontosA , 10 , canvas.height / 2 - 10);
+					 context.fillStyle = "red";
+					 context.fillText(pontosB , canvas.width - 70 , canvas.height / 2 + 50);
 					 
 					 
    			}
