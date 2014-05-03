@@ -11,7 +11,7 @@
 </head>
     
 <body onload="init()">
-    <canvas id="canvas" width="600" height="480">
+    <canvas id="canvas" width="480" height="600">
         Navegador não compatível com HTML5 Canvas
     </canvas>
         
@@ -34,23 +34,23 @@
 				jogadorPosX = 0;
 				jogadorPosY = (canvas.height - barraHeight) / 2;
 				
-				oponentePosX = canvas.width - barraWidth;
+				oponentePosX = canvas.height - barraWidth;
 				oponentePosY = 0;
 				
 				
-				jogadorPosX = 0;
+			/*	jogadorPosX = 0;
 				jogadorPosY = canvas.height - barraHeight;
 				
 				oponentePosX = canvas.width - barraWidth;
-				oponentePosY = canvas.height - barraHeight; 
+				oponentePosY = canvas.height - barraHeight; */
 				
 
                 bolaRaio = 10;
                 bolaPosX = canvas.width / 2;
                 bolaPosY = canvas.height / 2;
 				
-				bolaPosX = canvas.width / 2;
-                bolaPosY = canvas.height - bolaRaio;
+			/*	bolaPosX = canvas.width / 2;
+                bolaPosY = canvas.height - bolaRaio;*/
 				
 				pontosJogador = "00";
                 pontosOponente = "00";
@@ -62,18 +62,18 @@
 				context.fillStyle = "green"; 
 				context.fillRect(0,0,canvas.width,canvas.height);
 		
-				context.fillStyle = "yellow";
-				context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
+		  	    context.fillStyle = "yellow";
+				context.fillRect(jogadorPosY, jogadorPosX, barraHeight, barraWidth);
 				context.fillStyle = "blue";
-                context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);
+                context.fillRect(oponentePosY, oponentePosX, barraHeight, barraWidth);
 			
 			
 			    context.beginPath();
-                context.moveTo(canvas.width / 2, 0);
-                context.lineTo(canvas.width / 2, canvas.height);
+                context.moveTo(0, canvas.height / 2);
+                context.lineTo(canvas.height, canvas.height / 2);
                 context.strokeStyle = "black";
                 context.stroke();
-                context.closePath();             
+                context.closePath();            
 
 				
                 context.beginPath();
@@ -84,7 +84,11 @@
 				
 				context.font = "42pt Helvetica";
                 context.fillStyle = "#000000";
-                context.fillText(pontosA + " " + pontosB, (canvas.width / 2) - 70, 50); 
+                context.fillText(pontosA, (canvas.width / 2) - 230, 290);
+				
+								context.font = "42pt Helvetica";
+                context.fillStyle = "#000000";
+                context.fillText(pontosB, (canvas.width / 2) - 230, 350);
         }
     </script>
     </body>
