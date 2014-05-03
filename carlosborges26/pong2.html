@@ -16,7 +16,7 @@
 
 <body onload="init()">
 
-	<canvas id="canvas" width="600" height="480">
+	<canvas id="canvas" width="480" height="600">
 		Navegador não compatível com HTML5 Canvas
 	</canvas>
 
@@ -33,10 +33,10 @@ function init() {
 	canvas = document.getElementById("canvas");// procura o canvas
 	context = canvas.getContext("2d");// recupera o contexto 2d
 
-	barraWidth = 30;
-	barraHeight = 90;
-	jogadorPosX = 0;
-	jogadorPosY = (canvas.height - barraHeight);
+	barraWidth = 90;
+	barraHeight = 30;
+	jogadorPosX = (canvas.width - barraWidth);
+	jogadorPosY = 0;
 	
 	oponentePosX = canvas.width - barraWidth;
 	oponentePosY = canvas.height - barraHeight;
@@ -66,13 +66,14 @@ function init() {
     }
     
     context.font = "42pt Helvetica";// tamanho e fonte para desenhar o texto
-                context.fillStyle = "#000000";// cor preta (opcional)
-                context.fillText(pontosA + " " + pontosB, (canvas.width / 2) - 70, 50); // escreve texto na tela na posição desejada
+    context.fillStyle = "#000000";// cor preta (opcional)
+    context.fillText(pontosA, 10, (canvas.height / 2) - 10); // escreve texto na tela na posição desejada
+    context.fillText(pontosB, 10, (canvas.height / 2) + 48); // escreve texto na tela na posição desejada
 	
 	// Linha divisória
 	context.beginPath();// inicia o modo de desenho
-	context.moveTo(canvas.width / 2, 0);// posiciona o "lapiz" para desenhar
-	context.lineTo(canvas.width / 2, canvas.height);// faz o "risco" na tela
+	context.moveTo(0, canvas.height / 2);// posiciona o "lapiz" para desenhar
+	context.lineTo(canvas.width , canvas.height / 2);// faz o "risco" na tela
 	context.strokeStyle = "#000000";// cor preta (opcional)
 	context.stroke();// aplica o risco na tela
 	context.closePath();// finaliza o caminho (opcional)
