@@ -18,7 +18,7 @@ canvas {
 		teclaCimaPressionada, teclaBaixoPressionada, // status tecla
 		oponentePosX, oponentePosY, //posição oponente
 		oponenteParaCima, // oponente direção
-		bolaRaio, bolaPosX, bolaPosY, bolaParaDireita, bolaAngulo, bolaTempo, // bola
+		bolaRaio, bolaPosX, bolaPosY, bolaParaDireita, bolaAngulo, bolaTempo = 0, // bola
 		velocidadeJogador, velocidadeOponente, velocidadeBola, // velocidades
 		pontosJogador, pontosOponente; // pontuação
 
@@ -29,6 +29,7 @@ canvas {
 
 			barraWidth = 90;
 			barraHeight = 30;
+			bolaAngulo = 0;
 
 			jogadorPosX = (canvas.width - barraWidth) / 2;
 			jogadorPosY = 0;
@@ -52,6 +53,8 @@ canvas {
 			document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
 			document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
 			setInterval(gameLoop, 100);// chama a function gameLoop a cada 30 frames
+			pontosJogador = 0;
+			pontosOponente = 0;
 
 		}
 
@@ -99,17 +102,62 @@ canvas {
 				}
 			}
 
-			/* if(bolaParaDireita) {
-				bolaPosX += velocidadeBola;
-				if(bolaPosX >= canvas.width) {
-					bolaParaDireita = false;
-				}
-			} else {
-				bolaPosX -= velocidadeBola;
-				if(bolaPosX <= 0) {
-					bolaParaDireita = true;
-				}
-			} */
+			  if (bolaTempo <= 0) {
+                  if ((bolaPosY - bolaRaio) <= (jogadorPosY + barraHeight)) {//bola encosta no jogador no eixo Y
+                      if ((bolaPosX + bolaRaio > jogadorPosX) && (bolaPosX - bolaRaio < jogadorPosX + barraWidth)) {
+                          bolaParaDireita = true;
+                          if (teclaCimaPressionada) {
+                              bolaAngulo = Math.floor(Math.random() * 10) - 9;
+                          }
+                          else {
+                              bolaAngulo = Math.floor((Math.random() * 10));
+                          }                        
+                      }                    
+                  }
+                  else if ((bolaPosY + bolaRaio) >= oponentePosY) {// se o oponente enconstar na bola Y
+                      if ((bolaPosX + bolaRaio > oponentePosX) && (bolaPosX - bolaRaio < oponentePosX + barraWidth)) {// se o oponente enconstar na bola (eixo Y)...
+                          bolaParaDireita = false;// a bola muda de lado e é rebatida para o jogador
+                          if (oponenteParaCima) {// se o oponente estiver indo para cima quando tocar na bola...
+                              bolaAngulo = Math.floor(Math.random() * 10) - 9;// mandamos a bola na diagonal pra cima
+                          }
+                          else {// se o oponente estiver indo para baixo quando tocar na bola...
+                              bolaAngulo = Math.floor((Math.random() * 10));// mandamos a bola na diagonal pra baixo
+                          }  
+                      }
+                  } 
+                  
+                  if ((bolaPosX - bolaRaio <= 0) || (bolaPosX + bolaRaio > canvas.width)) {// se a bola bater em cima ou em baixo da tela...
+                      bolaAngulo = bolaAngulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
+                  }
+                  bolaPosX += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
+                  
+                  if (bolaParaDireita) {// se a bola estiver indo para a direita...
+                      bolaPosY += velocidadeBola;// movemos a bola para a direita
+                  }
+                  else {// se estiver indo para a esquerda...
+                      bolaPosY -= velocidadeBola;// movemos a bola para a esquerda
+                  }                    
+              } 
+			  
+			  if ((bolaPosY <= -bolaRaio) || (bolaPosY > canvas.height)) {// se a bola saiu da tela...
+                  if (bolaTempo >= 50) {// se so tempo de deixar a bola invisível passou...
+                      if (bolaPosY <= -bolaRaio)  {// se a bola saiu na esquerda...
+                          pontosOponente++;// ponto do oponente!
+                      }
+                      else {// se a bola saiu na direita...
+                          pontosJogador++;// ponto do jogador!
+                      }
+                  
+                      bolaPosY = canvas.width / 2;// posiciona a bola no meio da tela
+                      bolaPosX = canvas.height / 2;// posiciona a bola no meio da tela
+                      bolaParaDireita = false;// faz ela ir em direção ao jogador
+                      bolaAngulo = Math.floor(Math.random() * 21) - 10;// faz a bola ir para uma direção aleatória
+                      bolaTempo = 0;// zera o tempo de deixar a bola invisível e a coloca em jogo novamente
+                  }
+                  else {// se o tempo de deixar a bola invisível ainda não passou...
+                      bolaTempo++;// continuamos contando até 50
+                  }
+              }
 			
 			context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -128,9 +176,9 @@ canvas {
 			context.fill();
 
 			// Placar
-			var pontosA = pontosJogador = 0;// variável temporária para não alterar pontosJogador
-			var pontosB = pontosOponente = 0;// variável temporária para não alterar pontosOponente
-
+			var pontosA = pontosJogador;// variável temporária para não alterar pontosJogador
+			var pontosB = pontosOponente;// variável temporária para não alterar pontosOponente
+			
 			if (pontosA < 10) {// se o número de pontos for menor que 10, colocamos o zero á esquerda
 				pontosA = "0" + pontosA;
 			}
