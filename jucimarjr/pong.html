@@ -21,7 +21,8 @@
 	    oponentePosX, oponentePosY 
 	    bolaRaio, bolaPosX, bolaPosY,
 	    pontosJogador, pontosOponente, 
-	    teclaCimaPressionada, teclaBaixoPressionada, oponenteParaCima, velocidadeOponente;
+	    teclaCimaPressionada, teclaBaixoPressionada, oponenteParaCima, velocidadeOponente,
+	    bolaRaio, bolaPosX, bolaPosY, bolaParaDireita, bolaAngulo,velocidadeBola;
 	    
 	    function init() {
         	canvas = document.getElementById("canvas");// procura o canvas
@@ -42,8 +43,11 @@
             velocidadeOponente = 20;
             
             bolaRaio = 10;
-            bolaPosX = canvas.width / 2;
+            bolaPosX = canvas.width;
             bolaPosY = canvas.height / 2;
+            bolaParaDireita = false;
+            bolaAngulo = Math.floor(Math.random() * 21) - 10;
+            velocidadeBola = 15;
             
             pontosJogador = 0;
             pontosOponente = 0;
@@ -98,6 +102,18 @@
                         oponenteParaCima = true;// muda a direção
                 }
         	}
+    		
+    		if ((bolaPosY - bolaRaio <= 0) || (bolaPosY + bolaRaio > canvas.height)) {// se a bola bater em cima ou em baixo da tela...
+                bolaAngulo = bolaAngulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
+            }
+            bolaPosY += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
+            
+            if (bolaParaDireita) {// se a bola estiver indo para a direita...
+                bolaPosX += velocidadeBola;// movemos a bola para a direita
+            }
+            else {// se estiver indo para a esquerda...
+                bolaPosX -= velocidadeBola;// movemos a bola para a esquerda
+            }   
     		
     		  // Desenha tudo na tela
             context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
