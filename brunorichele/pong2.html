@@ -28,13 +28,13 @@
 			   canvas = document.getElementById("canvas");
 				context = canvas.getContext("2d");
 
-				barraWidth = 30;
-				barraHeight = 90;
+				barraWidth = 90;
+				barraHeight = 30;
 				
 				jogadorPosX = 0;
-				jogadorPosY = (canvas.height - barraHeight) / 2;
+				jogadorPosY = canvas.height - barraHeight;
 				
-				oponentePosX = canvas.height - barraWidth;
+				oponentePosX = canvas.width - barraWidth;
 				oponentePosY = 0;
 				
 				
@@ -63,9 +63,9 @@
 				context.fillRect(0,0,canvas.width,canvas.height);
 		
 		  	    context.fillStyle = "yellow";
-				context.fillRect(jogadorPosY, jogadorPosX, barraHeight, barraWidth);
+				context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
 				context.fillStyle = "blue";
-                context.fillRect(oponentePosY, oponentePosX, barraHeight, barraWidth);
+                context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);
 			
 			
 			    context.beginPath();
