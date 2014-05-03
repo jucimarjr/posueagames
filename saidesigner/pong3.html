@@ -20,18 +20,18 @@
          	barraWidth, barraHeight,
          	jogadorPosX, jogadorPosY,
          	bolaRaio, bolaPosX, bolaPosY,
-         	pontosJogador, pontosOponente,bolaAngulo,
-			teclaCimaPressionada, teclaBaixoPressionada, velocidadeBola,
-			bolaParaDireita, oponenteParaCima, velocidadeOponente, velocidadeJogador; 
+         	pontosJogador, pontosOponente,
+			teclaCimaPressionada, teclaBaixoPressionada,
+			oponenteParaCima, teclaEsquerdaPressionada,
+			teclaDireitaPressionado, velocidadeOponente, velocidadeJogador; 
 			
          	
          	function init() {
-					
-					bolaParaDireita = false;
-					bolaAngulo = Math.floor(Math.random() * 21) - 10;
-					velocidadeBola = 15;
+			
+					teclaDireitaPressionado = false;
+					teclaEsquerdaPressionada = false;					
 					oponenteParaCima = false;
-					velocidadeOponente = 15;
+					velocidadeOponente = 30;
 					velocidadeJogador = 15;
 					pontosJogador = 0;
 					pontosOponente = 0;
@@ -39,8 +39,8 @@
          	         canvas = document.getElementById("canvas");// procura o
          	         context = canvas.getContext("2d"); 
          	
-         	         barraWidth = 30;
-         	         barraHeight = 90;
+         	         barraWidth = 50;
+         	         barraHeight = 50;
          	
          	         jogadorPosX = 0;
          	         jogadorPosY = (canvas.height - barraHeight) ;
@@ -64,6 +64,13 @@
 				else if (e.keyCode == 40) { // down
 						teclaBaixoPressionada = true;
 				}
+				else if (e.keyCode == 37) {
+						teclaEsquerdaPressionada = true;
+				}
+				else if (e.keyCode == 39) {
+						teclaDireitaPressionado = true;
+				}
+				
 			}
 		
 			function keyUp(e) {
@@ -73,8 +80,14 @@
 				else if (e.keyCode == 40) { // down
 						teclaBaixoPressionada = false; // jogador soltou tecla baixo
 				}
-			}
-    	
+				else if (e.keyCode == 37) {
+						teclaEsquerdaPressionada = false;
+				}
+				else if (e.keyCode == 39) {
+						teclaDireitaPressionado = false;
+				}
+				
+			}    	
 			
 			function gameLoop () {
 			
@@ -91,97 +104,27 @@
 						}
 					}
 					
-					if(oponenteParaCima) {
-					   oponentePosY -= velocidadeOponente;
-					   if (oponentePosY <= 0){
-								oponenteParaCima = false;
+					if (teclaEsquerdaPressionada!=teclaDireitaPressionado) { // se o jogador estiver pressionando a tecla baixo ou cima
+						if (teclaEsquerdaPressionada) { // se for para cima...
+								if (jogadorPosX > 0) { // se nÃ£o sair da tela...
+										jogadorPosX -= velocidadeJogador;// muda a posiÃ§Ã£o
+								}
+						}
+						else if (teclaDireitaPressionado) { // se for para baixo...
+								if (jogadorPosX < (canvas.width - barraWidth)) {// se nÃ£o sair da tela...
+										jogadorPosX += velocidadeJogador;// muda a posiÃ§Ã£o
+								}
 						}
 					}
 					
-					else {
-						oponentePosY += velocidadeOponente;
-						if (oponentePosY >= canvas.height - barraHeight)
-						{
-								oponenteParaCima = true;
-						}
-					}
-					
-					// colisao com o jogador
-					
-					if ((bolaPosX - bolaRaio <= barraWidth) && (bolaPosY >= jogadorPosY && bolaPosY <= jogadorPosY + barraHeight)) {
-						velocidadeBola *= -1;
-					} else {
-						if (bolaPosX - bolaRaio <= 0) {
-							velocidadeBola *= -1;
-							pontosOponente++;
-						} else if (bolaPosX + bolaRaio > canvas.width) {
-							velocidadeBola *= -1;
-							pontosJogador++;
-						}
-					}
-					//muda angulo
-					
-					if (((bolaPosY - bolaRaio <= 0) || (bolaPosY + bolaRaio > canvas.height))) {// se a bola bater em cima ou em baixo da tela...
-						bolaAngulo *= -1;
-						/*if (bolaAngulo > 0) {
-						    bolaAngulo = Math.floor(Math.random() * 21) - 10;
-						} else {
-							bolaAngulo = -(Math.floor(Math.random() * 21) - 10);
-						}*/
-					}
-					
-					bolaPosY += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
-            
-					if (bolaParaDireita) {// se a bola estiver indo para a direita...
-						bolaPosX += velocidadeBola;// movemos a bola para a direita
-					}
-					else {// se estiver indo para a esquerda...
-						bolaPosX -= velocidadeBola;// movemos a bola para a esquerda
-					}   
-					
-					
-		
+									
 					 context.fillStyle = "green";
 					 context.fillRect(0 , 0, canvas.width, canvas.height);
+					 
          	         // jogador e oponente					 
 					 context.fillStyle = "blue";
          	         context.fillRect(jogadorPosX , jogadorPosY , barraWidth, barraHeight);
-					 context.fillStyle = "red";
-                     context.fillRect(oponentePosX , oponentePosY , barraWidth , barraHeight);
-                     
-                     
-                     
-					 //linha divisoria
-					 context.beginPath(); 
-                     context.moveTo(canvas.width / 2, 0);
-					 context.lineTo(canvas.width / 2, canvas.height);
-					 context.strokeStyle = "#000000"; 
-					 context.stroke();
-					 context.closePath();
-					 
-
-					 
-					 //placar
-					 var pontosA = pontosJogador;
-					 var pontosB = pontosOponente;
-					 
-					 if (pontosA < 10) {
-					     pontosA = "0" + pontosA;
-					 }
-					 if (pontosB < 10) {
-					     pontosB = "0" + pontosB
-					 }
-					 context.font = "42pt Helvetica";
-					 context.fillStyle = "#000000";
-					 context.fillText(pontosA + " " + pontosB , (canvas.width / 2) -70, 50);
 					
-					 // bola
-					 context.fillStyle = "yellow";
-                     context.beginPath(); 
-                     context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI *2, true);
-                     context.closePath(); 
-                     context.fill();					
-					 
    			}
    			      	
          
