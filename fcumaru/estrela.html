@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Estrela em HTML5</title>
+</head>
+
+<body onload="init()">
+	<canvas id="canvas" width="320" height="320">
+	Navegador não compatível com HTML5 Canvas
+</canvas>
+
+	<script>
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+
+		var width = canvas.width;
+		var height = canvas.height;
+
+		function init() {
+			var r = 150;
+
+			// Ajustando o posicionamento do desenho
+			ctx.translate(width / 2, height / 2);
+			ctx.rotate(60);
+
+			// Desenhando a estrela 
+			ctx.beginPath()
+			ctx.moveTo(r, 0);
+			for (var i = 0; i < 9; i++) {
+				ctx.rotate(Math.PI / 5);
+				if (i % 2 == 0) {
+					ctx.lineTo((r / 0.525731) * 0.200811, 0);
+				} else {
+					ctx.lineTo(r, 0);
+				}
+			}
+			ctx.closePath();
+			ctx.fillStyle = "gold";
+			ctx.fill();
+		}
+	</script>
+</body>
+</html>

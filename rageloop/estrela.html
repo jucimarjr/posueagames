@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>estrela em HTML5</title>
+</head>
+    
+<body onload="init()">
+<canvas id="canvas" width="320" height="240">
+	Navegador não compatível com HTML5 Canvas
+</canvas>
+        
+<script>
+var canvas = document.getElementById("canvas"); 
+var ctx = canvas.getContext("2d"); 
+
+var width = canvas.width; 
+var height = canvas.height; 
+var dx = 10, dy = 10; 
+
+function draw_star(ctx) {
+	var dx = 70, dy = 45;
+ 
+	ctx.beginPath();
+	ctx.moveTo(width/2, 0);
+	ctx.lineTo(width/2 + dx, height);
+	ctx.lineTo(dx -10, height/2 - dy);
+	ctx.lineTo(width-dx+10, height/2 - dy);
+	ctx.lineTo(width/2 - dx, height);
+	ctx.closePath();
+	
+	ctx.fillStyle = 'yellow';
+	ctx.fill();
+}
+
+
+function init() {
+	//fundo verde 
+	ctx.fillStyle = "white"; 
+	ctx.fillRect(0,0,width,height); 
+	
+
+	
+	draw_star(ctx);
+	
+
+}
+
+</script>
+    </body>
+</html>
