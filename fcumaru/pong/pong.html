@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>HTML5 - Canvas API</title>
+<style type="text/css">
+canvas {
+	border: 1px dashed #000000;
+	background-color: green;
+}
+</style>
+
+<!-- <script type="text/javascript" src="pong.js"></script> -->
+
+</head>
+<body onload="init()">
+	<canvas id="canvas" width="600" height="480">
+		Navegador não compatível com HTML5 Canvas
+    </canvas>
+	<script>
+		var canvas, context, barraWidth, barraHeight, jogadorPosX, jogadorPosY, oponentePosX, oponentePosY, bolaRaio, bolaPosX, bolaPosY, pontosJogador, pontosOponente;
+
+		function init() {
+			canvas = document.getElementById("canvas");
+			context = canvas.getContext("2d");
+
+			barraWidth = 30;
+			barraHeight = 90;
+			
+			pontosJogador = 0;
+			pontosOponente = 0;
+
+			// Jogador e oponente
+			jogadorPosX = 0;
+			// jogadorPosY = (canvas.height - barraHeight) / 2;
+			jogadorPosY = (canvas.height - barraHeight);
+
+			oponentePosX = canvas.width - barraWidth;
+			// oponentePosY = 0;
+			oponentePosY = canvas.height-barraHeight;
+
+			context.fillStyle = "blue";
+			context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
+			context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
+			context.fillStyle = "red";
+			context.fillRect(oponentePosX, oponentePosY, barraWidth,
+					barraHeight);
+
+			// Linha divisoria
+			context.beginPath();
+			context.moveTo(canvas.width / 2, 0);
+			context.lineTo(canvas.width / 2, canvas.height);
+			context.strokeStyle = "silver";
+			context.stroke();
+			context.closePath();
+			context.fill();
+
+			// Bola	
+			bolaRaio = 10;
+			bolaPosX = canvas.width / 2;
+			bolaPosY = canvas.height-bolaRaio;
+
+			context.beginPath();
+			context.arc(bolaPosX, bolaPosY, bolaRaio, 0, 2 * Math.PI, true);
+			context.closePath();
+			context.fillStyle = "gold";
+			context.fill();
+
+			// Placar
+			var pontosA = pontosJogador;
+			var pontosB = pontosOponente;
+			
+			if (pontosA < 10) {
+				pontosA = "0" + pontosA;
+			}
+			
+			if (pontosB < 10) {
+				pontosB = "0" + pontosB;
+			}
+			
+			context.font = "42pt Helvetica";
+			context.fillStyle = "#000000";
+			context.fillText(pontosA + " " + pontosB, (canvas.width / 2) - 70, 50);
+		}
+	</script>
+</body>
+</html>
