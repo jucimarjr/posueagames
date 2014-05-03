@@ -21,7 +21,7 @@
 	    oponentePosX, oponentePosY 
 	    bolaRaio, bolaPosX, bolaPosY,
 	    pontosJogador, pontosOponente, 
-	    teclaCimaPressionada, teclaBaixoPressionada;
+	    teclaCimaPressionada, teclaBaixoPressionada, oponenteParaCima, velocidadeOponente;
 	    
 	    function init() {
         	canvas = document.getElementById("canvas");// procura o canvas
@@ -38,6 +38,8 @@
 
             oponentePosX = canvas.width - barraWidth;
             oponentePosY = 0;
+            oponenteParaCima = false;
+            velocidadeOponente = 20;
             
             bolaRaio = 10;
             bolaPosX = canvas.width / 2;
@@ -81,6 +83,19 @@
                         if (jogadorPosY < (canvas.height - barraHeight)) {// se não sair da tela...
                                 jogadorPosY += velocidadeJogador;// muda a posição
                         }
+                }
+        	}
+    		
+    		if (oponenteParaCima) {// se o oponente estiver se movendo para cima...
+                oponentePosY -= velocidadeOponente;// muda a posição
+                if (oponentePosY <= 0) {// se estiver saindo da tela...
+                        oponenteParaCima = false;// muda a direção
+                }
+        	}
+        	else {// se o oponente estiver se movendo para baixo...
+                oponentePosY += velocidadeOponente;// muda a posição
+                if (oponentePosY >= canvas.height - barraHeight) {// se estiver saindo da tela...
+                        oponenteParaCima = true;// muda a direção
                 }
         	}
     		
