@@ -1,0 +1,82 @@
+<!-- Baseado em: Jogo Pong (http://gamedeveloper.com.br/blog/2013/08/21/pong-html5-javascript/) -->
+	<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>HTML5 - Canvas API</title>
+	
+	<style type="text/css">
+	canvas {
+		border:1px dashed #000000;
+		background-color: green;
+	}
+	</style>
+	
+</head>   
+
+<body onload="init()">
+
+	<canvas id="canvas" width="600" height="480">
+		Navegador não compatível com HTML5 Canvas
+	</canvas>
+
+<script>
+
+var canvas, context, 
+barraWidth, barraHeight, jogadorPosX, jogadorPosY, 
+teclaCimaPressionada, teclaBaixoPressionada, oponentePosX, 
+oponentePosY, oponenteParaCima, bolaRaio, bolaPosX, bolaPosY, bolaParaDireita, bolaAngulo, bolaTempo,
+velocidadeJogador, velocidadeOponente, velocidadeBola, pontosJogador, pontosOponente;
+
+function init() {
+	
+	canvas = document.getElementById("canvas");// procura o canvas
+	context = canvas.getContext("2d");// recupera o contexto 2d
+
+	barraWidth = 30;
+	barraHeight = 90;
+	jogadorPosX = 0;
+	jogadorPosY = (canvas.height - barraHeight);
+	
+	oponentePosX = canvas.width - barraWidth;
+	oponentePosY = canvas.height - barraHeight;
+	
+	bolaRaio = 10;
+	bolaPosX = canvas.width / 2;
+	bolaPosY = canvas.height / 2;
+	
+	
+	// Jogador e Oponente
+	context.fillStyle = "red"; 
+	context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);//desenha jogador
+	context.fillStyle = "blue"; 
+	context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);//desenha oponente
+	
+	// Linha divisória
+	context.beginPath();// inicia o modo de desenho
+	context.moveTo(canvas.width / 2, 0);// posiciona o "lapiz" para desenhar
+	context.lineTo(canvas.width / 2, canvas.height);// faz o "risco" na tela
+	context.strokeStyle = "#000000";// cor preta (opcional)
+	context.stroke();// aplica o risco na tela
+	context.closePath();// finaliza o caminho (opcional)
+	
+	// Bola
+	context.strokeStyle = "black"; 
+	context.beginPath();// inicia o modo de desenho
+	context.arc(bolaPosX, bolaPosY, 90, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
+	context.closePath();// finaliza o caminho (opcional)
+	context.stroke();
+	
+	// Bola
+	context.fillStyle = "white"; 
+	context.beginPath();// inicia o modo de desenho
+	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
+	context.closePath();// finaliza o caminho (opcional)
+	context.fill();
+	
+
+	
+}
+</script>
+</body>
+</html>
