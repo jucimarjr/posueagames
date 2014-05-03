@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Estrela de 5 pontas</title>
+</head>
+    
+<body onload="star(ctx,240, 320, 180, 5, 0.5)"> 
+<h1>Estrela de 5 pontas</h1>
+
+<canvas id="canvas" width="640" height="480"> <!-- aumentei o tamanho do canvas dobrei-->
+	Navegador não compatível com HTML5 Canvas
+</canvas>
+        
+<script>
+var canvas = document.getElementById("canvas");//identificar qual é o canvas
+var ctx = canvas.getContext("2d");//criando o contexto 2d dele ctx --> ambos são obrigatórios
+
+var width = canvas.width;//largura recebendo a largura do canvas canvas.width
+var height = canvas.height; //altura recebendo do proprio canvas
+var dx = 10, dy = 10; 
+
+var larguraPadrao = width/3;
+var alturaPadrao = height;
+
+
+
+function star(ctx, x, y, r, p, m)//fiz de um tutorial da internet
+{
+	
+    ctx.beginPath();
+    ctx.translate(x, y);
+    ctx.moveTo(0,0-r);
+    for (var i = 0; i < p; i++)
+    {
+        ctx.rotate(Math.PI / p);
+        ctx.lineTo(0, 0 - (r*m));
+        ctx.rotate(Math.PI / p);
+        ctx.lineTo(0, 0 - r);
+    }
+    ctx.fillStyle="Yellow";
+    ctx.fill();
+    ctx.restore();
+}
+
+</script>
+    </body>
+</html>

@@ -7,11 +7,11 @@
     
 <body onload="init()">
 <canvas id="canvas" width="320" height="240">
- Navegador não compatível com HTML5 Canvas
+	Navegador não compatível com HTML5 Canvas
 </canvas>
         
 <script>
-var canvas = document.getElementById("canvas"); 
+var canvas = document.getElementById("canvas"); /*pega a referencia do elemento canvas pelo id*/
 var ctx = canvas.getContext("2d"); 
 
 var width = canvas.width; 
@@ -20,9 +20,10 @@ var dx = 10, dy = 10;
 
 function init() {
 	//fundo verde 
-	ctx.fillStyle = "green"; 
-	ctx.fillRect(0,0,width,height); 
 	
+	ctx.fillStyle = "green"; 
+	ctx.fillRect(0,0,width,height);
+		
 	//losango amarelo 
 	ctx.beginPath(); 
 	ctx.moveTo(dx,height / 2); 
@@ -35,9 +36,8 @@ function init() {
 	
 	//circulo azul 
 	ctx.beginPath(); 
-	ctx.arc(width / 2,height / 2,60,0, 2*Math.PI,true);
-	ctx.closePath();
-	ctx.fillStyle = "blue"; 
+	ctx.arc(width / 2,height / 2,80,0, 2*Math.PI,true); 
+	ctx.fillStyle = "blue";
 	ctx.fill();
 }
 
