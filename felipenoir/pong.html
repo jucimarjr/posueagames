@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>HTML5 - Canvas API</title>
+<style type="text/css">
+canvas {
+	border: 1px dashed #000000;
+}
+</style>
+</head>
+<body onload="init()">
+	<canvas id="canvas" width="480" height="600">
+                        Navegador não compatível com HTML5 Canvas
+                </canvas>
+<script type="text/javascript">
+//Variáveis globais utilizadas no jogo
+var canvas, context, 
+barraWidth, barraHeight, 
+jogadorPosX, jogadorPosY, 
+teclaCimaPressionada, teclaBaixoPressionada, 
+oponentePosX, oponentePosY, oponenteParaCima, 
+bolaRaio, bolaPosX, bolaPosY, 
+bolaParaDireita, bolaAngulo, bolaTempo,
+velocidadeJogador, velocidadeOponente, velocidadeBola, 
+pontosJogador, pontosOponente;
+
+function init(){
+	
+	canvas = document.getElementById("canvas");// procura o canvas
+    context = canvas.getContext("2d");// recupera o contexto 2d
+    
+    barraWidth = 90;
+    barraHeight = 30;
+    
+    jogadorPosX = (canvas.width - barraWidth)/2;
+    jogadorPosY = 0;
+    
+    teclaCimaPressionada = false;
+    teclaBaixoPressionada = false;
+    
+    oponentePosX = (canvas.width - barraWidth)/2;
+    oponentePosY = canvas.height - barraHeight;
+    
+ // Jogador e Oponente
+	context.fillStyle = "red";
+    context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);//desenha jogador
+    context.fillStyle = "blue";
+    context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);//desenha oponente   
+    bolaRaio = 10;
+    bolaPosX = canvas.width/2;
+    bolaPosY = canvas.height/2;
+    
+    // Bola
+    context.fillStyle = "green"
+    context.beginPath();// inicia o modo de desenho
+    context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
+    context.closePath();// finaliza o caminho (opcional)
+    context.fill();
+    
+ // Placar
+	var pontosA = pontosJogador =0;// variável temporária para não alterar pontosJogador
+	var pontosB = pontosOponente =0;// variável temporária para não alterar pontosOponente
+
+	if (pontosA < 10) {// se o número de pontos for menor que 10, colocamos o zero á esquerda
+		pontosA = "0" + pontosA;
+	}
+	if (pontosB < 10) {// se o número de pontos for menor que 10, colocamos o zero á esquerda
+		pontosB = "0" + pontosB;
+	}
+	
+	context.font = "42pt Helvetica";// tamanho e fonte para desenhar o texto
+	context.fillStyle = "#000000";// cor preta (opcional)
+	context.fillText(pontosA  , canvas.width - 70,
+			(canvas.height/2) -30); // escreve texto na tela na posição desejada
+    
+			context.fillText(pontosB  , canvas.width - 70,
+					(canvas.height/2) +70); // escreve texto na tela na posição desejada
+ // Linha divisória
+    context.beginPath();// inicia o modo de desenho
+    context.moveTo(0,canvas.height / 2);// posiciona o "lapiz" para desenhar
+    context.lineTo(canvas.width, canvas.height/2);// faz o "risco" na tela
+    context.strokeStyle = "#000000";// cor preta (opcional)
+    context.stroke();// aplica o risco na tela
+    context.closePath();// finaliza o caminho (opcional)
+    
+    
+    
+}
+       
+</script>
+</body>
+</html>
