@@ -16,6 +16,7 @@ canvas {
 		barraW, barraH, // largura e altura do jogador
 		barraPosX, barraPosY, // posição do jogador
 		barraVel, // velocidade da barra
+		bolaPosX, bolaPosY, bolaRaio, bolaAngulo, bolaVel, bolaSubindo, // propriedades das bola
 		teclaEsq, teclaDir; // status das teclas
 		function init() {
 			canvas = document.getElementById("canvas");
@@ -26,6 +27,13 @@ canvas {
 			barraPosX = (canvas.width - barraW) / 2;
 			barraPosY = canvas.height - barraH;
 			barraVel = 30;
+
+			bolaPosX = canvas.width / 2;
+			bolaPosY = canvas.height / 2;
+			bolaRaio = 10;
+			bolaAngulo = 0;
+			bolaVel = 20;
+			bolaSubindo = false;
 
 			teclaEsq = false;
 			teclaDir = false;
@@ -46,7 +54,20 @@ canvas {
 				}
 			}, false);
 
+			document.addEventListener('mousemove', function(e) {
+				var mousePos = getMousePos(canvas, e);
+				barraPosX = mousePos.x - (barraW / 2);
+			}, false);
+
 			setInterval(gameLoop, 30);
+		}
+
+		function getMousePos(canvas, e) {
+			var rect = canvas.getBoundingClientRect();
+			return {
+				x : e.clientX - rect.left,
+				y : e.clientY - rect.top
+			};
 		}
 
 		function gameLoop() {
@@ -54,25 +75,63 @@ canvas {
 
 			ctx.clearRect(0, 0, canvas.width, canvas.height); // limpando o canvas
 
+			desenhaBola();
 			desenhaJogador();
-			desenhaBarras();
+			desenhaAlvos();
 		}
 
 		function atualizaMovimento() {
-			// movimento do jogador
 			if (teclaEsq != teclaDir) {
 				if (teclaEsq) {
 					// console.log("esq");
 					if (barraPosX > 0) {
 						barraPosX -= barraVel;
 					}
+					if (barraPosX < 0) {
+						barraPosX = 0;
+					}
 				} else {
 					// console.log("dir");
-					if (barraPosX < (canvas.width - barraW)) {
+					if (barraPosX < canvas.width - barraW) {
 						barraPosX += barraVel;
+					}
+					if (barraPosX > canvas.width - barraW) {
+						barraPosX = canvas.width - barraW;
 					}
 				}
 			}
+			
+			if(bolaPosY + bolaRaio > barraPosY) {
+				if(bolaPosX + bolaRaio > barraPosX && bolaPosX - bolaRaio < barraPosX + barraW) {
+					bolaSubindo = true;
+				}
+			} else if(encostouEmAlgumAlvo()) {
+				bolaSubindo = false;
+			}
+			
+			if(bolaPosX - bolaRaio <= 0 || bolaPosX + bolaRaio > canvas.width) {
+				bolaAngulo = bolaAngulo * (-1); // inverte o eixo
+			}
+			bolaPosX += bolaAngulo;
+			
+			if(bolaSubindo) {
+				bolaPosY -= bolaVel;
+			} else {
+				bolaPosY += bolaVel;
+			}
+			
+		}
+		
+		function encostouEmAlgumAlvo() {
+			for(var i = 0; i < 8; i++) {
+				for(var j = 0; j < 5; j++) {
+					if(bolaPosY - bolaRaio < (j * barraH) + barraH) {
+						console.log("acertou!");
+						return true;
+					}
+				}
+			}
+			return false;
 		}
 
 		function desenhaJogador() {
@@ -80,7 +139,15 @@ canvas {
 			ctx.fillRect(barraPosX, barraPosY, barraW, barraH);
 		}
 
-		function desenhaBarras() {
+		function desenhaBola() {
+			ctx.fillStyle = "red";
+			ctx.beginPath();
+			ctx.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true);
+			ctx.closePath();
+			ctx.fill();
+		}
+
+		function desenhaAlvos() {
 			for (var i = 0; i < 8; i++) {
 				for (var j = 0; j < 5; j++) {
 					ctx.beginPath();
