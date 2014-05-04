@@ -17,6 +17,7 @@ canvas {
 		barraPosX, barraPosY, // posição do jogador
 		barraVel, // velocidade da barra
 		bolaPosX, bolaPosY, bolaRaio, bolaAngulo, bolaVel, bolaSubindo, // propriedades das bola
+		alvos, // lista de alvos
 		teclaEsq, teclaDir; // status das teclas
 		function init() {
 			canvas = document.getElementById("canvas");
@@ -34,7 +35,14 @@ canvas {
 			bolaAngulo = 0;
 			bolaVel = 20;
 			bolaSubindo = false;
-
+			
+			alvos = [
+			         [true, true, true, false, false, true, true, true],
+			         [true, false, true, true, true, true, false, true],
+			         [true, true, true, false, false, true, true, true],
+			         [true, false, true, true, true, true, false, true],
+			         [true, true, true, false, false, true, true, true]];
+			
 			teclaEsq = false;
 			teclaDir = false;
 
@@ -105,7 +113,7 @@ canvas {
 				if(bolaPosX + bolaRaio > barraPosX && bolaPosX - bolaRaio < barraPosX + barraW) {
 					bolaSubindo = true;
 				}
-			} else if(encostouEmAlgumAlvo()) {
+			} else if(encostouEmAlgumAlvo() || encostouNoTopo()) {
 				bolaSubindo = false;
 			}
 			
@@ -122,12 +130,23 @@ canvas {
 			
 		}
 		
+		function encostouNoTopo() {
+			if(bolaPosY <= 0) {
+				return true;
+			}
+			return false;
+		}
+		
 		function encostouEmAlgumAlvo() {
-			for(var i = 0; i < 8; i++) {
-				for(var j = 0; j < 5; j++) {
-					if(bolaPosY - bolaRaio < (j * barraH) + barraH) {
-						console.log("acertou!");
-						return true;
+			for(var j = 0; j < alvos.length; j++) {
+				for(var i = 0; i < alvos[j].length; i++) {
+					if(alvos[j][i]){
+						if(bolaPosY - bolaRaio < (j * barraH) + barraH) {
+							if(bolaPosX + bolaRaio > i * barraW &&  bolaPosX - bolaRaio < (i * barraW) + barraW) {
+								alvos[j][i] = false;
+								return true;
+							}
+						}
 					}
 				}
 			}
@@ -148,15 +167,17 @@ canvas {
 		}
 
 		function desenhaAlvos() {
-			for (var i = 0; i < 8; i++) {
-				for (var j = 0; j < 5; j++) {
-					ctx.beginPath();
-					ctx.rect(i * barraW, j * barraH, barraW, barraH);
-					ctx.fillStyle = "blue";
-					ctx.fill();
-					ctx.lineWidth = 1;
-					ctx.strokeStyle = "black";
-					ctx.stroke();
+			for (var j = 0; j < alvos.length; j++) {
+				for (var i = 0; i < alvos[j].length; i++) {
+					if(alvos[j][i]){
+						ctx.beginPath();
+						ctx.rect(i * barraW, j * barraH, barraW, barraH);
+						ctx.fillStyle = "#0000FF";
+						ctx.fill();
+						ctx.lineWidth = 1;
+						ctx.strokeStyle = "#00AAFF";
+						ctx.stroke();
+					}
 				}
 			}
 		}
