@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>BREAKOUT</title>
+        <style type="text/css">
+            canvas {
+                border: 1px dashed #000000;
+            }
+        </style>
+    </head>
+    <body onload="init()">
+        <center>
+            <canvas id="canvas" width="600" height="480">
+                Navegador não compatível com HTML5 canvas, por favor não use IE
+            </canvas>
+        </center>
+        <script type="text/javascript">
+            // Variáveis globais
+            var canvas, context; // Objetos do HTML5 Canvas
+            var jogador; // dados do jogador
+            var bola; // dados da bola
+            var tecla; // tecla sendo pressionada no momento (esquerda/direita)
+            var blocos; // matriz para guardar os blocos 
+
+            function init(){
+                // Canvas e context
+                canvas = document.getElementById("canvas");
+                context = canvas.getContext("2d");
+
+                // Jogador
+                jogador = {
+                    w: 90,
+                    h: 20,
+                    x: 0,
+                    y: 0,
+                    velocidade: 20
+                };
+                jogador.x = canvas.width / 2 - jogador.w / 2;
+                jogador.y = canvas.height - jogador.h;
+
+                // Bola
+                bola = {
+                    raio: 10, 
+                    x: canvas.width / 2, 
+                    y: canvas.height / 2,
+                    baixo: false,
+                    angulo: 5,
+                    velocidade: 10
+                };
+                bola.x = canvas.width / 2;
+                bola.y = jogador.y - bola.raio;
+
+                // Blocos
+                // 10 blocos de largura, 5 blocos de altura
+                // largura: 60, altura: 20
+                blocos = new Array(10);
+                for(var i = 0; i < blocos.length; i++){
+                    blocos[i] = new Array(5);
+                    for(var j = 0; j < blocos[i].length; j++){
+                        blocos[i][j] = {
+                            x: 60 * i,
+                            y: 20 * j,
+                            w: 60,
+                            h: 20
+                        }
+                    }
+                }
+
+                // Teclas pressionadas
+                tecla = {
+                    direita: false,
+                    esquerda: false
+                }
+
+                // Eventos
+                document.addEventListener('keyup', keyUp, false);
+                document.addEventListener('keydown', keyDown, false);
+
+                // Intervalo do Gameloop: 30 fps
+                setInterval(gameLoop, 1000 / 30);
+            }
+
+            // Códigos de teclas:
+            // Esquerda: 37
+            // Direita: 39
+            function keyDown(e){
+                if(e.keyCode == 37){
+                    tecla.esquerda = true;
+                }
+                else if(e.keyCode == 39){ 
+                    tecla.direita = true;
+                }
+            }
+
+            function keyUp(e){
+                if(e.keyCode == 37){
+                    tecla.esquerda = false;
+                }
+                else if(e.keyCode == 39){
+                    tecla.direita = false;
+                }
+            }
+
+            function gameLoop(){
+                // Processar entrada do jogador e atualizar estado do jogo
+                atualizarEstadoJogo();
+                // Atualizar tela do jogo
+                atualizarTela();
+            }
+
+            function atualizarEstadoJogo(){
+                // Movimentação jogador
+                if(tecla.direita != tecla.esquerda){
+                    if(tecla.esquerda){
+                        if(jogador.x > 0){
+                            jogador.x -= jogador.velocidade;
+                        }
+                    }
+                    else {
+                        if(jogador.x < canvas.width - jogador.w){
+                            jogador.x += jogador.velocidade;
+                        }
+                    }
+                }
+
+                // TODO:
+                // movimentação da bola
+                // colisões com blocos
+                // remover bloco quando colidir -> setar posição na matriz para null
+            }
+
+            function atualizarTela(){
+                // Limpeza da tela
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Jogador
+                context.fillStyle = "black";
+                context.fillRect(jogador.x, jogador.y, jogador.w, jogador.h);
+
+                // Bola
+                context.fillStyle = "red";
+                context.beginPath();
+                context.arc(bola.x, bola.y, bola.raio, 0, Math.PI*2, true);
+                context.closePath();
+                context.fill();
+
+                // Blocos - desenhados linha por linha
+                context.fillStyle = "green";
+                for(var i = 0; i < blocos.length; i++){
+                    for(var j = 0; j < blocos[i].length; j++){
+                        bloco = blocos[i][j];
+                        // desenhar apenas blocos que não sejam null
+                        // (ou seja, não colidiram com a bola)
+                        if(bloco != null) {
+                            context.strokeRect(bloco.x, bloco.y, bloco.w, bloco.h); //contorno
+                            context.fillRect(bloco.x, bloco.y, bloco.w, bloco.h); //preenchimento
+                        }
+                    }
+                }
+            }           
+        </script>
+    </body>
+</html>
