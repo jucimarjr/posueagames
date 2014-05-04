@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Breakout</title>
+<style type="text/css">
+canvas {
+	border: 2px solid #000000;
+}
+</style>
+</head>
+<body onload="init()">
+	<canvas id="canvas" width="800" height="600">Navegador não compatível com HTML5 Canvas</canvas>
+	<script type="text/javascript">
+		var canvas, ctx, // variaveis principais
+		barraW, barraH, // largura e altura do jogador
+		barraPosX, barraPosY, // posição do jogador
+		barraVel, // velocidade da barra
+		teclaEsq, teclaDir; // status das teclas
+		function init() {
+			canvas = document.getElementById("canvas");
+			ctx = canvas.getContext("2d");
+
+			barraW = 100;
+			barraH = 30;
+			barraPosX = (canvas.width - barraW) / 2;
+			barraPosY = canvas.height - barraH;
+			barraVel = 30;
+
+			teclaEsq = false;
+			teclaDir = false;
+
+			document.addEventListener('keyup', function(e) {
+				if (e.keyCode == 37) {
+					teclaDir = true;
+				} else if (e.keyCode == 39) {
+					teclaEsq = true;
+				}
+			}, false);
+
+			document.addEventListener('keydown', function(e) {
+				if (e.keyCode == 37) {
+					teclaDir = false;
+				} else if (e.keyCode == 39) {
+					teclaEsq = false;
+				}
+			}, false);
+
+			setInterval(gameLoop, 30);
+		}
+
+		function gameLoop() {
+			atualizaMovimento();
+
+			ctx.clearRect(0, 0, canvas.width, canvas.height); // limpando o canvas
+
+			desenhaJogador();
+			desenhaBarras();
+		}
+
+		function atualizaMovimento() {
+			// movimento do jogador
+			if (teclaEsq != teclaDir) {
+				if (teclaEsq) {
+					// console.log("esq");
+					if (barraPosX > 0) {
+						barraPosX -= barraVel;
+					}
+				} else {
+					// console.log("dir");
+					if (barraPosX < (canvas.width - barraW)) {
+						barraPosX += barraVel;
+					}
+				}
+			}
+		}
+
+		function desenhaJogador() {
+			ctx.fillStyle = "green";
+			ctx.fillRect(barraPosX, barraPosY, barraW, barraH);
+		}
+
+		function desenhaBarras() {
+			for (var i = 0; i < 8; i++) {
+				for (var j = 0; j < 5; j++) {
+					ctx.beginPath();
+					ctx.rect(i * barraW, j * barraH, barraW, barraH);
+					ctx.fillStyle = "blue";
+					ctx.fill();
+					ctx.lineWidth = 1;
+					ctx.strokeStyle = "black";
+					ctx.stroke();
+				}
+			}
+		}
+	</script>
+</body>
