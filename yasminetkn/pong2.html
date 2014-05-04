@@ -21,7 +21,8 @@
             jogadorPosX, jogadorPosY,
             oponentePosX,oponentePosY,
             bolaRaio, bolaPosX,bolaPosY,
-            pontosJogador = 0,pontosOponente=0;
+            pontosJogador = 0,pontosOponente= 0,
+            velocidadeJogador=15;
 
     function init(){
 
@@ -41,6 +42,11 @@
         bolaRaio = 10;
         bolaPosX = canvas.width/2;
         bolaPosY = canvas.height/2;
+
+        //movimentacao
+        document.addEventListener("keyUp",keyUp,false);
+        document.addEventListener("keyDown()",keyDown,false);
+        setInterval(gameLoop,30);
 
 
 //        jogadorPosX = 0;
@@ -95,10 +101,33 @@
         context.font = "42pt Helvetica"
         context.fillStyle = "#000000";
 //        context.fillText(pontosA + " " + pontosB, (canvas.height/2) -70,50);
-        context.fillText(pontosA, canvas.width/2 - 30, canvas.height/2);
-        context.fillText(pontosB, canvas.width/2 - 30, canvas.height/2);
+        context.fillText(pontosA, canvas.width/2 - 30, canvas.height/2-20);
+        context.fillText(pontosB, canvas.width/2 - 30, canvas.height/2+60);
     }
 
+
+    function gameLoop(){
+
+
+        //jogador oponente
+
+        if(teclaCimaPressionada!=teclaBaixoPressionada){
+
+            if(teclaCimaPressionada){
+
+                if(jogadorPosY > 0){
+                    jogadorPosY -=velocidadeJogador;
+                }
+            }
+else {//se for para baixo
+                if(jogadorPosY<(canvas.height - barraHeight)){
+
+
+                }
+
+            }
+        }
+    }
 </script>
 </body>
 </html>
