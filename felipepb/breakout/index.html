@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Phaser Full Screen Mobile Example</title>
+		<meta charset="utf-8">
+		<script src="src/Game.js"></script>
+		<script src="src/GameObject.js"></script>
+		<script src="src/SpriteSheet.js"></script>
+		<script src="src/Sprite.js"></script>
+		<script src="src/SpriteFactory.js"></script>
+	</head>
+	<body onload="init()">
+		<canvas id="canvas" width="1024" height="768">
+	
+		</canvas>
+
+		<script type="text/javascript">
+			var canvas;
+
+			function init() {
+				canvas = document.getElementById("canvas");
+				var game = new BreakoutGame.Game(canvas);
+				
+				game.startGame(60);
+				
+				console.log(game.targetFPS);
+			}
+		</script>
+	</body>
+</html>
