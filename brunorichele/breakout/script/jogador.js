@@ -6,6 +6,12 @@ var jogador = {
 	y: 0,
 	velocidade: 20,
 	
+	render : function(root)
+	{
+		root.fillStyle = "black";
+		root.fillRect(jogador.x, jogador.y, jogador.w, jogador.h);	
+	},
+ 	
     atualizarJogador : function(){
 			// Movimentação jogador
 		if(tecla.direita != tecla.esquerda){
