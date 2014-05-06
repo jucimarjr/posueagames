@@ -105,6 +105,28 @@ var game = {
 				}
 			}
 		}
+		// Movimentação bola
+		if(bola.baixo){
+			// Colisão jogador
+			if(bola.y + bola.raio >= jogador.y && bola.x - bola.raio >= jogador.x && bola.x + bola.raio <= jogador.x + jogador.w){
+				bola.baixo = false;
+			}
+			bola.y += bola.velocidade;
+		}
+		else {
+			bola.y -= bola.velocidade;
+		}
+		// Colisão paredes
+		if(bola.x - bola.raio <= 0 || bola.x + bola.raio >= canvas.width){
+			bola.angulo *= -1;
+		}
+		// TODO: no momento a colisão com o piso está rebatendo a bola, mas
+		// deverá contar como derrota
+		if(bola.y - bola.raio <= 0 || bola.y + bola.raio >= canvas.height){
+			bola.baixo = !bola.baixo;
+		}
+		// TODO: colisão blocos
+		bola.x += bola.angulo;
 	},
 
 	desenharBloco : function(linha, coluna){
