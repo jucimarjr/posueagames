@@ -15,7 +15,7 @@ var jogador = {
 		root.fillRect(jogador.x, jogador.y, jogador.w, jogador.h);	
 	},
  	
-    atualizarJogador : function(){
+    atualizar : function(width){
 			// Movimentação jogador
 		if(tecla.direita != tecla.esquerda){
 			if(tecla.esquerda){
@@ -24,7 +24,7 @@ var jogador = {
 				}
 			}
 			else {
-				if(jogador.x < canvas.width - jogador.w){
+				if(jogador.x < width - jogador.w){
 					jogador.x += jogador.velocidade;
 				}
 			}
