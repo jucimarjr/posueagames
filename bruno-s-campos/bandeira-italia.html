@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Bandeira da Itália em HTML5</title>
+</head>
+
+<body onload="italyFlag()">
+<canvas id="canvas" width="320" height="240">
+Navegador não compatível com HTML5 Canvas
+</canvas>
+
+<script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+
+    var width = canvas.width;
+    var height = canvas.height;
+
+
+function italyFlag() {
+	var bandWidth = width / 3;
+
+    // Draw the green band
+    ctx.fillStyle = "green";
+    ctx.fillRect(0, 0, bandWidth, height);
+
+    // Draw the white band
+    ctx.fillStyle = "white";
+    ctx.fillRect(bandWidth, 0, 2 * bandWidth, height);
+
+    // Drawa the red band
+    ctx.fillStyle = "red";
+    ctx.fillRect(2 * bandWidth, 0, width, height);
+}
+
+</script>
+    </body>
+</html>

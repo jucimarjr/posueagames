@@ -4,7 +4,19 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 	
 var janela = new Janela(ctx,canvas.width,canvas.height);
-var bola = new Bola(ctx,canvas.width,canvas.height);
+
+geraPosicaoRandom = function(width){
+	var valor = 1;
+	while(true){
+		valor = Math.floor((Math.random()*width) +1);
+		if(valor >=0 && valor <= width)
+			break;
+	}
+	return valor;
+}
+//Gera posicai radom para bola
+var posicaoXBola = geraPosicaoRandom(canvas.width);
+var bola = new Bola(ctx,posicaoXBola,canvas.width,canvas.height);
 var jogador = new Jogador(ctx,canvas.width,canvas.height);
 var inimigos = new Inimigos(ctx,canvas.width,canvas.height);
 
@@ -55,14 +67,13 @@ function gameLoop(){
 }
 
 function verificarColisao(bola,jogador){
-	if(bola.posX + bola.raio > canvas.width || bola.posX + bola.raio < 0)
+	if(bola.posX + bola.raio > canvas.width || bola.posX < 0)
 		bola.velocidadeX = - bola.velocidadeX
 	
 	if(bola.posY + bola.raio < 0)
 		bola.velocidadeY = - bola.velocidadeY;
-	else if(bola.posY + bola.raio > canvas.height){
-		if(bola.posX  > jogador.posX && bola.posX < jogador.posX + jogador.width){
-			//Ouve uma colisão
+	else if(bola.posY + bola.raio > canvas.height - jogador.height){
+		if(bola.posX > jogador.posX && bola.posX < jogador.posX + jogador.width){
 			bola.velocidadeY = -bola.velocidadeY;
 		}else{
 			gameOver();
