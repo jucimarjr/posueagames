@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Breakout</title>
+</head>
+<body onload="init()">
+ <canvas id="canvas" width="640" height="480">
+  Your browser does not support the HTML5 Canvas feature.
+ </canvas>
+ <script type="text/javascript" src="graphic.js" ></script>
+ <script type="text/javascript" src="breakout.js" ></script>
+ <script>
+		
+		function init() {
+			var board = new BreakoutBoard("canvas");
+			board.paint();
+		}
+	</script>
+</body>
+</html>
