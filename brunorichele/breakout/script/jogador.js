@@ -5,9 +5,12 @@ var jogador = {
 	x: 0,
 	y: 0,
 	velocidade: 20,
+	init : function(width, height){
+		jogador.x = (width / 2) - (jogador.w / 2);
+		jogador.y = height - jogador.h;
+	},
 	
-	render : function(root)
-	{
+	render : function(root){
 		root.fillStyle = "black";
 		root.fillRect(jogador.x, jogador.y, jogador.w, jogador.h);	
 	},

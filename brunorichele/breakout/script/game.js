@@ -11,33 +11,24 @@ var game = {
 	height : null,
 	width : null,	
 	init : function(){
-		
-		game.setup();
-
-		// Intervalo do Gameloop: 30 fps
-		setInterval(game.gameLoop, 1000 / 30);	
-	},
-	
-	setup : function(){
 		game.canvas = document.getElementById("canvas");
 		game.context = game.canvas.getContext("2d");
 		game.height = game.canvas.height;
 		game.width = game.canvas.width; 
-		
-		jogador.x = game.width / 2 - jogador.w / 2;
-		jogador.y = game.height - jogador.h;
+		//Iniciar informacoes do jogador
+		jogador.init(game.width, game.height);
+		//Iniciar informacoes da bola
+		bola.init(game.width, jogador.y);
 
-		bola.x = canvas.width / 2;
-		bola.y = jogador.y - bola.raio;
+		game.bind();
 
-		game.bind();	
+		// Intervalo do Gameloop: 30 fps
+		setInterval(game.gameLoop, 1000 / 30);	
 	},
-	
 	bind : function(){
 		// Eventos
 		tecla.listenerKey();
 	},	
-	
 	gameLoop : function(){
 		//Atualiza posição do jogador 
 		jogador.atualizarJogador();
@@ -46,7 +37,6 @@ var game = {
 		// Atualizar tela do jogo
 		game.atualizarTela();
 	},
-
 	 atualizarEstadoJogo : function(){
 		// Movimentação bola
 		if(bola.baixo){
@@ -71,7 +61,6 @@ var game = {
 		// TODO: colisão blocos
 		bola.x += bola.angulo;
 	},
-
 	atualizarTela : function(){
 		// Limpeza da Tela
 		game.clear();
@@ -82,7 +71,6 @@ var game = {
 		//Desenha Blocos
 		bloco.render(game.context);
 	}, 
-	
 	clear : function(){
 		game.context.clearRect(0, 0, game.width, game.height);		
 	}

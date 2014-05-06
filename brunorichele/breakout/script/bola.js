@@ -6,7 +6,10 @@ var bola = {
 	baixo: false,
 	angulo: 5,
 	velocidade: 10,
-	
+	init : function(width, y){//largura do canvas e y do jogador
+		bola.x = width / 2;
+		bola.y = y - bola.raio;
+	},
 	render : function(root){
 		root.fillStyle = "red";
 		root.beginPath();
