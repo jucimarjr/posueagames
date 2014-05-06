@@ -39,12 +39,12 @@ var game = {
 	atualizar : function(){
 		// Limpeza da Tela
 		game.clear();
+		//Desenha Blocos
+		bloco.render(game.context);
 		//Desenha Jogador
 		jogador.render(game.context);
 		//Desenha Bola
 		bola.render(game.context);
-		//Desenha Blocos
-		bloco.render(game.context);
 	}, 
 	clear : function(){
 		game.context.clearRect(0, 0, game.width, game.height);		

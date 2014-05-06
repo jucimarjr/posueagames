@@ -42,7 +42,7 @@ var bola = {
 		}
 		
 		//Colisao bloco
-		if(bola.y - bola.raio <= 82){
+		if(bola.y - bola.raio <= 100){
 			bola.baixo = !bola.baixo;
 			console.log("Colisao bloco");
 		}
