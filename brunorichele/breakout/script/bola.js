@@ -6,9 +6,11 @@ var bola = {
 	baixo: false,
 	angulo: 5,
 	velocidade: 10,
+	resetX : null,
+	resetY : null,
 	init : function(width, y){//largura do canvas e y do jogador
-		bola.x = width / 2;
-		bola.y = y - bola.raio;
+		bola.resetX = bola.x = width / 2;
+		bola.resetY = bola.y = y - bola.raio;
 	},
 	render : function(root){
 		root.fillStyle = "red";
@@ -37,8 +39,15 @@ var bola = {
 		// deverá contar como derrota
 		if(bola.y - bola.raio <= 0 || bola.y + bola.raio >= height){
 			bola.baixo = !bola.baixo;
+		//	bola.clear(); // A bola retorna a posicao inicial
+		//	jogador.clear(); // O jogador retorna a posicao inicial
 		}
 		// TODO: colisão blocos
 		bola.x += bola.angulo;	
+	},
+	clear : function()
+	{
+		bola.x = bola.resetX;
+		bola.y = bola.resetY;	
 	}
 };
