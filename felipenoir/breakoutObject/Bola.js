@@ -4,7 +4,7 @@ function Bola(ctx, posX, width, height) {
 	this.ctx = ctx
 	this.posX = posX;
 	this.posY = height / 2;
-	this.raio = 0;
+	this.raio = 10;
 	this.angulo = 0;
 	this.velocidadeX = 2;
 	if (posX < width / 2)
@@ -14,8 +14,7 @@ function Bola(ctx, posX, width, height) {
 	this.ORIGEM = 0;
 	this.tempo = 0;
 
-	this.desenhaBola = function desenhaBola(raio) {
-		this.raio = raio;
+	this.desenhaBola = function desenhaBola() {
 		this.ctx.beginPath();
 		this.ctx.arc(this.posX, this.posY, this.raio, this.ORIGEM, Math.PI * 2,
 				true);
