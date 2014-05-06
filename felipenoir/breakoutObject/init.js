@@ -67,13 +67,13 @@ function gameLoop(){
 }
 
 function verificarColisao(bola,jogador){
-	if(bola.posX + bola.raio > canvas.width || bola.posX + bola.raio < 0)
+	if(bola.posX + bola.raio > canvas.width || bola.posX < 0)
 		bola.velocidadeX = - bola.velocidadeX
 	
 	if(bola.posY + bola.raio < 0)
 		bola.velocidadeY = - bola.velocidadeY;
 	else if(bola.posY + bola.raio > canvas.height - jogador.height){
-		if(bola.posX  + 3*bola.raio > jogador.posX && bola.posX < jogador.posX + jogador.width){
+		if(bola.posX > jogador.posX && bola.posX < jogador.posX + jogador.width){
 			bola.velocidadeY = -bola.velocidadeY;
 		}else{
 			gameOver();
