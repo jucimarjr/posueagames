@@ -51,7 +51,7 @@ function init() {
 }
 
 function gameLoop() {
-	bola.movimentaBola(janela.width, janela.height);
+	bola.movimentaBola(janela.width);
 	jogador.movimentaJogador(isDireita, isEsquerda, canvas.width);
 
 	// COLISAO
@@ -66,12 +66,12 @@ function gameLoop() {
 }
 
 function verificarColisao(bola, jogador) {
-	if (bola.posX + bola.raio > canvas.width || bola.posX < 0)
-		bola.velocidadeX = -bola.velocidadeX
+//	if (bola.posX + bola.raio > canvas.width || bola.posX < 0)
+//		bola.velocidadeX = -bola.velocidadeX
 
-	if (bola.posY + bola.raio < 0)
+	/*if (bola.posY + bola.raio < 0)
 		bola.velocidadeY = -bola.velocidadeY;
-	else if (bola.posY + bola.raio > canvas.height - jogador.height) {
+	else*/ if (bola.posY + bola.raio > canvas.height - jogador.height) {
 		if (bola.posX > jogador.posX
 				&& bola.posX < jogador.posX + jogador.width) {
 			bola.velocidadeY = -bola.velocidadeY;
