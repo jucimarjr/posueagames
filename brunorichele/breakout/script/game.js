@@ -9,12 +9,7 @@ var game = {
 	canvas : null, // Canvas
 	context : null, // Objetos do HTML5 Canvas
 	height : null,
-	width : null,
-	//tecla : null, // tecla sendo pressionada no momento (esquerda/direita)
-	blocos : [], // matriz bidimensional para guardar os blocos
-	numLinhas : 5, // 5 linhas, 10 blocos por linha
-	numColunas : 10, //número de linhas e colunas dos blocos, largura: 60, altura: 20;
-	
+	width : null,	
 	init : function(){
 		
 		game.setup();
@@ -35,19 +30,6 @@ var game = {
 		bola.x = canvas.width / 2;
 		bola.y = jogador.y - bola.raio;
 
-		// Blocos
-		for(var linha = 0; linha < game.numLinhas; linha++){
-			game.blocos[linha] = [];
-			for(var coluna = 0; coluna < game.numColunas; coluna++){
-				game.blocos[linha][coluna] = {
-					x: 60 * coluna, // X varia junto com a coluna
-					y: 20 * linha, // Y varia junto com a linha
-					w: 60, //largura
-					h: 20  //altura
-				}
-			}
-		}
-
 		game.bind();	
 	},
 	
@@ -59,7 +41,6 @@ var game = {
 	gameLoop : function(){
 		//Atualiza posição do jogador 
 		jogador.atualizarJogador();
-		
 		// Processar entrada do jogador e atualizar estado do jogo
 		game.atualizarEstadoJogo();
 		// Atualizar tela do jogo
@@ -67,7 +48,6 @@ var game = {
 	},
 
 	 atualizarEstadoJogo : function(){
-
 		// Movimentação bola
 		if(bola.baixo){
 			// Colisão jogador
@@ -92,19 +72,6 @@ var game = {
 		bola.x += bola.angulo;
 	},
 
-	desenharBloco : function(linha, coluna){
-		// desenhar apenas blocos que não sejam null
-		// (ou seja, não colidiram com a bola)
-		// cada linha terá uma cor, como o Breakout de Atari
-		game.bloco = game.blocos[linha][coluna];
-		if(game.bloco != null) {
-			// devemos adicionar um contorno?
-			//context.strokeRect(bloco.x, bloco.y, bloco.w, bloco.h); //contorno
-			game.context.fillStyle = bloco.color(linha);			
-			game.context.fillRect(game.bloco.x, game.bloco.y, game.bloco.w, game.bloco.h); //preenchimento
-		}
-	},
-
 	atualizarTela : function(){
 		// Limpeza da Tela
 		game.clear();
@@ -112,17 +79,11 @@ var game = {
 		jogador.render(game.context);
 		//Desenha Bola
 		bola.render(game.context);
-		
-		// Blocos - desenhados linha por linha
-		for(var linha = 0; linha < game.numLinhas; linha++){
-			for(var coluna = 0; coluna < game.numColunas; coluna++){
-				game.desenharBloco(linha, coluna);
-			}
-		}
+		//Desenha Blocos
+		bloco.render(game.context);
 	}, 
 	
-	clear : function()
-	{
+	clear : function(){
 		game.context.clearRect(0, 0, game.width, game.height);		
 	}
 };
