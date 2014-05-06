@@ -61,8 +61,8 @@ function verificarColisao(bola,jogador){
 	if(bola.posY + bola.raio < 0)
 		bola.velocidadeY = - bola.velocidadeY;
 	else if(bola.posY + bola.raio > canvas.height - jogador.height){
-		
-		if(bola.posX  + bola.raio > jogador.posX && bola.posX < jogador.posX + jogador.width){
+		console.log(bola.posX  + bola.raio + "  " + jogador.posX);
+		if(bola.posX  + 3*bola.raio > jogador.posX && bola.posX < jogador.posX + jogador.width){
 			bola.velocidadeY = -bola.velocidadeY;
 		}else{
 			gameOver();
