@@ -9,7 +9,7 @@ var game = {
 	context : null, // Objetos do HTML5 Canvas
 	height  : null,
 	width   : null,	
-	polling : null,
+	polling : null, //Guarda a instacia do setInterval com gameLoop
 	init : function(){
 		game.canvas = document.getElementById("canvas");
 		game.context = game.canvas.getContext("2d");
@@ -19,6 +19,8 @@ var game = {
 		jogador.init(game.width, game.height);
 		//Iniciar informacoes da bola
 		bola.init(game.width, jogador.y);
+		//Iniciar informacoes do bloco
+		bloco.init();
 		//Inicia a escuta do teclado
 		game.bind();
 		// Intervalo do Gameloop: 30 fps

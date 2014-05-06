@@ -41,10 +41,16 @@ var bola = {
 			bola.angulo *= -1;
 		}
 		
+		console.log("x da bola:" + bola.x  + "y da bola: " + bola.y);
+		
 		//Colisao bloco
 		if(bola.y - bola.raio <= 100){
 			bola.baixo = !bola.baixo;
 			console.log("Colisao bloco");
+			var linha = (bola.y - bola.raio)/20;
+			var coluna = Math.round((bola.x - bola.raio)/60);
+			console.log("linha: " + linha + "coluna:" + coluna);
+			bloco.blocos[linha - 1][coluna] = 1;
 		}
 		bola.colisaoChao(height, polling);
 		// TODO: colisão blocos
