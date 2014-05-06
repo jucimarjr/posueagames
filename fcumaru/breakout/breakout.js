@@ -1,15 +1,18 @@
-var canvas, context, barraWidthJogador, barraHeightJogador, jogadorPosX, jogadorPosY;
-var teclaDireita, teclaEsquerda, velocidadeBola;
+var width, height;
+var canvas, context;
+
+var keyLeft, keyRight;
+
+var player;
 
 function init() {
 	canvas = document.getElementById("canvas");
 	context = canvas.getContext("2d");
-
+	
 	width = canvas.width;
 	height = canvas.height;
-
-	barraWidthJogador = 100;
-	barraHeightJogador = 10;
+	
+	player = new player(width / 2, height, 100, 10, 10);
 
 	bolaTempo = 0;
 	bolaAngulo = Math.floor(Math.random() * 21) - 10;
@@ -20,14 +23,10 @@ function init() {
 	blocosWidth = 80;
 	blocosHeight = 10;
 
-	jogadorPosX = (width - barraWidthJogador) / 2;
-	jogadorPosY = height - barraHeightJogador;
-
 	bolaRaio = 5;
-	velocidadeJogador = 10;
 
-	teclaDireita = false;
-	teclaEsquerda = false;
+	keyRight = false;
+	keyLeft = false;
 
 	document.addEventListener('keyup', keyUp, false);
 	document.addEventListener('keydown', keyDown, false);
@@ -36,22 +35,21 @@ function init() {
 
 function keyDown(e) {
 	if (e.keyCode == 37) {
-		teclaEsquerda = true;
+		keyLeft = true;
 	} else if (e.keyCode == 39) {
-		teclaDireita = true;
+		keyRight = true;
 	}
 }
 
 function keyUp(e) {
 	if (e.keyCode == 37) {
-		teclaEsquerda = false;
+		keyLeft = false;
 	} else if (e.keyCode == 39) {
-		teclaDireita = false;
+		keyRight = false;
 	}
 }
 
 function geraBarras(x, y) {
-
 	context.fillStyle = "gold";
 	context.fillRect(x, y, blocosWidth, blocosHeight);
 }
@@ -59,26 +57,26 @@ function geraBarras(x, y) {
 function gameLoop() {
 	context.clearRect(0, 0, width, height);
 
-	for (var j = 100; j < 120; j += 20) {
+	for (var j = 100; j < 180; j += 20) {
 		for (var i = 0; i < width; i += 100) {
 			geraBarras(i + 10, j);
 		}
 	}
-	if ((teclaDireita) && ((jogadorPosX + barraWidthJogador) <= width)) {
-		jogadorPosX += 10;
+	if ((keyRight) && ((player.x + player.width) <= width)) {
+		player.x += 10;
 	}
 
-	if ((teclaEsquerda) && (jogadorPosX >= 0)) {
-		jogadorPosX -= 10;
+	if ((keyLeft) && (player.x >= 0)) {
+		player.x -= 10;
 	}
 
 	// Bola
 	if (bolaTempo <= 0) {
-		if ((bolaPosY - bolaRaio) <= (jogadorPosY + barraHeightJogador)) {
-			if ((bolaPosX + bolaRaio > jogadorPosX)
-					&& (bolaPosX - bolaRaio < jogadorPosX + barraWidthJogador)) {
+		if ((bolaPosY - bolaRaio) <= (player.y + player.height)) {
+			if ((bolaPosX + bolaRaio > player.x)
+					&& (bolaPosX - bolaRaio < player.x + player.width)) {
 				bolaParaBaixo = true;
-				if (teclaEsquerda) {
+				if (keyLeft) {
 					bolaAngulo = Math.floor(Math.random() * 10) - 9;
 				} else {
 					bolaAngulo = Math.floor((Math.random() * 10));
@@ -94,16 +92,14 @@ function gameLoop() {
 	}
 
 	// Jogador
-	context.fillStyle = "black";
-	context.fillRect(jogadorPosX, jogadorPosY, barraWidthJogador,
-			barraHeightJogador);
+	player.draw(context);
 
-	// Título
+	// Titulo
 	context.font = "21pt Helvetica";
 	context.fillStyle = "red";
 	context.fillText("BREAKOUT", (width / 2) - 80, 25);
 
-	// Linha divisória
+	// Linha divisoria
 	context.beginPath();
 	context.moveTo(0, 30);
 	context.lineTo(canvas.width, 30);
@@ -117,4 +113,55 @@ function gameLoop() {
 	context.fillStyle = "red";
 	context.fill();
 
+}
+
+function ball(x, y, radius, speed) {
+	this.x = x;
+	this.y = y;	
+	this.radius = radius;
+	this.speed = speed;
+	
+	this.draw = function(context) {
+		context.beginPath();
+		context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
+		context.fillStyle = "red";
+		context.fill();
+	};
+}
+
+function player(x, y, width, height, speed) {
+	this.x = x - (width / 2);
+	this.y = y - height;	
+	this.width = width;
+	this.height = height;
+	this.speed = speed;
+	
+	this.draw = function(context) {
+		context.fillStyle = "black";
+		context.fillRect(this.x, this.y, this.width,
+				this.height);
+	};
+	
+	this.colisao = function() {
+		
+	};
+}
+
+function block(x, y, width, height) {
+	this.x = x;
+	this.y = y;	
+	this.width = width;
+	this.height = height;
+	this.collided = false;
+	
+	this.draw = function() {
+		if (this.collided == false) {
+			context.fillStyle = "gold";
+			context.fillRect(this.x, this.y, this.width, this.height);
+		}
+	};
+	
+	this.collision = function() {
+		
+	};
 }
