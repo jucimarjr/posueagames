@@ -11,9 +11,9 @@ var game = {
 	height : null,
 	width : null,
 	tecla : null, // tecla sendo pressionada no momento (esquerda/direita)
-	blocos : null, // matriz bidimensional para guardar os blocos
-	numLinhas : null,
-	numColunas : null, //número de linhas e colunas dos blocos
+	blocos : [], // matriz bidimensional para guardar os blocos
+	numLinhas : 5, // 5 linhas, 10 blocos por linha
+	numColunas : 10, //número de linhas e colunas dos blocos, largura: 60, altura: 20;
 	
 	init : function(){
 		
@@ -36,13 +36,8 @@ var game = {
 		bola.y = jogador.y - bola.raio;
 
 		// Blocos
-		// 5 linhas, 10 blocos por linha
-		// largura: 60, altura: 20
-		game.numLinhas = 5;
-		game.numColunas = 10;
-		game.blocos = new Array(game.numLinhas);
 		for(var linha = 0; linha < game.numLinhas; linha++){
-			game.blocos[linha] = new Array(game.numColunas);
+			game.blocos[linha] = [];
 			for(var coluna = 0; coluna < game.numColunas; coluna++){
 				game.blocos[linha][coluna] = {
 					x: 60 * coluna, // X varia junto com a coluna
