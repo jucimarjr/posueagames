@@ -3,7 +3,9 @@
 	<head>
 		<title>Phaser Full Screen Mobile Example</title>
 		<meta charset="utf-8">
+		<link rel="stylesheet" href="css/stylesheet.css" type="text/css">
 		<script src="src/Game.js"></script>
+		<script src="src/GameScene.js"></script>
 		<script src="src/GameObject.js"></script>
 		<script src="src/SpriteSheet.js"></script>
 		<script src="src/Sprite.js"></script>
@@ -19,11 +21,8 @@
 
 			function init() {
 				canvas = document.getElementById("canvas");
-				var game = new BreakoutGame.Game(canvas);
-				
-				game.startGame(60);
-				
-				console.log(game.targetFPS);
+				var targetFPS = 30;
+				var gameScene = new BreakoutGame.GameScene(canvas, targetFPS);
 			}
 		</script>
 	</body>

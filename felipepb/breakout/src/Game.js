@@ -2,9 +2,10 @@
 var BreakoutGame = { };
 
 // Constructor for the Game class.
-BreakoutGame.Game = function (canvas) {
+BreakoutGame.Game = function (canvas, backgroundColor) {
 	// Reference to the canvas html5 object.
 	this.targetFPS;
+	this.backgroundColor = backgroundColor;
 	
 	this._canvas = canvas;
 	this._context2D = canvas.getContext("2d");
@@ -46,6 +47,9 @@ BreakoutGame.Game.prototype = {
 		for (var i = 0; i < self._gameObjects.length; i++) {
 			self._gameObjects[i].update(self._time.deltaTime);
 		}
+		
+		self._context2D.fillStyle = self.backgroundColor;
+		self._context2D.fillRect(0, 0, self._canvas.width, self._canvas.height);
 		
 		for (var i = 0; i < self._gameObjects.length; i++) {
 			self._gameObjects[i].render(self._time.deltaTime, self._context2D);
