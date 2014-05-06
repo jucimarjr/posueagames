@@ -18,9 +18,8 @@ var game = {
 		jogador.init(game.width, game.height);
 		//Iniciar informacoes da bola
 		bola.init(game.width, jogador.y);
-		//
+		//Inicia a escuta do teclado
 		game.bind();
-
 		// Intervalo do Gameloop: 30 fps
 		setInterval(game.gameLoop, 1000 / 30);	
 	},
