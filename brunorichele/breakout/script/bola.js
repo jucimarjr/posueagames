@@ -49,5 +49,8 @@ var bola = {
 	{
 		bola.x = bola.resetX;
 		bola.y = bola.resetY;	
+		bola.baixo = false;
+		bola.angulo = 5;
+		bola.velocidade = 10;		
 	}
 };
