@@ -9,6 +9,7 @@ var game = {
 	context : null, // Objetos do HTML5 Canvas
 	height  : null,
 	width   : null,	
+	polling : null,
 	init : function(){
 		game.canvas = document.getElementById("canvas");
 		game.context = game.canvas.getContext("2d");
@@ -21,7 +22,7 @@ var game = {
 		//Inicia a escuta do teclado
 		game.bind();
 		// Intervalo do Gameloop: 30 fps
-		setInterval(game.gameLoop, 1000 / 30);	
+		game.polling = setInterval(game.gameLoop, 1000 / 30);	
 	},
 	bind : function(){
 		// Eventos
@@ -31,7 +32,7 @@ var game = {
 		//Atualiza posição do jogador 
 		jogador.atualizar(game.width);
 		// Atualiza posição da bola
-		bola.atualizar(jogador.y, jogador.x, jogador.w, game.width, game.height);
+		bola.atualizar(jogador.y, jogador.x, jogador.w, game.width, game.height, game.polling);
 		// Atualizar tela do jogo
 		game.atualizar();
 	},
