@@ -61,8 +61,7 @@ function verificarColisao(bola,jogador){
 	if(bola.posY + bola.raio < 0)
 		bola.velocidadeY = - bola.velocidadeY;
 	else if(bola.posY + bola.raio > canvas.height){
-		if(bola.posX  > jogador.posX && bola.posX < jogador.posX + jogador.width){
-			//Ouve uma colisão
+		if(bola.posX  + bola.raio > jogador.posX && bola.posX + bola.raio < jogador.posX + jogador.width){
 			bola.velocidadeY = -bola.velocidadeY;
 		}else{
 			gameOver();
