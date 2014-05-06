@@ -10,7 +10,7 @@ var game = {
 	context : null, // Objetos do HTML5 Canvas
 	height : null,
 	width : null,
-	tecla : null, // tecla sendo pressionada no momento (esquerda/direita)
+	//tecla : null, // tecla sendo pressionada no momento (esquerda/direita)
 	blocos : [], // matriz bidimensional para guardar os blocos
 	numLinhas : 5, // 5 linhas, 10 blocos por linha
 	numColunas : 10, //número de linhas e colunas dos blocos, largura: 60, altura: 20;
@@ -48,43 +48,18 @@ var game = {
 			}
 		}
 
-		// Teclas pressionadas
-		game.tecla = {
-			direita: false,
-			esquerda: false
-		}
-
 		game.bind();	
 	},
 	
 	bind : function(){
 		// Eventos
-		document.addEventListener('keyup', game.keyUp, false);
-		document.addEventListener('keydown', game.keyDown, false);	
+		tecla.listenerKey();
 	},	
 	
-	// Códigos de teclas:
-	// Esquerda: 37
-	// Direita: 39
-	 keyDown : function(e){
-		if(e.keyCode == 37){
-			game.tecla.esquerda = true;
-		}
-		else if(e.keyCode == 39){ 
-			game.tecla.direita = true;
-		}
-	},
-
-	 keyUp : function(e){
-		if(e.keyCode == 37){
-			game.tecla.esquerda = false;
-		}
-		else if(e.keyCode == 39){
-			game.tecla.direita = false;
-		}
-	},
-
 	gameLoop : function(){
+		//Atualiza posição do jogador 
+		jogador.atualizarJogador();
+		
 		// Processar entrada do jogador e atualizar estado do jogo
 		game.atualizarEstadoJogo();
 		// Atualizar tela do jogo
@@ -92,19 +67,7 @@ var game = {
 	},
 
 	 atualizarEstadoJogo : function(){
-		// Movimentação jogador
-		if(game.tecla.direita != game.tecla.esquerda){
-			if(game.tecla.esquerda){
-				if(jogador.x > 0){
-					jogador.x -= jogador.velocidade;
-				}
-			}
-			else {
-				if(jogador.x < canvas.width - jogador.w){
-					jogador.x += jogador.velocidade;
-				}
-			}
-		}
+
 		// Movimentação bola
 		if(bola.baixo){
 			// Colisão jogador
