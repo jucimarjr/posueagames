@@ -100,35 +100,29 @@ var game = {
 		if(game.bloco != null) {
 			// devemos adicionar um contorno?
 			//context.strokeRect(bloco.x, bloco.y, bloco.w, bloco.h); //contorno
-			if(linha == 0) game.context.fillStyle = "green";
-			else if(linha == 1) game.context.fillStyle = "blue";
-			else if(linha == 2) game.context.fillStyle = "red";
-			else if(linha == 3) game.context.fillStyle = "yellow";
-			else if(linha == 4) game.context.fillStyle = "orange";
+			game.context.fillStyle = bloco.color(linha);			
 			game.context.fillRect(game.bloco.x, game.bloco.y, game.bloco.w, game.bloco.h); //preenchimento
 		}
 	},
 
 	atualizarTela : function(){
-		// Limpeza da tela
-		game.context.clearRect(0, 0, game.width, game.height);
-
-		// Jogador
-		game.context.fillStyle = "black";
-		game.context.fillRect(jogador.x, jogador.y, jogador.w, jogador.h);
-
-		// Bola
-		game.context.fillStyle = "red";
-		game.context.beginPath();
-		game.context.arc(bola.x, bola.y, bola.raio, 0, Math.PI*2, true);
-		game.context.closePath();
-		game.context.fill();
-
+		// Limpeza da Tela
+		game.clear();
+		//Desenha Jogador
+		jogador.render(game.context);
+		//Desenha Bola
+		bola.render(game.context);
+		
 		// Blocos - desenhados linha por linha
 		for(var linha = 0; linha < game.numLinhas; linha++){
 			for(var coluna = 0; coluna < game.numColunas; coluna++){
 				game.desenharBloco(linha, coluna);
 			}
 		}
-	} 
+	}, 
+	
+	clear : function()
+	{
+		game.context.clearRect(0, 0, game.width, game.height);		
+	}
 };
