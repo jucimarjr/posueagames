@@ -8,10 +8,11 @@ var bola = {
 	velocidade: 10,
 	resetX : null,
 	resetY : null,
-	countFail : 0,
+	countFail : null,
 	init : function(width, y){//largura do canvas e y do jogador
 		bola.resetX = bola.x = width / 2;
 		bola.resetY = bola.y = y - bola.raio;
+		bola.countFail = 0;
 	},
 	render : function(root){
 		root.fillStyle = "red";

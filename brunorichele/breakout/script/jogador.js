@@ -7,10 +7,11 @@ var jogador = {
 	velocidade: 20,
 	resetX : null,
 	resetY : null,
-	derrota : false,
+	derrota : null,
 	init : function(width, height){
 		jogador.resetX = jogador.x = (width / 2) - (jogador.w / 2);
 		jogador.resetY = jogador.y = height - jogador.h;
+		jogador.derrota = false;
 	},
 	
 	render : function(root){

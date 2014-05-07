@@ -48,8 +48,11 @@ var game = {
 		//Desenha Bola
 		bola.render(game.context);
 		//Verificar derrota e desenhar na tela
+		
 		if(jogador.derrota == true){
 			game.derrota();
+			game.btnNewGame();
+			mouse.listener(canvas);
 		}
 	}, 
 	clear : function(){
@@ -59,5 +62,11 @@ var game = {
 		game.context.font = "42px Helvetica";
 		game.context.fillStyle = "#000000";
 		game.context.fillText("Você perdeu!", 180, 250);	
-	}
+	},
+	
+	btnNewGame : function(){
+		game.context.font = "42px Helvetica";
+		game.context.fillStyle = "#000000";
+		game.context.fillText("Jogar Novamente", 140, 300);	
+	}		
 };
