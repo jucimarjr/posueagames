@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<title>Breakout - A fast fun game</title>
+<script src="jquery.js"></script>
+<script>
+$(function() {
+    // equivalente a document.getElementById('canvas');
+    var canvas = $('#canvas')[0];
+    var context = canvas.getContext('2d');
+
+
+    var paddleX = 200;
+    var paddleY = 460;
+
+    var jogadorWidth = 100;
+    var jogadorHeight = 15;
+
+    var paddleDeltaX = 0;
+    var paddleDeltaY = 0;
+
+    function desenhaJogador(){
+        context.fillRect(paddleX,paddleY,jogadorWidth,jogadorHeight);
+    }
+
+    var bolaX = 300;
+    var bolaY = 300;
+    var bolaRaio = 10;
+
+    var bouncingSound = new Audio("bounce.ogg");
+    var breakingSound = new Audio("break.ogg");
+
+    function desenhaBola(){
+        // desenhando a bola
+        context.beginPath();
+
+
+        context.arc(bolaX,bolaY,bolaRaio,0,Math.PI*2,true);
+
+        // fechando a bola
+        context.fill();
+    }
+
+
+    var blocosPorLinha = 8;
+    var blocoHeight = 20;
+    var blocoWidth = canvas.width/blocosPorLinha;
+
+    // Cor do Bloco: 1 Laranja, 2 Verde, 3 cinza, 0 vazio (sem bloco)
+    var blocos = [
+        [1,1,1,1,1,1,1,2],
+        [1,1,3,1,0,1,1,1],
+        [2,1,2,1,2,1,0,1],
+        [1,2,1,1,0,3,1,1]
+    ];
+
+
+    // pega o array de bloco através do desenhaBloco e preenche a tela()
+    function criadorDeBlocos(){
+        for (var i=0; i < blocos.length; i++) {
+            for (var j=0; j < blocos[i].length; j++) {
+                desenhaBloco(j,i,blocos[i][j]);
+            }
+        }
+    }
+
+    // funcao que desenha cada bloco
+    function desenhaBloco(x,y,type){
+        switch(type){
+            case 1:
+                context.fillStyle = 'orange';
+                break;
+            case 2:
+                context.fillStyle = 'rgb(100,200,100)';
+                break;
+            case 3:
+                context.fillStyle = 'rgba(50,100,50,.5)';
+                break;
+            default:
+                context.clearRect(x*blocoWidth,y*blocoHeight,blocoWidth,blocoHeight);
+                break;
+
+        }
+        if (type){
+            //Draw rectangle with fillStyle color selected earlier
+            context.fillRect(x*blocoWidth,y*blocoHeight,blocoWidth,blocoHeight);
+            // Also draw blackish border around the brick
+            context.strokeRect(x*blocoWidth+1,y*blocoHeight+1,blocoWidth-2,blocoHeight-2);
+        }
+    }
+
+    var score = 0;
+
+    function displayScoreBoard(){
+        //cor e fonte
+        context.fillStyle = 'rgb(50,100,50)';
+        context.font = "20px Times New Roman";
+
+        //Clear the bottom 30 pixels of the canvas
+        context.clearRect(0,canvas.height-30,canvas.width,30);
+        // Write Text 5 pixels from the bottom of the canvas
+        context.fillText('Pontos: '+score,10,canvas.height-5);
+    }
+
+    var bolaDeltaX;
+    var bolaDeltaY;
+
+    function movendoBola(){
+        // First check if we will bump into something
+
+        // If top of the ball touches the top then reverse Y direction
+        if (bolaY + bolaDeltaY - bolaRaio < 0
+            // or if ball collides in Y direction with blocos
+                || colisaoYComOsBlocos()){
+            bolaDeltaY = -bolaDeltaY;
+            bouncingSound.play();
+        }
+
+        // If the bottom of the ball touches the bottom of the screen then end the game
+        if (bolaY + bolaDeltaY + bolaRaio > canvas.height){
+            endGame();
+        }
+        // If side of ball touches either side of the wall then reverse X direction
+        //left of ball moves too far left
+        if ((bolaX + bolaDeltaX - bolaRaio < 0) ||
+            //or right side of ball moves too far right
+                (bolaX + bolaDeltaX + bolaRaio > canvas.width)
+            // or if ball collides in Y direction with blocos
+                || colisaoXComOsBlocos()
+                ){
+            bolaDeltaX = -bolaDeltaX;
+            bouncingSound.play();
+        }
+
+        // if bottom of ball reaches the top of paddle,
+        if (bolaY + bolaDeltaY + bolaRaio >= paddleY){
+            // and it is positioned between the two ends of the paddle (is on top)
+            if (bolaX + bolaDeltaX >= paddleX &&
+                    bolaX + bolaDeltaX <= paddleX + jogadorWidth){
+                bolaDeltaY = - bolaDeltaY;
+                bouncingSound.play();
+            }
+        }
+
+        // Move the ball
+        bolaX = bolaX + bolaDeltaX;
+        bolaY = bolaY + bolaDeltaY;
+    }
+
+    function retiraBloco(i,j){
+        // First weaken the brick (0 means brick has gone)
+        blocos[i][j] --;
+
+        if (blocos[i][j]>0){
+            // The brick is weakened but still around. Give a single point.
+            score++;
+        } else {
+            // give player an extra point when the brick disappears
+            score += 2;
+            breakingSound.play();
+        }
+    }
+
+    function colisaoXComOsBlocos(){
+        var bumpedX = false;
+        for (var i=0; i < blocos.length; i++) {
+            for (var j=0; j < blocos[i].length; j++) {
+                if (blocos[i][j]){ // if brick is still visible
+                    var brickX = j * blocoWidth;
+                    var brickY = i * blocoHeight;
+                    if (
+                    // barely touching from left
+                            ((bolaX + bolaDeltaX + bolaRaio >= brickX) &&
+                                    (bolaX + bolaRaio <= brickX))
+                                    ||
+                                // barely touching from right
+                                    ((bolaX + bolaDeltaX - bolaRaio<= brickX + blocoWidth)&&
+                                            (bolaX - bolaRaio >= brickX + blocoWidth))
+                            ){
+                        if ((bolaY + bolaDeltaY -bolaRaio<= brickY + blocoHeight) &&
+                                (bolaY + bolaDeltaY + bolaRaio >= brickY)){
+                            // weaken brick and increase score
+                            retiraBloco(i,j);
+
+                            bumpedX = true;
+                        }
+                    }
+                }
+            }
+        }
+        return bumpedX;
+    }
+
+    function colisaoYComOsBlocos(){
+
+        var bumpedY = false;
+        for (var i=0; i < blocos.length; i++) {
+            for (var j=0; j < blocos[i].length; j++) {
+                if (blocos[i][j]){ // if brick is still visible
+                    var brickX = j * blocoWidth;
+                    var brickY = i * blocoHeight;
+                    if (
+                    // barely touching from below
+                            ((bolaY + bolaDeltaY - bolaRaio <= brickY + blocoHeight) &&
+                                    (bolaY - bolaRaio >= brickY + blocoHeight))
+                                    ||
+                                // barely touching from above
+                                    ((bolaY + bolaDeltaY + bolaRaio >= brickY) &&
+                                            (bolaY + bolaRaio <= brickY ))){
+                        if (bolaX + bolaDeltaX + bolaRaio >= brickX &&
+                                bolaX + bolaDeltaX - bolaRaio<= brickX + blocoWidth){
+                            // weaken brick and increase score
+                            retiraBloco(i,j);
+                            bumpedY = true;
+                        }
+                    }
+                }
+            }
+        }
+        return bumpedY;
+    }
+
+    function animate () {
+        context.clearRect(0,0,canvas.width,canvas.height);
+
+        criadorDeBlocos();
+        displayScoreBoard();
+
+        movendoBola();
+        movimentoJogador();
+
+        desenhaJogador();
+        desenhaBola();
+
+
+    }
+
+    var paddleDeltaX;
+    var paddleSpeedX = 10;
+
+    function movimentoJogador(){
+        if (paddleMove == 'LEFT'){
+            paddleDeltaX = -paddleSpeedX;
+        } else if (paddleMove == 'RIGHT'){
+            paddleDeltaX = paddleSpeedX;
+        } else {
+            paddleDeltaX = 0;
+        }
+        // If paddle reaches the ends, then don't let it move
+        if (paddleX + paddleDeltaX < 0 || paddleX + paddleDeltaX +jogadorWidth >canvas.width){
+            paddleDeltaX = 0;
+        }
+        paddleX = paddleX + paddleDeltaX;
+    }
+
+    var gameLoop;
+    var paddleMove;
+
+    function startGame(){
+        bolaDeltaY = -4;
+        bolaDeltaX = -2;
+        paddleMove = 'NONE';
+        paddleDeltaX = 0;
+
+        // call the animate() function every 200ms until clearInterval(gameLoop) is called
+        gameLoop = setInterval(animate,20);
+
+        // Start Tracking Keystokes
+        $(document).keydown(function(evt) {
+            if (evt.keyCode == 39) {
+                paddleMove = 'RIGHT';
+            } else if (evt.keyCode == 37){
+                paddleMove = 'LEFT';
+            }
+        });
+
+        $(document).keyup(function(evt) {
+            if (evt.keyCode == 39) {
+                paddleMove = 'NONE';
+            } else if (evt.keyCode == 37){
+                paddleMove = 'NONE';
+            }
+        });
+    }
+
+    function endGame(){
+        clearInterval(gameLoop);
+        context.fillText('GAME OVER',canvas.width/2,canvas.height/2);
+    }
+
+    startGame();
+});
+</script>
+</head>
+<body>
+<style type="text/css">
+    canvas {
+        border:1px solid black;
+        border-style: dashed;
+    }
+</style>
+<h1>UEA Pós de Games - Breakout</h1>
+<canvas id="canvas" width="400" height="500">
+Seu Browser não suporta HTML 5</canvas>
+</body>
+</html>
