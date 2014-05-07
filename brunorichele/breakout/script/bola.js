@@ -48,7 +48,7 @@ var bola = {
 			bola.baixo = !bola.baixo;
 			console.log("Colisao bloco");
 			var linha = (bola.y - bola.raio)/20;
-			var coluna = Math.round((bola.x - bola.raio)/60);
+			var coluna = Math.floor((bola.x - bola.raio)/60);
 			console.log("linha: " + linha + "coluna:" + coluna);
 			bloco.blocos[linha - 1][coluna] = 1;
 		}
