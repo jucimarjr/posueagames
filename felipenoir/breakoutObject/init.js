@@ -19,6 +19,7 @@ var posicaoXBola = geraPosicaoRandom(canvas.width);
 var bola = new Bola(ctx, posicaoXBola, canvas.width, canvas.height);
 var jogador = new Jogador(ctx, canvas.width, canvas.height);
 var inimigos = new Inimigos(ctx, canvas.width, canvas.height);
+var alvos = inimigos.inimigos;
 
 var isDireita = false;
 var isEsquerda = false;
@@ -48,13 +49,15 @@ function init() {
 }
 
 function gameLoop() {
+	// movimenta
 	bola.movimentaBola(janela.width);
 	jogador.movimentaJogador(isDireita, isEsquerda, canvas.width);
 
-	// Colisão
-	colisaoBolaJogador(bola, jogador);
-	colisaoBolaInimigos(bola, inimigos);
+	// verifica colisão
+	colisaoBolaJogador();
+	colisaoBolaInimigos();
 
+	// desenha
 	janela.desenhaJanela();
 	bola.desenhaBola();
 	jogador.desenhaJogador()
@@ -62,7 +65,7 @@ function gameLoop() {
 
 }
 
-function colisaoBolaJogador(bola, jogador) {
+function colisaoBolaJogador() {
 	if (bola.posY + bola.raio > canvas.height - jogador.height) {
 		if (bola.posX > jogador.posX
 				&& bola.posX < jogador.posX + jogador.width) {
@@ -73,18 +76,34 @@ function colisaoBolaJogador(bola, jogador) {
 	}
 }
 
-function colisaoBolaInimigos(bola, inimigos) {
-	var heightTotal = inimigos.height + inimigos.DISTANCIA;
-	var widthTotal = inimigos.width + inimigos.DISTANCIA;
-	var linha = Math.floor(bola.posY / heightTotal);
-	var coluna = Math.floor(bola.posX / widthTotal);
-	if (bola.posY < inimigos.QTDCOLUNAS * heightTotal && linha >= 0
-			&& coluna >= 0 && inimigos.inimigos[linha][coluna] == 1) {
-		// houve uma colisão
-		bola.velocidadeY = -bola.velocidadeY;
-		inimigos.inimigos[linha][coluna] = 0;
+function colisaoBolaInimigos() {
+	for (var i = 0; i < alvos.length; i++) {
+		for (var j = 0; j < alvos[i].length; j++) {
+			if (alvos[i][j] == 1) {
+				var alvoX = j * inimigos.width;
+				if (bola.posX + bola.raio > alvoX
+						&& bola.posX - bola.raio < alvoX + inimigos.width) {
+					var alvoY = i * inimigos.height;
+					if (colisaoAlvo(alvoY, alvoY + inimigos.height)) {
+						alvos[i][j] = 0;
+						bola.velocidadeY = -bola.velocidadeY;
+					}
+				}
+			}
+		}
 	}
+}
 
+function colisaoAlvo(top, bottom) {
+	return /* colisaoAlvoCima(top) || */colisaoAlvoBaixo(bottom);
+}
+
+function colisaoAlvoBaixo(bottom) {
+	return (bola.posY - bola.raio < bottom) && bola.velocidadeY < 0;
+}
+
+function colisaoAlvoCima(top) {
+	return (bola.posY + bola.raio > top) && bola.velocidadeY > 0;
 }
 
 function gameOver() {
