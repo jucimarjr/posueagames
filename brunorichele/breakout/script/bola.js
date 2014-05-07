@@ -82,8 +82,9 @@ var bola = {
 			bola.countFail++;
 			console.log(bola.countFail);
 			if(bola.countFail == 4){
+				jogador.derrota = true;
 				clearInterval(polling);
 			}
 		}	
-	}
+	}	
 };
