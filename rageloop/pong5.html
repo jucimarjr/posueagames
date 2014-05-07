@@ -133,6 +133,18 @@
                         }
                 }
                 
+                //colisao
+                if ((jogadorPosX <= bolaPosX + bolaRaio && jogadorPosX + barraWidth >= bolaPosX - bolaRaio)
+                	&& (jogadorPosY <= bolaPosY + bolaRaio && jogadorPosY + barraHeight >= bolaPosY - bolaRaio)) {
+                	bolaParaDireita = true;
+                }
+             
+                //colisao oponente
+                if ((oponentePosX <= bolaPosX + bolaRaio && oponentePosX + barraWidth >= bolaPosX - bolaRaio)
+                	&& (oponentePosY <= bolaPosY + bolaRaio && oponentePosY + barraHeight >= bolaPosY - bolaRaio)) {
+                	bolaParaDireita = false;
+                }
+                
                 if ((bolaPosY - bolaRaio <= 0) || (bolaPosY + bolaRaio > canvas.height)) {// se a bola bater em cima ou em baixo da tela...
                     bolaAngulo = bolaAngulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
                 }
@@ -145,22 +157,34 @@
                     bolaPosX -= velocidadeBola;// movemos a bola para a esquerda
                 }
                 
-                
-                
-                
                 if (oponenteParaCima) {
                     oponentePosY -= velocidadeOponente;
                     if (oponentePosY <= 0) {
                         oponenteParaCima = false;
                     }
-	            }
-	            else {
+	            } else {
                     oponentePosY += velocidadeOponente;
                     if (oponentePosY >= canvas.height - barraHeight) {
                         oponenteParaCima = true;
                     }
 	            }
+
+                if (bolaPosX + bolaRaio > canvas.width || bolaPosX - bolaRaio < 0) {
+                	
+                	if (bolaPosX - bolaRaio < 0) {
+                		pontosOponente++;
+                	} else {
+                		pontosJogador++;
+                	}
+                	
+                	bolaParaDireita = false;
+                	bolaPosX = canvas.width / 2;
+    	        	bolaPosY = canvas.height / 2;
+    	        	
+                }
                 
+                
+                              
                 // Desenha tudo na tela
                 context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
                                     

@@ -8,151 +8,92 @@
 	    <style type="text/css">
 	    	canvas {
 			  border:1px dashed #000;
-
 	    	}
 	    </style>
 	</head>
     
 	<body onload="init()">
-	    <canvas id="canvas" height="600" width="480">
-			Navegador não compatível com HTML5 Canvas
-	    </canvas>
-	
+	    <canvas id="canvas" height="600" width="480"> Navegador não compatível com HTML5 Canvas </canvas>
 	</body>
 	
 	<script>
 	
+var canvas, context;
 
-var canvas, context, 
- 	barraWidth, barraHeight,
+// Variáveis do jogoador e oponente
+var barraWidth, barraHeight,
 	jogadorPosX, jogadorPosY,
 	oponentePosX, oponentePosY,
-	bolaRaio, bolaPosX, bolaPosY,
-	pontosJogador, pontosOponente;
-	
-var velocidadeJogador;
-var teclaBaixoPressionada;
-var teclaCimaPressionada;
+	pontosJogador, pontosOponente,
+	velocidadeJogador;
 
+// Variáveis de posição e raio da bola
+var	bolaRaio, bolaPosX, bolaPosY;
 
 var canvas = document.getElementById("canvas"); 
 var context = canvas.getContext("2d"); 
 
-
-
 function init() {
-
+	// Configurar barra do Jogador e Oponente
 	barraWidth = 90;
 	barraHeight = 30;
 
-	
-	// Jogador
+	// Configurar posição do Jogador e Oponente
     jogadorPosX =  (canvas.width - barraWidth) / 2;
     jogadorPosY = canvas.height - barraHeight-10;
-    velocidadeJogador = 5;
-
-    // Oponente
     oponentePosX =  (canvas.width - barraWidth) / 2;
 	oponentePosY = 10;
 		
-	// Tamanho e posicionamento da bola
+	// Configurar tamanho e posicionamento da bola
 	bolaRaio = 10;
 	bolaPosX = canvas.width / 2;
 	bolaPosY = canvas.height / 2; 
 	
-	// Placar
+	// Configurar placar
 	pontosJogador = 0;
 	pontosOponente = 0;
 	
-	document.addEventListener('keyup', keyUp, false);     // Adiciona evento para o teclado
-	document.addEventListener('keydown', keyDown, false); // Adiciona evento para o teclado
-	
-	setInterval(gameLoop, 30);                            // Executa gameLoop a cada 30 frames
-	
+	// Realizar desenho de todos os elementos da tela
+	desenhar();
 }
-
-
-function keyUp(e){
-	if (e.keyCode == 38){
-		teclaCimaPressionada = false; // Soltou tecla cima
-	} 
-	else if (e.keyCode == 40){
-		teclaBaixoPressionada = false; // Soltou a tecla baixo
-	}
-	
-}
-
-function keyDown(e){
-	if (e.keyCode == 38){
-		teclaCimaPressionada = true; // Acertou a tecla cima
-	} 
-	else if (e.keyCode == 40){
-		teclaBaixoPressionada = true; // Acertou a tecla baixo
-	}
-}
-
-
-function gameLoop(){
-	
-		if (teclaCimaPressionada != teclaBaixoPressionada) {
-			if (teclaCimaPressionada) { // se for para cima
-				if (jogadorPosX > 0) { // se nao sair da tela
-					jogadorPosX -= velocidadeJogador; // muda a posicção
-				}
-			}
-		}
-		else { 
-			if (jogadorPosX < (canvas.width - barraWidth) ){
-				jogadorPosX += velocidadeJogador; // muda a posição
-			}
-		}
-		
-		desenhar();	
-
-}
-
-
-
 
 function desenhar(){
-
-
 	
-	// Jogadores
+	// Desenhar jogadores
 	context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);   // desenho do jogador
 	context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight); // desenho do oponente
 	
-	// Bola
+	// Desenhar bola
 	context.beginPath();                 						  // Inicia o modo de desenho
 	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, 2*Math.PI,true); // desenho da bola
 	context.closePath();						                  // Fim do modo de desenho
 	context.fill();
 	
-
-	// Placar
+	// Configura o desenho do placar
 	var pontosA = pontosJogador;
 	var pontosB = pontosOponente;
-	
+
+	// Se não foi definido algum ponto, atribuir o segundo "0" ao placar do Jogador
 	if (pontosA < 10 ) {
 		pontosA = "0" + pontosA;
 	}
+	// Se não foi definido algum ponto, atribuir o segundo "0" ao placar do Oponente
 	if (pontosB < 10 ) {
 		pontosB = "0" + pontosB;
 	}
-	
+
+	// Desenhar placar
 	context.font = "42pt Helvetica";
-//	context.fillStype = "#000000";
 	context.fillText(pontosA, canvas.width-70, canvas.height/2 + 50);
 	context.fillText(pontosB, 10, (canvas.height/2)-10);
-	
-	
-	// Linha Divisória
-	context.beginPath();                 // Inicia o modo de desenho
-	context.moveTo(0,canvas.height / 2); // Posiciona "lápis" para desenho
+		
+	// Desenhar linha divisória da quadra
+	context.beginPath();                 // Iniciar o modo de desenho
+	context.moveTo(0,canvas.height / 2); // Posicionar "lápis" para desenho
 	context.lineTo(canvas.width,canvas.height / 2); // 
 	context.strokeStyle = "#000000"; // Cor da divisória (opcional)
-	context.stroke();    // Aplica a divisória
-	context.closePath(); // Finaliza o caminho
+	context.stroke();    // Aplicar a divisória
+	context.closePath(); // Finalizar o caminho
 	
 	context.clear(0,0,canvas.width,canvas.height);
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Bandeira da Alemanha em HTML5</title>
+</head>
+
+<body onload="germanyFlag()">
+<canvas id="canvas" width="320" height="240">
+Navegador não compatível com HTML5 Canvas
+</canvas>
+
+<script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+
+    var width = canvas.width;
+    var height = canvas.height;
+
+
+function germanyFlag() {
+    var bandHeight = height / 3;
+
+    // Draw the black band
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, width, bandHeight);
+
+    // Draw the red band
+    ctx.fillStyle = "red";
+    ctx.fillRect(0, bandHeight, width, 2 * bandHeight);
+
+    // Drawa the yellow band
+    ctx.fillStyle = "yellow";
+    ctx.fillRect(0, 2 * bandHeight, width, height);
+}
+
+</script>
+    </body>
+</html>

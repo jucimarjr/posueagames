@@ -31,79 +31,99 @@ var velocidadeBarra;
 
 var teclaEnterPressionada;
 
-var acertouCima;
-var acertouBaixo;
-var acertouEsquerda;
-var acertouDireita;
+var acertouSuperiorEsquerda = false;
+var acertouInferiorEsquerda = false;
+var acertouInferiorDireita = false;
+var acertouSuperiorDireita = false;
 
 var canvas = document.getElementById("canvas"); 
-var context = canvas.getContext("2d"); 
+var context = canvas.getContext("2d");
+var movimentoInicial = true;
 
 function init() {
 
+	// Inicializa parametros da barra
 	barraWidth = 50;
 	barraHeight = 50;
-
-    barraPosX = (canvas.width - barraWidth) / 2;
-    barraPosY = (canvas.height - barraHeight) / 2;;
+    velocidadeBarra = 10;
+    barraPosX = 1;
+    barraPosY = 1;
     
-    velocidadeBarra = 5;
+/*
+    // superior esquerda
+    barraPosX = 1;
+    barraPosY = 1;
+    
+ 	// inferior esquerda
+    barraPosX = 1;
+    barraPosY = canvas.height - barraHeight -1;
+ 	
+ 	// inferior direita
+    barraPosX = canvas.width- barraWidth-1;
+    barraPosY = canvas.height - barraHeight -1;
 
-	document.addEventListener('keyup', keyUp, false);     // Adiciona evento para o teclado
-	document.addEventListener('keydown', keyDown, false); // Adiciona evento para o teclado
+ // superior direita
+    barraPosX = canvas.width- barraWidth-1;
+    barraPosY = 1;
+*/    
 	
 	setInterval(gameLoop, 30);                            // Executa gameLoop a cada 30 frames
 	
 }
 
-
-function keyUp(e){
-	if (e.keyCode == 13){
-		teclaEnterPressionada = false; // Soltou tecla ENTER
-	} 
-}
-
-function keyDown(e){
-	if (e.keyCode == 13){
-		teclaEnterPressionada = true; // Acertou a tecla ENTER
-	} 
-}
-
 function gameLoop(){
 	
-	if (acertouCima){
-		barraPosX -= velocidadeBarra;
-	} else if (acertouEsquerda){
-		barraPosY += velocidadeBarra;
-	} else if (acertouBaixo){
-		barraPosX += velocidadeBarra;
-	} else if (acertouDireita){
-		barraPosY -= velocidadeBarra;
+    // Superior esquerda
+    if ( barraPosX <= 1 && barraPosY <= 1 ){
+    	acertouSuperiorEsquerda = true;
+    	acertouInferiorEsquerda = false;
+    	acertouInferiorDireita = false;
+    	acertouSuperiorDireita = false;
+    }
+      
+ 	// Inferior esquerda
+	if ( barraPosX <= 1 &&  barraPosY >= canvas.height - barraHeight){
+		acertouSuperiorEsquerda = false;
+    	acertouInferiorEsquerda = true;
+    	acertouInferiorDireita = false;
+    	acertouSuperiorDireita = false;
 	}
 	
-	colisao();
-		
-	context.clearRect(0,0,canvas.width,canvas.height); // Limpar Tela
+ 	// Inferior direita
+ 	if (barraPosX >= canvas.width - barraWidth && barraPosY >= canvas.height - barraHeight){
+ 		acertouSuperiorEsquerda = false;
+    	acertouInferiorEsquerda = false;
+    	acertouInferiorDireita = true;
+    	acertouSuperiorDireita = false;
+ 	}
+
+	// Superior direita
+	if ( barraPosX >= canvas.width - barraWidth && barraPosY <= 1 ){
+		acertouSuperiorEsquerda = false;
+    	acertouInferiorEsquerda = false;
+    	acertouInferiorDireita = false;
+    	acertouSuperiorDireita = true;
+	}
+
+	if (acertouSuperiorEsquerda == true){
+		barraPosY += velocidadeBarra;  			 // Mover baixo
+	} 
+	if (acertouInferiorEsquerda){
+		barraPosX += velocidadeBarra;            // Mover direita
+	}
 	
-	// Barra
-	context.fillRect(barraPosX, barraPosY, barraWidth, barraHeight);   // desenho do jogador
-		
+ 	if (acertouInferiorDireita){
+ 		barraPosY -= velocidadeBarra;            // Mover cima
+ 	}
+
+	if (acertouSuperiorDireita){
+		barraPosX -= velocidadeBarra;    		 // Mover esquerda
+	}
+	
+	context.clearRect(0,0,canvas.width,canvas.height);				 // Limpar Tela
+	context.fillRect(barraPosX, barraPosY, barraWidth, barraHeight); // Desenho da barra
 }
 
-function colisao(){
-		
-	if (barraPosY <= 0){
-		acertouCima = true;
-	} else 	if (barraPosX >= 0  ){
-		acertouEsquerda = true; 
-	} else 	if (barraPosY >= canvas.height - barraHeight){
-		acertouBaixo = true;
-	} else 	if (barraPosX >= canvas.width - barraWidth ){
-		acertouDireita = true; 
-	} else {
-		acertouBaixo = true;
-	}
-}
 	</script>
 	
 </html>

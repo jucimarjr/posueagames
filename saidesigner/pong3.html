@@ -11,68 +11,89 @@ canvas {
 </style>
 </head>
 <body onload="init()">
- <canvas id="canvas" width="480" height="600">
-                        Navegador não compatível com HTML5 Canvas
-          </canvas>
+ <canvas id="canvas" width="600" height="480">
+   Navegador não compatível com HTML5 Canvas
+ </canvas>
  <script>
-		var canvas, context, barraWidth, barraHeight, jogadorPosX, jogadorPosY, F
-		bolaRaio, bolaPosX, bolaPosY, pontosJogador, pontosOponente,
-				teclaCimaPressionada, teclaBaixoPressionada, velocidadeJogador;
+		var canvas, context, barraWidth, barraHeight, jogadorPosX, jogadorPosY, bolaRaio, bolaPosX, bolaPosY, pontosJogador, pontosOponente, teclaCimaPressionada, teclaBaixoPressionada, oponenteParaCima, teclaEsquerdaPressionada, teclaDireitaPressionado, velocidadeOponente, velocidadeJogador;
 
 		function init() {
 
+			teclaDireitaPressionado = false;
+			teclaEsquerdaPressionada = false;
+			oponenteParaCima = false;
+			velocidadeOponente = 30;
 			velocidadeJogador = 15;
-			teclaCimaPressionada = false;
-			teclaBaixoPressionada = false;
-
 			pontosJogador = 0;
 			pontosOponente = 0;
 
 			canvas = document.getElementById("canvas");// procura o
 			context = canvas.getContext("2d");
 
-			barraWidth = 90;
-			barraHeight = 30;
+			barraWidth = 50;
+			barraHeight = 50;
 
-			jogadorPosX = (canvas.width - barraWidth) / 2;
-			jogadorPosY = 0;
+			jogadorPosX = 0;
+			jogadorPosY = (canvas.height - barraHeight);
 
 			oponentePosX = canvas.width - barraWidth;
 			oponentePosY = (canvas.height - barraHeight);
 
 			bolaRaio = 10;
 			bolaPosX = canvas.width / 2;
-			bolaPosY = canvas.height / 2;
+			bolaPosY = canvas.height - bolaRaio;
 
 			document.addEventListener('keyup', keyUp, false);
 			document.addEventListener('keydown', keyDown, false);
 			setInterval(gameLoop, 30);
 		}
+
 		function keyDown(e) {
-			if (e.keyCode == 37) { // up
+			if (e.keyCode == 38) { // up
 				teclaCimaPressionada = true;
-			} else if (e.keyCode == 39) { // down
+			} else if (e.keyCode == 40) { // down
 				teclaBaixoPressionada = true;
+			} else if (e.keyCode == 37) {
+				teclaEsquerdaPressionada = true;
+			} else if (e.keyCode == 39) {
+				teclaDireitaPressionado = true;
 			}
+
 		}
 
 		function keyUp(e) {
-			//alert(e.keyCode);
-			if (e.keyCode == 37) { // up
+			if (e.keyCode == 38) { // up
 				teclaCimaPressionada = false; // jogador soltou tecla cima
-			} else if (e.keyCode == 39) { // down
+			} else if (e.keyCode == 40) { // down
 				teclaBaixoPressionada = false; // jogador soltou tecla baixo
+			} else if (e.keyCode == 37) {
+				teclaEsquerdaPressionada = false;
+			} else if (e.keyCode == 39) {
+				teclaDireitaPressionado = false;
 			}
+
 		}
 
 		function gameLoop() {
 
 			if (teclaCimaPressionada != teclaBaixoPressionada) { // se o jogador estiver pressionando a tecla baixo ou cima
 				if (teclaCimaPressionada) { // se for para cima...
+					if (jogadorPosY > 0) { // se nÃ£o sair da tela...
+						jogadorPosY -= velocidadeJogador;// muda a posiÃ§Ã£o
+					}
+				} else if (teclaBaixoPressionada) { // se for para baixo...
+					if (jogadorPosY < (canvas.height - barraHeight)) {// se nÃ£o sair da tela...
+						jogadorPosY += velocidadeJogador;// muda a posiÃ§Ã£o
+					}
+				}
+			}
+
+			if (teclaEsquerdaPressionada != teclaDireitaPressionado) { // se o jogador estiver pressionando a tecla baixo ou cima
+				if (teclaEsquerdaPressionada) { // se for para cima...
 					if (jogadorPosX > 0) { // se nÃ£o sair da tela...
 						jogadorPosX -= velocidadeJogador;// muda a posiÃ§Ã£o
 					}
-				} else if (teclaBaixoPressionada) { // se for para baixo...
+				} else if (teclaDireitaPressionado) { // se for para baixo...
 					if (jogadorPosX < (canvas.width - barraWidth)) {// se nÃ£o sair da tela...
 						jogadorPosX += velocidadeJogador;// muda a posiÃ§Ã£o
 					}
@@ -82,45 +103,9 @@ canvas {
 			context.fillStyle = "green";
 			context.fillRect(0, 0, canvas.width, canvas.height);
 
-			// jogador e oponente
+			// jogador e oponente					 
 			context.fillStyle = "blue";
 			context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
-			context.fillStyle = "red";
-			context.fillRect(oponentePosX, oponentePosY, barraWidth,
-					barraHeight);
-
-			//linha divisoria
-			context.beginPath();
-			context.moveTo(0, canvas.height / 2);
-			context.lineTo(canvas.width, canvas.height / 2);
-			context.strokeStyle = "white";
-			context.stroke();
-			context.closePath();
-
-			// bola
-			context.fillStyle = "yellow";
-			context.beginPath();
-			context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true);
-			context.closePath();
-			context.fill();
-
-			//placar
-			var pontosA = pontosJogador;
-			var pontosB = pontosOponente;
-
-			if (pontosA < 10) {
-				pontosA = "0" + pontosA;
-			}
-			if (pontosB < 10) {
-				pontosB = "0" + pontosB
-			}
-			context.font = "42pt Helvetica";
-			context.fillStyle = "blue";
-			context.fillText(pontosA, 10, canvas.height / 2 - 10);
-			context.fillStyle = "red";
-			context
-					.fillText(pontosB, canvas.width - 70,
-							canvas.height / 2 + 50);
 
 		}
 	</script>
