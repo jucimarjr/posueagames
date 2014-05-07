@@ -29,7 +29,7 @@ var bola = {
 				(bola.x + bola.raio <= x + w)){
 				bola.baixo = false;
 			//	bola.baixo = !bola.baixo;
-				console.log("Colisao jogador");
+			//	console.log("Colisao jogador");
 			}
 			bola.y += bola.velocidade;
 		}
@@ -41,16 +41,24 @@ var bola = {
 			bola.angulo *= -1;
 		}
 		
-		console.log("x da bola:" + bola.x  + "y da bola: " + bola.y);
+		//console.log("x da bola:" + bola.x  + "y da bola: " + bola.y);
 		
 		//Colisao bloco
-		if(bola.y - bola.raio <= 100){
-			bola.baixo = !bola.baixo;
-			console.log("Colisao bloco");
-			var linha = (bola.y - bola.raio)/20;
+		if(bola.y - bola.raio <= 100 && bola.y >= 0){
+			
+		//	console.log("Colisao bloco");
+			var linha  = Math.floor((bola.y - bola.raio)/20);
 			var coluna = Math.floor((bola.x - bola.raio)/60);
 			console.log("linha: " + linha + "coluna:" + coluna);
-			bloco.blocos[linha - 1][coluna] = 1;
+
+			if(coluna >= 0 && linha > 0){
+				if(bloco.blocos[linha - 1][coluna] == 0){
+					bola.baixo = !bola.baixo;
+					bloco.blocos[linha - 1][coluna] = 1;
+				}
+			}else{
+				bola.baixo = !bola.baixo;
+			}
 		}
 		bola.colisaoChao(height, polling);
 		// TODO: colisão blocos
