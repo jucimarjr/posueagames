@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+	    <meta charset="UTF-8" />
+	    <title>BREAK OUT!</title>
+	    <style type="text/css">
+		body{
+			background-color:black;
+		}
+		canvas{
+			border:#333333 solid 30px;
+			background-color:#999999;
+			margin-top:20px;
+			margin-left:180px;	
+		}
+	    </style>
+	</head>
+    
+	<body onload="init()">
+	    <canvas id="canvas" height="600" width="480"> Navegador não compatível com HTML5 Canvas </canvas>
+	</body>
+	
+	<script>
+	
+var canvas = document.getElementById("canvas"); 
+var context = canvas.getContext("2d"); 
+
+// Posição do Mouse
+var mousePos; 
+
+// Status do jogo
+var pause = false;
+
+// Jogador 
+var barraWidth, barraHeight,
+	jogadorPosX, jogadorPosY,
+	aceleracaoJogador, velocidadeJogador,
+	pontosJogador;
+
+// Posição e raio da bola
+var	bolaRaio, velocidadeBola,
+    bolaPosX, bolaPosY,
+    direcaoBolaX, direcaoBolaY,
+    anguloBola;
+
+
+// Detecção movimento da barra
+var teclaEnterPressionada;
+var teclaEsqPressionada;
+var teclaDirPressionada;
+
+
+function init() {
+
+	pause = true;
+	
+	// Inicializa controle de tecla pressionada
+	teclaEsqPressionada = false;
+	teclaDirPressionada = false;
+
+	// Configurar barra do Jogador
+	barraWidth = 90;
+	barraHeight = 15;
+
+	// Configurar posição do Jogador
+    jogadorPosX =  (canvas.width - barraWidth) / 2;
+    jogadorPosY = canvas.height - barraHeight-1;
+    velocidadeJogador = 10;
+    		
+	// Configurar tamanho, posicionamento e velocidade da bola
+	bolaRaio = 10;
+    velocidadeBola = 3;
+    anguloBola = -6;
+    reiniciarBola();
+    direcaoBolaX = 1;
+    direcaoBolaY = 1; 
+	
+	// Configurar placar
+	pontosJogador = 0;
+	
+	document.addEventListener('keyup', keyUp, false);     // Adiciona evento para o teclado
+	document.addEventListener('keydown', keyDown, false); // Adiciona evento para o teclado
+	document.addEventListener('mousemove', mouse, false);
+	
+	setInterval(gameLoop, 5);                            // Executa gameLoop a cada 30 frames
+
+}
+
+
+
+function gameLoop(){
+	
+	// Relizar movimento da barra
+	movimentarBarra();
+	
+	// Relizar movimento da bola
+	movimentarBola();
+	
+	// Realizar desenho de todos os elementos da tela
+	desenhar();
+}
+
+function movimentarBarra(){
+	if (teclaEsqPressionada!=teclaDirPressionada){
+		if (teclaEsqPressionada){
+			jogadorPosX = jogadorPosX - velocidadeJogador;
+			if (jogadorPosX < 0){
+				jogadorPosX = 1;
+			}
+		} 
+		if (teclaDirPressionada){
+			jogadorPosX = jogadorPosX + velocidadeJogador;
+			if (jogadorPosX > canvas.width - barraWidth){
+				jogadorPosX = canvas.width - barraWidth -1;
+			}
+		}
+		mousePos = -1;
+	}
+	
+	if (teclaEsqPressionada == false  && teclaDirPressionada == false){
+		if (mousePos >= 0 ){
+			jogadorPosX = mousePos - barraWidth/2;
+		}
+		if (jogadorPosX <= 1){
+			jogadorPosX = 1;
+		}
+		if (jogadorPosX > canvas.width - barraWidth){
+			jogadorPosX = canvas.width - barraWidth - 1;
+		}
+	
+	}
+}
+
+function movimentarBola(){
+	
+	// Verificar colisão com a ESQUERDA
+	if (bolaPosX - bolaRaio <= 1){ 
+	    direcaoBolaX = direcaoBolaX * -1;
+	}
+	
+	// Verificar colisão com a DIREITA
+	if (bolaPosX + bolaRaio >= canvas.width){
+	    direcaoBolaX = direcaoBolaX * -1;
+	}
+		
+	// Verificar colisão ACIMA
+	if (bolaPosY <= bolaRaio ){
+		direcaoBolaY = direcaoBolaY * -1;
+	}
+	
+	// Verificar colisão com JOGADOR
+	if (bolaPosY + bolaRaio >= jogadorPosY 
+		&& bolaPosX + bolaRaio >= jogadorPosX  
+		&& bolaPosX + bolaRaio <= jogadorPosX + barraWidth){
+		direcaoBolaY = direcaoBolaY * -1; 
+	}
+	
+	// CONDIÇÃO DE DERROTA
+	if (bolaPosY >= canvas.height - bolaRaio){
+		reiniciarBola();
+	}
+	
+	bolaPosX = bolaPosX +(velocidadeBola*direcaoBolaX);
+    bolaPosY = bolaPosY +(velocidadeBola*direcaoBolaY);
+    
+    //direcaoBola =  2*Math.PI;
+    //direcaoBola = Math.floor(Math.random() * 21) - 10;
+}
+
+function reiniciarBola(){
+	bolaPosX = jogadorPosX + barraWidth/2;
+	bolaPosY = jogadorPosY - bolaRaio;
+	//bolaPosX = 200;
+	//bolaPosY = 200;
+}
+
+
+function desenhar(){
+
+	// Limpar tela
+	context.clearRect(0,0,canvas.width,canvas.height);
+	
+	// Desenhar jogador
+	context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);   // desenho do jogador
+	
+	// Desenhar bola
+	context.beginPath();                 						  // Inicia o modo de desenho
+	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, 2*Math.PI,true); // desenho da bola
+	context.closePath();						                  // Fim do modo de desenho
+	context.fill();
+	
+	// Configura o desenho do placar
+	var pontos = pontosJogador;
+
+	// Se não foi definido algum ponto, atribuir o segundo "0" ao placar do Jogador
+	if (pontos < 10 ) {
+		pontos = "000" + pontos;
+	} else if (pontos < 100 ){
+		pontos = "00" + pontos;
+	} else if (pontos < 1000 ){
+		pontos = "0" + pontos;
+	}
+
+	// Desenhar placar
+	context.font = "42pt Helvetica";
+	context.fillText(pontos, canvas.width-133, 50);
+
+	// context.clear(0,0,canvas.width,canvas.height);
+}
+
+
+function mouse(e){
+	mousePos = e.clientX - canvas.getBoundingClientRect().left;
+   
+}
+
+//Capturar posição do mouse
+function keyUp(e){
+	if (e.keyCode == 37){   
+		teclaEsqPressionada = false; // Soltou a tecla ESQUERDA
+	}
+	else if (e.keyCode == 39){
+		teclaDirPressionada = false; // Soltou a tecla DIRETIA
+	}
+	else if (e.keyCode == 13){
+		teclaEnterPressionada = false; // Soltou a tecla ENTER
+	}
+}
+
+function keyDown(e){
+	if (e.keyCode == 37){
+		teclaEsqPressionada = true; // Acertou a tecla ESQUERDA
+	}
+	else if (e.keyCode == 39){
+		teclaDirPressionada = true; // Acertou a tecla DIREITA
+	}
+	else if (e.keyCode == 13){
+		teclaEnterPressionada = true; // Acertou a tecla ENTER
+	}
+}
+
+
+
+
+	</script>
+	
+</html>
