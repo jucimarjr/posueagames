@@ -47,14 +47,14 @@ var bola = {
 		if(bola.y - bola.raio <= 100 && bola.y >= 0){
 			
 		//	console.log("Colisao bloco");
-			var linha  = Math.floor((bola.y - bola.raio)/20);
+			var linha  = Math.floor(((bola.y - bola.raio)-20)/20);
 			var coluna = Math.floor((bola.x - bola.raio)/60);
 			console.log("linha: " + linha + "coluna:" + coluna);
 
-			if(coluna >= 0 && linha > 0){
-				if(bloco.blocos[linha - 1][coluna] == 0){
+			if(coluna >= 0 && linha >= 0){
+				if(bloco.blocos[linha][coluna] == 0){
 					bola.baixo = !bola.baixo;
-					bloco.blocos[linha - 1][coluna] = 1;
+					bloco.blocos[linha][coluna] = 1;
 				}
 			}else{
 				bola.baixo = !bola.baixo;
