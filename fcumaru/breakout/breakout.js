@@ -3,7 +3,7 @@ var canvas, context;
 
 var keyLeft, keyRight;
 
-var player, ball;
+var player, ball, blocks;
 
 function init() {
 	canvas = document.getElementById("canvas");
@@ -14,12 +14,19 @@ function init() {
 	
 	player = new player(width / 2, height, 100, 10, 10);
 	ball = new ball(width / 2, height / 2, 5, 15);
-
+	
 	bolaTempo = 0;
 	bolaAngulo = Math.floor(Math.random() * 21) - 10;
 	
 	blocosWidth = 80;
 	blocosHeight = 10;
+
+	blocks = new Array();
+	for (var j = 100; j < 180; j += 20) {
+		for (var i = 0; i < width; i += 100) {
+			blocks.push(new block(i + 10, j, 80, 10));
+		}
+	}
 
 	keyRight = false;
 	keyLeft = false;
@@ -52,12 +59,7 @@ function geraBarras(x, y) {
 
 function gameLoop() {
 	context.clearRect(0, 0, width, height);
-
-	for (var j = 100; j < 180; j += 20) {
-		for (var i = 0; i < width; i += 100) {
-			geraBarras(i + 10, j);
-		}
-	}
+	
 	if ((keyRight) && ((player.x + player.width) <= width)) {
 		player.x += 10;
 	}
@@ -89,6 +91,11 @@ function gameLoop() {
 
 	// Jogador
 	player.draw(context);
+
+	// Blocos
+	for (var i = 0; i < blocks.length; i++) {
+		blocks[i].draw(context);
+	}
 
 	// Titulo
 	context.font = "21pt Helvetica";
