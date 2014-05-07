@@ -19,7 +19,7 @@
 	</head>
     
 	<body onload="init()">
-	    <canvas id="canvas" height="600" width="480"> Navegador não compatível com HTML5 Canvas </canvas>
+	    <canvas id="canvas" height="600" width="680"> Navegador não compatível com HTML5 Canvas </canvas>
 	</body>
 	
 	<script>
@@ -46,10 +46,12 @@ var	bolaRaio, velocidadeBola,
     anguloBola;
 
 
-// Detecção movimento da barra
+// Detecção das teclas
 var teclaEnterPressionada;
+var contadorTeclaEnter;
 var teclaEsqPressionada;
 var teclaDirPressionada;
+
 
 
 function init() {
@@ -59,6 +61,8 @@ function init() {
 	// Inicializa controle de tecla pressionada
 	teclaEsqPressionada = false;
 	teclaDirPressionada = false;
+	teclaEnterPressionada = false;
+	contadorTeclaEnter = 0;
 
 	// Configurar barra do Jogador
 	barraWidth = 90;
@@ -66,16 +70,14 @@ function init() {
 
 	// Configurar posição do Jogador
     jogadorPosX =  (canvas.width - barraWidth) / 2;
-    jogadorPosY = canvas.height - barraHeight-1;
+    jogadorPosY = canvas.height - barraHeight;
     velocidadeJogador = 10;
     		
 	// Configurar tamanho, posicionamento e velocidade da bola
 	bolaRaio = 10;
-    velocidadeBola = 3;
+    velocidadeBola = 10;
     anguloBola = -6;
     reiniciarBola();
-    direcaoBolaX = 1;
-    direcaoBolaY = 1; 
 	
 	// Configurar placar
 	pontosJogador = 0;
@@ -84,7 +86,7 @@ function init() {
 	document.addEventListener('keydown', keyDown, false); // Adiciona evento para o teclado
 	document.addEventListener('mousemove', mouse, false);
 	
-	setInterval(gameLoop, 5);                            // Executa gameLoop a cada 30 frames
+	setInterval(gameLoop, 40);                            // Executa gameLoop a cada 30 frames
 
 }
 
@@ -92,11 +94,20 @@ function init() {
 
 function gameLoop(){
 	
-	// Relizar movimento da barra
-	movimentarBarra();
+	if (teclaEnterPressionada){
+		if (contadorTeclaEnter == 0)
+			contadorTeclaEnter++;
+		if (contadorTeclaEnter > 1)
+			contadorTeclaEnter = 0;
+	}
 	
-	// Relizar movimento da bola
-	movimentarBola();
+	if (contadorTeclaEnter == 1){
+		// Relizar movimento da barra
+		movimentarBarra();
+	
+		// Relizar movimento da bola
+		movimentarBola();
+	}
 	
 	// Realizar desenho de todos os elementos da tela
 	desenhar();
@@ -107,13 +118,13 @@ function movimentarBarra(){
 		if (teclaEsqPressionada){
 			jogadorPosX = jogadorPosX - velocidadeJogador;
 			if (jogadorPosX < 0){
-				jogadorPosX = 1;
+				jogadorPosX = 0;
 			}
 		} 
 		if (teclaDirPressionada){
 			jogadorPosX = jogadorPosX + velocidadeJogador;
 			if (jogadorPosX > canvas.width - barraWidth){
-				jogadorPosX = canvas.width - barraWidth -1;
+				jogadorPosX = canvas.width - barraWidth ;
 			}
 		}
 		mousePos = -1;
@@ -124,10 +135,10 @@ function movimentarBarra(){
 			jogadorPosX = mousePos - barraWidth/2;
 		}
 		if (jogadorPosX <= 1){
-			jogadorPosX = 1;
+			jogadorPosX = 0;
 		}
 		if (jogadorPosX > canvas.width - barraWidth){
-			jogadorPosX = canvas.width - barraWidth - 1;
+			jogadorPosX = canvas.width - barraWidth;
 		}
 	
 	}
@@ -151,7 +162,7 @@ function movimentarBola(){
 	}
 	
 	// Verificar colisão com JOGADOR
-	if (bolaPosY + bolaRaio >= jogadorPosY 
+	if (bolaPosY + bolaRaio >= jogadorPosY - bolaRaio 
 		&& bolaPosX + bolaRaio >= jogadorPosX  
 		&& bolaPosX + bolaRaio <= jogadorPosX + barraWidth){
 		direcaoBolaY = direcaoBolaY * -1; 
@@ -170,12 +181,11 @@ function movimentarBola(){
 }
 
 function reiniciarBola(){
+    direcaoBolaX = 1;
+    direcaoBolaY = -1; 
 	bolaPosX = jogadorPosX + barraWidth/2;
-	bolaPosY = jogadorPosY - bolaRaio;
-	//bolaPosX = 200;
-	//bolaPosY = 200;
+	bolaPosY = jogadorPosY - 1.2*bolaRaio;
 }
-
 
 function desenhar(){
 
