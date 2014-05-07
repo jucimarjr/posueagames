@@ -3,7 +3,7 @@ var canvas, context;
 
 var keyLeft, keyRight;
 
-var player;
+var player, ball;
 
 function init() {
 	canvas = document.getElementById("canvas");
@@ -13,17 +13,13 @@ function init() {
 	height = canvas.height;
 	
 	player = new player(width / 2, height, 100, 10, 10);
+	ball = new ball(width / 2, height / 2, 5, 15);
 
 	bolaTempo = 0;
 	bolaAngulo = Math.floor(Math.random() * 21) - 10;
-	velocidadeBola = 15;
-	bolaPosX = width / 2;
-	bolaPosY = height / 2;
-
+	
 	blocosWidth = 80;
 	blocosHeight = 10;
-
-	bolaRaio = 5;
 
 	keyRight = false;
 	keyLeft = false;
@@ -72,9 +68,9 @@ function gameLoop() {
 
 	// Bola
 	if (bolaTempo <= 0) {
-		if ((bolaPosY - bolaRaio) <= (player.y + player.height)) {
-			if ((bolaPosX + bolaRaio > player.x)
-					&& (bolaPosX - bolaRaio < player.x + player.width)) {
+		if ((ball.y - ball.radius) <= (player.y + player.height)) {
+			if ((ball.x + ball.radius > player.x)
+					&& (ball.x - ball.radius < player.x + player.width)) {
 				bolaParaBaixo = true;
 				if (keyLeft) {
 					bolaAngulo = Math.floor(Math.random() * 10) - 9;
@@ -84,11 +80,11 @@ function gameLoop() {
 			}
 		}
 	}
-
+	
 	if (bolaParaBaixo) {
-		bolaPosY += velocidadeBola;
+		ball.y += ball.speed;
 	} else {
-		bolaPosY -= velocidadeBola;
+		ball.y -= ball.speed;
 	}
 
 	// Jogador
@@ -108,11 +104,7 @@ function gameLoop() {
 	context.closePath();
 
 	// Bola
-	context.beginPath();
-	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, 2 * Math.PI, true);
-	context.fillStyle = "red";
-	context.fill();
-
+	ball.draw(context);
 }
 
 function ball(x, y, radius, speed) {
