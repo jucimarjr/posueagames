@@ -24,14 +24,7 @@ var bola = {
 	atualizar : function(y, x, w, width, height, polling){		
 		// Movimentação bola
 		if(bola.baixo){
-			// Colisão jogador
-			if((bola.y + bola.raio >= y) && 
-				(bola.x - bola.raio >= x) && 
-				(bola.x + bola.raio <= x + w)){
-				bola.baixo = false;
-			//	bola.baixo = !bola.baixo;
-			//	console.log("Colisao jogador");
-			}
+			bola.colisaoJogador(y, x, w);
 			bola.y += bola.velocidade;
 		}
 		else {
@@ -41,13 +34,33 @@ var bola = {
 		if(bola.x - bola.raio <= 0 || bola.x + bola.raio >= width){
 			bola.angulo *= -1;
 		}
-		
-		//console.log("x da bola:" + bola.x  + "y da bola: " + bola.y);
-		
 		//Colisao bloco
-		if(bola.y - bola.raio <= 100 && bola.y >= 0){
-			
-		//	console.log("Colisao bloco");
+		bola.colisaoBloco();
+		//Colisao chao
+		bola.colisaoChao(height, polling);
+		//Altera o angulo da bola
+		bola.x += bola.angulo;	
+	},
+	clear : function()
+	{
+		bola.x = bola.resetX;
+		bola.y = bola.resetY;	
+		bola.baixo = false;
+		bola.angulo = 5;
+		bola.velocidade = 10;		
+	},
+	colisaoJogador : function(y, x, w){
+		// Colisão jogador
+		if((bola.y + bola.raio >= y) && 
+			(bola.x - bola.raio >= x) && 
+			(bola.x + bola.raio <= x + w)){
+			bola.baixo = false;
+		//	console.log("Colisao jogador");
+		}	
+	},
+	colisaoBloco : function(){
+		//Colisao bloco
+		if(bola.y - bola.raio <= 100 && bola.y >= 0){			
 			var linha  = Math.floor(((bola.y - bola.raio)-20)/20);
 			var coluna = Math.floor((bola.x - bola.raio)/60);
 			console.log("linha: " + linha + "coluna:" + coluna);
@@ -60,18 +73,7 @@ var bola = {
 			}else{
 				bola.baixo = !bola.baixo;
 			}
-		}
-		bola.colisaoChao(height, polling);
-		// TODO: colisão blocos
-		bola.x += bola.angulo;	
-	},
-	clear : function()
-	{
-		bola.x = bola.resetX;
-		bola.y = bola.resetY;	
-		bola.baixo = false;
-		bola.angulo = 5;
-		bola.velocidade = 10;		
+		}	
 	},
 	colisaoChao : function(height, polling){
 		//Colisao chao
