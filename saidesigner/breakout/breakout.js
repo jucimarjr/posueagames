@@ -29,7 +29,7 @@ BreakoutGame.prototype.KEY_RIGHT = 39;
 BreakoutGame.prototype.initBars = function() {
 
 	var BAR_Y_OFFSET = 120;
-	var BAR_NCOL = 15;
+	var BAR_NCOL = 30;
 	var BAR_NLIN = 6;
 	var BAR_SPACE = 0;
 	var BAR_WIDTH = (this.width - ((BAR_NCOL + 1) * BAR_SPACE || 1)) / BAR_NCOL;
@@ -116,8 +116,23 @@ BreakoutGame.prototype.start = function() {
 };
 
 BreakoutGame.prototype.loop = function() {
+	this.checkCollison();
 	this.animate();
 	this.paint();
+};
+
+BreakoutGame.prototype.checkCollison = function() {
+
+	this.ball.checkCollisionWithParent();
+
+	for ( var i in this.items) {
+		if (this.ball.checkCollision(this.items[i])) {
+			if (this.items[i] != this.player) {
+				this.items.splice(i, 1);
+			}
+			break;
+		}
+	}
 };
 
 BreakoutGame.prototype.keyDown = function(event) {
@@ -166,6 +181,72 @@ BreakoutGame.prototype.keyUp = function(event) {
 	}
 };
 
+/**
+ * Ball Object
+ * 
+ */
+
+function Ball(x, y, radius) {
+	Circle.call(this, x, y, radius);
+}
+
+Ball.prototype = new Circle();
+Ball.prototype.constructor = Ball;
+
+Ball.prototype.checkCollisionWithParent = function() {
+
+	if (this.x - this.radius <= this.parent.x
+			|| this.x + this.radius >= this.parent.x + this.parent.width) {
+		this.velocity.x *= -1;
+	}
+
+	if (this.y - this.radius <= this.parent.y) {
+		this.velocity.y *= -1;
+	}
+
+	if (this.y + this.radius >= this.parent.y + this.parent.height) {
+		this.velocity.y *= -1;
+	}
+};
+
+Ball.prototype.checkCollision = function(drawable) {
+
+	if (!(drawable instanceof Drawable) || drawable == this) {
+		return false;
+	}
+
+	var result = false;
+
+	if (this.y >= drawable.y && this.y <= drawable.y + drawable.height) {
+		if (this.velocity.x > 0) {
+			if (this.x + this.radius >= drawable.x
+					&& this.x + this.radius <= drawable.x + drawable.width) {
+				this.velocity.x *= -1;
+				result = true;
+			}
+		} else if (this.x - this.radius >= drawable.x
+				&& this.x - this.radius <= drawable.x + drawable.width) {
+			this.velocity.x *= -1;
+			result = true;
+		}
+	}
+
+	if (this.x >= drawable.x && this.x <= drawable.x + drawable.width) {
+		if (this.velocity.y > 0) {
+			if (this.y + this.radius >= drawable.y
+					&& this.y + this.radius <= drawable.y + drawable.height) {
+				this.velocity.y *= -1;
+				result = true;
+			}
+		} else if (this.y - this.radius >= drawable.y
+				&& this.y - this.radius <= drawable.y + drawable.height) {
+			this.velocity.y *= -1;
+			result = true;
+		}
+	}
+
+	return result;
+};
 /*
  * Player Object
  * 
@@ -194,7 +275,6 @@ Player.prototype.animate = function() {
 	} else {
 		this.x = this.parent.width - this.width;
 	}
-
 };
 
 Player.prototype.turnLeft = function() {

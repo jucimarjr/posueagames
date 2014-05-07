@@ -76,29 +76,28 @@ Board.prototype.animate = function() {
 };
 
 /**
- * Ball Object
+ * Circle Object
  */
-function Ball(x, y, radius) {
+function Circle(x, y, radius) {
 
 	Drawable.call(this, x, y, radius * 2, radius * 2);
 
 	this.radius = radius;
 }
 
-Ball.prototype = new Drawable();
-Ball.prototype.constructor = Ball;
-Ball.prototype.radius = 0;
+Circle.prototype = new Drawable();
+Circle.prototype.constructor = Circle;
+Circle.prototype.radius = 0;
 
-Ball.prototype.paint = function(canvas) {
+Circle.prototype.paint = function(canvas) {
 
 	canvas.fillStyle = this.color;
 	canvas.beginPath();
-	canvas.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-	this.x += 5;
+	canvas.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);	
 	canvas.fill();
 };
 
-Ball.prototype.animate = function() {
+Circle.prototype.animate = function() {
 	this.x += this.velocity.x;
 	this.y += this.velocity.y;
 };
