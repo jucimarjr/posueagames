@@ -8,6 +8,11 @@ function Drawable(x, y, width, height) {
 	this.y = y;
 	this.width = width;
 	this.height = height;
+	this.velocity = {
+		x : 0,
+		y : 0,
+		a : 0 // acceleration
+	};
 }
 
 Drawable.prototype.color = 'black';
@@ -16,10 +21,7 @@ Drawable.prototype.y = 0;
 Drawable.prototype.width = 0;
 Drawable.prototype.height = 0;
 Drawable.prototype.parent = null;
-Drawable.prototype.velocity = {
-	x : 0,
-	y : 0
-};
+Drawable.prototype.velocity = null;
 
 Drawable.prototype.paint = function(canvas) {
 };
@@ -53,6 +55,7 @@ Board.prototype.add = function(item) {
 		item.setParent(this);
 		this.items.push(item);
 	}
+	return item;
 };
 
 Board.prototype.paint = function() {
@@ -91,6 +94,7 @@ Ball.prototype.paint = function(canvas) {
 	canvas.fillStyle = this.color;
 	canvas.beginPath();
 	canvas.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+	this.x += 5;
 	canvas.fill();
 };
 
