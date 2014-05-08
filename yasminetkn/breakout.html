@@ -4,14 +4,13 @@
     <title>BreakOut UEA - GAMES</title>
     <style type="text/css">
         canvas {
-
             border:1px dashed #000000;
         }
     </style>
 </head>
 <body onload="init()">
 
-<canvas id="canvas" width="600" height="480">
+<canvas id="canvas" width="1024" height="768">
     Navegador não compatível com HTML5 Canvas
 </canvas>
 <script>
@@ -32,13 +31,15 @@
    var blocoHeight = 20;
    var blocoWidth = canvas.width/blocosPorLinha;
    var scoreJogador = 0;
-   var ballX = 300;
-   var ballY = 300;
+
+   var bolaX = 300;
+   var bolaY = 300;
+
    var paddleX = 200;
    var paddleY = 460;
 
-   var paddleWidth = 100;
-   var paddleHeight = 15;
+   var jogadorWidth = 100;
+   var jogadorHeight = 15;
 
    var paddleDeltaX = 0;
    var paddleDeltaY = 0;
@@ -51,7 +52,12 @@
        [1,1,3,1,0,1,1,1],
        [2,1,2,1,2,1,0,1],
        [1,2,1,1,0,3,1,1],
-       [2,0,0,0,0,1,1,2]
+       [2,0,0,0,0,0,0,2],
+       [2,0,0,0,0,0,0,2],
+       [1,1,1,1,1,1,1,2],
+       [1,1,3,1,0,1,1,1],
+       [2,1,2,1,2,1,0,1],
+       [1,2,1,1,0,3,1,1]
    ];
 
    // criador dos blocos
@@ -99,10 +105,10 @@
    }
 
    function desenhaJogador(){
-       barraWidth = 90;
+       barraWidth = 180;
        barraHeight = 30;
 
-       jogadorPosX = (canvas.width - barraWidth)/2 //centralizando o jogador na tela eixo X em baixo;
+       jogadorPosX = (canvas.width - barraWidth)/2; //centralizando o jogador na tela eixo X em baixo;
        jogadorPosY = canvas.height-barraHeight;//colocando o jogado para baixo eixo Y
 
        //desenhando o Jogador
@@ -122,110 +128,7 @@
        context.fillText('Placar: '+scoreJogador,10,canvas.height-5);
 
    }
-   var ballDeltaX;
-   var ballDeltaY;
 
-   function moveBall(){
-       // First check if we will bump into something
-
-       // If top of the ball touches the top then reverse Y direction
-       if (ballY + ballDeltaY - bolaRaio < 0){
-           ballDeltaY = -ballDeltaY;
-       }
-
-       // If the bottom of the ball touches the bottom of the screen then end the game
-       if (ballY + ballDeltaY + bolaRaio > canvas.height){
-           endGame();
-       }
-       // If side of ball touches either side of the wall then reverse X direction
-       //left of ball moves too far left
-       if ((ballX + ballDeltaX - bolaRaio < 0) ||
-           //or right side of ball moves too far right
-               (ballX + ballDeltaX + bolaRaio > canvas.width)){
-           ballDeltaX = -ballDeltaX;
-       }
-
-       // if bottom of ball reaches the top of paddle,
-       if (ballY + ballDeltaY + bolaRaio >= paddleY){
-           // and it is positioned between the two ends of the paddle (is on top)
-           if (ballX + ballDeltaX >= paddleX &&
-                   ballX + ballDeltaX <= paddleX + barraWidth){
-               ballDeltaY = - ballDeltaY;
-           }
-       }
-
-       // Move the ball
-       ballX = ballX + ballDeltaX;
-       ballY = ballY + ballDeltaY;
-   }
-
-   function animate () {
-       context.clearRect(0,0,canvas.width,canvas.height);
-       moveBall();
-       movePaddle();
-       desenhaJogador();
-       desenhaBola();
-       //createBricks();
-       //displayScoreBoard();
-   }
-
-   var paddleDeltaX;
-   var paddleSpeedX = 10;
-
-   function movePaddle(){
-       if (paddleMove == 'LEFT'){
-           paddleDeltaX = -paddleSpeedX;
-       } else if (paddleMove == 'RIGHT'){
-           paddleDeltaX = paddleSpeedX;
-       } else {
-           paddleDeltaX = 0;
-       }
-       // If paddle reaches the ends, then don't let it move
-       if (paddleX + paddleDeltaX < 0 || paddleX + paddleDeltaX +barraWidth >canvas.width){
-           paddleDeltaX = 0;
-       }
-       paddleX = paddleX + paddleDeltaX;
-   }
-
-   var gameLoop;
-   var paddleMove;
-
-   function startGame(){
-       ballDeltaY = -4;
-       ballDeltaX = -2;
-       paddleMove = 'NONE';
-       paddleDeltaX = 0;
-
-       // call the animate() function every 200ms until clearInterval(gameLoop) is called
-       gameLoop = setInterval(animate,20);
-//
-//       keyDown();
-//       keyUp();
-
-   }
-
-   function endGame(){
-       clearInterval(gameLoop);
-       context.fillText('The End!!!!',canvas.width/2,canvas.height/2);
-   }
-
-
-   // Start Tracking Keystokes
-   function KeyDown(evt) {
-       if (evt.keyCode == 39) {
-           paddleMove = 'RIGHT';
-       } else if (evt.keyCode == 37){
-           paddleMove = 'LEFT';
-       }
-   }
-
-   function KeyUp(evt) {
-       if (evt.keyCode == 39) {
-           paddleMove = 'NONE';
-       } else if (evt.keyCode == 37){
-           paddleMove = 'NONE';
-       }
-   }
 
 
    function init(){
@@ -238,7 +141,6 @@
        desenhaJogador();
        desenhaBola();
        criadorDeBlocos();
-       startGame();
     }
 
 
