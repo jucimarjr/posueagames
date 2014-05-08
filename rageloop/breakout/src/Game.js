@@ -32,7 +32,7 @@ Game.prototype.init = function () {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
 
-    this.player = new Player((this.width - 40) / 2, this.height - 30, 80, 15);
+    this.player = new Player((this.width - 40) / 2, this.height - 30, 80, 15, ImageLoader.get('player'));
 
     this.ball = new Ball(this.width / 2, this.height / 2, 10);
     this.ball.speed = 15;

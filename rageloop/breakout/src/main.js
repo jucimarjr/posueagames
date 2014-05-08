@@ -9,8 +9,15 @@ function init() {
     document.addEventListener('keyup', keyUp, false);
     document.addEventListener('keydown', keyDown, false);
 
-    game.init();
-    game.start();
+    ImageLoader.load({
+        'player': 'assets/player_tron.png',
+        'brick': 'assets/bricks_tron60x20.png'
+    }, function(){
+
+        game.init();
+        game.start();
+
+    });
 }
 
 //===============================================================

@@ -1,9 +1,10 @@
-function Bar(x, y, width, height, cor) {
-    this.x = x || 0;
-    this.y = y || 0;
-    this.width = width || 0;
-    this.height = height || 0;
-    this.cor = cor;
+function Bar(params) {
+    this.x = params.x || 0;
+    this.y = params.y || 0;
+    this.width = params.width || 0;
+    this.height = params.height || 0;
+    this.cor = params.color;
+    this.image = params.image || null;
 }
 
 Bar.prototype.collidesWithBall = function (ball) {
@@ -13,7 +14,13 @@ Bar.prototype.collidesWithBall = function (ball) {
 
 Bar.prototype.draw = function (context) {
     context.save();
-    context.fillStyle = this.cor;
-    context.fillRect(this.x, this.y, this.width, this.height);
+
+    if (this.image) {
+        context.drawImage(this.image, this.x, this.y, this.width, this.height);
+    } else {
+        context.fillStyle = this.cor;
+        context.fillRect(this.x, this.y, this.width, this.height);
+    }
+    
     context.restore();
 };

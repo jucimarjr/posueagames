@@ -17,7 +17,16 @@ Level.prototype.init = function () {
 
     for (var i=0; i<colors.length; i++) {
         for (var j=0; j<barsPerLine; j++) {
-            this.bars.push(new Bar(j * barWidth, barHeight * (i+2), barWidth, barHeight, colors[i]));
+
+            this.bars.push(new Bar({
+                'x': j * barWidth,
+                'y': barHeight * (i+2),
+                'width': barWidth,
+                'height': barHeight,
+                'color': colors[i],
+                'image': ImageLoader.get('brick')
+            }));
+
         }
     }
 };

@@ -1,9 +1,10 @@
-function Player(x, y, width, height) {
+function Player(x, y, width, height, image) {
     this.x = x || 0;
     this.y = y || 0;
     this.width = width || 0;
     this.height = height || 0;
     this.velocidade = 15;
+    this.image = image || null;
 }
 
 Player.prototype.moveLeft = function () {
@@ -16,8 +17,14 @@ Player.prototype.moveRight = function () {
 
 Player.prototype.draw = function (context) {
     context.save();
-    context.fillStyle = '#fff';
-    context.fillRect(this.x, this.y, this.width, this.height);
+
+    if (this.image) {
+        context.drawImage(this.image, this.x, this.y, this.width, this.height);    
+    } else {
+        context.fillStyle = '#fff';
+        context.fillRect(this.x, this.y, this.width, this.height);  
+    }    
+
     context.restore();
 };
 
