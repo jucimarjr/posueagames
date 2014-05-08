@@ -1,3 +1,9 @@
+/**
+ * @class mouse
+ * @description Classe responsável por implementar os métodos e disponibilizar a posicao do ponteiro do mouse
+ * @author Bruno Araujo <bruno.araujo@gmail.com>, Bruno Richele <bruno.richele@gmail.com>, Cristina Araujo <crisoara@gmail.com>, Raymundo Junior <raymundojunior@gmail.com> 
+ * @version 1.0 
+ */
 var mouse = {
 	x : null,
 	y : null,

@@ -31,7 +31,6 @@ var bola = {
 		if(bola.baixo){
 			bola.colisaoJogador(y, x, w);
 			bola.y += bola.velocidade;
-			
 		}
 		else {
 			bola.y -= bola.velocidade;
@@ -41,8 +40,7 @@ var bola = {
 			bola.angulo *= -1;
 		}
 		//Colisao bloco
-		bola.colisaoBloco();
-		
+		bola.colisaoBloco(polling);
 		
 		//Colisao chao
 		bola.colisaoChao(height, polling);
@@ -66,7 +64,7 @@ var bola = {
 		//	console.log("Colisao jogador");
 		}	
 	},
-	colisaoBloco : function(){
+	colisaoBloco : function(polling){
 		//Colisao bloco
 		if(bola.y - bola.raio <= 100 && bola.y >= 0){			
 			var linha  = Math.floor(((bola.y)-20)/20);
@@ -78,7 +76,12 @@ var bola = {
 					bola.baixo = !bola.baixo;
 					bloco.blocos[linha][coluna] = 1;
 					bola.pontuacao++;
-					console.log(bola.pontuacao);
+					if(bola.pontuacao == 50){	
+						bola.clear(); // A bola retorna a posicao inicial
+						jogador.clear(); // O jogador retorna a posicao inicial					
+						jogador.vitoria = true;
+						clearInterval(polling);
+					}
 				}
 				console.log("Colisao bloco");
 			}else{
@@ -86,7 +89,6 @@ var bola = {
 			}
 		}	
 	},
-	
 	colisaoChao : function(height, polling){
 		//Colisao chao
 		if(bola.y + bola.raio >= height){
