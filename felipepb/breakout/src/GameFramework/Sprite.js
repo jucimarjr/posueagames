@@ -1,18 +1,21 @@
 GameFramework.Sprite = function (sprite) {
+    
+    if (sprite === undefined)
+        return;
 
 	GameFramework.GameObject.call(this);
 
 	this.texture = null;
 	this.spriteSheet = null;
 	if (sprite instanceof Image) {
-		console.log("simple sprite texture");
-		this.texture = image;
+		// console.log("simple sprite texture");
+		this.texture = sprite;
 	} else if (sprite instanceof GameFramework.SpriteSheet) {
-		console.log("init with spritesheet");
+		// console.log("init with spritesheet");
 		this.spriteSheet = sprite;
 		this.texture = sprite.image;
 	} else {
-		console.error("error initiating sprite");
+		// console.error("error initiating sprite");
 	}
 
 	this.opacity = 1.0;
@@ -20,8 +23,8 @@ GameFramework.Sprite = function (sprite) {
 
 	this._debugDrawFillColor = "rgba(255,0,0,0.25)";
 	this._debugDrawStrokeColor = "rgba(255,0,0,1)";
-	this._sourceRect;
 	this._spriteIndex = 0;
+	this._sourceRect;
 	this._boundingBox = {
 		x: 0.0, y: 0.0,
 		width: 0.0, height: 0.0
@@ -35,15 +38,7 @@ GameFramework.Sprite.prototype = new GameFramework.GameObject();
 GameFramework.Sprite.prototype.init = function () { 
 	GameFramework.GameObject.prototype.init.apply(this);
 	
-	if (this.texture instanceof GameFramework.SpriteSheet) {
-		this._sourceRect = GameFramework.SpriteSheet.sourceRectForIndex(this.spriteIndex);
-	} else {
-		this._sourceRect = {
-			x: 0, y: 0,
-			width: this.texture.width,
-			height: this.texture.height
-		};
-	}
+	this.spriteIndex(this._spriteIndex);
 	
 	this.boundingBox();
 };
@@ -101,10 +96,16 @@ GameFramework.Sprite.prototype.boundingBox = function () {
 GameFramework.Sprite.prototype.spriteIndex = function (newIndex) {
 	if (newIndex === undefined) {
 		return this._spriteIndex;
-	} else if (this.spriteSheet !== undefined) {
+	} else if (this.spriteSheet) {
 		this._spriteIndex = newIndex;
 		this._sourceRect = this.spriteSheet.sourceRectForIndex(this._spriteIndex);
 	} else {
 		this._spriteIndex = newIndex;
+		this._sourceRect = {
+		    x: 0,
+            y: 0,
+            width: this.texture.width,
+            height: this.texture.height
+        };
 	}
 };
