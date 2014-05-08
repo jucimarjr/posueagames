@@ -1,11 +1,11 @@
-BreakoutGame.SpriteSheet = function (textureUrl, totalRows, totalCollumns) {
+GameFramework.SpriteSheet = function (textureUrl, totalRows, totalCollumns) {
 
 	Image.call(this);
 
 	if (textureUrl === undefined || textureUrl.length === 0)
-		console.error("BreakoutGame.SpriteSheet -> invalid textureUrl!");
+		console.error("GameFramework.SpriteSheet -> invalid textureUrl!");
 
-	this.onload = BreakoutGame.SpriteSheet._onload;
+	this.onload = GameFramework.SpriteSheet._onload;
 	this.onTextureLoaded;
 	this.totalRows = parseInt(Math.floor(totalRows));
 	this.totalCollumns = parseInt(Math.floor(totalCollumns));
@@ -14,18 +14,18 @@ BreakoutGame.SpriteSheet = function (textureUrl, totalRows, totalCollumns) {
 	return this;
 };
 
-BreakoutGame.SpriteSheet.prototype = new Image();
+GameFramework.SpriteSheet.prototype = new Image();
 
-BreakoutGame.SpriteSheet.prototype._onload = function () {
+GameFramework.SpriteSheet.prototype._onload = function () {
 
 	if (typeof(this.onTextureLoaded) === 'function')
 		this.onTextureLoaded(this);
 };
 
-BreakoutGame.SpriteSheet.prototype.sourceRectForIndex = function (index) {
+GameFramework.SpriteSheet.prototype.sourceRectForIndex = function (index) {
 
 	if (!this.complete) {
-		console.error("BreakoutGame.SpriteSheet::sourceRectForIndex -> image not loaded!");
+		console.error("GameFramework.SpriteSheet::sourceRectForIndex -> image not loaded!");
 		return null;
 	}
 	

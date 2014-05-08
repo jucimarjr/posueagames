@@ -1,4 +1,4 @@
-BreakoutGame.GameObject = function () {
+GameFramework.GameObject = function () {
 
 	this.transform = {
 		x: 0.0, y: 0.0,
@@ -12,7 +12,7 @@ BreakoutGame.GameObject = function () {
 	return this;
 };
 
-BreakoutGame.GameObject.prototype = {
+GameFramework.GameObject.prototype = {
 	
 	init: function () {
 		this._isInitialized = true;

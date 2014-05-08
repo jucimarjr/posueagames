@@ -1,8 +1,8 @@
-// Namespace BreakoutGame encapsulates class Game to detach it from the wild world of the deepweb!
-var BreakoutGame = { };
+// Namespace GameFramework encapsulates class Game to detach it from the wild world of the deepweb!GameFramework
+var GameFramework = { };
 
 // Constructor for the Game class.
-BreakoutGame.Game = function (canvas, backgroundColor) {
+GameFramework.Game = function (canvas, backgroundColor) {
 	// Reference to the canvas html5 object.
 	this.targetFPS;
 	this.backgroundColor = backgroundColor;
@@ -15,8 +15,8 @@ BreakoutGame.Game = function (canvas, backgroundColor) {
 		startTime: 0, elapsedTime: 0, deltaTime: 0, _lastUpdateTime: 0
 	};
 	
-	if (!BreakoutGame.Game.Instance) {
-		BreakoutGame.Game.Instance = this;
+	if (!GameFramework.Game.Instance) {
+		GameFramework.Game.Instance = this;
 	} else {
 		console.error("Trying to instantiate Breakout.Game again. It should be a singleton.");
 	}
@@ -24,9 +24,9 @@ BreakoutGame.Game = function (canvas, backgroundColor) {
 	return this;
 };
 
-BreakoutGame.Game.Instance;
+GameFramework.Game.Instance;
 
-BreakoutGame.Game.prototype = {
+GameFramework.Game.prototype = {
 
 	startGame: function (targetFPS) {
 		var self = this;

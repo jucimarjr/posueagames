@@ -1,11 +1,11 @@
-BreakoutGame.SpriteFactory = {
+GameFramework.SpriteFactory = {
 	
 	loadedSpriteSheets: { },
 	loadedTextures: { },
 	
 	loadSpriteSheet: function (textureUrl, totalRows, totalCollumns, callback) {		
-		var spriteSheet = new BreakoutGame.SpriteSheet(textureUrl, totalRows, totalCollumns);
-		BreakoutGame.SpriteFactory.loadedSpriteSheets[spriteSheet.src] = spriteSheet;
+		var spriteSheet = new GameFramework.SpriteSheet(textureUrl, totalRows, totalCollumns);
+		GameFramework.SpriteFactory.loadedSpriteSheets[spriteSheet.src] = spriteSheet;
 		
 		if (callback) {
 			spriteSheet.addEventListener('load', function(e) { 
@@ -24,16 +24,16 @@ BreakoutGame.SpriteFactory = {
 			});
 		}
 
-		BreakoutGame.SpriteFactory.loadedTextures[textureUrl] = texture;
+		GameFramework.SpriteFactory.loadedTextures[textureUrl] = texture;
 	},
 	
 	spriteFromTexture: function (textureUrl) {
 		var sprite;
 		
-		if (BreakoutGame.SpriteFactory.loadedTextures[textureUrl] === undefined)
-			BreakoutGame.SpriteFactory.loadTexture(textureUrl);
+		if (GameFramework.SpriteFactory.loadedTextures[textureUrl] === undefined)
+			GameFramework.SpriteFactory.loadTexture(textureUrl);
 		
-		sprite = new BreakoutGame.Sprite(BreakoutGame.SpriteFactory.loadedTextures[textureUrl]);
+		sprite = new GameFramework.Sprite(GameFramework.SpriteFactory.loadedTextures[textureUrl]);
 		
 		return sprite;
 	},
@@ -41,10 +41,10 @@ BreakoutGame.SpriteFactory = {
 	spriteFromSpriteSheet: function (textureUrl, totalRows, totalCollumns) {
 		var sprite;
 		
-		if (BreakoutGame.SpriteFactory.loadedSpriteSheets[textureUrl] === undefined)
-			BreakoutGame.SpriteFactory.loadSpriteSheet(textureUrl, totalRows, totalCollumns);
+		if (GameFramework.SpriteFactory.loadedSpriteSheets[textureUrl] === undefined)
+			GameFramework.SpriteFactory.loadSpriteSheet(textureUrl, totalRows, totalCollumns);
 		
-		sprite = new BreakoutGame.Sprite(BreakoutGame.SpriteFactory.loadedSpriteSheets[textureUrl]);
+		sprite = new GameFramework.Sprite(GameFramework.SpriteFactory.loadedSpriteSheets[textureUrl]);
 		
 		return sprite;
 	}

@@ -1,6 +1,6 @@
-BreakoutGame.Sprite = function (image) {
+GameFramework.Sprite = function (image) {
 	
-	BreakoutGame.GameObject.call(this);
+	GameFramework.GameObject.call(this);
 	
 	this.texture = image;
 	this.opacity = 1.0;
@@ -16,13 +16,13 @@ BreakoutGame.Sprite = function (image) {
 	return this;
 };
 
-BreakoutGame.Sprite.prototype = new BreakoutGame.GameObject();
+GameFramework.Sprite.prototype = new GameFramework.GameObject();
 
-BreakoutGame.Sprite.prototype.init = function () { 
-	BreakoutGame.GameObject.prototype.init.apply(this);
+GameFramework.Sprite.prototype.init = function () { 
+	GameFramework.GameObject.prototype.init.apply(this);
 	
-	if (this.texture instanceof BreakoutGame.SpriteSheet) {
-		this._sourceRect = BreakoutGame.SpriteSheet.sourceRectForIndex(this.spriteIndex);
+	if (this.texture instanceof GameFramework.SpriteSheet) {
+		this._sourceRect = GameFramework.SpriteSheet.sourceRectForIndex(this.spriteIndex);
 	} else {
 		this._sourceRect = {
 			x: 0, y: 0,
@@ -34,7 +34,7 @@ BreakoutGame.Sprite.prototype.init = function () {
 	this.boundingBox();
 };
 
-BreakoutGame.Sprite.prototype.render = function (deltaTime, context2D) { 
+GameFramework.Sprite.prototype.render = function (deltaTime, context2D) { 
 	if (!this.texture || !this.texture.complete) {
 		return;
 	}
@@ -58,7 +58,7 @@ BreakoutGame.Sprite.prototype.render = function (deltaTime, context2D) {
 	context2D.restore();
 };
 
-BreakoutGame.Sprite.prototype.boundingBox = function () {
+GameFramework.Sprite.prototype.boundingBox = function () {
 	this._boundingBox.x = this.transform.x - this._sourceRect.width * this.transform.scaleX / 2;
 	this._boundingBox.y = this.transform.y - this._sourceRect.height * this.transform.scaleY / 2;
 	this._boundingBox.width = this._sourceRect.width * this.transform.scaleX;
@@ -67,12 +67,12 @@ BreakoutGame.Sprite.prototype.boundingBox = function () {
 	return this._boundingBox;
 };
 
-BreakoutGame.Sprite.prototype.spriteIndex = function (newIndex) {
+GameFramework.Sprite.prototype.spriteIndex = function (newIndex) {
 	if (newIndex === undefined) {
 		return this._spriteIndex;
-	} else if (this.texture instanceof BreakoutGame.SpriteSheet) {
+	} else if (this.texture instanceof GameFramework.SpriteSheet) {
 		this._spriteIndex = newIndex;
-		this._sourceRect = BreakoutGame.SpriteSheet.sourceRectForIndex(this.spriteIndex);
+		this._sourceRect = GameFramework.SpriteSheet.sourceRectForIndex(this.spriteIndex);
 	} else {
 		this._spriteIndex = newIndex;
 	}
