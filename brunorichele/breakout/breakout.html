@@ -10,10 +10,15 @@
        <script type="text/javascript" language="JavaScript" src="script/bola.js"></script>
        <script type="text/javascript" language="JavaScript" src="script/bloco.js"></script>
        <script type="text/javascript" language="JavaScript" src="script/tecla.js"></script>
+       <script type="text/javascript" language="JavaScript" src="script/mouse.js"></script>
     </head>
     <body>
         <center>
-            <canvas id="canvas" width="600" height="480">
+        	<div id="menu" class="menu">
+            	<a id="jogar" href="javascript:void(0);">Jogar</a>
+                <a id="credito" href="javascript:void(0);">Créditos</a>
+            </div>
+            <canvas id="canvas" width="600" height="480" style="display:none">
                 Navegador não compatível com HTML5 canvas, por favor não use IE
             </canvas>
         </center>

@@ -30,7 +30,6 @@ var canvas, context,
 	bolaRaio, bolaPosX, bolaPosY,
 	pontosJogador, pontosOponente;
 	
-
 var canvas = document.getElementById("canvas"); 
 var context = canvas.getContext("2d"); 
 
@@ -45,17 +44,9 @@ function init() {
     oponentePosX = canvas.width - barraWidth;
 	oponentePosY = 0;
 	
-/*
-    jogadorPosX = 0;
-	jogadorPosY = canvas.height - barraHeight;
-	oponentePosX = canvas.width - barraWidth;
-	oponentePosY = canvas.height - barraHeight;
-	*/
-	
 	bolaRaio = 10;
 	bolaPosX = canvas.width / 2;
-//	bolaPosY = canvas.height / 2; // bola no meio
-	bolaPosY = canvas.height - bolaRaio; // bola embaixo
+	bolaPosY = canvas.height - bolaRaio;
 	
 	pontosJogador = 0;
 	pontosOponente = 0;
@@ -75,7 +66,6 @@ function desenhar(){
 	context.closePath();						                  // Fim do modo de desenho
 	context.fill();
 	
-
 	// Placar
 	var pontosA = pontosJogador;
 	var pontosB = pontosOponente;
@@ -88,20 +78,16 @@ function desenhar(){
 	}
 	
 	context.font = "42pt Helvetica";
-	context.fillStype = "#000000";
 	context.fillText(pontosA + " " + pontosB, (canvas.width/2)-70, 50);
-	
-	
+		
 	// Linha Divisória
 	context.beginPath();                 // Inicia o modo de desenho
-	context.moveTo(canvas.width / 2, 0); // Posiciona "lápis" para desenho
-	context.lineTo(canvas.width / 2, canvas.height); // 
+	context.moveTo(canvas.width / 2, 0);             // Posiciona "lápis" para inicio do desenho 
+	context.lineTo(canvas.width / 2, canvas.height); //  Planeja tracejado do "lápis" para fazer uma linha até esse ponto
 	context.strokeStyle = "#000000"; // Cor da divisória (opcional)
-	context.stroke();    // Aplica a divisória
+	context.stroke();    // Desenha a linha
 	context.closePath(); // Finaliza o caminho
 	
-	alert("Nenhum erro!");
-		
 }
 
 	</script>

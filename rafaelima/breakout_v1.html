@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Breakout</title>
+<style type="text/css">
+canvas {
+	border: 1px dashed #000000;
+}
+</style>
+</head>
+<body onload="init()">
+	<canvas id="canvas" width="630" height="480">
+	Navegador não compatível com HTML5 Canvas
+	</canvas>
+	<script>
+		var canvas, context, 
+		barraWidth, barraHeight, 
+		jogadorPosX, jogadorPosY, velocidadeJogador, 
+		bolaRaio, bolaPosX, bolaPosY, bolaParaCima, bolaAngulo, velocidadeBola, 
+		teclaEsquerdaPressionada, teclaDireitaPressionada,
+		lance, parede, paredeLinhas, paredeColunas, brickWidth, brickHeight;
+
+		function init() {
+			canvas = document.getElementById("canvas");// procura o canvas
+			context = canvas.getContext("2d");// recupera o contexto 2d
+
+			barraWidth = 90;
+			barraHeight = 30;
+
+			jogadorPosX = (canvas.width - barraWidth) / 2;
+			jogadorPosY = canvas.height - barraHeight;
+			velocidadeJogador = 15;
+
+			bolaRaio = 10;
+			bolaPosX = canvas.width / 2;
+			bolaPosY = jogadorPosY - bolaRaio;
+			bolaParaCima = true;
+			bolaAngulo = Math.floor(Math.random() * 21)  -10;
+			velocidadeBola = 5;
+			lance = 0;
+			
+			brickWidth = 45; 
+			brickHeight = 30;
+			paredeLinhas = 4;
+			paredeColunas = 14;
+			preencheParede();
+
+			document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
+			document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
+			setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
+		}
+		
+		//preenche uma matriz parede onde cada espaço tem 30% de chance de ser vazio
+		function preencheParede(){
+			parede = [];
+			for(var i=0; i<paredeLinhas; i++) {
+			    parede[i] = [];
+			    for(var j=0; j<paredeColunas; j++) {
+			        parede[i][j] = ( Math.random() <= 0.7 ? 1 : 0);
+			    }
+			}
+		}
+
+		function keyDown(e) {
+			lance = (lance<1?1:lance); //jogador começou o primeiro lance? sim = 1 ou já fez = lance
+			if (e.keyCode == 37) { // left
+				teclaEsquerdaPressionada = true;
+			} else if (e.keyCode == 39) { // rigth
+				teclaDireitaPressionada = true;
+			}
+		}
+
+		function keyUp(e) {	
+			lance = (lance>0?2:lance); //jogador soltou o primeiro lance? sim = 2 ou já fez = lance
+			if (e.keyCode == 37) { // left
+				teclaEsquerdaPressionada = false; // jogador soltou tecla Esquerda
+			} else if (e.keyCode == 39) { // right
+				teclaDireitaPressionada = false; // jogador soltou tecla Direita
+			}
+		}
+
+		function gameLoop() {
+			checaColisaoParede();
+			movimentaBola();
+			checaColisaoParede();
+			
+			movimentaJogador();
+			redesenhaTela();
+		}
+
+		function movimentaBola() {
+			if (lance==2) { //jogador já lançou a bola
+				if ((bolaPosX - bolaRaio <= 0)
+						|| (bolaPosX + bolaRaio >= canvas.width)) {// se a bola bater dos lados da tela...
+					bolaAngulo = bolaAngulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo X
+				}
+				bolaPosX += bolaAngulo;// movemos a bola para os lados, de acordo com o cáculo acima
+
+				if (bolaParaCima) {// se a bola estiver indo para cima...
+					bolaPosY -= velocidadeBola;// movemos a bola para cima
+				} else {// se estiver indo para a baixo...
+					bolaPosY += velocidadeBola;// movemos a bola para baixo
+				}
+
+				if ((bolaPosY - bolaRaio) < 0) { //se a bola bater no topo ela deve descer
+					bolaParaCima = false;
+				} else if ((bolaPosY + bolaRaio) >= jogadorPosY && (bolaPosY - bolaRaio) <= (jogadorPosY+barraWidth) //se a bola esta na altura da barra 
+					 && bolaPosX >= jogadorPosX && bolaPosX <= (jogadorPosX + barraWidth)) { //e se a bola esta dentro do comprimento da barra
+						bolaParaCima = true; //bola rebate na barra
+					}else if (bolaPosY>jogadorPosY){ //se a bola passou da barra
+						//finaliza jogo
+					}
+			} else { //a bola deve acompanhar a barra antes do primeiro lance
+				if (teclaEsquerdaPressionada || teclaDireitaPressionada) { // se o jogador estiver pressionando a tecla Direita ou Esquerda
+					if (teclaEsquerdaPressionada) { // se for para Esquerda...
+						bolaPosX -= velocidadeJogador;// muda a posição
+					} else { // se for para Direita...
+						bolaPosX += velocidadeJogador;// muda a posição
+					}
+				}
+			}
+		}
+		
+		function checaColisaoParede(){ //todas as possiveis colisoes do raio e centro da bola com a parede
+			if((bolaPosY-bolaRaio)<=brickHeight*paredeLinhas){ //se o topo da bola chegar no fundo da parede
+				for(var j = -1; j<=1; j++){ //indices que controlam qual 'extremidade' da bola esta tocando a parede
+					for(var i = -1; i<=1; i++){
+						x = Math.floor((bolaPosX + (i*bolaRaio))/brickWidth);
+						y = Math.floor((bolaPosY + (j*bolaRaio))/brickHeight);
+						atualizaParede(x,y,i,j);
+					}
+				}		
+			}
+		}
+		
+		function atualizaParede(x, y, i, j){
+			if( x < paredeColunas && y < paredeLinhas &&  x >= 0 && y >= 0)
+				if (parede[y][x] == 1){
+					parede[y][x] = 0; //tira tijolo
+					//reação da colisão
+					if((i==0 && j==-1) || (i==-1 && j==-1) || (i==1 && j==-1)){ //top center 0 -1 //top left -1 -1 //top right 1 -1
+						bolaParaCima = false;
+					}else if((i==-1 && j==-1) || (i==0 && j==1) || (i==1 && j==1)){ //bottom left -1 1 //bottom center 0 1 //bottom right 1 1
+							bolaParaCima = true;
+						 }else if((i==-1 && j==0)|| (i==0 && j==0) ||(i==1 && j==0)){ //side left -1 0 //center  0 0 //side right 1 0 
+								bolaAngulo = bolaAngulo * -1;
+								bolaPosX += bolaAngulo;
+							  } 
+				}
+		}
+		
+		function desenhaParede(){
+			for(var i=0; i<paredeLinhas; i++) {
+			    for(var j=0; j<paredeColunas; j++) {
+			        if(parede[i][j]==1){ //se for um tijolo cheio
+			        	context.fillRect(j*brickWidth, i*brickHeight, brickWidth, brickHeight);//desenha tijolo
+			        }
+			    }
+			}
+		}
+
+		function movimentaJogador() {
+			if (teclaEsquerdaPressionada || teclaDireitaPressionada) { // se o jogador estiver pressionando a tecla Direita ou Esquerda
+				if (teclaEsquerdaPressionada) { // se for para Esquerda...
+					if (jogadorPosX >= velocidadeJogador) { // se não sair da tela...
+						jogadorPosX -= velocidadeJogador;// muda a posição
+					}
+				} else { // se for para Direita...
+					if ((canvas.width - jogadorPosX) >= (barraWidth + velocidadeJogador)) {// se não sair da tela...
+						jogadorPosX += velocidadeJogador;// muda a posição
+					}
+				}
+			}
+		}
+
+		// Desenha tudo na tela
+		function redesenhaTela() {
+			context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+			desenhaParede(); //Parede
+			context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);//desenha jogador 
+			context.beginPath();// inicia o modo de desenho // Bola
+			context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
+			context.closePath();// finaliza o caminho (opcional)
+			context.fill();
+		}
+	</script>
+</body>
+</html>

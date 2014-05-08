@@ -6,3 +6,21 @@ html, body {
 canvas {
 	border:1px dashed #000000;
 }
+
+.menu{
+	width:600px; 
+	height:280px;
+	padding-top:200px;
+	border:1px solid #000000;
+}
+
+.menu a{
+	border:1px solid #000000;
+	width:150px;
+	height:40px;
+	font-size:32px;
+	display:block; 
+	margin-bottom:20px;
+	text-decoration:none;
+	color:#000000;
+}

@@ -8,10 +8,16 @@ var bola = {
 	velocidade: 10,
 	resetX : null,
 	resetY : null,
-	countFail : 0,
+	countFail : null,
+	pontuacao : null,
+	randomInit : [-1, 1],
+	
 	init : function(width, y){//largura do canvas e y do jogador
 		bola.resetX = bola.x = width / 2;
 		bola.resetY = bola.y = y - bola.raio;
+		bola.countFail = 0;
+		bola.pontuacao = 0;
+		bola.angulo *= bola.randomInit[Math.round(Math.random() * 1)];  // Random inicio da partida
 	},
 	render : function(root){
 		root.fillStyle = "red";
@@ -21,47 +27,24 @@ var bola = {
 		root.fill();
 	},
 	atualizar : function(y, x, w, width, height, polling){		
-		// Movimentação bola
+		// Movimentar a bola
 		if(bola.baixo){
-			// Colisão jogador
-			if((bola.y + bola.raio >= y) && 
-				(bola.x - bola.raio >= x) && 
-				(bola.x + bola.raio <= x + w)){
-				bola.baixo = false;
-			//	bola.baixo = !bola.baixo;
-			//	console.log("Colisao jogador");
-			}
+			bola.colisaoJogador(y, x, w);
 			bola.y += bola.velocidade;
 		}
 		else {
 			bola.y -= bola.velocidade;
 		}
-		// Colisão paredes
+		// Colisao paredes
 		if(bola.x - bola.raio <= 0 || bola.x + bola.raio >= width){
 			bola.angulo *= -1;
 		}
-		
-		//console.log("x da bola:" + bola.x  + "y da bola: " + bola.y);
-		
 		//Colisao bloco
-		if(bola.y - bola.raio <= 100 && bola.y >= 0){
-			
-		//	console.log("Colisao bloco");
-			var linha  = Math.floor(((bola.y - bola.raio)-20)/20);
-			var coluna = Math.floor((bola.x - bola.raio)/60);
-			console.log("linha: " + linha + "coluna:" + coluna);
-
-			if(coluna >= 0 && linha >= 0){
-				if(bloco.blocos[linha][coluna] == 0){
-					bola.baixo = !bola.baixo;
-					bloco.blocos[linha][coluna] = 1;
-				}
-			}else{
-				bola.baixo = !bola.baixo;
-			}
-		}
+		bola.colisaoBloco(polling);
+		
+		//Colisao chao
 		bola.colisaoChao(height, polling);
-		// TODO: colisão blocos
+		//Altera o angulo da bola
 		bola.x += bola.angulo;	
 	},
 	clear : function()
@@ -69,8 +52,42 @@ var bola = {
 		bola.x = bola.resetX;
 		bola.y = bola.resetY;	
 		bola.baixo = false;
-		bola.angulo = 5;
-		bola.velocidade = 10;		
+		bola.angulo = 5 * bola.randomInit[Math.round(Math.random() * 1)]; // Random inicio da partida
+		bola.velocidade = 10;
+	},
+	colisaoJogador : function(y, x, w){
+		// Colisao jogador
+		if((bola.y + bola.raio >= y) && 
+			(bola.x >= x) &&
+			(bola.x <= x + w)){
+			bola.baixo = false;
+		//	console.log("Colisao jogador");
+		}	
+	},
+	colisaoBloco : function(polling){
+		//Colisao bloco
+		if(bola.y - bola.raio <= 100 && bola.y >= 0){			
+			var linha  = Math.floor(((bola.y)-20)/20);
+			var coluna = Math.floor((bola.x)/60);
+			console.log("linha: " + linha + "coluna:" + coluna);
+
+			if(coluna >= 0 && linha >= 0){
+				if(bloco.blocos[linha][coluna] == 0){
+					bola.baixo = !bola.baixo;
+					bloco.blocos[linha][coluna] = 1;
+					bola.pontuacao++;
+					if(bola.pontuacao == 50){	
+						bola.clear(); // A bola retorna a posicao inicial
+						jogador.clear(); // O jogador retorna a posicao inicial					
+						jogador.vitoria = true;
+						clearInterval(polling);
+					}
+				}
+				console.log("Colisao bloco");
+			}else{
+				bola.baixo = !bola.baixo;
+			}
+		}	
 	},
 	colisaoChao : function(height, polling){
 		//Colisao chao
@@ -82,8 +99,9 @@ var bola = {
 			bola.countFail++;
 			console.log(bola.countFail);
 			if(bola.countFail == 4){
+				jogador.derrota = true;
 				clearInterval(polling);
 			}
 		}	
-	}
+	}	
 };
