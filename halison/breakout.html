@@ -19,7 +19,7 @@
 	</head>
     
 	<body onload="init()">
-	    <canvas id="canvas" height="600" width="680"> Navegador não compatível com HTML5 Canvas </canvas>
+	    <canvas id="canvas" height="480" width="600"> Navegador não compatível com HTML5 Canvas </canvas>
 	</body>
 	
 	<script>
@@ -45,14 +45,11 @@ var	bolaRaio, velocidadeBola,
     direcaoBolaX, direcaoBolaY,
     anguloBola;
 
-
 // Detecção das teclas
 var teclaEnterPressionada;
 var contadorTeclaEnter;
 var teclaEsqPressionada;
 var teclaDirPressionada;
-
-
 
 function init() {
 
@@ -70,7 +67,7 @@ function init() {
 
 	// Configurar posição do Jogador
     jogadorPosX =  (canvas.width - barraWidth) / 2;
-    jogadorPosY = canvas.height - barraHeight;
+    jogadorPosY = canvas.height - barraHeight - 7;
     velocidadeJogador = 10;
     		
 	// Configurar tamanho, posicionamento e velocidade da bola
@@ -86,11 +83,8 @@ function init() {
 	document.addEventListener('keydown', keyDown, false); // Adiciona evento para o teclado
 	document.addEventListener('mousemove', mouse, false);
 	
-	setInterval(gameLoop, 40);                            // Executa gameLoop a cada 30 frames
-
+	setInterval(gameLoop, 1000/30);                            // Executa gameLoop a cada 30 frames
 }
-
-
 
 function gameLoop(){
 	
@@ -117,6 +111,7 @@ function movimentarBarra(){
 	if (teclaEsqPressionada!=teclaDirPressionada){
 		if (teclaEsqPressionada){
 			jogadorPosX = jogadorPosX - velocidadeJogador;
+			
 			if (jogadorPosX < 0){
 				jogadorPosX = 0;
 			}
@@ -140,7 +135,6 @@ function movimentarBarra(){
 		if (jogadorPosX > canvas.width - barraWidth){
 			jogadorPosX = canvas.width - barraWidth;
 		}
-	
 	}
 }
 
@@ -162,10 +156,17 @@ function movimentarBola(){
 	}
 	
 	// Verificar colisão com JOGADOR
-	if (bolaPosY + bolaRaio >= jogadorPosY - bolaRaio 
-		&& bolaPosX + bolaRaio >= jogadorPosX  
-		&& bolaPosX + bolaRaio <= jogadorPosX + barraWidth){
-		direcaoBolaY = direcaoBolaY * -1; 
+	
+	
+	if (bolaPosY + bolaRaio >= jogadorPosY - bolaRaio){ // se está na altura da raquete
+		
+		if ((bolaPosY-bolaRaio)<=0 || colisaoJogadorBola()){ // verifica colisao no Y, e muda direcao do Y
+			direcaoBolaY = direcaoBolaY * -1;
+		}
+		if ((bolaPosX-bolaRaio)<=0 || colisaoJogadorBola()){ // verifica colisao no X, e muda direcao do X
+			direcaoBolaX = direcaoBolaX * -1;
+		}
+
 	}
 	
 	// CONDIÇÃO DE DERROTA
@@ -180,6 +181,21 @@ function movimentarBola(){
     //direcaoBola = Math.floor(Math.random() * 21) - 10;
 }
 
+function colisaoJogadorBola(){
+	var xProx = maisProximo(bolaPosX,jogadorPosX,jogadorPosX+barraWidth);
+	var yProx = maisProximo(bolaPosY,jogadorPosY,jogadorPosY+barraHeight);
+	var distX = bolaPosX - xProx;
+	var distY = bolaPosY - yProx;
+	var dist = (distX*distX)+(distY*distY);
+	return dist < (bolaRaio*bolaRaio);	
+}
+
+// Retorna o valor mais proximo de v: min ou max
+function maisProximo(v, min, max){
+	return Math.max(min, Math.min(max,v));
+}
+
+
 function reiniciarBola(){
     direcaoBolaX = 1;
     direcaoBolaY = -1; 
@@ -193,10 +209,18 @@ function desenhar(){
 	context.clearRect(0,0,canvas.width,canvas.height);
 	
 	// Desenhar jogador
-	context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);   // desenho do jogador
-	
+    context.beginPath();
+	context.rect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);   // desenho do jogador
+    context.fillStyle = 'yellow';
+    context.fill();
+	context.lineWidth = 3;
+    context.strokeStyle = 'black';
+    context.stroke();
+
 	// Desenhar bola
-	context.beginPath();                 						  // Inicia o modo de desenho
+	context.beginPath();   
+    context.fillStyle = 'black';
+    context.fill();// Inicia o modo de desenho
 	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, 2*Math.PI,true); // desenho da bola
 	context.closePath();						                  // Fim do modo de desenho
 	context.fill();
@@ -220,13 +244,12 @@ function desenhar(){
 	// context.clear(0,0,canvas.width,canvas.height);
 }
 
-
+//Capturar posição do MOUSE
 function mouse(e){
 	mousePos = e.clientX - canvas.getBoundingClientRect().left;
-   
 }
 
-//Capturar posição do mouse
+//Capturar TECLAS
 function keyUp(e){
 	if (e.keyCode == 37){   
 		teclaEsqPressionada = false; // Soltou a tecla ESQUERDA
@@ -239,6 +262,7 @@ function keyUp(e){
 	}
 }
 
+//Capturar TECLAS
 function keyDown(e){
 	if (e.keyCode == 37){
 		teclaEsqPressionada = true; // Acertou a tecla ESQUERDA
@@ -250,10 +274,6 @@ function keyDown(e){
 		teclaEnterPressionada = true; // Acertou a tecla ENTER
 	}
 }
-
-
-
-
 	</script>
 	
 </html>
