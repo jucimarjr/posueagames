@@ -48,28 +48,35 @@ var game = {
 		jogador.render(game.context);
 		//Desenha Bola
 		bola.render(game.context);
+		//Exibi os pontos do usuario
+		game.pontuar();
 		//Verificar derrota e desenhar na tela
-		
 		if(jogador.derrota == true){
 			game.derrota();
 			game.btnNewGame();
-			game.pontuar();
-			mouse.listener(canvas);
-		}else{
-			game.pontuar();
 			mouse.listener(canvas);
 		}
+		//Verificar derrota e desenhar na tela
+		if(jogador.vitoria == true){
+			game.vitoria();
+			game.btnNewGame();
+			mouse.listener(canvas);
+		}		
 	}, 
 	clear : function(){
 		game.context.clearRect(0, 0, game.width, game.height);		
+	},
+	vitoria : function(){
+		game.context.font = "42px Helvetica";
+		game.context.fillStyle = "#000000";
+		game.context.fillText("Você venceu!", 180, 250);	
 	},
 	derrota : function(){
 		game.context.font = "42px Helvetica";
 		game.context.fillStyle = "#000000";
 		game.context.fillText("Você perdeu!", 180, 250);	
 	},	
-	
-	pontuar:function(){
+	pontuar : function(){
 
         var ponto = bola.pontuacao;
             
