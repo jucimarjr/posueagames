@@ -8,9 +8,10 @@ BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this._resourcesLoadCount = 0;
 	
 	this._preloadTextures = [
-		{ path: "images/whiteBricks.png", isSpriteSheet: true, row: 1, collumns: 7 },
+		{ path: "images/whiteBricks.png", isSpriteSheet: true, rows: 1, collumns: 7 },
 		{ path: "images/whiteGlow.png", isSpriteSheet: false },
-		{ path: "images/bricksGlow.png", isSpriteSheet: false }
+		{ path: "images/bricksGlow.png", isSpriteSheet: true, rows: 1, collumns: 5 },
+		{ path: "images/bricks.png", isSpriteSheet: true, rows: 8, collumns: 3 }
 	];
 	
 	this.loadTextures(this._preloadTextures);
@@ -33,7 +34,7 @@ BreakoutGame.GameScene.prototype = {
 			}
 			else  {
 				spriteFactory.loadSpriteSheet(imagesToLoad[i].path,
-											  imagesToLoad[i].row,
+											  imagesToLoad[i].rows,
 											  imagesToLoad[i].collumns, 
 											  callback);
 			}
@@ -43,12 +44,21 @@ BreakoutGame.GameScene.prototype = {
 	startGame: function () {
 		console.log("startGame");
 		
-		var bigBrick = new BreakoutGame.BigWhiteBrick();
-		bigBrick.transform.x = this.canvas.width / 2;
-		bigBrick.transform.y = this.canvas.height / 2;
-
-		this.game.addGameObject(bigBrick);
+		this.createBrickRows();
+        
 		this.game.startGame(this.targetFPS);
+	},
+	
+	createBrickRows: function () {
+	    var bigBrick = new BreakoutGame.BigWhiteBrick();
+        this.game.addGameObject(bigBrick);
+        bigBrick.transform.x = this.canvas.width / 2;
+        bigBrick.transform.y = bigBrick.boundingBox().height / 2 + 10;
+        
+        var brick = new BreakoutGame.Brick(15);
+        this.game.addGameObject(brick);
+        brick.transform.x = this.canvas.width / 2;
+        brick.transform.y = 300;
 	},
 	
 	onResourceLoaded: function () {
