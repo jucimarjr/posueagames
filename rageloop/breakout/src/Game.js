@@ -159,9 +159,9 @@ Game.prototype.drawHud = function () {
         pontosB = '0' + this.pontosOponente;
     }
 
-    this.context.font = '42pt Helvetica';
-    this.context.fillStyle = '#fff';
-    this.context.fillText(pontosA + ' ' + pontosB, (this.width / 2) - 70, 45);
+    this.context.font = '24pt Tr2n';
+    this.context.fillStyle = '#00ffff';
+    this.context.fillText(pontosA + ' ' + pontosB, (this.width / 2) + 180, 40);
 };
 
 Game.prototype.gameOver = function () {
