@@ -112,10 +112,11 @@ Game.prototype.update = function () {
 
     //miss
     if (this.ball.y > this.height) {
-        if (this.delay >= 50) {
-            this.hud.updateLifes(-1);
-            this.hud.draw(this.context);
 
+        if (this.delay === 0)
+            this.hud.updateLifes(-1);
+
+        if (this.delay >= 50) {
             this.ball.x = this.width / 2;
             this.ball.y = this.posicaoInicial;
             this.ball.diretionUp = false;
@@ -143,7 +144,7 @@ Game.prototype.update = function () {
     }
 
     //check game over
-    if (!this.level.hasBars()) {
+    if (!this.level.hasBars() || this.hud.getLifes() < 1) {
         this.gameOver(this.context);
         return;
     }

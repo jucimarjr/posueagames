@@ -34,6 +34,11 @@ HUD.prototype.updateLifes = function(value) {
 
 };
 
+HUD.prototype.getLifes = function() {
+
+    return this.amountOfLifes;
+};
+
 HUD.prototype.draw = function(context) {
 
     if (!context) {
