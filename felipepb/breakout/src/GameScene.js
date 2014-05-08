@@ -8,7 +8,9 @@ BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this._resourcesLoadCount = 0;
 	
 	this._preloadTextures = [
-		{ path: "images/whiteBricks.png", isSpriteSheet: true, row: 1, collumns: 7 }
+		{ path: "images/whiteBricks.png", isSpriteSheet: true, row: 1, collumns: 7 },
+		{ path: "images/whiteGlow.png", isSpriteSheet: false },
+		{ path: "images/bricksGlow.png", isSpriteSheet: false }
 	];
 	
 	this.loadTextures(this._preloadTextures);
