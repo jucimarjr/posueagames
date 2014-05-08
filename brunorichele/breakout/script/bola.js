@@ -52,8 +52,8 @@ var bola = {
 	colisaoJogador : function(y, x, w){
 		// Colisão jogador
 		if((bola.y + bola.raio >= y) && 
-			(bola.x - bola.raio >= x) && 
-			(bola.x + bola.raio <= x + w)){
+			(bola.x >= x) &&
+			(bola.x <= x + w)){
 			bola.baixo = false;
 		//	console.log("Colisao jogador");
 		}	
