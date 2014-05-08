@@ -28,7 +28,7 @@
    velocidadeBola = 15;
 
    var blocosPorLinha = 8;
-   var blocoHeight = 20;
+   var blocoHeight = 25;
    var blocoWidth = canvas.width/blocosPorLinha;
    var scoreJogador = 0;
 
@@ -48,16 +48,17 @@
    // layout dos blocos: 1 Laranja, 2 verde, 3 cinza, 0 sem nada
    // gerado a fila de blocos
    var arrayDeBlocos = [
-       [1,1,1,1,1,1,1,2],
-       [1,1,3,1,0,1,1,1],
-       [2,1,2,1,2,1,0,1],
-       [1,2,1,1,0,3,1,1],
-       [2,0,0,0,0,0,0,2],
-       [2,0,0,0,0,0,0,2],
-       [1,1,1,1,1,1,1,2],
-       [1,1,3,1,0,1,1,1],
-       [2,1,2,1,2,1,0,1],
-       [1,2,1,1,0,3,1,1]
+       [1,1,1,1,1,1,1,1],
+       [1,1,1,1,1,1,1,1],
+       [2,2,2,2,2,2,2,2],
+       [2,2,2,2,2,2,2,2],
+       [3,3,3,3,3,3,3,3],
+       [3,3,3,3,3,3,3,3],
+       [4,4,4,4,4,4,4,4],
+       [4,4,4,4,4,4,4,4],
+       [5,5,5,5,5,5,5,5],
+       [5,5,5,5,5,5,5,5],
+       [1,0,0,1,1,0,0,1]
    ];
 
    // criador dos blocos
@@ -73,13 +74,19 @@
    function pintaBloco(x,y,type){
        switch(type){ // if brick is still visible; three colors for three types of bricks
            case 1:
-               context.fillStyle = 'orange';
+               context.fillStyle = 'red';
                break;
            case 2:
-               context.fillStyle = 'rgb(100,200,100)';
+               context.fillStyle = 'orange';
                break;
            case 3:
-               context.fillStyle = 'rgba(50,100,50,.5)';
+               context.fillStyle = 'yellow';
+               break;
+           case 4:
+               context.fillStyle = 'green';
+               break;
+           case 5:
+               context.fillStyle = 'blue';
                break;
            default:
                context.clearRect(x*blocoWidth,y*blocoHeight,blocoWidth,blocoHeight);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6ef0bce8-2a76-43d7-99ea-0f5b48e9f221" name="Default" comment="aumentando a tela">
+    <list default="true" id="6ef0bce8-2a76-43d7-99ea-0f5b48e9f221" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/yasminetkn/breakout.html" afterPath="$PROJECT_DIR$/yasminetkn/breakout.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -29,7 +29,7 @@
       <file leaf-file-name="pongJucimar.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/yasminetkn/pongJucimar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="13" selection-start="2053" selection-end="2053" vertical-scroll-proportion="-10.5" vertical-offset="768" max-vertical-offset="2565">
+            <state line="68" column="13" selection-start="2053" selection-end="2053" vertical-scroll-proportion="-17.375" vertical-offset="603" max-vertical-offset="2565">
               <folding />
             </state>
           </provider>
@@ -38,7 +38,7 @@
       <file leaf-file-name="breakout.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/yasminetkn/breakout.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="110" column="51" selection-start="2957" selection-end="2957" vertical-scroll-proportion="0.3326923" vertical-offset="1477" max-vertical-offset="2385">
+            <state line="30" column="23" selection-start="666" selection-end="666" vertical-scroll-proportion="0.06367041" vertical-offset="399" max-vertical-offset="2490">
               <folding />
             </state>
           </provider>
@@ -47,7 +47,7 @@
       <file leaf-file-name="breakout2.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/yasminetkn/breakout2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="237" column="0" selection-start="7685" selection-end="7685" vertical-scroll-proportion="-148.125" vertical-offset="0" max-vertical-offset="4695">
+            <state line="237" column="0" selection-start="7685" selection-end="7685" vertical-scroll-proportion="-27.125" vertical-offset="2904" max-vertical-offset="4695">
               <folding />
             </state>
           </provider>
@@ -184,6 +184,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="SearchEverywhereHistory" value="" />
   </component>
   <component name="RestClientSettings">
     <option name="REQUEST_HISTORY">
@@ -473,13 +474,18 @@
       <created>1399138557125</created>
       <updated>1399138557125</updated>
     </task>
+    <task id="LOCAL-00001" summary="aumentando a tela">
+      <created>1399592356874</created>
+      <updated>1399592356874</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32942554" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942554" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -584,13 +590,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/yasminetkn/pongJucimar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="13" selection-start="2053" selection-end="2053" vertical-scroll-proportion="-10.5" vertical-offset="768" max-vertical-offset="2565">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/yasminetkn/jquery.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="30891" selection-start="95174" selection-end="95174" vertical-scroll-proportion="0.073891625" vertical-offset="0" max-vertical-offset="812">
@@ -605,16 +604,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/yasminetkn/pongJucimar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="13" selection-start="2053" selection-end="2053" vertical-scroll-proportion="-17.375" vertical-offset="603" max-vertical-offset="2565">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/yasminetkn/breakout2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="237" column="0" selection-start="7685" selection-end="7685" vertical-scroll-proportion="-148.125" vertical-offset="0" max-vertical-offset="4695">
+        <state line="237" column="0" selection-start="7685" selection-end="7685" vertical-scroll-proportion="-27.125" vertical-offset="2904" max-vertical-offset="4695">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/yasminetkn/breakout.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="51" selection-start="2957" selection-end="2957" vertical-scroll-proportion="0.3326923" vertical-offset="1477" max-vertical-offset="2385">
+        <state line="30" column="23" selection-start="666" selection-end="666" vertical-scroll-proportion="0.06367041" vertical-offset="399" max-vertical-offset="2490">
           <folding />
         </state>
       </provider>
