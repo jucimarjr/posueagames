@@ -1,18 +1,32 @@
-GameFramework.Sprite = function (image) {
-	
+GameFramework.Sprite = function (sprite) {
+
 	GameFramework.GameObject.call(this);
-	
-	this.texture = image;
+
+	this.texture = null;
+	this.spriteSheet = null;
+	if (sprite instanceof Image) {
+		console.log("simple sprite texture");
+		this.texture = image;
+	} else if (sprite instanceof GameFramework.SpriteSheet) {
+		console.log("init with spritesheet");
+		this.spriteSheet = sprite;
+		this.texture = sprite.image;
+	} else {
+		console.error("error initiating sprite");
+	}
+
 	this.opacity = 1.0;
 	this.zOrder = 0;
-	
+
+	this._debugDrawFillColor = "rgba(255,0,0,0.25)";
+	this._debugDrawStrokeColor = "rgba(255,0,0,1)";
 	this._sourceRect;
 	this._spriteIndex = 0;
 	this._boundingBox = {
 		x: 0.0, y: 0.0,
 		width: 0.0, height: 0.0
 	}
-	
+
 	return this;
 };
 
@@ -34,7 +48,7 @@ GameFramework.Sprite.prototype.init = function () {
 	this.boundingBox();
 };
 
-GameFramework.Sprite.prototype.render = function (deltaTime, context2D) { 
+GameFramework.Sprite.prototype.render = function (time, context2D, debugDraw) { 
 	if (!this.texture || !this.texture.complete) {
 		return;
 	}
@@ -54,7 +68,24 @@ GameFramework.Sprite.prototype.render = function (deltaTime, context2D) {
 	context2D.drawImage(this.texture, this._sourceRect.x, this._sourceRect.y,
 						this._sourceRect.width, this._sourceRect.height,
 						offsetX, offsetY, width, height);
-    
+   	
+	if (debugDraw) {
+		context2D.fillStyle = this._debugDrawFillColor;
+		context2D.strokeStyle = this._debugDrawStrokeColor;
+		context2D.lineWidth = 3;
+		
+		var boundingBox = this.boundingBox();
+		
+		context2D.strokeRect(boundingBox.x - this.transform.x, 
+						   boundingBox.y - this.transform.y, 
+						   boundingBox.width, 
+						   boundingBox.height);
+   		context2D.fillRect(boundingBox.x - this.transform.x, 
+   						   boundingBox.y - this.transform.y, 
+   						   boundingBox.width, 
+   						   boundingBox.height);
+	}
+	
 	context2D.restore();
 };
 
@@ -70,11 +101,10 @@ GameFramework.Sprite.prototype.boundingBox = function () {
 GameFramework.Sprite.prototype.spriteIndex = function (newIndex) {
 	if (newIndex === undefined) {
 		return this._spriteIndex;
-	} else if (this.texture instanceof GameFramework.SpriteSheet) {
+	} else if (this.spriteSheet !== undefined) {
 		this._spriteIndex = newIndex;
-		this._sourceRect = GameFramework.SpriteSheet.sourceRectForIndex(this.spriteIndex);
+		this._sourceRect = this.spriteSheet.sourceRectForIndex(this._spriteIndex);
 	} else {
 		this._spriteIndex = newIndex;
 	}
 };
-

@@ -5,10 +5,10 @@ GameFramework.SpriteFactory = {
 	
 	loadSpriteSheet: function (textureUrl, totalRows, totalCollumns, callback) {		
 		var spriteSheet = new GameFramework.SpriteSheet(textureUrl, totalRows, totalCollumns);
-		GameFramework.SpriteFactory.loadedSpriteSheets[spriteSheet.src] = spriteSheet;
+		GameFramework.SpriteFactory.loadedSpriteSheets[textureUrl] = spriteSheet;
 		
 		if (callback) {
-			spriteSheet.addEventListener('load', function(e) { 
+			spriteSheet.image.addEventListener('load', function(e) { 
 				callback();
 			});
 		}
@@ -44,7 +44,8 @@ GameFramework.SpriteFactory = {
 		if (GameFramework.SpriteFactory.loadedSpriteSheets[textureUrl] === undefined)
 			GameFramework.SpriteFactory.loadSpriteSheet(textureUrl, totalRows, totalCollumns);
 		
-		sprite = new GameFramework.Sprite(GameFramework.SpriteFactory.loadedSpriteSheets[textureUrl]);
+		sprite = new GameFramework.Sprite(GameFramework.SpriteFactory.loadedSpriteSheets[textureUrl].image);
+		sprite.spriteSheet = GameFramework.SpriteFactory.loadedSpriteSheets[textureUrl];
 		
 		return sprite;
 	}

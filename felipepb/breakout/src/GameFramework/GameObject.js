@@ -18,9 +18,9 @@ GameFramework.GameObject.prototype = {
 		this._isInitialized = true;
 	},
 	
-	update: function (deltaTime) { },
+	update: function (time) { },
 	
-	render: function (deltaTime, context2D) { },
+	render: function (time, context2D) { },
 	
 	dispose: function () {
 		this.transform = null;

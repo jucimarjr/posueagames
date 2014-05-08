@@ -3,42 +3,54 @@ var BreakoutGame = { };
 BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this.canvas = canvas;
 	this.targetFPS = targetFPS;
-	this.game = new GameFramework.Game(canvas, "black");
+	this.game = new GameFramework.Game(canvas, "black", true);
 	
-	var self = this;
+	this._resourcesLoadCount = 0;
 	
-	GameFramework.SpriteFactory.loadTexture("images/paddleBounds.png", function() { 
-		self.onResourceLoaded();
-	});
+	this._preloadTextures = [
+		{ path: "images/whiteBricks.png", isSpriteSheet: true, row: 1, collumns: 7 }
+	];
+	
+	this.loadTextures(this._preloadTextures);
 };
 
 BreakoutGame.GameScene.prototype = {
-	startGame: function () {
-		var block = GameFramework.SpriteFactory.spriteFromTexture("images/paddleBounds.png");
-		block.transform.x = this.canvas.width / 2;
-		block.transform.y = this.canvas.height / 2;
-		block.transform.scaleX = 0.5;
-		block.transform.scaleY = 0.5;
-		block.zOrder = 2;
+	loadTextures: function (imagesToLoad) {
+		this._resourcesLoadCount = imagesToLoad.length;
 		
-		block.update = function(delta) {
-			block.transform.angle += 0.01;
+		var self = this;
+		var callback = function() {
+			self.onResourceLoaded();
 		};
 		
-		this.game.addGameObject(block);
+		var spriteFactory = GameFramework.SpriteFactory;
 		
-		var staticBlock = GameFramework.SpriteFactory.spriteFromTexture("images/paddleBounds.png");
-		staticBlock.transform.x = this.canvas.width / 2 + 50;
-		staticBlock.transform.y = this.canvas.height / 2;
-		staticBlock.zOrder = 1;
-		staticBlock.opacity = 0.5;
+		for (var i = 0; i < imagesToLoad.length; i++) {
+			if (!imagesToLoad[i].isSpriteSheet) {
+				spriteFactory.loadTexture(imagesToLoad[i].path, callback);
+			}
+			else  {
+				spriteFactory.loadSpriteSheet(imagesToLoad[i].path,
+											  imagesToLoad[i].row,
+											  imagesToLoad[i].collumns, 
+											  callback);
+			}
+		}
+	},
+	
+	startGame: function () {
+		console.log("startGame");
+		
+		var bigBrick = new BreakoutGame.BigWhiteBrick();
+		bigBrick.transform.x = this.canvas.width / 2;
+		bigBrick.transform.y = this.canvas.height / 2;
 
-		this.game.addGameObject(staticBlock);
-		
+		this.game.addGameObject(bigBrick);
 		this.game.startGame(this.targetFPS);
 	},
 	
 	onResourceLoaded: function () {
-		this.startGame();
+		if (--this._resourcesLoadCount <= 0)
+			this.startGame();
 	}
 }

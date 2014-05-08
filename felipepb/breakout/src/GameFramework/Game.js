@@ -2,11 +2,12 @@
 var GameFramework = { };
 
 // Constructor for the Game class.
-GameFramework.Game = function (canvas, backgroundColor) {
+GameFramework.Game = function (canvas, backgroundColor, debugDraw) {
 	// Reference to the canvas html5 object.
 	this.targetFPS;
 	this.backgroundColor = backgroundColor;
 	
+	this._debugDraw = debugDraw;
 	this._canvas = canvas;
 	this._context2D = canvas.getContext("2d");
 	this._gameObjects = new Array();
@@ -45,14 +46,16 @@ GameFramework.Game.prototype = {
 		self._time.elapsedTime += self._time.deltaTime;
 		
 		for (var i = 0; i < self._gameObjects.length; i++) {
-			self._gameObjects[i].update(self._time.deltaTime);
+			self._gameObjects[i].update(self._time);
 		}
 		
 		self._context2D.fillStyle = self.backgroundColor;
 		self._context2D.fillRect(0, 0, self._canvas.width, self._canvas.height);
 		
 		for (var i = 0; i < self._gameObjects.length; i++) {
-			self._gameObjects[i].render(self._time.deltaTime, self._context2D);
+			self._gameObjects[i].render(self._time, 
+										self._context2D, 
+										self._debugDraw);
 		}
 		
 		self._time._lastUpdateTime = millisecondsNow;
