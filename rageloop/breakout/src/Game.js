@@ -161,15 +161,15 @@ Game.prototype.drawHud = function () {
 
     this.context.font = '24pt Tr2n';
     this.context.fillStyle = '#00ffff';
-    this.context.fillText(pontosA + ' ' + pontosB, (this.width / 2) + 180, 40);
+    this.context.fillText(pontosA + ' ' + pontosB, 20, 40);
 };
 
 Game.prototype.gameOver = function () {
     this.clear();
 
-    this.context.font = '42pt Helvetica';
-    this.context.fillStyle = '#fff';
-    this.context.fillText('GAME OVER!', (this.width / 2) - 180, 40);
+    this.context.font = '42pt Tr2n';
+    this.context.fillStyle = '#00ffff';
+    this.context.fillText('GAME OVER!', (this.width / 2) - 180, (this.height / 2) - 50);
 
     clearInterval(this.timer);
 };
