@@ -8,10 +8,13 @@ var jogador = {
 	resetX : null,
 	resetY : null,
 	derrota : null,
-	init : function(width, height){
+	vence : null,
+	
+	init : function(width, height, b){
 		jogador.resetX = jogador.x = (width / 2) - (jogador.w / 2);
 		jogador.resetY = jogador.y = height - jogador.h;
-		jogador.derrota = false;
+		jogador.derrota = false;		
+		
 	},
 	
 	render : function(root){
@@ -20,7 +23,7 @@ var jogador = {
 	},
  	
     atualizar : function(width){
-			// Movimentação jogador
+			// Movimenta����o jogador
 		if(tecla.direita != tecla.esquerda){
 			if(tecla.esquerda){
 				if(jogador.x > 0){
@@ -34,6 +37,7 @@ var jogador = {
 			}
 		}
 	},
+	
 	clear : function()
 	{
 		jogador.x = jogador.resetX;

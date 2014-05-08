@@ -10,6 +10,7 @@ var game = {
 	height  : null,
 	width   : null,	
 	polling : null, //Guarda a instacia do setInterval com gameLoop
+	
 	init : function(){
 		game.canvas = document.getElementById("canvas");
 		game.context = game.canvas.getContext("2d");
@@ -18,7 +19,7 @@ var game = {
 		//Iniciar informacoes do jogador
 		jogador.init(game.width, game.height);
 		//Iniciar informacoes da bola
-		bola.init(game.width, jogador.y);
+		bola.init(game.width, jogador.y);		
 		//Iniciar informacoes do bloco
 		bloco.init();
 		//Inicia a escuta do teclado
@@ -31,9 +32,9 @@ var game = {
 		tecla.listenerKey();
 	},	
 	gameLoop : function(){
-		//Atualiza posição do jogador 
+		//Atualiza posi����o do jogador 
 		jogador.atualizar(game.width);
-		// Atualiza posição da bola
+		// Atualiza posi����o da bola
 		bola.atualizar(jogador.y, jogador.x, jogador.w, game.width, game.height, game.polling);
 		// Atualizar tela do jogo
 		game.atualizar();
@@ -52,6 +53,10 @@ var game = {
 		if(jogador.derrota == true){
 			game.derrota();
 			game.btnNewGame();
+			game.pontuar();
+			mouse.listener(canvas);
+		}else{
+			game.pontuar();
 			mouse.listener(canvas);
 		}
 	}, 
@@ -62,6 +67,19 @@ var game = {
 		game.context.font = "42px Helvetica";
 		game.context.fillStyle = "#000000";
 		game.context.fillText("Você perdeu!", 180, 250);	
+	},	
+	
+	pontuar:function(){
+
+        var ponto = bola.pontuacao;
+            
+        if (ponto < 10) {
+        	ponto = "0" + ponto;
+        }
+        
+        game.context.font = "42pt Helvetica";
+        game.context.fillStyle = "#000000";
+        game.context.fillText(ponto + " ", (game.width/2) - 20, 200);
 	},
 	
 	btnNewGame : function(){

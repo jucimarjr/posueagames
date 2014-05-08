@@ -9,10 +9,13 @@ var bola = {
 	resetX : null,
 	resetY : null,
 	countFail : null,
+	pontuacao:null,
+	
 	init : function(width, y){//largura do canvas e y do jogador
 		bola.resetX = bola.x = width / 2;
 		bola.resetY = bola.y = y - bola.raio;
 		bola.countFail = 0;
+		bola.pontuacao = 0;
 	},
 	render : function(root){
 		root.fillStyle = "red";
@@ -22,20 +25,23 @@ var bola = {
 		root.fill();
 	},
 	atualizar : function(y, x, w, width, height, polling){		
-		// Movimentação bola
+		// Movimenta����o bola
 		if(bola.baixo){
 			bola.colisaoJogador(y, x, w);
 			bola.y += bola.velocidade;
+			
 		}
 		else {
 			bola.y -= bola.velocidade;
 		}
-		// Colisão paredes
+		// Colis��o paredes
 		if(bola.x - bola.raio <= 0 || bola.x + bola.raio >= width){
 			bola.angulo *= -1;
 		}
 		//Colisao bloco
 		bola.colisaoBloco();
+		
+		
 		//Colisao chao
 		bola.colisaoChao(height, polling);
 		//Altera o angulo da bola
@@ -47,10 +53,11 @@ var bola = {
 		bola.y = bola.resetY;	
 		bola.baixo = false;
 		bola.angulo = 5;
-		bola.velocidade = 10;		
+		bola.velocidade = 10;
+
 	},
 	colisaoJogador : function(y, x, w){
-		// Colisão jogador
+		// Colis��o jogador
 		if((bola.y + bola.raio >= y) && 
 			(bola.x >= x) &&
 			(bola.x <= x + w)){
@@ -70,11 +77,17 @@ var bola = {
 					bola.baixo = !bola.baixo;
 					bloco.blocos[linha][coluna] = 1;
 				}
+				
+				console.log("Colisao bloco");
+				bola.pontuacao++;
+				console.log(bola.pontuacao);
+				
 			}else{
 				bola.baixo = !bola.baixo;
 			}
 		}	
 	},
+	
 	colisaoChao : function(height, polling){
 		//Colisao chao
 		if(bola.y + bola.raio >= height){
