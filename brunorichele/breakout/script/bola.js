@@ -25,7 +25,7 @@ var bola = {
 		root.fill();
 	},
 	atualizar : function(y, x, w, width, height, polling){		
-		// Movimenta����o bola
+		// Movimentar a bola
 		if(bola.baixo){
 			bola.colisaoJogador(y, x, w);
 			bola.y += bola.velocidade;
@@ -34,7 +34,7 @@ var bola = {
 		else {
 			bola.y -= bola.velocidade;
 		}
-		// Colis��o paredes
+		// Colisao paredes
 		if(bola.x - bola.raio <= 0 || bola.x + bola.raio >= width){
 			bola.angulo *= -1;
 		}
@@ -76,12 +76,10 @@ var bola = {
 				if(bloco.blocos[linha][coluna] == 0){
 					bola.baixo = !bola.baixo;
 					bloco.blocos[linha][coluna] = 1;
+					bola.pontuacao++;
+					console.log(bola.pontuacao);
 				}
-				
 				console.log("Colisao bloco");
-				bola.pontuacao++;
-				console.log(bola.pontuacao);
-				
 			}else{
 				bola.baixo = !bola.baixo;
 			}
