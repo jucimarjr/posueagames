@@ -9,13 +9,15 @@ var bola = {
 	resetX : null,
 	resetY : null,
 	countFail : null,
-	pontuacao:null,
+	pontuacao : null,
+	randomInit : [-1, 1],
 	
 	init : function(width, y){//largura do canvas e y do jogador
 		bola.resetX = bola.x = width / 2;
 		bola.resetY = bola.y = y - bola.raio;
 		bola.countFail = 0;
 		bola.pontuacao = 0;
+		bola.angulo *= bola.randomInit[Math.round(Math.random() * 1)];  // Random inicio da partida
 	},
 	render : function(root){
 		root.fillStyle = "red";
@@ -52,12 +54,11 @@ var bola = {
 		bola.x = bola.resetX;
 		bola.y = bola.resetY;	
 		bola.baixo = false;
-		bola.angulo = 5;
+		bola.angulo = 5 * bola.randomInit[Math.round(Math.random() * 1)]; // Random inicio da partida
 		bola.velocidade = 10;
-
 	},
 	colisaoJogador : function(y, x, w){
-		// Colis��o jogador
+		// Colisao jogador
 		if((bola.y + bola.raio >= y) && 
 			(bola.x >= x) &&
 			(bola.x <= x + w)){
