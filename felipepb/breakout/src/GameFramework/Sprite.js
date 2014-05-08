@@ -44,7 +44,7 @@ BreakoutGame.Sprite.prototype.render = function (deltaTime, context2D) {
 	                    -Math.sin(this.transform.angle), Math.cos(this.transform.angle),
 						this.transform.x, this.transform.y);
 
-    context2D.globalOpacity = this.opacity;
+    context2D.globalAlpha = this.opacity;
 	
 	var offsetX =  - this._sourceRect.width * this.transform.scaleX / 2;
 	var offsetY =  - this._sourceRect.height * this.transform.scaleY / 2;
