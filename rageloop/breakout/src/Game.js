@@ -144,8 +144,14 @@ Game.prototype.update = function () {
     }
 
     //check game over
-    if (!this.level.hasBars() || this.hud.getLifes() < 1) {
+    if (this.hud.getLifes() < 1) {
         this.gameOver(this.context);
+        return;
+    }
+
+    //check player is winner
+    if (!this.level.hasBars()) {
+        this.gameWin(this.context);
         return;
     }
 
@@ -168,6 +174,16 @@ Game.prototype.gameOver = function () {
     this.context.font = '42pt Tr2n';
     this.context.fillStyle = '#00ffff';
     this.context.fillText('GAME OVER!', (this.width / 2) - 180, (this.height / 2) - 50);
+
+    clearInterval(this.timer);
+};
+
+Game.prototype.gameWin = function () {
+    this.clear();
+
+    this.context.font = '42pt Tr2n';
+    this.context.fillStyle = '#00ffff';
+    this.context.fillText('YOU WIN!', (this.width / 2) - 130, (this.height / 2) - 50);
 
     clearInterval(this.timer);
 };
