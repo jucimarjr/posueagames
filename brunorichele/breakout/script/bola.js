@@ -40,7 +40,7 @@ var bola = {
 			bola.angulo *= -1;
 		}
 		//Colisao bloco
-		bola.colisaoBloco();
+		bola.colisaoBloco(polling);
 		
 		//Colisao chao
 		bola.colisaoChao(height, polling);
@@ -76,9 +76,9 @@ var bola = {
 					bola.baixo = !bola.baixo;
 					bloco.blocos[linha][coluna] = 1;
 					bola.pontuacao++;
-					if(bola.pontuacao == 50){
+					if(bola.pontuacao == 50){	
 						bola.clear(); // A bola retorna a posicao inicial
-						jogador.clear(); // O jogador retorna a posicao inicial						
+						jogador.clear(); // O jogador retorna a posicao inicial					
 						jogador.vitoria = true;
 						clearInterval(polling);
 					}
