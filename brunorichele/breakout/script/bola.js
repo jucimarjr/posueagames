@@ -31,7 +31,6 @@ var bola = {
 		if(bola.baixo){
 			bola.colisaoJogador(y, x, w);
 			bola.y += bola.velocidade;
-			
 		}
 		else {
 			bola.y -= bola.velocidade;
@@ -42,7 +41,6 @@ var bola = {
 		}
 		//Colisao bloco
 		bola.colisaoBloco();
-		
 		
 		//Colisao chao
 		bola.colisaoChao(height, polling);
@@ -78,7 +76,7 @@ var bola = {
 					bola.baixo = !bola.baixo;
 					bloco.blocos[linha][coluna] = 1;
 					bola.pontuacao++;
-					if(bola.countWin == 50){
+					if(bola.pontuacao == 50){
 						bola.clear(); // A bola retorna a posicao inicial
 						jogador.clear(); // O jogador retorna a posicao inicial						
 						jogador.vitoria = true;
