@@ -23,6 +23,9 @@ function Game(id, width, height) {
     this.posicaoInicial = this.height / 2;
     this.timer = null;
     this.delay = 0;
+
+    //game fps
+    this.stats = null;
 }
 
 Game.prototype.init = function () {
@@ -40,6 +43,8 @@ Game.prototype.init = function () {
 
     this.level = new Level();
     this.level.init();
+
+    this.stats = this.initStats();
 };
 
 Game.prototype.start = function () {
@@ -47,6 +52,7 @@ Game.prototype.start = function () {
 
     this.timer = setInterval(function () {
         self.update();
+        self.stats.update();
     }, 30);
 };
 
@@ -176,4 +182,23 @@ Game.prototype.gameOver = function () {
 
 Game.prototype.clear = function () {
     this.canvas.width = this.canvas.width;
+};
+
+//===============================================================
+// Game Stats
+//===============================================================
+
+Game.prototype.initStats = function() {
+
+    var stats = new Stats();
+    stats.setMode(0); // 0: fps, 1: ms
+
+    // Align top-left
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.left = '0px';
+    stats.domElement.style.top = '0px';
+
+    document.body.appendChild( stats.domElement );
+
+    return stats;
 };
