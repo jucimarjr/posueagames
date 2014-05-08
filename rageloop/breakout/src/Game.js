@@ -11,8 +11,7 @@ function Game(id, width, height) {
     this.context = null;
 
     //hud
-    this.pontosJogador = 0;
-    this.pontosOponente = 0;
+    this.hud = null;
 
     //key handlers
     this.keys = {
@@ -37,12 +36,18 @@ Game.prototype.init = function () {
 
     this.player = new Player((this.width - 40) / 2, this.height - 30, 80, 15, ImageLoader.get('player'));
 
-    this.ball = new Ball(this.width / 2, this.height / 2, 10);
+    this.ball = new Ball(this.width / 2, this.height / 2, 10, ImageLoader.get('ball'));
     this.ball.speed = 15;
     this.ball.angle = Math.floor(Math.random() * 21) - 10;
 
     this.level = new Level();
     this.level.init();
+
+    this.hud = new HUD({
+        'top' : 20,
+        'amountOfLifes': 5,
+        'lifeImage': ImageLoader.get('ball')
+    });
 
     this.stats = this.initStats();
 };
@@ -108,7 +113,8 @@ Game.prototype.update = function () {
     //miss
     if (this.ball.y > this.height) {
         if (this.delay >= 50) {
-            this.pontosOponente++;
+            this.hud.updateLifes(-1);
+            this.hud.draw(this.context);
 
             this.ball.x = this.width / 2;
             this.ball.y = this.posicaoInicial;
@@ -132,7 +138,7 @@ Game.prototype.update = function () {
 
             this.ball.angle = Math.floor((Math.random() * 10));
 
-            this.pontosJogador++;
+            this.hud.updateScore(1);
         }
     }
 
@@ -151,23 +157,8 @@ Game.prototype.update = function () {
 
     this.ball.draw(this.context);
 
-    this.drawHud();
-};
+    this.hud.draw(this.context);
 
-Game.prototype.drawHud = function () {
-    var pontosA = this.pontosJogador;
-    var pontosB = this.pontosOponente;
-
-    if (this.pontosJogador < 10) {
-        pontosA = '0' + this.pontosJogador;
-    }
-    if (this.pontosOponente < 10) {
-        pontosB = '0' + this.pontosOponente;
-    }
-
-    this.context.font = '24pt Tr2n';
-    this.context.fillStyle = '#00ffff';
-    this.context.fillText(pontosA + ' ' + pontosB, 20, 40);
 };
 
 Game.prototype.gameOver = function () {
