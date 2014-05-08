@@ -119,7 +119,7 @@ function ball(x, y, radius, speed) {
 				// mandamos a bola na diagonal pra direita
 				angle = Math.floor((Math.random() * 10));
 			}
-		} else if (collisions(ball, blocks)) {
+		} else if (collisions(ball)) {
 			if (this.direction == DOWN) {
 				this.direction = UP;
 			} else {
@@ -198,12 +198,12 @@ function block(x, y, w, h) {
 
 	this.collision = function(ball) {
 		// se o bloco ainda nao foi colidido
-		if (!collided) {
+		if (!this.collided) {
 			// se a bola enconstar no bloco
 			if ((ball.y + ball.radius) > this.y
 					&& (ball.y - ball.radius) < (this.y + this.h)) {
-				if ((ball.x + ball.radius > player.x)
-						&& (ball.x - ball.radius < this.x + this.w)) {
+				if ((ball.x - ball.radius > player.x)
+						&& (ball.x + ball.radius < this.x + this.w)) {
 					collided = true;
 					return true;
 				}
@@ -215,7 +215,7 @@ function block(x, y, w, h) {
 }
 
 function collisions(ball) {
-	for (var i = 0; i < blocks.lenght; i++) {
+	for (var i = 0; i < blocks.length; i++) {
 		if (blocks[i].collision(ball)) {
 			return true;
 		}
