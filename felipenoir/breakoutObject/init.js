@@ -14,7 +14,7 @@ geraPosicaoRandom = function(width) {
 	}
 	return valor;
 }
-// Gera posicão aleatória para bola
+//Gera posicão aleatória para bola
 var posicaoXBola = geraPosicaoRandom(canvas.width);
 var bola = new Bola(ctx, posicaoXBola, canvas.width, canvas.height);
 var jogador = new Jogador(ctx, canvas.width, canvas.height);
@@ -24,7 +24,7 @@ var alvos = inimigos.inimigos;
 var isDireita = false;
 var isEsquerda = false;
 
-// Usuário movendo
+//Usuário movendo
 document.addEventListener('keydown', function(evt) {
 	if (evt.keyCode == 39)
 		isDireita = true;
@@ -32,7 +32,7 @@ document.addEventListener('keydown', function(evt) {
 		isEsquerda = true;
 }, false);
 
-// Usuário parado
+//Usuário parado
 document.addEventListener('keyup', function(evt) {
 	if (evt.keyCode == 39)
 		isDireita = false;
@@ -93,10 +93,27 @@ function colisaoBolaInimigos() {
 
 				if (houveColisao(alvoX, alvoY)) {
 
+					var x1 = Math.abs(alvoX - (bola.posX + bola.raio));
+					var x2 = Math.abs((alvoX + inimigos.width) - (bola.posX - bola.raio));
+					if(x1 > x2)
+						x1 = x2;
+
+					var y1 = Math.abs(alvoY - (bola.posY + bola.raio));
+					var y2 = Math.abs((alvoY + inimigos.height) - (bola.posY - bola.raio));
+					if (y1 > y2)
+						y1 = y2;
+
+					if (x1 == y1) {
+						bola.velocidadeX = -bola.velocidadeX;
+						bola.velocidadeY = -bola.velocidadeY;
+					} else if (x1 < y1)
+						bola.velocidadeX = -bola.velocidadeX;
+					else
+						bola.velocidadeY = -bola.velocidadeY;
+
 					alvos[i][j] = 0;
-					bola.velocidadeY = -bola.velocidadeY;
 					break;
-					
+
 				}
 
 			}
@@ -104,46 +121,11 @@ function colisaoBolaInimigos() {
 	}
 }
 
-function colisaoAlvoEsquerda(left) {
-	var resultado = bola.posX + bola.raio > left && bola.velocidadeX > 0;
-	if (resultado) {
-		console.log("left colision");
-		// bola.posX = left - bola.raio;
-	}
-	return resultado;
-}
-
-function colisaoAlvoDireita(rigth) {
-	var resultado = bola.posX - bola.raio < rigth && bola.velocidadeX < 0;
-	if (resultado) {
-		console.log("rigth colision");
-		// bola.posX = rigth + bola.raio;
-	}
-	return resultado;
-}
-
-function colisaoAlvoBaixo(bottom) {
-	var resultado = (bola.posY - bola.raio < bottom) && bola.velocidadeY < 0;
-	if (resultado) {
-		console.log("bottom colision");
-		// bola.posY = bottom + bola.raio;
-	}
-	return resultado;
-}
-
-function colisaoAlvoCima(top) {
-	var resultado = (bola.posY + bola.raio > top) && bola.velocidadeY > 0;
-	if (resultado) {
-		console.log("top colision");
-	}
-	return resultado;
-}
-
 function gameOver() {
-	
+
 	clearInterval(0);
 	reloadPage();
 }
 
-// The Treta has been planted
+//The Treta has been planted
 init();
