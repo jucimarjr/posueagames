@@ -2,8 +2,8 @@ BreakoutGame.Brick = function (index) {
     if (index === undefined) {
         console.error("index not defined");
     } else {
-        if (index > 18)
-            index = 18;
+        if (index > 23)
+            index = 23;
     }
     
     GameFramework.Sprite.call(this, GameFramework.SpriteFactory.loadedSpriteSheets["images/bricks.png"]);

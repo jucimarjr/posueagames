@@ -3,7 +3,7 @@ var BreakoutGame = { };
 BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this.canvas = canvas;
 	this.targetFPS = targetFPS;
-	this.game = new GameFramework.Game(canvas, "black", true);
+	this.game = new GameFramework.Game(canvas, "black", false);
 	
 	this._resourcesLoadCount = 0;
 	
@@ -50,15 +50,97 @@ BreakoutGame.GameScene.prototype = {
 	},
 	
 	createBrickRows: function () {
+	    this.game.clearGameObjects();
+	    
+	    var topMargin = 15;
+	    
 	    var bigBrick = new BreakoutGame.BigWhiteBrick();
         this.game.addGameObject(bigBrick);
         bigBrick.transform.x = this.canvas.width / 2;
-        bigBrick.transform.y = bigBrick.boundingBox().height / 2 + 10;
+        bigBrick.transform.y = bigBrick.boundingBox().height / 2 + topMargin;
         
-        var brick = new BreakoutGame.Brick(15);
-        this.game.addGameObject(brick);
-        brick.transform.x = this.canvas.width / 2;
-        brick.transform.y = 300;
+        // first brick collumn
+        var brickY = bigBrick.boundingBox().y;
+        var brickTopMargin = 28;
+        var brickRightMargin = 10;
+        
+        for (var i = 0; i < 5; i++) {
+            var index = (i * 4) <= 12 ? i * 4 : 19;
+            var brick = new BreakoutGame.Brick(index);
+            this.game.addGameObject(brick);
+            brickY += brick.boundingBox().height / 2.0;
+            brick.transform.x = bigBrick.boundingBox().x - brick.boundingBox().width * 1.5 - brickRightMargin;
+            brick.transform.y = brickY;
+            brickY += brickTopMargin;
+        }
+        
+        // second brick collumn
+        brickY = bigBrick.boundingBox().y;
+        brickRightMargin = 5;
+        
+        for (var i = 0; i < 5; i++) {
+            var index = ((i * 4) + 1) <= 13 ? ((i * 4) + 1) : 20;
+            var brick = new BreakoutGame.Brick(index);
+            this.game.addGameObject(brick);
+            brickY += brick.boundingBox().height / 2.0;
+            brick.transform.x = bigBrick.boundingBox().x - brick.boundingBox().width * 0.5 - brickRightMargin;
+            brick.transform.y = brickY;
+            brickY += brickTopMargin;
+        }
+        
+        // second last brick collumn
+        brickY = bigBrick.boundingBox().y;
+        brickRightMargin = 5;
+        
+        for (var i = 0; i < 4; i++) {
+            var index = ((i * 4) + 2) <= 13 ? ((i * 4) + 2) : 17;
+            var brick = new BreakoutGame.Brick(index);
+            this.game.addGameObject(brick);
+            brickY += brick.boundingBox().height / 2.0;
+            brick.transform.x = bigBrick.boundingBox().x
+                                + bigBrick.boundingBox().width
+                                + brick.boundingBox().width * 0.5 + brickRightMargin;
+            brick.transform.y = brickY;
+            brickY += brickTopMargin;
+        }
+        
+        // last brick collumn
+        brickY = bigBrick.boundingBox().y;
+        brickRightMargin = 10;
+        
+        for (var i = 0; i < 4; i++) {
+            var index = ((i * 4) + 3) <= 14 ? ((i * 4) + 3) : 18;
+            var brick = new BreakoutGame.Brick(index);
+            this.game.addGameObject(brick);
+            brickY += brick.boundingBox().height / 2.0;
+            brick.transform.x = bigBrick.boundingBox().x
+                                + bigBrick.boundingBox().width
+                                + brick.boundingBox().width * 1.5 + brickRightMargin;
+            brick.transform.y = brickY;
+            brickY += brickTopMargin;
+        }
+        
+        // "to love you" and "to kill you" 
+        topMargin = 28;
+        brickRightMargin = 5;
+        brickY = bigBrick.boundingBox().y + bigBrick.boundingBox().height + topMargin;
+        var brickX;
+
+        for (var i = 0; i < 2; i++) {
+            brickX = bigBrick.boundingBox().x;
+            for (var j = 0; j < 3; j++) {
+                var index = (14 + j) + (7 * i);
+                var brick = new BreakoutGame.Brick(index);
+                this.game.addGameObject(brick);
+                if (j == 0)
+                    brickX += brick.boundingBox().width / 2.0;
+                brick.transform.x = brickX;
+                brick.transform.y = brickY;
+                brickX += brick.boundingBox().width + brickRightMargin;
+            }
+            brickY += brick.boundingBox().height / 2.0 + topMargin;
+        }
+
 	},
 	
 	onResourceLoaded: function () {
