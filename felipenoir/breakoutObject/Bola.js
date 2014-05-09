@@ -9,7 +9,7 @@ function Bola(ctx, posX, width, height) {
 		this.posX = width - this.raio;
 	else
 		this.posX = posX;
-	this.posX = posX;
+
 	this.posY = height / 2;
 	this.angulo = 0;
 	this.velocidadeX = 2;

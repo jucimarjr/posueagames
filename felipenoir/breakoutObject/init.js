@@ -21,6 +21,7 @@ var jogador = new Jogador(ctx, canvas.width, canvas.height);
 var inimigos = new Inimigos(ctx, canvas.width, canvas.height);
 var alvos = inimigos.inimigos;
 var pontuacao = new Pontuacao(ctx, 10, 38);
+var vidas = new Vidas(ctx);
 
 var isDireita = false;
 var isEsquerda = false;
@@ -64,6 +65,7 @@ function gameLoop() {
 	jogador.desenhaJogador()
 	inimigos.desenhaInimigos();
 	pontuacao.desenha();
+	vidas.desenha();
 }
 
 function colisaoBolaJogador() {
