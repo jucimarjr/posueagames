@@ -20,6 +20,7 @@ var bola = new Bola(ctx, posicaoXBola, canvas.width, canvas.height);
 var jogador = new Jogador(ctx, canvas.width, canvas.height);
 var inimigos = new Inimigos(ctx, canvas.width, canvas.height);
 var alvos = inimigos.inimigos;
+var pontuacao = new Pontuacao(ctx, 10, 38);
 
 var isDireita = false;
 var isEsquerda = false;
@@ -62,6 +63,7 @@ function gameLoop() {
 	bola.desenhaBola();
 	jogador.desenhaJogador()
 	inimigos.desenhaInimigos();
+	pontuacao.desenha();
 }
 
 function colisaoBolaJogador() {
@@ -111,6 +113,7 @@ function colisaoBolaInimigos() {
 					else
 						bola.velocidadeY = -bola.velocidadeY;
 
+					pontuacao.incrementa(10);
 					alvos[i][j] = 0;
 					break;
 
@@ -122,7 +125,6 @@ function colisaoBolaInimigos() {
 }
 
 function gameOver() {
-
 	clearInterval(0);
 	reloadPage();
 }

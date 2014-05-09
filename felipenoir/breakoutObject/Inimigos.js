@@ -30,6 +30,7 @@ function Inimigos(ctx,width,height){
 			for(var j =0; j < this.inimigos[i].length; j++){
 				if(this.inimigos[i][j] == 1){
 					this.ctx.beginPath();
+					this.ctx.fillStyle = "#000000";
 					this.ctx.rect((j*(this.width + this.DISTANCIA)) + this.DISTANCIA,(i*(this.height + this.DISTANCIA)) + this.DISTANCIA, this.width,this.height);
 					this.ctx.closePath();
 					this.ctx.fill();
