@@ -65,7 +65,7 @@ function gameLoop() {
 }
 
 function colisaoBolaJogador() {
-	if (bola.posY + bola.raio > canvas.height - jogador.height) {
+	if (bola.posY + bola.raio > canvas.height) {
 		if (bola.posX + bola.raio > jogador.posX
 				&& bola.posX - bola.raio < jogador.posX + jogador.width) {
 			bola.velocidadeY = -bola.velocidadeY;
@@ -128,7 +128,9 @@ function colisaoAlvoCima(top) {
 }
 
 function gameOver() {
+	
 	clearInterval(0);
+	reloadPage();
 }
 
 //The Treta has been planted
