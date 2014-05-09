@@ -75,9 +75,15 @@ function colisaoBolaJogador() {
 			bola.posY = jogador.posY - bola.raio;
 			bola.velocidadeY = -bola.velocidadeY;
 		} else {
-			gameOver();
+			vidas.removeVida();
+			reiniciaBola();
 		}
 	}
+}
+
+function reiniciaBola() {
+	bola.posX = geraPosicaoRandom(canvas.width);
+	bola.posY = canvas.height / 2;
 }
 
 function houveColisao(alvoX, alvoY) {
