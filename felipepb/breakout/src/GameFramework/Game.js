@@ -77,6 +77,17 @@ GameFramework.Game.prototype = {
 			removedObjects[0].dispose();
 		}
 	},
+	
+	clearGameObjects: function () {
+	    var self = this;
+	    var gameObjects = self._gameObjects;
+	    var length = gameObjects.length;
+
+	    for (var i = 0; i < length; i++)
+	       gameObjects[i].dispose();
+	    
+	    gameObjects.splice(0, length + 1);
+	},
 		
 	_compareGameObjects: function (a, b) {
 		if (a.zOrder === undefined || b.zOrder === undefined) {
