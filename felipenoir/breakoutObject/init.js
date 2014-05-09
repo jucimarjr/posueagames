@@ -14,7 +14,7 @@ geraPosicaoRandom = function(width) {
 	}
 	return valor;
 }
-//Gera posicão aleatória para bola
+// Gera posicão aleatória para bola
 var posicaoXBola = geraPosicaoRandom(canvas.width);
 var bola = new Bola(ctx, posicaoXBola, canvas.width, canvas.height);
 var jogador = new Jogador(ctx, canvas.width, canvas.height);
@@ -24,7 +24,7 @@ var alvos = inimigos.inimigos;
 var isDireita = false;
 var isEsquerda = false;
 
-//Usuário movendo
+// Usuário movendo
 document.addEventListener('keydown', function(evt) {
 	if (evt.keyCode == 39)
 		isDireita = true;
@@ -32,7 +32,7 @@ document.addEventListener('keydown', function(evt) {
 		isEsquerda = true;
 }, false);
 
-//Usuário parado
+// Usuário parado
 document.addEventListener('keyup', function(evt) {
 	if (evt.keyCode == 39)
 		isDireita = false;
@@ -68,11 +68,19 @@ function colisaoBolaJogador() {
 	if (bola.posY + bola.raio > canvas.height) {
 		if (bola.posX + bola.raio > jogador.posX
 				&& bola.posX - bola.raio < jogador.posX + jogador.width) {
+			bola.posY = jogador.posY - bola.raio;
 			bola.velocidadeY = -bola.velocidadeY;
 		} else {
 			gameOver();
 		}
 	}
+}
+
+function houveColisao(alvoX, alvoY) {
+	return (alvoX < bola.posX + bola.raio
+			&& alvoX + inimigos.width > bola.posX - bola.raio
+			&& alvoY < bola.posY + bola.raio
+			&& alvoY + inimigos.height > bola.posY - bola.raio);
 }
 
 function colisaoBolaInimigos() {
@@ -83,28 +91,13 @@ function colisaoBolaInimigos() {
 				var alvoX = (j * (inimigos.width + inimigos.DISTANCIA)) + inimigos.DISTANCIA;
 				var alvoY = (i * (inimigos.height + inimigos.DISTANCIA)) + inimigos.DISTANCIA;
 
-				if (bola.posX > alvoX && bola.posX < alvoX + inimigos.width) {
-					// verifica se a bola está entre a esquerda e a direita do alvo
+				if (houveColisao(alvoX, alvoY)) {
 
-					if (/*colisaoAlvoCima(alvoY) || */colisaoAlvoBaixo(alvoY + inimigos.height)) {
-						// verifica se houve colisão no topo ou no fundo
-
-						alvos[i][j] = 0;
-						bola.velocidadeY = -bola.velocidadeY;
-
-					}
-
-				}/* else if (bola.posY > alvoY && bola.posY < alvoY + inimigos.height) {
-					// verifica se a bola está entre o topo e o fundo do alvo
-
-					if (colisaoAlvoEsquerda(alvoX) || colisaoAlvoDireita(alvoX + inimigos.width)) {
-						// verifica se houve colisão nas laterais
-
-						alvos[i][j] = 0;
-						bola.velocidadeX = -bola.velocidadeX;
-
-					}
-				}*/
+					alvos[i][j] = 0;
+					bola.velocidadeY = -bola.velocidadeY;
+					break;
+					
+				}
 
 			}
 		}
@@ -112,19 +105,38 @@ function colisaoBolaInimigos() {
 }
 
 function colisaoAlvoEsquerda(left) {
-	return bola.posX + bola.raio > left && bola.velocidadeX > 0;
+	var resultado = bola.posX + bola.raio > left && bola.velocidadeX > 0;
+	if (resultado) {
+		console.log("left colision");
+		// bola.posX = left - bola.raio;
+	}
+	return resultado;
 }
 
 function colisaoAlvoDireita(rigth) {
-	return bola.posX - bola.raio < rigth && bola.velocidadeX < 0;
+	var resultado = bola.posX - bola.raio < rigth && bola.velocidadeX < 0;
+	if (resultado) {
+		console.log("rigth colision");
+		// bola.posX = rigth + bola.raio;
+	}
+	return resultado;
 }
 
 function colisaoAlvoBaixo(bottom) {
-	return (bola.posY - bola.raio < bottom) && bola.velocidadeY < 0;
+	var resultado = (bola.posY - bola.raio < bottom) && bola.velocidadeY < 0;
+	if (resultado) {
+		console.log("bottom colision");
+		// bola.posY = bottom + bola.raio;
+	}
+	return resultado;
 }
 
 function colisaoAlvoCima(top) {
-	return (bola.posY + bola.raio > top) && bola.velocidadeY > 0;
+	var resultado = (bola.posY + bola.raio > top) && bola.velocidadeY > 0;
+	if (resultado) {
+		console.log("top colision");
+	}
+	return resultado;
 }
 
 function gameOver() {
@@ -133,5 +145,5 @@ function gameOver() {
 	reloadPage();
 }
 
-//The Treta has been planted
+// The Treta has been planted
 init();
