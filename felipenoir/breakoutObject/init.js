@@ -95,22 +95,22 @@ function colisaoBolaInimigos() {
 
 				if (houveColisao(alvoX, alvoY)) {
 
-					var x1 = Math.abs(alvoX - (bola.posX + bola.raio));
-					var x2 = Math.abs((alvoX + inimigos.width) - (bola.posX - bola.raio));
-					if(x1 > x2)
+					var x1 = Math.abs(alvoX - (bola.posX + bola.raio)); // distancia entre a bola e a esquerda do alvo
+					var x2 = Math.abs((alvoX + inimigos.width) - (bola.posX - bola.raio)); // distancia entre a bola e a direita do alvo
+					if(x1 > x2) // se condição for verdadeira então a bola veio da direita, senão, da esquerda
 						x1 = x2;
 
-					var y1 = Math.abs(alvoY - (bola.posY + bola.raio));
-					var y2 = Math.abs((alvoY + inimigos.height) - (bola.posY - bola.raio));
-					if (y1 > y2)
+					var y1 = Math.abs(alvoY - (bola.posY + bola.raio)); // distancia entre a bola e o topo do alvo
+					var y2 = Math.abs((alvoY + inimigos.height) - (bola.posY - bola.raio)); // distancia entre a bola e o fundo do alvo
+					if (y1 > y2) // se condição for verdadeira então a bola veio de baixo, senão, de cima
 						y1 = y2;
 
-					if (x1 == y1) {
+					if (x1 == y1) { // tocou na quina do alvo
 						bola.velocidadeX = -bola.velocidadeX;
 						bola.velocidadeY = -bola.velocidadeY;
-					} else if (x1 < y1)
+					} else if (x1 < y1) // tocou no lado esquerdo/direito
 						bola.velocidadeX = -bola.velocidadeX;
-					else
+					else // tocou no topo/fundo
 						bola.velocidadeY = -bola.velocidadeY;
 
 					pontuacao.incrementa(10);
