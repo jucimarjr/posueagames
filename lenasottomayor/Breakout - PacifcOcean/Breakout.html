@@ -1,5 +1,13 @@
 <html>
 <title> BreakOut-2 </title>
+
+<style type="text/css">
+canvas {
+	border: 3px dashed #000000;
+	background: #009900;
+	margin: 100px;
+}
+</style>
 	<body onload="init()">
 		<canvas id="canvas" width="600" height="450">
 			Navegador nao compativel com HTML5 canvas
@@ -10,7 +18,7 @@
 		
 		 var canvas, context, barraWidth, barraHeight, jogadorPosX, jogadorPosY, teclaEsquerdaPressionada, teclaDireitaPressionada, oponentePosX, 
                    oponentePosY, oponenteParaCima, bolaRaio, bolaPosX, bolaPosY, bolaParaCima, bolaAngulo, bolaTempo,
-                   velocidadeJogador, velocidadeOponente, velocidadeBola, pontosJogador, pontosOponente;
+                   velocidadeJogador, velocidadeOponente, velocidadeBola, pontosJogador, pontosOponente, mousePosicao;
 				   
 			function init(){
 			
@@ -44,6 +52,7 @@
 							
 				document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
                 document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
+                document.addEventListener('mousemove', mouseMove, false);// adiciona evento para keydown
                 setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
 			}
 			
@@ -64,6 +73,10 @@
                     teclaDireitaPressionada = false; // jogador soltou tecla direita
                 }
             }
+            
+            function mouseMove(e) {
+				mousePosicao = e.clientX - canvas.getBoundingClientRect().left;
+			}
 			
 			 function gameLoop() {
 			 
@@ -80,6 +93,13 @@
                                                 }
                                         }
                                 }
+                                
+                // Movimento do jogador com o mouse
+                            	if (teclaEsquerdaPressionada == false  && teclaDireitaPressionada == false){
+                            		if (mousePosicao >= (barraWidth/2) && mousePosicao < (canvas.width - barraWidth/2)){
+                            			jogadorPosX = mousePosicao - barraWidth/2;
+                            		}
+                            	}
 
                 // Oponente
                                 if (oponenteParaEsquerda) {// se o oponente estiver se movendo para esquerda...
