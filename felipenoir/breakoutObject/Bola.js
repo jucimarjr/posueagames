@@ -2,9 +2,15 @@
 
 function Bola(ctx, posX, width, height) {
 	this.ctx = ctx
+	this.raio = 10;
+	if (posX < this.raio)
+		this.posX = this.raio;
+	else if (posX > width - this.raio)
+		this.posX = width - this.raio;
+	else
+		this.posX = posX;
 	this.posX = posX;
 	this.posY = height / 2;
-	this.raio = 10;
 	this.angulo = 0;
 	this.velocidadeX = 2;
 	if (posX < width / 2)
