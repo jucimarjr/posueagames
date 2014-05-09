@@ -24,7 +24,7 @@ function Bola(ctx, posX, width, height) {
 
 	this.movimentaBola = function(limite) {
 		this.posX += this.velocidadeX;
-		if (this.posX < 0 || this.posX > limite - this.raio)
+		if (this.posX - this.raio < 0 || this.posX > limite - this.raio)
 			this.velocidadeX = -this.velocidadeX;
 
 		this.posY += this.velocidadeY;
