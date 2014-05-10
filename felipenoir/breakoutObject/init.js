@@ -17,7 +17,6 @@ geraPosicaoRandom = function(width) {
 //Gera posicão aleatória para bola
 var posicaoXBola = geraPosicaoRandom(canvas.width);
 var bola = new Bola(ctx, canvas.width / 2, canvas.height - 20, canvas.width, canvas.height);
-bola.state = bola.PARADO;
 var jogador = new Jogador(ctx, canvas.width, canvas.height);
 var inimigos = new Inimigos(ctx, canvas.width, canvas.height);
 var alvos = inimigos.inimigos;
@@ -76,6 +75,8 @@ function gameLoop() {
 		colisaoBolaInimigos();
 
 		// desenha
+		if(bola.state == bola.PARADO)
+			startGame();
 		janela.desenhaJanela();
 		bola.desenhaBola();
 		jogador.desenhaJogador()
@@ -95,7 +96,7 @@ function colisaoBolaJogador() {
 			bola.velocidadeY = -bola.velocidadeY;
 		} else {
 			vidas.removeVida();
-			if (vidas.qtd == 0) {
+			if (vidas.qtd < 0) {
 				gameState = GAMEOVER;
 			} else {
 				reiniciaBola();
@@ -105,8 +106,9 @@ function colisaoBolaJogador() {
 }
 
 function reiniciaBola() {
-	bola.posX = geraPosicaoRandom(canvas.width);
-	bola.posY = canvas.height / 2;
+	bola.state = bola.PARADO;
+	bola.posX = jogador.posX + 35;
+	bola.posY = canvas.height - 20;
 }
 
 function houveColisao(alvoX, alvoY) {
@@ -153,6 +155,12 @@ function colisaoBolaInimigos() {
 			}
 		}
 	}
+}
+
+function startGame() {
+	this.ctx.font = "40pt Helvetica";
+	this.ctx.fillStyle = "#000000";
+	this.ctx.fillText("Pressione 'Barra de Espaço'!", 5, (canvas.height / 2) + 20);
 }
 
 function gameOver() {
