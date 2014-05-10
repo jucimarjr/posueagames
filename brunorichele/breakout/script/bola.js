@@ -4,8 +4,8 @@ var bola = {
 	x: null, 
 	y: null,
 	baixo: false,
-	angulo: 5,
-	velocidade: 5,
+	angulo: null,
+	velocidade: null,
 	resetX : null,
 	resetY : null,
 	countFail : null,
@@ -13,11 +13,11 @@ var bola = {
 	randomInit : [-1, 1],
 	
 	init : function(width, y){//largura do canvas e y do jogador
-		bola.resetX = bola.x = width / 2;
-		bola.resetY = bola.y = y - bola.raio;
+		bola.resetX = width / 2;
+		bola.resetY = y - bola.raio;
 		bola.countFail = 0;
 		bola.pontuacao = 0;
-		bola.angulo *= bola.randomInit[Math.round(Math.random() * 1)];  // Random inicio da partida
+		bola.clear();
 	},
 	render : function(root){
 		root.fillStyle = "red";
