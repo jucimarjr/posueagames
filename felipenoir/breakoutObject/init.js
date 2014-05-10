@@ -16,7 +16,8 @@ geraPosicaoRandom = function(width) {
 }
 //Gera posicão aleatória para bola
 var posicaoXBola = geraPosicaoRandom(canvas.width);
-var bola = new Bola(ctx, posicaoXBola, canvas.width, canvas.height);
+var bola = new Bola(ctx, canvas.width / 2, canvas.height - 20, canvas.width, canvas.height);
+bola.state = bola.PARADO;
 var jogador = new Jogador(ctx, canvas.width, canvas.height);
 var inimigos = new Inimigos(ctx, canvas.width, canvas.height);
 var alvos = inimigos.inimigos;
@@ -31,12 +32,17 @@ var gameState = STARTED;
 var isDireita = false;
 var isEsquerda = false;
 
-//Usuário movendo
+// Usuário movendo
 document.addEventListener('keydown', function(evt) {
 	if (evt.keyCode == 39)
 		isDireita = true;
 	else if (evt.keyCode == 37)
 		isEsquerda = true;
+	else if (evt.keyCode == 32)
+		if (bola.state == bola.PARADO) {
+			console.log("a");
+			bola.lancarBola();
+		}
 }, false);
 
 //Usuário parado
@@ -58,7 +64,11 @@ function init() {
 function gameLoop() {
 	if(gameState == STARTED){
 		// movimenta
-		bola.movimentaBola(janela.width);
+		if (bola.state == bola.MOVIMENTANDO) {
+			bola.movimentaBola(janela.width);
+		} else {
+			bola.movimentaParado(janela.width, isDireita, isEsquerda);
+		}
 		jogador.movimentaJogador(isDireita, isEsquerda, canvas.width);
 
 		// verifica colisão
