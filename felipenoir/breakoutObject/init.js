@@ -23,6 +23,10 @@ var alvos = inimigos.inimigos;
 var pontuacao = new Pontuacao(ctx, 10, 38);
 var vidas = new Vidas(ctx);
 
+//0 - started; 1 - gameOver
+var gameState = 0; 
+
+
 var isDireita = false;
 var isEsquerda = false;
 
@@ -51,21 +55,25 @@ function init() {
 }
 
 function gameLoop() {
-	// movimenta
-	bola.movimentaBola(janela.width);
-	jogador.movimentaJogador(isDireita, isEsquerda, canvas.width);
+	if(gameState == 0){
+		// movimenta
+		bola.movimentaBola(janela.width);
+		jogador.movimentaJogador(isDireita, isEsquerda, canvas.width);
 
-	// verifica colisão
-	colisaoBolaJogador();
-	colisaoBolaInimigos();
+		// verifica colisão
+		colisaoBolaJogador();
+		colisaoBolaInimigos();
 
-	// desenha
-	janela.desenhaJanela();
-	bola.desenhaBola();
-	jogador.desenhaJogador()
-	inimigos.desenhaInimigos();
-	pontuacao.desenha();
-	vidas.desenha();
+		// desenha
+		janela.desenhaJanela();
+		bola.desenhaBola();
+		jogador.desenhaJogador()
+		inimigos.desenhaInimigos();
+		pontuacao.desenha();
+		vidas.desenha();
+	} else if(gameState == 1) {
+		gameOver();
+	}
 }
 
 function colisaoBolaJogador() {
@@ -76,7 +84,11 @@ function colisaoBolaJogador() {
 			bola.velocidadeY = -bola.velocidadeY;
 		} else {
 			vidas.removeVida();
-			reiniciaBola();
+			if (vidas.qtd == 0) {
+				gameState = 1; // estado do jogo muda para game over.
+			} else {
+				reiniciaBola();
+			}
 		}
 	}
 }
@@ -133,8 +145,9 @@ function colisaoBolaInimigos() {
 }
 
 function gameOver() {
-	clearInterval(0);
-	reloadPage();
+	this.ctx.font = "40pt Helvetica";
+	this.ctx.fillStyle = "#000000";
+	this.ctx.fillText("Game Over", canvas.width / 5, (canvas.height / 2) + 20);
 }
 
 //The Treta has been planted
