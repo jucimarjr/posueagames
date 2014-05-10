@@ -6,12 +6,13 @@
         <title>HTML5 - Canvas API</title>
                 <style type="text/css">
                         canvas {
-                          border:1px dashed #000000;
+                          border:1px dashed #ffffff;
+                          background: #555555;
                         }
                 </style>
     </head>   
     <body onload="init()">
-                <canvas id="canvas" width="500" height="550">
+                <canvas id="canvas" width="800" height="600">
                         Navegador não compatível com HTML5 Canvas
                 </canvas>
         <script>
@@ -25,8 +26,8 @@
                                 canvas = document.getElementById("canvas");// procura o canvas
                     context = canvas.getContext("2d");// recupera o contexto 2d
 
-                    barraWidth = 90;
-                    barraHeight = 30;
+                    barraWidth = 70;
+                    barraHeight = 15;
                     jogadorPosX = (canvas.width - barraWidth) / 2;
                     jogadorPosY = (canvas.height - barraHeight);
                     teclaCimaPressionada = false;
