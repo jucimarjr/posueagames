@@ -1,6 +1,6 @@
 //Objeto bola
 
-function Bola(ctx, posX, posY, width, height) {
+function Bola(ctx, posX, posY) {
 	this.ctx = ctx
 	this.raio = 10;
 	this.posX = posX;
@@ -12,10 +12,10 @@ function Bola(ctx, posX, posY, width, height) {
 	this.ORIGEM = 0;
 	this.tempo = 0;
 
-	this.VELX = 2;
-	this.VELY = 2;
+	this.VELX = 4;
+	this.VELY = 4;
 	
-	this.PARADOX = 5;
+	this.PARADOX = 10;
 	
 	this.PARADO = 0;
 	this.MOVIMENTANDO = 1;

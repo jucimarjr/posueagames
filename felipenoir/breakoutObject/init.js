@@ -16,8 +16,9 @@ geraPosicaoRandom = function(width) {
 }
 //Gera posicão aleatória para bola
 var posicaoXBola = geraPosicaoRandom(canvas.width);
-var bola = new Bola(ctx, canvas.width / 2, canvas.height - 20, canvas.width, canvas.height);
 var jogador = new Jogador(ctx, canvas.width, canvas.height);
+var bola = new Bola(ctx, 0, 0);
+reiniciaBola();
 var inimigos = new Inimigos(ctx, canvas.width, canvas.height);
 var alvos = inimigos.inimigos;
 var pontuacao = new Pontuacao(ctx, 10, 38);
@@ -38,10 +39,8 @@ document.addEventListener('keydown', function(evt) {
 	else if (evt.keyCode == 37)
 		isEsquerda = true;
 	else if (evt.keyCode == 32)
-		if (bola.state == bola.PARADO) {
-			console.log("a");
+		if (bola.state == bola.PARADO)
 			bola.lancarBola();
-		}
 }, false);
 
 //Usuário parado
@@ -54,7 +53,7 @@ document.addEventListener('keyup', function(evt) {
 
 function init() {
 	try {
-		setInterval(gameLoop, 10)
+		setInterval(gameLoop, 20)
 	} catch (e) {
 		console.log("TRETA:" + e.message)
 	}
@@ -63,11 +62,10 @@ function init() {
 function gameLoop() {
 	if(gameState == STARTED){
 		// movimenta
-		if (bola.state == bola.MOVIMENTANDO) {
+		if (bola.state == bola.MOVIMENTANDO)
 			bola.movimentaBola(janela.width);
-		} else {
+		else
 			bola.movimentaParado(janela.width, isDireita, isEsquerda);
-		}
 		jogador.movimentaJogador(isDireita, isEsquerda, canvas.width);
 
 		// verifica colisão
@@ -107,8 +105,8 @@ function colisaoBolaJogador() {
 
 function reiniciaBola() {
 	bola.state = bola.PARADO;
-	bola.posX = jogador.posX + 35;
-	bola.posY = canvas.height - 20;
+	bola.posX = jogador.posX + (jogador.width / 2);
+	bola.posY = canvas.height - (jogador.height + bola.raio);
 }
 
 function houveColisao(alvoX, alvoY) {
