@@ -4,7 +4,7 @@ var jogador = {
 	h: 20, //altura
 	x: 0,
 	y: 0,
-	velocidade: 20,
+	velocidade: 10,
 	resetX : null,
 	resetY : null,
 	derrota : null,
@@ -41,6 +41,6 @@ var jogador = {
 	{
 		jogador.x = jogador.resetX;
 		jogador.y = jogador.resetY;
-		jogador.velocidade = 20;	
+		jogador.velocidade = 10;
 	}
 };

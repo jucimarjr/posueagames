@@ -5,7 +5,7 @@ var bola = {
 	y: null,
 	baixo: false,
 	angulo: 5,
-	velocidade: 10,
+	velocidade: 5,
 	resetX : null,
 	resetY : null,
 	countFail : null,
@@ -53,7 +53,7 @@ var bola = {
 		bola.y = bola.resetY;	
 		bola.baixo = false;
 		bola.angulo = 5 * bola.randomInit[Math.round(Math.random() * 1)]; // Random inicio da partida
-		bola.velocidade = 10;
+		bola.velocidade = 5;
 	},
 	colisaoJogador : function(y, x, w){
 		// Colisao jogador
