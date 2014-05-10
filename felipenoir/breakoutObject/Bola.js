@@ -22,7 +22,7 @@ function Bola(ctx, posX, width, height) {
 
 	this.desenhaBola = function desenhaBola() {
 		this.ctx.beginPath();
-		this.ctx.fillStyle = "#000000";
+		this.ctx.fillStyle = "#11748C";
 		this.ctx.arc(this.posX, this.posY, this.raio, this.ORIGEM, Math.PI * 2,
 				true);
 		this.ctx.closePath();

@@ -23,9 +23,10 @@ var alvos = inimigos.inimigos;
 var pontuacao = new Pontuacao(ctx, 10, 38);
 var vidas = new Vidas(ctx);
 
-//0 - started; 1 - gameOver
-var gameState = 0; 
-
+const STARTED = 0;
+const GAMEOVER = 1;
+const WIN = 2;
+var gameState = STARTED; 
 
 var isDireita = false;
 var isEsquerda = false;
@@ -55,7 +56,7 @@ function init() {
 }
 
 function gameLoop() {
-	if(gameState == 0){
+	if(gameState == STARTED){
 		// movimenta
 		bola.movimentaBola(janela.width);
 		jogador.movimentaJogador(isDireita, isEsquerda, canvas.width);
@@ -71,7 +72,7 @@ function gameLoop() {
 		inimigos.desenhaInimigos();
 		pontuacao.desenha();
 		vidas.desenha();
-	} else if(gameState == 1) {
+	} else if(gameState == GAMEOVER) {
 		gameOver();
 	}
 }
@@ -85,7 +86,7 @@ function colisaoBolaJogador() {
 		} else {
 			vidas.removeVida();
 			if (vidas.qtd == 0) {
-				gameState = 1; // estado do jogo muda para game over.
+				gameState = GAMEOVER;
 			} else {
 				reiniciaBola();
 			}
@@ -135,7 +136,7 @@ function colisaoBolaInimigos() {
 
 					pontuacao.incrementa(10);
 					alvos[i][j] = 0;
-					break;
+//					break;
 
 				}
 
