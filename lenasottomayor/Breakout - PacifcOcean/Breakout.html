@@ -39,7 +39,7 @@
 				canvas = document.getElementById("canvas");// procura o canvas
 				context = canvas.getContext("2d");// recupera o contexto 2d
 
-				barraWidth = 200;
+				barraWidth = 100;
 				barraHeight = 20;
 				
 				teclaEsquerdaPressionada = false;
@@ -120,7 +120,7 @@
 				}
 
 				// Oponente
-				if (oponenteParaEsquerda) {// se o oponente estiver se movendo para esquerda...
+				/*if (oponenteParaEsquerda) {// se o oponente estiver se movendo para esquerda...
 					oponentePosX -= velocidadeOponente;// muda a posição
 
 					if (oponentePosX <= 0) {// se estiver saindo da tela...
@@ -132,7 +132,7 @@
 					if (oponentePosX >= canvas.width - barraWidth) {// se estiver saindo da tela...
 						oponenteParaEsquerda = true;// muda a direção
 					}
-				}
+				}*/
 
 				// Bola
 				if (bolaTempo <= 0) {// se a bola estiver em jogo, o tempo é zero (após marcar ponto, a bola fica invisível por um tempo)
@@ -195,8 +195,12 @@
 
 				// Jogador e Oponente
 				context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);//desenha jogador
-				context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);//desenha oponente
-
+				
+				for(var posY = 0; posY < (canvas.height/3); posY = posY + barraHeight + 1){
+					for(var posX = 0; posX < canvas.width; posX = posX + barraWidth + 1){
+						context.fillRect(posX, posY, barraWidth, barraHeight);//desenha oponente
+					}
+				}
 				// Placar
 				var pontosB = pontosJogador;// variável temporária para não alterar pontosJogador
 				var pontosA = pontosOponente;// variável temporária para não alterar pontosOponente
