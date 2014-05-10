@@ -40,7 +40,7 @@ Game.prototype.init = function () {
     this.ball.speed = 15;
     this.ball.angle = Math.floor(Math.random() * 21) - 10;
 
-    this.level = new Level();
+    this.level = new Level2();
     this.level.init();
 
     this.hud = new HUD({
