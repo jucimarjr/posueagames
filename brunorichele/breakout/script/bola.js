@@ -66,9 +66,9 @@ var bola = {
 	},
 	colisaoBloco : function(polling){
 		//Colisao bloco
-		if(bola.y - bola.raio <= 100 && bola.y >= 0){			
-			var linha  = Math.floor(((bola.y)-20)/20);
-			var coluna = Math.floor((bola.x)/60);
+		if(bola.y - bola.raio <= bloco.h * 5 && bola.y >= 0){
+			var linha  = Math.floor(((bola.y) - bloco.h) / bloco.h);
+			var coluna = Math.floor((bola.x) / bloco.w);
 			console.log("linha: " + linha + "coluna:" + coluna);
 
 			if(coluna >= 0 && linha >= 0){
