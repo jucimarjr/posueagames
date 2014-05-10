@@ -9,6 +9,7 @@ function Jogador(ctx, width, height) {
 	this.posY = height - this.height;
 
 	this.desenhaJogador = function() {
+		this.ctx.fillStyle = "#000000";
 		this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
 	}
 

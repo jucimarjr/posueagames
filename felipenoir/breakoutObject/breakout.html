@@ -8,16 +8,26 @@
 			border:1px solid black;
 		}
 	</style>
+	<script>
+	function reloadPage() {
+	    location.reload();
+	}
+	</script>
   </head>
   <body>
     <canvas id="canvas" width="400" height="500">
       Your browser does not support the HTML5 Canvas feature.
     </canvas>
+	<div id="div-bota0">
+		<input type="button" value="reiniciar" onclick="reloadPage()" />
+	</div>
   </body>
     
   <script type="text/javascript" src="Janela.js" ></script>
   <script type="text/javascript" src="Bola.js" ></script>
   <script type="text/javascript" src="Jogador.js" ></script>
   <script type="text/javascript" src="Inimigos.js" ></script>
+  <script type="text/javascript" src="Pontuacao.js" ></script>
+  <script type="text/javascript" src="Vidas.js" ></script>
   <script type="text/javascript" src="init.js" ></script>
 </html>

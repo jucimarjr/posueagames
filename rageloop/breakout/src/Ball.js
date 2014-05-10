@@ -13,7 +13,7 @@ Ball.prototype.draw = function (context) {
 
     if (this.image) {
         var side_size = this.radius * 2;
-        context.drawImage(this.image, this.x, this.y, side_size, side_size);
+        context.drawImage(this.image, this.x - this.radius, this.y - this.radius, side_size, side_size);
     } else {
         context.beginPath();
         context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);

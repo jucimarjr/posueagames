@@ -40,7 +40,7 @@ Game.prototype.init = function () {
     this.ball.speed = 15;
     this.ball.angle = Math.floor(Math.random() * 21) - 10;
 
-    this.level = new Level();
+    this.level = new Level2();
     this.level.init();
 
     this.hud = new HUD({
@@ -88,12 +88,6 @@ Game.prototype.update = function () {
         }
 
         if ((this.ball.y - this.ball.radius) <= 0) {
-            if (this.keys.right) {
-                this.ball.angle = Math.floor(Math.random() * 10);
-            }
-            else {
-                this.ball.angle = Math.floor(Math.random() * 10) -9;
-            }     
             this.ball.diretionUp = false;            
         }
 
@@ -134,11 +128,7 @@ Game.prototype.update = function () {
 
         if (colisao) {
             this.level.bars.splice(i, 1);
-
             this.ball.diretionUp = !this.ball.diretionUp;
-
-            this.ball.angle = Math.floor((Math.random() * 10));
-
             this.hud.updateScore(1);
         }
     }

@@ -14,11 +14,11 @@ canvas {
 	Navegador não compatível com HTML5 Canvas
 	</canvas>
 	<script>
-		var canvas, context, barraImg, backgroundImg, bolaImg,
-		teclaEsquerdaPressionada, teclaDireitaPressionada,
-		lance, parede, paredeLinhas, paredeColunas, brickWidth, brickHeight, bolaFrame;
-		var brickTypes = 4;
-		var frameProportion = 3;
+		var canvas, context, barraImg, backgroundImg, bolaImg, 
+		frameProportion, frameCount, lance,
+		teclaEsquerdaPressionada, teclaDireitaPressionada, 
+		brickTypes, brickWidth, brickHeight,
+		parede, paredeLinhas, paredeColunas;
 		
 		var bola = {
 			raio : 17,
@@ -57,7 +57,7 @@ canvas {
 			backgroundImg.src = "img/BG.png";
 			bolaImg = new Image(); 
 			bolaImg.src = "img/pokeball0.png";
-			bolaFrame = 0;
+			frameCount = 0;
 
 			jogador.posX = (canvas.width - barraImg.width) / 2;
 			jogador.posY = canvas.height - barraImg.height;
@@ -66,7 +66,7 @@ canvas {
 			bola.raio = 17;
 			bola.posX = canvas.width / 2;
 			bola.posY = jogador.posY - bola.raio;
-			bola.velocidade = 5;
+			bola.velocidade = 3;
 			bola.paraCima = true;
 			
 			teclaEsquerdaPressionada = false; 
@@ -77,6 +77,8 @@ canvas {
 			brickHeight = 45;
 			paredeLinhas = 7;
 			paredeColunas = 14;
+			brickTypes = 4;
+			frameProportion = 3;
 			preencheParede();
 		}
 		
@@ -125,6 +127,7 @@ canvas {
 				//movimento no eixo X
 				if ((bola.posX - bola.raio <= 0) 
 						|| (bola.posX + bola.raio >= canvas.width)) {// se a bola bater dos lados da tela...
+					bola.poX = ((bola.posX - bola.raio <= 0) ? 0 : canvas.width)
 					bola.angulo = bola.angulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo X
 				}
 				bola.posX += bola.angulo;// movemos a bola para os lados, de acordo com o cáculo acima
@@ -135,9 +138,9 @@ canvas {
 				} else {// se estiver indo para a baixo...
 					bola.posY += bola.velocidade;// movemos a bola para baixo
 				}
-				if ((bola.posY - bola.raio) <= 0) { //se a bola bater no topo ela deve descer
+				if ((bola.posY - bola.raio - bola.velocidade) <= 0) { //se a bola bater no topo ela deve descer
 					bola.paraCima = false;
-				} else if (((bola.posY + bola.raio) >= jogador.posY) //se a bola esta na altura da barra 
+				} else if (((bola.posY + bola.raio - bola.velocidade) >= jogador.posY) //se a bola esta na altura da barra 
 					 && ((bola.posX >= jogador.posX) && (bola.posX <= (jogador.posX + barraImg.width)))) { //e se a bola esta dentro do comprimento da barra
 						bola.paraCima = true; //bola rebate na barra
 						movimentaBolaBarra(); //da efeito
@@ -158,12 +161,12 @@ canvas {
 				if((bola.posX > jogador.velocidade)){
 					bola.posX -= jogador.velocidade;// muda a posição
 				}
-				bola.angulo = Math.floor(Math.random() * bola.raio) - bola.raio;
+				bola.angulo = Math.floor(Math.random() * (bola.raio/2)) +5;
 			} else if (teclaDireitaPressionada){ // se for para Direita...
 				if(((bola.posX + bola.raio + jogador.velocidade) < canvas.width)){
 					bola.posX += jogador.velocidade;// muda a posição
 				}
-				bola.angulo = Math.floor(Math.random() * bola.raio);
+				bola.angulo = Math.floor(Math.random() * bola.raio) +5;
 			}
 		}
 		
@@ -228,9 +231,9 @@ canvas {
 		
 		function rodaBola(){
 			if((bola.posY + bola.raio) < jogador.posY){ //se bola não estiver na barra
-				bolaFrame += ((bolaFrame + 1) < (frameProportion * brickTypes) ? 1 : -bolaFrame); //contador de frames, para controlar a velocidade de rotação da bola
+				frameCount += ((frameCount + 1) < (frameProportion * brickTypes) ? 1 : -frameCount); //contador de frames, para controlar a velocidade de rotação da bola
 				bolaImg = new Image(); 
-				bolaImg.src = "img/pokeball"+Math.floor(bolaFrame/frameProportion)+".png"; //load posicao da bola	
+				bolaImg.src = "img/pokeball"+Math.floor(frameCount/frameProportion)+".png"; //load posicao da bola	
 			}
 		}
 	</script>

@@ -20,13 +20,8 @@ function init() {
 	background = new background();
 	player = new player(width / 2, height, 100, 10, 10);
 	ball = new ball(width / 2, height / 2, 5, 10);
-
-	blocks = new Array();
-	for (var j = 100; j < 180; j += 20) {
-		for (var i = 0; i < width; i += 100) {
-			blocks.push(new block(i + 10, j, 80, 10));
-		}
-	}
+	blocks = new blocks();
+	blocks.init();
 
 	keyRight = false;
 	keyLeft = false;
@@ -63,12 +58,10 @@ function gameLoop() {
 	player.draw(context);
 
 	// Blocos
-	for (var i = 0; i < blocks.length; i++) {
-		blocks[i].draw(context);
-	}
+	blocks.draw(context);
 
 	// Bola
-	ball.update(player);
+	ball.update(player, blocks);
 	ball.draw(context);
 }
 
@@ -104,7 +97,7 @@ function ball(x, y, radius, speed) {
 		context.fill();
 	};
 
-	this.update = function(player) {
+	this.update = function(player, blocks) {
 		// se a bola enconstar no jogador
 		if (player.collision(this)) {
 			this.direction = UP;
@@ -119,7 +112,11 @@ function ball(x, y, radius, speed) {
 				// mandamos a bola na diagonal pra direita
 				angle = Math.floor((Math.random() * 10));
 			}
-		} else if (collisions(ball)) {
+		} else if (blocks.collisions(ball)) {
+			if (blocks.items.length == 0) {
+				// GAME OVER
+			}
+			
 			if (this.direction == DOWN) {
 				this.direction = UP;
 			} else {
@@ -182,31 +179,25 @@ function player(x, y, w, h, speed) {
 	};
 }
 
-function block(x, y, w, h) {
+function block(x, y, w, h, color) {
 	this.x = x;
 	this.y = y;
 	this.w = w;
 	this.h = h;
-	this.collided = false;
+	this.color = color;
 
 	this.draw = function() {
-		if (this.collided == false) {
-			context.fillStyle = "gold";
-			context.fillRect(this.x, this.y, this.w, this.h);
-		}
+		context.fillStyle = this.color;
+		context.fillRect(this.x, this.y, this.w, this.h);
 	};
 
 	this.collision = function(ball) {
-		// se o bloco ainda nao foi colidido
-		if (!this.collided) {
-			// se a bola enconstar no bloco
-			if ((ball.y + ball.radius) > this.y
-					&& (ball.y - ball.radius) < (this.y + this.h)) {
-				if ((ball.x - ball.radius > player.x)
-						&& (ball.x + ball.radius < this.x + this.w)) {
-					collided = true;
-					return true;
-				}
+		// se a bola enconstar no bloco
+		if (ball.y + ball.radius >= this.y
+				&& ball.y - ball.radius <= this.y + this.h) {
+			if (ball.x + ball.radius >= this.x
+					&& ball.x - ball.radius <= this.x + this.w) {
+				return true;
 			}
 		}
 
@@ -214,12 +205,31 @@ function block(x, y, w, h) {
 	};
 }
 
-function collisions(ball) {
-	for (var i = 0; i < blocks.length; i++) {
-		if (blocks[i].collision(ball)) {
-			return true;
-		}
-	}
+function blocks() {
+	this.items = new Array();
 
-	return false;
+	this.init = function() {
+		for (var j = 100; j < 180; j += 20) {
+			for (var i = 0; i < width; i += 102) {
+				this.items.push(new block(i + 10, j, 80, 10, "gold"));
+			}
+		}
+	};
+
+	this.draw = function(context) {
+		for (var i = 0; i < this.items.length; i++) {
+			this.items[i].draw(context);
+		}
+	};
+
+	this.collisions = function(ball) {
+		for (var i = 0; i < this.items.length; i++) {
+			if (this.items[i].collision(ball)) {
+				this.items.splice(i, 1);
+				return true;
+			}
+		}
+
+		return false;
+	};
 }

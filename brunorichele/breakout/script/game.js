@@ -24,8 +24,8 @@ var game = {
 		bloco.init();
 		//Inicia a escuta do teclado
 		game.bind();
-		// Intervalo do Gameloop: 30 fps
-		game.polling = setInterval(game.gameLoop, 1000 / 30);	
+		// Intervalo do Gameloop: 60 fps
+		game.polling = setInterval(game.gameLoop, 1000 / 60);
 	},
 	bind : function(){
 		// Eventos

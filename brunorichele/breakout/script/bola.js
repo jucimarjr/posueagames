@@ -4,8 +4,8 @@ var bola = {
 	x: null, 
 	y: null,
 	baixo: false,
-	angulo: 5,
-	velocidade: 10,
+	angulo: null,
+	velocidade: null,
 	resetX : null,
 	resetY : null,
 	countFail : null,
@@ -13,11 +13,11 @@ var bola = {
 	randomInit : [-1, 1],
 	
 	init : function(width, y){//largura do canvas e y do jogador
-		bola.resetX = bola.x = width / 2;
-		bola.resetY = bola.y = y - bola.raio;
+		bola.resetX = width / 2;
+		bola.resetY = y - bola.raio;
 		bola.countFail = 0;
 		bola.pontuacao = 0;
-		bola.angulo *= bola.randomInit[Math.round(Math.random() * 1)];  // Random inicio da partida
+		bola.clear();
 	},
 	render : function(root){
 		root.fillStyle = "red";
@@ -53,7 +53,7 @@ var bola = {
 		bola.y = bola.resetY;	
 		bola.baixo = false;
 		bola.angulo = 5 * bola.randomInit[Math.round(Math.random() * 1)]; // Random inicio da partida
-		bola.velocidade = 10;
+		bola.velocidade = 5;
 	},
 	colisaoJogador : function(y, x, w){
 		// Colisao jogador
@@ -66,9 +66,9 @@ var bola = {
 	},
 	colisaoBloco : function(polling){
 		//Colisao bloco
-		if(bola.y - bola.raio <= 100 && bola.y >= 0){			
-			var linha  = Math.floor(((bola.y)-20)/20);
-			var coluna = Math.floor((bola.x)/60);
+		if(bola.y - bola.raio <= bloco.h * 5 && bola.y >= 0){
+			var linha  = Math.floor(((bola.y) - bloco.h) / bloco.h);
+			var coluna = Math.floor((bola.x) / bloco.w);
 			console.log("linha: " + linha + "coluna:" + coluna);
 
 			if(coluna >= 0 && linha >= 0){

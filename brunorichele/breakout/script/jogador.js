@@ -4,16 +4,17 @@ var jogador = {
 	h: 20, //altura
 	x: 0,
 	y: 0,
-	velocidade: 20,
+	velocidade: null,
 	resetX : null,
 	resetY : null,
 	derrota : null,
 	vitoria : null,
 	init : function(width, height){
-		jogador.resetX = jogador.x = (width / 2) - (jogador.w / 2);
-		jogador.resetY = jogador.y = height - jogador.h
+		jogador.resetX = (width / 2) - (jogador.w / 2);
+		jogador.resetY = height - jogador.h
 		jogador.derrota = false;		
 		jogador.vitoria = false;
+		jogador.clear();
 	},
 	
 	render : function(root){
@@ -41,6 +42,6 @@ var jogador = {
 	{
 		jogador.x = jogador.resetX;
 		jogador.y = jogador.resetY;
-		jogador.velocidade = 20;	
+		jogador.velocidade = 10;
 	}
 };

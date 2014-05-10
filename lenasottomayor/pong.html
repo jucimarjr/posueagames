@@ -48,6 +48,8 @@
 
 				pontosJogador = 0;
 				pontosOponente = 0;
+				imagem = new Image();
+				imagem.src = 'tenista.jpeg';
 
 				document.addEventListener('keyup', keyUp, false);
 				// adiciona evento para keyup
@@ -114,8 +116,8 @@
 				// limpa a tela antes de desenhar
 
 				// Jogador e Oponente
-				context.fillStyle = "red";
-				context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
+				context.drawImage(imagem, jogadorPosX, jogadorPosY);
+				context.fill();
 				//desenha jogador
 				context.fillStyle = "blue";
 				context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);
