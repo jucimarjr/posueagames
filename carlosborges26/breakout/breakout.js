@@ -28,6 +28,9 @@ function init() {
 	width = canvas.width;
 	height = canvas.height;
 	
+	teclaEsquerdaPressionada = false;
+	teclaDireitaPressionada = false;
+	
 	barraWidth = 90;
 	barraHeight = 10;
 	
@@ -147,6 +150,8 @@ function gameLoop() {
 			}
 		}
 		
+		winGame = false;
+		
 		// Bola
 		if (bolaTempo <= 0) { // se a bola estiver em jogo, o tempo é zero (após perder vida, a bola fica invisível por um tempo)
 			
@@ -214,6 +219,7 @@ function gameLoop() {
 			}
 			
 			// detect foes collision
+			collided = false;
 			for(var row = 0; row < enemyRows; row++) {
 				
 				if( enemies[row][0].isRowCanCollide(bolaPosY, bolaRaio) ) { // fist test if the ball is in this row
@@ -243,19 +249,42 @@ function gameLoop() {
 								bolaParaBaixo = true;
 							}
 							
+							pontosJogador++;
+							collided = true;
+							
+							break;
 						}
 						
 					}
 					
 				}
-				
 			}
 			
+			// verify win game
+			if(collided) {
+				
+				winGame = true;
+				
+				for(var row = 0; row < enemyRows; row++) {
+					
+					for(var col = 0; col < enemyCols; col++) {
+						
+						if(enemies[row][col].enabled == true) {
+							winGame = false;
+							break;
+						}
+						
+					}
+				}
+			}
+			
+			// move the ball
 			bolaPosX += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
-	
+			
 			if (bolaParaBaixo) {// se a bola estiver indo para a direita...
 				bolaPosY += velocidadeBola;// movemos a bola para a direita
-			} else {// se estiver indo para a esquerda...
+			}
+			else {// se estiver indo para a esquerda...
 				bolaPosY -= velocidadeBola;// movemos a bola para a esquerda
 			}
 		}
@@ -269,16 +298,10 @@ function gameLoop() {
 	//	context.fillStyle = "blue";
 	//	context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);//desenha oponente
 	
-		// Placar
-		var pontosA = pontosJogador;// variável temporária para não alterar pontosJogador
-	
-		if (pontosA < 10) {// se o número de pontos for menor que 10, colocamos o zero á esquerda
-			pontosA = "0" + pontosA;
-		}
-	
+		// Score
 		context.font = "20pt Helvetica";// tamanho e fonte para desenhar o texto
 		context.fillStyle = "#000000";// cor preta (opcional)
-		context.fillText(pontosA, 10, (canvas.height / 2) - 10); // escreve texto na tela na posição desejada
+		context.fillText(pontosJogador, 10, 30); // escreve texto na tela na posição desejada
 	
 		// foes
 		for(var row = 0; row < enemyRows; row++) {
@@ -297,7 +320,29 @@ function gameLoop() {
 		context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
 		context.closePath();// finaliza o caminho (opcional)
 		context.fill();
+		
+		// verify win game
+		if(winGame) {
+			winGameFunc();
+			return;
+		}
 	}
+	
+}
+
+function winGameFunc() {
+	
+	gameOver = true;
+	
+	startBallInfo();
+	
+	context.font = "40pt Helvetica"; // tamanho e fonte para desenhar o texto
+	context.fillStyle = "#FF0000"; // cor
+	context.fillText("VENCEDOR", width / 2 - 170, height / 2 + 10); // escreve texto na tela na posição desejada
+	
+	context.font = "16pt Helvetica"; // tamanho e fonte para desenhar o texto
+	context.fillStyle = "#FFFF00"; // cor preta (opcional)
+	context.fillText("PRESSIONE 'r' PARA REINICIAR", width / 2 - 170, height / 2 + 40); // escreve texto na tela na posição desejada
 	
 }
 
@@ -308,8 +353,12 @@ function gameOverFunc() {
 	startBallInfo();
 	
 	context.font = "40pt Helvetica"; // tamanho e fonte para desenhar o texto
-	context.fillStyle = "#FF0000"; // cor preta (opcional)
+	context.fillStyle = "#FF0000"; // cor
 	context.fillText("GAME OVER", width / 2 - 170, height / 2 + 10); // escreve texto na tela na posição desejada
+	
+	context.font = "16pt Helvetica"; // tamanho e fonte para desenhar o texto
+	context.fillStyle = "#FFFF00"; // cor
+	context.fillText("PRESSIONE 'r' PARA REINICIAR", width / 2 - 170, height / 2 + 40); // escreve texto na tela na posição desejada
 	
 }
 
