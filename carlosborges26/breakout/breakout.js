@@ -8,6 +8,8 @@ var pontosJogador, playerLife;
 
 var paused, gameOver;
 
+var playerColSound, enemyColSound, screenColSound;
+
 var enemyWidth, enemyHeight;
 var enemies = [];
 
@@ -24,6 +26,10 @@ function init() {
 	
 	canvas = document.getElementById("canvas");// procura o canvas
 	context = canvas.getContext("2d");// recupera o contexto 2d
+	
+	playerColSound = "player_collide";//document.getElementById("player_collide");
+	enemyColSound = "enemy_collide";//document.getElementById("enemy_collide");
+	screenColSound = "screen_collide";
 	
 	width = canvas.width;
 	height = canvas.height;
@@ -160,6 +166,9 @@ function gameLoop() {
 				
 				if ((bolaPosX + bolaRaio > jogadorPosX) && (bolaPosX - bolaRaio < jogadorPosX + barraWidth)) { // se o jogador enconstar na bola (eixo X)...
 					
+//					playerColSound.play();
+					plaMultiSound(playerColSound);
+					
 					bolaParaBaixo = false; // a bola muda de lado e é rebatida para cima
 					
 					divBar = 11;
@@ -187,20 +196,24 @@ function gameLoop() {
 			}
 			
 			// screen collision
+			screenCollisionDetected = false;
 			if (bolaPosY - bolaRaio <= 0) { // se a bola bater em cima da tela...
 				bolaParaBaixo = true; // go down
+				screenCollisionDetected = true;
 			}
 			else if( (bolaPosX - bolaRaio) <= 0 ) { // if ball hit left screen
 				
 				if(bolaAngulo < 0) {
 					bolaAngulo = bolaAngulo * -1;
 				}
+				screenCollisionDetected = true;
 			}
 			else if( (bolaPosX + bolaRaio > width) ) { // se a bola bater em left ou right da tela...
 				
 				if(bolaAngulo > 0) {
 					bolaAngulo = bolaAngulo * -1;
 				}
+				screenCollisionDetected = true;
 			}
 			else if ((bolaPosY + bolaRaio) >= height) { // if ball touch bottom canvas, lose one ball
 				
@@ -215,7 +228,10 @@ function gameLoop() {
 					gameOverFunc();
 					return;
 				}
-				
+			}
+			
+			if(screenCollisionDetected) {
+				plaMultiSound(screenColSound);
 			}
 			
 			// detect foes collision
@@ -227,6 +243,9 @@ function gameLoop() {
 					for(var col = 0; col < enemyCols; col++) {
 						
 						if( (collide = enemies[row][col].isCollide(bolaPosX, bolaPosY, bolaRaio)) != NONE ) {
+							
+//							enemyColSound.play();
+							plaMultiSound(enemyColSound);
 							
 							enemies[row][col].enabled = false;
 							

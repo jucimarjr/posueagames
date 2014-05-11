@@ -11,11 +11,16 @@ canvas {
 }
 </style>
 
+<script type="text/javascript" src="sound.js"></script>
 <script type="text/javascript" src="breakout.js"></script>
 
 </head>
 
 <body onload="init()">
+
+<audio id="player_collide" src="sound/wood_stick_hit_log_soft.mp3" preload="auto"></audio>
+<audio id="enemy_collide" src="sound/wood_stick_hit_log_hard.mp3" preload="auto"></audio>
+<audio id="screen_collide" src="sound/wood_hit_brick_1.mp3" preload="auto"></audio>
 
 	<canvas id="canvas" width="480" height="480">
 		Navegador não compatível com HTML5 Canvas
