@@ -2,7 +2,7 @@
 
 function Bola(ctx, posX, posY) {
 	this.ctx = ctx
-	this.raio = 10;
+	this.raio = 7;
 	this.posX = posX;
 	this.posY = posY;
 	this.angulo = 0;

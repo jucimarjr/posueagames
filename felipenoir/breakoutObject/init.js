@@ -83,6 +83,8 @@ function gameLoop() {
 		vidas.desenha();
 	} else if(gameState == GAMEOVER) {
 		gameOver();
+	} else if(gameState == WIN) {
+		win();
 	}
 }
 
@@ -136,35 +138,45 @@ function colisaoBolaInimigos() {
 					if (y1 > y2) // se condição for verdadeira então a bola veio de baixo, senão, de cima
 						y1 = y2;
 
-					if (x1 == y1) { // tocou na quina do alvo
+					/*if (x1 == y1) { // tocou na quina do alvo
 						bola.velocidadeX = -bola.velocidadeX;
 						bola.velocidadeY = -bola.velocidadeY;
-					} else if (x1 < y1) // tocou no lado esquerdo/direito
+					} else*/ if (x1 < y1) // tocou no lado esquerdo/direito
 						bola.velocidadeX = -bola.velocidadeX;
 					else // tocou no topo/fundo
 						bola.velocidadeY = -bola.velocidadeY;
 
 					pontuacao.incrementa(10);
 					alvos[i][j] = 0;
-//					break;
+					inimigos.qtd -= 1;
 
 				}
 
 			}
 		}
 	}
+	
+	if(inimigos.qtd <= 0) {
+		gameState = WIN;
+	}
 }
 
 function startGame() {
 	this.ctx.font = "40pt Helvetica";
 	this.ctx.fillStyle = "#000000";
-	this.ctx.fillText("Pressione 'Barra de Espaço'!", 5, (canvas.height / 2) + 20);
+	this.ctx.fillText("Pressione \"Barra de Espaco!\"", 5, (canvas.height / 2) + 20);
 }
 
 function gameOver() {
 	this.ctx.font = "40pt Helvetica";
 	this.ctx.fillStyle = "#000000";
 	this.ctx.fillText("Game Over", canvas.width / 5, (canvas.height / 2) + 20);
+}
+
+function win() {
+	this.ctx.font = "40pt Helvetica";
+	this.ctx.fillStyle = "#000000";
+	this.ctx.fillText("You win!", canvas.width / 5, (canvas.height / 2) + 20);
 }
 
 //The Treta has been planted
