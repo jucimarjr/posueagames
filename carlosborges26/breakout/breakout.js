@@ -6,6 +6,8 @@ var bolaRaio, bolaPosX, bolaPosY, bolaParaBaixo, bolaAngulo, bolaTempo;
 var velocidadeJogador, velocidadeBola, maxBallSpeedX;
 var pontosJogador, playerLife;
 
+var paused, gameOver;
+
 var enemyWidth, enemyHeight;
 var enemies = [];
 
@@ -29,27 +31,52 @@ function init() {
 	barraWidth = 90;
 	barraHeight = 10;
 	
-	jogadorPosX = (width - barraWidth) / 2;
-	jogadorPosY = height - barraHeight;
-
 	bolaRaio = 5;
-	bolaPosX = canvas.width / 2;
-	bolaPosY = canvas.height / 2;
-	bolaParaBaixo = false;
-	bolaAngulo = Math.floor(Math.random() * 21) - 10;
-	bolaTempo = 0;
-	velocidadeBola = 10;
-	maxBallSpeedX = velocidadeBola * 1;
-
-	pontosJogador = 0;
-
-	velocidadeJogador = 10;
-
-	createEnemys();
+	
+	startInfos();
 	
 	document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
 	document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
-	setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
+	setInterval(gameLoop, 15);// chama a function gameLoop a cada 15 milisegundos
+}
+
+function startInfos() {
+	
+	jogadorPosX = (width - barraWidth) / 2;
+	jogadorPosY = height - barraHeight;
+	
+	restartBall();
+	
+	velocidadeBola = 5;
+	maxBallSpeedX = velocidadeBola * 1;
+	
+	pontosJogador = 0;
+	
+	playerLife = 3;
+	
+	velocidadeJogador = 5;
+	
+	paused = false;
+	gameOver = false;
+	
+	createEnemys();
+}
+
+function startBallInfo() {
+	
+	bolaPosX = canvas.width / 2 - (canvas.width * 0.05);
+	bolaPosY = canvas.height / 2;
+	bolaParaBaixo = true;
+	bolaAngulo = 0;
+	
+}
+
+function startBall() {
+	bolaTempo = 0;
+}
+
+function stopBall() {
+	bolaTempo = 1;
 }
 
 function createEnemys() {
@@ -80,183 +107,238 @@ function createEnemys() {
 }
 
 function keyDown(e) {
-	if (e.keyCode == 37) { // up
+	if (e.keyCode == 37) { // left
 		teclaEsquerdaPressionada = true;
-	} else if (e.keyCode == 39) { // down
+	}
+	else if (e.keyCode == 39) { // right
 		teclaDireitaPressionada = true;
 	}
 }
 
 function keyUp(e) {
-	if (e.keyCode == 37) { // up
-		teclaEsquerdaPressionada = false; // jogador soltou tecla cima
-	} else if (e.keyCode == 39) { // down
-		teclaDireitaPressionada = false; // jogador soltou tecla baixo
+	if (e.keyCode == 37) { // left
+		teclaEsquerdaPressionada = false;
+	}
+	else if (e.keyCode == 39) { // right
+		teclaDireitaPressionada = false;
+	}
+	else if(e.keyCode == 82) { // r - restart game
+		restartGame();
+	}
+	else if(e.keyCode == 80) { // p - pause game
+		pauseGame();
 	}
 }
 
 function gameLoop() {
 	
-	// Jogador
-	if (teclaEsquerdaPressionada != teclaDireitaPressionada) { // se o jogador estiver pressionando a tecla baixo ou cima
-		if (teclaEsquerdaPressionada) { // se for para cima...
-			if (jogadorPosX > 0) { // se não sair da tela...
-				jogadorPosX -= velocidadeJogador;// muda a posição
-			}
-		} else { // se for para baixo...
-			if (jogadorPosX < (canvas.width - barraWidth)) {// se não sair da tela...
-				jogadorPosX += velocidadeJogador;// muda a posição
+	if(!paused && !gameOver) {
+		
+		// Jogador
+		if (teclaEsquerdaPressionada != teclaDireitaPressionada) { // se o jogador estiver pressionando a tecla baixo ou cima
+			if (teclaEsquerdaPressionada) { // se for para cima...
+				if (jogadorPosX > 0) { // se não sair da tela...
+					jogadorPosX -= velocidadeJogador;// muda a posição
+				}
+			} else { // se for para baixo...
+				if (jogadorPosX < (canvas.width - barraWidth)) {// se não sair da tela...
+					jogadorPosX += velocidadeJogador;// muda a posição
+				}
 			}
 		}
-	}
-	
-	// Bola
-	if (bolaTempo <= 0) { // se a bola estiver em jogo, o tempo é zero (após perder vida, a bola fica invisível por um tempo)
 		
-		// player collision
-		if ((bolaPosY + bolaRaio) >= jogadorPosY) { // se o jogador enconstar na bola (eixo Y)...
+		// Bola
+		if (bolaTempo <= 0) { // se a bola estiver em jogo, o tempo é zero (após perder vida, a bola fica invisível por um tempo)
 			
-			if ((bolaPosX + bolaRaio > jogadorPosX) && (bolaPosX - bolaRaio < jogadorPosX + barraWidth)) { // se o jogador enconstar na bola (eixo X)...
+			// player collision
+			if ((bolaPosY + bolaRaio) >= jogadorPosY) { // se o jogador enconstar na bola (eixo Y)...
 				
-				bolaParaBaixo = false; // a bola muda de lado e é rebatida para cima
-				
-				divBar = 11;
-				halfDivBar = (divBar - 1) / 2;
-				// divide bar into divBar pieces
-				pieceWidth = (barraWidth + 2 * bolaRaio) / divBar;
-				
-				// detect which part of the player ball collides
-				for(var count = 0; count < divBar; count++) {
+				if ((bolaPosX + bolaRaio > jogadorPosX) && (bolaPosX - bolaRaio < jogadorPosX + barraWidth)) { // se o jogador enconstar na bola (eixo X)...
 					
-					xPiece = jogadorPosX - bolaRaio + (count * pieceWidth);
+					bolaParaBaixo = false; // a bola muda de lado e é rebatida para cima
 					
-					if( bolaPosX >= xPiece && bolaPosX <= (xPiece + pieceWidth) ) {
+					divBar = 11;
+					halfDivBar = (divBar - 1) / 2;
+					// divide bar into divBar pieces
+					pieceWidth = (barraWidth + 2 * bolaRaio) / divBar;
+					
+					// detect which part of the player ball collides
+					for(var count = 0; count < divBar; count++) {
 						
-						bolaAngulo += (count - halfDivBar) * (maxBallSpeedX / halfDivBar);
+						xPiece = jogadorPosX - bolaRaio + (count * pieceWidth);
 						
-						bolaAngulo = Math.min(maxBallSpeedX, Math.max(bolaAngulo, -maxBallSpeedX));
+						if( bolaPosX >= xPiece && bolaPosX <= (xPiece + pieceWidth) ) {
+							
+							bolaAngulo += (count - halfDivBar) * (maxBallSpeedX / halfDivBar); // the result angle depends on which part of the player bar ball collides
+							
+							bolaAngulo = Math.min(maxBallSpeedX, Math.max(bolaAngulo, -maxBallSpeedX)); // limitting ball angle
+							
+							break;
+						}
 						
-						break;
+					}
+					
+				}
+			}
+			
+			// screen collision
+			if (bolaPosY - bolaRaio <= 0) { // se a bola bater em cima da tela...
+				bolaParaBaixo = true; // go down
+			}
+			else if( (bolaPosX - bolaRaio) <= 0 ) { // if ball hit left screen
+				
+				if(bolaAngulo < 0) {
+					bolaAngulo = bolaAngulo * -1;
+				}
+			}
+			else if( (bolaPosX + bolaRaio > width) ) { // se a bola bater em left ou right da tela...
+				
+				if(bolaAngulo > 0) {
+					bolaAngulo = bolaAngulo * -1;
+				}
+			}
+			else if ((bolaPosY + bolaRaio) >= height) { // if ball touch bottom canvas, lose one ball
+				
+				playerLife--;
+				
+				stopBall();
+				
+				if(playerLife > 0) {
+					restartBall();
+				}
+				else {
+					gameOverFunc();
+					return;
+				}
+				
+			}
+			
+			// detect foes collision
+			for(var row = 0; row < enemyRows; row++) {
+				
+				if( enemies[row][0].isRowCanCollide(bolaPosY, bolaRaio) ) { // fist test if the ball is in this row
+					
+					for(var col = 0; col < enemyCols; col++) {
+						
+						if( (collide = enemies[row][col].isCollide(bolaPosX, bolaPosY, bolaRaio)) != NONE ) {
+							
+							enemies[row][col].enabled = false;
+							
+							if(collide == LEFT) {
+								
+								if(bolaAngulo > 0) { // just go to the left direction
+									bolaAngulo = bolaAngulo * -1;
+								}
+							}
+							else if(collide == UP) {
+								bolaParaBaixo = false;
+							}
+							else if(collide == RIGHT) {
+								
+								if(bolaAngulo < 0) { // just go to the right direction
+									bolaAngulo = bolaAngulo * -1;
+								}
+							}
+							else if(collide == DOWN) {
+								bolaParaBaixo = true;
+							}
+							
+						}
+						
 					}
 					
 				}
 				
-				
-//				if (teclaEsquerdaPressionada) { // se o jogador estiver indo para left quando tocar na bola...
-//					bolaAngulo = Math.floor(Math.random() * 10) - 9; // mandamos a bola na diagonal pra esquerda
-//				}
-//				else { // se o jogador estiver indo para direita quando tocar na bola...
-//					bolaAngulo = Math.floor((Math.random() * 10)); // mandamos a bola na diagonal pra direita
-//				}
 			}
-		}
-		
-		// screen collision
-		if (bolaPosY - bolaRaio <= 0) { // se a bola bater em cima da tela...
-			bolaParaBaixo = true; // go down
-		}
-		else if( (bolaPosX - bolaRaio) <= 0 ) { // if ball hit left screen
 			
-			if(bolaAngulo < 0) {
-				bolaAngulo = bolaAngulo * -1;
+			bolaPosX += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
+	
+			if (bolaParaBaixo) {// se a bola estiver indo para a direita...
+				bolaPosY += velocidadeBola;// movemos a bola para a direita
+			} else {// se estiver indo para a esquerda...
+				bolaPosY -= velocidadeBola;// movemos a bola para a esquerda
 			}
 		}
-		else if( (bolaPosX + bolaRaio > width) ) { // se a bola bater em left ou right da tela...
-			
-			if(bolaAngulo > 0) {
-				bolaAngulo = bolaAngulo * -1;
-			}
+	
+		// Desenha tudo na tela
+		context.clearRect(0, 0, width, height); // limpa a tela antes de desenhar
+	
+		// Jogador e Oponente
+		context.fillStyle = "red";
+		context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);//desenha jogador
+	//	context.fillStyle = "blue";
+	//	context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);//desenha oponente
+	
+		// Placar
+		var pontosA = pontosJogador;// variável temporária para não alterar pontosJogador
+	
+		if (pontosA < 10) {// se o número de pontos for menor que 10, colocamos o zero á esquerda
+			pontosA = "0" + pontosA;
 		}
-		else if ((bolaPosY + bolaRaio) >= height) { // if ball touch bottom canvas, lose one ball
-//			ball--;
-			// TODO: lose ball and restart ball
-		}
-		
-		// detect foes collision
+	
+		context.font = "20pt Helvetica";// tamanho e fonte para desenhar o texto
+		context.fillStyle = "#000000";// cor preta (opcional)
+		context.fillText(pontosA, 10, (canvas.height / 2) - 10); // escreve texto na tela na posição desejada
+	
+		// foes
 		for(var row = 0; row < enemyRows; row++) {
 			
-			if( enemies[row][0].isRowCanCollide(bolaPosY, bolaRaio) ) { // fist test if the ball is in this row
+			for(var col = 0; col < enemyCols; col++) {
 				
-				for(var col = 0; col < enemyCols; col++) {
-					
-					if( (collide = enemies[row][col].isCollide(bolaPosX, bolaPosY, bolaRaio)) != NONE ) {
-						
-						enemies[row][col].enabled = false;
-						
-						if(collide == LEFT) {
-							
-							if(bolaAngulo > 0) { // just go to the left direction
-								bolaAngulo = bolaAngulo * -1;
-							}
-						}
-						else if(collide == UP) {
-							bolaParaBaixo = false;
-						}
-						else if(collide == RIGHT) {
-							
-							if(bolaAngulo < 0) { // just go to the right direction
-								bolaAngulo = bolaAngulo * -1;
-							}
-						}
-						else if(collide == DOWN) {
-							bolaParaBaixo = true;
-						}
-						
-					}
-					
-				}
+				enemies[row][col].draw(context);
 				
 			}
 			
 		}
 		
-		bolaPosX += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
-
-		if (bolaParaBaixo) {// se a bola estiver indo para a direita...
-			bolaPosY += velocidadeBola;// movemos a bola para a direita
-		} else {// se estiver indo para a esquerda...
-			bolaPosY -= velocidadeBola;// movemos a bola para a esquerda
-		}
-	}
-
-	// Desenha tudo na tela
-	context.clearRect(0, 0, width, height);// limpa a tela antes de desenhar
-
-	// Jogador e Oponente
-	context.fillStyle = "red";
-	context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);//desenha jogador
-//	context.fillStyle = "blue";
-//	context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);//desenha oponente
-
-	// Placar
-	var pontosA = pontosJogador;// variável temporária para não alterar pontosJogador
-
-	if (pontosA < 10) {// se o número de pontos for menor que 10, colocamos o zero á esquerda
-		pontosA = "0" + pontosA;
-	}
-
-	context.font = "20pt Helvetica";// tamanho e fonte para desenhar o texto
-	context.fillStyle = "#000000";// cor preta (opcional)
-	context.fillText(pontosA, 10, (canvas.height / 2) - 10); // escreve texto na tela na posição desejada
-
-	// foes
-	for(var row = 0; row < enemyRows; row++) {
-		
-		for(var col = 0; col < enemyCols; col++) {
-			
-			enemies[row][col].draw(context);
-			
-		}
-		
+		// Bola
+		context.fillStyle = "black";
+		context.beginPath();// inicia o modo de desenho
+		context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
+		context.closePath();// finaliza o caminho (opcional)
+		context.fill();
 	}
 	
-	// Bola
-	context.fillStyle = "black";
-	context.beginPath();// inicia o modo de desenho
-	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
-	context.closePath();// finaliza o caminho (opcional)
-	context.fill();
+}
 
+function gameOverFunc() {
+	
+	gameOver = true;
+	
+	startBallInfo();
+	
+	context.font = "40pt Helvetica"; // tamanho e fonte para desenhar o texto
+	context.fillStyle = "#FF0000"; // cor preta (opcional)
+	context.fillText("GAME OVER", width / 2 - 170, height / 2 + 10); // escreve texto na tela na posição desejada
+	
+}
+
+function restartBall() {
+	
+	startBallInfo();
+	
+	setTimeout(startBall, 2000);
+	
+}
+
+function restartGame() {
+	
+	stopBall();
+	
+	startInfos();
+	
+}
+
+function pauseGame() {
+	
+	if(!gameOver) {
+	
+		paused ^= true;
+		
+		context.font = "40pt Helvetica"; // tamanho e fonte para desenhar o texto
+		context.fillStyle = "#FFFF00"; // cor preta (opcional)
+		context.fillText("JOGO PARADO", width / 2 - 200, height / 2 + 10); // escreve texto na tela na posição desejada
+	}
 }
 
 function Enemy(x, y, width, height, color) {
