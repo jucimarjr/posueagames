@@ -3,7 +3,7 @@ var barraWidth, barraHeight;
 var jogadorPosX, jogadorPosY;
 var teclaEsquerdaPressionada, teclaDireitaPressionada;
 var bolaRaio, bolaPosX, bolaPosY, bolaParaBaixo, bolaAngulo, bolaTempo;
-var velocidadeJogador, velocidadeBola;
+var velocidadeJogador, velocidadeBola, maxBallSpeedX;
 var pontosJogador, playerLife;
 
 var enemyWidth, enemyHeight;
@@ -39,6 +39,7 @@ function init() {
 	bolaAngulo = Math.floor(Math.random() * 21) - 10;
 	bolaTempo = 0;
 	velocidadeBola = 10;
+	maxBallSpeedX = velocidadeBola * 1;
 
 	pontosJogador = 0;
 
@@ -117,26 +118,54 @@ function gameLoop() {
 			
 			if ((bolaPosX + bolaRaio > jogadorPosX) && (bolaPosX - bolaRaio < jogadorPosX + barraWidth)) { // se o jogador enconstar na bola (eixo X)...
 				
-				bolaAngulo = bolaAngulo * -1;
-				//bolaAngulo = Math.floor(Math.random() * 10) - 9;// mandamos a bola na diagonal pra cima
-				bolaParaBaixo = false;// a bola muda de lado e é rebatida para o oponente
-				if (teclaEsquerdaPressionada) {// se o jogador estiver indo para left quando tocar na bola...
-					bolaAngulo = Math.floor(Math.random() * 10) - 9; // mandamos a bola na diagonal pra esquerda
-					//bolaParaDireita = false;
+				bolaParaBaixo = false; // a bola muda de lado e é rebatida para cima
+				
+				divBar = 11;
+				halfDivBar = (divBar - 1) / 2;
+				// divide bar into divBar pieces
+				pieceWidth = (barraWidth + 2 * bolaRaio) / divBar;
+				
+				// detect which part of the player ball collides
+				for(var count = 0; count < divBar; count++) {
+					
+					xPiece = jogadorPosX - bolaRaio + (count * pieceWidth);
+					
+					if( bolaPosX >= xPiece && bolaPosX <= (xPiece + pieceWidth) ) {
+						
+						bolaAngulo += (count - halfDivBar) * (maxBallSpeedX / halfDivBar);
+						
+						bolaAngulo = Math.min(maxBallSpeedX, Math.max(bolaAngulo, -maxBallSpeedX));
+						
+						break;
+					}
+					
 				}
-				else {// se o jogador estiver indo para direita quando tocar na bola...
-					bolaAngulo = Math.floor((Math.random() * 10)); // mandamos a bola na diagonal pra direita
-//					bolaParaDireita = true;
-				}
+				
+				
+//				if (teclaEsquerdaPressionada) { // se o jogador estiver indo para left quando tocar na bola...
+//					bolaAngulo = Math.floor(Math.random() * 10) - 9; // mandamos a bola na diagonal pra esquerda
+//				}
+//				else { // se o jogador estiver indo para direita quando tocar na bola...
+//					bolaAngulo = Math.floor((Math.random() * 10)); // mandamos a bola na diagonal pra direita
+//				}
 			}
 		}
 		
 		// screen collision
 		if (bolaPosY - bolaRaio <= 0) { // se a bola bater em cima da tela...
-			bolaParaBaixo ^= true; // multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
+			bolaParaBaixo = true; // go down
 		}
-		else if ((bolaPosX - bolaRaio <= 0) || (bolaPosX + bolaRaio > width)) { // se a bola bater em left ou right da tela...
-			bolaAngulo = bolaAngulo * -1; // multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
+		else if( (bolaPosX - bolaRaio) <= 0 ) { // if ball hit left screen
+			
+			if(bolaAngulo < 0) {
+				bolaAngulo = bolaAngulo * -1;
+			}
+		}
+		else if( (bolaPosX + bolaRaio > width) ) { // se a bola bater em left ou right da tela...
+			
+			if(bolaAngulo > 0) {
+				bolaAngulo = bolaAngulo * -1;
+			}
 		}
 		else if ((bolaPosY + bolaRaio) >= height) { // if ball touch bottom canvas, lose one ball
 //			ball--;
@@ -239,6 +268,7 @@ function Enemy(x, y, width, height, color) {
 	this.color = color;
 	this.enabled = true;
 	
+	// data for line formule
 	this.line1A = height / width;
 	this.line1B = y - this.line1A * x; // y = ax + b :: b = y - ax
 	this.line2A = -height / width;
