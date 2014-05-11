@@ -12,6 +12,11 @@ var enemies = [];
 var enemyCols = 12;
 var enemyRows = 4;
 
+var NONE = -1;
+var LEFT = 1;
+var UP = 2;
+var RIGHT = 3;
+var DOWN = 4;
 
 function init() {
 	
@@ -107,24 +112,26 @@ function gameLoop() {
 	// Bola
 	if (bolaTempo <= 0) { // se a bola estiver em jogo, o tempo é zero (após perder vida, a bola fica invisível por um tempo)
 		
-		if ((bolaPosY + bolaRaio) >= jogadorPosY) {// se o jogador enconstar na bola (eixo Y)...
+		// player collision
+		if ((bolaPosY + bolaRaio) >= jogadorPosY) { // se o jogador enconstar na bola (eixo Y)...
 			
-			if ((bolaPosX + bolaRaio > jogadorPosX) && (bolaPosX - bolaRaio < jogadorPosX + barraWidth)) {// se o jogador enconstar na bola (eixo X)...
+			if ((bolaPosX + bolaRaio > jogadorPosX) && (bolaPosX - bolaRaio < jogadorPosX + barraWidth)) { // se o jogador enconstar na bola (eixo X)...
 				
 				bolaAngulo = bolaAngulo * -1;
 				//bolaAngulo = Math.floor(Math.random() * 10) - 9;// mandamos a bola na diagonal pra cima
 				bolaParaBaixo = false;// a bola muda de lado e é rebatida para o oponente
 				if (teclaEsquerdaPressionada) {// se o jogador estiver indo para left quando tocar na bola...
-					bolaAngulo = Math.floor(Math.random() * 10) - 9;// mandamos a bola na diagonal pra esquerda
+					bolaAngulo = Math.floor(Math.random() * 10) - 9; // mandamos a bola na diagonal pra esquerda
 					//bolaParaDireita = false;
 				}
 				else {// se o jogador estiver indo para direita quando tocar na bola...
-					bolaAngulo = Math.floor((Math.random() * 10));// mandamos a bola na diagonal pra direita
+					bolaAngulo = Math.floor((Math.random() * 10)); // mandamos a bola na diagonal pra direita
 //					bolaParaDireita = true;
 				}
 			}
 		}
-
+		
+		// screen collision
 		if (bolaPosY - bolaRaio <= 0) { // se a bola bater em cima da tela...
 			bolaParaBaixo ^= true; // multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
 		}
@@ -139,15 +146,33 @@ function gameLoop() {
 		// detect foes collision
 		for(var row = 0; row < enemyRows; row++) {
 			
-			if(enemies[row][0].isRowCanCollide(bolaPosY, bolaRaio)) { // fist test if ball is in this row
+			if( enemies[row][0].isRowCanCollide(bolaPosY, bolaRaio) ) { // fist test if the ball is in this row
 				
 				for(var col = 0; col < enemyCols; col++) {
 					
-					if(enemies[row][col].isCollide(bolaPosX, bolaPosY, bolaRaio)) {
+					if( (collide = enemies[row][col].isCollide(bolaPosX, bolaPosY, bolaRaio)) != NONE ) {
 						
 						enemies[row][col].enabled = false;
 						
-						bolaParaBaixo ^= true;
+						if(collide == LEFT) {
+							
+							if(bolaAngulo > 0) { // just go to the left direction
+								bolaAngulo = bolaAngulo * -1;
+							}
+						}
+						else if(collide == UP) {
+							bolaParaBaixo = false;
+						}
+						else if(collide == RIGHT) {
+							
+							if(bolaAngulo < 0) { // just go to the right direction
+								bolaAngulo = bolaAngulo * -1;
+							}
+						}
+						else if(collide == DOWN) {
+							bolaParaBaixo = true;
+						}
+						
 					}
 					
 				}
@@ -214,16 +239,47 @@ function Enemy(x, y, width, height, color) {
 	this.color = color;
 	this.enabled = true;
 	
+	this.line1A = height / width;
+	this.line1B = y - this.line1A * x; // y = ax + b :: b = y - ax
+	this.line2A = -height / width;
+	this.line2B = (y + height) - this.line2A * x;
+	
+	this.isAboveLine = function(a, b, ballPosX, ballPosY) {
+		
+		yLine = a * ballPosX + b;
+		
+		return ballPosY < yLine;
+		
+	};
+	
 	this.isCollide = function(ballPosX, ballPosY, radius) {
 		
-		ret = false;
+		ret = NONE;
 		
 		if(this.enabled) {
 			
-			if(((ballPosX + radius) >= this.x && (ballPosX + radius) <= this.x + this.width) ||
-					((ballPosX - radius) >= this.x && (ballPosX - radius) <= this.x + this.width)) {
+			if( ((ballPosX + radius) >= this.x && (ballPosX + radius) <= this.x + this.width) ||
+					((ballPosX - radius) >= this.x && (ballPosX - radius) <= this.x + this.width) ) {
 				
-				ret = true;
+				aboveLine1 = this.isAboveLine(this.line1A, this.line1B, ballPosX, ballPosY);
+				aboveLine2 = this.isAboveLine(this.line2A, this.line2B, ballPosX, ballPosY);
+				
+				if(aboveLine1) {
+					if(aboveLine2) {
+						ret = UP;
+					}
+					else { // below line 2
+						ret = RIGHT;
+					}
+				}
+				else { // below line 1
+					if(aboveLine2) {
+						ret = LEFT;
+					}
+					else { // below two lines
+						ret = DOWN;
+					}
+				}
 				
 			}
 			
@@ -236,8 +292,8 @@ function Enemy(x, y, width, height, color) {
 		
 		ret = false;
 		
-		if(((ballPosY + radius) >= this.y && (ballPosY + radius) <= this.y + this.height) ||
-				((ballPosY - radius) >= this.y && (ballPosY - radius) <= this.y + this.height)) {
+		if( ((ballPosY + radius) >= this.y && (ballPosY + radius) <= this.y + this.height) ||
+				((ballPosY - radius) >= this.y && (ballPosY - radius) <= this.y + this.height) ) {
 			
 			ret = true;
 			
