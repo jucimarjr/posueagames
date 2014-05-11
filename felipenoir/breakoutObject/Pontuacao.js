@@ -7,7 +7,7 @@ function Pontuacao(ctx, x, y) {
 
 	this.desenha = function() {
 		this.ctx.font = "28pt Helvetica";
-		this.ctx.fillStyle = "#FF00FF";
+		this.ctx.fillStyle = "#000000";
 		this.ctx.fillText(this.valor, this.x, this.y);
 	}
 	

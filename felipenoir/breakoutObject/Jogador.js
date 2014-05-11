@@ -4,7 +4,7 @@ function Jogador(ctx, width, height) {
 	this.ctx = ctx;
 	this.width = 75;
 	this.height = 10;
-	this.velocidade = 5;
+	this.velocidade = 10;
 	this.posX = (width - this.width) / 2;
 	this.posY = height - this.height;
 

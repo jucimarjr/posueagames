@@ -16,26 +16,31 @@ geraPosicaoRandom = function(width) {
 }
 //Gera posicão aleatória para bola
 var posicaoXBola = geraPosicaoRandom(canvas.width);
-var bola = new Bola(ctx, posicaoXBola, canvas.width, canvas.height);
 var jogador = new Jogador(ctx, canvas.width, canvas.height);
+var bola = new Bola(ctx, 0, 0);
+reiniciaBola();
 var inimigos = new Inimigos(ctx, canvas.width, canvas.height);
 var alvos = inimigos.inimigos;
 var pontuacao = new Pontuacao(ctx, 10, 38);
 var vidas = new Vidas(ctx);
 
-//0 - started; 1 - gameOver
-var gameState = 0; 
-
+const STARTED = 0;
+const GAMEOVER = 1;
+const WIN = 2;
+var gameState = STARTED; 
 
 var isDireita = false;
 var isEsquerda = false;
 
-//Usuário movendo
+// Usuário movendo
 document.addEventListener('keydown', function(evt) {
 	if (evt.keyCode == 39)
 		isDireita = true;
 	else if (evt.keyCode == 37)
 		isEsquerda = true;
+	else if (evt.keyCode == 32)
+		if (bola.state == bola.PARADO)
+			bola.lancarBola();
 }, false);
 
 //Usuário parado
@@ -48,16 +53,19 @@ document.addEventListener('keyup', function(evt) {
 
 function init() {
 	try {
-		setInterval(gameLoop, 10)
+		setInterval(gameLoop, 20)
 	} catch (e) {
 		console.log("TRETA:" + e.message)
 	}
 }
 
 function gameLoop() {
-	if(gameState == 0){
+	if(gameState == STARTED){
 		// movimenta
-		bola.movimentaBola(janela.width);
+		if (bola.state == bola.MOVIMENTANDO)
+			bola.movimentaBola(janela.width);
+		else
+			bola.movimentaParado(janela.width, isDireita, isEsquerda);
 		jogador.movimentaJogador(isDireita, isEsquerda, canvas.width);
 
 		// verifica colisão
@@ -65,13 +73,15 @@ function gameLoop() {
 		colisaoBolaInimigos();
 
 		// desenha
+		if(bola.state == bola.PARADO)
+			startGame();
 		janela.desenhaJanela();
 		bola.desenhaBola();
 		jogador.desenhaJogador()
 		inimigos.desenhaInimigos();
 		pontuacao.desenha();
 		vidas.desenha();
-	} else if(gameState == 1) {
+	} else if(gameState == GAMEOVER) {
 		gameOver();
 	}
 }
@@ -84,8 +94,8 @@ function colisaoBolaJogador() {
 			bola.velocidadeY = -bola.velocidadeY;
 		} else {
 			vidas.removeVida();
-			if (vidas.qtd == 0) {
-				gameState = 1; // estado do jogo muda para game over.
+			if (vidas.qtd < 0) {
+				gameState = GAMEOVER;
 			} else {
 				reiniciaBola();
 			}
@@ -94,8 +104,9 @@ function colisaoBolaJogador() {
 }
 
 function reiniciaBola() {
-	bola.posX = geraPosicaoRandom(canvas.width);
-	bola.posY = canvas.height / 2;
+	bola.state = bola.PARADO;
+	bola.posX = jogador.posX + (jogador.width / 2);
+	bola.posY = canvas.height - (jogador.height + bola.raio);
 }
 
 function houveColisao(alvoX, alvoY) {
@@ -135,13 +146,19 @@ function colisaoBolaInimigos() {
 
 					pontuacao.incrementa(10);
 					alvos[i][j] = 0;
-					break;
+//					break;
 
 				}
 
 			}
 		}
 	}
+}
+
+function startGame() {
+	this.ctx.font = "40pt Helvetica";
+	this.ctx.fillStyle = "#000000";
+	this.ctx.fillText("Pressione 'Barra de Espaço'!", 5, (canvas.height / 2) + 20);
 }
 
 function gameOver() {
