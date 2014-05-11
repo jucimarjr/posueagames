@@ -27,10 +27,12 @@ var game = {
 		// Intervalo do Gameloop: 60 fps
 		game.polling = setInterval(game.gameLoop, 1000 / 60);
 	},
+	
 	bind : function(){
 		// Eventos
 		tecla.listenerKey();
-	},	
+	},
+	
 	gameLoop : function(){
 		//Atualiza posi����o do jogador 
 		jogador.atualizar(game.width);
@@ -39,6 +41,7 @@ var game = {
 		// Atualizar tela do jogo
 		game.atualizar();
 	},
+	
 	atualizar : function(){
 		// Limpeza da Tela
 		game.clear();
@@ -63,19 +66,23 @@ var game = {
 			mouse.listener(canvas);
 		}		
 	}, 
+	
 	clear : function(){
 		game.context.clearRect(0, 0, game.width, game.height);		
 	},
+	
 	vitoria : function(){
 		game.context.font = "42px Helvetica";
 		game.context.fillStyle = "#000000";
 		game.context.fillText("Você venceu!", 180, 250);	
 	},
+	
 	derrota : function(){
 		game.context.font = "42px Helvetica";
 		game.context.fillStyle = "#000000";
 		game.context.fillText("Você perdeu!", 180, 250);	
 	},	
+	
 	pontuar : function(){
 
         var ponto = bola.pontuacao;

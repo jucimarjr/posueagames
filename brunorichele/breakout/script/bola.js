@@ -11,20 +11,25 @@ var bola = {
 	countFail : null,
 	pontuacao : null,
 	randomInit : [-1, 1],
+	imagem: null,
 	
 	init : function(width, y){//largura do canvas e y do jogador
 		bola.resetX = width / 2;
-		bola.resetY = y - bola.raio;
+		bola.resetY = y - 2 * bola.raio;
 		bola.countFail = 0;
 		bola.pontuacao = 0;
+		bola.imagem = new Image();
+		bola.imagem.src = "assets/bola.png";
 		bola.clear();
 	},
 	render : function(root){
-		root.fillStyle = "red";
-		root.beginPath();
-		root.arc(bola.x, bola.y, bola.raio, 0, Math.PI*2, true);
-		root.closePath();
-		root.fill();
+		
+		root.drawImage(bola.imagem, bola.x , bola.y);
+		//root.fillStyle = "red";
+		//root.beginPath();
+		//root.arc(bola.x, bola.y, bola.raio, 0, Math.PI*2, true);
+		//root.closePath();
+		//root.fill();
 	},
 	atualizar : function(y, x, w, width, height, polling){		
 		// Movimentar a bola
@@ -36,7 +41,8 @@ var bola = {
 			bola.y -= bola.velocidade;
 		}
 		// Colisao paredes
-		if(bola.x - bola.raio <= 0 || bola.x + bola.raio >= width){
+		//if(bola.x - bola.raio <= 0 || bola.x + bola.raio >= width){
+		if(bola.x <= 0 || bola.x + 2* bola.raio >= width){
 			bola.angulo *= -1;
 		}
 		//Colisao bloco
@@ -57,7 +63,8 @@ var bola = {
 	},
 	colisaoJogador : function(y, x, w){
 		// Colisao jogador
-		if((bola.y + bola.raio >= y) && 
+	//if((bola.y + bola.raio >= y) && 
+		if((bola.y + 2* bola.raio >= y) && 
 			(bola.x >= x) &&
 			(bola.x <= x + w)){
 			bola.baixo = false;
@@ -66,7 +73,8 @@ var bola = {
 	},
 	colisaoBloco : function(polling){
 		//Colisao bloco
-		if(bola.y - bola.raio <= bloco.h * 5 && bola.y >= 0){
+		//if(bola.y - bola.raio <= bloco.h * 5 && bola.y >= 0){
+		if(bola.y<= bloco.h * 5 && bola.y >= 0){
 			var linha  = Math.floor(((bola.y) - bloco.h) / bloco.h);
 			var coluna = Math.floor((bola.x) / bloco.w);
 			console.log("linha: " + linha + "coluna:" + coluna);
@@ -91,7 +99,8 @@ var bola = {
 	},
 	colisaoChao : function(height, polling){
 		//Colisao chao
-		if(bola.y + bola.raio >= height){
+//		if(bola.y + bola.raio >= height){
+		if(bola.y  >= height){
 			bola.baixo = !bola.baixo;
 			console.log("Colisao chao");
 			bola.clear(); // A bola retorna a posicao inicial
