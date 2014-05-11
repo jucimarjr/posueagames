@@ -58,7 +58,7 @@ function Bola(ctx, posX, posY) {
 
 	this.lancarBola = function() {
 		this.state = this.MOVIMENTANDO;
-		this.velocidadeX = this.VELX;
+		this.velocidadeX = 0;
 		this.velocidadeY = -this.VELY;
 	}
 

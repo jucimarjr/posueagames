@@ -94,6 +94,7 @@ function colisaoBolaJogador() {
 				&& bola.posX - bola.raio < jogador.posX + jogador.width) {
 			bola.posY = jogador.posY - bola.raio;
 			bola.velocidadeY = -bola.velocidadeY;
+			bola.velocidadeX = (bola.posX - (jogador.posX + (jogador.width / 2))) / 5; 
 		} else {
 			vidas.removeVida();
 			if (vidas.qtd < 0) {
