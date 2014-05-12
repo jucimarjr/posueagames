@@ -4,21 +4,27 @@ var jogador = {
 	h: 20, //altura
 	x: 0,
 	y: 0,
-	velocidade: 20,
+	velocidade: null,
 	resetX : null,
 	resetY : null,
 	derrota : null,
 	vitoria : null,
+	imagem : null,
+	
 	init : function(width, height){
-		jogador.resetX = jogador.x = (width / 2) - (jogador.w / 2);
-		jogador.resetY = jogador.y = height - jogador.h
+		jogador.resetX = (width / 2) - (jogador.w / 2);
+		jogador.resetY = height - jogador.h
 		jogador.derrota = false;		
 		jogador.vitoria = false;
+		jogador.imagem = new Image();
+		jogador.imagem.src = "assets/barra.png";
+		jogador.clear();
 	},
 	
 	render : function(root){
-		root.fillStyle = "black";
-		root.fillRect(jogador.x, jogador.y, jogador.w, jogador.h);	
+		root.drawImage(jogador.imagem, jogador.x , jogador.y);
+		//root.fillStyle = "black";
+		//root.fillRect(jogador.x, jogador.y, jogador.w, jogador.h);	
 	},
  	
     atualizar : function(width){
@@ -41,6 +47,6 @@ var jogador = {
 	{
 		jogador.x = jogador.resetX;
 		jogador.y = jogador.resetY;
-		jogador.velocidade = 20;	
+		jogador.velocidade = 10;
 	}
 };

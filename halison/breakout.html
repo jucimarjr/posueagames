@@ -40,7 +40,9 @@ var barraWidth, barraHeight,
 	pontosJogador;
 
 // Posição e raio da bola
-var	bolaRaio, velocidadeBola,
+var	bolaRaio,
+	velocidadeBola,
+	velocidadeBolaX, velocidadeBolaY,
     bolaPosX, bolaPosY,
     direcaoBolaX, direcaoBolaY,
     anguloBola;
@@ -67,12 +69,14 @@ function init() {
 
 	// Configurar posição do Jogador
     jogadorPosX =  (canvas.width - barraWidth) / 2;
-    jogadorPosY = canvas.height - barraHeight - 7;
+    jogadorPosY = canvas.height - barraHeight - 30;
     velocidadeJogador = 10;
     		
 	// Configurar tamanho, posicionamento e velocidade da bola
+	velocidadeBola = 14	;
+	velocidadeBolaX = 14;
+	velocidadeBolaY = 14;
 	bolaRaio = 10;
-    velocidadeBola = 10;
     anguloBola = -6;
     reiniciarBola();
 	
@@ -81,9 +85,9 @@ function init() {
 	
 	document.addEventListener('keyup', keyUp, false);     // Adiciona evento para o teclado
 	document.addEventListener('keydown', keyDown, false); // Adiciona evento para o teclado
-	document.addEventListener('mousemove', mouse, false);
+	document.addEventListener('mousemove', mouse, false); // Adiciona evento para mouse
 	
-	setInterval(gameLoop, 1000/30);                            // Executa gameLoop a cada 30 frames
+	setInterval(gameLoop, 1000/30);                       // Executa gameLoop a cada 30 frames
 }
 
 function gameLoop(){
@@ -143,39 +147,41 @@ function movimentarBola(){
 	// Verificar colisão com a ESQUERDA
 	if (bolaPosX - bolaRaio <= 1){ 
 	    direcaoBolaX = direcaoBolaX * -1;
-	}
-	
+	} 
 	// Verificar colisão com a DIREITA
-	if (bolaPosX + bolaRaio >= canvas.width){
+	if (bolaPosX + bolaRaio >= canvas.width){ 
 	    direcaoBolaX = direcaoBolaX * -1;
 	}
-		
+	
 	// Verificar colisão ACIMA
 	if (bolaPosY <= bolaRaio ){
 		direcaoBolaY = direcaoBolaY * -1;
 	}
 	
-	// Verificar colisão com JOGADOR
-	
-	
-	if (bolaPosY + bolaRaio >= jogadorPosY - bolaRaio){ // se está na altura da raquete
-		
-		if ((bolaPosY-bolaRaio)<=0 || colisaoJogadorBola()){ // verifica colisao no Y, e muda direcao do Y
-			direcaoBolaY = direcaoBolaY * -1;
-		}
-		if ((bolaPosX-bolaRaio)<=0 || colisaoJogadorBola()){ // verifica colisao no X, e muda direcao do X
-			direcaoBolaX = direcaoBolaX * -1;
-		}
-
+	// Verificar colisão BAIXO
+	if (bolaPosY >= canvas.height - bolaRaio ){
+		direcaoBolaY = direcaoBolaY * -1;
 	}
 	
+	
+		// Verificar colisão com JOGADOR
+		
+	if (bolaPosY + bolaRaio >= jogadorPosY - bolaRaio){ // se está na altura da raquete
+		
+	if ((bolaPosY-bolaRaio)<=0 || colisaoJogadorBola()){ // verifica colisao no Y, e muda direcao do Y
+		direcaoBolaY = direcaoBolaY * -1;
+	} 
+	if ((bolaPosX-bolaRaio)<=0 || colisaoJogadorBola()){ // verifica colisao no X, e muda direcao do X
+		direcaoBolaX = direcaoBolaX * -1;
+	}
+	}
 	// CONDIÇÃO DE DERROTA
-	if (bolaPosY >= canvas.height - bolaRaio){
+	else if (bolaPosY >= canvas.height - bolaRaio){
 		reiniciarBola();
 	}
 	
-	bolaPosX = bolaPosX +(velocidadeBola*direcaoBolaX);
-    bolaPosY = bolaPosY +(velocidadeBola*direcaoBolaY);
+	bolaPosX = bolaPosX +(velocidadeBolaX*direcaoBolaX);
+    bolaPosY = bolaPosY +(velocidadeBolaY*direcaoBolaY);
     
     //direcaoBola =  2*Math.PI;
     //direcaoBola = Math.floor(Math.random() * 21) - 10;
@@ -195,10 +201,23 @@ function maisProximo(v, min, max){
 	return Math.max(min, Math.min(max,v));
 }
 
+function calcularAnguloBolaJogador(){
+	var posicaoDaBolaNaRaquete = bolaPosX - jogadorPosX;	
+	var percentualAcerto = (posicaoDaBolaNaRaquete/(barraWidth-bolaRaio*2)) - 0.5
+	velocidadeBolaX = percentualAcerto*10;
+	velocidadeBolaY = velocidadeBolaY - 1;  
+}
 
 function reiniciarBola(){
-    direcaoBolaX = 1;
-    direcaoBolaY = -1; 
+	// Atribuir direção aleatório ao lançar a bola
+	if (Math.random() > 0.5 ){
+		direcaoBolaX = 1;
+	    direcaoBolaY = -1;
+	} else {
+		direcaoBolaX = -1;
+	    direcaoBolaY = -1;	
+	}
+	// Atribuir posição inicial logo a frente da raquete
 	bolaPosX = jogadorPosX + barraWidth/2;
 	bolaPosY = jogadorPosY - 1.2*bolaRaio;
 }

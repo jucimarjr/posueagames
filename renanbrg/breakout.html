@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Breakout</title>
+            <style type="text/css">
+                canvas {
+                border:1px dashed #000000;
+                }
+            </style>
+    </head>
+
+    <body onload="init()">
+        <canvas id="canvas" width="768" height="1024">
+            Navegador não compatível com HTML5 Canvas
+        </canvas>
+        <script>
+
+var canvas, context;
+var width, height;
+
+function init(){
+    canvas = document.getElementById("canvas");
+    context = canvas.getContext("2d");
+
+    width = canvas.width;
+    height = canvas.height;
+
+    drawBackground();
+}
+
+function drawBackground(){
+    context.fillStyle = "black"; 
+    context.fillRect(0, 0, width, height);
+}
+        </script>
+    </body>
+</html>
+

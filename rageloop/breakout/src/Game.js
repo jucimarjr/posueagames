@@ -10,6 +10,11 @@ function Game(id, width, height) {
     this.canvas = null;
     this.context = null;
 
+    this.bgSound = null;
+    this.destroySound = null;
+    this.gameOverSound = null;
+    this.missBallSound = null;
+
     //hud
     this.hud = null;
 
@@ -40,9 +45,14 @@ Game.prototype.init = function () {
     this.ball.speed = 15;
     this.ball.angle = Math.floor(Math.random() * 21) - 10;
 
-    this.level = new Level();
+    this.level = new Level2();
     this.level.init();
-
+    
+    this.bgSound = new Audio("assets/audio/background.wav");
+    this.destroySound = new Audio("assets/audio/explosion.wav");
+    this.gameOverSound = new Audio("assets/audio/gameOver.wav");
+    this.missBallSound = new Audio("assets/audio/missBall.wav");
+    
     this.hud = new HUD({
         'top' : 20,
         'amountOfLifes': 5,
@@ -54,14 +64,18 @@ Game.prototype.init = function () {
 
 Game.prototype.start = function () {
     var self = this;
-
+    
+    this.bgSound.loop = true;
+    this.bgSound.play();            
+    
     this.timer = setInterval(function () {
         self.update();
         self.stats.update();
     }, 30);
 };
 
-Game.prototype.update = function () {
+Game.prototype.update = function () {   
+
     //move player
     if (this.keys.right != this.keys.left) {
         if (this.keys.left) {
@@ -106,7 +120,9 @@ Game.prototype.update = function () {
 
     //miss
     if (this.ball.y > this.height) {
-
+    	
+    	this.missBallSound.play();
+    	
         if (this.delay === 0)
             this.hud.updateLifes(-1);
 
@@ -130,6 +146,8 @@ Game.prototype.update = function () {
             this.level.bars.splice(i, 1);
             this.ball.diretionUp = !this.ball.diretionUp;
             this.hud.updateScore(1);
+            this.destroySound.play();
+            this.destroySound.currentTime = 0;
         }
     }
 
@@ -154,8 +172,7 @@ Game.prototype.update = function () {
 
     this.ball.draw(this.context);
 
-    this.hud.draw(this.context);
-
+    this.hud.draw(this.context);    
 };
 
 Game.prototype.gameOver = function () {
@@ -164,7 +181,8 @@ Game.prototype.gameOver = function () {
     this.context.font = '42pt Tr2n';
     this.context.fillStyle = '#00ffff';
     this.context.fillText('GAME OVER!', (this.width / 2) - 180, (this.height / 2) - 50);
-
+    this.bgSound.pause();
+    this.gameOverSound.play();    
     clearInterval(this.timer);
 };
 
@@ -173,8 +191,7 @@ Game.prototype.gameWin = function () {
 
     this.context.font = '42pt Tr2n';
     this.context.fillStyle = '#00ffff';
-    this.context.fillText('YOU WIN!', (this.width / 2) - 130, (this.height / 2) - 50);
-
+    this.context.fillText('YOU WIN!', (this.width / 2) - 130, (this.height / 2) - 50);    
     clearInterval(this.timer);
 };
 
@@ -197,6 +214,6 @@ Game.prototype.initStats = function() {
     stats.domElement.style.top = '0px';
 
     document.body.appendChild( stats.domElement );
-
+    
     return stats;
 };

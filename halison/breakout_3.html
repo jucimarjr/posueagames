@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Breakout</title>
+<style type="text/css">
+		body{
+			background-color:black;
+		}
+		canvas{
+			border:#333333 solid 30px;
+			background-color:#999999;
+			margin-top:20px;
+			margin-left:180px;	
+		}
+
+</style>
+</head>
+<body onload="inicio()">
+	<canvas id="canvas" width="600" height="550">
+    	Navegador não compatível com HTML5
+    </canvas>
+    
+	<script>
+	
+	// declarando variaveis 
+	
+	var canvas, context;
+	
+	// variaveis jogador
+	 
+	var barraWidth, barraHeight, jogadorPosX, jogadorPosY, teclaEsquerdaPressionada, teclaDireitaPressionada,velocidadeJogador, pontosJogador, vidasJogador;
+	
+	// variaveis bola
+	
+	var bolaRaio, bolaPosX, bolaPosY;
+	
+	// variaveis tijolo
+	
+	var tijolos, tijolosHeight, tijolosWidth;
+	var bricks = [[1,1,1,1,1,1,1,1],[2,2,2,2,2,2,2,2],[3,3,3,3,3,3,3,3],[4,4,4,4,4,4,4,4],[5,5,5,5,5,5,5,5],[6,6,6,6,6,6,6,6]];	
+	
+		// executa a funcao inicio declarada no body com evento onload
+			
+		function inicio() {
+        canvas = document.getElementById("canvas");							// procura o canvas
+		context = canvas.getContext("2d");									// recupera o contexto 2d
+		barraWidth = 90;													// largura do jogador
+		barraHeight = 10;													// altura do jogador
+		jogadorPosX = (canvas.width / 2) - (barraWidth / 2);				// posicao x jogador
+		jogadorPosY = canvas.height - barraHeight;							// posicao y jogador
+		velocidadeJogador = 10;												// velocidade do jogador
+		teclaEsquerdaPressionada = false;									// movimentacao esquerda
+		teclaDireitaPressionada = false;									// movimentacao direita
+		bolaRaio=10;														// tamanho da bola
+		bolaPosY = jogadorPosY - barraHeight;								// posicao da bola
+		bolaPosX = jogadorPosX + barraWidth/2;								
+		tijolos = 8;                               							
+	    tijolosHeight = 20;													// altura do tijolo
+	    tijolosWidth = canvas.width/tijolos;								
+		
+	
+		document.addEventListener('keyup', keyUp, false);					// evento keyup
+        document.addEventListener('keydown', keyDown, false);				// evento keydown
+        gameLoop = setInterval(game, 30);									// executa o gameloop a cada 30 frames
+	}
+	
+	   // carregar na tela
+	   
+	   function game() {         
+	   	 		context.clearRect(0, 0, canvas.width, canvas.height); 		// limpa a tela
+				barra(); 													// chama a funcao barra
+				moverJogador();												// chama a funcao mover jogador
+				bola();														// chama a funcao bola
+				tijolo();													// chama a funcao desenharTijolo
+			}
+	
+	
+		// desenha barra
+		
+		function barra(){				
+	            context.fillStyle = "#FFFF00";
+	            context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
+			}
+			
+		// movimento da barra
+			
+		function keyDown(e) {
+                if (e.keyCode == 37) { 										// acima
+                        teclaEsquerdaPressionada = true;
+                }
+                else if (e.keyCode == 39) { 								// abaixo
+        			teclaDireitaPressionada = true;
+                }
+        	}
+        
+		function keyUp(e) {
+    			if (e.keyCode == 37) { 										// acima
+            		teclaEsquerdaPressionada = false; 						// jogador soltou tecla cima
+    			}
+    			else if (e.keyCode == 39) { 								// abaixo
+            		teclaDireitaPressionada = false; 						// jogador soltou tecla baixo
+    			}
+			}
+			
+			
+		//movimento do jogador
+			
+		function moverJogador(){
+
+				if (teclaDireitaPressionada!=teclaEsquerdaPressionada) { 	// pressionando a tecla baixo ou cima
+					if (teclaEsquerdaPressionada) { 						// se for para cima
+						if (jogadorPosX > 0) { 								// se nao sair da tela
+							jogadorPosX -= velocidadeJogador;				// muda a posiçao
+						}
+					}
+					else { 													// se for para baixo
+						if (jogadorPosX < (canvas.width - barraWidth)) {	// se nao sair da tela
+							jogadorPosX += velocidadeJogador;				// muda a posicao
+						}
+					}
+				}
+			}		
+
+		// Bola
+		
+		function bola(){				
+	            context.beginPath();// inicia o modo de desenho
+	            context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o c?rculo desejado com as coordenadas no centro.
+	            context.closePath();// finaliza o caminho (opcional)
+	            context.fillStyle = "#006600";
+	            context.fill();
+			}	
+		
+		// tijolos
+			function tijolo(){
+				for (var i=0; i < bricks.length; i++) {
+	                for (var j=0; j < bricks[i].length; j++) {
+	                    drawBrick(j,i,bricks[i][j]);
+	                }
+	            }
+			}			
+
+			// Desenhar um tijolo
+			function drawBrick(x,y,type){  
+
+			    switch(type){
+			        case 1:
+			            context.fillStyle = '#0099FF';
+			            break;
+			        case 2:
+			            context.fillStyle = '#FFFFFF';                    
+			            break;
+			        case 3:
+			            context.fillStyle = '#0099FF';
+			            break;
+			        case 4:
+			            context.fillStyle = '#FFFFFF';
+			            break;
+			        case 5:
+			            context.fillStyle = '#0099FF';
+			            break;
+			        case 6:
+			            context.fillStyle = '#FFFFFF';
+			            break;			                                         
+			        default:
+			            context.clearRect(x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight,tijolosWidth,tijolosHeight);
+			            break;
+
+			    }
+			    if (type){			        
+			        context.fillRect(x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight, tijolosWidth,tijolosHeight);				                
+			    } 
+
+			}   
+
+			// Jogador
+			function jogador(){				
+	            context.fillStyle = "#D2691E";
+	            context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);//desenha jogador
+			}
+
+
+		
+		
+    </script>
+			
+</body>
+</html>

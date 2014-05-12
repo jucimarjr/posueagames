@@ -33,8 +33,6 @@ canvas {
 			jogadorPosX = 0;
 			jogadorPosY = (canvas.height - barraHeight) / 2;
 			velocidadeJogador = 15;
-			teclaCimaPressionada = false;
-			teclaBaixoPressionada = false;
 			teclaEsquerdaPressionada = false;
 			teclaDireitaPressionada = false;
 
@@ -45,11 +43,7 @@ canvas {
 		}
 
 		function keyDown(e) {
-			if (e.keyCode == 38) { // up
-				teclaCimaPressionada = true;
-			} else if (e.keyCode == 40) { // down
-				teclaBaixoPressionada = true;
-			}
+
 			
 			if (e.keyCode == 37) { // up
 				teclaEsquerdaPressionada = true;
@@ -59,15 +53,11 @@ canvas {
 		}
 
 		function keyUp(e) {
-			if (e.keyCode == 38) { // up
-				teclaCimaPressionada = false; // jogador soltou tecla cima
-			} else if (e.keyCode == 40) { // down
-				teclaBaixoPressionada = false; // jogador soltou tecla baixo
-			}
+
 			
-			if (e.keyCode == 37) { // up
+			if (e.keyCode == 37) { // Esquerda Left
 				teclaEsquerdaPressionada = false;
-			} else if (e.keyCode == 39) { // down
+			} else if (e.keyCode == 39) { // Direita Right
 				teclaDireitaPressionada = false;
 			}
 		}
