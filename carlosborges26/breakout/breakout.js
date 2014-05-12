@@ -9,6 +9,7 @@ var pontosJogador, playerLife;
 var paused, gameOver;
 
 var playerColSound, enemyColSound, screenColSound;
+var music;
 
 var enemyWidth, enemyHeight;
 var enemies = [];
@@ -31,6 +32,10 @@ function init() {
 	enemyColSound = "enemy_collide";//document.getElementById("enemy_collide");
 	screenColSound = "screen_collide";
 	
+	// get random music
+	getMusic();
+	
+	
 	width = canvas.width;
 	height = canvas.height;
 	
@@ -47,6 +52,18 @@ function init() {
 	document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
 	document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
 	setInterval(gameLoop, 15);// chama a function gameLoop a cada 15 milisegundos
+	
+	music.loop = true;
+	music.volume = 0.4;
+	music.play();
+}
+
+function getMusic() {
+	
+	var numMusic = Math.floor((Math.random() * 4) + 1);
+	
+	music = document.getElementById("music" + numMusic);
+	
 }
 
 function startInfos() {
@@ -379,6 +396,7 @@ function gameOverFunc() {
 	context.fillStyle = "#FFFF00"; // cor
 	context.fillText("PRESSIONE 'r' PARA REINICIAR", width / 2 - 170, height / 2 + 40); // escreve texto na tela na posição desejada
 	
+	music.pause();
 }
 
 function restartBall() {
@@ -395,6 +413,8 @@ function restartGame() {
 	
 	startInfos();
 	
+	music.play();
+	
 }
 
 function pauseGame() {
@@ -406,6 +426,13 @@ function pauseGame() {
 		context.font = "40pt Helvetica"; // tamanho e fonte para desenhar o texto
 		context.fillStyle = "#FFFF00"; // cor preta (opcional)
 		context.fillText("JOGO PARADO", width / 2 - 200, height / 2 + 10); // escreve texto na tela na posição desejada
+		
+		if(paused) {
+			music.pause();
+		}
+		else {
+			music.play();
+		}
 	}
 }
 
