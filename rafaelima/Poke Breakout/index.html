@@ -9,16 +9,25 @@ canvas {
 }
 </style>
 </head>
-<body onload="init()" align="center">
+<body onload="init()" style="text-align: center">
 	<canvas id="canvas" width="540" height="760" >
 	Navegador não compatível com HTML5 Canvas
 	</canvas>
+        <audio autoplay loop="loop" id="bgsound">
+            <source src="img/music.mp3" type="audio/mp3">
+            Seu browser não suporta o formato do audio.
+        </audio>
+        <audio id='playPokeBall'>
+            <source src="PokeBallsong.wav" type="audio/wav">
+            Seu browser não suporta o formato do audio.
+        </audio>
 	<script>
 		var canvas, context, barraImg, backgroundImg, bolaImg, 
 		frameProportion, frameCount, lance,
 		teclaEsquerdaPressionada, teclaDireitaPressionada, 
 		brickTypes, brickWidth, brickHeight,
-		parede, paredeLinhas, paredeColunas;
+		parede, paredeLinhas, paredeColunas,
+                soung, playAudio, contaVidas, vidasImg;
 		
 		var bola = {
 			raio : 17,
@@ -27,7 +36,7 @@ canvas {
 			paraCima : true,
 			angulo : 0,
 			anguloR : Math.PI,
-			velocidade : 9
+			velocidade : 9//9
 		};
 		
 		var jogador = {
@@ -39,10 +48,12 @@ canvas {
 		function init() {
 			canvas = document.getElementById("canvas");// procura o canvas
 			context = canvas.getContext("2d");// recupera o contexto 2d
-			
+                        
+                        contaVidas = 3;//Quantidade de vidas iniciais
 			document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
 			document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
-			
+			soung = document.getElementById("bgsound");
+                        playAudio = document.getElementById("playPokeBall");
 			reset();
 			
 			setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
@@ -57,6 +68,8 @@ canvas {
 			backgroundImg.src = "img/BG.png";
 			bolaImg = new Image(); 
 			bolaImg.src = "img/pokeball0.png";
+                        vidasImg = new Image();
+                        vidasImg.src = "img/pokeball0.png";
 			frameCount = 0;
 
 			jogador.posX = (canvas.width - barraImg.width) / 2;
@@ -80,7 +93,18 @@ canvas {
 			brickTypes = 4;
 			frameProportion = 3;
 			preencheParede();
+                        regulaVolume();
 		}
+                
+                
+                //30% do som atual
+                function regulaVolume(){ 
+                        soung.volume = 0.3;
+                }
+                
+                function pokeballPlay() {
+                        playAudio.play();
+                }
 		
 		//preenche uma matriz parede onde cada espaço tem 30% de chance de ser vazio
 		function preencheParede(){
@@ -90,27 +114,27 @@ canvas {
 			    for(var j=0; j < paredeColunas; j++) {
 					var brick = new Image(); 
 					brick.src = "img/brick"+ Math.floor(Math.random() * 4)+".png";
-			        parede[i][j] = ( Math.random() <= 0.7 ? brick : null); //tijolo(1) ou não tijolo(0)?
+                                        parede[i][j] = ( Math.random() <= 0.7 ? brick : null); //tijolo(1) ou não tijolo(0)?
 			    }
 			}
 		}
 
 		function keyDown(e) {
-			if ((e.keyCode == 37) || (e.keyCode == 39) )
-				lance = (lance==0?1:lance); //jogador começou o primeiro lance? sim = 1 ou já fez = lance
-			if (e.keyCode == 37) { // left
+			if ((e.keyCode === 37) || (e.keyCode === 39) )
+				lance = (lance === 0?1:lance); //jogador começou o primeiro lance? sim = 1 ou já fez = lance
+			if (e.keyCode === 37) { // left
 				teclaEsquerdaPressionada = true;
-			} else if (e.keyCode == 39) { // rigth
+			} else if (e.keyCode === 39) { // rigth
 				teclaDireitaPressionada = true;
 			}
 		}
 
 		function keyUp(e) {	
-			if ((e.keyCode == 37) || (e.keyCode == 39) )
-				lance = (lance==1?2:lance); //jogador soltou o primeiro lance? sim = 2 ou já fez = lance
-			if (e.keyCode == 37) { // left
+			if ((e.keyCode === 37) || (e.keyCode === 39) )
+				lance = (lance === 1 ? 2 : lance); //jogador soltou o primeiro lance? sim = 2 ou já fez = lance
+			if (e.keyCode === 37) { // left
 				teclaEsquerdaPressionada = false; // jogador soltou tecla Esquerda
-			} else if (e.keyCode == 39) { // right
+			} else if (e.keyCode === 39) { // right
 				teclaDireitaPressionada = false; // jogador soltou tecla Direita
 			}
 		}
@@ -123,11 +147,11 @@ canvas {
 		}
 
 		function movimentaBola() {
-			if (lance==2) { //se o jogador já lançou a bola
+			if (lance===2) { //se o jogador já lançou a bola
 				//movimento no eixo X
 				if ((bola.posX - bola.raio <= 0) 
 						|| (bola.posX + bola.raio >= canvas.width)) {// se a bola bater dos lados da tela...
-					bola.poX = ((bola.posX - bola.raio <= 0) ? 0 : canvas.width)
+					bola.posX = ((bola.posX - bola.raio <= 0) ? bola.raio : canvas.width-bola.raio);
 					bola.angulo = bola.angulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo X
 				}
 				bola.posX += bola.angulo;// movemos a bola para os lados, de acordo com o cáculo acima
@@ -138,7 +162,7 @@ canvas {
 				} else {// se estiver indo para a baixo...
 					bola.posY += bola.velocidade;// movemos a bola para baixo
 				}
-				if ((bola.posY - bola.raio - bola.velocidade) <= 0) { //se a bola bater no topo ela deve descer
+				if ((bola.posY - bola.raio) <= 0) { //se a bola bater no topo ela deve descer
 					bola.paraCima = false;
 				} else if (((bola.posY + bola.raio - bola.velocidade) >= jogador.posY) //se a bola esta na altura da barra 
 					 && ((bola.posX >= jogador.posX) && (bola.posX <= (jogador.posX + barraImg.width)))) { //e se a bola esta dentro do comprimento da barra
@@ -147,11 +171,18 @@ canvas {
 						bola.posY -= bola.velocidade; //aplica 'efeito'
 					}else if (bola.posY > jogador.posY){ //se a bola passou da barra
 						//reinicia jogo
-						alert("Você perdeu a bola... Vamos recomeçar");
-						reset();
+                                                if(contaVidas === 0){
+                                                        alert("Game Over. Vamos recomeçar?");
+                                                        lance = 1;//lance incial
+                                                        contaVidas = 3;//Quantidade inicial de vidas
+                                                        reset();
+                                                }else {
+                                                        contaVidas--;
+                                                        reset();
+                                                }
 					}
 			} else { //a bola deve acompanhar a barra antes do primeiro lance
-				movimentaBolaBarra()
+				movimentaBolaBarra();
 			}
 		}
 		
@@ -159,19 +190,28 @@ canvas {
 			// se o jogador estiver pressionando a tecla Direita ou Esquerda
 			if (teclaEsquerdaPressionada) { // se for para Esquerda...
 				if((bola.posX > jogador.velocidade)){
-					bola.posX -= jogador.velocidade;// muda a posição
+                                            bola.posX -= jogador.velocidade;// muda a posição
 				}
-				bola.angulo = Math.floor(Math.random() * (bola.raio/2)) +5;
+				bola.angulo = Math.floor(Math.random() * 2*bola.raio) - 2*bola.raio;
+                                validaAngulo();
 			} else if (teclaDireitaPressionada){ // se for para Direita...
 				if(((bola.posX + bola.raio + jogador.velocidade) < canvas.width)){
 					bola.posX += jogador.velocidade;// muda a posição
 				}
-				bola.angulo = Math.floor(Math.random() * bola.raio) +5;
+				bola.angulo = Math.floor(Math.random() * 2*bola.raio);
+                                validaAngulo();
 			}
 		}
+                
+                function validaAngulo(){
+                        if(bola.angulo > 0 && bola.angulo < 10)
+                            bola.angulo = 11;
+                        else if (bola.angulo <= 0 && bola.angulo > -10)
+                            bola.angulo = -11;
+                }
 		
 		function checaColisaoParede(){ //todas as possiveis colisoes do perímetro e centro da bola com a parede
-			if((bola.posY-bola.raio)<=brickHeight*paredeLinhas){ //se o topo da bola chegar no fundo da parede
+			if((bola.posY-bola.raio) <= (brickHeight * paredeLinhas)){ //se o topo da bola chegar no fundo da parede
 				for(var j = -1; j<=1; j++){ //indices que controlam qual 'extremidade' da bola esta tocando a parede
 					for(var i = -1; i<=1; i++){//em relação ao centro da bola
 						x = Math.floor((bola.posX + (i*bola.raio))/brickWidth); //x do ponto
@@ -186,14 +226,19 @@ canvas {
 			}
 		}
 		
-		function reacaoColisao(i, j){
-			if((i==0 && j==-1) || (i==-1 && j==-1) || (i==1 && j==-1)){ //top center 0 -1 //top left -1 -1 //top right 1 -1
+		function reacaoColisao(x, y){
+                        //som quando acerta o pokemon
+                        pokeballPlay();
+			if(x===0 && y===-1){ //top center 0 -1 //top left -1 -1 //top right 1 -1
 				bola.paraCima = false;
-			}else if((i==-1 && j==1) || (i==0 && j==1) || (i==1 && j==1)){ //bottom left -1 1 //bottom center 0 1 //bottom right 1 1
+			}else if(x===0 && y===1){ //bottom left -1 1 //bottom center 0 1 //bottom right 1 1
 					bola.paraCima = true;
-				 }else if((i==-1 && j==0)|| (i==0 && j==0) ||(i==1 && j==0)){ //side left -1 0 //center  0 0 //side right 1 0 
+				 }else if((x===-1 && y===0)|| (x===0 && y===0) ||(x===1 && y===0)){ //side left -1 0 //center  0 0 //side right 1 0 
 						bola.angulo = bola.angulo * -1;
-					  }
+					  }else if((x===-1 && y===-1) || (x===1 && y===-1) || (x===-1 && y===1) || (x===1 && y===1)){
+                                              bola.paraCima = !bola.paraCima;
+                                              bola.angulo = bola.angulo * -1;
+                                          }
 		}
 		
 		function desenhaParede(){
@@ -225,7 +270,7 @@ canvas {
 			desenhaParede(); 
 			context.drawImage(barraImg,jogador.posX,jogador.posY); //desenha nuvem
 			context.drawImage(bolaImg, bola.posX - bola.raio, bola.posY - bola.raio); //desenha bola
-			
+                        desenhaVidas();
 			rodaBola();
 		}
 		
@@ -236,6 +281,15 @@ canvas {
 				bolaImg.src = "img/pokeball"+Math.floor(frameCount/frameProportion)+".png"; //load posicao da bola	
 			}
 		}
+                
+                function desenhaVidas(){
+                    if(contaVidas !== 0){
+                            var desenha = contaVidas;
+                            for(;desenha > 0; desenha--){
+                                    context.drawImage(vidasImg, (canvas.width) - 20 -(50*desenha), 30);
+                            }
+                    }
+                }
 	</script>
 </body>
 </html>
