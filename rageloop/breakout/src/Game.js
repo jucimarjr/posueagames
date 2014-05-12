@@ -9,7 +9,11 @@ function Game(id, width, height) {
     this.level = null;
     this.canvas = null;
     this.context = null;
+
     this.bgSound = null;
+    this.destroySound = null;
+    this.gameOverSound = null;
+    this.missBallSound = null;
 
     //hud
     this.hud = null;
@@ -44,9 +48,10 @@ Game.prototype.init = function () {
     this.level = new Level2();
     this.level.init();
     
-    this.bgSound = new Audio("assets/audio/kick_shock.wav");
+    this.bgSound = new Audio("assets/audio/background.wav");
     this.destroySound = new Audio("assets/audio/explosion.wav");
     this.gameOverSound = new Audio("assets/audio/gameOver.wav");
+    this.missBallSound = new Audio("assets/audio/missBall.wav");
     
     this.hud = new HUD({
         'top' : 20,
@@ -115,7 +120,9 @@ Game.prototype.update = function () {
 
     //miss
     if (this.ball.y > this.height) {
-
+    	
+    	this.missBallSound.play();
+    	
         if (this.delay === 0)
             this.hud.updateLifes(-1);
 
@@ -175,7 +182,7 @@ Game.prototype.gameOver = function () {
     this.context.fillStyle = '#00ffff';
     this.context.fillText('GAME OVER!', (this.width / 2) - 180, (this.height / 2) - 50);
     this.bgSound.pause();
-    this.gameOverSound.play();
+    this.gameOverSound.play();    
     clearInterval(this.timer);
 };
 
