@@ -7,13 +7,13 @@
 <style type="text/css">
 canvas {
 	border: 1px dashed #ffffff;
-	background: #555555;
+	background: #000000;
 }
 </style>
 <script src="desenho.js"></script>
 </head>
 <body onload="init()">
-	<canvas id="canvas" width="800" height="600">
+	<canvas id="canvas" width="800" height="768">
                         Navegador não compatível com HTML5 Canvas
                 </canvas>
 	<script>
@@ -21,17 +21,35 @@ canvas {
             var canvas, context, w, h, barraWidth, barraHeight, jogadorPosX, jogadorPosY, 
             	oponentePosX, bolaRaio, bolaPosX, bolaPosY, bolaParaDireita, bolaAngulo, bolaTempo,
                 velocidadeJogador, velocidadeBola, pontosJogador, teclaEsquerdaPressionada, teclaDireitaPressionada,
-                bordaW;
+                bordaW, dy, initDx, initDy, qtdLinhas, qtdColunas, blocoW, blocoH;
             
+            function bloco(x, y, style){
+            		this.x = x;
+            		this.y = y;
+            		this.style = style;
+            		this.w  = 40;
+            		this.h = 20;
+            }
+            
+            var blocos = [];
+            var styles = ["#FF1493", "#EE1289", "#FFA500", "#FF8C00", "#9ACD32", "#1E90FF"]
+            //var blocos = new Array();
+            //blocos.add(new bloco[0,0]);
             // Método para iniciar o jogo, executado no onload da tag body
             function init() {
             	canvas = document.getElementById("canvas");// procura o canvas
             	context = canvas.getContext("2d");// recupera o contexto 2d
             	w = canvas.width;
             	h = canvas.height;
-				barraWidth = 80; barraHeight = 14; 
-				blocoW  = barraWidth/2; blocoH = 20;
-				bordaW = blocoW;
+				barraWidth = 80; barraHeight = 14;
+				bordaW = barraWidth/2;
+				dy = 100;
+				initDy = dy+3*bordaW;
+				initDx = bordaW;
+				qtdLinhas = 6;
+				qtdColunas = 18;
+				blocoW = 40;
+				blocoH = 20;
 				jogadorPosX = (canvas.width - barraWidth) / 2;
 				jogadorPosY = (canvas.height - barraHeight);
 				teclaDireitaPressionada = false; teclaEsquerdaPressionada = false;
@@ -43,7 +61,8 @@ canvas {
 				velocidadeJogador = 15;
 				velocidadeBola = 15;
 				pontosJogador = 0;
-	
+				
+				initBlocos();
 				document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
 				document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
 				setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
@@ -153,8 +172,9 @@ canvas {
 			
 			
 			//Primeira Linha de Oponentes
-			desenhar(bordaW, bordaW, blocoW, blocoH);
-			desenhar(2*bordaW, bordaW, blocoW, blocoH);
+			//desenhar(bordaW, bordaW, blocoW, blocoH);
+			//desenhar(2*bordaW, bordaW, blocoW, blocoH);
+			desenharBlocos();
 
 			// Bola
 			context.fillStyle = "silver";
