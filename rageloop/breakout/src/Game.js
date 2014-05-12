@@ -43,7 +43,7 @@ Game.prototype.init = function () {
 
     this.ball = new Ball(this.width / 2, this.height / 2, 10, ImageLoader.get('ball'));
     this.ball.speed = 15;
-    this.ball.angle = Math.floor(Math.random() * 21) - 10;
+    this.ball.angle = 0;
 
     this.level = new Level2();
     this.level.init();
@@ -128,9 +128,9 @@ Game.prototype.update = function () {
 
         if (this.delay >= 50) {
             this.ball.x = this.width / 2;
-            this.ball.y = this.posicaoInicial;
+            this.ball.y = this.height / 2;
             this.ball.diretionUp = false;
-            this.ball.angle = Math.floor(Math.random() * 21) - 10;
+            this.ball.angle = 0;
             this.delay = 0;
         }
         else {
