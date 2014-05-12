@@ -44,7 +44,17 @@
 	}
 	
 	function gameLoop() {
-        console.log(teclaEsquerdaPressionada)
+
+        if(teclaEsquerdaPressionada){
+            if (jogadorPosX > 0) { // se não sair da tela...
+                jogadorPosX -= velocidadeJogador;// muda a posição
+            }
+        }else if (teclaDireitaPressionada){
+            if(jogadorPosX < (canvas.width - barraWidth)){
+                jogadorPosX += velocidadeJogador;
+            }
+        }
+
         if (((bolaPosY - bolaRaio)<= 0) || ((bolaPosY + bolaRaio)> canvas.height)){
             bolaAngulo = bolaAngulo * -1;
         }
@@ -65,7 +75,6 @@
         else {// se estiver indo para a esquerda...
             bolaPosX -= velocidadeBola;// movemos a bola para a esquerda
         }
-
         // Desenha tudo na tela
         context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
 		
