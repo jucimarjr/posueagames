@@ -23,6 +23,8 @@ var skateWidth, skateHeight;
 var ballWidth, ballHeight;
 var ballPosX, ballPosY;
 var imgSkate, imgBall;
+var leftPressed, rightPressed;
+var speedPlayer;
 
 function init(){
     canvas = document.getElementById("canvas");
@@ -46,9 +48,17 @@ function init(){
     imgBall = new Image();
     imgBall.src = "bola.png";
 
+    leftPressed = false;
+    rightPressed = false;
+    speedPlayer = 20;
+
     drawBackground();
     drawBar(imgSkate, playerPosX, playerPosY);
     drawBall(imgBall, ballPosX, ballPosY);
+
+    document.addEventListener('keyup', keyUp, false);
+    document.addEventListener('keydown', keyDown, false);
+    setInterval(gameLoop, 30);
 }
 
 function drawBackground(){
@@ -62,6 +72,45 @@ function drawBar(img, posX, posY){
 
 function drawBall(img, posX, posY){
     context.drawImage(img, posX, posY, ballWidth, ballHeight);
+}
+
+function keyDown(e) {
+    if (e.keyCode == 37) { 
+        leftPressed = true;
+    } else if (e.keyCode == 39) { 
+        rightPressed = true;
+    }
+}
+
+function keyUp(e) {
+    if (e.keyCode == 37) {
+    	leftPressed = false; 
+    } else if (e.keyCode == 39) {
+    	rightPressed = false;
+    }
+}
+
+function getBarPosition() {
+    if (leftPressed != rightPressed) { 
+        if (leftPressed) { 
+            if (playerPosX > 0) { 
+            	playerPosX -= speedPlayer;
+            }
+        } else { 
+            if (playerPosX < (width - skateWidth)) {
+            	playerPosX += speedPlayer;
+            }
+        }
+    }
+}
+
+function gameLoop() {    
+    getBarPosition();
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    drawBackground();
+    drawBar(imgSkate, playerPosX, playerPosY);
+    drawBall(imgBall, ballPosX, ballPosY);
 }
         </script>
     </body>
