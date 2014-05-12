@@ -22,16 +22,20 @@ var playerPosX, playerPosY;
 var playerWidth, playerHeight;
 var ballWidth, ballHeight;
 var ballPosX, ballPosY, ballRaio;
+var ballUp, ballAngle;
 var imgSkate, imgBall;
 var leftPressed, rightPressed;
-var speedPlayer;
-var wallMatrix, wallNumRows, wallNumColumns;
+var speedPlayer, speedBall;
+var wallMatrix, addNumRows;
+var wallNumRows, wallNumColumns, wallNumRowsDraw, wallNumColumnsDraw;
 var wallWidth, wallHeight, wallMargin;
+var startGame;
 
 function init(){
     canvas = document.getElementById("canvas");
     context = canvas.getContext("2d");
 
+    startGame = false;
     width = 520;
     height = canvas.height;
 
@@ -45,9 +49,12 @@ function init(){
 
     ballWidth = 40;
     ballHeight = 40;
+    speedBall = 20;
     ballRaio = ballWidth/2;
     ballPosX = width / 2;
     ballPosY = height - playerHeight - ballRaio;
+    ballAngle = Math.floor(Math.random() * 21) - 10;
+    ballUp = false;
     imgBall = new Image();
     imgBall.src = "../assets/bola.png";
 
@@ -58,18 +65,29 @@ function init(){
     wallMatrix = new Array();
     wallWidth = 52; 
     wallHeight = 52;
-    wallNumRows = 5;
+    wallNumRows = 17
     wallNumColumns = 10;
+    wallNumRowsDraw = 5;
+    wallNumColumnsDraw = 10;
     wallMargin = 0;
+    addNumRows = false;
     createWall();
 
     drawBackground();
     drawBar(imgSkate, playerPosX, playerPosY);
     drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
-
+    drawWall();
+    drawArea();
+    
     document.addEventListener('keyup', keyUp, false);
     document.addEventListener('keydown', keyDown, false);
     setInterval(gameLoop, 30);
+    setInterval(addWallNumRows, 10000);
+}
+
+function drawArea(){ //change name
+	context.fillStyle = "red"; 
+    context.fillRect(width, 0, canvas.width, canvas.height);
 }
 
 function drawBackground(){
@@ -97,15 +115,22 @@ function createWall() {
 }
 
 function drawWall(){
-    for (var i = 0; i < wallNumRows ; i++) { 
-        for (var j = 0; j < wallNumColumns; j++) { 
+	var contRows = 0;
+    for (var i = wallNumRowsDraw-1; i >= 0 ; i--) { 
+        for (var j = wallNumColumnsDraw-1; j >= 0; j--) { 
             var img = wallMatrix[i][j];
             if (img != null) {
-                context.drawImage(img, (wallWidth + wallMargin) * j , (wallHeight + wallMargin) * i,
+                context.drawImage(img, (wallWidth + wallMargin) * j , (wallHeight + wallMargin) * contRows,
                 		wallWidth, wallHeight);
             }
         }
-    } 
+        contRows ++;
+    }
+    
+    if(addNumRows){
+    	wallNumRowsDraw++;
+    	addNumRows = false;
+    }
 }
 
 function keyDown(e) {
@@ -144,14 +169,58 @@ function getBarPosition() {
     }
 }
 
-function gameLoop() {    
-    getBarPosition();
-    context.clearRect(0, 0, canvas.width, canvas.height);
+function getBallPosition(){
+    if (ballPosY + ballRaio == playerPosY){
+        if ((ballPosX-ballRaio >= playerPosX-ballWidth) && (ballPosX + ballRaio <= playerPosX + playerWidth + ballWidth)) {
+        	ballUp = true;
+            if (leftPressed) {
+            	ballAngle = Math.floor(Math.random() * 10) - 9;
+            }
+            else {
+            	ballAngle = Math.floor((Math.random() * 10));
+            }                        
+        }                    
+    }
+    if ((ballPosX-ballRaio <= 0) || (ballPosX + ballRaio > width)) {
+    	ballAngle = ballAngle * -1;
+    }
+    ballPosX += ballAngle;
+    
+    if (ballUp) {
+        ballPosY -= speedBall;
+    } else {
+        ballPosY += speedBall;
+    }                    
+}
 
-    drawBackground();
-    drawBar(imgSkate, playerPosX, playerPosY);
-    drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
-    drawWall();
+function gameLoop() { 
+	if(startGame){
+	    context.clearRect(0, 0, canvas.width, canvas.height);
+	    drawBackground();
+	    
+	    getBarPosition();
+	    drawBar(imgSkate, playerPosX, playerPosY);
+	    
+	    getBallPosition();
+	    drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
+
+	    drawWall();
+	    drawArea();
+	}else{
+		checkStartGame();
+	}
+}
+
+function checkStartGame(){
+	if(leftPressed || rightPressed){
+		startGame = true;
+	}
+}
+
+function addWallNumRows() {
+	if(startGame){
+		addNumRows = true;
+	}
 }
         </script>
     </body>
