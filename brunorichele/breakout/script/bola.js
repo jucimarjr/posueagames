@@ -84,6 +84,7 @@ var bola = {
 					bola.baixo = !bola.baixo;
 					bloco.blocos[linha][coluna] = 1;
 					bola.pontuacao++;
+					document.getElementById('colisao').play();
 					if(bola.pontuacao == 50){	
 						bola.clear(); // A bola retorna a posicao inicial
 						jogador.clear(); // O jogador retorna a posicao inicial					
