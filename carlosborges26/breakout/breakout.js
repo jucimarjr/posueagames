@@ -3,8 +3,10 @@ var barraWidth, barraHeight;
 var jogadorPosX, jogadorPosY;
 var teclaEsquerdaPressionada, teclaDireitaPressionada;
 var bolaRaio, bolaPosX, bolaPosY, bolaParaBaixo, bolaAngulo, bolaTempo;
-var velocidadeJogador, velocidadeBola, maxBallSpeedX;
+var velocidadeJogador, velocidadeBola, maxBallSpeedX, ballSpeedInit;
 var pontosJogador, playerLife;
+
+var level;
 
 var paused, gameOver;
 
@@ -43,7 +45,7 @@ function init() {
 	teclaDireitaPressionada = false;
 	
 	barraWidth = 90;
-	barraHeight = 10;
+	barraHeight = 20;
 	
 	bolaRaio = 5;
 	
@@ -73,14 +75,37 @@ function startInfos() {
 	
 	restartBall();
 	
-	velocidadeBola = 5;
+	level = 1;
+	
+	ballSpeedInit = 3;
+	velocidadeBola = ballSpeedInit + level;
 	maxBallSpeedX = velocidadeBola * 1;
+	
+	velocidadeJogador = velocidadeBola + 1;
 	
 	pontosJogador = 0;
 	
 	playerLife = 3;
 	
-	velocidadeJogador = 5;
+	paused = false;
+	gameOver = false;
+	
+	createEnemys();
+}
+
+function nextLevel() {
+	
+	level++;
+	
+	velocidadeBola = ballSpeedInit + level;
+	maxBallSpeedX = velocidadeBola * 1;
+	
+	velocidadeJogador = velocidadeBola;
+	
+	restartBall();
+	
+	jogadorPosX = (width - barraWidth) / 2;
+	jogadorPosY = height - barraHeight;
 	
 	paused = false;
 	gameOver = false;
@@ -284,7 +309,7 @@ function gameLoop() {
 								bolaParaBaixo = true;
 							}
 							
-							pontosJogador++;
+							pontosJogador += level; // player earn level points each block destroyed
 							collided = true;
 							
 							break;
@@ -341,6 +366,9 @@ function gameLoop() {
 		// draw life
 		drawPlayerLife();
 		
+		// draw level
+		drawLevel();
+		
 		// foes
 		for(var row = 0; row < enemyRows; row++) {
 			
@@ -361,7 +389,8 @@ function gameLoop() {
 		
 		// verify win game
 		if(winGame) {
-			winGameFunc();
+			passNextLevel();
+			//winGameFunc();
 			return;
 		}
 		
@@ -370,6 +399,16 @@ function gameLoop() {
 		}
 	}
 	
+}
+
+function drawLevel() {
+	levelTemp = level;
+	if(levelTemp < 10) {
+		levelTemp = "0" + levelTemp;
+	}
+	context.font = "20pt Helvetica";// tamanho e fonte para desenhar o texto
+	context.fillStyle = "#000000";// cor preta (opcional)
+	context.fillText(levelTemp, width / 2 - 20, 30); // escreve texto na tela na posição desejada
 }
 
 function drawPlayerLife() {
@@ -394,6 +433,20 @@ function drawGameOver() {
 	
 }
 
+function passNextLevel() {
+	
+	playerLife++; // player earn a life when pass a level
+	
+	stopBall();
+	
+	nextLevel();
+	
+	music.pause();
+	music.currentTime = 0;
+	getMusic();
+	music.play();
+}
+
 function winGameFunc() {
 	
 	gameOver = true;
@@ -407,6 +460,8 @@ function winGameFunc() {
 	context.font = "16pt Helvetica"; // tamanho e fonte para desenhar o texto
 	context.fillStyle = "#FFFF00"; // cor preta (opcional)
 	context.fillText("PRESSIONE 'r' PARA REINICIAR", width / 2 - 170, height / 2 + 40); // escreve texto na tela na posição desejada
+	
+	music.pause();
 	
 }
 
@@ -433,6 +488,9 @@ function restartGame() {
 	
 	startInfos();
 	
+	music.pause();
+	music.currentTime = 0;
+	getMusic();
 	music.play();
 	
 }
