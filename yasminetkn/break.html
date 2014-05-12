@@ -31,19 +31,16 @@
         jogadorPosX = (canvas.width - barraWidth)/2;
         jogadorPosY = canvas.height -barraHeight;
 
-        velocidadeJogador = 15;
+        velocidadeJogador = 20;
         teclaCimaPressionada = false;
         teclaBaixoPressionada = false;
-
-
-        velocidadeOponente = 20;
 
         bolaRaio = 10;
         bolaPosX = canvas.width;
         bolaPosY = canvas.height / 2;
         bolaParaDireita = false;
-        bolaAngulo = Math.floor(Math.random() * 21) - 10;
-        velocidadeBola = 15;
+        bolaAngulo = Math.floor(Math.random() * 60) - 10;
+        velocidadeBola = 10;
 
         pontosJogador = 0;
 
@@ -71,7 +68,6 @@
     }
 
     function gameLoop() {
-        console.log(teclaEsquerdaPressionada)
         if(teclaEsquerdaPressionada){
          if (jogadorPosX > 0) { // se não sair da tela...
            jogadorPosX -= velocidadeJogador;// muda a posição
@@ -82,11 +78,20 @@
             }
         }
 
-       if ((bolaPosY - bolaRaio <= 0) || (bolaPosY + bolaRaio > canvas.height)) {// se a bola bater em cima ou em baixo da tela...
-            bolaAngulo = bolaAngulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
+        if (((bolaPosY - bolaRaio)<= 0) || ((bolaPosY + bolaRaio)> canvas.height)){
+            bolaAngulo = bolaAngulo * -1;
         }
-        bolaPosY += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
 
+        if (((bolaPosX - bolaRaio)<= 0)){
+            bolaParaDireita = true;
+        } else {
+            if ((bolaPosX + bolaRaio)> canvas.width){
+                bolaParaDireita = false;
+            }
+        }
+
+        //movimento de acordo com o angulo
+        bolaPosY += bolaAngulo;
         if (bolaParaDireita) {// se a bola estiver indo para a direita...
             bolaPosX += velocidadeBola;// movemos a bola para a direita
         }

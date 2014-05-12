@@ -19,6 +19,7 @@
 		document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
         document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
         setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
+
 	}
 	
 	function setJogador(){
@@ -44,21 +45,20 @@
 	
 	function gameLoop() {
         console.log(teclaEsquerdaPressionada)
-        if(teclaEsquerdaPressionada){
-         if (jogadorPosX > 0) { // se não sair da tela...
-           jogadorPosX -= velocidadeJogador;// muda a posição
-            }
-        }else if (teclaDireitaPressionada){
-            if(jogadorPosX < (canvas.width - barraWidth)){
-                jogadorPosX += velocidadeJogador;
+        if (((bolaPosY - bolaRaio)<= 0) || ((bolaPosY + bolaRaio)> canvas.height)){
+            bolaAngulo = bolaAngulo * -1;
+        }
+
+        if (((bolaPosX - bolaRaio)<= 0)){
+            bolaParaDireita = true;
+        } else {
+            if ((bolaPosX + bolaRaio)> canvas.width){
+                bolaParaDireita = false;
             }
         }
 
-       if ((bolaPosY - bolaRaio <= 0) || (bolaPosY + bolaRaio > canvas.height)) {// se a bola bater em cima ou em baixo da tela...
-            bolaAngulo = bolaAngulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
-        }
-        bolaPosY += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
-
+        //movimento de acordo com o angulo
+        bolaPosY += bolaAngulo;
         if (bolaParaDireita) {// se a bola estiver indo para a direita...
             bolaPosX += velocidadeBola;// movemos a bola para a direita
         }
@@ -72,4 +72,5 @@
 		drawPlayer();
 		drawBola();
 		drawPlacar();
+        criadorDeBlocos();//criando os blocos
     }
