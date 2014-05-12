@@ -11,11 +11,58 @@
     </head>
 
     <body onload="init()">
-        <canvas id="canvas" width="1024" height="768">
+        <canvas id="canvas" width="768" height="1024">
             Navegador não compatível com HTML5 Canvas
         </canvas>
         <script>
-            // TODO: Inserir as funcionalidades do jogo
+
+var canvas, context;
+var width, height;
+var playerPosX, playerPosY;
+var skateWidth, skateHeight;
+var ballWidth, ballHeight;
+var ballPosX, ballPosY;
+var imgSkate, imgBall;
+
+function init(){
+    canvas = document.getElementById("canvas");
+    context = canvas.getContext("2d");
+
+    width = canvas.width;
+    height = canvas.height;
+
+    skateWidth = 150;
+    skateHeight = 30;
+    imgSkate = new Image();
+    imgSkate.src = "skate.png";
+
+    playerPosX = (width - skateWidth) / 2;
+    playerPosY = height - skateHeight;
+
+    ballWidth = 50;
+    ballHeight = 50;
+    ballPosX = (width - ballWidth) / 2;
+    ballPosY = height - skateHeight - ballHeight;
+    imgBall = new Image();
+    imgBall.src = "bola.png";
+
+    drawBackground();
+    drawBar(imgSkate, playerPosX, playerPosY);
+    drawBall(imgBall, ballPosX, ballPosY);
+}
+
+function drawBackground(){
+    context.fillStyle = "black"; 
+    context.fillRect(0, 0, width, height);
+}
+
+function drawBar(img, posX, posY){
+    context.drawImage(img, posX, posY, skateWidth, skateHeight);
+}
+
+function drawBall(img, posX, posY){
+    context.drawImage(img, posX, posY, ballWidth, ballHeight);
+}
         </script>
     </body>
 </html>

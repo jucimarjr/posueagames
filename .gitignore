@@ -3,6 +3,8 @@
 ######################
 .DS_Store
 Thumbs.db
+.workspace
+.idea
 
 # Eclipse #
 ###########

@@ -3,10 +3,15 @@ var barraWidth, barraHeight;
 var jogadorPosX, jogadorPosY;
 var teclaEsquerdaPressionada, teclaDireitaPressionada;
 var bolaRaio, bolaPosX, bolaPosY, bolaParaBaixo, bolaAngulo, bolaTempo;
-var velocidadeJogador, velocidadeBola, maxBallSpeedX;
+var velocidadeJogador, velocidadeBola, maxBallSpeedX, ballSpeedInit;
 var pontosJogador, playerLife;
 
+var level;
+
 var paused, gameOver;
+
+var playerColSound, enemyColSound, screenColSound;
+var music;
 
 var enemyWidth, enemyHeight;
 var enemies = [];
@@ -25,6 +30,14 @@ function init() {
 	canvas = document.getElementById("canvas");// procura o canvas
 	context = canvas.getContext("2d");// recupera o contexto 2d
 	
+	playerColSound = "player_collide";//document.getElementById("player_collide");
+	enemyColSound = "enemy_collide";//document.getElementById("enemy_collide");
+	screenColSound = "screen_collide";
+	
+	// get random music
+	getMusic();
+	
+	
 	width = canvas.width;
 	height = canvas.height;
 	
@@ -32,7 +45,7 @@ function init() {
 	teclaDireitaPressionada = false;
 	
 	barraWidth = 90;
-	barraHeight = 10;
+	barraHeight = 20;
 	
 	bolaRaio = 5;
 	
@@ -41,6 +54,18 @@ function init() {
 	document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
 	document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
 	setInterval(gameLoop, 15);// chama a function gameLoop a cada 15 milisegundos
+	
+	music.loop = true;
+	music.volume = 0.4;
+	music.play();
+}
+
+function getMusic() {
+	
+	var numMusic = Math.floor((Math.random() * 4) + 1);
+	
+	music = document.getElementById("music" + numMusic);
+	
 }
 
 function startInfos() {
@@ -50,14 +75,37 @@ function startInfos() {
 	
 	restartBall();
 	
-	velocidadeBola = 5;
+	level = 1;
+	
+	ballSpeedInit = 3;
+	velocidadeBola = ballSpeedInit + level;
 	maxBallSpeedX = velocidadeBola * 1;
+	
+	velocidadeJogador = velocidadeBola + 1;
 	
 	pontosJogador = 0;
 	
 	playerLife = 3;
 	
-	velocidadeJogador = 5;
+	paused = false;
+	gameOver = false;
+	
+	createEnemys();
+}
+
+function nextLevel() {
+	
+	level++;
+	
+	velocidadeBola = ballSpeedInit + level;
+	maxBallSpeedX = velocidadeBola * 1;
+	
+	velocidadeJogador = velocidadeBola;
+	
+	restartBall();
+	
+	jogadorPosX = (width - barraWidth) / 2;
+	jogadorPosY = height - barraHeight;
 	
 	paused = false;
 	gameOver = false;
@@ -160,6 +208,9 @@ function gameLoop() {
 				
 				if ((bolaPosX + bolaRaio > jogadorPosX) && (bolaPosX - bolaRaio < jogadorPosX + barraWidth)) { // se o jogador enconstar na bola (eixo X)...
 					
+//					playerColSound.play();
+					plaMultiSound(playerColSound);
+					
 					bolaParaBaixo = false; // a bola muda de lado e é rebatida para cima
 					
 					divBar = 11;
@@ -187,20 +238,24 @@ function gameLoop() {
 			}
 			
 			// screen collision
+			screenCollisionDetected = false;
 			if (bolaPosY - bolaRaio <= 0) { // se a bola bater em cima da tela...
 				bolaParaBaixo = true; // go down
+				screenCollisionDetected = true;
 			}
 			else if( (bolaPosX - bolaRaio) <= 0 ) { // if ball hit left screen
 				
 				if(bolaAngulo < 0) {
 					bolaAngulo = bolaAngulo * -1;
 				}
+				screenCollisionDetected = true;
 			}
 			else if( (bolaPosX + bolaRaio > width) ) { // se a bola bater em left ou right da tela...
 				
 				if(bolaAngulo > 0) {
 					bolaAngulo = bolaAngulo * -1;
 				}
+				screenCollisionDetected = true;
 			}
 			else if ((bolaPosY + bolaRaio) >= height) { // if ball touch bottom canvas, lose one ball
 				
@@ -213,9 +268,11 @@ function gameLoop() {
 				}
 				else {
 					gameOverFunc();
-					return;
 				}
-				
+			}
+			
+			if(screenCollisionDetected) {
+				plaMultiSound(screenColSound);
 			}
 			
 			// detect foes collision
@@ -227,6 +284,9 @@ function gameLoop() {
 					for(var col = 0; col < enemyCols; col++) {
 						
 						if( (collide = enemies[row][col].isCollide(bolaPosX, bolaPosY, bolaRaio)) != NONE ) {
+							
+//							enemyColSound.play();
+							plaMultiSound(enemyColSound);
 							
 							enemies[row][col].enabled = false;
 							
@@ -249,7 +309,7 @@ function gameLoop() {
 								bolaParaBaixo = true;
 							}
 							
-							pontosJogador++;
+							pontosJogador += level; // player earn level points each block destroyed
 							collided = true;
 							
 							break;
@@ -302,7 +362,13 @@ function gameLoop() {
 		context.font = "20pt Helvetica";// tamanho e fonte para desenhar o texto
 		context.fillStyle = "#000000";// cor preta (opcional)
 		context.fillText(pontosJogador, 10, 30); // escreve texto na tela na posição desejada
-	
+		
+		// draw life
+		drawPlayerLife();
+		
+		// draw level
+		drawLevel();
+		
 		// foes
 		for(var row = 0; row < enemyRows; row++) {
 			
@@ -323,11 +389,62 @@ function gameLoop() {
 		
 		// verify win game
 		if(winGame) {
-			winGameFunc();
+			passNextLevel();
+			//winGameFunc();
 			return;
+		}
+		
+		if(gameOver) {
+			drawGameOver();
 		}
 	}
 	
+}
+
+function drawLevel() {
+	levelTemp = level;
+	if(levelTemp < 10) {
+		levelTemp = "0" + levelTemp;
+	}
+	context.font = "20pt Helvetica";// tamanho e fonte para desenhar o texto
+	context.fillStyle = "#000000";// cor preta (opcional)
+	context.fillText(levelTemp, width / 2 - 20, 30); // escreve texto na tela na posição desejada
+}
+
+function drawPlayerLife() {
+	playerLifeTemp = playerLife;
+	if(playerLifeTemp < 10) {
+		playerLifeTemp = "0" + playerLifeTemp;
+	}
+	context.font = "20pt Helvetica";// tamanho e fonte para desenhar o texto
+	context.fillStyle = "#000000";// cor preta (opcional)
+	context.fillText(playerLifeTemp, width - 40, 30); // escreve texto na tela na posição desejada
+}
+
+function drawGameOver() {
+	
+	context.font = "40pt Helvetica"; // tamanho e fonte para desenhar o texto
+	context.fillStyle = "#FF0000"; // cor
+	context.fillText("GAME OVER", width / 2 - 170, height / 2 + 10); // escreve texto na tela na posição desejada
+	
+	context.font = "16pt Helvetica"; // tamanho e fonte para desenhar o texto
+	context.fillStyle = "#FFFF00"; // cor
+	context.fillText("PRESSIONE 'r' PARA REINICIAR", width / 2 - 170, height / 2 + 40); // escreve texto na tela na posição desejada
+	
+}
+
+function passNextLevel() {
+	
+	playerLife++; // player earn a life when pass a level
+	
+	stopBall();
+	
+	nextLevel();
+	
+	music.pause();
+	music.currentTime = 0;
+	getMusic();
+	music.play();
 }
 
 function winGameFunc() {
@@ -344,6 +461,8 @@ function winGameFunc() {
 	context.fillStyle = "#FFFF00"; // cor preta (opcional)
 	context.fillText("PRESSIONE 'r' PARA REINICIAR", width / 2 - 170, height / 2 + 40); // escreve texto na tela na posição desejada
 	
+	music.pause();
+	
 }
 
 function gameOverFunc() {
@@ -352,14 +471,7 @@ function gameOverFunc() {
 	
 	startBallInfo();
 	
-	context.font = "40pt Helvetica"; // tamanho e fonte para desenhar o texto
-	context.fillStyle = "#FF0000"; // cor
-	context.fillText("GAME OVER", width / 2 - 170, height / 2 + 10); // escreve texto na tela na posição desejada
-	
-	context.font = "16pt Helvetica"; // tamanho e fonte para desenhar o texto
-	context.fillStyle = "#FFFF00"; // cor
-	context.fillText("PRESSIONE 'r' PARA REINICIAR", width / 2 - 170, height / 2 + 40); // escreve texto na tela na posição desejada
-	
+	music.pause();
 }
 
 function restartBall() {
@@ -376,6 +488,11 @@ function restartGame() {
 	
 	startInfos();
 	
+	music.pause();
+	music.currentTime = 0;
+	getMusic();
+	music.play();
+	
 }
 
 function pauseGame() {
@@ -387,6 +504,13 @@ function pauseGame() {
 		context.font = "40pt Helvetica"; // tamanho e fonte para desenhar o texto
 		context.fillStyle = "#FFFF00"; // cor preta (opcional)
 		context.fillText("JOGO PARADO", width / 2 - 200, height / 2 + 10); // escreve texto na tela na posição desejada
+		
+		if(paused) {
+			music.pause();
+		}
+		else {
+			music.play();
+		}
 	}
 }
 
