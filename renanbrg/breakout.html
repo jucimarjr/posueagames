@@ -20,7 +20,9 @@ var canvas, context;
 var width, height;
 var playerPosX, playerPosY;
 var skateWidth, skateHeight;
-var imgSkate;
+var ballWidth, ballHeight;
+var ballPosX, ballPosY;
+var imgSkate, imgBall;
 
 function init(){
     canvas = document.getElementById("canvas");
@@ -37,8 +39,16 @@ function init(){
     playerPosX = (width - skateWidth) / 2;
     playerPosY = height - skateHeight;
 
+    ballWidth = 50;
+    ballHeight = 50;
+    ballPosX = (width - ballWidth) / 2;
+    ballPosY = height - skateHeight - ballHeight;
+    imgBall = new Image();
+    imgBall.src = "bola.png";
+
     drawBackground();
     drawBar(imgSkate, playerPosX, playerPosY);
+    drawBall(imgBall, ballPosX, ballPosY);
 }
 
 function drawBackground(){
@@ -48,6 +58,10 @@ function drawBackground(){
 
 function drawBar(img, posX, posY){
     context.drawImage(img, posX, posY, skateWidth, skateHeight);
+}
+
+function drawBall(img, posX, posY){
+    context.drawImage(img, posX, posY, ballWidth, ballHeight);
 }
         </script>
     </body>
