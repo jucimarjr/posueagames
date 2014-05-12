@@ -139,13 +139,21 @@ function colisaoBolaInimigos() {
 					if (y1 > y2) // se condição for verdadeira então a bola veio de baixo, senão, de cima
 						y1 = y2;
 
-					/*if (x1 == y1) { // tocou na quina do alvo
+					if (x1 < y1) {// tocou no lado esquerdo/direito
 						bola.velocidadeX = -bola.velocidadeX;
+						if (bola.velocidadeX < 0) {
+							bola.posX = alvoX - bola.raio;
+						} else {
+							bola.posX = (alvoX + inimigos.width) + bola.raio;
+						}
+					} else { // tocou no topo/fundo
 						bola.velocidadeY = -bola.velocidadeY;
-					} else*/ if (x1 < y1) // tocou no lado esquerdo/direito
-						bola.velocidadeX = -bola.velocidadeX;
-					else // tocou no topo/fundo
-						bola.velocidadeY = -bola.velocidadeY;
+						if (bola.velocidadeY < 0) {
+							bola.posY = alvoY - bola.raio;
+						} else {
+							bola.posY = (alvoY + inimigos.height) + bola.raio;
+						}
+					}
 
 					pontuacao.incrementa(10);
 					alvos[i][j] = 0;
