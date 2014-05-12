@@ -18,6 +18,9 @@
 
 var canvas, context;
 var width, height;
+var playerPosX, playerPosY;
+var skateWidth, skateHeight;
+var imgSkate;
 
 function init(){
     canvas = document.getElementById("canvas");
@@ -26,12 +29,25 @@ function init(){
     width = canvas.width;
     height = canvas.height;
 
+    skateWidth = 150;
+    skateHeight = 30;
+    imgSkate = new Image();
+    imgSkate.src = "skate.png";
+
+    playerPosX = (width - skateWidth) / 2;
+    playerPosY = height - skateHeight;
+
     drawBackground();
+    drawBar(imgSkate, playerPosX, playerPosY);
 }
 
 function drawBackground(){
     context.fillStyle = "black"; 
     context.fillRect(0, 0, width, height);
+}
+
+function drawBar(img, posX, posY){
+    context.drawImage(img, posX, posY, skateWidth, skateHeight);
 }
         </script>
     </body>
