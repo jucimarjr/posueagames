@@ -11,7 +11,7 @@
     </head>
 
     <body onload="init()">
-        <canvas id="canvas" width="768" height="1024">
+        <canvas id="canvas" width="728" height="880">
             Navegador não compatível com HTML5 Canvas
         </canvas>
         <script>
@@ -19,32 +19,35 @@
 var canvas, context;
 var width, height;
 var playerPosX, playerPosY;
-var skateWidth, skateHeight;
+var playerWidth, playerHeight;
 var ballWidth, ballHeight;
-var ballPosX, ballPosY;
+var ballPosX, ballPosY, ballRaio;
 var imgSkate, imgBall;
 var leftPressed, rightPressed;
 var speedPlayer;
+var wallMatrix, wallNumRows, wallNumColumns;
+var wallWidth, wallHeight, wallMargin;
 
 function init(){
     canvas = document.getElementById("canvas");
     context = canvas.getContext("2d");
 
-    width = canvas.width;
+    width = 520;
     height = canvas.height;
 
-    skateWidth = 150;
-    skateHeight = 30;
+    playerWidth = 130;
+    playerHeight = 40;
     imgSkate = new Image();
     imgSkate.src = "skate.png";
 
-    playerPosX = (width - skateWidth) / 2;
-    playerPosY = height - skateHeight;
+    playerPosX = (width - playerWidth) / 2;
+    playerPosY = height - playerHeight;
 
-    ballWidth = 50;
-    ballHeight = 50;
-    ballPosX = (width - ballWidth) / 2;
-    ballPosY = height - skateHeight - ballHeight;
+    ballWidth = 40;
+    ballHeight = 40;
+    ballRaio = ballWidth/2;
+    ballPosX = width / 2;
+    ballPosY = height - playerHeight - ballRaio;
     imgBall = new Image();
     imgBall.src = "bola.png";
 
@@ -52,9 +55,17 @@ function init(){
     rightPressed = false;
     speedPlayer = 20;
 
+    wallMatrix = new Array();
+    wallWidth = 52; 
+    wallHeight = 52;
+    wallNumRows = 5;
+    wallNumColumns = 10;
+    wallMargin = 0;
+    createWall();
+
     drawBackground();
     drawBar(imgSkate, playerPosX, playerPosY);
-    drawBall(imgBall, ballPosX, ballPosY);
+    drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
 
     document.addEventListener('keyup', keyUp, false);
     document.addEventListener('keydown', keyDown, false);
@@ -67,11 +78,34 @@ function drawBackground(){
 }
 
 function drawBar(img, posX, posY){
-    context.drawImage(img, posX, posY, skateWidth, skateHeight);
+    context.drawImage(img, posX, posY, playerWidth, playerHeight);
 }
 
 function drawBall(img, posX, posY){
     context.drawImage(img, posX, posY, ballWidth, ballHeight);
+}
+
+function createWall() {
+    for (var i = 0; i < wallNumRows; i++) { 
+        wallMatrix[i] = new Array();
+        for (var j = 0; j < wallNumColumns; j++) { 
+            var img2 = new Image();
+            img2.src = "tijolo.png";
+            wallMatrix[i][j] = img2;
+        }
+    } 
+}
+
+function drawWall(){
+    for (var i = 0; i < wallNumRows ; i++) { 
+        for (var j = 0; j < wallNumColumns; j++) { 
+            var img = wallMatrix[i][j];
+            if (img != null) {
+                context.drawImage(img, (wallWidth + wallMargin) * j , (wallHeight + wallMargin) * i,
+                		wallWidth, wallHeight);
+            }
+        }
+    } 
 }
 
 function keyDown(e) {
@@ -96,9 +130,15 @@ function getBarPosition() {
             if (playerPosX > 0) { 
             	playerPosX -= speedPlayer;
             }
+            if(playerPosX < 0){
+            	playerPosX = 0;
+            }
         } else { 
-            if (playerPosX < (width - skateWidth)) {
+            if (playerPosX < (width - playerWidth)) {
             	playerPosX += speedPlayer;
+            }
+            if(playerPosX > (width - playerWidth)){
+            	playerPosX = width - playerWidth;
             }
         }
     }
@@ -110,7 +150,8 @@ function gameLoop() {
 
     drawBackground();
     drawBar(imgSkate, playerPosX, playerPosY);
-    drawBall(imgBall, ballPosX, ballPosY);
+    drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
+    drawWall();
 }
         </script>
     </body>
