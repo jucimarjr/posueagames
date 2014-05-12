@@ -1,25 +1,28 @@
 var bloco = {
-	w: 60, //largura
-	h: 20,  //altura	
+	w : 60, //largura
+	h : 20,  //altura	
 	numLinhas : 5, // 5 linhas, 10 blocos por linha
 	numColunas : 10, //n��mero de linhas e colunas dos blocos, largura: 60, altura: 20;
 	bloco : null,
 	blocos : [], // matriz bidimensional para guardar os blocos
-	canvas:null,
-	context:null,
+	canvas :null,
+	context :null,
+	imagem : null,
 
 	
 	init : function()
 	{
-		canvas = document.getElementById("canvas");
-		context = canvas.getContext("2d");
+		//canvas = document.getElementById("canvas");
+		//context = canvas.getContext("2d");
 		//var imagem = new Image();
 		//imagem.src = "bloco-verde.png";
 		
 		for(var linha = 0; linha < bloco.numLinhas; linha++){
 			bloco.blocos[linha] = [];
 			for(var coluna = 0; coluna < bloco.numColunas; coluna++){
-				bloco.blocos[linha][coluna] = 0;				
+				bloco.blocos[linha][coluna] = 0;	
+				bloco.imagem = new Image();
+				bloco.imagem.src = "assets/bloco2.png";
 			}
 		}			
 	},
@@ -29,8 +32,9 @@ var bloco = {
 		for(var linha = 0; linha < bloco.numLinhas; linha++){
 			for(var coluna = 0; coluna < bloco.numColunas; coluna++){			
 				if(bloco.blocos[linha][coluna] == 0){				
-					root.fillStyle = bloco.color(linha);
-					root.fillRect(bloco.w * coluna, bloco.h * linha, bloco.w, bloco.h); 
+					//root.fillStyle = bloco.color(linha);
+				//	root.fillRect(bloco.w * coluna, bloco.h * linha, bloco.w, bloco.h); 
+					root.drawImage(bloco.imagem, bloco.w * coluna, bloco.h * linha);
 					
 					//preenchimento
 				}
