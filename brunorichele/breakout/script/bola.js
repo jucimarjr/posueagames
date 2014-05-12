@@ -1,6 +1,6 @@
 // Bola (JS Object)
 var bola = {
-	raio: 10, 
+	raio: 20, 
 	x: null, 
 	y: null,
 	baixo: false,
@@ -19,7 +19,7 @@ var bola = {
 		bola.countFail = 0;
 		bola.pontuacao = 0;
 		bola.imagem = new Image();
-		bola.imagem.src = "assets/bola.png";
+		bola.imagem.src = "assets/bola-futebol.png";
 		bola.clear();
 	},
 	render : function(root){

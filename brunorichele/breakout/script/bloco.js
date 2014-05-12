@@ -42,7 +42,7 @@ var bloco = {
 		}	
 	},	
 
-	color : function(linha)
+/*	color : function(linha)
 	{
 		switch(linha) {
 			case 0:
@@ -63,5 +63,5 @@ var bloco = {
 			default:
 				return "black";
 		}
-	}
+	}*/
 };
