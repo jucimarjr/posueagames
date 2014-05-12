@@ -243,7 +243,6 @@ function gameLoop() {
 				}
 				else {
 					gameOverFunc();
-					return;
 				}
 			}
 			
@@ -338,7 +337,10 @@ function gameLoop() {
 		context.font = "20pt Helvetica";// tamanho e fonte para desenhar o texto
 		context.fillStyle = "#000000";// cor preta (opcional)
 		context.fillText(pontosJogador, 10, 30); // escreve texto na tela na posição desejada
-	
+		
+		// draw life
+		drawPlayerLife();
+		
 		// foes
 		for(var row = 0; row < enemyRows; row++) {
 			
@@ -362,7 +364,33 @@ function gameLoop() {
 			winGameFunc();
 			return;
 		}
+		
+		if(gameOver) {
+			drawGameOver();
+		}
 	}
+	
+}
+
+function drawPlayerLife() {
+	playerLifeTemp = playerLife;
+	if(playerLifeTemp < 10) {
+		playerLifeTemp = "0" + playerLifeTemp;
+	}
+	context.font = "20pt Helvetica";// tamanho e fonte para desenhar o texto
+	context.fillStyle = "#000000";// cor preta (opcional)
+	context.fillText(playerLifeTemp, width - 40, 30); // escreve texto na tela na posição desejada
+}
+
+function drawGameOver() {
+	
+	context.font = "40pt Helvetica"; // tamanho e fonte para desenhar o texto
+	context.fillStyle = "#FF0000"; // cor
+	context.fillText("GAME OVER", width / 2 - 170, height / 2 + 10); // escreve texto na tela na posição desejada
+	
+	context.font = "16pt Helvetica"; // tamanho e fonte para desenhar o texto
+	context.fillStyle = "#FFFF00"; // cor
+	context.fillText("PRESSIONE 'r' PARA REINICIAR", width / 2 - 170, height / 2 + 40); // escreve texto na tela na posição desejada
 	
 }
 
@@ -387,14 +415,6 @@ function gameOverFunc() {
 	gameOver = true;
 	
 	startBallInfo();
-	
-	context.font = "40pt Helvetica"; // tamanho e fonte para desenhar o texto
-	context.fillStyle = "#FF0000"; // cor
-	context.fillText("GAME OVER", width / 2 - 170, height / 2 + 10); // escreve texto na tela na posição desejada
-	
-	context.font = "16pt Helvetica"; // tamanho e fonte para desenhar o texto
-	context.fillStyle = "#FFFF00"; // cor
-	context.fillText("PRESSIONE 'r' PARA REINICIAR", width / 2 - 170, height / 2 + 40); // escreve texto na tela na posição desejada
 	
 	music.pause();
 }
