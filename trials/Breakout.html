@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,12 +12,18 @@
 			canvas,img {
 				display: block;
 				margin: 0px auto;
-				border: 1px solid #0f1c36;
+				border: 1px solid #b1dce2
 			}
 
 			canvas {
 				background: url(images/background.png)
 			}
+			
+			@font-face {
+				font-family: break;
+				src: url(assets/GREALN_.ttf);
+						}
+			
 		</style>
 	</head>
 
@@ -26,7 +33,7 @@
 		</canvas>
 
 		<script>
-
+		
 			var canvas, context, barraWidth, barraHeight, barraJogadorWidth, barraJogadorHeight, 
 				jogadorPosX, jogadorPosY,  teclaEsquerdaPressionada, teclaDireitaPressionada, 
 				oponentePosX, oponentePosY, oponenteParaCima, bolaRaio, bolaPosX, bolaPosY, 
@@ -39,9 +46,9 @@
 				canvas = document.getElementById("canvas");// procura o canvas
 				context = canvas.getContext("2d");// recupera o contexto 2d
 
-				barraWidth = 100;
-				barraHeight = 20;
-
+				barraWidth = 150;
+				barraHeight = 45;
+				
 				barraJogadorWidth = 200;
 				barraJogadorHeight = 20;
 
@@ -50,16 +57,17 @@
 				
 				pontosJogador = 0;
 
-				blocos = [[1,1,1,1,1,1,1,1,1,1],
-				          [1,1,0,1,1,1,1,0,1,1],
-				          [1,0,0,0,1,1,0,0,0,1],
-				          [1,1,0,1,1,1,1,0,1,1],
-				          [1,1,1,1,1,1,1,1,1,1]];
+				blocos = [[0,1,0,1,0,1],
+				          [1,0,1,0,1,0],
+				          [0,1,0,1,0,1],
+				          [1,0,1,0,1,0],
+				          [0,1,0,1,0,1]
+				          ];
 				
 				velocidadeJogador = 20;
 				velocidadeBola = 12;
 			
-				bolaRaio = 20; 
+				bolaRaio = 10; 
 				bolaParaCima = false;
 				bolaAngulo = Math.floor(Math.random() * 21) - 10;
 				bolaTempo = 0;
@@ -73,6 +81,9 @@
 				bolaPosY = canvas.height / 2;
 				bolaimagem = new Image();
 				bolaimagem.src = 'images/bola.png';
+				
+				enemyship = new Image();
+				enemyship.src = 'images/enemyship.png';
 
 				document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
                 document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
@@ -123,6 +134,7 @@
 					}
 				}
 
+				var blocoHeight = blocos.length * barraHeight + 85;
 				// Bola
 				if (bolaTempo <= 0) {// se a bola estiver em jogo, o tempo é zero (após marcar ponto, a bola fica invisível por um tempo)
 					if ((bolaPosY + bolaRaio) >= jogadorPosY ) {// se o jogador enconstar na bola (eixo Y)...
@@ -130,6 +142,21 @@
 							bolaParaCima = true;// a bola muda de lado e é rebatida para o oponente
 						}                    
 					}
+				
+				if(bolaPosY + bolaRaio <= blocoHeight){					
+					for(var posY = 0; posY < blocos.length; posY++) {
+						for(var posX = 0; posX < blocos[posY].length; posX++) {
+							var blocoPosX = posX * barraWidth + posX;
+							var blocoPosY = posY * barraHeight + posY + 50;
+								
+							if (blocos[posY][posX]){	
+								if ((bolaPosX + bolaRaio >= blocoPosX) && (bolaPosX + bolaRaio <= (blocoPosX + barraWidth))) {
+									bolaParaCima = false;
+								}
+							}
+						}
+					}
+				}
                     
 					if ((bolaPosX - bolaRaio <= 0) || (bolaPosX + bolaRaio >= canvas.width)) {// se a bola bater na direita ou na esquerda da tela...
 						bolaAngulo = bolaAngulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
@@ -137,7 +164,7 @@
 
 					bolaPosX += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
 
-					//se a bola encostar na arede de cima a bola desce
+					//se a bola encostar na parede de cima a bola desce
 					if (bolaPosY - bolaRaio <= 0) {
 						bolaParaCima = false;
 					}
@@ -148,6 +175,8 @@
 						bolaPosY += velocidadeBola;// movemos a bola para baixo
 					}
 				}
+				
+				
 
 				if ((bolaPosY - bolaRaio) >= canvas.height) {// se a bola saiu da tela...
 					if (bolaTempo >= 50) {// se o tempo de deixar a bola invisível passou...
@@ -159,7 +188,7 @@
 							bolaAngulo = Math.floor(Math.random() * 21) - 10;// faz a bola ir para uma direção aleatória
 							bolaTempo = 0;// zera o tempo de deixar a bola invisível e a coloca em jogo novamente
 						} else {
-							gameOver = "Game over";
+							gameOver = "Game Over";
 						}
 					} else {// se o tempo de deixar a bola invisível ainda não passou...
 						bolaTempo++;// continuamos contando até 50
@@ -175,7 +204,7 @@
 				for(var posY = 0; posY < blocos.length; posY++) {
 					for(var posX = 0; posX < blocos[posY].length; posX++) {
 						if (blocos[posY][posX]) {
-							context.fillRect(posX*barraWidth+posX, posY*barraHeight+posY+50, barraWidth, barraHeight);//desenha oponente
+							context.drawImage(enemyship, posX*barraWidth+posX+50, posY*barraHeight+posY+65);//desenha oponente
 						}
 					}
 				}
@@ -187,11 +216,12 @@
 					pontos = "0" + pontos;
 				}
 
-				context.font = "22pt Helvetica";// tamanho e fonte para desenhar o texto
-				context.fillStyle = "#000000";// cor preta (opcional)
-				context.fillText("Vidas: "+vidaJogador, 50, 25); // escreve texto na tela na posição desejada
-				context.fillText("Pontos: "+pontos, 800, 25); // escreve texto na tela na posição desejada
+				context.font = "20pt Break";// tamanho e fonte para desenhar o texto
+				context.fillStyle = "#b1dce2";// cor preta (opcional)
+				context.fillText("LIFE: "+vidaJogador, 895, 30); // escreve texto na tela na posição desejada
+				context.fillText("SCORE: "+pontos, 10, 30); // escreve texto na tela na posição desejada
 				context.fillText(gameOver, 425, (canvas.height/2));
+
 
 				// Bola
 				context.drawImage(bolaimagem, bolaPosX - bolaRaio, bolaPosY - bolaRaio);
