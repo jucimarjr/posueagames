@@ -9,17 +9,22 @@ var jogador = {
 	resetY : null,
 	derrota : null,
 	vitoria : null,
+	imagem : null,
+	
 	init : function(width, height){
 		jogador.resetX = (width / 2) - (jogador.w / 2);
 		jogador.resetY = height - jogador.h
 		jogador.derrota = false;		
 		jogador.vitoria = false;
+		jogador.imagem = new Image();
+		jogador.imagem.src = "assets/barra.png";
 		jogador.clear();
 	},
 	
 	render : function(root){
-		root.fillStyle = "black";
-		root.fillRect(jogador.x, jogador.y, jogador.w, jogador.h);	
+		root.drawImage(jogador.imagem, jogador.x , jogador.y);
+		//root.fillStyle = "black";
+		//root.fillRect(jogador.x, jogador.y, jogador.w, jogador.h);	
 	},
  	
     atualizar : function(width){
