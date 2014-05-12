@@ -38,7 +38,7 @@ function init(){
     playerWidth = 130;
     playerHeight = 40;
     imgSkate = new Image();
-    imgSkate.src = "skate.png";
+    imgSkate.src = "../assets/skate.png";
 
     playerPosX = (width - playerWidth) / 2;
     playerPosY = height - playerHeight;
@@ -49,7 +49,7 @@ function init(){
     ballPosX = width / 2;
     ballPosY = height - playerHeight - ballRaio;
     imgBall = new Image();
-    imgBall.src = "bola.png";
+    imgBall.src = "../assets/bola.png";
 
     leftPressed = false;
     rightPressed = false;
@@ -90,7 +90,7 @@ function createWall() {
         wallMatrix[i] = new Array();
         for (var j = 0; j < wallNumColumns; j++) { 
             var img2 = new Image();
-            img2.src = "tijolo.png";
+            img2.src = "../assets/tijolo.png";
             wallMatrix[i][j] = img2;
         }
     } 
