@@ -11,11 +11,28 @@
     </head>
 
     <body onload="init()">
-        <canvas id="canvas" width="1024" height="768">
+        <canvas id="canvas" width="768" height="1024">
             Navegador não compatível com HTML5 Canvas
         </canvas>
         <script>
-            // TODO: Inserir as funcionalidades do jogo
+
+var canvas, context;
+var width, height;
+
+function init(){
+    canvas = document.getElementById("canvas");
+    context = canvas.getContext("2d");
+
+    width = canvas.width;
+    height = canvas.height;
+
+    drawBackground();
+}
+
+function drawBackground(){
+    context.fillStyle = "black"; 
+    context.fillRect(0, 0, width, height);
+}
         </script>
     </body>
 </html>
