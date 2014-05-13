@@ -1,15 +1,16 @@
 function keyDown(e) {
         if (e.keyCode == 37) { // up
-            teclaEsquerdaPressionada = true;
+            jogador.teclaEsquerdaPressionada = true;
         } else if (e.keyCode == 39) { // down
-            teclaDireitaPressionada = true;
+            jogador.teclaDireitaPressionada = true;
         }
     }
 
 function keyUp(e) {
 	if (e.keyCode == 37) { // up
-		teclaEsquerdaPressionada = false;
+		jogador.teclaEsquerdaPressionada = false;
 	} else if (e.keyCode == 39) { // down
-		teclaDireitaPressionada = false;
+		jogador.teclaDireitaPressionada = false;
 	}
 }
+
