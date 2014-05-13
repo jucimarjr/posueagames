@@ -88,55 +88,62 @@ canvas {
 			}
 			
 			function gameLoop() {
-				// Jogador
-				if (teclaDireitaPressionada != teclaEsquerdaPressionada) { // se o jogador estiver pressionando a tecla left ou right
-					if (teclaEsquerdaPressionada) { // se for para esquerda...
-						if (jogadorPosX > 0 + bordaW) { // se não sair da tela...
-							jogadorPosX -= velocidadeJogador;// muda a posição
-						}
-					} else { // se for para direita...
-						if (jogadorPosX < (canvas.width - bordaW - barraWidth)) {// se não sair da tela...
-							jogadorPosX += velocidadeJogador;// muda a posição
+				if(vidas == 0 ){// se game over
+					context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+					gameOver();
+				}
+				else{ //se nao for game over, contiua o jogo
+					// Jogador
+					if (teclaDireitaPressionada != teclaEsquerdaPressionada) { // se o jogador estiver pressionando a tecla left ou right
+						if (teclaEsquerdaPressionada) { // se for para esquerda...
+							if (jogadorPosX > 0 + bordaW) { // se não sair da tela...
+								jogadorPosX -= velocidadeJogador;// muda a posição
+							}
+						} else { // se for para direita...
+							if (jogadorPosX < (canvas.width - bordaW - barraWidth)) {// se não sair da tela...
+								jogadorPosX += velocidadeJogador;// muda a posição
+							}
 						}
 					}
-				}
 
-				// Bola
-				if (bolaTempo <= 0) {// se a bola estiver em jogo, o tempo é zero	
-					verificarColisao();
-					
-					if (bolaParaCima) {// se a bola estiver indo para cima...
-						bolaPosY -= velocidadeBola;// movemos a bola para cima
-					} else {// se estiver indo para baixo...
-						bolaPosY += velocidadeBola;// movemos a bola para baixo
+					// Bola
+					if (bolaTempo <= 0) {// se a bola estiver em jogo, o tempo é zero	
+						verificarColisao();
+						
+						if (bolaParaCima) {// se a bola estiver indo para cima...
+							bolaPosY -= velocidadeBola;// movemos a bola para cima
+						} else {// se estiver indo para baixo...
+							bolaPosY += velocidadeBola;// movemos a bola para baixo
+						}
 					}
-				}
-	
-				if ( perdeuVida() ) {// se a bola saiu da tela...
-					if (bolaTempo >= 50) {// se so tempo de deixar a bola invisível passou...
-						vidas --;
-	
-						bolaPosX = canvas.width / 2;// posiciona a bola no meio da tela
-						bolaPosY = canvas.height / 2;// posiciona a bola no meio da tela
-						bolaParaCima = false;// faz ela ir em direção ao jogador
-						bolaAngulo = Math.floor(Math.random() * 21) - 10;// faz a bola ir para uma direção aleatória
-						bolaTempo = 0;// zera o tempo de deixar a bola invisível e a coloca em jogo novamente   
-					} else {// se o tempo de deixar a bola invisível ainda não passou...
-						bolaTempo++;// continuamos contando até 50
+		
+					if ( perdeuVida() ) {// se a bola saiu da tela...
+						if (bolaTempo >= 50) {// se so tempo de deixar a bola invisível passou...
+							vidas --;
+		
+							bolaPosX = canvas.width / 2;// posiciona a bola no meio da tela
+							bolaPosY = canvas.height / 2;// posiciona a bola no meio da tela
+							bolaParaCima = false;// faz ela ir em direção ao jogador
+							bolaAngulo = Math.floor(Math.random() * 21) - 10;// faz a bola ir para uma direção aleatória
+							bolaTempo = 0;// zera o tempo de deixar a bola invisível e a coloca em jogo novamente   
+						} else {// se o tempo de deixar a bola invisível ainda não passou...
+							bolaTempo++;// continuamos contando até 50
+						}
 					}
+					// Desenha tudo na tela
+					context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+					//placar
+					atualizarPlacar();
+					//borda
+					desenharBorda();
+					// Jogador
+					desenharBarra();
+					//blocos
+					desenharBlocos();
+					// Bola
+					desenharBola();
 				}
-				// Desenha tudo na tela
-				context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
-				//placar
-				atualizarPlacar();
-				//borda
-				desenharBorda();
-				// Jogador
-				desenharBarra();
-				//blocos
-				desenharBlocos();
-				// Bola
-				desenharBola();
+				
 		}
 	</script>
 </body>

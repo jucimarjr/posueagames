@@ -75,3 +75,9 @@ function atualizarPlacar(){
 	context.fillText(vidas, (w/3)+250, 90);
 	context.fillText(fase, (w/3)+400, 90);
 }
+
+function gameOver(){
+	context.font = "38pt Square One";// tamanho e fonte para desenhar o texto
+	context.fillStyle = "#silver";// cor preta (opcional)
+	context.fillText("Game Over", w/5, h/2);
+}
