@@ -2,6 +2,7 @@ function verificarColisao(){
 	colisaoLateral();
 	colisaoSuperior();
 	colisaoComBarra();
+	colisaoComBlocos();
 }
 
 function colisaoLateral(){
@@ -29,27 +30,27 @@ function colisaoComBarra(){
 			}
 		}
 	}
-	
-	
-	/*if ((bolaPosX - bolaRaio) <= (jogadorPosX + barraWidth)) {// se o jogador enconstar na bola (eixo X)...
-		if ((bolaPosY + bolaRaio > jogadorPosY)	&& 
-				(bolaPosY - bolaRaio < jogadorPosY + barraWidth)) {// se o jogador enconstar na bola (eixo Y)...
-			bolaParaCima = true;// a bola muda de lado e é rebatida para o oponente
-			if (teclaDireitaPressionada) {// se o jogador estiver indo para cima quando tocar na bola...
-				bolaAngulo = Math.floor(Math.random() * 10) - 9;// mandamos a bola na diagonal pra cima
-			} else {// se o jogador estiver indo para baixo quando tocar na bola...
-				bolaAngulo = Math.floor((Math.random() * 10));// mandamos a bola na diagonal pra baixo
+}
+
+function colisaoComBlocos(){
+	for(var i=0;i<qtdLinhas;i++){
+		for(var j=0;j<qtdColunas;j++){
+			if(blocos[i][j].vivo){
+				if(colisaoComBloco(blocos[i][j])){
+					bolaParaCima = !bolaParaCima;
+					return;
+				}
 			}
 		}
-	} else if ((bolaPosX - bolaRaio) <= (oponentePosX + barraWidth)) {// se o oponente enconstar na bola (eixo X)...
-		if ((bolaPosY + bolaRaio > oponentePosY)
-				&& (bolaPosY - bolaRaio < oponentePosY + barraWidth)) {// se o oponente enconstar na bola (eixo Y)...
-			bolaParaCima = false;// a bola muda de lado e é rebatida para o jogador
-			if (teclaDireitaPressionada) {// se o oponente estiver indo para cima quando tocar na bola...
-				bolaAngulo = Math.floor(Math.random() * 10) - 9;// mandamos a bola na diagonal pra cima
-			} else {// se o oponente estiver indo para baixo quando tocar na bola...
-				bolaAngulo = Math.floor((Math.random() * 10) - 9);// mandamos a bola na diagonal pra baixo
-			}
+	}
+}
+
+function colisaoComBloco(bloco){
+	if( (bolaPosY-bolaRaio <= bloco.y+bloco.h) && (bolaPosY+bolaRaio >= bloco.y) ){ //se acertou por cima ou por baixo
+		if( (bolaPosX+bolaRaio>=bloco.x) && (bolaPosX-bolaRaio<=bloco.x+bloco.w) ){
+			bloco.vivo=false;
+			return true;
 		}
-	}*/
+	}
+	return false;
 }

@@ -9,7 +9,6 @@ function desenharBola(){
 function desenharBarra(){
 	desenhar(jogadorPosX, jogadorPosY, barraWidth, barraHeight, "pink");
 }
-
 function desenhar(x, y, w, h, style) {
 	context.beginPath();
 	if (style) {
@@ -51,7 +50,9 @@ function initBlocos(){
 function desenharBlocos(){
 	for(var i=0;i<qtdLinhas;i++){
 		for(var j=0;j<qtdColunas;j++){
-			desenharBloco(blocos[i][j]);
+			if(blocos[i][j].vivo){
+				desenharBloco(blocos[i][j]);
+			}
 		}
 	}
 }
