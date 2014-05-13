@@ -7,24 +7,23 @@ var bloco = {
 	blocos : [], // matriz bidimensional para guardar os blocos
 	canvas :null,
 	context :null,
-	//imagem: null,
-
+	imagens: null,
 	
 	init : function()
 	{
-		//canvas = document.getElementById("canvas");
-		//context = canvas.getContext("2d");
-		//var imagem = new Image();
-		//imagem.src = "bloco-verde.png";
 		for(var linha = 0; linha < bloco.numLinhas; linha++){
 			bloco.blocos[linha] = [];
 			for(var coluna = 0; coluna < bloco.numColunas; coluna++){
 				bloco.blocos[linha][coluna] = 0;
-				//bloco.imagem = new Image();
-				//bloco.imagem.src = "assets/robo1.png"; //bloco.color(linha); 
-				//console.log("Cor"+ bloco.color(linha));
 			}
-		}			
+		}
+		bloco.imagens = [];
+		bloco.imagens[0] = bloco.criarImagem("assets/robo2_morte.png");
+		bloco.imagens[1] = bloco.criarImagem("assets/robo2.png");
+		bloco.imagens[2] = bloco.criarImagem("assets/robo1.png");
+		bloco.imagens[3] = bloco.criarImagem("assets/robo1_morte.png");
+		bloco.imagens[4] = bloco.criarImagem("assets/robo1.png");
+		bloco.imagens[5] = bloco.criarImagem("assets/robo2.png");
 	},
 	
 	render : function(root){
@@ -33,12 +32,7 @@ var bloco = {
 		for(var linha = 0; linha < bloco.numLinhas; linha++){
 			for(var coluna = 0; coluna < bloco.numColunas; coluna++){			
 				if(bloco.blocos[linha][coluna] == 0){				
-					//root.fillStyle = bloco.color(linha);
-				//	root.fillRect(bloco.w * coluna, bloco.h * linha, bloco.w, bloco.h); 
-					
-					img = new Image();
-					img.src = bloco.color(linha);
-					root.drawImage(img, bloco.w * coluna, bloco.h * (linha + 3));
+					root.drawImage(bloco.color(linha), bloco.w * coluna, bloco.h * (linha + 3));
 					//preenchimento
 				}
 			}
@@ -49,22 +43,27 @@ var bloco = {
 	{
 		switch(linha) {
 			case 0:
-				return "assets/robo2_morte.png";
+				return bloco.imagens[0];
 				break;
 			case 1:
-				return "assets/robo2.png";
+				return bloco.imagens[1];
 				break;
 			case 2:
-				return "assets/robo1.png";
+				return bloco.imagens[2];
 				break;
 			case 3:
-				return "assets/robo1_morte.png";
+				return bloco.imagens[3];
 				break;
 			case 4:
-				return "assets/robo1.png";
+				return bloco.imagens[4];
 				break;
 			default:
-				return "assets/robo2.png";
+				return bloco.imagens[5];
 		}
+	},
+	criarImagem: function(src){
+		img = new Image();
+		img.src = src;
+		return img;
 	}
 };
