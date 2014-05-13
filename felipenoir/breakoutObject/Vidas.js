@@ -5,7 +5,7 @@ function Vidas(ctx) {
 
 	this.desenha = function() {
 		this.ctx.beginPath();
-		this.ctx.fillStyle = "#00FFFF";
+		this.ctx.fillStyle = "#FFFFFF";
 		for (var i = 0; i < this.qtd; i++) {
 			this.ctx.arc((i + 1) * 20, 53, 7, 0, Math.PI * 2, true);
 		}
