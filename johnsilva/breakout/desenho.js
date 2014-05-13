@@ -1,3 +1,15 @@
+function desenharBola(){
+	context.fillStyle = "silver";
+	context.beginPath();// inicia o modo de desenho
+	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
+	context.closePath();// finaliza o caminho (opcional)
+	context.fill();
+}
+
+function desenharBarra(){
+	desenhar(jogadorPosX, jogadorPosY, barraWidth, barraHeight, "pink");
+}
+
 function desenhar(x, y, w, h, style) {
 	context.beginPath();
 	if (style) {
