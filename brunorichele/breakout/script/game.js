@@ -15,7 +15,7 @@ var game = {
 		game.canvas = document.getElementById("canvas");
 		game.context = game.canvas.getContext("2d");
 		game.height = game.canvas.height;
-		game.width = game.canvas.width; \
+		game.width = game.canvas.width;
 		//Iniciar informacoes do jogador
 		jogador.init(game.width, game.height);
 		//Iniciar informacoes da bola
