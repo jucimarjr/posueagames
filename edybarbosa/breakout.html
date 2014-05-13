@@ -11,7 +11,7 @@
 </head>
 <body>
 
-	<canvas id="canvas" width="400" height="500">
+	<canvas id="canvas" width="520" height="500">
       browser incompativel
     </canvas>
 
@@ -22,19 +22,25 @@
 	    
 		var blocoAltura = 20;
 		var blocoLargura = 50;
-	    
+		
+		var barraX = 200;
+		var barraY = 460;
+		
+		var barraAltura = 15;
+		var barraLargura = 80;
+
 		// Matriz dos blocos a serem desenhados 10 X 6 inicialmente 
 		 var blocos = [
+			[1,1,1,1,1,0,1,1,1,0],
+			[1,1,0,1,1,1,1,1,1,1],
+			[1,1,1,0,1,1,0,1,1,1],
 			[1,1,1,1,1,1,1,1,1,1],
+			[1,1,1,1,0,1,1,0,1,1],
 			[1,1,1,1,1,1,1,1,1,1],
+			[1,1,1,1,1,0,1,0,1,1],
 			[1,1,1,1,1,1,1,1,1,1],
-			[1,1,1,1,1,1,1,1,1,1],
-			[1,1,1,1,1,1,1,1,1,1],
-			[1,1,1,1,1,1,1,1,1,1],
-			[1,1,1,1,1,1,1,1,1,1],
-			[1,1,1,1,1,1,1,1,1,1],
-			[1,1,1,1,1,1,1,1,1,1],
-			[1,1,1,1,1,1,1,1,0,0],
+			[1,1,0,1,1,1,1,1,1,1],
+			[1,0,1,0,1,0,1,0,0,0],
 		];
 	    
 		// Desenha a parede 
@@ -45,16 +51,26 @@
 					}
 				}
 		 }
-		
+
+	    // Desenhar a barra
+	    function desenhaBarra(){
+	    	ctx.fillStyle = "black";
+	    	ctx.fillRect(barraX, barraY, barraLargura, barraAltura);
+	    }
+
+	    	
 	    // Desenha o bloco
 	    function desenharBloco(x,y, temBloco){
-	    	ctx.fillStyle = "green";
-	    	ctx.fillRect((x*blocoLargura)+(x*1),(y*blocoAltura)+(y*1),blocoLargura,blocoAltura);
+	    	if (temBloco != 0) {
+		    	ctx.fillStyle = "green";
+		    	ctx.fillRect((x*blocoLargura)+(x*1),(y*blocoAltura)+(y*1),blocoLargura,blocoAltura);
+	    	}
 	    }
 
     
 	    desenhaParedeDeBlocos();
-
+	    desenhaBarra();
+	    
     </script>
 
 </body>
