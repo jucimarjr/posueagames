@@ -1,7 +1,12 @@
+@media screen and (max-height : 700px ){
+	html{ 
+		zoom: 80%;
+	}
+}
+
 html, body {
 	margin:0px;
 	padding:0px;
-
 }
 
 canvas {
