@@ -122,7 +122,7 @@ function houveColisao(alvoX, alvoY) {
 function colisaoBolaInimigos() {
 	for (var i = 0; i < alvos.length; i++) { // percorre as linhas da matriz
 		for (var j = 0; j < alvos[i].length; j++) { // percorre as colunas da matriz
-			if (alvos[i][j] == 1) { // verifica se o alvo ainda está vivo
+			if (alvos[i][j] > 0) { // verifica se o alvo ainda está vivo
 
 				var alvoX = (j * (inimigos.width + inimigos.DISTANCIA)) + inimigos.DISTANCIA;
 				var alvoY = (i * (inimigos.height + inimigos.DISTANCIA)) + inimigos.DISTANCIA;
@@ -139,7 +139,7 @@ function colisaoBolaInimigos() {
 					if (y1 > y2) // se condição for verdadeira então a bola veio de baixo, senão, de cima
 						y1 = y2;
 
-					if (x1 < y1) {// tocou no lado esquerdo/direito
+					if (x1 < y1) { // tocou no lado esquerdo/direito
 						bola.velocidadeX = -bola.velocidadeX;
 						if (bola.velocidadeX < 0) {
 							bola.posX = alvoX - bola.raio;
