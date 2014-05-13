@@ -9,9 +9,8 @@
 
 	<body onload="init()">
 		<canvas id="canvas" width="1000" height="680">
-			Navegador nao compativel com HTML5 canvas
+			Navegador não compativel com HTML5 canvas
 		</canvas>
-
 		<script>
 		
 			var canvas, context, barraWidth, barraHeight, barraJogadorWidth, barraJogadorHeight, 
@@ -20,7 +19,7 @@
 				bolaParaCima, bolaAngulo, bolaTempo, velocidadeJogador, 
 				velocidadeOponente, velocidadeBola, pontosJogador, pontosOponente, 
 				mousePosicao, vidaJogador, gameOver, blocos;
-
+				
 			function init(){
 
 				canvas = document.getElementById("canvas");// procura o canvas
@@ -29,8 +28,10 @@
 				barraWidth = 150;
 				barraHeight = 47;
 				
-				barraJogadorWidth = 200;
-				barraJogadorHeight = 20;
+				barraJogadorWidth = 175;
+				barraJogadorHeight = 30;
+				jogador = new Image();
+				jogador.src = 'images/player.png';
 
 				teclaEsquerdaPressionada = false;
 				teclaDireitaPressionada = false;
@@ -41,11 +42,11 @@
 				          [1,0,1,0,1,0],
 				          [1,1,1,1,0,1],
 				          [1,0,1,0,1,0],
-				          [0,1,0,1,1,1]
+				          [1,1,1,1,1,1]
 				          ];
 				
 				velocidadeJogador = 20;
-				velocidadeBola = 12;
+				velocidadeBola = 18;
 			
 				bolaRaio = 10; 
 				bolaParaCima = false;
@@ -69,6 +70,10 @@
                 document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
                 document.addEventListener('mousemove', mouseMove, false);// adiciona evento para mousemove
 
+		   		var snd = new Audio("assets/beat.wav");
+               	snd.loop = true;
+               	snd.volume = 1;
+               	snd.play();
                 setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
 			}
 
@@ -114,7 +119,7 @@
 					}
 				}
 
-				var blocoHeight = blocos.length * barraHeight + 100;
+				var blocoHeight = blocos.length * barraHeight + 105;
 				// Bola
 				if (bolaTempo <= 0) {// se a bola estiver em jogo, o tempo é zero (após marcar ponto, a bola fica invisível por um tempo)
 					if ((bolaPosY + bolaRaio) >= jogadorPosY ) {// se o jogador enconstar na bola (eixo Y)...
@@ -178,7 +183,7 @@
 				context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
 
 				// Jogador
-				context.fillRect(jogadorPosX, jogadorPosY, barraJogadorWidth, barraJogadorHeight);//desenha jogador
+				context.drawImage(jogador, jogadorPosX, jogadorPosY);//desenha jogador
 				
 				// Blocos
 				for(var posY = 0; posY < blocos.length; posY++) {
@@ -196,7 +201,7 @@
 					pontos = "0" + pontos;
 				}
 
-				context.font = '16pt helvetica';// tamanho e fonte para desenhar o texto
+				context.font = '16pt GreatLakesNF';// tamanho e fonte para desenhar o texto
 				context.fillStyle = "#b1dce2";// cor preta (opcional)
 				context.fillText("TRIALS: "+vidaJogador, 890, 30); // escreve texto na tela na posição desejada
 				context.fillText("SCORE: "+pontos, 10, 30); // escreve texto na tela na posição desejada
