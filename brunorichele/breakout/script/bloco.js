@@ -2,7 +2,7 @@ var bloco = {
 	w : 64, //largura
 	h : 64,  //altura	
 	numLinhas : 3, // 5 linhas, 10 blocos por linha
-	numColunas : 15, //n��mero de linhas e colunas dos blocos, largura: 60, altura: 20;
+	numColunas : 16, //n��mero de linhas e colunas dos blocos, largura: 60, altura: 20;
 	bloco : null,
 	blocos : [], // matriz bidimensional para guardar os blocos
 	canvas :null,
@@ -38,7 +38,7 @@ var bloco = {
 					
 					img = new Image();
 					img.src = bloco.color(linha);
-					root.drawImage(img, bloco.w * coluna, bloco.h * (linha + 2));
+					root.drawImage(img, bloco.w * coluna, bloco.h * (linha + 3));
 					//preenchimento
 				}
 			}

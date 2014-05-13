@@ -12,6 +12,7 @@ var bola = {
 	pontuacao : null,
 	randomInit : [-1, 1],
 	imagem: null,
+	somColisaoBloco: null,
 	
 	init : function(width, y){//largura do canvas e y do jogador
 		bola.resetX = width / 2;
@@ -20,6 +21,7 @@ var bola = {
 		bola.pontuacao = 0;
 		bola.imagem = new Image();
 		bola.imagem.src = "assets/bola1.png";
+		bola.somColisaoBloco = document.getElementById('colisao');
 		bola.clear();
 	},
 	render : function(root){
@@ -73,15 +75,14 @@ var bola = {
 	},
 	colisaoBloco : function(polling){
 		//Colisao bloco
-		//if(bola.y - bola.raio <= bloco.h * 5 && bola.y >= 0){
-		if(bola.y<= bloco.h * (bloco.numLinhas + 2) && bola.y >= 0){
-			var linha  = Math.floor(((bola.y) - bloco.h) / bloco.h);
+		if(bola.y - bola.raio <= (bloco.h * bloco.numLinhas) + bloco.h * 2 && bola.y >= 0){
+			var linha  = Math.floor(((bola.y) - bloco.h) / bloco.h) - 2;
 			var coluna = Math.floor((bola.x) / bloco.w);
 			console.log("linha: " + linha + "coluna:" + coluna);
 
 			if(coluna >= 0 && linha >= 0){
 				if(bloco.blocos[linha][coluna] == 0){
-					document.getElementById('colisao').play();
+					bola.somColisaoBloco.play();
 					bola.baixo = !bola.baixo;
 					bloco.blocos[linha][coluna] = 1;
 					bola.pontuacao++;
@@ -102,7 +103,7 @@ var bola = {
 	colisaoChao : function(height, polling){
 		//Colisao chao
 //		if(bola.y + bola.raio >= height){
-		if(bola.y  >= height){
+		if(bola.y - bola.raio >= height){
 			bola.baixo = !bola.baixo;
 			console.log("Colisao chao");
 			bola.clear(); // A bola retorna a posicao inicial
