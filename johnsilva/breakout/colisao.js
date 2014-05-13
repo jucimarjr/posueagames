@@ -49,8 +49,13 @@ function colisaoComBloco(bloco){
 	if( (bolaPosY-bolaRaio <= bloco.y+bloco.h) && (bolaPosY+bolaRaio >= bloco.y) ){ //se acertou por cima ou por baixo
 		if( (bolaPosX+bolaRaio>=bloco.x) && (bolaPosX-bolaRaio<=bloco.x+bloco.w) ){
 			bloco.vivo=false;
+			pontos++;
 			return true;
 		}
 	}
 	return false;
+}
+
+function perdeuVida(){
+	return ( (bolaPosY-bolaRaio > canvas.height) ? true: false );
 }

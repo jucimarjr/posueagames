@@ -11,12 +11,12 @@
     jogador, bola, mapaTeclas, estadoBola, tempo, tijolo, tijolos, score =0;
     
     mapaTecla = new Array();
-    velocidadeJogador = 15;
+    velocidadeJogador = 20;
     window.onload = init;
     window.onkeydown = teclaPressionada;
     window.onkeyup = teclaSolta;
-    tamanhoBarra = 90;
-    alturaBarra = 30;
+    tamanhoBarra = 120;
+    alturaBarra = 20;
     estadoBola = 0;
     tempo = 0;
     bola = new Bola(200, 560, 7);
@@ -31,7 +31,7 @@
 
 		criadorDeBlocos(); 
 
-        setInterval(gameLoop, 33);// chama a function gameLoop a cada 30 frames
+        setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
 	}
 	
 	
