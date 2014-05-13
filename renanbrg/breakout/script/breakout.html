@@ -192,9 +192,29 @@ function getBallPosition(){
         ballPosY += speedBall;
     }                    
 }
+function checkCollisionWall(){
+	var contRows = 0;
+    for (var i = wallNumRowsDraw-1; i >= 0 ; i--) { 
+        for (var j = wallNumColumnsDraw-1; j >= 0; j--) { 
+            if (wallMatrix[i][j]) {
+            	var posXwall = (wallWidth + wallMargin) * j ;
+        		var posYwall = (wallHeight + wallMargin) * contRows;
+        		
+            	if((ballPosX - ballRaio >= posXwall-ballWidth && ballPosX + ballRaio <= posXwall + wallWidth + ballWidth)){
+                	if((ballPosY - ballRaio >= posYwall-ballHeight && ballPosY + ballRaio <= posYwall + wallHeight + ballHeight)){
+                		wallMatrix[i][j] = null;
+                		ballUp = false;
+                	}
+            	}
+            }
+        }
+        contRows++;
+    } 
+}
 
 function gameLoop() { 
 	if(startGame){
+		checkCollisionWall();
 	    context.clearRect(0, 0, canvas.width, canvas.height);
 	    drawBackground();
 	    
