@@ -1,7 +1,7 @@
 // Bola (JS Object)
 var bola = {
-	raio: 15, 
-	x: null, 
+	raio: 15,
+	x: null,
 	y: null,
 	baixo: false,
 	angulo: null,
@@ -13,7 +13,7 @@ var bola = {
 	randomInit : [-1, 1],
 	imagem: null,
 	somColisaoBloco: null,
-	
+
 	init : function(width, y){// largura do canvas e y do jogador
 		bola.resetX = width / 2;
 		bola.resetY = y - 2 * bola.raio;
@@ -25,16 +25,9 @@ var bola = {
 		bola.clear();
 	},
 	render : function(root){
-		
 		root.drawImage(bola.imagem, bola.x , bola.y);
-		
-		//root.fillStyle = "red";
-		//root.beginPath();
-		//root.arc(bola.x, bola.y, bola.raio, 0, Math.PI*2, true);
-		//root.closePath();
-		//root.fill();
 	},
-	atualizar : function(y, x, w, width, height, polling){		
+	atualizar : function(y, x, w, width, height, polling){
 		// Movimentar a bola
 		if(bola.baixo){
 			bola.colisaoJogador(y, x, w);
@@ -50,29 +43,29 @@ var bola = {
 		}
 		//Colisao bloco
 		bola.colisaoBloco(polling);
-		
+
 		//Colisao chao
 		bola.colisaoChao(height, polling);
 		//Altera o angulo da bola
-		bola.x += bola.angulo;	
+		bola.x += bola.angulo;
 	},
 	clear : function()
 	{
 		bola.x = bola.resetX;
-		bola.y = bola.resetY;	
+		bola.y = bola.resetY;
 		bola.baixo = false;
 		bola.angulo = 5 * bola.randomInit[Math.round(Math.random() * 1)]; // Random inicio da partida
 		bola.velocidade = 5;
 	},
 	colisaoJogador : function(y, x, w){
 		// Colisao jogador
-	//if((bola.y + bola.raio >= y) && 
-		if((bola.y + 2* bola.raio >= y) && 
+	//if((bola.y + bola.raio >= y) &&
+		if((bola.y + 2* bola.raio >= y) &&
 			(bola.x >= x) &&
 			(bola.x <= x + w)){
 			bola.baixo = false;
 		//	console.log("Colisao jogador");
-		}	
+		}
 	},
 	colisaoBloco : function(polling){
 		//Colisao bloco
@@ -87,10 +80,10 @@ var bola = {
 					bola.baixo = !bola.baixo;
 					bloco.blocos[linha][coluna] = 1;
 					bola.pontuacao++;
-					
-					if(bola.pontuacao == bloco.numLinhas * bloco.numColunas){	
+
+					if(bola.pontuacao == bloco.numLinhas * bloco.numColunas){
 						bola.clear(); // A bola retorna a posicao inicial
-						jogador.clear(); // O jogador retorna a posicao inicial					
+						jogador.clear(); // O jogador retorna a posicao inicial
 						jogador.vitoria = true;
 						clearInterval(polling);
 					}
@@ -99,11 +92,10 @@ var bola = {
 			}else{
 				bola.baixo = !bola.baixo;
 			}
-		}	
+		}
 	},
 	colisaoChao : function(height, polling){
 		//Colisao chao
-//		if(bola.y + bola.raio >= height){
 		if(bola.y - bola.raio >= height){
 			bola.baixo = !bola.baixo;
 			console.log("Colisao chao");
@@ -115,6 +107,6 @@ var bola = {
 				jogador.derrota = true;
 				clearInterval(polling);
 			}
-		}	
-	}	
+		}
+	}
 };

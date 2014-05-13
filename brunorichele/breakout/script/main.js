@@ -9,7 +9,7 @@ var main = {
 	bind : function(){
 		document.getElementById("jogar").onclick = function(){
 			main.jogar();
-		}	
+		}
 	},
 	jogar : function(){
 		document.getElementById("menu").style.display = "none";

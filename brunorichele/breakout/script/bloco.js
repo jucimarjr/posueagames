@@ -1,6 +1,6 @@
 var bloco = {
 	w : 64, //largura
-	h : 64,  //altura	
+	h : 64,  //altura
 	numLinhas : 3, // 5 linhas, 10 blocos por linha
 	numColunas : 16, //n��mero de linhas e colunas dos blocos, largura: 60, altura: 20;
 	bloco : null,
@@ -8,7 +8,7 @@ var bloco = {
 	canvas :null,
 	context :null,
 	imagens: null,
-	
+
 	init : function()
 	{
 		for(var linha = 0; linha < bloco.numLinhas; linha++){
@@ -25,19 +25,18 @@ var bloco = {
 		bloco.imagens[4] = bloco.criarImagem("assets/robo1.png");
 		bloco.imagens[5] = bloco.criarImagem("assets/robo2.png");
 	},
-	
+
 	render : function(root){
 		// Blocos - desenhados linha por linha
 		var img = null;
 		for(var linha = 0; linha < bloco.numLinhas; linha++){
-			for(var coluna = 0; coluna < bloco.numColunas; coluna++){			
-				if(bloco.blocos[linha][coluna] == 0){				
+			for(var coluna = 0; coluna < bloco.numColunas; coluna++){
+				if(bloco.blocos[linha][coluna] == 0){
 					root.drawImage(bloco.color(linha), bloco.w * coluna, bloco.h * (linha + 3));
-					//preenchimento
 				}
 			}
-		}	
-	},	
+		}
+	},
 
 	color : function(linha)
 	{
