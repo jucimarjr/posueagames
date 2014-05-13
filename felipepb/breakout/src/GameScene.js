@@ -4,10 +4,13 @@ BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this.canvas = canvas;
 	this.targetFPS = targetFPS;
 	this.game = new GameFramework.Game(canvas, "black", false);
+	this.player;
 	
 	this._resourcesLoadCount = 0;
 	
 	this._preloadTextures = [
+		{ path: "images/player_racket_block.png", isSpriteSheet: false },
+		{ path: "images/player_racket_glow.png", isSpriteSheet: false },
 		{ path: "images/whiteBricks.png", isSpriteSheet: true, rows: 1, collumns: 7 },
 		{ path: "images/whiteGlow.png", isSpriteSheet: false },
 		{ path: "images/bricksGlow.png", isSpriteSheet: true, rows: 1, collumns: 5 },
@@ -42,10 +45,17 @@ BreakoutGame.GameScene.prototype = {
 	},
 	
 	startGame: function () {
-		console.log("startGame");
+		// console.log("startGame");
 		
 		this.createBrickRows();
+		this.createPlayer();
 		
+		this.createAudioAndTweenDemo();
+        
+		this.game.startGame(this.targetFPS);
+	},
+	
+	createAudioAndTweenDemo: function () {
 		// TODO: delete this later...
 		var sound = GameFramework.SoundFactory.loadSound('sounds/3star.mp3', 'audio/mp3');
 		// ******************** Animation and Audio Demo ********************
@@ -85,8 +95,6 @@ BreakoutGame.GameScene.prototype = {
         angle.begin();
         this.game.addGameObject(angle);
         // ******************** Animation and Audio Demo ********************
-        
-		this.game.startGame(this.targetFPS);
 	},
 	
 	createBrickRows: function () {
@@ -181,6 +189,13 @@ BreakoutGame.GameScene.prototype = {
             brickY += brick.boundingBox().height / 2.0 + topMargin;
         }
 
+	},
+	
+	createPlayer: function () {
+		this.player = new BreakoutGame.Player();
+		this.game.addGameObject(this.player);
+		this.player.transform.x = this.canvas.width / 2;
+		this.player.transform.y = this.canvas.height * 3 / 4;
 	},
 	
 	onResourceLoaded: function () {
