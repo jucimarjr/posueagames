@@ -14,7 +14,7 @@ var bola = {
 	imagem: null,
 	somColisaoBloco: null,
 	
-	init : function(width, y){//largura do canvas e y do jogador
+	init : function(width, y){// largura do canvas e y do jogador
 		bola.resetX = width / 2;
 		bola.resetY = y - 2 * bola.raio;
 		bola.countFail = 0;
@@ -27,6 +27,7 @@ var bola = {
 	render : function(root){
 		
 		root.drawImage(bola.imagem, bola.x , bola.y);
+		
 		//root.fillStyle = "red";
 		//root.beginPath();
 		//root.arc(bola.x, bola.y, bola.raio, 0, Math.PI*2, true);
