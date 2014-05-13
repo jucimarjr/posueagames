@@ -53,6 +53,10 @@ var game = {
 		bola.render(game.context);
 		//Exibi os pontos do usuario
 		game.pontuar();
+		
+		//Exibi as vidas
+		game.exibirVidas();
+		
 		//Verificar derrota e desenhar na tela
 		if(jogador.derrota == true){
 			game.derrota();
@@ -73,15 +77,21 @@ var game = {
 	
 	vitoria : function(){
 		game.context.font = "42px Helvetica";
-		game.context.fillStyle = "#000000";
-		game.context.fillText("Você venceu!", 180, 250);	
+		game.context.fillStyle = "#ffffff";
+		game.context.fillText("Você venceu!", 380, 400);	
 	},
 	
 	derrota : function(){
 		game.context.font = "42px Helvetica";
-		game.context.fillStyle = "#000000";
-		game.context.fillText("Você perdeu!", 180, 250);	
+		game.context.fillStyle = "#ffffff";
+		game.context.fillText("Você perdeu!", 380, 400);	
 	},	
+	
+	btnNewGame : function(){
+		game.context.font = "42px Helvetica";
+		game.context.fillStyle = "#ffffff";
+		game.context.fillText("Jogar Novamente", 340, 450);	
+	},
 	
 	pontuar : function(){
 
@@ -91,14 +101,23 @@ var game = {
         	ponto = "0" + ponto;
         }
         
-        game.context.font = "42pt Helvetica";
-        game.context.fillStyle = "#000000";
-        game.context.fillText(ponto + " ", (game.width/2) - 20, 200);
+        game.context.font = "25pt Helvetica";
+        game.context.fillStyle = "#ffffff";
+        game.context.fillText(ponto + " ", (game.width/2) - 2, 87);
 	},
 	
-	btnNewGame : function(){
-		game.context.font = "42px Helvetica";
-		game.context.fillStyle = "#000000";
-		game.context.fillText("Jogar Novamente", 140, 300);	
-	}		
+	exibirVidas : function(){
+
+        var vida = jogador.vidas;
+            
+        if (vida < 10) {
+        	vida = "0" + vida;
+        }
+        
+        game.context.font = "25pt Helvetica";
+        game.context.fillStyle = "#ffffff";
+        game.context.fillText(vida + " ", (game.width/2) + 330, 87);
+	}
+	
+			
 };

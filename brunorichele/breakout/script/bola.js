@@ -1,6 +1,6 @@
 // Bola (JS Object)
 var bola = {
-	raio: 20, 
+	raio: 15, 
 	x: null, 
 	y: null,
 	baixo: false,
@@ -19,7 +19,7 @@ var bola = {
 		bola.countFail = 0;
 		bola.pontuacao = 0;
 		bola.imagem = new Image();
-		bola.imagem.src = "assets/bola-futebol.png";
+		bola.imagem.src = "assets/bola1.png";
 		bola.clear();
 	},
 	render : function(root){
@@ -74,18 +74,19 @@ var bola = {
 	colisaoBloco : function(polling){
 		//Colisao bloco
 		//if(bola.y - bola.raio <= bloco.h * 5 && bola.y >= 0){
-		if(bola.y<= bloco.h * 5 && bola.y >= 0){
+		if(bola.y<= bloco.h * (bloco.numLinhas + 2) && bola.y >= 0){
 			var linha  = Math.floor(((bola.y) - bloco.h) / bloco.h);
 			var coluna = Math.floor((bola.x) / bloco.w);
 			console.log("linha: " + linha + "coluna:" + coluna);
 
 			if(coluna >= 0 && linha >= 0){
 				if(bloco.blocos[linha][coluna] == 0){
+					document.getElementById('colisao').play();
 					bola.baixo = !bola.baixo;
 					bloco.blocos[linha][coluna] = 1;
 					bola.pontuacao++;
-					document.getElementById('colisao').play();
-					if(bola.pontuacao == 50){	
+					
+					if(bola.pontuacao == bloco.numLinhas * bloco.numColunas){	
 						bola.clear(); // A bola retorna a posicao inicial
 						jogador.clear(); // O jogador retorna a posicao inicial					
 						jogador.vitoria = true;
@@ -106,9 +107,9 @@ var bola = {
 			console.log("Colisao chao");
 			bola.clear(); // A bola retorna a posicao inicial
 			jogador.clear(); // O jogador retorna a posicao inicial
-			bola.countFail++;
+			jogador.vidas--;
 			console.log(bola.countFail);
-			if(bola.countFail == 4){
+			if(jogador.vidas == 0){
 				jogador.derrota = true;
 				clearInterval(polling);
 			}
