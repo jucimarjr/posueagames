@@ -1,17 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-      <title>Breakout</title>
-    
-  </head>
-  <body>
-    <style type="text/css">
-    
-    </style>
-    <h1>Breakout</h1>
-    <canvas id="canvas" width="400" height="500">
+	<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Breakout UEA</title>
+		<style type="text/css">
+        	canvas {
+            	border:1px dashed #000000;
+             }
+		</style>
+</head>
+<body>
+
+	<canvas id="canvas" width="400" height="500">
       browser incompativel
     </canvas>
-  </body>
+
+	<script>
+    
+	    var canvas = document.getElementById("canvas"); 
+	    var ctx = canvas.getContext("2d");
+	    
+		var blocoAltura = 20;
+		var blocoLargura = 50;
+	    
+		// Matriz dos blocos a serem desenhados 10 X 6 inicialmente 
+		 var blocos = [
+			[0,1,1,1,1,1,1,1,1,1],
+			[1,1,1,1,1,1,1,1,1,1],
+			[1,1,1,1,0,1,1,1,1,1],
+			[1,1,1,1,1,1,1,1,1,1],
+			[1,1,1,1,1,1,1,1,1,1],
+			[1,1,1,1,1,1,1,1,1,1],
+		];
+	    
+		 function desenhaParedeDeBlocos(){
+				for (var x=0; x < blocos.length; x++) {
+					for (var y=0; y < blocos[x].length; y++) {
+						desenharBloco(y,x,blocos[x][y]);
+					}
+				}
+		 }
+		
+	    // Desenha o bloco
+	    function desenharBloco(x,y, temBloco){
+	    	ctx.fillStyle = "green";
+	    	ctx.fillRect((x*blocoLargura)+(x*1),(y*blocoAltura)+(y*1),blocoLargura,blocoAltura);
+	    }
+
+    
+	    desenhaParedeDeBlocos();
+
+    </script>
+
+</body>
 </html>
