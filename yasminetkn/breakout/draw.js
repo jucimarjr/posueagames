@@ -11,7 +11,7 @@ function Jogador(jogadorPosX, jogadorPosY, barraWidth, barraHeight){
 	this.altura = barraHeight;
 	
 	this.draw = function(){
-	    context.fillStyle = "black";
+	    context.fillStyle = "white";
 	    context.fillRect(this.x, this.y, this.largura, this.altura);
 	};
 	
@@ -28,8 +28,8 @@ function Bola(x, y, raio){
 	this.x = x;
 	this.y = y;
 	this.raio = raio;
-	this.direcaoX = (valor>0.5)?15:-15;
-	this.direcaoY = -15;
+	this.direcaoX = (valor>0.5)?20:-20;
+	this.direcaoY = -20;
 	
 	this.draw = function(){
 		context.beginPath();// inicia o modo de desenho
