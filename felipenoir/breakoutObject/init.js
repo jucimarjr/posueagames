@@ -179,7 +179,7 @@ function startGame() {
 function gameOver() {
 	this.ctx.font = "40pt Helvetica";
 	this.ctx.fillStyle = "#000000";
-	this.ctx.fillText("Game Over", canvas.width / 5, (canvas.height / 2) + 20);
+	this.ctx.fillText("Game Over", canvas.width / 3, (canvas.height / 2) + 20);
 }
 
 function win() {
