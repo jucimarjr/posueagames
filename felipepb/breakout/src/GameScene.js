@@ -45,6 +45,46 @@ BreakoutGame.GameScene.prototype = {
 		console.log("startGame");
 		
 		this.createBrickRows();
+		
+		// TODO: delete this later...
+		var sound = GameFramework.SoundFactory.loadSound('sounds/3star.mp3', 'audio/mp3');
+		// ******************** Animation and Audio Demo ********************
+		var brick = new BreakoutGame.Brick(0);
+        this.game.addGameObject(brick);
+        brick.transform.x = brick.boundingBox().width / 2.0;
+        brick.transform.y = this.canvas.height - brick.boundingBox().height / 2;
+        
+        var translation = new GameFramework.Animation(brick,
+                                                      'x',
+                                                      brick.x(),
+                                                      this.canvas.width / 2.0,
+                                                      3000,     // milliseconds
+                                                      GameFramework.Easing.Type.OutInBack,
+                                                      function () {
+                                                          console.log('translation completed');
+                                                          sound.play();
+                                                      });
+        translation.begin();
+        this.game.addGameObject(translation);
+
+        var opacity = new GameFramework.Animation(brick,
+                                                  'opacity',
+                                                  0.0,
+                                                  1.0,
+                                                  4000,     // milliseconds
+                                                  GameFramework.Easing.Type.Linear);
+        opacity.begin();
+        this.game.addGameObject(opacity);
+        
+        var angle = new GameFramework.Animation(brick,
+                                                'angle',
+                                                0.0,
+                                                2 * Math.PI,
+                                                3000,     // milliseconds
+                                                GameFramework.Easing.Type.InOutBack);
+        angle.begin();
+        this.game.addGameObject(angle);
+        // ******************** Animation and Audio Demo ********************
         
 		this.game.startGame(this.targetFPS);
 	},
