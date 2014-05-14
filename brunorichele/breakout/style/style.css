@@ -39,6 +39,14 @@ canvas {
 	background-image: url('../assets/b_jogar.png');
 }
 
+.btn-jogar:hover{
+	background-image: url('../assets/b_jogar2.png');
+}
+
 .btn-creditos{
 	background-image: url('../assets/b_credito.png');
+}
+
+.btn-creditos:hover{
+	background-image: url('../assets/b_credito2.png');
 }
