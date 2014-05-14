@@ -20,7 +20,7 @@
 	    var canvas = document.getElementById("canvas"); 
 	    var ctx = canvas.getContext("2d");
 	    
-		var blocoAltura = 30;
+		var blocoAltura = 20;
 		var blocoLargura = 50;
 		
 		var barraX = 200;
@@ -28,19 +28,18 @@
 		
 		var barraAltura = 15;
 		var barraLargura = 80;
+		
+		var bolaX = 300;
+		var bolaY = 300;
+		var bolaRaio = 10;
 
 		// Matriz dos blocos a serem desenhados 10 X 6 inicialmente 
 		 var blocos = [
+			[1,1,1,1,1,1,1,1,1,0],
+			[1,1,0,1,1,1,1,1,1,1],
+			[1,1,1,0,1,1,0,1,1,1],
 			[1,1,1,1,1,1,1,1,1,1],
-			[0,0,0,1,1,1,1,1,1,1],
-			[0,1,1,1,1,1,1,1,1,1],
-			[0,0,0,0,0,1,1,1,1,1],
-			[0,1,1,0,1,0,1,1,1,1],
-			[0,0,0,0,1,0,1,1,1,1],
-			[1,1,1,0,0,1,0,1,0,1],
-			[1,1,1,1,1,1,1,0,1,1],
-			[1,1,1,1,1,1,1,0,1,1],
-			[1,1,1,1,1,1,1,0,1,1],
+			[1,0,0,0,1,0,0,1,1,1],
 		];
 	    
 		// Desenha a parede 
@@ -58,7 +57,6 @@
 	    	ctx.fillRect(barraX, barraY, barraLargura, barraAltura);
 	    }
 
-	    	
 	    // Desenha o bloco
 	    function desenharBloco(x,y, temBloco){
 	    	if (temBloco != 0) {
@@ -66,10 +64,16 @@
 		    	ctx.fillRect((x*blocoLargura)+(x*1),(y*blocoAltura)+(y*1),blocoLargura,blocoAltura);
 	    	}
 	    }
+	    
+		function desenhaBola(){
+			ctx.beginPath();
+			ctx.arc(bolaX,bolaY,bolaRaio,0,Math.PI*2,true);
+			ctx.fill();			
+		}				
 
-    
 	    desenhaParedeDeBlocos();
 	    desenhaBarra();
+	    desenhaBola();
 	    
     </script>
 
