@@ -1,0 +1,1041 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6ef0bce8-2a76-43d7-99ea-0f5b48e9f221" name="Default" comment="- mudando tamanho e cor dos blocos&#10;">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bandeira/bandeira_italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bandeira/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bruno-s-campos/bandeira-alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bruno-s-campos/bandeira-italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bruno-s-campos/breakout/breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bruno-s-campos/estrela-cinco-pontas.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/apres/atualizar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/apres/breakout.ppt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/apres/gameloop.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/alegre_sans_nc.zip" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/b_credito.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/b_credito2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/b_inicio.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/b_inicio2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/b_jogar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/b_jogar2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/background_fase_1024x768.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/background_menu.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/barra.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/barra2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/bg_level.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/bloco.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/bloco2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/bola-futebol.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/bola.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/bola1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/fundo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/nave_bloco.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/robo1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/robo1_morte.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/robo2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/robo2_morte.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/tela_creditos.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/teladederrota.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/teladevitoria.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/telas do jogo/telacreditos.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/telas do jogo/teladerrota.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/telas do jogo/telamenu.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/assets/telas do jogo/telavitoria.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/audio/ponto.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/audio/ponto2.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/script/bloco.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/script/bola.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/script/game.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/script/jogador.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/script/main.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/script/mouse.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/script/tecla.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/breakout/style/style.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/pong2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/brunorichele/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/breakout/breakout.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/breakout/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/breakout/sound.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/breakout/sound/magic_dream.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/breakout/sound/melodie_for_solo_and_piano.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/breakout/sound/suburban_cloud.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/breakout/sound/travel_the_hills.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/breakout/sound/wood_hit_brick_1.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/breakout/sound/wood_stick_hit_log_hard.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/breakout/sound/wood_stick_hit_log_soft.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/pong2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/carlosborges26/pong4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/edybarbosa/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/edybarbosa/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/edybarbosa/breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/edybarbosa/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/edybarbosa/img/lula.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/edybarbosa/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/edybarbosa/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/edybarbosa/pong2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/edybarbosa/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/edybarbosa/pong4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/breakout/breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/breakout/breakout.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/pong/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/pong/pong.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/pong/pong2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/pong/pong2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/pong/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/pong/pong3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/pong/pong4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/pong/pong4.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/pong/pong5.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/pong/pong5.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/pong/pong6.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/pong/pong6.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fcumaru/star2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakout/breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/AudioGame.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/Bola.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/Inimigos.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/Janela.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/Jogador.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/Pontuacao.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/Vidas.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/assets/alvo1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/assets/alvo2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/assets/alvo3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/assets/bg.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/assets/bola.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/assets/colisao.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/assets/jogador.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/assets/player.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/breakoutObject/init.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipenoir/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/css/stylesheet.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/0_block_white_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/0_block_white_2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/0_block_white_3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/0_block_white_4.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/0_block_white_5.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/0_block_white_6.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/0_block_white_7.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/a_block_blue_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/a_block_blue_2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/a_block_blue_3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/a_block_blue_4.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/a_glow_blue.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/b_block_green_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/b_block_green_2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/b_block_green_3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/b_block_green_4.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/b_glow_green.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/bricks.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/bricksGlow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/c_block_yellow_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/c_block_yellow_2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/c_block_yellow_3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/c_block_yellow_4.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/c_glow_yellow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/d_block_orange_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/d_block_orange_2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/d_block_orange_3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/d_block_orange_4.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/d_block_orange_5.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/d_block_orange_6.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/d_block_orange_7.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/d_glow_orange.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/e_block_red_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/e_block_red_2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/e_block_red_3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/e_block_red_4.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/e_block_red_5.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/e_glow_red.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/paddleBounds.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/player_ball.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/player_life.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/player_racket_block.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/player_racket_glow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/whiteBricks.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/images/whiteGlow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/sounds/3star.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/Ball.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/BigWhiteBrick.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/Brick.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/GameFramework/Animation.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/GameFramework/Easing.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/GameFramework/Game.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/GameFramework/GameObject.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/GameFramework/Sound.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/GameFramework/SoundFactory.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/GameFramework/Sprite.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/GameFramework/SpriteFactory.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/GameFramework/SpriteSheet.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/GameScene.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/breakout/src/Player.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/felipepb/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/breakout_1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/breakout_2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/breakout_3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/pong2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/pong4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/teste.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/testeColisao1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/halison/testeColisao2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/johnsilva/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/johnsilva/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/johnsilva/breakout/Square One.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/johnsilva/breakout/breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/johnsilva/breakout/colisao.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/johnsilva/breakout/desenho.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/johnsilva/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/johnsilva/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/johnsilva/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/johnsilva/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/johnsilva/pong4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/jucimarjr/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/jucimarjr/mario.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/jucimarjr/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/jucimarjr/quadrado-30x30.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/jucimarjr/setas.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/Breakout - Pacific Wars/Breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/Breakout - Pacific Wars/assets/beat.wav" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/Breakout - Pacific Wars/assets/bounce.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/Breakout - Pacific Wars/assets/grea_.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/Breakout - Pacific Wars/css/stylesheet.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/Breakout - Pacific Wars/images/background.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/Breakout - Pacific Wars/images/bola.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/Breakout - Pacific Wars/images/breakout_over.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/Breakout - Pacific Wars/images/breakout_start.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/Breakout - Pacific Wars/images/breakout_win.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/Breakout - Pacific Wars/images/enemyship.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/Breakout - Pacific Wars/images/player.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/pong2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lenasottomayor/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/pong/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/img/BG.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/img/PokeBallSong.wav" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/img/bar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/img/brick0.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/img/brick1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/img/brick2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/img/brick3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/img/music.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/img/pokeball0.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/img/pokeball1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/img/pokeball2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/img/pokeball3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/Poke Breakout/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/breakout_v1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/pong2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/pong4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rafaelima/pong5.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/assets/Tr2n.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/assets/audio/background.wav" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/assets/audio/explosion.wav" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/assets/audio/gameOver.wav" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/assets/audio/missBall.wav" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/assets/ball.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/assets/bg02.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/assets/bricks_tron60x20.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/assets/player_tron.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/src/Ball.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/src/Bar.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/src/Game.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/src/Hud.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/src/ImageLoader.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/src/Level.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/src/Level2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/src/Lifes.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/src/Player.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/src/libs/stats.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/breakout/src/main.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/pong2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/pong4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rageloop/pong5.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/renanbrg/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/renanbrg/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/renanbrg/breakout/assets/bola.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/renanbrg/breakout/script/breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/renanbrg/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/renanbrg/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/renanbrg/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/renanbrg/pong2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/renanbrg/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/renanbrg/pong4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/renanbrg/pong5.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/saidesigner/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/saidesigner/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/saidesigner/breakout/breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/saidesigner/breakout/breakout.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/saidesigner/breakout/graphic.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/saidesigner/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/saidesigner/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/saidesigner/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/saidesigner/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/saidesigner/pong4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/saidesigner/pongvert.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/Breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/Copyt.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/Estrelatrial.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/GREALN__.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/Pong_Imagem.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/background.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/bola.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/breakout_start.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/estrelatrial2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/mario.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/setas.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/style.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trials/tenista.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/alemanha.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/brasil.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/break.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/breakout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/breakout/breakout0.1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/breakout/draw.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/breakout/event.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/breakout/init.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/breakout2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito do jogo/modeloespacial_fundo_conceito.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito do jogo/modelopopmusic_fundo_conceito.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito do jogo/modelosimples_fundoconceito.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/arquivos_png/modelo_espacial.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/arquivos_png/modelo_simples_.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/arquivos_png/modeloespacial_bloc_meteoroespecial.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/arquivos_png/modeloespacial_bloco_meteoro.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/arquivos_png/modeloespacial_bloco_nave.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/arquivos_png/modelomusicapop.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/arquivos_png/modelomusicapop_bloco_caixadesom.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/arquivos_png/modelomusicapop_bloco_musica.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/arquivos_png/modelomusicapop_bloco_musicaespecial.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/modelo1_simples.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/modelo_simples.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/modeloespacial_fundo_conceito.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/modeloespacial_fundo_conceito.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/modelopopmusic_fundo_conceito.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/modelopopmusic_fundo_conceito.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/modelosimples_fundoconceito.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/conceito_do_jogo/modelosimples_fundoconceito.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/estrela.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/italia.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/pong.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/pong2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/pong3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/pong4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/yasminetkn/pongJucimar.html" afterPath="" />
+    </list>
+    <ignored path="posueagames.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="posueagames" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="breakout0.1.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout/breakout0.1.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="801">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="draw.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout/draw.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="126" column="64" selection-start="3848" selection-end="3848" vertical-scroll-proportion="0.0" vertical-offset="724" max-vertical-offset="3345">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/posueagames/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="init.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout/init.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="11" selection-start="940" selection-end="940" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1530">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="esashika &lt;rhedson@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/yasminetkn/pong.html" />
+        <option value="$PROJECT_DIR$/yasminetkn/pong2.html" />
+        <option value="/private/var/folders/v2/phcs6n8d6x199rwzh97p973w0000gn/T/tmpRestClientResponse3176066363425038713.xml" />
+        <option value="$PROJECT_DIR$/yasminetkn/pongJucimar.html" />
+        <option value="$PROJECT_DIR$/yasminetkn/jquery.js" />
+        <option value="$PROJECT_DIR$/yasminetkn/breakout2.html" />
+        <option value="$PROJECT_DIR$/yasminetkn/breakout.html" />
+        <option value="$PROJECT_DIR$/yasminetkn/break.js" />
+        <option value="$PROJECT_DIR$/yasminetkn/pong3.html" />
+        <option value="$PROJECT_DIR$/yasminetkn/break.html" />
+        <option value="$PROJECT_DIR$/yasminetkn/breakout/blocos.js" />
+        <option value="$PROJECT_DIR$/yasminetkn/breakout/blocks.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/yasminetkn/breakout/draw.js" />
+        <option value="$PROJECT_DIR$/yasminetkn/breakout/init.js" />
+        <option value="$PROJECT_DIR$/yasminetkn/breakout/breakout0.1.html" />
+        <option value="$PROJECT_DIR$/posueagames/yasminetkn/breakout/init.js" />
+        <option value="$PROJECT_DIR$/posueagames/yasminetkn/breakout/draw.js" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="posueagames" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="posueagames" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="posueagames" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="posueagames" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="posueagames" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="posueagames" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Default" />
+        <subPane subId="Problems" />
+        <subPane subId="Project Files" />
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="DefaultHtmlFileTemplate" value="Html5" />
+    <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="FullScreen" value="true" />
+    <property name="options.lastSelected" value="settings.github" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="SearchEverywhereHistory" value="" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="136" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="153" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="157" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="951" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="148" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="149" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="153" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="947" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/posueagames/yasminetkn/breakout" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/yasminetkn/breakout" />
+    </key>
+  </component>
+  <component name="RestClientSettings">
+    <option name="REQUEST_HISTORY">
+      <list>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8080" />
+          <option name="urlPath" value="/ws/web/listaProf" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="application/json" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parameters">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="" />
+                <option name="value" value="" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="dias" />
+                <option name="value" value="30" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="" />
+                <option name="value" value="" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8080" />
+          <option name="urlPath" value="/ws/web/listaProf" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="application/json" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parameters">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="" />
+                <option name="value" value="" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="dias" />
+                <option name="value" value="30" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8080" />
+          <option name="urlPath" value="/ws/web/lista" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="application/json" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parameters">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="" />
+                <option name="value" value="" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8080" />
+          <option name="urlPath" value="/ws/web/3" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="application/json" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parameters">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="" />
+                <option name="value" value="" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8080" />
+          <option name="urlPath" value="/ws/web/3" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parameters">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="" />
+                <option name="value" value="" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8080" />
+          <option name="urlPath" value="/ws/web/" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parameters">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="" />
+                <option name="value" value="" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8080" />
+          <option name="urlPath" value="/ws/web/" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+        <RestClientRequest>
+          <option name="httpMethod" value="GET" />
+          <option name="urlBase" value="http://localhost:8080" />
+          <option name="urlPath" value="/ws/web/30" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="name" value="Dart" />
+      <option name="saveOutputToFile" value="false" />
+      <option name="showConsoleOnStdErr" value="false" />
+      <option name="showConsoleOnStdOut" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
+      <setting name="configLocationType" value="CONFIG_FILE" />
+      <setting name="settingsFile" value="" />
+      <setting name="serverType" value="INTERNAL" />
+      <setting name="preferredDebugBrowser" value="CHROME" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <browser start="false" url="" with-js-debugger="false" />
+      <method />
+    </configuration>
+    <list size="0" />
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="sslv3">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6ef0bce8-2a76-43d7-99ea-0f5b48e9f221" name="Default" comment="" />
+      <created>1399138557125</created>
+      <updated>1399138557125</updated>
+    </task>
+    <task id="LOCAL-00001" summary="aumentando a tela">
+      <created>1399592356874</created>
+      <updated>1399592356874</updated>
+    </task>
+    <task id="LOCAL-00002" summary="- mudando tamanho e cor dos blocos">
+      <created>1399593065541</created>
+      <updated>1399593065541</updated>
+    </task>
+    <task id="LOCAL-00003" summary="- mudando tamanho e cor dos blocos&#10;">
+      <created>1399594516274</created>
+      <updated>1399594516274</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Mais uma coluna">
+      <created>1399595597971</created>
+      <updated>1399595597971</updated>
+    </task>
+    <task id="LOCAL-00005" summary="pequenos ajustes">
+      <created>1400034814774</created>
+      <updated>1400034814774</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Jenkins" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942554" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942554" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942554" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.66822976" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USERS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+    <MESSAGE value="aumentando a tela" />
+    <MESSAGE value="- mudando tamanho e cor dos blocos" />
+    <MESSAGE value="- mudando tamanho e cor dos blocos&#10;" />
+    <MESSAGE value="Mais uma coluna" />
+    <MESSAGE value="pequenos ajustes" />
+    <option name="LAST_COMMIT_MESSAGE" value="pequenos ajustes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout/breakout0.1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout/draw.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="126" column="64" selection-start="3848" selection-end="3848" vertical-scroll-proportion="0.0" vertical-offset="724" max-vertical-offset="3345">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/posueagames/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout/init.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="11" selection-start="940" selection-end="940" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1530">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout/breakout0.1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout/draw.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="126" column="64" selection-start="3848" selection-end="3848" vertical-scroll-proportion="0.0" vertical-offset="1699" max-vertical-offset="3345">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout/init.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="11" selection-start="940" selection-end="940" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1530">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="345" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="12735" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.12727273" vertical-offset="0" max-vertical-offset="825" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="116" column="25" selection-start="3237" selection-end="3250" vertical-scroll-proportion="2.0903225" vertical-offset="120" max-vertical-offset="4695" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout/init.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="11" selection-start="940" selection-end="940" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1530">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/posueagames/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout/draw.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="126" column="64" selection-start="3848" selection-end="3848" vertical-scroll-proportion="0.0" vertical-offset="1699" max-vertical-offset="3345">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/posueagames/yasminetkn/breakout/breakout0.1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="801">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
+
