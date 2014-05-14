@@ -80,4 +80,5 @@ function gameOver(){
 	context.font = "30pt Square One";// tamanho e fonte para desenhar o texto
 	context.fillStyle = "#silver";// cor preta (opcional)
 	context.fillText("Game Over", w/4, h/2);
+	audioGameOver.play();
 }
