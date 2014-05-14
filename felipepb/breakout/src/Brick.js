@@ -20,11 +20,11 @@ BreakoutGame.Brick.prototype.glowIndex = function (brickIndex) {
     } else if (brickIndex < 8) {
         return 1;
     } else if (brickIndex < 12) {
-        return 3;
+        return 2;
     } else if (brickIndex < 19) {
-        return 4;
+        return 3;
     }
-    return 5;
+    return 4;
 };
 
 BreakoutGame.Brick.prototype.init = function () {
@@ -49,6 +49,7 @@ BreakoutGame.Brick.prototype.update = function (time) {
 };
 
 BreakoutGame.Brick.prototype.render = function (time, context2D, debugDraw) {
+    this.glow.opacity = this.opacity;
     this.glow.render(time, context2D, false);
     GameFramework.Sprite.prototype.render.apply(this, [time, context2D, debugDraw]);
 };
