@@ -21,18 +21,21 @@
 
 var canvas, context, btnStart, relogio,intervalo,info_display;
 var gameFieldWidth, gameFieldHeight;
+var heroFieldWidth, heroFieldHeight;
+var frameWidth, frameHeight;
 var playerPosX, playerPosY;
 var playerWidth, playerHeight;
 var ballWidth, ballHeight;
 var ballPosX, ballPosY, ballRaio;
 var ballUp, ballAngle;
-var imgSkate, imgBall;
+var imgBarra, imgBall;
 var leftPressed, rightPressed;
 var speedPlayer, speedBall;
 var wallMatrix, addNumRows;
 var wallNumRows, wallNumColumns, wallNumRowsDraw, wallNumColumnsDraw;
 var wallWidth, wallHeight, wallMargin;
 var startGame;
+var score;
 
 function init(){
     canvas = document.getElementById("canvas");
@@ -42,13 +45,17 @@ function init(){
 
     gameFieldWidth = 600;
     gameFieldHeight = 500;
+    heroFieldWidth = 120;
+    heroFieldHeight = 520;
+    frameWidth = 40;
+    frameHeight = 40;
 
     startGame = false;
 
     playerWidth = 90;
     playerHeight = 30;
-    imgSkate = new Image();
-    imgSkate.src = "../assets/skate.png";
+    imgBarra = new Image();
+    imgBarra.src = "../assets/barra.png";
 
     playerPosX = (gameFieldWidth - playerWidth) / 2;
     playerPosY = gameFieldHeight - playerHeight;
@@ -79,11 +86,15 @@ function init(){
     addNumRows = false;
     createWall();
 
+    score = 0;
+
     drawBackground();
+    
+    drawBar(imgBarra, playerPosX, playerPosY);
     drawGameField();
-    drawBar(imgSkate, playerPosX, playerPosY);
     drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
     drawWall();
+    drawGameScore();
     
     intervalo = 20; 
     Reiniciar();
@@ -118,11 +129,11 @@ function Pausar()
 			clearInterval(relogio); 
 			info_display.innerHTML = "Pausa"; 
 			btnStart.innerHTML = "Iniciar"; 
- } 
+        }
 }
 
-function drawGameField(){
-	context.fillStyle = "white";
+function drawGameField() { //change name
+	context.fillStyle = "white"; 
     context.fillRect(0, 0, gameFieldWidth, gameFieldHeight);
 }
 
@@ -144,7 +155,7 @@ function createWall() {
         wallMatrix[i] = new Array();
         for (var j = 0; j < wallNumColumns; j++) { 
             var img2 = new Image();
-            img2.src = "../assets/tijolo.png";
+            img2.src = "../assets/bloco.png";
             wallMatrix[i][j] = img2;
         }
     } 
@@ -167,6 +178,16 @@ function drawWall(){
     	wallNumRowsDraw++;
     	addNumRows = false;
     }
+}
+
+function drawGameScore() {
+    context.font = "28pt Helvetica";
+    context.fillStyle = "white";
+    context.fillText("Score", canvas.width - heroFieldWidth - frameWidth + 15, 2 * frameHeight);
+    if (score >= 100000) {
+        context.font = "22pt Helvetica";
+    }
+    context.fillText(score, canvas.width - heroFieldWidth - frameWidth + 15, 3 * frameHeight + 8);
 }
 
 function keyDown(e) {
@@ -241,6 +262,7 @@ function checkCollisionWall(){
                 	if((ballPosY - ballRaio >= posYwall-ballHeight && ballPosY + ballRaio <= posYwall + wallHeight + ballHeight)){
                 		wallMatrix[i][j] = null;
                 		ballUp = false;
+                        score = (score + 1) % 1000000;
                 	}
             	}
             }
@@ -257,12 +279,14 @@ function gameLoop() {
 	    drawGameField();
 	    
 	    getBarPosition();
-	    drawBar(imgSkate, playerPosX, playerPosY);
+	    drawBar(imgBarra, playerPosX, playerPosY);
 	    
 	    getBallPosition();
 	    drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
 
 	    drawWall();
+	    drawGameScore();
+
 	}else{
 		checkStartGame();
 	}
