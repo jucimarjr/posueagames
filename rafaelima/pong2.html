@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+	    <meta charset="UTF-8" />
+	    <title>Pong2</title>
+	    <style type="text/css">
+	    
+	   canvas {border:1px dashed #000000;
+	   }
+	    
+	    </style>
+	</head>
+	<body onload="init()">
+		<canvas id="canvas" width="400" height="600">
+		
+		</canvas> 
+		<script>
+		
+			//variaveis do jogo
+			var canvas, context, barraWidth, barraHeight, jogadorPosX, 
+			jogadorPosY, oponentePosX, oponentePosY, bolaRaio, bolaPosX,
+			bolaPosY, pontosJogador, pontosOponente;
+			
+			//dados iniciais
+			function init() {
+				canvas = document.getElementById("canvas");// procura o canvas API
+                context = canvas.getContext("2d");// recupera o contexto 2d INF API
+                
+                barraWidth = 90;
+                barraHeight = 30;
+                
+                jogadorPosX = (canvas.width - barraWidth)/2;
+                jogadorPosY = canvas.height - barraHeight;
+              
+                oponentePosX = 0;
+                oponentePosY = 0;
+                
+                pontosJogador = 0;
+                pontosOponente = 0;
+                
+                bolaRaio = 10
+  			  	bolaPosX = canvas.width/2;
+  			 	bolaPosY = canvas.height/2;
+  			 	
+  			 //background
+  			 context.fillStyle = "#07e1d7";
+             context.fillRect(0, 0, canvas.width, canvas.height); //desenha jogador
+         
+              //jogador e oponente
+			  context.fillStyle = "blue";
+              context.fillRect(jogadorPosX, jogadorPosY, barraWidth,barraHeight); //desenha jogador
+			 
+			  context.fillStyle = "green";
+              context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight); //desenha oponente
+			 
+			  //linha central
+			  context.beginPath();
+			  context.moveTo(0, canvas.height /2);
+			  context.lineTo(canvas.width, canvas.height/2);
+			  context.strokeStyle = "red";
+			  context.stroke();
+			  context.closePath();
+			  
+			  //bolinha
+			  context.beginPath();		  
+			  context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI *2, true); //desenha jogador
+			  context.closePath();
+			  context.fillStyle = "yellow";
+			  context.strokeStyle = "#e17107";
+			  context.fill();
+			  context.stroke();
+			
+			  //placar
+			  var pontosA = pontosJogador;
+			  var pontosB = pontosOponente;
+			  
+			  
+			  //se o numero for menor que 10 coloca 0 na frente
+			  if(pontosA < 10){
+				  pontosA = "0"  +pontosA;
+			  }
+			//se o numero for menor que 10 coloca 0 na frente
+			  if(pontosB < 10){
+				  pontosB = "0" +pontosB;
+			  }
+			  
+			  context.font = "42pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
+			  context.fillStyle = "black";//cor da fonte
+			  context.fillText(pontosA , 10, (canvas.height / 2) - 10);
+			  context.fillText(pontosB, 10, (canvas.height / 2) + 50);
+			}
+			
+			
+		
+		</script>
+		
+	</body>
+
+</html>

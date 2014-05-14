@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8" />
+<title>Pong4</title>
+<style type="text/css">
+canvas {
+	border: 1px dashed #000000;
+}
+</style>
+</head>
+<body onload="init()">
+	<canvas id="canvas" width="600" height="400">
+		
+		</canvas>
+	<script>
+		//variaveis do jogo
+		var canvas, context, barraWidth, barraHeight, 
+		jogadorPosX, jogadorPosY, oponentePosX, oponentePosY, 
+		bolaRaio, bolaPosX, bolaPosY, pontosJogador, pontosOponente, 
+		velocidadeJogador, teclaCimaPressionada, teclaBaixoPressionada,
+		oponenteParaCima, velocidadeOponente, teclaEsquerdaPressionada,
+		teclaDireitaPressionada, bolaAngulo, bolaParaDireita,
+		velocidadeBola;
+
+		//dados iniciais
+		function init() {
+			canvas = document.getElementById("canvas");// procura o canvas API
+			context = canvas.getContext("2d");// recupera o contexto 2d INF API
+
+			//Variaveis
+			teclaCimaPressionada = false;
+			teclaBaixoPressionada = false;
+			teclaEsquerdaPressionada = false;
+			teclaDireitaPressionada = false;
+			oponenteParaCima = false;
+
+			barraWidth = 30;
+			barraHeight = 90;
+
+			jogadorPosX = 0;
+			jogadorPosY = canvas.height - barraHeight;
+
+			oponentePosX = canvas.width - barraWidth;
+			oponentePosY = canvas.height - barraHeight;
+
+			pontosJogador = 0;
+			pontosOponente = 0;
+
+			bolaRaio = 10
+			bolaPosX = canvas.width / 2;
+			bolaPosY = canvas.height / 2;
+			bolaAngulo = Math.floor(Math.random() * 21) - 10;
+			bolaParaDireita = false;
+
+			velocidadeJogador = 15;
+			velocidadeOponente = 20;
+			velocidadeBola = 15;
+
+			document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
+			document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
+			setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
+		}
+
+		function keyDown(e) {
+			if (e.keyCode == 37) { // left
+				teclaEsquerdaPressionada = true;
+			} else if (e.keyCode == 38) { // up
+				teclaCimaPressionada = true;
+			} else if (e.keyCode == 39) { // right
+				teclaDireitaPressionada = true;
+			} else if (e.keyCode == 40) { // down
+				teclaBaixoPressionada = true;
+			}
+		}
+
+		function keyUp(e) {
+			//jogador solta a tela
+			if (e.keyCode == 37) { // left
+				teclaEsquerdaPressionada = false;
+			} else if (e.keyCode == 38) { // up
+				teclaCimaPressionada = false;
+			} else if (e.keyCode == 39) { // right
+				teclaDireitaPressionada = false;
+			} else if (e.keyCode == 40) { // down
+				teclaBaixoPressionada = false;
+			}
+		}
+
+		function gameLoop() {
+			// Ação do Jogador
+			if (teclaCimaPressionada != teclaBaixoPressionada 
+					|| teclaBaixoPressionada != teclaDireitaPressionada 
+					|| teclaBaixoPressionada != teclaEsquerdaPressionada ) { // se o jogador estiver pressionando a tecla baixo ou cima
+				//Pressiona para cima    
+				if (teclaEsquerdaPressionada) {
+					//ate o topo da tela
+					if (jogadorPosX > 0) {
+						jogadorPosX -= velocidadeJogador;// muda a posição
+					}
+				}
+				else {
+					if (teclaCimaPressionada) {
+						//ate o topo da tela
+						if (jogadorPosY > 0) {
+							jogadorPosY -= velocidadeJogador;// muda a posição
+						}
+					}
+					else {
+					//Pressiona para direita   
+						if (teclaDireitaPressionada) {
+							//ate o meio
+							if ((jogadorPosX >= 0) &&(jogadorPosX < (canvas.width/2 - barraWidth))) {
+								jogadorPosX += velocidadeJogador;// muda a posição
+							}
+						}
+					//Pressiona para baixo
+						else {
+							if (jogadorPosY < (canvas.height - barraHeight)) {
+								jogadorPosY += velocidadeJogador;// muda a posição
+							}
+						}
+					}
+				}
+			}
+
+			//Ação do Oponente
+			//Movimentacao para cima
+			if (oponenteParaCima) { 
+				oponentePosY -= velocidadeOponente;// muda a posição
+				//se chegou no topo
+				if (oponentePosY <= 0) {
+					oponenteParaCima = false;// muda a direção
+				}
+			} 
+			//Movimentacao para baixo
+			else {
+				oponentePosY += velocidadeOponente;// muda a posição
+				//se chegou no final da tela
+				if (oponentePosY >= canvas.height - barraHeight) {
+					oponenteParaCima = true;// muda a direção
+				}
+			}
+
+			
+			//movimento da bola
+// 			bolaRaio = 10
+// 			bolaPosX = canvas.width / 2;
+// 			bolaPosY = canvas.height / 2;
+// 			bolaAngulo = Math.floor(Math.random() * 21) - 10;
+			
+			//Se colidir com a parede de cima e de baixo muda de direcao
+			if (((bolaPosY - bolaRaio)<= 0) || ((bolaPosY + bolaRaio)> canvas.height)){
+				bolaAngulo = bolaAngulo * -1;
+			}
+			
+			if (((bolaPosX - bolaRaio)<= 0)){
+				bolaParaDireita = true;
+			} else {
+				if ((bolaPosX + bolaRaio)> canvas.width){
+					bolaParaDireita = false;
+				}
+			}
+			
+			//movimento de acordo com o angulo
+			bolaPosY += bolaAngulo;
+			if (bolaParaDireita) {// se a bola estiver indo para a direita...
+            	bolaPosX += velocidadeBola;// movemos a bola para a direita
+            }
+            else {// se estiver indo para a esquerda...
+            	bolaPosX -= velocidadeBola;// movemos a bola para a esquerda
+            }
+			
+			// Desenha tudo na tela
+            context.clearRect(0, 0, canvas.width, canvas.height);
+			
+			//background
+			context.fillStyle = "#07e1d7";
+			context.fillRect(0, 0, canvas.width, canvas.height); //desenha tela
+
+			//jogador e oponente
+			context.fillStyle = "blue";
+			context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight); //desenha jogador
+
+			context.fillStyle = "green";
+			context.fillRect(oponentePosX, oponentePosY, barraWidth,
+					barraHeight); //desenha oponente
+
+			//linha central
+			context.beginPath();
+			context.moveTo(canvas.width / 2, 0);
+			context.lineTo(canvas.width / 2, canvas.height);
+			context.strokeStyle = "red";
+			context.stroke();
+			context.closePath();
+
+			//bolinha
+			context.beginPath();
+			context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); //desenha bolinha
+			context.closePath();
+			context.fillStyle = "yellow";
+			context.strokeStyle = "#e17107";
+			context.fill();
+			context.stroke();
+
+			//placar
+			var pontosA = pontosJogador;
+			var pontosB = pontosOponente;
+
+			//se o numero for menor que 10 coloca 0 na frente
+			if (pontosA < 10) {
+				pontosA = "0" + pontosA;
+			}
+			//se o numero for menor que 10 coloca 0 na frente
+			if (pontosB < 10) {
+				pontosB = "0" + pontosB;
+			}
+
+			context.font = "42pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
+			context.fillStyle = "black";//cor da fonte
+			context.fillText(pontosA + " " + pontosB, (canvas.width / 2) - 70, 50);
+		}
+	</script>
+
+</body>
+
+</html>

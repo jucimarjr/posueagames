@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BreakOut UEA - GAMES</title>
+    <style type="text/css">
+        canvas {
+            border:1px dashed #000000;
+        }
+    </style>
+</head>
+<body onload="init()">
+
+<canvas id="canvas" width="1024" height="768">
+    Navegador não compatível com HTML5 Canvas
+</canvas>
+<script>
+
+   var barraHeight, barraWidth,
+       jogadorPosY, jogadorPosX,
+       bolaPosY,bolaPosX,
+       bolaRaio;
+
+   bolaRaio = 10;
+   bolaPosX = canvas.width/2;
+   bolaPosY = canvas.height/2;
+   bolaParaDireita = false;
+   bolaAngulo = Math.floor(Math.random() * 21) - 10;
+   velocidadeBola = 15;
+
+   var blocosPorLinha = 8;
+   var blocoHeight = 25;
+   var blocoWidth = canvas.width/blocosPorLinha;
+   var scoreJogador = 0;
+
+   var bolaX = 300;
+   var bolaY = 300;
+
+   var paddleX = 200;
+   var paddleY = 460;
+
+   var jogadorWidth = 100;
+   var jogadorHeight = 15;
+
+   var paddleDeltaX = 0;
+   var paddleDeltaY = 0;
+
+
+   // layout dos blocos: 1 Laranja, 2 verde, 3 cinza, 0 sem nada
+   // gerado a fila de blocos
+   var arrayDeBlocos = [
+       [1,1,1,1,1,1,1,1],
+       [1,1,1,1,1,1,1,1],
+       [2,2,2,2,2,2,2,2],
+       [2,2,2,2,2,2,2,2],
+       [3,3,3,3,3,3,3,3],
+       [3,3,3,3,3,3,3,3],
+       [4,4,4,4,4,4,4,4],
+       [4,4,4,4,4,4,4,4],
+       [5,5,5,5,5,5,5,5],
+       [5,5,5,5,5,5,5,5],
+       [1,0,0,1,1,0,0,1],
+       [0,1,1,0,0,1,1,0],
+       [0,0,0,1,1,0,0,0]
+   ];
+
+   // criador dos blocos
+   function criadorDeBlocos(){
+       for (var i=0; i < arrayDeBlocos.length; i++) {
+           for (var j=0; j < arrayDeBlocos[i].length; j++) {
+               pintaBloco(j,i,arrayDeBlocos[i][j]);
+           }
+       }
+   }
+
+  //pintando cada bloco
+   function pintaBloco(x,y,type){
+       switch(type){ // if brick is still visible; three colors for three types of bricks
+           case 1:
+               context.fillStyle = 'red';
+               break;
+           case 2:
+               context.fillStyle = 'orange';
+               break;
+           case 3:
+               context.fillStyle = 'yellow';
+               break;
+           case 4:
+               context.fillStyle = 'green';
+               break;
+           case 5:
+               context.fillStyle = 'blue';
+               break;
+           default:
+               context.clearRect(x*blocoWidth,y*blocoHeight,blocoWidth,blocoHeight);
+               break;
+
+       }
+       if (type){
+           //Draw rectangle with fillStyle color selected earlier
+           context.fillRect(x*blocoWidth,y*blocoHeight,blocoWidth,blocoHeight);
+           // Also draw blackish border around the brick
+           context.strokeRect(x*blocoWidth+1,y*blocoHeight+1,blocoWidth-2,blocoHeight-2);
+       }
+   }
+
+   //desenhando bola
+   function desenhaBola(){
+
+       context.beginPath();// inicia o modo de desenho
+       context.fillStyle = 'black';
+       context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
+       context.closePath();// finaliza o caminho (opcional)
+       context.fill();
+   }
+
+   function desenhaJogador(){
+       barraWidth = 180;
+       barraHeight = 30;
+
+       jogadorPosX = (canvas.width - barraWidth)/2; //centralizando o jogador na tela eixo X em baixo;
+       jogadorPosY = canvas.height-barraHeight;//colocando o jogado para baixo eixo Y
+
+       //desenhando o Jogador
+       context.fillStyle = 'orange';
+       context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);//desenha jogador
+   }
+
+   function desenhaPlacar(){
+
+       //Set the text font and color
+       context.fillStyle = 'rgb(50,100,50)';
+       context.font = "20px Times New Roman";
+
+       //Clear the bottom 30 pixels of the canvas
+       context.clearRect(0,canvas.height-30,canvas.width,30);
+       // Write Text 5 pixels from the bottom of the canvas
+       context.fillText('Placar: '+scoreJogador,10,canvas.height-5);
+
+   }
+
+
+
+   var jogadorMovimento;
+   var gameLoop;
+
+   function init(){
+
+       jogadorMovimento = 'NONE';
+        canvas = document.getElementById("canvas");// procura o canvas
+        context = canvas.getContext("2d");// recupera o contexto 2d
+        context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+
+
+
+       desenhaPlacar();
+       desenhaJogador();
+       desenhaBola();
+       criadorDeBlocos();
+
+
+       function keyDown(e) {
+           if (e.keyCode == 37) { // up
+               teclaEsquerdaPressionada = true;
+               jogadorMovimento = 'LEFT';
+           }
+           else if (e.keyCode == 39) { // down
+               teclaDireitaPressionada = true;
+               jogadorMovimento = 'RIGHT';
+           }
+       }
+
+       function keyUp(e) {
+           if (e.keyCode == 38) { // up
+               teclaEsquerdaPressionada = false; // jogador soltou tecla cima
+           }
+           else if (e.keyCode == 40) { // down
+               teclaDireitaPressionada = false; // jogador soltou tecla baixo
+           }
+       }
+
+    document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
+    document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
+    setInterval(gameLoop,30);//chama gameloop a cada 30 segundos
+    }
+
+    function gameLoop(){
+
+        if (teclaDireitaPressionada!=teclaEsquerdaPressionada) { // se o jogador estiver pressionando a tecla baixo ou cima
+            if (teclaDireitaPressionada) { // se for para cima...
+                if (barraPosY > 0) { // se não sair da tela...
+                    jogadorPosY -= velocidadeJogador;// muda a posição
+                }
+            }
+            else { // se for para baixo...
+                if (jogadorPosY < (canvas.height - barraHeight)) {// se não sair da tela...
+                    jogadorPosY += velocidadeJogador;// muda a posição
+                }
+            }
+        }
+
+        if (oponenteParaCima) {// se o oponente estiver se movendo para cima...
+            oponentePosY -= velocidadeOponente;// muda a posição
+            if (oponentePosY <= 0) {// se estiver saindo da tela...
+                oponenteParaCima = false;// muda a direção
+            }
+        }
+        else {// se o oponente estiver se movendo para baixo...
+            oponentePosY += velocidadeOponente;// muda a posição
+            if (oponentePosY >= canvas.height - barraHeight) {// se estiver saindo da tela...
+                oponenteParaCima = true;// muda a direção
+            }
+        }
+    }
+
+
+
+</script>
+
+
+
+</body>
+</html>
