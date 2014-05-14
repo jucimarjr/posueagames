@@ -62,12 +62,15 @@ function init() {
 
 function gameLoop() {
 	if(gameState == STARTED){
+		if (bola.state == bola.MOVIMENTANDO)
+			audioGame.tocarAudioJogo();	
 		// movimenta
 		if (bola.state == bola.MOVIMENTANDO)
 			bola.movimentaBola(janela.width);
 		else
 			bola.movimentaParado(janela.width, isDireita, isEsquerda);
 		jogador.movimentaJogador(isDireita, isEsquerda, canvas.width);
+		
 
 		// verifica colisão
 		colisaoBolaJogador();
@@ -129,7 +132,7 @@ function colisaoBolaInimigos() {
 				var alvoY = (i * (inimigos.height + inimigos.DISTANCIA)) + inimigos.DISTANCIA;
 
 				if (houveColisao(alvoX, alvoY)) {
-
+					audioGame.tocarColisao();
 					var x1 = Math.abs(alvoX - (bola.posX + bola.raio)); // distancia entre a bola e a esquerda do alvo
 					var x2 = Math.abs((alvoX + inimigos.width) - (bola.posX - bola.raio)); // distancia entre a bola e a direita do alvo
 					if(x1 > x2) // se condição for verdadeira então a bola veio da direita, senão, da esquerda
@@ -159,8 +162,7 @@ function colisaoBolaInimigos() {
 					pontuacao.incrementa(10);
 					alvos[i][j] = 0;
 					inimigos.qtd -= 1;
-					audioGame.tocarColisao()
-
+					
 				}
 
 			}
