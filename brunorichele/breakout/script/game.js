@@ -121,5 +121,5 @@ var game = {
 		
 		game.btnInicio = new Image();
 		game.btnInicio.src = "assets/b_inicio.png";	
-	}	
+	}
 };
