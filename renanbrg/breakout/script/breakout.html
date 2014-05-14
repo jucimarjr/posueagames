@@ -21,12 +21,13 @@
 
 var canvas, context, btnStart, relogio,intervalo,info_display;
 var gameFieldWidth, gameFieldHeight;
+var width, height;
 var playerPosX, playerPosY;
 var playerWidth, playerHeight;
 var ballWidth, ballHeight;
 var ballPosX, ballPosY, ballRaio;
 var ballUp, ballAngle;
-var imgSkate, imgBall;
+var imgBarra, imgBall;
 var leftPressed, rightPressed;
 var speedPlayer, speedBall;
 var wallMatrix, addNumRows;
@@ -44,11 +45,13 @@ function init(){
     gameFieldHeight = 500;
 
     startGame = false;
+    width = canvas.width;
+    height = canvas.height;
 
     playerWidth = 90;
     playerHeight = 30;
-    imgSkate = new Image();
-    imgSkate.src = "../assets/skate.png";
+    imgBarra = new Image();
+    imgBarra.src = "../assets/barra.png";
 
     playerPosX = (gameFieldWidth - playerWidth) / 2;
     playerPosY = gameFieldHeight - playerHeight;
@@ -80,10 +83,10 @@ function init(){
     createWall();
 
     drawBackground();
-    drawGameField();
-    drawBar(imgSkate, playerPosX, playerPosY);
+    drawBar(imgBarra, playerPosX, playerPosY);
     drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
     drawWall();
+    drawArea();
     
     intervalo = 20; 
     Reiniciar();
@@ -121,14 +124,14 @@ function Pausar()
  } 
 }
 
-function drawGameField(){
-	context.fillStyle = "white";
-    context.fillRect(0, 0, gameFieldWidth, gameFieldHeight);
+function drawArea(){ //change name
+	context.fillStyle = "red"; 
+    context.fillRect(width, 0, canvas.width, canvas.height);
 }
 
 function drawBackground(){
     context.fillStyle = "black"; 
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillRect(0, 0, width, height);
 }
 
 function drawBar(img, posX, posY){
@@ -144,7 +147,7 @@ function createWall() {
         wallMatrix[i] = new Array();
         for (var j = 0; j < wallNumColumns; j++) { 
             var img2 = new Image();
-            img2.src = "../assets/tijolo.png";
+            img2.src = "../assets/bloco.png";
             wallMatrix[i][j] = img2;
         }
     } 
@@ -254,15 +257,15 @@ function gameLoop() {
 		checkCollisionWall();
 	    context.clearRect(0, 0, canvas.width, canvas.height);
 	    drawBackground();
-	    drawGameField();
 	    
 	    getBarPosition();
-	    drawBar(imgSkate, playerPosX, playerPosY);
+	    drawBar(imgBarra, playerPosX, playerPosY);
 	    
 	    getBallPosition();
 	    drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
 
 	    drawWall();
+	    drawArea();
 	}else{
 		checkStartGame();
 	}
