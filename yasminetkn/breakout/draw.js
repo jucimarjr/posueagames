@@ -20,14 +20,13 @@ function drawPlacar(){
 		
 	var pontosA = pontosJogador;
 
-	if (pontosA < 10) {// se o número de pontos for menor que 10, colocamos o zero a esquerda
+	if (pontosA < 10) {// se o n�mero de pontos for menor que 10, colocamos o zero � esquerda
 		pontosA = "0" + pontosA;
 	}
-
-
+	
 	context.font = "42pt Helvetica";// tamanho e fonte para desenhar o texto
 	context.fillStyle = "#000000";// cor preta (opcional)
-	context.fillText(pontosA, 10,canvas.height-15); // escreve texto na tela na posi��o desejada
+	context.fillText(pontosA, (canvas.width / 2) - 70, 50); // escreve texto na tela na posi��o desejada
 }
 
 
@@ -72,7 +71,7 @@ function desenhaBloco(x,y,type){
 
     }
     if (type){
-        //desenhando o retangulo com a cor escolhida fillStyle
+        //Draw rectangle with fillStyle color selected earlier
         context.fillRect(x*blocoWidth,y*blocoHeight,blocoWidth,blocoHeight);
         // Also draw blackish border around the brick
         context.strokeRect(x*blocoWidth+1,y*blocoHeight+1,blocoWidth-2,blocoHeight-2);

@@ -1,34 +1,33 @@
 // Jogador (JS object)
 var jogador = {
-	w: 90, //largura
-	h: 20, //altura
+	w: 128, //largura
+	h: 48, //altura
 	x: 0,
 	y: 0,
+	vidas: 4,
 	velocidade: null,
 	resetX : null,
 	resetY : null,
 	derrota : null,
 	vitoria : null,
 	imagem : null,
-	
+
 	init : function(width, height){
 		jogador.resetX = (width / 2) - (jogador.w / 2);
-		jogador.resetY = height - jogador.h
-		jogador.derrota = false;		
+		jogador.resetY = height - jogador.h;
+		jogador.derrota = false;
 		jogador.vitoria = false;
 		jogador.imagem = new Image();
-		jogador.imagem.src = "assets/barra.png";
+		jogador.imagem.src = "assets/nave_bloco.png";
 		jogador.clear();
 	},
-	
+
 	render : function(root){
 		root.drawImage(jogador.imagem, jogador.x , jogador.y);
-		//root.fillStyle = "black";
-		//root.fillRect(jogador.x, jogador.y, jogador.w, jogador.h);	
 	},
- 	
+
     atualizar : function(width){
-			// Movimentar jogador
+		// Movimentar jogador
 		if(tecla.direita != tecla.esquerda){
 			if(tecla.esquerda){
 				if(jogador.x > 0){
@@ -42,7 +41,7 @@ var jogador = {
 			}
 		}
 	},
-	
+
 	clear : function()
 	{
 		jogador.x = jogador.resetX;

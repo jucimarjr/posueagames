@@ -18,6 +18,36 @@ GameFramework.GameObject.prototype = {
 		this._isInitialized = true;
 	},
 	
+	x: function (value) {
+	    if (value === undefined)
+	       return this.transform.x;
+	    this.transform.x = value;
+	},
+	
+	y: function (value) {
+	    if (value === undefined)
+	       return this.transform.y;
+        this.transform.y = value;
+	},
+	
+	scaleY: function (value) {
+	    if (value === undefined)
+	       return this.transform.scaleX;
+        this.transform.scaleX = value;
+	},
+	
+	scaleY: function (value) {
+	    if (value === undefined)
+	       return this.transform.scaleY;
+        this.transform.scaleY = value;
+	},
+	
+	angle: function (value) {
+	    if (value === undefined)
+	       return this.transform.angle;
+	    this.transform.angle = value;
+	},
+	
 	update: function (time) { },
 	
 	render: function (time, context2D) { },

@@ -12,18 +12,18 @@ function Bola(ctx, posX, posY) {
 	this.ORIGEM = 0;
 	this.tempo = 0;
 
-	this.VELX = 4;
-	this.VELY = 4;
-	
+	this.VELX = 8;
+	this.VELY = 16;
+
 	this.PARADOX = 10;
-	
+
 	this.PARADO = 0;
 	this.MOVIMENTANDO = 1;
 	this.state = this.PARADO;
 
 	this.desenhaBola = function desenhaBola() {
 		this.ctx.beginPath();
-		this.ctx.fillStyle = "#11748C";
+		this.ctx.fillStyle = "#FFFFFF";
 		this.ctx.arc(this.posX, this.posY, this.raio, this.ORIGEM, Math.PI * 2,
 				true);
 		this.ctx.closePath();
@@ -32,24 +32,31 @@ function Bola(ctx, posX, posY) {
 
 	this.movimentaBola = function(limite) {
 		this.posX += this.velocidadeX;
-		if (this.posX - this.raio < 0 || this.posX > limite - this.raio)
+		if (this.posX - this.raio < 0 || this.posX > limite - this.raio) {
 			this.velocidadeX = -this.velocidadeX;
+			if (this.posX - this.raio < 0)
+				this.posX = this.raio;
+			else
+				this.posX = limite - this.raio;
+		}
 
 		this.posY += this.velocidadeY;
-		if (this.posY - this.raio < 0)
+		if (this.posY - this.raio < 0) {
 			this.velocidadeY = -this.velocidadeY;
+			this.posY = this.raio;
+		}
 	}
-	
+
 	this.movimentaParado = function(limite, isDireita, isEsquerda) {
-		if(isDireita != isEsquerda) {
-			if(isEsquerda) {
+		if (isDireita != isEsquerda) {
+			if (isEsquerda) {
 				this.posX -= this.PARADOX;
-				if(this.posX < 35) {
+				if (this.posX < 35) {
 					this.posX = 35;
 				}
 			} else {
 				this.posX += this.PARADOX;
-				if(this.posX > limite - 35) {
+				if (this.posX > limite - 35) {
 					this.posX = limite - 35;
 				}
 			}

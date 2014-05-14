@@ -1,3 +1,14 @@
+function desenharBola(){
+	context.fillStyle = "silver";
+	context.beginPath();// inicia o modo de desenho
+	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
+	context.closePath();// finaliza o caminho (opcional)
+	context.fill();
+}
+
+function desenharBarra(){
+	desenhar(jogadorPosX, jogadorPosY, barraWidth, barraHeight, "pink");
+}
 function desenhar(x, y, w, h, style) {
 	context.beginPath();
 	if (style) {
@@ -39,11 +50,34 @@ function initBlocos(){
 function desenharBlocos(){
 	for(var i=0;i<qtdLinhas;i++){
 		for(var j=0;j<qtdColunas;j++){
-			desenharBloco(blocos[i][j]);
+			if(blocos[i][j].vivo){
+				desenharBloco(blocos[i][j]);
+			}
 		}
 	}
 }
 
 function desenharBloco(bloco){
 	desenhar(bloco.x, bloco.y, bloco.w, bloco.h, bloco.style);
+}
+
+function atualizarPlacar(){
+	var placar = pontos;
+	if (placar < 10) {// se o número de pontos for menor que 10, colocamos o zero á esquerda
+		placar = "00" + placar;
+	}else if(placar<100){
+		placar = "0" + placar;
+	}
+
+	context.font = "38pt Square One";// tamanho e fonte para desenhar o texto
+	context.fillStyle = "#silver";// cor preta (opcional)
+	context.fillText(placar, (w/3), 90);
+	context.fillText(vidas, (w/3)+250, 90);
+	context.fillText(fase, (w/3)+400, 90);
+}
+
+function gameOver(){
+	context.font = "38pt Square One";// tamanho e fonte para desenhar o texto
+	context.fillStyle = "#silver";// cor preta (opcional)
+	context.fillText("Game Over", w/5, h/2);
 }

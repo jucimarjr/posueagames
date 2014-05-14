@@ -1,85 +1,89 @@
 
+	
+	
+   
+	
     var canvas, context,
-            barraWidth, barraHeight,
-            jogadorPosX, jogadorPosY,bolaRaio, bolaPosX, bolaPosY,
-            pontosJogador, pontosOponente,teclaCimaPressionada, teclaBaixoPressionada, oponenteParaCima, velocidadeOponente,
-            bolaRaio, bolaParaDireita, bolaAngulo,velocidadeBola,teclaEsquerdaPressionada,teclaDireitaPressionada;
-			
-			
+    barraWidth, barraHeight,
+    jogadorPosX, jogadorPosY,bolaRaio, bolaPosX, bolaPosY,
+    pontosJogador, pontosOponente,teclaCimaPressionada, teclaBaixoPressionada, oponenteParaCima, velocidadeOponente,
+    bolaRaio, bolaParaDireita, bolaAngulo,velocidadeBola,teclaEsquerdaPressionada,teclaDireitaPressionada, 
+    jogador, bola, mapaTeclas, estadoBola, tempo, tijolo, tijolos, score =0;
+    
+    mapaTecla = new Array();
+    velocidadeJogador = 20;
+    window.onload = init;
+    window.onkeydown = teclaPressionada;
+    window.onkeyup = teclaSolta;
+    tamanhoBarra = 120;
+    alturaBarra = 20;
+    estadoBola = 0;
+    tempo = 0;
+    bola = new Bola(200, 560, 7);
+    var tijolos = new Array();
 	function init(){
 
 		canvas = document.getElementById("canvas");// procura o canvas
         context = canvas.getContext("2d");// recupera o contexto 2d
-		
-		setJogador();
-		setBola();
-		
+        jogador = new Jogador((canvas.width - tamanhoBarra)/2, canvas.height-alturaBarra, tamanhoBarra, alturaBarra);
+        jogador.draw();
 		pontosJogador = 0;
-		
-		document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
-        document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
+
+		criadorDeBlocos(); 
+
         setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
-
 	}
 	
-	function setJogador(){
-		barraWidth = 90;
-        barraHeight = 30;
-
-        jogadorPosX = (canvas.width - barraWidth)/2;
-        jogadorPosY = canvas.height -barraHeight;
-
-        velocidadeJogador = 15;
-        teclaEsquerdaPressionada = false;
-        teclaDireitaPressionada = false;
+	
+	function teclaPressionada(tecla){
+		mapaTecla[tecla.keyCode] = true;
 	}
 	
-	function setBola(){
-		bolaRaio = 10;
-        bolaPosX = canvas.width;
-        bolaPosY = canvas.height / 2;
-        bolaParaDireita = false;
-        bolaAngulo = Math.floor(Math.random() * 21) - 10;
-        velocidadeBola = 15;
+	function teclaSolta(tecla){
+		mapaTecla[tecla.keyCode] = false;	
 	}
 	
-	function gameLoop() {
-
-        if(teclaEsquerdaPressionada){
-            if (jogadorPosX > 0) { // se não sair da tela...
-                jogadorPosX -= velocidadeJogador;// muda a posição
-            }
-        }else if (teclaDireitaPressionada){
-            if(jogadorPosX < (canvas.width - barraWidth)){
-                jogadorPosX += velocidadeJogador;
-            }
-        }
-
-        if (((bolaPosY - bolaRaio)<= 0) || ((bolaPosY + bolaRaio)> canvas.height)){
-            bolaAngulo = bolaAngulo * -1;
-        }
-
-        if (((bolaPosX - bolaRaio)<= 0)){
-            bolaParaDireita = true;
-        } else {
-            if ((bolaPosX + bolaRaio)> canvas.width){
-                bolaParaDireita = false;
-            }
-        }
-
-        //movimento de acordo com o angulo
-        bolaPosY += bolaAngulo;
-        if (bolaParaDireita) {// se a bola estiver indo para a direita...
-            bolaPosX += velocidadeBola;// movemos a bola para a direita
-        }
-        else {// se estiver indo para a esquerda...
-            bolaPosX -= velocidadeBola;// movemos a bola para a esquerda
-        }
-        // Desenha tudo na tela
-        context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+	function paint(){
+		 context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+		 jogador.draw();
+		 bola.draw();
+		 criadorDeBlocos(); 
+	}
+	
+	//Funcao pra gerar um valor de limite
+	function clamp(val, min, max){
+		return Math.max(min, Math.min(max,val));
+	}
+	
+	function detectarColisaoJogadorEBola(){
+		var xMaisProximo = clamp(bola.x, jogador.x, (jogador.x+jogador.largura));
+		var yMaisProximo = clamp(bola.y, jogador.y, (jogador.y+jogador.altura));
 		
-		drawPlayer();
-		drawBola();
-		drawPlacar();
-        criadorDeBlocos();//criando os blocos
+		var distanciaX = bola.x - xMaisProximo;
+		var distanciaY = bola.y - yMaisProximo;
+		var distancia = (distanciaX*distanciaX)+(distanciaY*distanciaY);
+		
+		return distancia < (bola.raio*bola.raio);
+	}
+
+	function gameLoop() {
+		
+		if(mapaTecla[37] == true){
+			
+			if(jogador.x>0){
+				jogador.mexer(-velocidadeJogador);
+			}
+			
+		}else if (mapaTecla[39] == true){
+			if(jogador.x < (canvas.width - tamanhoBarra)){
+				jogador.mexer(velocidadeJogador);
+            }
+			
+		}
+		
+		bola.mover();
+		bola.verificaColisao();
+
+		paint();	
+
     }
