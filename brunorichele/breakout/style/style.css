@@ -23,9 +23,12 @@ canvas {
 .menu{
 	background-image: url('../assets/background_menu.jpg');
 	width:1024px; 
-	height:380px;
-	padding-top:388px;
+	height:440px;
+	padding-top:328px;
 	border:1px solid #000000;
+	font-family:Alégre Sans;
+	font-size:30px;
+	color:#8efffb;
 }
 
 .menu a{
@@ -49,4 +52,12 @@ canvas {
 
 .btn-creditos:hover{
 	background-image: url('../assets/b_credito2.png');
+}
+
+.btn-inicio{
+	background-image: url('../assets/b_inicio.png');
+}
+
+.btn-inicio:hover{
+	background-image: url('../assets/b_inicio2.png');
 }
