@@ -21,7 +21,6 @@
 
 var canvas, context, btnStart, relogio,intervalo,info_display;
 var gameFieldWidth, gameFieldHeight;
-var width, height;
 var playerPosX, playerPosY;
 var playerWidth, playerHeight;
 var ballWidth, ballHeight;
@@ -45,8 +44,6 @@ function init(){
     gameFieldHeight = 500;
 
     startGame = false;
-    width = canvas.width;
-    height = canvas.height;
 
     playerWidth = 90;
     playerHeight = 30;
@@ -83,10 +80,10 @@ function init(){
     createWall();
 
     drawBackground();
+    drawGameField();
     drawBar(imgSkate, playerPosX, playerPosY);
     drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
     drawWall();
-    drawArea();
     
     intervalo = 20; 
     Reiniciar();
@@ -124,14 +121,14 @@ function Pausar()
  } 
 }
 
-function drawArea(){ //change name
-	context.fillStyle = "red"; 
-    context.fillRect(width, 0, canvas.width, canvas.height);
+function drawGameField(){
+	context.fillStyle = "white";
+    context.fillRect(0, 0, gameFieldWidth, gameFieldHeight);
 }
 
 function drawBackground(){
     context.fillStyle = "black"; 
-    context.fillRect(0, 0, width, height);
+    context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function drawBar(img, posX, posY){
@@ -257,6 +254,7 @@ function gameLoop() {
 		checkCollisionWall();
 	    context.clearRect(0, 0, canvas.width, canvas.height);
 	    drawBackground();
+	    drawGameField();
 	    
 	    getBarPosition();
 	    drawBar(imgSkate, playerPosX, playerPosY);
@@ -265,7 +263,6 @@ function gameLoop() {
 	    drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
 
 	    drawWall();
-	    drawArea();
 	}else{
 		checkStartGame();
 	}
