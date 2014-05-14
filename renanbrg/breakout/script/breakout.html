@@ -238,6 +238,10 @@ function getBallPosition(){
             }                        
         }                    
     }
+    if (ballPosY - ballRaio <= 0) { // Hit the floor
+        ballUp = false;
+        ballAngle = ballAngle * -1;
+    }
     if ((ballPosX-ballRaio <= 0) || (ballPosX + ballRaio > gameFieldWidth)) {
     	ballAngle = ballAngle * -1;
     }
