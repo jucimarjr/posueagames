@@ -24,12 +24,14 @@
 		var blocoAltura = 20;
 		var blocoLargura = 50;
 		
-		// Variaveis para controle da barra (raquete)
+		// Variaveis para controle da barra
 		var barraX = 200;
 		var barraY = 460;
 		var barraAltura = 15;
 		var barraLargura = 80;
 		var moverBarra = 'PARAR'; // DIREITA ou ESQUERDA ou PARAR
+		var barraDeltaX; // sentido da barra
+		var barraVelocidadeX = 10; // deslocamento da barra em pixels
 		
 		// Variaveis para controle da bola (trocar depois por imagem)
 		var bolaX = 300;
@@ -49,7 +51,7 @@
 		];
 	    
 		// Desenha a parede 
-		function desenhaParedeDeBlocos(){
+		function desenhaParedeDeBlocos() {
 				for (var x=0; x < blocos.length; x++) {
 					for (var y=0; y < blocos[x].length; y++) {
 						desenharBloco(y,x,blocos[x][y]);
@@ -72,10 +74,7 @@
 	    }
 	    
 		function desenhaBola(){
-			//ctx.beginPath();
 	    	ctx.drawImage(bola, bolaX, bolaY);
-		//	ctx.arc(bolaX,bolaY,bolaRaio,0,Math.PI*2,true);
-			//ctx.fill();			
 		}
 		
 		function animarJogo() {
@@ -83,6 +82,7 @@
 		    desenhaParedeDeBlocos();
 		    desenhaBarra();
 		    desenhaBola();
+		    moverBarraLateral();
 		    moverBola();
 		    ctx.fillText('Barra: '+ moverBarra, 10,canvas.height-5);
 		}
@@ -109,7 +109,7 @@
 			ctx.fillText('Fim de Jogo ', 200, 200); // TODO melhorar
 		}
 		
-
+	    // Função para manipular variaveis das coordenadas (bolaX, bolaY) e direção (bolaDeltaX e bolaDeltaY) da bola
 		function moverBola(){
 
 			// Se bola chegou no limite inferior fim de jogo
@@ -124,15 +124,44 @@
 
 			// Se a bola tocar nas laterais inverter a direcao
 				// Chegou no limite esquerdo mudar sentido para direito
-			if ((bolaX < 1) ||				
-				//Chegou no limite direito mudar sentido para direito
-				(bolaX  > canvas.width - 1)){  
+				// ou Chegou no limite direito mudar sentido para direito
+			if ((bolaX < 1) || (bolaX+bolaAltura  > canvas.width - 1)){  
 				bolaDeltaX = bolaDeltaX * -1;
 			}
 
-			// Mover a bola
+			// se a bola colidir na barra ou seja:
+				//1) chegou na mesma coordenada Y
+				//2) esta entre a coordena X do inicio ao fim da barra
+			if (bolaY + bolaAltura >= barraY){
+				if (bolaX + bolaAltura >= barraX && 
+					bolaX + bolaAltura <= barraX + barraLargura){
+					bolaDeltaY = bolaDeltaY * -1; // inverte sentido da bola
+				}
+			}
+
+
+			// Coordenadas da bola
 			bolaX += bolaDeltaX; 
 			bolaY += bolaDeltaY;
+		}
+	    
+		function moverBarraLateral() {
+			
+			if (moverBarra == 'DIREITA') {
+				barraDeltaX = barraVelocidadeX;
+			} else if (moverBarra == 'ESQUERDA') {
+				barraDeltaX = -barraVelocidadeX;
+			} else {
+				barraDeltaX = 0;
+			}
+			// se o proximo movimento for ultrapassar os limites esquedo e direito então para o movimento
+			// por isso a soma com o barraDeltaX
+			if (barraX + barraDeltaX < 0 || barraX + barraLargura + barraDeltaX > canvas.width){
+				barraDeltaX = 0; 
+			}
+
+			barraX += barraDeltaX;
+
 		}
 		
         function keyDown(e) {
@@ -152,7 +181,6 @@
         }
 
         inicioDoJogo();
-		
     </script>
 </body>
 </html>
