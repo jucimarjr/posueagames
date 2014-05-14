@@ -45,14 +45,14 @@ function Bola(x, y, raio){
         if (this.y + this.direcaoY - this.raio < 0
             // verifica se bateu em algum bloco por baixo ou por cima e muda a direcao
             || colisaoComTijoloY()){
-            bouncingSound.play();
+        	bater.play();
             this.direcaoY = -this.direcaoY;
         }
 
         // Se bateu pela esquerda ou direita inverte o sentido da bola
         if ((this.x + this.direcaoX - this.raio < 0) ||(this.x + this.direcaoX + this.raio > canvas.width)
             || colisaoComTijoloX()){
-            bouncingSound.play();
+        	bater.play();
             this.direcaoX = -this.direcaoX;
         }
     };
@@ -66,20 +66,42 @@ function Bola(x, y, raio){
     };
 
     this.verificaColisao = function(){
-        if((this.x-this.raio)<=0 || (this.x+this.raio)>=canvas.width){
-            this.inverterX();
-        }
-
-        if((this.y-this.raio)<=0 || detectarColisaoJogadorEBola()){
-            this.inverterY();
-            zap.play();
-        }
-
-        if((this.y-this.raio)>=canvas.height){
-            estado=2;
-        }
-
-    };
+    	if((this.x-this.raio)<=0 || (this.x+this.raio)>=canvas.width){
+			bater.play();
+			this.inverterX();	
+		}
+		
+		if((this.y-this.raio)<=0 || detectarColisaoJogadorEBola()){
+			bater.play();
+			
+			if(detectarColisaoJogadorEBola()){
+				// Se bateu por cima do jogador
+				if (this.y + this.direcaoY + this.raio >= jogador.y){
+				    // e bateu ateh a metade da largura
+				    if (this.x + this.direcaoX >= jogador.x &&
+				        this.x + this.direcaoX <= (jogador.x + (jogador.largura)/2)){
+				        this.inverterX();
+				        bater.play();
+				        //senao se bateu do meio pro fim
+				    }else if (this.x + this.direcaoX >= jogador.x &&
+					        this.x + this.direcaoX > (jogador.x + (jogador.largura)/2) && 
+					        this.x + this.direcaoX <= (jogador.x + (jogador.largura))-canvas.width){
+				    	this.inverterX()* (-1);
+				    	bater.play();
+				    	
+				    }
+				}
+			}
+			this.inverterY();
+		}
+		//Se a posicao da bola for maior ou igual à altura do canvas finaliza a partida
+		if((this.y-this.raio)>=canvas.height){
+			//bater.pause();
+			end();
+			
+		}
+		
+	};
 }
 
 function colisaoComTijoloX(){
@@ -101,7 +123,7 @@ function colisaoComTijoloX(){
                     if ((bola.y + bola.direcaoY -bola.raio<= blocoY + blocoHeight) &&
                         (bola.y + bola.direcaoY + bola.raio >= blocoY)){
                         // apaga o bloco
-                        explodeBrick(i,j);
+                        quebraTijolo(i,j);
 
                         bateuX = true;
                     }
@@ -127,7 +149,7 @@ function colisaoComTijoloY(){
                     if (bola.x + bola.direcaoX + bola.raio >= blocoX &&
                         bola.x + bola.direcaoX - bola.raio<= blocoX + blocoWidth){
                         // metodo de detruir a bola
-                        explodeBrick(i,j);
+                        quebraTijolo(i,j);
                         bateuY = true;
                     }
                 }
@@ -137,14 +159,13 @@ function colisaoComTijoloY(){
     return bateuY;
 }
 
-function explodeBrick(i,j){
+function quebraTijolo(i,j){
     // ao bater atribui o valor zero ao bloco
     blocos[i][j] = 0;
     //marcar o ponto aki
     score ++;
+    quebrar.play();
 }
-
-
 
 function drawPlacar(){
     // PLACAR
@@ -179,6 +200,7 @@ function criadorDeBlocos(){
         for (var j=0; j < blocos[i].length; j++) {
             tijolo = new Tijolo(j, i, blocoWidth, blocoHeight, blocos[i][j]);
             tijolo.desenhaBloco();
+            tijolos.push(tijolo);
         }
     }
 }

@@ -16,17 +16,22 @@
     window.onkeydown = teclaPressionada;
     window.onkeyup = teclaSolta;
     tamanhoBarra = 120;
-    alturaBarra = 20;
+    alturaBarra = 35;
     estadoBola = 0;
     tempo = 0;
+    var gameLoop;
+    var temTijolos = false;
     bola = new Bola(200, 560, 7);
     var tijolos = new Array();
 
-    var bouncingSound = new Audio("sound/bounce.ogg");
+   /* var bouncingSound = new Audio("sound/bounce.ogg");
     var breakingSound = new Audio("sound/break.ogg");
     var starterSound = new Audio("sound/skratch.wav");
     var gameOver = new Audio("sound/skratch17.wav");
-    var zap = new Audio("sound/zap.wav");
+    var zap = new Audio("sound/zap.wav");*/
+    
+    var quebrar = new Audio("sound/break.ogg");
+    var bater = new Audio("sound/bounce.ogg");
 
 	function init(){
 
@@ -37,8 +42,15 @@
 		pontosJogador = 0;
 
 		criadorDeBlocos();
-        starterSound.play();
-        setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
+        //starterSound.play();
+
+        gameLoop = setInterval(animacao, 30);// chama a function gameLoop a cada 30 frames
+	}
+	
+	function end(){
+		clearInterval(gameLoop);
+	    context.fillText('Fim de jogo!!!!',canvas.width/2,canvas.height/2);
+	    
 	}
 
 
@@ -55,6 +67,20 @@
 		 jogador.draw();
 		 bola.draw();
 		 criadorDeBlocos();
+		 
+		 for(t in tijolos){
+			 if(tijolos[t]!=0){
+				temTijolos = true; 
+			 } 
+		 }
+		 
+		 context.font = "18pt monospace";
+		 
+		 
+		 if(!temTijolos){
+			 context.fillText("Voce venceu",125,295);
+			 clearInterval(gameLoop);
+		 }
 	}
 
 	//Funcao pra gerar um valor de limite
@@ -73,7 +99,7 @@
 		return distancia < (bola.raio*bola.raio);
 	}
 
-	function gameLoop() {
+	function animacao() {
 
 		if(mapaTecla[37] == true){
 
