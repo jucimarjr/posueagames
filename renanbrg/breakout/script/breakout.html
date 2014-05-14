@@ -11,7 +11,7 @@
     </head>
 
     <body onload="init()">
-        <canvas id="canvas" width="728" height="880">
+        <canvas id="canvas" width="800" height="600">
             Navegador não compatível com HTML5 Canvas
         </canvas>
         <button type="button" onClick="Pausar()" id = "btstart"> Iniciar </button>
@@ -20,6 +20,7 @@
         <script>
 
 var canvas, context, btnStart, relogio,intervalo,info_display;
+var gameFieldWidth, gameFieldHeight;
 var width, height;
 var playerPosX, playerPosY;
 var playerWidth, playerHeight;
@@ -40,24 +41,27 @@ function init(){
     btnStart = document.getElementById("btStart");
     info_display = document.getElementById("info");
 
+    gameFieldWidth = 600;
+    gameFieldHeight = 500;
+
     startGame = false;
-    width = 520;
+    width = canvas.width;
     height = canvas.height;
 
-    playerWidth = 130;
-    playerHeight = 40;
+    playerWidth = 90;
+    playerHeight = 30;
     imgSkate = new Image();
     imgSkate.src = "../assets/skate.png";
 
-    playerPosX = (width - playerWidth) / 2;
-    playerPosY = height - playerHeight;
+    playerPosX = (gameFieldWidth - playerWidth) / 2;
+    playerPosY = gameFieldHeight - playerHeight;
 
-    ballWidth = 40;
-    ballHeight = 40;
+    ballWidth = 20;
+    ballHeight = 20;
     speedBall = 20;
-    ballRaio = ballWidth/2;
-    ballPosX = width / 2;
-    ballPosY = height - playerHeight - ballRaio;
+    ballRaio = ballWidth / 2;
+    ballPosX = gameFieldWidth / 2;
+    ballPosY = gameFieldHeight - playerHeight - ballRaio;
     ballAngle = Math.floor(Math.random() * 21) - 10;
     ballUp = false;
     imgBall = new Image();
@@ -65,12 +69,12 @@ function init(){
 
     leftPressed = false;
     rightPressed = false;
-    speedPlayer = 20;
+    speedPlayer = 10;
 
     wallMatrix = new Array();
-    wallWidth = 52; 
-    wallHeight = 52;
-    wallNumRows = 17
+    wallWidth = 60; 
+    wallHeight = 30;
+    wallNumRows = 15;
     wallNumColumns = 10;
     wallNumRowsDraw = 5;
     wallNumColumnsDraw = 10;
@@ -119,6 +123,7 @@ function Pausar()
 			btnStart.innerHTML = "Iniciar"; 
  } 
 }
+
 function drawArea(){ //change name
 	context.fillStyle = "red"; 
     context.fillRect(width, 0, canvas.width, canvas.height);
@@ -193,11 +198,11 @@ function getBarPosition() {
             	playerPosX = 0;
             }
         } else { 
-            if (playerPosX < (width - playerWidth)) {
-            	playerPosX += speedPlayer;
+            if (playerPosX < (gameFieldWidth - playerWidth)) {
+                playerPosX += speedPlayer;
             }
-            if(playerPosX > (width - playerWidth)){
-            	playerPosX = width - playerWidth;
+            if(playerPosX > (gameFieldWidth - playerWidth)){
+                playerPosX = gameFieldWidth - playerWidth;
             }
         }
     }
@@ -215,7 +220,7 @@ function getBallPosition(){
             }                        
         }                    
     }
-    if ((ballPosX-ballRaio <= 0) || (ballPosX + ballRaio > width)) {
+    if ((ballPosX-ballRaio <= 0) || (ballPosX + ballRaio > gameFieldWidth)) {
     	ballAngle = ballAngle * -1;
     }
     ballPosX += ballAngle;
@@ -226,6 +231,7 @@ function getBallPosition(){
         ballPosY += speedBall;
     }                    
 }
+
 function checkCollisionWall(){
 	var contRows = 0;
     for (var i = wallNumRowsDraw-1; i >= 0 ; i--) { 
