@@ -30,7 +30,7 @@ var bloco = {
 		for(var linha = 0; linha < bloco.numLinhas; linha++){
 			for(var coluna = 0; coluna < bloco.numColunas; coluna++){
 				if(bloco.blocos[linha][coluna] == 0){
-					root.drawImage(bloco.getImage(linha), bloco.w * coluna, bloco.h * (linha + 3));
+					root.drawImage(bloco.getImage(linha), bloco.w * coluna, bloco.h * (linha + 2));
 				}
 			}
 		}
