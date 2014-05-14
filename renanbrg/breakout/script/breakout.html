@@ -118,14 +118,7 @@ function init(){
 
     score = 0;
 
-    drawBackground();
-    drawMan();
-    drawBar(imgBarra, playerPosX, playerPosY);
-    drawGameField();
-    drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
-    drawWall();
-    drawGameScore();
-    drawFrame();
+    drawGame();
     
     intervalo = 20; 
 //    Reiniciar();
@@ -231,6 +224,18 @@ function drawGameScore() {
     context.fillText(score, canvas.width - heroFieldWidth - frameWidth + 15, 3 * frameHeight + 8);
 }
 
+function drawGame() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    drawGameField();
+    drawBackground();
+    drawMan();
+    drawBar(imgBarra, playerPosX, playerPosY);
+    drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
+    drawWall();
+    drawFrame();
+    drawGameScore();
+}
+
 function keyDown(e) {
     if (e.keyCode == 37) { 
         leftPressed = true;
@@ -330,32 +335,13 @@ function checkCollisionWall(){
 function gameLoop() { 
 	if(startGame){
 		checkCollisionWall();
-	    context.clearRect(0, 0, canvas.width, canvas.height);
-//	    drawBackground();
-	    drawGameField();
-	    
 	    getBarPosition();
-//	    drawBar(imgBarra, playerPosX, playerPosY);
-	    
 	    getBallPosition();
-//	    drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
-
-//	    drawWall();
-	    drawGameScore();
-//	    drawFrame();
-
 	}else{
 		checkStartGame();
 	}
-	
-	drawBackground();
-	drawMan();
-	drawBar(imgBarra, playerPosX, playerPosY);
-	drawBall(imgBall, ballPosX-ballRaio, ballPosY-ballRaio);
 
-    drawWall();
-    drawFrame();
-    
+	drawGame();
 }
 
 function checkStartGame(){
