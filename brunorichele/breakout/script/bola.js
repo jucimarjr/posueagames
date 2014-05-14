@@ -60,10 +60,12 @@ var bola = {
 	colisaoJogador : function(y, x, w){
 		// Colisao jogador
 	//if((bola.y + bola.raio >= y) &&
-		if((bola.y + 2* bola.raio >= y) &&
+		if((bola.y + 2 * bola.raio >= y) &&
 			(bola.x >= x) &&
 			(bola.x <= x + w)){
 			bola.baixo = false;
+			if(tecla.esquerda) bola.angulo -= 4;
+			else if(tecla.direita) bola.angulo += 4;
 		//	console.log("Colisao jogador");
 		}
 	},

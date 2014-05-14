@@ -1,6 +1,13 @@
 // Namespace GameFramework encapsulates class Game to detach it from the wild world of the deepweb!GameFramework
 var GameFramework = { };
 
+GameFramework.KeyCode = {
+	LeftArrow: 37,
+	UpArrow: 38,
+	RightArrow: 39,
+	DownArrow: 40
+}
+
 // Constructor for the Game class.
 GameFramework.Game = function (canvas, backgroundColor, debugDraw) {
 	// Reference to the canvas html5 object.
@@ -34,6 +41,7 @@ GameFramework.Game.prototype = {
 		
 		self.targetFPS = targetFPS;
 		self._time.startTime = +new Date();
+		self._time._lastUpdateTime = self._time.startTime;
 		self._mainIntervalID = setInterval(function() { self.update(self); } , 1000 / self.targetFPS);
 	},
 

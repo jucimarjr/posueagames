@@ -23,6 +23,7 @@ var inimigos = new Inimigos(ctx, canvas.width, canvas.height);
 var alvos = inimigos.inimigos;
 var pontuacao = new Pontuacao(ctx, 10, 38);
 var vidas = new Vidas(ctx);
+var audioGame = new AudioGame();
 
 const STARTED = 0;
 const GAMEOVER = 1;
@@ -154,10 +155,11 @@ function colisaoBolaInimigos() {
 							bola.posY = (alvoY + inimigos.height) + bola.raio;
 						}
 					}
-
+					
 					pontuacao.incrementa(10);
 					alvos[i][j] = 0;
 					inimigos.qtd -= 1;
+					audioGame.tocarColisao()
 
 				}
 

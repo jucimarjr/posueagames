@@ -33,11 +33,6 @@ function Inimigos(ctx, width, height) {
 			for (var j = 0; j < this.inimigos[i].length; j++) {
 				if (this.inimigos[i][j] > 0) {
 					this.ctx.drawImage(this.imgs[this.inimigos[i][j] - 1], (j * (this.width + this.DISTANCIA)) + this.DISTANCIA, (i * (this.height + this.DISTANCIA)) + this.DISTANCIA, this.width, this.height);
-					// this.ctx.beginPath();
-					// this.ctx.fillStyle = this.cores[i];
-					// this.ctx.rect((j*(this.width + this.DISTANCIA)) + this.DISTANCIA,(i*(this.height + this.DISTANCIA)) + this.DISTANCIA, this.width,this.height);
-					// this.ctx.closePath();
-					// this.ctx.fill();
 					this.qtd += 1;
 				}
 			}

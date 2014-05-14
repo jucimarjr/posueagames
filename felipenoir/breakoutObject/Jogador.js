@@ -11,8 +11,6 @@ function Jogador(ctx, width, height) {
 	this.img.src = "assets/jogador.png";
 
 	this.desenhaJogador = function() {
-//		this.ctx.fillStyle = "#000000";
-//		this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
 		this.ctx.drawImage(this.img, this.posX, this.posY, this.width, this.height);
 	}
 

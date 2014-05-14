@@ -3,11 +3,16 @@ var BreakoutGame = { };
 BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this.canvas = canvas;
 	this.targetFPS = targetFPS;
-	this.game = new GameFramework.Game(canvas, "black", false);
+	this.game = new GameFramework.Game(canvas, "black", true);
+	this.player;
+	this.ball;
 	
 	this._resourcesLoadCount = 0;
 	
 	this._preloadTextures = [
+		{ path: "images/player_racket_block.png", isSpriteSheet: false },
+		{ path: "images/player_racket_glow.png", isSpriteSheet: false },
+		{ path: "images/player_ball.png", isSpriteSheet: false },
 		{ path: "images/whiteBricks.png", isSpriteSheet: true, rows: 1, collumns: 7 },
 		{ path: "images/whiteGlow.png", isSpriteSheet: false },
 		{ path: "images/bricksGlow.png", isSpriteSheet: true, rows: 1, collumns: 5 },
@@ -42,11 +47,56 @@ BreakoutGame.GameScene.prototype = {
 	},
 	
 	startGame: function () {
-		console.log("startGame");
+		// console.log("startGame");
 		
 		this.createBrickRows();
+		this.createPlayer();
+		
+		this.createAudioAndTweenDemo();
         
 		this.game.startGame(this.targetFPS);
+	},
+	
+	createAudioAndTweenDemo: function () {
+		// TODO: delete this later...
+		var sound = GameFramework.SoundFactory.loadSound('sounds/3star.mp3', 'audio/mp3');
+		// ******************** Animation and Audio Demo ********************
+		var brick = new BreakoutGame.Brick(0);
+        this.game.addGameObject(brick);
+        brick.transform.x = brick.boundingBox().width / 2.0;
+        brick.transform.y = this.canvas.height - brick.boundingBox().height / 2;
+        
+        var translation = new GameFramework.Animation(brick,
+                                                      'x',
+                                                      brick.x(),
+                                                      this.canvas.width / 2.0,
+                                                      3000,     // milliseconds
+                                                      GameFramework.Easing.Type.OutInBack,
+                                                      function () {
+                                                          console.log('translation completed');
+                                                          sound.play();
+                                                      });
+        translation.begin();
+        this.game.addGameObject(translation);
+
+        var opacity = new GameFramework.Animation(brick,
+                                                  'opacity',
+                                                  0.0,
+                                                  1.0,
+                                                  4000,     // milliseconds
+                                                  GameFramework.Easing.Type.Linear);
+        opacity.begin();
+        this.game.addGameObject(opacity);
+        
+        var angle = new GameFramework.Animation(brick,
+                                                'angle',
+                                                0.0,
+                                                2 * Math.PI,
+                                                3000,     // milliseconds
+                                                GameFramework.Easing.Type.InOutBack);
+        angle.begin();
+        this.game.addGameObject(angle);
+        // ******************** Animation and Audio Demo ********************
 	},
 	
 	createBrickRows: function () {
@@ -141,6 +191,23 @@ BreakoutGame.GameScene.prototype = {
             brickY += brick.boundingBox().height / 2.0 + topMargin;
         }
 
+	},
+	
+	createPlayer: function () {
+		this.player = new BreakoutGame.Player(this.canvas);
+		this.game.addGameObject(this.player);
+		this.player.transform.x = this.canvas.width / 2;
+		this.player.transform.y = this.canvas.height * 3 / 4;
+		
+		this.ball = new BreakoutGame.Ball(this.canvas);
+		this.game.addGameObject(this.ball);
+		this.ball.transform.x = this.player.transform.x;
+		this.ball.transform.y = this.player.transform.y
+								- this.player.boundingBox().height / 2
+								- this.ball.boundingBox().height / 2;
+								
+		this.ball.velocity.x = 0.1;
+		this.ball.velocity.y = -0.1;
 	},
 	
 	onResourceLoaded: function () {
