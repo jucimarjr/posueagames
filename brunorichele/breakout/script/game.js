@@ -80,21 +80,21 @@ var game = {
 
 	// Texto de vitória
 	vitoria : function(){
-		game.context.font = "42px Helvetica";
+		game.context.font = "42px Alégre Sans";
 		game.context.fillStyle = "#ffffff";
 		game.context.fillText("Você venceu!", 380, 400);
 	},
 
 	// Texto de derrota
 	derrota : function(){
-		game.context.font = "42px Helvetica";
+		game.context.font = "42px Alégre Sans";
 		game.context.fillStyle = "#ffffff";
 		game.context.fillText("Você perdeu!", 380, 400);
 	},
 
 	// Botão para jogar novamente
 	btnNewGame : function(){
-		game.context.font = "42px Helvetica";
+		game.context.font = "42px Alégre Sans";
 		game.context.fillStyle = "#ffffff";
 		game.context.fillText("Jogar Novamente", 340, 450);
 	},
@@ -105,7 +105,7 @@ var game = {
         if (ponto < 10) {
         	ponto = "0" + ponto;
         }
-        game.context.font = "25pt Helvetica";
+        game.context.font = "25pt Alégre Sans";
         game.context.fillStyle = "#ffffff";
         game.context.fillText(ponto + " ", (game.width/2) - 2, 87);
 	},

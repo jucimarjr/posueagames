@@ -1,3 +1,10 @@
+@charset "utf-8";
+@font-face 
+{
+    font-family: Alégre Sans;
+    src: url('../font/Alegre_Sans.ttf');
+}
+
 @media screen and (max-height : 700px ){
 	html{ 
 		zoom: 80%;
