@@ -3,7 +3,7 @@ var BreakoutGame = { };
 BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this.canvas = canvas;
 	this.targetFPS = targetFPS;
-	this.game = new GameFramework.Game(canvas, "black", false);
+	this.game = new GameFramework.Game(canvas, "black", true);
 	this.player;
 	this.ball;
 	
@@ -205,6 +205,9 @@ BreakoutGame.GameScene.prototype = {
 		this.ball.transform.y = this.player.transform.y
 								- this.player.boundingBox().height / 2
 								- this.ball.boundingBox().height / 2;
+								
+		this.ball.velocity.x = 0.1;
+		this.ball.velocity.y = -0.1;
 	},
 	
 	onResourceLoaded: function () {
