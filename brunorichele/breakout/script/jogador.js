@@ -13,7 +13,7 @@ var jogador = {
 	imagem : null,
 
 	init : function(width, height){
-		jogador.resetX = (width / 2) - (jogador.w / 2);
+		jogador.resetX = (width - jogador.w) / 2;
 		jogador.resetY = height - jogador.h;
 		jogador.derrota = false;
 		jogador.vitoria = false;

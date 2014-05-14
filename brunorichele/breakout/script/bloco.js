@@ -1,7 +1,7 @@
 var bloco = {
 	w : 64, // largura do bloco
 	h : 64, // altura do bloco
-	numLinhas : 3, // 5 linhas, 10 blocos por linha
+	numLinhas : 4, // 5 linhas, 10 blocos por linha
 	numColunas : 16, //número de linhas e colunas dos blocos
 	blocos : [], // matriz bidimensional para guardar os blocos
 	imagens: null, // vetor para armazenar as imagens a serem usadas
