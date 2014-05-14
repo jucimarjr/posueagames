@@ -4,8 +4,8 @@ function Jogador(ctx, width, height) {
 	this.ctx = ctx;
 	this.width = 75;
 	this.height = 10;
-	this.velocidade = 10;
-	this.posX = (width - this.width) / 2;
+	this.velocidade = 15;
+	this.posX = (width - this.width) / 2 + 10;
 	this.posY = height - this.height;
 	this.img = document.createElement('img');
 	this.img.src = "assets/jogador.png";

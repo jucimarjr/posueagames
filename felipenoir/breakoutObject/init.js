@@ -63,7 +63,9 @@ function init() {
 function gameLoop() {
 	if(gameState == STARTED){
 		if (bola.state == bola.MOVIMENTANDO)
-			audioGame.tocarAudioJogo();	
+			audioGame.tocarAudioJogo();
+		else
+			audioGame.pararAudioJogo();	
 		// movimenta
 		if (bola.state == bola.MOVIMENTANDO)
 			bola.movimentaBola(janela.width);
@@ -175,12 +177,14 @@ function colisaoBolaInimigos() {
 }
 
 function startGame() {
+	audioGame.pararAudioJogo();
 	this.ctx.font = "40pt Helvetica";
 	this.ctx.fillStyle = "#000000";
 	this.ctx.fillText("Pressione \"Barra de Espaco!\"", 60, (canvas.height / 2) + 20);
 }
 
 function gameOver() {
+	audioGame.pararAudioJogo();
 	this.ctx.font = "40pt Helvetica";
 	this.ctx.fillStyle = "#000000";
 	this.ctx.fillText("Game Over", canvas.width / 3, (canvas.height / 2) + 20);
