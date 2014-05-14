@@ -53,10 +53,10 @@ var game = {
 		jogador.render(game.context);
 		//Desenha Bola
 		bola.render(game.context);
-		//Exibi os pontos do usuario
+		//Exibe os pontos do usuario
 		game.pontuar();
 
-		//Exibi as vidas
+		//Exibe as vidas
 		game.exibirVidas();
 
 		//Verificar derrota e desenhar na tela
@@ -110,16 +110,11 @@ var game = {
         game.context.fillText(ponto + " ", (game.width/2) - 2, 87);
 	},
 
-	// Função para desenhar as vidas
-	// TODO: desenhar blocos
+	// Desenha blocos para as vidas
 	exibirVidas : function(){
-
-        var vida = jogador.vidas;
-        if (vida < 10) {
-        	vida = "0" + vida;
-        }
-        game.context.font = "25pt Helvetica";
-        game.context.fillStyle = "#ffffff";
-        game.context.fillText(vida + " ", (game.width/2) + 330, 87);
+		game.context.fillStyle = "cyan";
+		for(var i = 0; i < jogador.vidas; i++){
+			game.context.fillRect(820 + i * 50, 57, 40, 40);
+		}
 	}
 };
