@@ -5,12 +5,14 @@ BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this.targetFPS = targetFPS;
 	this.game = new GameFramework.Game(canvas, "black", false);
 	this.player;
+	this.ball;
 	
 	this._resourcesLoadCount = 0;
 	
 	this._preloadTextures = [
 		{ path: "images/player_racket_block.png", isSpriteSheet: false },
 		{ path: "images/player_racket_glow.png", isSpriteSheet: false },
+		{ path: "images/player_ball.png", isSpriteSheet: false },
 		{ path: "images/whiteBricks.png", isSpriteSheet: true, rows: 1, collumns: 7 },
 		{ path: "images/whiteGlow.png", isSpriteSheet: false },
 		{ path: "images/bricksGlow.png", isSpriteSheet: true, rows: 1, collumns: 5 },
@@ -196,6 +198,13 @@ BreakoutGame.GameScene.prototype = {
 		this.game.addGameObject(this.player);
 		this.player.transform.x = this.canvas.width / 2;
 		this.player.transform.y = this.canvas.height * 3 / 4;
+		
+		this.ball = new BreakoutGame.Ball(this.canvas);
+		this.game.addGameObject(this.ball);
+		this.ball.transform.x = this.player.transform.x;
+		this.ball.transform.y = this.player.transform.y
+								- this.player.boundingBox().height / 2
+								- this.ball.boundingBox().height / 2;
 	},
 	
 	onResourceLoaded: function () {

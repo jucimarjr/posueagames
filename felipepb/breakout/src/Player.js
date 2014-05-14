@@ -60,9 +60,11 @@ BreakoutGame.Player.prototype.update = function (time) {
 	this.horizontalInput = this.pressedKeys[GameFramework.KeyCode.RightArrow] - this.pressedKeys[GameFramework.KeyCode.LeftArrow];
 	
 	this.transform.x += this.horizontalInput * this.velocity * time.deltaTime;
+	
 	var margin = 15;
 	var minX = this.boundingBox().width / 2 + margin;
 	var maxX = this.canvas.width - this.boundingBox().width / 2 - margin;
+	
 	this.transform.x = this.clamp(this.transform.x, minX, maxX);
 };
 
