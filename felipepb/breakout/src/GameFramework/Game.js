@@ -34,6 +34,7 @@ GameFramework.Game.prototype = {
 		
 		self.targetFPS = targetFPS;
 		self._time.startTime = +new Date();
+		self._time._lastUpdateTime = self._time.startTime;
 		self._mainIntervalID = setInterval(function() { self.update(self); } , 1000 / self.targetFPS);
 	},
 
