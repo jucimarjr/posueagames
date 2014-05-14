@@ -119,15 +119,15 @@
 
 			// Se bola chegou no limite superior
 			if (bolaY < 0){
-				bolaDeltaY = -bolaDeltaY; // Inverte o Sentido da  Bola
+				bolaDeltaY = bolaDeltaY * -1; // Inverte o Sentido da  Bola
 			}
 
 			// Se a bola tocar nas laterais inverter a direcao
 				// Chegou no limite esquerdo mudar sentido para direito
 			if ((bolaX < 1) ||				
 				//Chegou no limite direito mudar sentido para direito
-				(ballX  > canvas.width - 1)){  
-				bolaDeltaX = -bolaX;
+				(bolaX  > canvas.width - 1)){  
+				bolaDeltaX = bolaDeltaX * -1;
 			}
 
 			// Mover a bola
