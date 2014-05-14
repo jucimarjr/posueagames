@@ -73,9 +73,9 @@ function gameLoop() {
 		colisaoBolaInimigos();
 
 		// desenha
+		janela.desenhaJanela();
 		if(bola.state == bola.PARADO)
 			startGame();
-		janela.desenhaJanela();
 		bola.desenhaBola();
 		jogador.desenhaJogador()
 		inimigos.desenhaInimigos();
@@ -173,7 +173,7 @@ function colisaoBolaInimigos() {
 function startGame() {
 	this.ctx.font = "40pt Helvetica";
 	this.ctx.fillStyle = "#000000";
-	this.ctx.fillText("Pressione \"Barra de Espaco!\"", 5, (canvas.height / 2) + 20);
+	this.ctx.fillText("Pressione \"Barra de Espaco!\"", 60, (canvas.height / 2) + 20);
 }
 
 function gameOver() {
