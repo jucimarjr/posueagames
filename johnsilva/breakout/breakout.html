@@ -14,16 +14,18 @@ canvas {
 <script src="colisao.js"></script>
 </head>
 <body onload="init()">
-	<canvas id="canvas" width="800" height="768">
+	<canvas id="canvas" width="800" height="600">
                         Navegador não compatível com HTML5 Canvas
                 </canvas>
 	<script>
             // Variáveis globais utilizadas no jogo
             var canvas, context, w, h, barraWidth, barraHeight, jogadorPosX, jogadorPosY, 
             	bolaRaio, bolaPosX, bolaPosY, bolaParaCima, bolaAngulo, bolaTempo, vidas, fase,
-                velocidadeJogador, velocidadeBola, pontos, teclaEsquerdaPressionada, teclaDireitaPressionada,
-                bordaW, dy, initDx, initDy, qtdLinhas, qtdColunas, blocoW, blocoH;
-            
+                velocidadeJogador, velocidadeBola, velocidadeBolaInicial, pontos, pontosPorFase, 
+                teclaEsquerdaPressionada, teclaDireitaPressionada, bordaW, dy, initDx, initDy, 
+                qtdLinhas, qtdColunas, blocoW, blocoH;
+            var audioBarra = new Audio('sons/barra.mp3');
+            var audioBloco = new Audio('sons/bloco.mp3');
             function bloco(x, y, style){
             		this.x = x;
             		this.y = y;
@@ -44,22 +46,24 @@ canvas {
             	h = canvas.height;
 				barraWidth = 80; barraHeight = 14;
 				bordaW = barraWidth/2;
-				dy = 100;
-				initDy = dy+3*bordaW;
+				dy = 50;
+				initDy = dy+2*(bordaW+10);
 				initDx = bordaW;
 				qtdLinhas = 6;
 				qtdColunas = 18;
+				pontosPorFase = 0;
 				blocoW = 40;
 				blocoH = 20;
 				jogadorPosX = (canvas.width - barraWidth) / 2;
-				jogadorPosY = (canvas.height - barraHeight);
+				jogadorPosY = (canvas.height - barraHeight) - 10;
 				teclaDireitaPressionada = false; teclaEsquerdaPressionada = false;
 				bolaRaio = 8; bolaPosX = canvas.width / 2; bolaPosY = canvas.height / 2;
 				bolaParaCima = false;
 				bolaAngulo = Math.floor(Math.random() * 21) - 10;
 				bolaTempo = 0;
-				velocidadeJogador = 10;
-				velocidadeBola = 10;
+				velocidadeJogador = 16;
+				velocidadeBola = 8;
+				velocidadeBolaInicial = velocidadeBola;
 				pontos = 0;
 				vidas=5;
 				fase = 1;
@@ -93,6 +97,16 @@ canvas {
 					gameOver();
 				}
 				else{ //se nao for game over, contiua o jogo
+					if(pontosPorFase == qtdLinhas*qtdColunas){//Passou de fase;
+						fase++;
+						pontosPorFase=0;
+						velocidadeBolaInicial = velocidadeBola;
+						bolaPosX = canvas.width / 2; bolaPosY = canvas.height / 2;
+						bolaParaCima = false;
+						bolaAngulo = Math.floor(Math.random() * 21) - 10;
+						bolaTempo = 0;
+						initBlocos();
+					}
 					// Jogador
 					if (teclaDireitaPressionada != teclaEsquerdaPressionada) { // se o jogador estiver pressionando a tecla left ou right
 						if (teclaEsquerdaPressionada) { // se for para esquerda...
