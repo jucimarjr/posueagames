@@ -10,28 +10,34 @@
 		</style>
 </head>
 <body>
-
 	<canvas id="canvas" width="520" height="500">
-      browser incompativel
+      browser incompatível
     </canvas>
 
 	<script>
     
+		var gameLoop;
+		
 	    var canvas = document.getElementById("canvas"); 
 	    var ctx = canvas.getContext("2d");
 	    
 		var blocoAltura = 20;
 		var blocoLargura = 50;
 		
+		// Variaveis para controle da barra (raquete)
 		var barraX = 200;
 		var barraY = 460;
-		
 		var barraAltura = 15;
 		var barraLargura = 80;
+		var moverBarra = 'PARAR'; // DIREITA ou ESQUERDA ou PARAR
 		
+		// Variaveis para controle da bola (trocar depois por imagem)
 		var bolaX = 300;
 		var bolaY = 300;
-		var bolaRaio = 10;
+		var bolaAltura = 15; 
+		var bola; // Imagem da bola
+		var bolaDeltaY = -3;
+		var bolaDeltaX = -3;
 
 		// Matriz dos blocos a serem desenhados 10 X 6 inicialmente 
 		 var blocos = [
@@ -66,16 +72,89 @@
 	    }
 	    
 		function desenhaBola(){
-			ctx.beginPath();
-			ctx.arc(bolaX,bolaY,bolaRaio,0,Math.PI*2,true);
-			ctx.fill();			
-		}				
+			//ctx.beginPath();
+	    	ctx.drawImage(bola, bolaX, bolaY);
+		//	ctx.arc(bolaX,bolaY,bolaRaio,0,Math.PI*2,true);
+			//ctx.fill();			
+		}
+		
+		function animarJogo() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+		    desenhaParedeDeBlocos();
+		    desenhaBarra();
+		    desenhaBola();
+		    moverBola();
+		    ctx.fillText('Barra: '+ moverBarra, 10,canvas.height-5);
+		}
+		
+		function inicioDoJogo() {
+            document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
+            document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
+            
+            // Criar imagens
+            bola = new Image();
+	    	bola.src = 'images/bola2.png';
+		 	// chama a animarJogo()) a cada 200ms
+			gameLoop = setInterval(animarJogo, 20);
+		 	
+			//fimDoJogo();
+		}
+		
+		function fimDoJogo() {
+			clearInterval(gameLoop);	
+			// imagem de end game
+//            var fimJogo = new Image();
+//            fimJogo.src = 'images/bola2.png';
+//	    	ctx.drawImage(fimJogo, 10, 10);
+			ctx.fillText('Fim de Jogo ', 200, 200); // TODO melhorar
+		}
+		
 
-	    desenhaParedeDeBlocos();
-	    desenhaBarra();
-	    desenhaBola();
-	    
+		function moverBola(){
+
+			// Se bola chegou no limite inferior fim de jogo
+			if (bolaY + bolaAltura > canvas.height){
+				fimDoJogo();
+			}
+
+			// Se bola chegou no limite superior
+			if (bolaY < 0){
+				bolaDeltaY = -bolaDeltaY; // Inverte o Sentido da  Bola
+			}
+
+			// Se a bola tocar nas laterais inverter a direcao
+				// Chegou no limite esquerdo mudar sentido para direito
+			if ((bolaX < 1) ||				
+				//Chegou no limite direito mudar sentido para direito
+				(ballX  > canvas.width - 1)){  
+				bolaDeltaX = -bolaX;
+			}
+
+
+
+			// Mover a bola
+			bolaX += bolaDeltaX; 
+			bolaY += bolaDeltaY;
+		}
+		
+        function keyDown(e) {
+            if (e.keyCode == 39) { // direita
+            	moverBarra = 'DIREITA';
+            } else if (e.keyCode == 37) { // esquerda
+            	moverBarra = 'ESQUERDA';
+            }
+        }
+    
+        function keyUp(e) {
+            if (e.keyCode == 39) { // esquerda
+            	moverBarra = 'PARAR';
+            } else if (e.keyCode == 37) { // direita
+            	moverBarra = 'PARAR';
+            }
+        }
+
+        inicioDoJogo();
+		
     </script>
-
 </body>
 </html>
