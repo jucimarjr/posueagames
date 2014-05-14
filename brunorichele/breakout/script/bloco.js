@@ -1,14 +1,12 @@
 var bloco = {
-	w : 64, //largura
-	h : 64,  //altura
+	w : 64, // largura do bloco
+	h : 64, // altura do bloco
 	numLinhas : 3, // 5 linhas, 10 blocos por linha
-	numColunas : 16, //n��mero de linhas e colunas dos blocos, largura: 60, altura: 20;
-	bloco : null,
+	numColunas : 16, //número de linhas e colunas dos blocos
 	blocos : [], // matriz bidimensional para guardar os blocos
-	canvas :null,
-	context :null,
-	imagens: null,
+	imagens: null, // vetor para armazenar as imagens a serem usadas
 
+	// Inicialização da matriz de bloco e carregamento das imagens
 	init : function()
 	{
 		for(var linha = 0; linha < bloco.numLinhas; linha++){
@@ -18,27 +16,28 @@ var bloco = {
 			}
 		}
 		bloco.imagens = [];
-		bloco.imagens[0] = bloco.criarImagem("assets/robo2_morte.png");
-		bloco.imagens[1] = bloco.criarImagem("assets/robo2.png");
-		bloco.imagens[2] = bloco.criarImagem("assets/robo1.png");
-		bloco.imagens[3] = bloco.criarImagem("assets/robo1_morte.png");
-		bloco.imagens[4] = bloco.criarImagem("assets/robo1.png");
-		bloco.imagens[5] = bloco.criarImagem("assets/robo2.png");
+		bloco.imagens[0] = bloco.createImage("assets/robo2_morte.png");
+		bloco.imagens[1] = bloco.createImage("assets/robo2.png");
+		bloco.imagens[2] = bloco.createImage("assets/robo1.png");
+		bloco.imagens[3] = bloco.createImage("assets/robo1_morte.png");
+		bloco.imagens[4] = bloco.createImage("assets/robo1.png");
+		bloco.imagens[5] = bloco.createImage("assets/robo2.png");
 	},
 
+	// Desenho dos blocos, iterando pelas linhas e colunas
 	render : function(root){
-		// Blocos - desenhados linha por linha
 		var img = null;
 		for(var linha = 0; linha < bloco.numLinhas; linha++){
 			for(var coluna = 0; coluna < bloco.numColunas; coluna++){
 				if(bloco.blocos[linha][coluna] == 0){
-					root.drawImage(bloco.color(linha), bloco.w * coluna, bloco.h * (linha + 3));
+					root.drawImage(bloco.getImage(linha), bloco.w * coluna, bloco.h * (linha + 3));
 				}
 			}
 		}
 	},
 
-	color : function(linha)
+	// Retorna a imagem correspondente ao identificador passado
+	getImage : function(linha)
 	{
 		switch(linha) {
 			case 0:
@@ -60,7 +59,9 @@ var bloco = {
 				return bloco.imagens[5];
 		}
 	},
-	criarImagem: function(src){
+
+	// Instancia uma imagem
+	createImage: function(src){
 		img = new Image();
 		img.src = src;
 		return img;
