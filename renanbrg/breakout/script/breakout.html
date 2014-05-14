@@ -33,7 +33,7 @@ var manPosX, manPosY;
 var ballUp, ballAngle;
 var imgBarra, imgBall, imgFrame, imgBackground;
 var imgMan, imgManLeft, imgManRight;
-var leftPressed, rightPressed;
+var leftPressed, rightPressed, previousPressed;
 var speedPlayer, speedBall;
 var wallMatrix, addNumRows;
 var wallNumRows, wallNumColumns, wallNumRowsDraw, wallNumColumnsDraw;
@@ -237,12 +237,18 @@ function drawGame() {
 }
 
 function keyDown(e) {
-    if (e.keyCode == 37) { 
+    if (e.keyCode == 37) {
+        if (previousPressed == 39) {
+            imgMan.src = imgManLeft.src;
+        }
         leftPressed = true;
-        imgMan.src = imgManLeft.src;
-    } else if (e.keyCode == 39) { 
+        previousPressed = 37;
+    } else if (e.keyCode == 39) {
+        if (previousPressed == 37) {
+            imgMan.src = imgManRight.src;
+        }
         rightPressed = true;
-        imgMan.src = imgManRight.src;
+        previousPressed = 39;
     }
 }
 
@@ -345,9 +351,13 @@ function gameLoop() {
 }
 
 function checkStartGame(){
-	if(leftPressed || rightPressed){
-		startGame = true;
-	}
+    if (leftPressed) {
+        previousPressed = 37;
+        startGame = true;
+    } else if (rightPressed) {
+        previousPressed = 39;
+        startGame = true;
+    }
 }
 
 function resetBall(){
