@@ -21,19 +21,24 @@ canvas {
 }
 
 .menu{
-	width:600px; 
-	height:280px;
-	padding-top:200px;
+	background-image: url('../assets/background_menu.jpg');
+	width:1024px; 
+	height:380px;
+	padding-top:388px;
 	border:1px solid #000000;
 }
 
 .menu a{
-	border:1px solid #000000;
-	width:150px;
-	height:40px;
-	font-size:32px;
+	width:249px;
+	height:106px;
 	display:block; 
 	margin-bottom:20px;
-	text-decoration:none;
-	color:#000000;
+}
+
+.btn-jogar{
+	background-image: url('../assets/b_jogar.png');
+}
+
+.btn-creditos{
+	background-image: url('../assets/b_credito.png');
 }
