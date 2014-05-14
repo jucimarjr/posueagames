@@ -17,6 +17,12 @@ function AudioGame(){
 	this.tocarColisao = function(){
 		
 		setTimeout(function() { audioColisao.play(); },1);
+		
+	}
+
+	this.paraAudioColisao = function(){
+		console.log("parou");
+		audioColisao.pause();
 	}
 
 	this.tocarAudioJogo = function(){
