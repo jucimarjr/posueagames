@@ -192,7 +192,7 @@ BreakoutGame.GameScene.prototype = {
 	},
 	
 	createPlayer: function () {
-		this.player = new BreakoutGame.Player();
+		this.player = new BreakoutGame.Player(this.canvas);
 		this.game.addGameObject(this.player);
 		this.player.transform.x = this.canvas.width / 2;
 		this.player.transform.y = this.canvas.height * 3 / 4;
