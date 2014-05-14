@@ -40,6 +40,7 @@ var wallNumRows, wallNumColumns, wallNumRowsDraw, wallNumColumnsDraw;
 var wallWidth, wallHeight, wallMargin;
 var startGame;
 var score;
+var totalBlocks;
 
 function init(){
     canvas = document.getElementById("canvas");
@@ -111,6 +112,7 @@ function init(){
     wallNumRowsDraw = 5;
     wallNumColumnsDraw = 10;
     wallMargin = 0;
+    totalBlocks = wallNumRowsDraw * wallNumColumnsDraw;
     addNumRows = false;
     createWall();
 
@@ -312,7 +314,12 @@ function checkCollisionWall(){
                 		wallMatrix[i][j] = null;
                 		ballUp = false;
                         score = (score + 1) % 1000000;
-                	}
+                        totalBlocks--;
+                        if (totalBlocks == 0) {
+                            wallNumRowsDraw++;
+                            totalBlocks = wallNumColumns;
+                        }
+                    }
             	}
             }
         }
