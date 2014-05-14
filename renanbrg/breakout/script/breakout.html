@@ -14,9 +14,12 @@
         <canvas id="canvas" width="728" height="880">
             Navegador não compatível com HTML5 Canvas
         </canvas>
+        <button type="button" onClick="Pausar()" id = "btstart"> Iniciar </button>
+        <button type="button" onClick="Reiniciar()" id = "btstart"> Reiniciar </button>
+        <p id="info"></p>
         <script>
 
-var canvas, context;
+var canvas, context, btnStart, relogio,intervalo,info_display;
 var width, height;
 var playerPosX, playerPosY;
 var playerWidth, playerHeight;
@@ -34,6 +37,8 @@ var startGame;
 function init(){
     canvas = document.getElementById("canvas");
     context = canvas.getContext("2d");
+    btnStart = document.getElementById("btStart");
+    info_display = document.getElementById("info");
 
     startGame = false;
     width = 520;
@@ -79,12 +84,41 @@ function init(){
     drawWall();
     drawArea();
     
+    intervalo = 20; 
+    Reiniciar();
+    
     document.addEventListener('keyup', keyUp, false);
     document.addEventListener('keydown', keyDown, false);
     setInterval(gameLoop, 30);
     setInterval(addWallNumRows, 10000);
 }
 
+function Reiniciar()
+{
+	info_display.innerHTML = "Clique em Iniciar para Jogar";
+
+	if (startGame) 
+		Pausar();
+	 	gameLoop(); 
+
+}
+
+function Pausar()
+{ 
+	startGame = !startGame; 
+		if (startGame) 
+		{ 
+			relogio = setInterval("Desenhar()" , intervalo); 
+			info_display.innerHTML = "Executando..."; 
+			btnStart.innerHTML = "Pausar"; 
+		} 
+		else 
+		{ 
+			clearInterval(relogio); 
+			info_display.innerHTML = "Pausa"; 
+			btnStart.innerHTML = "Iniciar"; 
+ } 
+}
 function drawArea(){ //change name
 	context.fillStyle = "red"; 
     context.fillRect(width, 0, canvas.width, canvas.height);
