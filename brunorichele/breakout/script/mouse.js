@@ -21,11 +21,11 @@ var mouse = {
 
 		console.log("mouse x: " + mouse.x + "mouse y: " + mouse.y);
 
-		if(mouse.x > 388 && mouse.x < 635 && mouse.y > 401 && mouse.y < 506){
+		if(mouse.x > 377 && mouse.x < 501 && mouse.y > 407 && mouse.y < 447){
 			game.init();
 			console.log("Iniciar novo jogo");
 		}else
-		if(mouse.x > 388 && mouse.x < 635 && mouse.y > 550 && mouse.y < 654){
+		if(mouse.x > 521 && mouse.x < 645 && mouse.y > 407 && mouse.y < 447){
 			main.inicio();
 			console.log("Menu do jogo");
 		}	
