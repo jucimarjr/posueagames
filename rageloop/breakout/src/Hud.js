@@ -58,7 +58,7 @@ HUD.prototype.drawScore = function(context) {
     }
 
     context.font = '24pt Tr2n';
-    context.fillStyle = '#00ffff';
+    context.fillStyle = '#00bfff';
     context.fillText(score.toString(), this.top, 40);
 
 };

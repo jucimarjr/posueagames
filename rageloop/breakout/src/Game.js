@@ -182,7 +182,7 @@ Game.prototype.gameOver = function () {
     this.clear();
 
     this.context.font = '42pt Tr2n';
-    this.context.fillStyle = '#00ffff';
+    this.context.fillStyle = '#00bfff';
     this.context.fillText('GAME OVER!', (this.width / 2) - 180, (this.height / 2) - 50);
     this.bgSound.pause();
     this.gameOverSound.play();    
@@ -193,7 +193,7 @@ Game.prototype.gameWin = function () {
     this.clear();
 
     this.context.font = '42pt Tr2n';
-    this.context.fillStyle = '#00ffff';
+    this.context.fillStyle = '#00bfff';
     this.context.fillText('YOU WIN!', (this.width / 2) - 130, (this.height / 2) - 50);    
     clearInterval(this.timer);
     this.bgSound.pause();
