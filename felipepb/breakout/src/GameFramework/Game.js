@@ -83,6 +83,7 @@ GameFramework.Game.prototype = {
 		if (index !== -1) {
 			var removedObjects = this._gameObjects.splice(index, 1);
 			removedObjects[0].dispose();
+			removedObjects[0] = null;
 		}
 	},
 	

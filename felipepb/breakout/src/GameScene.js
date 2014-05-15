@@ -6,6 +6,9 @@ BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this.game = new GameFramework.Game(canvas, "black", true);
 	this.player;
 	this.ball;
+	this.bricks = new Array();
+	this.bigBrick;
+	this.gamePhysics;
 	
 	this._resourcesLoadCount = 0;
 	
@@ -51,8 +54,10 @@ BreakoutGame.GameScene.prototype = {
 		
 		this.createBrickRows();
 		this.createPlayer();
+		this.createBall();
+		this.createPhysicsManager();
 		
-		this.createAudioAndTweenDemo();
+		// this.createAudioAndTweenDemo();
         
 		this.game.startGame(this.targetFPS);
 	},
@@ -106,11 +111,13 @@ BreakoutGame.GameScene.prototype = {
 	
 	createBrickRows: function () {
 	    this.game.clearGameObjects();
-	    
+	    this.clearArray(this.bricks);
+		
 	    var topMargin = 15;
 	    
 	    var bigBrick = new BreakoutGame.BigWhiteBrick();
         this.game.addGameObject(bigBrick);
+		this.bigBrick = bigBrick;
         bigBrick.transform.x = this.canvas.width / 2;
         bigBrick.transform.y = bigBrick.boundingBox().height / 2 + topMargin;
         
@@ -123,6 +130,7 @@ BreakoutGame.GameScene.prototype = {
             var index = (i * 4) <= 12 ? i * 4 : 19;
             var brick = new BreakoutGame.Brick(index);
             this.game.addGameObject(brick);
+			this.bricks.push(brick);
             brickY += brick.boundingBox().height / 2.0;
             brick.transform.x = bigBrick.boundingBox().x - brick.boundingBox().width * 1.5 - brickRightMargin;
             brick.transform.y = brickY;
@@ -137,6 +145,7 @@ BreakoutGame.GameScene.prototype = {
             var index = ((i * 4) + 1) <= 13 ? ((i * 4) + 1) : 20;
             var brick = new BreakoutGame.Brick(index);
             this.game.addGameObject(brick);
+			this.bricks.push(brick);
             brickY += brick.boundingBox().height / 2.0;
             brick.transform.x = bigBrick.boundingBox().x - brick.boundingBox().width * 0.5 - brickRightMargin;
             brick.transform.y = brickY;
@@ -151,6 +160,7 @@ BreakoutGame.GameScene.prototype = {
             var index = ((i * 4) + 2) <= 13 ? ((i * 4) + 2) : 17;
             var brick = new BreakoutGame.Brick(index);
             this.game.addGameObject(brick);
+			this.bricks.push(brick);
             brickY += brick.boundingBox().height / 2.0;
             brick.transform.x = bigBrick.boundingBox().x
                                 + bigBrick.boundingBox().width
@@ -167,6 +177,7 @@ BreakoutGame.GameScene.prototype = {
             var index = ((i * 4) + 3) <= 14 ? ((i * 4) + 3) : 18;
             var brick = new BreakoutGame.Brick(index);
             this.game.addGameObject(brick);
+			this.bricks.push(brick);
             brickY += brick.boundingBox().height / 2.0;
             brick.transform.x = bigBrick.boundingBox().x
                                 + bigBrick.boundingBox().width
@@ -187,6 +198,7 @@ BreakoutGame.GameScene.prototype = {
                 var index = (14 + j) + (7 * i);
                 var brick = new BreakoutGame.Brick(index);
                 this.game.addGameObject(brick);
+				this.bricks.push(brick);
                 if (j == 0)
                     brickX += brick.boundingBox().width / 2.0;
                 brick.transform.x = brickX;
@@ -203,20 +215,59 @@ BreakoutGame.GameScene.prototype = {
 		this.game.addGameObject(this.player);
 		this.player.transform.x = this.canvas.width / 2;
 		this.player.transform.y = this.canvas.height * 3 / 4;
-		
-		this.ball = new BreakoutGame.Ball(this.canvas);
+	},
+	
+	createBall: function () {
+		this.ball = new BreakoutGame.Ball();
 		this.game.addGameObject(this.ball);
 		this.ball.transform.x = this.player.transform.x;
 		this.ball.transform.y = this.player.transform.y
 								- this.player.boundingBox().height / 2
 								- this.ball.boundingBox().height / 2;
 								
-		this.ball.velocity.x = 0.1;
-		this.ball.velocity.y = -0.1;
+		this.ball.velocity.x = 0.3;
+		this.ball.velocity.y = -0.3;
+		
+		if (this.gamePhysics) {
+			this.gamePhysics.ball = this.ball;
+		}
+	},
+	
+	createPhysicsManager: function () {
+		this.gamePhysics = new BreakoutGame.GamePhysics(this.canvas, 
+														this.bricks, 
+														this.bigBrick, 
+														this.player, 
+														this.ball);
+		this.game.addGameObject(this.gamePhysics);
+		
+		var self = this;
+		this.gamePhysics.playerLooseLifeCallback = function () { 
+			self.onPlayerLooseLife();
+		};
+	},
+	
+	onPlayerLooseLife: function () {
+		this.game.removeGameObject(this.ball);
+		this.ball = null;
+		
+		var self = this;
+		setTimeout(function () {
+			self.createBall();
+		}, 1000);
 	},
 	
 	onResourceLoaded: function () {
 		if (--this._resourcesLoadCount <= 0)
 			this.startGame();
+	},
+	
+	clearArray: function (array) {
+	    var length = array.length;
+
+	    for (var i = 0; i < length; i++)
+	       array[i].dispose();
+	    
+	    array.splice(0, length + 1);
 	}
 }
