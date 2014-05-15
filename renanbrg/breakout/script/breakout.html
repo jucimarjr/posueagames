@@ -258,7 +258,8 @@ function drawWall(){
         for (var j = wallNumColumnsDraw-1; j >= 0; j--) { 
             var img = wallMatrix[i][j];
             if (img != null) {
-                context.drawImage(img, posXGame + ((wallWidth + wallMargin) * j) , posYGame + ((wallHeight + wallMargin) * contRows),
+                context.drawImage(img, posXGame + ((wallWidth + wallMargin) * j) ,
+                        2 * posYGame + ((wallHeight + wallMargin) * contRows),
                 		wallWidth, wallHeight);
             }
         }
@@ -382,7 +383,7 @@ function checkCollisionWall(){
         for (var j = wallNumColumnsDraw-1; j >= 0; j--) { 
             if (wallMatrix[i][j]) {
             	var posXwall = posXGame + ((wallWidth + wallMargin) * j) ;
-        		var posYwall = posYGame + ((wallHeight + wallMargin) * contRows);
+                var posYwall = posYGame + ((wallHeight + wallMargin) * contRows) + posYGame;
         		
             	if((ballPosX - ballRaio >= posXwall-ballWidth && ballPosX + ballRaio <= posXwall + wallWidth + ballWidth)){
                 	if((ballPosY - ballRaio >= posYwall-ballHeight && ballPosY + ballRaio <= posYwall + wallHeight + ballHeight)){
