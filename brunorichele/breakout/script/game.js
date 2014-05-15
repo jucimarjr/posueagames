@@ -31,6 +31,8 @@ var game = {
 		
 		game.initBotoes();
 		
+		sound.init();
+		
 		// Intervalo do Gameloop: 60 fps
 		game.polling = setInterval(game.gameLoop, 1000 / 60);
 	},
@@ -60,20 +62,18 @@ var game = {
 		bola.render(game.context);
 		//Exibe os pontos do usuario
 		game.pontuar();
-
 		//Exibe as vidas
 		game.exibirVidas();
-
 		//Verificar derrota e desenhar na tela
 		if(jogador.derrota == true){
-			game.derrota();
 			game.btnNewGame();
+			game.derrota();
 			mouse.listener(canvas);
 		}
 		//Verificar derrota e desenhar na tela
 		if(jogador.vitoria == true){
-			game.vitoria();
 			game.btnNewGame();
+			game.vitoria();
 			mouse.listener(canvas);
 		}
 	},
@@ -83,20 +83,22 @@ var game = {
 	},
 	// Texto de vitória
 	vitoria : function(){
-		game.context.font = "80px Alégre Sans";
-		game.context.fillStyle = "#8efffb";
-		game.context.fillText("Você venceu!", 360, 350);
+		game.context.font = "45px Alégre Sans";
+		game.context.fillStyle = "#ffffff";
+		game.context.fillText("Você venceu!", (game.width-160)/2, 370);
 	},
 	// Texto de derrota
 	derrota : function(){
-		game.context.font = "80px Alégre Sans";
-		game.context.fillStyle = "#8efffb";
-		game.context.fillText("Você perdeu!", 360, 350);
+		game.context.font = "45px Alégre Sans";
+		game.context.fillStyle = "#ffffff";
+		game.context.fillText("Você perdeu!", (game.width-160)/2, 370);
 	},
 	// Botão para jogar novamente
 	btnNewGame : function(){
-		game.context.drawImage(game.btnJogar, (game.width-250)/2, 400);
-		game.context.drawImage(game.btnInicio, (game.width-250)/2, 550);
+		game.context.fillStyle = "#060f16"; 
+		game.context.fillRect((game.width-306)/2, 300, 306, 223);
+		game.context.drawImage(game.btnJogar, (game.width - 300)/2, 400);
+		game.context.drawImage(game.btnInicio, (game.width - 10)/2, 400);
 	},
 	// Função para desenhar a pontuação na tela
 	pontuar : function(){
@@ -117,9 +119,9 @@ var game = {
 	},
 	initBotoes : function(){
 		game.btnJogar = new Image();
-		game.btnJogar.src = "assets/b_jogar.png";
+		game.btnJogar.src = "assets/telajogo_jogar.png";
 		
 		game.btnInicio = new Image();
-		game.btnInicio.src = "assets/b_inicio.png";	
+		game.btnInicio.src = "assets/telajogo_inicio.png";	
 	}
 };

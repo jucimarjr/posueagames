@@ -12,8 +12,8 @@ function Bola(ctx, posX, posY) {
 	this.ORIGEM = 0;
 	this.tempo = 0;
 
-	this.VELX = 15;
-	this.VELY = 23;
+	this.VELX = 8;
+	this.VELY = 12;
 
 	this.PARADOX = 15;
 
@@ -32,7 +32,7 @@ function Bola(ctx, posX, posY) {
 
 	this.movimentaBola = function(limite) {
 		this.posX += this.velocidadeX;
-		if (this.posX - this.raio < 0 || this.posX > limite - this.raio) {
+		if (this.posX - this.raio < 0 || this.posX + this.raio > limite) {
 			this.velocidadeX = -this.velocidadeX;
 			if (this.posX - this.raio < 0)
 				this.posX = this.raio;

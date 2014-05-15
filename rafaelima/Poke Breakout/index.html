@@ -7,6 +7,10 @@
 canvas {
 	border: 1px dashed #000000;
 }
+@font-face {
+    font-family: "pokeNumber";
+    src: url("font/04B_03__.TTF");
+}
 </style>
 </head>
 <body onload="init()" style="text-align: center">
@@ -22,7 +26,8 @@ canvas {
         songBackground, playBolaSom, contaVidas, vidasImg,
         numPokemon, contaPokemon, placarAltura,
         gameOverScreen, endGame, tocaMusica,
-        pontuacaoTotal, songGameOver;
+        pontuacaoTotal, songGameOver, gifPokemon,
+        totalBrick, telaVitoria;
 		
 		var bola = {
 			raio : 16,
@@ -59,24 +64,28 @@ canvas {
 		//Reseta a tela e os dados
 		function beginsGame(){
 			reset();
+			telaVitoria = false;
 			contaPokemon = new Array (0, 0, 0, 0); //pontuacao dos 4 pokemons diferentes
 			contaVidas = 3;//Quantidade de vidas iniciais
 			regulaVolume();//30% da musica de Background
 			endGame = false;//nao é game over
 			pontuacaoTotal = 0;//placar total
 			continuaMusica();//continua musica se nao foi parada pelo usuario
-			preencheParede();
+			preencheParede();// Preenche soh no inicio da partida
 		}
 		
 		//Repete constantemente essas funcoes
 		function gameLoop() {
-			if(!endGame){//Verifica se é não é game over
-				checaColisaoParede();
-				movimentaJogador();
-				movimentaBola();
-				redesenhaTela();
-			} else {
-				gameOver();
+			if(!telaVitoria){
+				if(!endGame){//Verifica se é não é game over
+					checaColisaoParede();
+					movimentaJogador();
+					movimentaBola();
+					redesenhaTela();
+					verificaVitoria();
+				} else {
+					gameOver();
+				}
 			}
 		}
 		
@@ -94,17 +103,19 @@ canvas {
 			bolaImg.src = "img/pokeball0.png";
 			vidasImg = new Image();
 			vidasImg.src = "img/pokeball_vidas.png";
+			gifPokemon = new Image(); 
+			gifPokemon.src = "img/gameover_gif.png";
 			frameCount = 0;
-			placarAltura = 43;
+			placarAltura = 43;//Altura da barra
+			altura = placarAltura*3;//3 tijolos de diferenca ate a parde de tijolo
 
 			jogador.posX = (canvas.width - barraImg.width) / 2;
 			jogador.posY = canvas.height - barraImg.height ;
-			jogador.velocidade = 15;
 
 			bola.raio = 16;
 			bola.posX = canvas.width / 2;
 			bola.posY = jogador.posY - bola.raio;
-			bola.velocidade = 10;//3
+			bola.velocidade = 5;//5
 			bola.paraCima = true;
 			
 			teclaEsquerdaPressionada = false; 
@@ -121,8 +132,10 @@ canvas {
          
 		//GAME OVER - Desenha a Tela de Game Over
 		function gameOver(){
-			context.drawImage(gameOverScreen,0,0);
-			context.font = "80pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
+		    context.drawImage(backgroundImg, 0, 0);
+		    context.drawImage(gameOverScreen, 0, 0);
+		    context.drawImage(gifPokemon, 35, 438);
+		    context.font = '90px "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
 			context.fillStyle = "#1c30bd";//cor da fonte
 			var pontuaTexto = (pontuacaoTotal < 10 ? "0"+ pontuacaoTotal : pontuacaoTotal);// Acrescenta 0 na frente dos numeros menores que 10
 			context.fillText( pontuaTexto ,  canvas.width/2 - 55, canvas.height/2 +10);//Desenha a pontuacao
@@ -153,7 +166,6 @@ canvas {
 				songBackground.autoplay = true;
 				songBackground.load();
 			}
-	        
 		}
 		
 		//para musica quando gameover
@@ -164,7 +176,6 @@ canvas {
 		        songBackground.pause();
 				songGameOver.play();
 			}
-	        
 		}
 		
 		//continua tocando se som ativado
@@ -177,6 +188,7 @@ canvas {
 		
 		//preenche uma matriz parede onde cada espaço tem 30% de chance de ser vazio
 		function preencheParede(){
+			totalBrick = 0;
 			parede = [];
 			numPokemon = [];
 			for(var i=0; i < paredeLinhas; i++) {
@@ -188,6 +200,7 @@ canvas {
 					brick.src = "img/brick"+ numPokemon[i][j] +".png";
 						if(Math.random()<=0.7){
 						    parede[i][j] = brick; //tijolo(1) ou não tijolo(0)?
+							totalBrick++;
 						} else {
 						    parede[i][j] = null; //tijolo nao existe
 						    numPokemon[i][j] = -1;
@@ -268,37 +281,40 @@ canvas {
 				if((bola.posX > jogador.velocidade)){
 					bola.posX -= jogador.velocidade;// muda a posição
 				}
-				bola.angulo = Math.floor(Math.random() * 2*bola.raio) - 2*bola.raio;
+				bola.angulo = Math.floor(Math.random() * (bola.raio + 4)) - (bola.raio - 2);
+				jogador.velocidade = verificaVelocidade();
 				validaAngulo();
 			} else if (teclaDireitaPressionada){ // se for para Direita...
 				if(((bola.posX + bola.raio + jogador.velocidade) < canvas.width)){
 					bola.posX += jogador.velocidade;// muda a posição
 				}
-				bola.angulo = Math.floor(Math.random() * 2*bola.raio);
+				bola.angulo = Math.floor(Math.random() * (bola.raio + 4));
+				jogador.velocidade = verificaVelocidade();
 				validaAngulo();
 			}
 		}
 
 		//A bola nunca vai em um angulo de muito pequeno
 		function validaAngulo(){
-		        if(bola.angulo > 0 && bola.angulo < 10)
-		            bola.angulo = 9;
-		        else if (bola.angulo <= 0 && bola.angulo > -10)
-		            bola.angulo = -9;
+		        if(bola.angulo > 0 && bola.angulo < 6)
+		            bola.angulo = 6;
+		        else if (bola.angulo <= 0 && bola.angulo > -6)
+		            bola.angulo = -6;
 		}
 		
 		//Verifica se houve colisao na tijolo
 		function checaColisaoParede(){ //todas as possiveis colisoes do perímetro e centro da bola com a parede
-			if((bola.posY-bola.raio) <= (brickHeight* paredeLinhas + placarAltura)){ //se o topo da bola chegar no fundo da parede
+			if((bola.posY-bola.raio) <= (brickHeight* paredeLinhas + altura)){ //se o topo da bola chegar no fundo da parede
 				for(var j = -1; j<=1; j++){ //indices que controlam qual 'extremidade' da bola esta tocando a parede
 					for(var i = -1; i<=1; i++){//em relação ao centro da bola
 						x = Math.floor((bola.posX + (i*bola.raio))/brickWidth); //x do ponto
-						y = Math.floor((bola.posY + (j*bola.raio)- placarAltura)/brickHeight); //y do ponto
+						y = Math.floor((bola.posY + (j*bola.raio)- altura)/brickHeight); //y do ponto
 						if( x < paredeColunas && y < paredeLinhas &&  x >= 0 && y >= 0) //se teve colisão no ponto
 							if (parede[y][x]){ //se tinha tijolo
 								parede[y][x] = null; //tira tijolo
 								contaPokemon[numPokemon[y][x]]++; //Conta +1 pokemon
 								pontuacaoTotal++; //Soma mais um no total
+								totalBrick--;
 								numPokemon[y][x] = -1;
 								reacaoColisao(i,j);
 							}
@@ -328,7 +344,7 @@ canvas {
 			for(var i=0; i<paredeLinhas; i++) {
 			    for(var j=0; j<paredeColunas; j++) {
 			        if(parede[i][j]){ //se for um tijolo cheio
-			        	context.drawImage(parede[i][j],j*brickWidth, i*brickHeight + placarAltura);//desenha tijolo
+			        	context.drawImage(parede[i][j],j*brickWidth, i*brickHeight + altura);//desenha tijolo
 			        }
 			    }
 			}
@@ -356,8 +372,8 @@ canvas {
 			context.drawImage(bolaImg, bola.posX - bola.raio, bola.posY - bola.raio); //desenha bola
 			desenhaVidas();
 			rodaBola();
-			context.font = "20pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
-			context.fillStyle = "#1c30bd";//cor da fonte
+			context.font = '20pt "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
+			context.fillStyle = "#ffffff"; //cor da fonte
 			desenhaPontuacao();
 		}
 		
@@ -385,10 +401,33 @@ canvas {
 				var count = 3;
 				for(;count >= 0; count--){
 					var number = (contaPokemon[count]<10 ? "0"+contaPokemon[count] : contaPokemon[count]);
-					context.fillText("x" + number, 66 +(83*count), 30);
+					context.fillText(number, 66 +(83*count), 30);
 				}
 		}
 		
+		//aumenta velocidade da barra do jogador caso esteja mais lenta que a velocidade da bola
+		function verificaVelocidade(){
+			if (bola.angulo > jogador.velocidade){
+				return jogador.velocidade = bola.angulo +1; //Aumenta velocidade se angulo muito grande
+			} else {
+				return jogador.velocidade = 15;
+			}
+		}
+		
+		function verificaVitoria(){
+			if (totalBrick === 0){
+				telaVitoria = true;
+				context.font = '30pt "pokeNumber"'; 
+				context.fillStyle = "#1c30bd";
+				context.fillText( "PARABENS!" ,  canvas.width/2 - 100, canvas.height/2 - 200);
+				context.fillText( "Voce capturou" ,  canvas.width/2 - 150, canvas.height/2 - 130);
+				context.fillText( "pokemons" ,  canvas.width/2 - 100 , canvas.height/2 + 20);
+				
+				context.font = '90px "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
+				var pontuaTotal = (pontuacaoTotal < 10 ? "0"+ pontuacaoTotal : pontuacaoTotal);// Acrescenta 0 na frente dos numeros menores que 10
+				context.fillText( pontuaTotal ,  canvas.width/2 - 55, canvas.height/2 - 40);//Desenha a pontuacao
+			}
+		}
 	</script>
         <audio autoplay loop="loop" id="bgsound">
             <source src="sound/sound_bg.mp3" type="audio/mp3">
