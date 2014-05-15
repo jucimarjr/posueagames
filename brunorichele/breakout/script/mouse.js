@@ -21,10 +21,14 @@ var mouse = {
 
 		console.log("mouse x: " + mouse.x + "mouse y: " + mouse.y);
 
-		if((mouse.x > 144 && mouse.x < 466) && (mouse.y > 275 && mouse.y < 300)){
+		if(mouse.x > 388 && mouse.x < 635 && mouse.y > 401 && mouse.y < 506){
 			game.init();
-		}
-
+			console.log("Iniciar novo jogo");
+		}else
+		if(mouse.x > 388 && mouse.x < 635 && mouse.y > 550 && mouse.y < 654){
+			main.inicio();
+			console.log("Menu do jogo");
+		}	
 	},
 	findPosition : function (obj)
 	{
