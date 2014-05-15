@@ -65,6 +65,7 @@ canvas {
 			endGame = false;//nao é game over
 			pontuacaoTotal = 0;//placar total
 			continuaMusica();//continua musica se nao foi parada pelo usuario
+			preencheParede();
 		}
 		
 		//Repete constantemente essas funcoes
@@ -116,8 +117,6 @@ canvas {
 			paredeColunas = 12;
 			brickTypes = 4;
 			frameProportion = 3;
-			
-			preencheParede();
 		}
          
 		//GAME OVER - Desenha a Tela de Game Over
