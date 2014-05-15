@@ -7,6 +7,10 @@
 canvas {
 	border: 1px dashed #000000;
 }
+@font-face {
+    font-family: "pokeNumber";
+    src: url("font/04B_03__.TTF");
+}
 </style>
 </head>
 <body onload="init()" style="text-align: center">
@@ -62,7 +66,7 @@ canvas {
 			contaPokemon = new Array (0, 0, 0, 0); //pontuacao dos 4 pokemons diferentes
 			contaVidas = 3;//Quantidade de vidas iniciais
 			regulaVolume();//30% da musica de Background
-			endGame = true;//nao é game over
+			endGame = false;//nao é game over
 			pontuacaoTotal = 0;//placar total
 			continuaMusica();//continua musica se nao foi parada pelo usuario
 			preencheParede();
@@ -97,7 +101,7 @@ canvas {
 			gifPokemon = new Image(); 
 			gifPokemon.src = "img/gameover_gif.png";
 			frameCount = 0;
-			placarAltura = 43;
+			placarAltura = 129;
 
 			jogador.posX = (canvas.width - barraImg.width) / 2;
 			jogador.posY = canvas.height - barraImg.height ;
@@ -123,9 +127,9 @@ canvas {
          
 		//GAME OVER - Desenha a Tela de Game Over
 		function gameOver(){
-			context.drawImage(gameOverScreen,0,0);
-			context.drawImage(gifPokemon,35,438);
-			context.font = "80pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
+		    context.drawImage(backgroundImg, 0, 0);
+		    context.drawImage(gameOverScreen, 0, 0);
+		    context.font = '90px "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
 			context.fillStyle = "#1c30bd";//cor da fonte
 			var pontuaTexto = (pontuacaoTotal < 10 ? "0"+ pontuacaoTotal : pontuacaoTotal);// Acrescenta 0 na frente dos numeros menores que 10
 			context.fillText( pontuaTexto ,  canvas.width/2 - 55, canvas.height/2 +10);//Desenha a pontuacao
@@ -359,8 +363,8 @@ canvas {
 			context.drawImage(bolaImg, bola.posX - bola.raio, bola.posY - bola.raio); //desenha bola
 			desenhaVidas();
 			rodaBola();
-			context.font = "20pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
-			context.fillStyle = "#1c30bd";//cor da fonte
+			context.font = '20pt "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
+			context.fillStyle = "#ffffff"; //cor da fonte
 			desenhaPontuacao();
 		}
 		
@@ -388,7 +392,7 @@ canvas {
 				var count = 3;
 				for(;count >= 0; count--){
 					var number = (contaPokemon[count]<10 ? "0"+contaPokemon[count] : contaPokemon[count]);
-					context.fillText("x" + number, 66 +(83*count), 30);
+					context.fillText(number, 66 +(83*count), 30);
 				}
 		}
 		
