@@ -9,7 +9,9 @@ GameFramework.Sound = function (audio) {
 GameFramework.Sound.prototype = {
     play: function () {
         var audio = this.audio;
+        // you cannot play the same audio at same time...
         try {
+            // reset the audio if it is playing 
             audio.pause();
             audio.currentTime = 0;    
         } catch (e) {
