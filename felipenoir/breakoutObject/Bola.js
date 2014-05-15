@@ -15,7 +15,7 @@ function Bola(ctx, posX, posY) {
 	this.VELX = 15;
 	this.VELY = 23;
 
-	this.PARADOX = 10;
+	this.PARADOX = 15;
 
 	this.PARADO = 0;
 	this.MOVIMENTANDO = 1;

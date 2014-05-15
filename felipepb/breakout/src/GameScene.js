@@ -59,7 +59,8 @@ BreakoutGame.GameScene.prototype = {
 	
 	createAudioAndTweenDemo: function () {
 		// TODO: delete this later...
-		var sound = GameFramework.SoundFactory.loadSound('sounds/3star.mp3', 'audio/mp3');
+		var sound = GameFramework.SoundFactory.loadSound('sounds/3star.mp3',
+		                                                 GameFramework.SoundFactory.Format.MP3);
 		// ******************** Animation and Audio Demo ********************
 		var brick = new BreakoutGame.Brick(0);
         this.game.addGameObject(brick);
