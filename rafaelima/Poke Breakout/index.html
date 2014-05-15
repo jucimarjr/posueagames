@@ -19,9 +19,10 @@ canvas {
 		teclaEsquerdaPressionada, teclaDireitaPressionada, 
 		brickTypes, brickWidth, brickHeight,
 		parede, paredeLinhas, paredeColunas,
-        song, playBolaSom, contaVidas, vidasImg,
+        songBackground, playBolaSom, contaVidas, vidasImg,
         numPokemon, contaPokemon, placarAltura,
-        gameOverScreen, endGame, tocaMusica;
+        gameOverScreen, endGame, tocaMusica,
+        pontuacaoTotal, songGameOver;
 		
 		var bola = {
 			raio : 16,
@@ -46,8 +47,9 @@ canvas {
                         
 			document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
 			document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
-			song = document.getElementById("bgsound");
-            playBolaSom = document.getElementById("playPokeBall");
+			songBackground = document.getElementById("bgsound");
+            playBolaSom = document.getElementById("audioPokeball");
+            songGameOver = document.getElementById("audioGameOver");
             
             tocaMusica = true;//Musica esta tocando
             beginsGame();//Reseta a tela e os dados
@@ -58,17 +60,23 @@ canvas {
 		function beginsGame(){
 			reset();
 			contaPokemon = new Array (0, 0, 0, 0); //4 pokemons diferentes
-			contaVidas = 3;//Quantidade de vidas iniciais
+			contaVidas = 0;//Quantidade de vidas iniciais
 			regulaVolume();
 			endGame = false;//false
+			pontuacaoTotal = 0;
+			continuaMusica();
 		}
 		
 		//Repete constantemente essas funcoes
 		function gameLoop() {
-			checaColisaoParede();
-			movimentaJogador();
-			movimentaBola();
-			redesenhaTela();
+			if(!endGame){
+				checaColisaoParede();
+				movimentaJogador();
+				movimentaBola();
+				redesenhaTela();
+			} else {
+				gameOver();
+			}
 		}
 		
 		//Reseta a tela
@@ -77,8 +85,8 @@ canvas {
 			gameOverScreen.src = "img/gameover.png";
 			barraImg = new Image(); 
 			barraImg.src = "img/bar.png";
-			barraImg.width = 90;//90
-			barraImg.height = 26;
+			barraImg.width = 87;//87
+			barraImg.height = 24;
 			backgroundImg = new Image(); 
 			backgroundImg.src = "img/BG.png";
 			bolaImg = new Image(); 
@@ -111,30 +119,61 @@ canvas {
 			
 			preencheParede();
 		}
-                
+         
+		//GAME OVER - Desenha a Tela de Game Over
+		function gameOver(){
+			context.drawImage(gameOverScreen,0,0);
+			context.font = "80pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
+			context.fillStyle = "#1c30bd";//cor da fonte
+			var pontuaTexto = (pontuacaoTotal < 10 ? "0"+ pontuacaoTotal : pontuacaoTotal);// Acrescenta 0 na frente dos numeros menores que 10
+			context.fillText( pontuaTexto ,  canvas.width/2 - 55, canvas.height/2 +10);
+		}
 		
-		//30% do som atual
+		//30% do som do Background
 		function regulaVolume(){ 
-			song.volume = 0.3;//0.3
+			songBackground.volume = 0.3;//0.3
 		}
 		
 		//Toca a musica da pokeBall e nao toca se a musica estiver pausada
-		function pokeballPlay() {
+		function playPokeball() {
 			if(tocaMusica){
 			 	playBolaSom.play();
 			}
 		}
 		
-		//pausa musica
-		function musicaPause() {
-	        playBolaSom.pause();
-	        song.pause();
+		//pausa/continua musica
+		function ativadorMusica() {
+			//Musica Pause
+			if(tocaMusica){
+				tocaMusica = false;
+				playBolaSom.pause();
+		        songBackground.pause();
+			} else {
+				//Musica Continua
+				tocaMusica = true;
+				songBackground.autoplay = true;
+				songBackground.load();
+			}
+	        
 		}
 		
-		//musica de fundo continua
-		function musicaContinua(){
-			song.autoplay = true;
-			song.load();
+		//para musica quando gameover
+		function playGameOver() {
+			//Musica Pause
+			if(tocaMusica){
+				playBolaSom.pause();
+		        songBackground.pause();
+				songGameOver.play();
+			}
+	        
+		}
+		
+		//continua tocando se som ativado
+		function continuaMusica(){
+			if(tocaMusica){
+				songBackground.autoplay = true;
+				songBackground.load();
+			}
 		}
 		
 		//preenche uma matriz parede onde cada espaço tem 30% de chance de ser vazio
@@ -181,13 +220,7 @@ canvas {
 			} else if (e.keyCode === 13) { // Enter - recomeca o jogo
 				beginsGame();
 			} else if (e.keyCode === 77) { // letra m - sem/com musica
-				if(tocaMusica){
-					tocaMusica = false;
-					musicaPause();
-				} else {
-					tocaMusica = true;
-					musicaContinua();
-				}
+				ativadorMusica();
 			} 
 		}
 
@@ -218,6 +251,7 @@ canvas {
 						//reinicia jogo
 						if(contaVidas === 0){
 							endGame = true;
+							playGameOver();
 						}else {
 							contaVidas--;
 							reset();
@@ -264,6 +298,7 @@ canvas {
 							if (parede[y][x]){ //se tinha tijolo
 								parede[y][x] = null; //tira tijolo
 								contaPokemon[numPokemon[y][x]]++; //Conta +1 pokemon
+								pontuacaoTotal++; //Soma mais um no total
 								numPokemon[y][x] = -1;
 								reacaoColisao(i,j);
 							}
@@ -275,7 +310,7 @@ canvas {
 		//EM qual ponto houve a colisao na bola
 		function reacaoColisao(x, y){
             //som quando acerta o pokemon
-            //pokeballPlay();
+            playPokeball();
 			if(x===0 && y===-1){ //top center 0 -1 //top left -1 -1 //top right 1 -1
 				bola.paraCima = false;
 			}else if(x===0 && y===1){ //bottom left -1 1 //bottom center 0 1 //bottom right 1 1
@@ -314,26 +349,16 @@ canvas {
 		}
 
 		function redesenhaTela() {
-			if (!endGame){
-				context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
-				context.drawImage(backgroundImg,0,0);//desenha fundo
-				desenhaParede(); 
-				context.drawImage(barraImg,jogador.posX,jogador.posY); //desenha nuvem
-				context.drawImage(bolaImg, bola.posX - bola.raio, bola.posY - bola.raio); //desenha bola
-				desenhaVidas();
-				rodaBola();
-				context.font = "20pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
-				context.fillStyle = "#1c30bd";//cor da fonte
-				desenhaPontuacao();
-				
-			//GAME OVER
-			}else {
-				context.drawImage(gameOverScreen,0,0);
-				context.font = "90pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
-				context.fillStyle = "#1c30bd";//cor da fonte
-				context.fillText( (calculaPotuacaoTotal()<10 ? "0" + calculaPontuacaoTotal() : calculaPontuacaoTotal()) , canvas.width/2 - 50, canvas.height/2 -10);
-				contaPokemon = new Array (0, 0, 0, 0);
-			}
+			context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+			context.drawImage(backgroundImg,0,0);//desenha fundo
+			desenhaParede(); 
+			context.drawImage(barraImg,jogador.posX,jogador.posY); //desenha nuvem
+			context.drawImage(bolaImg, bola.posX - bola.raio, bola.posY - bola.raio); //desenha bola
+			desenhaVidas();
+			rodaBola();
+			context.font = "20pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
+			context.fillStyle = "#1c30bd";//cor da fonte
+			desenhaPontuacao();
 		}
 		
 		//Desenha a bola girando
@@ -364,22 +389,17 @@ canvas {
 				}
 		}
 		
-		//Calcula quanto voce ganhou na partida
-		function calculaPotuacaoTotal(){
-			var total = 0;
-			for(var count = 3; count >= 0; count--){
-				total = contaPokemon[count];
-			}
-			return total;
-		}
-		
 	</script>
         <audio autoplay loop="loop" id="bgsound">
-            <source src="img/music.mp3" type="audio/mp3">
+            <source src="sound/sound_bg.mp3" type="audio/mp3">
             Seu browser não suporta o formato do audio.
         </audio>
-        <audio id='playPokeBall'>
-            <source src="img/PokeBallSong.mp3" type="audio/mp3">
+        <audio id='audioPokeball'>
+            <source src="sound/sound_pokeball.mp3" type="audio/mp3">
+            Seu browser não suporta o formato do audio.
+        </audio>
+        <audio id='audioGameOver'>
+            <source src="sound/sound_gameover.mp3" type="audio/mp3">
             Seu browser não suporta o formato do audio.
         </audio>
 </body>
