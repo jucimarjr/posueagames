@@ -115,7 +115,7 @@
 
 				// Movimento do jogador com o mouse
 				if (teclaEsquerdaPressionada == false  && teclaDireitaPressionada == false){
-					if (mousePosicao >= (barraJogadorWidth/2) && mousePosicao < (canvas.width - barraJogadorWidth/2)){
+					if ((mousePosicao >= (barraJogadorWidth/2))  && (mousePosicao < canvas.width - 0.5*barraJogadorWidth)){
 						jogadorPosX = mousePosicao - barraJogadorWidth/2;
 					}
 				}
@@ -123,7 +123,7 @@
 				var blocoHeight = blocos.length * barraHeight + 105;
 				// Bola
 				if (bolaTempo <= 0) {// se a bola estiver em jogo, o tempo é zero (após marcar ponto, a bola fica invisível por um tempo)
-					if ((bolaPosY + bolaRaio) >= jogadorPosY ) {// se o jogador enconstar na bola (eixo Y)...
+					if ((bolaPosY + bolaRaio) >= jogadorPosY) {// se o jogador enconstar na bola (eixo Y)...
 						if ((bolaPosX > jogadorPosX) && (bolaPosX < (jogadorPosX + barraJogadorWidth))) {// se o jogador enconstar na bola (eixo X)...
 							bolaParaCima = true;// a bola muda de lado e é rebatida para o oponente
 						}                    
@@ -154,7 +154,7 @@
 					bolaPosX += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
 
 					//se a bola encostar na parede de cima a bola desce
-					if (bolaPosY - bolaRaio <= 0) {
+					if (bolaPosY - bolaRaio <= 42 + bolaRaio) {
 						bolaParaCima = false;
 					}
 					
