@@ -70,8 +70,8 @@ var game = {
 		}
 		//Verificar derrota e desenhar na tela
 		if(jogador.vitoria == true){
-			game.vitoria();
 			game.btnNewGame();
+			game.vitoria();
 			mouse.listener(canvas);
 		}
 	},
