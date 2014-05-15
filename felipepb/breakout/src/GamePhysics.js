@@ -51,6 +51,7 @@ BreakoutGame.GamePhysics.prototype.handleBallMovement = function (time, ballBoun
 		if (this.onPlayerLooseLife) {
 			this.onPlayerLooseLife();
 			this.ball = null;
+			
 			return;
 		}
 	}
@@ -70,7 +71,6 @@ BreakoutGame.GamePhysics.prototype.handleBallMovement = function (time, ballBoun
 			
 			if (this.onBallHitBrick) {
 				this.onBallHitBrick(this.bricks[i]);
-				GameFramework.removeObjectFromArray(this.bricks, this.bricks[i]);
 			}
 			
 			break;

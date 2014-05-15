@@ -33,6 +33,36 @@ BreakoutGame.Brick.prototype.glowIndex = function (brickIndex) {
     return 4;
 };
 
+BreakoutGame.Brick.prototype.innerWordForIndex = function (index) {
+	switch (index) {
+	case 0: return "why";
+	case 1: return "are";
+	case 2: return "you_blue";
+	case 3: return "doing";
+	case 4: return "t_green";
+	case 5: return "h";
+	case 6: return "i_green";
+	case 7: return "s";
+	case 8: return "t_yellow";
+	case 9: return "o";
+	case 10: return "m";
+	case 11: return "e";
+	case 12: return "i_orange";
+	case 13: return "used";
+	case 14: return "to_orange";
+	case 15: return "love";
+	case 16: return "you_orange";
+	case 17: return "but";
+	case 18: return "now";
+	case 19: return "i_red";
+	case 20: return "have";
+	case 21: return "to_red";
+	case 22: return "kill";
+	case 23: return "you_red";
+	default: return null;
+	}
+}
+
 BreakoutGame.Brick.prototype.init = function () {
     GameFramework.Sprite.prototype.init.apply(this);
     this.glow.init();

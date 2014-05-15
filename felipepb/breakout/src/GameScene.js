@@ -3,7 +3,7 @@ var BreakoutGame = { };
 BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this.canvas = canvas;
 	this.targetFPS = targetFPS;
-	this.game = new GameFramework.Game(canvas, "black", true);
+	this.game = new GameFramework.Game(canvas, "black", false);
 	this.player;
 	this.ball;
 	this.bricks = new Array();
@@ -13,7 +13,7 @@ BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this._resourcesLoadCount = 0;
 	
 	this._preloadTextures = [
-		{ path: "images/player_racket_block.png", isSpriteSheet: false },
+		{ path: "images/player_racket_block.png", isSpriteSheet: false },	
 		{ path: "images/player_racket_glow.png", isSpriteSheet: false },
 		{ path: "images/player_ball.png", isSpriteSheet: false },
 		{ path: "images/whiteBricks.png", isSpriteSheet: true, rows: 1, collumns: 7 },
