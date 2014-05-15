@@ -126,6 +126,7 @@
 					if ((bolaPosY + bolaRaio) >= jogadorPosY) {// se o jogador enconstar na bola (eixo Y)...
 						if ((bolaPosX > jogadorPosX) && (bolaPosX < (jogadorPosX + barraJogadorWidth))) {// se o jogador enconstar na bola (eixo X)...
 							bolaParaCima = true;// a bola muda de lado e é rebatida para o oponente
+							bolaAngulo = (Math.floor(Math.random() * 21)-10);
 						}                    
 					}
 				
