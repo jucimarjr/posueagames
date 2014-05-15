@@ -114,7 +114,7 @@ var bola = {
 		}	
 	},
 	somColisaoBloco : function(){
-		var sound = new Audio("audio/recover.mp3");
+		var sound = new Audio("audio/powerdown.mp3");
 		sound.play();
 	},
 	somColisaoJogador : function(){
