@@ -8,6 +8,8 @@ var width, height;
 
 var player, ball, blocks, background;
 
+var points, lives;
+
 var keyLeft, keyRight;
 
 function init() {
@@ -16,8 +18,13 @@ function init() {
 
 	width = canvas.width;
 	height = canvas.height;
-
+	
+	points = 0;
+	lives = 3;
+	
 	background = new background();
+	showPoints = new showPoints();
+	showLives = new showLives();
 	player = new player(width / 2, height, 100, 10, 10);
 	ball = new ball(width / 2, height / 2, 5, 10);
 	blocks = new blocks();
@@ -28,6 +35,7 @@ function init() {
 
 	document.addEventListener('keyup', keyUp, false);
 	document.addEventListener('keydown', keyDown, false);
+	
 	setInterval(gameLoop, 30);
 }
 
@@ -52,6 +60,12 @@ function gameLoop() {
 
 	// Titulo / Linha divisoria
 	background.draw(context);
+
+	// Pontos
+	showPoints.draw(context);
+	
+	//Vidas
+	showLives.draw(context);
 
 	// Jogador
 	player.update();
@@ -81,6 +95,25 @@ function background() {
 		context.closePath();
 	};
 }
+
+function showPoints() {
+	this.draw = function(context) {
+		// Placar
+		context.font = "21pt Helvetica";
+		context.fillStyle = "red";
+		context.fillText("Pontos: " + points, (width / 2) + 150, 25);
+	};
+}
+
+function showLives() {
+	this.draw = function(context) {
+		// Placar
+		context.font = "21pt Helvetica";
+		context.fillStyle = "red";
+		context.fillText("Vidas: " + lives, (width / 2) + 300, 25);
+	};
+}
+
 
 function ball(x, y, radius, speed) {
 	this.x = x;
@@ -116,19 +149,20 @@ function ball(x, y, radius, speed) {
 			if (blocks.items.length == 0) {
 				// GAME OVER
 			}
-			
+
 			if (this.direction == DOWN) {
 				this.direction = UP;
 			} else {
 				this.direction = DOWN;
 			}
-		} else if ((this.y + this.radius) < 0) {
+		} else if ((this.y + this.radius) < 31) {
 			this.direction = DOWN;
 		}
 
 		// se a bola bater na lateral da tela...
 		if ((this.x - this.radius <= 0) || (this.x + radius > width)) {
-			// multiplicamos por -1 para inverter o sinal e a direção da bola no
+			// multiplicamos por -1 para inverter o sinal e a direção da bola
+			// no
 			// eixo X
 			this.angle = this.angle * -1;
 		}
@@ -139,6 +173,13 @@ function ball(x, y, radius, speed) {
 			this.y += this.speed;
 		} else {
 			this.y -= this.speed;
+		}
+		
+		// morreu
+		if ((this.y + this.radius) > height) {
+			lives--;
+			this.x = width / 2;
+			this.y = height / 2;
 		}
 	};
 }
@@ -197,6 +238,8 @@ function block(x, y, w, h, color) {
 				&& ball.y - ball.radius <= this.y + this.h) {
 			if (ball.x + ball.radius >= this.x
 					&& ball.x - ball.radius <= this.x + this.w) {
+				// marcou ponto
+				points++;
 				return true;
 			}
 		}
