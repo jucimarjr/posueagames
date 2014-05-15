@@ -23,6 +23,8 @@
     var temTijolos = false;
     bola = new Bola(200, 560, 7);
     var tijolos = new Array();
+    
+    
 
    /* var bouncingSound = new Audio("sound/bounce.ogg");
     var breakingSound = new Audio("sound/break.ogg");
@@ -48,14 +50,14 @@
         starterSound.play();
 
         gameLoop = setInterval(animacao, 30);// chama a function gameLoop a cada 30 frames
-        drawPlacar();
+       // drawPlacar();
 
 	}
 	
 	function end(){//gameOver
-		clearInterval(gameLoop);
-	    context.fillText('Fim de jogo!!!!',canvas.width/2,canvas.height/2);
-	    
+
+		context.fillText('Fim de jogo!!!!',canvas.width/2,canvas.height/2);
+		clearInterval(gameLoop);    
 	}
 
 
@@ -72,20 +74,20 @@
 		 jogador.draw();
 		 bola.draw();
 		 criadorDeBlocos();
-		 
-		 for(t in tijolos){
+ 
+		/* for(t in tijolos){
 			 if(tijolos[t]!=0){
 				temTijolos = true; 
 			 } 
-		 }
+		 }*/
 		 
 		 context.font = "18pt monospace";
 		 
-		 
+		/* 
 		 if(!temTijolos){
 			 context.fillText("Voce venceu",125,295);
 			 clearInterval(gameLoop);
-		 }
+		 }*/
 	}
 
 	//Funcao pra gerar um valor de limite
