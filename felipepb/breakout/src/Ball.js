@@ -14,6 +14,12 @@ BreakoutGame.Ball = function () {
 	};
 	
 	this.lastPos;
+	this.opacity = 0.0;
+	var self = this;
+	this._startAnimation = new GameFramework.Animation(this, "opacity", 0, 1.0, 1000, GameFramework.Easing.Type.Linear, function () {
+		self._startGame();
+	});
+	this._startAnimation.begin();
 };
 
 BreakoutGame.Ball.prototype = new GameFramework.Sprite();
@@ -29,8 +35,15 @@ BreakoutGame.Ball.prototype.circleShape = function () {
 BreakoutGame.Ball.prototype.update = function (time) {
 	GameFramework.Sprite.prototype.update.apply(this, [time]);
 	
+	this._startAnimation.update(time);
+	
 	this.velocity.angular = this.velocity.x / 50.0;
 	this.transform.angle += this.velocity.angular * time.deltaTime;
+};
+
+BreakoutGame.Ball.prototype._startGame = function () {
+	this.velocity.x = Math.random() * 0.6 - 0.3;
+	this.velocity.y = -0.3;
 };
 
 BreakoutGame.Ball.prototype.render = function (time, context2D, debugDraw) {

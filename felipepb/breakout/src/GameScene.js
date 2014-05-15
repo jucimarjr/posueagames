@@ -15,6 +15,7 @@ BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this._preloadTextures = [
 		{ path: "images/player_racket_block.png", isSpriteSheet: false },	
 		{ path: "images/player_racket_glow.png", isSpriteSheet: false },
+		{ path: "images/player_life.png", isSpriteSheet: false },
 		{ path: "images/player_ball.png", isSpriteSheet: false },
 		{ path: "images/whiteBricks.png", isSpriteSheet: true, rows: 1, collumns: 7 },
 		{ path: "images/whiteGlow.png", isSpriteSheet: false },
@@ -23,6 +24,8 @@ BreakoutGame.GameScene = function (canvas, targetFPS) {
 	];
 	
 	this.loadTextures(this._preloadTextures);
+	this.playerLives;
+	this.heartSprites = new Array();
 };
 
 BreakoutGame.GameScene.prototype = {
@@ -56,6 +59,7 @@ BreakoutGame.GameScene.prototype = {
 		this.createPlayer();
 		this.createBall();
 		this.createPhysicsManager();
+		this.setUpLives();
 		
 		//this.createAudioAndTweenDemo();
         
@@ -256,9 +260,6 @@ BreakoutGame.GameScene.prototype = {
 		this.ball.transform.y = this.player.transform.y
 								- this.player.boundingBox().height / 2
 								- this.ball.boundingBox().height / 2;
-								
-		this.ball.velocity.x = 0.3;
-		this.ball.velocity.y = -0.3;
 		
 		if (this.gamePhysics) {
 			this.gamePhysics.ball = this.ball;
@@ -282,14 +283,35 @@ BreakoutGame.GameScene.prototype = {
 		};
 	},
 	
+	setUpLives: function () {
+		this.playerLives = 3;
+		
+		for (var i = 0; i < this.playerLives; i++) {
+			var sprite = GameFramework.SpriteFactory.spriteFromTexture("images/player_life.png");
+			this.game.addGameObject(sprite);
+			this.heartSprites.push(sprite);
+			sprite.transform.x = this.canvas.width - (sprite.boundingBox().width + 5) * (this.playerLives - i);
+			sprite.transform.y = this.canvas.height - sprite.boundingBox().height;
+		}
+	},
+	
 	onPlayerLooseLife: function () {
+		if (this.playerLives > 0) {
+			var heart = this.heartSprites[0];
+			this.game.removeGameObject(heart);
+			GameFramework.removeObjectFromArray(this.heartSprites, heart);
+			this.playerLives--;
+			
+			var self = this;
+			setTimeout(function () {
+				self.createBall();
+			}, 1000);
+		} else {
+			//TODO: call game over scene.
+		}
+		
 		this.game.removeGameObject(this.ball);
 		this.ball = null;
-		
-		var self = this;
-		setTimeout(function () {
-			self.createBall();
-		}, 1000);
 	},
 	
 	onBallHitBrick: function (brick) {
