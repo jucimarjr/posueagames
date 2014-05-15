@@ -100,15 +100,11 @@ BreakoutGame.GamePhysics.prototype.handleBallMovement = function (time, ballBoun
 	if (this.checkCollisionCircleAgainstRect(ballCircle, this.bigBrick.boundingBox())) {
 		this.calculateNewBallVelocity(this.bigBrick.boundingBox());
 
-		if (!this.bigBrick.active()) {
+		if (!this.bigBrick.active() && this.bricks.length == 0) {
 			this.bigBrick.active(true);
-		} else {
+		} else if (this.bigBrick.active()) {
 			this.bigBrick.onHit();
-			this.checkCollisionCircleAgainstRect({
-				radius: ballBoundingBox.width / 2.0,
-				centerX: this.ball.transform.x,
-				centerY: this.ball.transform.y
-			}, this.bigBrick.boundingBox());
+			this.checkCollisionCircleAgainstRect(ballCircle, this.bigBrick.boundingBox());
 		}
 	}
 

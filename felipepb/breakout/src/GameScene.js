@@ -3,7 +3,7 @@ var BreakoutGame = { };
 BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this.canvas = canvas;
 	this.targetFPS = targetFPS;
-	this.game = new GameFramework.Game(canvas, "black", true);
+	this.game = new GameFramework.Game(canvas, "black", false);
 	this.player;
 	this.ball;
 	this.bricks = new Array();
