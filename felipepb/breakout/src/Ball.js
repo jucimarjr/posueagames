@@ -3,7 +3,8 @@ BreakoutGame.Ball = function () {
 	
 	this.velocity = {
 		x: 0.0,
-		y: 0.0
+		y: 0.0,
+		angular: 0.0
 	};
 	
 	this._circleShape = {
@@ -23,6 +24,13 @@ BreakoutGame.Ball.prototype.circleShape = function () {
 	this._circleShape.centerY = this.transform.y;
 	
 	return this._circleShape;
+};
+
+BreakoutGame.Ball.prototype.update = function (time) {
+	GameFramework.Sprite.prototype.update.apply(this, [time]);
+	
+	this.velocity.angular = this.velocity.x / 50.0;
+	this.transform.angle += this.velocity.angular * time.deltaTime;
 };
 
 BreakoutGame.Ball.prototype.render = function (time, context2D, debugDraw) {

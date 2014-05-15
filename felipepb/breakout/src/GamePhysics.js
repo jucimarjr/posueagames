@@ -78,6 +78,7 @@ BreakoutGame.GamePhysics.prototype.handleBallMovement = function (time, ballBoun
 	var playerBoundingBox = this.player.boundingBox();
 	if (this.checkCollisionCircleAgainstRect(ballCircle, playerBoundingBox) && this.ball.velocity.y > 0) {
 		this.calculateNewBallVelocity(playerBoundingBox);
+		this.ball.velocity.x = (this.ball.transform.x - this.player.transform.x) / 100.0;
 	}
 	
 	// Handle collision between ball and bricks
@@ -193,6 +194,4 @@ BreakoutGame.GamePhysics.prototype.calculateNewBallVelocity = function (bounding
 		this.ball.transform.y += offsetY;
 		ballVelocity.y = -ballVelocity.y;
 	}
-	
-	// this.ball.velocity = ballVelocity;
 };
