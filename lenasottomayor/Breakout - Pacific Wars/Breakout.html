@@ -14,7 +14,7 @@
 		<script>
 		
 			var canvas, context, barraWidth, barraHeight, barraJogadorWidth, barraJogadorHeight, 
-				jogadorPosX, jogadorPosY,  teclaEsquerdaPressionada, teclaDireitaPressionada, 
+				jogadorPosX, jogadorPosY,  teclaEsquerdaPressionada, teclaDireitaPressionada, teclaEnterPressionada,
 				oponentePosX, oponentePosY, oponenteParaCima, bolaRaio, bolaPosX, bolaPosY, 
 				bolaParaCima, bolaAngulo, bolaTempo, velocidadeJogador, 
 				velocidadeOponente, velocidadeBola, pontosJogador, pontosOponente, 
@@ -35,6 +35,7 @@
 
 				teclaEsquerdaPressionada = false;
 				teclaDireitaPressionada = false;
+				teclaEnterPressionada = false;
 				
 				pontosJogador = 0;
 
@@ -50,14 +51,14 @@
 			
 				bolaRaio = 10; 
 				bolaParaCima = false;
-				bolaAngulo = Math.floor(Math.random() * 21) - 10;
+				bolaAngulo = Math.floor(Math.random() * 21) - 7;
 				bolaTempo = 0;
 				bolaDirecaoY = -1;
 
 				jogadorPosX = (canvas.width - barraJogadorWidth)/2;
 				jogadorPosY = canvas.height - barraJogadorHeight;
 				vidaJogador = 3;
-				gameOver = " ";
+				gameOver = false;
 				
 				bolaPosX = canvas.width / 2;
 				bolaPosY = canvas.height / 2;
@@ -83,6 +84,8 @@
 					teclaEsquerdaPressionada = true;
 				} else if (e.keyCode == 39) { // right
                     teclaDireitaPressionada = true;
+				} else if(e.keyCode == 13){
+					teclaEnterPressionada = true;
 				}
 			}
 
@@ -97,8 +100,25 @@
 			function mouseMove(e) {
 				mousePosicao = e.clientX - canvas.getBoundingClientRect().left;
 			}
+			
+			function estadoJogo(){
+				if(gameOver){
+					do{
+						
+					}while(!teclaEnterPressionada)
+					
+					if(teclaEnterPressionada){
+						
+						document.getElementById("gameOver").style.display ="none";
+						document.getElementById("canvas").style.display ="block";
+						init();
+					}
+				}
+			}
 
 			function gameLoop() {
+			
+				estadoJogo();
 
 				// Movimento do jogador com o teclado
 				if (teclaEsquerdaPressionada!=teclaDireitaPressionada) { // se o jogador estiver pressionando a tecla direita ou esquerda
@@ -115,7 +135,7 @@
 
 				// Movimento do jogador com o mouse
 				if (teclaEsquerdaPressionada == false  && teclaDireitaPressionada == false){
-					if (mousePosicao >= (barraJogadorWidth/2) && mousePosicao < (canvas.width - barraJogadorWidth/2)){
+					if ((mousePosicao >= (barraJogadorWidth/2))  && (mousePosicao < canvas.width - 0.5*barraJogadorWidth)){
 						jogadorPosX = mousePosicao - barraJogadorWidth/2;
 					}
 				}
@@ -123,10 +143,16 @@
 				var blocoHeight = blocos.length * barraHeight + 105;
 				// Bola
 				if (bolaTempo <= 0) {// se a bola estiver em jogo, o tempo é zero (após marcar ponto, a bola fica invisível por um tempo)
-					if ((bolaPosY + bolaRaio) >= jogadorPosY ) {// se o jogador enconstar na bola (eixo Y)...
+					if ((bolaPosY + bolaRaio) >= jogadorPosY) {// se o jogador enconstar na bola (eixo Y)...
 						if ((bolaPosX > jogadorPosX) && (bolaPosX < (jogadorPosX + barraJogadorWidth))) {// se o jogador enconstar na bola (eixo X)...
 							bolaParaCima = true;// a bola muda de lado e é rebatida para o oponente
-						}                    
+							
+							if (teclaEsquerdaPressionada) {
+								bolaAngulo -= 5;
+							} else if (teclaDireitaPressionada) {
+								bolaAngulo +=3;
+							}
+						}
 					}
 				
 					for(var posY = 0; posY < blocos.length; posY++) {
@@ -154,7 +180,7 @@
 					bolaPosX += bolaAngulo;// movemos a bola para cima ou para baixo, de acordo com o cáculo acima
 
 					//se a bola encostar na parede de cima a bola desce
-					if (bolaPosY - bolaRaio <= 0) {
+					if (bolaPosY - bolaRaio <= 42 + bolaRaio) {
 						bolaParaCima = false;
 					}
 					
@@ -178,8 +204,26 @@
 							bolaTempo = 0;// zera o tempo de deixar a bola invisível e a coloca em jogo novamente
 						} else {
 							context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+							
+							var div = document.createElement("div");
+								div.setAttribute("id", "gameOver");
 
-							gameOver = "Game over";
+								div.className = "notice";
+								div.style.display = "block";
+								div.style.width = "1000px";
+								div.style.height = "683px";
+								div.style.position = "relative";
+								div.style.left = "50px";
+								div.style.zIndex = "2";
+								div.style.background = "url('images/breakout_over.gif')";
+								div.addEventListener('keydown', keyDown, false);
+								
+								document.getElementById("canvas").style.display ="none";
+							
+								// test case, append the div to the body
+								document.body.appendChild(div);
+								
+								gameOver = true;
 						}
 					} else {// se o tempo de deixar a bola invisível ainda não passou...
 						bolaTempo++;// continuamos contando até 50
@@ -211,7 +255,7 @@
 				context.fillStyle = "#b1dce2";// cor preta (opcional)
 				context.fillText("TRIALS: "+vidaJogador, 890, 30); // escreve texto na tela na posição desejada
 				context.fillText("SCORE: "+pontos, 10, 30); // escreve texto na tela na posição desejada
-				context.fillText(gameOver, 425, (canvas.height/2));
+				//context.fillText(gameOver, 425, (canvas.height/2));
 
 				
 				// Bola

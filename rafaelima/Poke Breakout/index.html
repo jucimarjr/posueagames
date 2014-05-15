@@ -7,6 +7,10 @@
 canvas {
 	border: 1px dashed #000000;
 }
+@font-face {
+    font-family: "pokeNumber";
+    src: url("font/04B_03__.TTF");
+}
 </style>
 </head>
 <body onload="init()" style="text-align: center">
@@ -19,9 +23,10 @@ canvas {
 		teclaEsquerdaPressionada, teclaDireitaPressionada, 
 		brickTypes, brickWidth, brickHeight,
 		parede, paredeLinhas, paredeColunas,
-        song, playBolaSom, contaVidas, vidasImg,
+        songBackground, playBolaSom, contaVidas, vidasImg,
         numPokemon, contaPokemon, placarAltura,
-        gameOverScreen, endGame, tocaMusica;
+        gameOverScreen, endGame, tocaMusica,
+        pontuacaoTotal, songGameOver, gifPokemon;
 		
 		var bola = {
 			raio : 16,
@@ -46,8 +51,9 @@ canvas {
                         
 			document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
 			document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
-			song = document.getElementById("bgsound");
-            playBolaSom = document.getElementById("playPokeBall");
+			songBackground = document.getElementById("bgsound");
+            playBolaSom = document.getElementById("audioPokeball");
+            songGameOver = document.getElementById("audioGameOver");
             
             tocaMusica = true;//Musica esta tocando
             beginsGame();//Reseta a tela e os dados
@@ -57,36 +63,45 @@ canvas {
 		//Reseta a tela e os dados
 		function beginsGame(){
 			reset();
-			contaPokemon = new Array (0, 0, 0, 0); //4 pokemons diferentes
+			contaPokemon = new Array (0, 0, 0, 0); //pontuacao dos 4 pokemons diferentes
 			contaVidas = 3;//Quantidade de vidas iniciais
-			regulaVolume();
-			endGame = false;//false
+			regulaVolume();//30% da musica de Background
+			endGame = false;//nao é game over
+			pontuacaoTotal = 0;//placar total
+			continuaMusica();//continua musica se nao foi parada pelo usuario
+			preencheParede();
 		}
 		
 		//Repete constantemente essas funcoes
 		function gameLoop() {
-			checaColisaoParede();
-			movimentaJogador();
-			movimentaBola();
-			redesenhaTela();
+			if(!endGame){//Verifica se é não é game over
+				checaColisaoParede();
+				movimentaJogador();
+				movimentaBola();
+				redesenhaTela();
+			} else {
+				gameOver();
+			}
 		}
 		
-		//Reseta a tela
+		//Reseta a tela, mas nao todos os dados
 		function reset() {
 			gameOverScreen = new Image(); 
 			gameOverScreen.src = "img/gameover.png";
 			barraImg = new Image(); 
 			barraImg.src = "img/bar.png";
-			barraImg.width = 90;//90
-			barraImg.height = 26;
+			barraImg.width = 87;
+			barraImg.height = 24;
 			backgroundImg = new Image(); 
 			backgroundImg.src = "img/BG.png";
 			bolaImg = new Image(); 
 			bolaImg.src = "img/pokeball0.png";
 			vidasImg = new Image();
 			vidasImg.src = "img/pokeball_vidas.png";
+			gifPokemon = new Image(); 
+			gifPokemon.src = "img/gameover_gif.png";
 			frameCount = 0;
-			placarAltura = 43;
+			placarAltura = 129;
 
 			jogador.posX = (canvas.width - barraImg.width) / 2;
 			jogador.posY = canvas.height - barraImg.height ;
@@ -104,37 +119,68 @@ canvas {
 			lance = 0;
 			brickWidth = 42; 
 			brickHeight = 42;
-			paredeLinhas = 7;
+			paredeLinhas = 7;//7
 			paredeColunas = 12;
 			brickTypes = 4;
 			frameProportion = 3;
-			
-			preencheParede();
 		}
-                
+         
+		//GAME OVER - Desenha a Tela de Game Over
+		function gameOver(){
+		    context.drawImage(backgroundImg, 0, 0);
+		    context.drawImage(gameOverScreen, 0, 0);
+		    context.drawImage(gifPokemon, 35, 438);
+		    context.font = '90px "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
+			context.fillStyle = "#1c30bd";//cor da fonte
+			var pontuaTexto = (pontuacaoTotal < 10 ? "0"+ pontuacaoTotal : pontuacaoTotal);// Acrescenta 0 na frente dos numeros menores que 10
+			context.fillText( pontuaTexto ,  canvas.width/2 - 55, canvas.height/2 +10);//Desenha a pontuacao
+		}
 		
-		//30% do som atual
+		//30% do som do Background
 		function regulaVolume(){ 
-			song.volume = 0.3;//0.3
+			songBackground.volume = 0.3;//0.3
 		}
 		
 		//Toca a musica da pokeBall e nao toca se a musica estiver pausada
-		function pokeballPlay() {
+		function playPokeball() {
 			if(tocaMusica){
 			 	playBolaSom.play();
 			}
 		}
 		
-		//pausa musica
-		function musicaPause() {
-	        playBolaSom.pause();
-	        song.pause();
+		//pausa/continua musica
+		function ativadorMusica() {
+			//Musica Pause
+			if(tocaMusica){
+				tocaMusica = false;
+				playBolaSom.pause();
+		        songBackground.pause();
+			} else {
+				//Musica Continua
+				tocaMusica = true;
+				songBackground.autoplay = true;
+				songBackground.load();
+			}
+	        
 		}
 		
-		//musica de fundo continua
-		function musicaContinua(){
-			song.autoplay = true;
-			song.load();
+		//para musica quando gameover
+		function playGameOver() {
+			//Musica Pause
+			if(tocaMusica){
+				playBolaSom.pause();
+		        songBackground.pause();
+				songGameOver.play();
+			}
+	        
+		}
+		
+		//continua tocando se som ativado
+		function continuaMusica(){
+			if(tocaMusica){
+				songBackground.autoplay = true;
+				songBackground.load();
+			}
 		}
 		
 		//preenche uma matriz parede onde cada espaço tem 30% de chance de ser vazio
@@ -146,12 +192,12 @@ canvas {
 				numPokemon[i] = [];
 			    for(var j=0; j < paredeColunas; j++) {
 					var brick = new Image();
-					numPokemon[i][j] = Math.floor(Math.random() * 4);
+					numPokemon[i][j] = Math.floor(Math.random() * 4);//numero do pokemon na posicao [i][j]
 					brick.src = "img/brick"+ numPokemon[i][j] +".png";
 						if(Math.random()<=0.7){
 						    parede[i][j] = brick; //tijolo(1) ou não tijolo(0)?
 						} else {
-						    parede[i][j] = null; 
+						    parede[i][j] = null; //tijolo nao existe
 						    numPokemon[i][j] = -1;
 						}
                                         
@@ -181,13 +227,7 @@ canvas {
 			} else if (e.keyCode === 13) { // Enter - recomeca o jogo
 				beginsGame();
 			} else if (e.keyCode === 77) { // letra m - sem/com musica
-				if(tocaMusica){
-					tocaMusica = false;
-					musicaPause();
-				} else {
-					tocaMusica = true;
-					musicaContinua();
-				}
+				ativadorMusica();
 			} 
 		}
 
@@ -196,7 +236,7 @@ canvas {
 				//movimento no eixo X
 				if ((bola.posX - bola.raio <= 0) 
 						|| (bola.posX + bola.raio >= canvas.width)) {// se a bola bater dos lados da tela...
-					bola.posX = ((bola.posX - bola.raio <= 0) ? bola.raio : canvas.width-bola.raio);
+					bola.posX = ((bola.posX - bola.raio <= 0) ? bola.raio : canvas.width - bola.raio);
 					bola.angulo = bola.angulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo X
 				}
 				bola.posX += bola.angulo;// movemos a bola para os lados, de acordo com o cáculo acima
@@ -207,7 +247,8 @@ canvas {
 				} else {// se estiver indo para a baixo...
 					bola.posY += bola.velocidade;// movemos a bola para baixo
 				}
-				if ((bola.posY - (bola.raio/2) -placarAltura) <= 0) { //se a bola bater no topo ela deve descer
+				
+				if ((bola.posY - bola.raio - placarAltura ) <= 0) { //se a bola bater no topo ela deve descer
 					bola.paraCima = false;
 				} else if (((bola.posY + bola.raio - bola.velocidade) >= jogador.posY) //se a bola esta na altura da barra 
 					 && ((bola.posX >= jogador.posX) && (bola.posX <= (jogador.posX + barraImg.width)))) { //e se a bola esta dentro do comprimento da barra
@@ -218,6 +259,7 @@ canvas {
 						//reinicia jogo
 						if(contaVidas === 0){
 							endGame = true;
+							playGameOver();
 						}else {
 							contaVidas--;
 							reset();
@@ -245,17 +287,17 @@ canvas {
 			}
 		}
 
-		//A bola nunca vai em um angulo de 0 graus
+		//A bola nunca vai em um angulo de muito pequeno
 		function validaAngulo(){
 		        if(bola.angulo > 0 && bola.angulo < 10)
-		            bola.angulo = 11;
+		            bola.angulo = 9;
 		        else if (bola.angulo <= 0 && bola.angulo > -10)
-		            bola.angulo = -11;
+		            bola.angulo = -9;
 		}
 		
 		//Verifica se houve colisao na tijolo
 		function checaColisaoParede(){ //todas as possiveis colisoes do perímetro e centro da bola com a parede
-			if((bola.posY-bola.raio) <= (brickHeight* paredeLinhas)){ //se o topo da bola chegar no fundo da parede
+			if((bola.posY-bola.raio) <= (brickHeight* paredeLinhas + placarAltura)){ //se o topo da bola chegar no fundo da parede
 				for(var j = -1; j<=1; j++){ //indices que controlam qual 'extremidade' da bola esta tocando a parede
 					for(var i = -1; i<=1; i++){//em relação ao centro da bola
 						x = Math.floor((bola.posX + (i*bola.raio))/brickWidth); //x do ponto
@@ -264,6 +306,7 @@ canvas {
 							if (parede[y][x]){ //se tinha tijolo
 								parede[y][x] = null; //tira tijolo
 								contaPokemon[numPokemon[y][x]]++; //Conta +1 pokemon
+								pontuacaoTotal++; //Soma mais um no total
 								numPokemon[y][x] = -1;
 								reacaoColisao(i,j);
 							}
@@ -275,7 +318,7 @@ canvas {
 		//EM qual ponto houve a colisao na bola
 		function reacaoColisao(x, y){
             //som quando acerta o pokemon
-            //pokeballPlay();
+            playPokeball();
 			if(x===0 && y===-1){ //top center 0 -1 //top left -1 -1 //top right 1 -1
 				bola.paraCima = false;
 			}else if(x===0 && y===1){ //bottom left -1 1 //bottom center 0 1 //bottom right 1 1
@@ -314,26 +357,16 @@ canvas {
 		}
 
 		function redesenhaTela() {
-			if (!endGame){
-				context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
-				context.drawImage(backgroundImg,0,0);//desenha fundo
-				desenhaParede(); 
-				context.drawImage(barraImg,jogador.posX,jogador.posY); //desenha nuvem
-				context.drawImage(bolaImg, bola.posX - bola.raio, bola.posY - bola.raio); //desenha bola
-				desenhaVidas();
-				rodaBola();
-				context.font = "20pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
-				context.fillStyle = "#1c30bd";//cor da fonte
-				desenhaPontuacao();
-				
-			//GAME OVER
-			}else {
-				context.drawImage(gameOverScreen,0,0);
-				context.font = "90pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
-				context.fillStyle = "#1c30bd";//cor da fonte
-				context.fillText( (calculaPotuacaoTotal()<10 ? "0" + calculaPontuacaoTotal() : calculaPontuacaoTotal()) , canvas.width/2 - 50, canvas.height/2 -10);
-				contaPokemon = new Array (0, 0, 0, 0);
-			}
+			context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+			context.drawImage(backgroundImg,0,0);//desenha fundo
+			desenhaParede(); 
+			context.drawImage(barraImg,jogador.posX,jogador.posY); //desenha nuvem
+			context.drawImage(bolaImg, bola.posX - bola.raio, bola.posY - bola.raio); //desenha bola
+			desenhaVidas();
+			rodaBola();
+			context.font = '20pt "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
+			context.fillStyle = "#ffffff"; //cor da fonte
+			desenhaPontuacao();
 		}
 		
 		//Desenha a bola girando
@@ -360,26 +393,21 @@ canvas {
 				var count = 3;
 				for(;count >= 0; count--){
 					var number = (contaPokemon[count]<10 ? "0"+contaPokemon[count] : contaPokemon[count]);
-					context.fillText("x" + number, 66 +(83*count), 30);
+					context.fillText(number, 66 +(83*count), 30);
 				}
-		}
-		
-		//Calcula quanto voce ganhou na partida
-		function calculaPotuacaoTotal(){
-			var total = 0;
-			for(var count = 3; count >= 0; count--){
-				total = contaPokemon[count];
-			}
-			return total;
 		}
 		
 	</script>
         <audio autoplay loop="loop" id="bgsound">
-            <source src="img/music.mp3" type="audio/mp3">
+            <source src="sound/sound_bg.mp3" type="audio/mp3">
             Seu browser não suporta o formato do audio.
         </audio>
-        <audio id='playPokeBall'>
-            <source src="img/PokeBallSong.mp3" type="audio/mp3">
+        <audio id='audioPokeball'>
+            <source src="sound/sound_pokeball.mp3" type="audio/mp3">
+            Seu browser não suporta o formato do audio.
+        </audio>
+        <audio id='audioGameOver'>
+            <source src="sound/sound_gameover.mp3" type="audio/mp3">
             Seu browser não suporta o formato do audio.
         </audio>
 </body>

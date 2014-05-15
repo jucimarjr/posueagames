@@ -10,6 +10,12 @@ BreakoutGame.Brick = function (index) {
     
     this.glow = GameFramework.SpriteFactory.spriteFromSpriteSheet("images/bricksGlow.png");
     this._spriteIndex = index;
+    this._glowAnimation = new GameFramework.Animation(this.glow,
+                                                      'opacity',
+                                                      0.5,
+                                                      1.0,
+                                                      600,
+                                                      GameFramework.Easing.Type.OutQuart);
 };
 
 BreakoutGame.Brick.prototype = new GameFramework.Sprite();
@@ -37,15 +43,16 @@ BreakoutGame.Brick.prototype.spriteIndex = function(index) {
     this.glow.spriteIndex(this.glowIndex(index));
 };
 
+BreakoutGame.Brick.prototype.playGlowAnimation = function () {
+    this._glowAnimation.begin();
+},
+
 BreakoutGame.Brick.prototype.update = function (time) {
     GameFramework.Sprite.prototype.update.apply(this, [time]);
     
-    this._timeInCurrentIndex += time.deltaTime;
-    
-    // this.spriteIndex((this.spriteIndex() + 1) % this._maxIndex);
-    
     this.glow.transform = this.transform;
     this.glow.update(time);
+    this._glowAnimation.update(time);
 };
 
 BreakoutGame.Brick.prototype.render = function (time, context2D, debugDraw) {
@@ -57,4 +64,5 @@ BreakoutGame.Brick.prototype.render = function (time, context2D, debugDraw) {
 BreakoutGame.Brick.prototype.dispose = function () {
     GameFramework.Sprite.prototype.dispose();
     this.glow.dispose();
+    this._glowAnimation.dispose();
 };

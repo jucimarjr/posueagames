@@ -97,6 +97,10 @@ BreakoutGame.GameScene.prototype = {
                                                 GameFramework.Easing.Type.InOutBack);
         angle.begin();
         this.game.addGameObject(angle);
+        
+        BreakoutGame.MonitorBeat.play();
+        BreakoutGame.MonitorBeat.dying();
+        BreakoutGame.HeartBeat.play();
         // ******************** Animation and Audio Demo ********************
 	},
 	
