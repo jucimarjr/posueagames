@@ -43,11 +43,13 @@
 
 		// Matriz dos blocos a serem desenhados 10 X 6 inicialmente 
 		 var blocos = [
-			[1,1,1,1,1,1,1,1,1,0],
-			[1,1,0,1,1,1,1,1,1,1],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
 			[1,1,1,0,1,1,0,1,1,1],
 			[1,1,1,1,1,1,1,1,1,1],
 			[1,0,0,0,1,0,0,1,1,1],
+			[1,1,1,1,1,1,1,1,1,1],
+			[1,1,1,1,1,1,1,1,1,1],
 		];
 	    
 		// Desenha a parede 
@@ -69,7 +71,7 @@
 	    function desenharBloco(x,y, temBloco){
 	    	if (temBloco != 0) {
 		    	ctx.fillStyle = "green";
-		    	ctx.fillRect((x*blocoLargura)+(x*1),(y*blocoAltura)+(y*1),blocoLargura,blocoAltura);
+		    	ctx.fillRect((x*blocoLargura)+x,(y*blocoAltura)+y,blocoLargura,blocoAltura);
 	    	}
 	    }
 	    
@@ -101,10 +103,10 @@
 		}
 		
 		function fimDoJogo() {
-			clearInterval(gameLoop);	
+			clearInterval(gameLoop);
 			// imagem de end game
 //            var fimJogo = new Image();
-//            fimJogo.src = 'images/bola2.png';
+//            fimJogo.src = 'images/endgame2.png';
 //	    	ctx.drawImage(fimJogo, 10, 10);
 			ctx.fillText('Fim de Jogo ', 200, 200); // TODO melhorar
 		}
@@ -118,35 +120,35 @@
 			}
 
 			// Se bola chegou no limite superior
-			if (bolaY < 0){
+			// ou Se a bola colidiu em um bloco
+			if (bolaY < 0 || colisaoBlocoVertical()){
 				bolaDeltaY = bolaDeltaY * -1; // Inverte o Sentido da  Bola
 			}
 
 			// Se a bola tocar nas laterais inverter a direcao
 				// Chegou no limite esquerdo mudar sentido para direito
 				// ou Chegou no limite direito mudar sentido para direito
-			if ((bolaX < 1) || (bolaX+bolaAltura  > canvas.width - 1)){  
+			if ((bolaX < 0) || (bolaX+bolaAltura  > canvas.width)){  
 				bolaDeltaX = bolaDeltaX * -1;
 			}
 
 			// se a bola colidir na barra ou seja:
 				//1) chegou na mesma coordenada Y
 				//2) esta entre a coordena X do inicio ao fim da barra
-			if (bolaY + bolaAltura >= barraY){
+			if (bolaY + bolaAltura >= barraY) {
 				if (bolaX + bolaAltura >= barraX && 
 					bolaX + bolaAltura <= barraX + barraLargura){
 					bolaDeltaY = bolaDeltaY * -1; // inverte sentido da bola
 				}
 			}
 
-
 			// Coordenadas da bola
 			bolaX += bolaDeltaX; 
 			bolaY += bolaDeltaY;
 		}
-	    
+
 		function moverBarraLateral() {
-			
+
 			if (moverBarra == 'DIREITA') {
 				barraDeltaX = barraVelocidadeX;
 			} else if (moverBarra == 'ESQUERDA') {
@@ -162,6 +164,48 @@
 
 			barraX += barraDeltaX;
 
+		}
+
+		function colidirBloco(i,j){
+			// decrementa valor na posicao da matriz blocos
+			blocos[i][j] --;
+			//TODO play na musica de colisão
+			//TODO aumentar PONTOS
+		}
+
+		// Função para checar colisão da bola com um bloco na coordenada Y (Vertical)
+		function colisaoBlocoVertical(){
+
+		    var colidiu = false;
+			for (var i=0; i < blocos.length; i++) {
+				for (var j=0; j < blocos[i].length; j++) {
+					if (blocos[i][j] > 0 ){ // Se ainda tem blocos nesta posicao na matriz blocos
+						// Calcular em que posição no canvas este bloco foi desenhado baseado
+						// na função desenharBloco(x,y, temBloco)
+						//(x*blocoLargura)+(x*1),(y*blocoAltura)+(y*1)
+						var blocoX = (j * blocoLargura)+j;
+						var blocoY = (i * blocoAltura) + i;
+
+						
+						if (
+							// checar se a bola esta tocando por baixo do bloco 
+							(bolaY <= (blocoY + blocoAltura))
+							|| 
+							// ou checar se a bola esta tocando por cima do bloco
+							(bolaY + bolaAltura >= blocoY && bolaY + bolaAltura <= blocoY))  {
+								// Checar se esta entre o bloco
+								if (bolaX >= blocoX && bolaX <= blocoX + blocoLargura) {
+									colidirBloco(i,j);							
+									colidiu = true;
+								}
+						}
+
+						
+
+					}	
+				}
+			}
+			return colidiu;
 		}
 		
         function keyDown(e) {
