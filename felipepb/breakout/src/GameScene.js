@@ -111,7 +111,7 @@ BreakoutGame.GameScene.prototype = {
 	
 	createBrickRows: function () {
 	    this.game.clearGameObjects();
-	    this.clearArray(this.bricks);
+	    GameFramework.clearArray(this.bricks);
 		
 	    var topMargin = 15;
 	    
@@ -242,8 +242,11 @@ BreakoutGame.GameScene.prototype = {
 		this.game.addGameObject(this.gamePhysics);
 		
 		var self = this;
-		this.gamePhysics.playerLooseLifeCallback = function () { 
+		this.gamePhysics.onPlayerLooseLife = function () { 
 			self.onPlayerLooseLife();
+		};
+		this.gamePhysics.onBallHitBrick = function (arg) {
+			self.onBallHitBrick(arg);
 		};
 	},
 	
@@ -257,17 +260,13 @@ BreakoutGame.GameScene.prototype = {
 		}, 1000);
 	},
 	
+	onBallHitBrick: function (brick) {
+		this.game.removeGameObject(brick);
+		GameFramework.removeObjectFromArray(this.bricks, brick);
+	},
+	
 	onResourceLoaded: function () {
 		if (--this._resourcesLoadCount <= 0)
 			this.startGame();
-	},
-	
-	clearArray: function (array) {
-	    var length = array.length;
-
-	    for (var i = 0; i < length; i++)
-	       array[i].dispose();
-	    
-	    array.splice(0, length + 1);
 	}
 }

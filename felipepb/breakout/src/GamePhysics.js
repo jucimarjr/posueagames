@@ -5,7 +5,8 @@ BreakoutGame.GamePhysics = function (canvas, bricks, bigBrick, player, ball) {
 	this.player = player;
 	this.ball = ball;
 	
-	this.playerLooseLifeCallback;
+	this.onPlayerLooseLife;
+	this.onBallHitBrick;
 }
 
 BreakoutGame.GamePhysics.prototype = new GameFramework.GameObject() 
@@ -18,7 +19,7 @@ BreakoutGame.GamePhysics.prototype.update = function (time) {
 
 BreakoutGame.GamePhysics.prototype.step = function (time) {
 	// Handle ball physics.
-	if (this.ball != null && this.player != null) {
+	if (this.ball != null && this.player != null && this.bricks != null) {
 		// Store ball bounding box before movement.
 		var ballBoundingBox = this.ball.boundingBox();
 		// Move the ball.
@@ -47,8 +48,8 @@ BreakoutGame.GamePhysics.prototype.handleBallMovement = function (time, ballBoun
 	
 	// Check if the ball hit the bottom of the screen and callback to the GameScene.
 	if (this.ball.transform.y > screenBottom) {
-		if (this.playerLooseLifeCallback) {
-			this.playerLooseLifeCallback();
+		if (this.onPlayerLooseLife) {
+			this.onPlayerLooseLife();
 			this.ball = null;
 			return;
 		}
@@ -58,6 +59,22 @@ BreakoutGame.GamePhysics.prototype.handleBallMovement = function (time, ballBoun
 	var playerBoundingBox = this.player.boundingBox();
 	if (this.intersects(ballBoundingBox, playerBoundingBox) && this.ball.velocity.y > 0) {
 		this.ball.velocity.y = -this.ball.velocity.y;
+	}
+	
+	// Handle collision bewteen ball and bricks
+	var bricksNum = this.bricks.length;
+	for (var i = 0; i < bricksNum; i++) {
+		var brickBoundingBox = this.bricks[i].boundingBox();
+		if (this.intersects(ballBoundingBox, brickBoundingBox)) {
+			this.ball.velocity.y = -this.ball.velocity.y;
+			
+			if (this.onBallHitBrick) {
+				this.onBallHitBrick(this.bricks[i]);
+				GameFramework.removeObjectFromArray(this.bricks, this.bricks[i]);
+			}
+			
+			break;
+		}
 	}
 
 	// Update position based on velocity.
