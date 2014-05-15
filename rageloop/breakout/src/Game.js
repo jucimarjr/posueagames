@@ -17,7 +17,7 @@ function Game(id, width, height) {
     this.missBallSound = null;
     this.winSound = null;
 
-    //hud
+    //hud // exibe qtde de pontos e qtde de vidas  
     this.hud = null;
 
     //key handlers
@@ -93,7 +93,7 @@ Game.prototype.update = function () {
     }
 
     if (this.delay <= 0) {
-        //move ball
+        //move ball // colisão da bola com o jogador, com os blocos e com a margem do canvas
         if (this.player.collidesWithBall(this.ball)) {
             this.ball.diretionUp = true;
             if (this.keys.right) {
