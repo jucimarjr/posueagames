@@ -178,7 +178,7 @@ function drawPlacar(){
 
     context.font = "42pt Helvetica";// tamanho e fonte para desenhar o texto
     context.fillStyle = "white";// cor preta (opcional)
-    context.fillText(pontosA, (canvas.width -100), canvas.height-5); // escreve o texto na tela
+    context.fillText(pontosA, (canvas.width -30), canvas.height-5); // escreve o texto na tela
 }
 
 
