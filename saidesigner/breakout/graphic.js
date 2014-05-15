@@ -11,7 +11,8 @@ function Drawable(x, y, width, height) {
 	this.velocity = {
 		x : 0,
 		y : 0,
-		a : 0 // acceleration
+		a : 0
+	// acceleration
 	};
 }
 
@@ -22,6 +23,13 @@ Drawable.prototype.width = 0;
 Drawable.prototype.height = 0;
 Drawable.prototype.parent = null;
 Drawable.prototype.velocity = null;
+
+Drawable.prototype.coordIsWithin = function(x, y) {
+
+	return x >= this.x && x <= this.x + this.width && y >= this.y
+			&& y <= this.y + this.height;
+
+};
 
 Drawable.prototype.paint = function(canvas) {
 };
@@ -93,28 +101,23 @@ Circle.prototype.paint = function(canvas) {
 
 	canvas.fillStyle = this.color;
 	canvas.beginPath();
-	canvas.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);	
+	canvas.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
 	canvas.fill();
 };
 
-Circle.prototype.animate = function() {
-	this.x += this.velocity.x;
-	this.y += this.velocity.y;
-};
-
 /**
- * Bar Object
+ * Rectangle Object
  */
 
-function Bar(x, y, width, height) {
+function Rectangle(x, y, width, height) {
 
 	Drawable.call(this, x, y, width, height);
 }
 
-Bar.prototype = new Drawable();
-Bar.prototype.constructor = Bar;
+Rectangle.prototype = new Drawable();
+Rectangle.prototype.constructor = Rectangle;
 
-Bar.prototype.paint = function(canvas) {
+Rectangle.prototype.paint = function(canvas) {
 
 	canvas.fillStyle = this.color;
 	canvas.fillRect(this.x, this.y, this.width, this.height);

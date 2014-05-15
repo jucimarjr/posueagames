@@ -15,7 +15,7 @@ var bola = {
 	somColisaoBloco: null,
 
 	init : function(width, y){// largura do canvas e y do jogador
-		bola.resetX = width / 2;
+		bola.resetX = (width - bola.raio) / 2;
 		bola.resetY = y - 2 * bola.raio;
 		bola.countFail = 0;
 		bola.pontuacao = 0;

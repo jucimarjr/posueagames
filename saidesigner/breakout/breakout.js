@@ -4,7 +4,7 @@
  * 
  */
 
-function BreakoutGame(canvasElementId) {
+function BreakoutGame(canvasElementId, fps) {
 
 	var canvasElement = document.getElementById(canvasElementId);
 
@@ -13,27 +13,28 @@ function BreakoutGame(canvasElementId) {
 
 	this.keyLeftPressed = false;
 	this.keyRightPressed = false;
+	this.fps = fps;
 }
 
 BreakoutGame.prototype = new Board();
 BreakoutGame.prototype.constructor = BreakoutGame;
-BreakoutGame.prototype.bars = null;
-BreakoutGame.prototype.ball = null;
+BreakoutGame.prototype.balls = null;
 BreakoutGame.prototype.player = null;
 BreakoutGame.prototype.keyLeftPressed = false;
 BreakoutGame.prototype.keyRightPressed = false;
+BreakoutGame.prototype.fps = 0;
 
 BreakoutGame.prototype.KEY_LEFT = 37;
 BreakoutGame.prototype.KEY_RIGHT = 39;
 
 BreakoutGame.prototype.initBars = function() {
 
-	var BAR_Y_OFFSET = 120;
-	var BAR_NCOL = 30;
+	var BAR_Y_OFFSET = 30;
+	var BAR_NCOL = 15;
 	var BAR_NLIN = 6;
-	var BAR_SPACE = 0;
+	var BAR_SPACE = 1;
 	var BAR_WIDTH = (this.width - ((BAR_NCOL + 1) * BAR_SPACE || 1)) / BAR_NCOL;
-	var BAR_HEIGHT = 25;
+	var BAR_HEIGHT = 35;
 	var COLORS = [ "rgb(208, 58, 209)", "rgb(247, 83, 82)",
 			"rgb(253, 128, 20)", "rgb(255, 144, 36)", "rgb(5, 179, 32)",
 			"rgb(109, 101, 246)" ];
@@ -41,8 +42,6 @@ BreakoutGame.prototype.initBars = function() {
 	var posX = this.x + BAR_SPACE;
 	var posY = this.y + BAR_Y_OFFSET;
 	var colorIndex = 0;
-
-	this.bars = new Array();
 
 	for (var i = 0; i < BAR_NCOL * BAR_NLIN; i++) {
 
@@ -57,6 +56,7 @@ BreakoutGame.prototype.initBars = function() {
 
 		var bar = new Bar(posX, posY, BAR_WIDTH + 1, BAR_HEIGHT);
 		bar.color = COLORS[colorIndex];
+		bar.velocityPlus = BAR_NLIN - colorIndex;
 		this.add(bar);
 
 		posX += BAR_WIDTH + BAR_SPACE;
@@ -65,15 +65,23 @@ BreakoutGame.prototype.initBars = function() {
 
 BreakoutGame.prototype.initBall = function() {
 
-	var BALL_RADIUS = 8;
+	var BALL_NBALLS = 1;
+	var BALL_RADIUS = 10;
 	var BALL_X = (this.x + this.width) / 2;
 	var BALL_Y = (this.y + this.height) / 2;
 
-	this.ball = new Ball(BALL_X, BALL_Y, BALL_RADIUS);
-	this.ball.color = "yellow";
-	this.ball.velocity.x = Math.floor((Math.random() * 21) - 10);
-	this.ball.velocity.y = Math.floor((Math.random() * 21) - 10);
-	this.add(this.ball);
+	this.balls = new Array();
+
+	for (var i = 0; i < BALL_NBALLS; i++) {
+
+		var ball = new Ball(BALL_X, BALL_Y, BALL_RADIUS);
+		ball.color = "yellow";
+		ball.velocity.x = Math.floor((Math.random() * 21) - 10);
+		ball.velocity.y = Math.floor((Math.random() * 21) - 10);
+
+		this.balls.push(ball);
+		this.add(ball);
+	}
 };
 
 BreakoutGame.prototype.initPlayer = function() {
@@ -112,25 +120,38 @@ BreakoutGame.prototype.start = function() {
 
 	setInterval(function() {
 		self.loop();
-	}, 30);
+	}, 1000 / this.fps);
 };
 
 BreakoutGame.prototype.loop = function() {
-	this.checkCollison();
 	this.animate();
+	this.checkCollison();
 	this.paint();
 };
 
 BreakoutGame.prototype.checkCollison = function() {
 
-	this.ball.checkCollisionWithParent();
+	for ( var j in this.balls) {
 
-	for ( var i in this.items) {
-		if (this.ball.checkCollision(this.items[i])) {
-			if (this.items[i] != this.player) {
-				this.items.splice(i, 1);
+		if (this.balls[j].checkCollisionWithParent()) {
+			// TODO: Perdeu vida
+			//this.items.splice(this.items.indexOf(this.balls[j]), 1);
+			//this.balls.splice(j, 1);
+		}
+
+		for ( var i in this.items) {
+
+			if (this.items[i] instanceof Bar) {
+				if (this.balls[j].checkCollision(this.items[i])) {
+					this.balls[j].velocityPlus = this.items[i].velocityPlus;
+					this.items.splice(i, 1);
+					break;
+				}
+			} else {
+				if (this.balls[j].checkCollision(this.items[i])) {
+					break;
+				}
 			}
-			break;
 		}
 	}
 };
@@ -182,83 +203,183 @@ BreakoutGame.prototype.keyUp = function(event) {
 };
 
 /**
+ * 
+ * Bar Object
+ * 
+ */
+
+function Bar(x, y, width, height) {
+
+	Rectangle.call(this, x, y, width, height);
+
+	this.velocityPlus = 0;
+}
+
+Bar.prototype = new Rectangle();
+Bar.prototype.constructor = Bar;
+Bar.prototype.velocityPlus = 0;
+
+/**
  * Ball Object
  * 
  */
 
 function Ball(x, y, radius) {
 	Circle.call(this, x, y, radius);
+	this.velocityPlus = 0;
 }
 
 Ball.prototype = new Circle();
 Ball.prototype.constructor = Ball;
+Ball.prototype.velocityPlus = 0;
+Ball.prototype.top = 0;
+Ball.prototype.bottom = 0;
+Ball.prototype.left = 0;
+Ball.prototype.right = 0;
+
+Ball.prototype.animate = function() {
+
+	this.x += this.velocity.x
+			+ (this.velocity.x > 0 ? this.velocityPlus : -this.velocityPlus);
+	this.y += this.velocity.y
+			+ (this.velocity.y > 0 ? this.velocityPlus : -this.velocityPlus);
+
+	this.top = this.y - this.radius;
+	this.bottom = this.y + this.radius;
+	this.left = this.x - this.radius;
+	this.right = this.x + this.radius;
+};
 
 Ball.prototype.checkCollisionWithParent = function() {
 
-	if (this.x - this.radius <= this.parent.x
-			|| this.x + this.radius >= this.parent.x + this.parent.width) {
+	var result = false;
+
+	if (this.velocity.x > 0) {
+		if (this.right >= this.parent.x + this.parent.width) {
+			this.velocity.x *= -1;
+		}
+	} else if (this.left <= this.parent.x) {
 		this.velocity.x *= -1;
 	}
 
-	if (this.y - this.radius <= this.parent.y) {
-		this.velocity.y *= -1;
-	}
-
-	if (this.y + this.radius >= this.parent.y + this.parent.height) {
-		this.velocity.y *= -1;
-	}
-};
-
-Ball.prototype.checkCollision = function(drawable) {
-
-	if (!(drawable instanceof Drawable) || drawable == this) {
-		return false;
-	}
-
-	var result = false;
-
-	if (this.y >= drawable.y && this.y <= drawable.y + drawable.height) {
-		if (this.velocity.x > 0) {
-			if (this.x + this.radius >= drawable.x
-					&& this.x + this.radius <= drawable.x + drawable.width) {
-				this.velocity.x *= -1;
-				result = true;
-			}
-		} else if (this.x - this.radius >= drawable.x
-				&& this.x - this.radius <= drawable.x + drawable.width) {
-			this.velocity.x *= -1;
-			result = true;
-		}
-	}
-
-	if (this.x >= drawable.x && this.x <= drawable.x + drawable.width) {
-		if (this.velocity.y > 0) {
-			if (this.y + this.radius >= drawable.y
-					&& this.y + this.radius <= drawable.y + drawable.height) {
-				this.velocity.y *= -1;
-				result = true;
-			}
-		} else if (this.y - this.radius >= drawable.y
-				&& this.y - this.radius <= drawable.y + drawable.height) {
+	if (this.velocity.y > 0) {
+		if (this.bottom >= this.parent.y + this.parent.height) {
 			this.velocity.y *= -1;
 			result = true;
 		}
+	} else if (this.top <= this.parent.y) {
+		this.velocity.y *= -1;
 	}
 
 	return result;
 };
-/*
+
+Ball.prototype.almostEqual = function(dist1, dist2) {
+
+	return (dist1 == dist2);
+
+};
+
+Ball.prototype.checkCollision = function(obj) {
+
+	if (!(obj instanceof Drawable) || obj == this) {
+		return false;
+	}
+
+	var topIsWithin = obj.coordIsWithin(this.x, this.top);
+	var bottomIsWithin = obj.coordIsWithin(this.x, this.bottom);
+	var leftIsWithin = obj.coordIsWithin(this.left, this.y);
+	var rightIsWithin = obj.coordIsWithin(this.right, this.y);
+
+	var auxVelocity = {
+		x : this.velocity.x,
+		y : this.velocity.y
+	};
+
+	if (this.velocity.x > 0) {
+		if (this.velocity.y > 0) {
+			if (bottomIsWithin || rightIsWithin) {
+
+				var distLeft = this.right - obj.x;
+				var distTop = this.bottom - obj.y;
+
+				if (this.almostEqual(distTop, distLeft)) {
+					this.velocity.x *= -1;
+					this.velocity.y *= -1;
+				} else if (distTop < distLeft) {
+					this.velocity.y *= -1;
+				} else {
+					this.velocity.x *= -1;
+				}
+			}
+		} else {
+			if (topIsWithin || rightIsWithin) {
+
+				var distLeft = this.right - obj.x;
+				var distBottom = obj.y + obj.height - this.top;
+
+				if (this.almostEqual(distBottom, distLeft)) {
+					this.velocity.x *= -1;
+					this.velocity.y *= -1;
+				} else if (distBottom < distLeft) {
+					this.velocity.y *= -1;
+				} else {
+					this.velocity.x *= -1;
+				}
+			}
+		}
+	} else {
+		if (this.velocity.y > 0) {
+
+			if (bottomIsWithin || leftIsWithin) {
+
+				var distRight = obj.x + obj.width - this.left;
+				var distTop = this.bottom - obj.y;
+
+				if (this.almostEqual(distTop, distRight)) {
+					this.velocity.x *= -1;
+					this.velocity.y *= -1;
+				} else if (distTop < distRight) {
+					this.velocity.y *= -1;
+				} else {
+					this.velocity.x *= -1;
+				}
+			}
+
+		} else {
+
+			if (topIsWithin || leftIsWithin) {
+				var distRight = obj.x + obj.width - this.left;
+				var distBottom = obj.y + obj.height - this.top;
+
+				if (this.almostEqual(distRight, distBottom)) {
+					this.velocity.x *= -1;
+					this.velocity.y *= -1;
+				} else if (distBottom < distRight) {
+					this.velocity.y *= -1;
+				} else {
+					this.velocity.x *= -1;
+				}
+			}
+		}
+	}
+
+	return this.velocity.x != auxVelocity.x || this.velocity.y != auxVelocity.y;
+};
+
+/**
  * Player Object
  * 
  */
+
 function Player(x, y, width, height) {
 
-	Bar.call(this, x, y, width, height);
+	Rectangle.call(this, x, y, width, height);
 
 	this.velocityBkp = 0;
 }
 
-Player.prototype = new Bar();
+Player.prototype = new Rectangle();
 Player.prototype.constructor = Player;
 Player.prototype.velocityBkp = 0;
 
