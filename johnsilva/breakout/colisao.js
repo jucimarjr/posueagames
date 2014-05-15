@@ -23,6 +23,7 @@ function colisaoComBarra(){
 	if(bolaPosY+bolaRaio >= jogadorPosY){ // se o jogador enconstar na bola (eixo y)...
 		if( (bolaPosX+bolaRaio>=jogadorPosX) && (bolaPosX-bolaRaio<=jogadorPosX+barraWidth) ){ //verifica se esta na mesma posicao da barra
 			bolaParaCima = true;
+			audioBarra.play();
 			if (teclaDireitaPressionada) {// se o jogador estiver indo para direita quando tocar na bola...
 				bolaAngulo = Math.floor(Math.random() * 10) - 9;// mandamos a bola na diagonal pra esquerda
 			} else {// se o jogador estiver indo para esquerda quando tocar na bola...
@@ -38,6 +39,9 @@ function colisaoComBlocos(){
 			if(blocos[i][j].vivo){
 				if(colisaoComBloco(blocos[i][j])){
 					bolaParaCima = !bolaParaCima;
+					if( (i==2) && (velocidadeBolaInicial == velocidadeBola) ){//Verifica se chegou na linha laranja e se a velocidade é a mesma
+						velocidadeBola *= 2; //dobra a velocidade
+					}
 					return;
 				}
 			}
@@ -48,8 +52,10 @@ function colisaoComBlocos(){
 function colisaoComBloco(bloco){
 	if( (bolaPosY-bolaRaio <= bloco.y+bloco.h) && (bolaPosY+bolaRaio >= bloco.y) ){ //se acertou por cima ou por baixo
 		if( (bolaPosX+bolaRaio>=bloco.x) && (bolaPosX-bolaRaio<=bloco.x+bloco.w) ){
+			audioBloco.play();
 			bloco.vivo=false;
 			pontos++;
+			pontosPorFase++;
 			return true;
 		}
 	}

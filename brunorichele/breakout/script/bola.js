@@ -15,7 +15,7 @@ var bola = {
 	somColisaoBloco: null,
 
 	init : function(width, y){// largura do canvas e y do jogador
-		bola.resetX = width / 2;
+		bola.resetX = (width - bola.raio) / 2;
 		bola.resetY = y - 2 * bola.raio;
 		bola.countFail = 0;
 		bola.pontuacao = 0;
@@ -60,17 +60,19 @@ var bola = {
 	colisaoJogador : function(y, x, w){
 		// Colisao jogador
 	//if((bola.y + bola.raio >= y) &&
-		if((bola.y + 2* bola.raio >= y) &&
+		if((bola.y + 2 * bola.raio >= y) &&
 			(bola.x >= x) &&
 			(bola.x <= x + w)){
 			bola.baixo = false;
+			if(tecla.esquerda) bola.angulo -= 4;
+			else if(tecla.direita) bola.angulo += 4;
 		//	console.log("Colisao jogador");
 		}
 	},
 	colisaoBloco : function(polling){
 		//Colisao bloco
-		if(bola.y - bola.raio <= (bloco.h * bloco.numLinhas) + bloco.h * 2 && bola.y >= 0){
-			var linha  = Math.floor(((bola.y) - bloco.h) / bloco.h) - 2;
+		if(bola.y - bola.raio <= (bloco.h * bloco.numLinhas) + bloco.h * 1 && bola.y >= 0){
+			var linha  = Math.floor(((bola.y) - bloco.h) / bloco.h) - 1;
 			var coluna = Math.floor((bola.x) / bloco.w);
 			console.log("linha: " + linha + "coluna:" + coluna);
 

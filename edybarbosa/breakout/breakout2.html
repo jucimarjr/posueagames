@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Breakout UEA</title>
+		<style type="text/css">
+        	canvas {
+            	border:1px dashed #000000;
+             }
+		</style>
+</head>
+<body>
+	<canvas id="canvas" width="520" height="500">
+      browser incompatível
+    </canvas>
+
+	<script>
+    
+		var gameLoop;
+		
+	    var canvas = document.getElementById("canvas"); 
+	    var ctx = canvas.getContext("2d");
+	    
+		var blocoAltura = 20;
+		var blocoLargura = 50;
+		
+		// Variaveis para controle da barra (raquete)
+		var barraX = 200;
+		var barraY = 460;
+		var barraAltura = 15;
+		var barraLargura = 80;
+		var moverBarra = 'PARAR'; // DIREITA ou ESQUERDA ou PARAR
+		
+		// Variaveis para controle da bola (trocar depois por imagem)
+		var bolaX = 300;
+		var bolaY = 300;
+		var bolaAltura = 15; 
+		var bola; // Imagem da bola
+		var bolaDeltaY = -3;
+		var bolaDeltaX = -3;
+
+		// Matriz dos blocos a serem desenhados 10 X 6 inicialmente 
+		 var blocos = [
+			[3,2,1,3,3,2,2,1,1,0],
+			[2,1,3,2,1,3,1,2,3,1],
+			[1,2,2,3,3,0,2,3,0,1],
+			[1,2,2,3,1,2,1,1,2,3],
+			[1,0,0,0,1,2,2,3,2,3],
+		];
+
+		var cores = ['red','yellow','green'];
+		var imagemAberturaLogo;
+		var imagemAberturaInicio;
+		var imagemAberturaCreditos;
+		var aberturaAcao;
+	    
+		// Desenha a parede 
+		function desenhaParedeDeBlocos(){
+				for (var x=0; x < blocos.length; x++) {
+					for (var y=0; y < blocos[x].length; y++) {
+						desenharBloco(y,x,blocos[x][y]);
+					}
+				}
+		 }
+
+	    // Desenha a barra
+	    function desenhaBarra(){
+	    	ctx.fillStyle = "black";
+	    	ctx.fillRect(barraX, barraY, barraLargura, barraAltura);
+	    }
+
+	    // Desenha o bloco
+	    function desenharBloco(x,y, temBloco){
+	    	if (temBloco != 0) {
+		    	ctx.fillStyle = cores[temBloco - 1];
+		    	ctx.fillRect((x*blocoLargura)+(x*1),(y*blocoAltura)+(y*1),blocoLargura,blocoAltura);
+	    	}
+	    }
+	    
+		function desenhaBola(){
+			//ctx.beginPath();
+	    	ctx.drawImage(bola, bolaX, bolaY);
+		//	ctx.arc(bolaX,bolaY,bolaRaio,0,Math.PI*2,true);
+			//ctx.fill();			
+		}
+		
+		function animarJogo() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+		    desenhaParedeDeBlocos();
+		    desenhaBarra();
+		    desenhaBola();
+		    moverBola();
+		    ctx.fillText('Barra: '+ moverBarra, 10,canvas.height-5);
+		}
+		
+		function inicioDoJogo() {
+            document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
+            document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
+            
+            // Criar imagens
+            bola = new Image();
+	    	bola.src = 'images/bola2.png';
+		 	// chama a animarJogo()) a cada 200ms
+			gameLoop = setInterval(animarJogo, 20);
+		 	
+			//fimDoJogo();
+		}
+		
+		function fimDoJogo() {
+			clearInterval(gameLoop);	
+			// imagem de end game
+//            var fimJogo = new Image();
+//            fimJogo.src = 'images/bola2.png';
+//	    	ctx.drawImage(fimJogo, 10, 10);
+			ctx.fillText('Fim de Jogo ', 200, 200); // TODO melhorar
+		}
+		
+
+		function moverBola(){
+
+			// Se bola chegou no limite inferior fim de jogo
+			if (bolaY + bolaAltura > canvas.height){
+				fimDoJogo();
+			}
+
+			// Se bola chegou no limite superior
+			if (bolaY < 0){
+				bolaDeltaY = bolaDeltaY * -1; // Inverte o Sentido da  Bola
+			}
+
+			// Se a bola tocar nas laterais inverter a direcao
+				// Chegou no limite esquerdo mudar sentido para direito
+			if ((bolaX < 1) ||				
+				//Chegou no limite direito mudar sentido para direito
+				(bolaX  > canvas.width - 1)){  
+				bolaDeltaX = bolaDeltaX * -1;
+			}
+
+			// Mover a bola
+			bolaX += bolaDeltaX; 
+			bolaY += bolaDeltaY;
+		}
+		
+        function keyDown(e) {
+            if (e.keyCode == 39) { // direita
+            	moverBarra = 'DIREITA';
+            } else if (e.keyCode == 37) { // esquerda
+            	moverBarra = 'ESQUERDA';
+            } else if (e.keyCode == 49) { // numero 1
+            	aberturaAcao = 'INICIAR';
+            	inicioDoJogo();
+            } else if (e.keyCode == 50) { // numero 2
+            	aberturaAcao = 'CREDITOS';
+            }   
+        }
+    
+        function keyUp(e) {
+            if (e.keyCode == 39) { // esquerda
+            	moverBarra = 'PARAR';
+            } else if (e.keyCode == 37) { // direita
+            	moverBarra = 'PARAR';  
+           	}       
+        }
+
+		function telaInicial(){
+			
+
+			imagemAberturaLogo = new Image();
+			imagemAberturaLogo.src = 'images/breakout3.png';		
+			imagemAberturaLogo.onload = function() {
+				ctx.drawImage(imagemAberturaLogo, ((canvas.width / 2) - (imagemAberturaLogo.width/2)), 100);
+			};
+
+			// var snd = new Audio("sounds/background.mp3"); // buffers automatically when created
+			// snd.play();
+
+            document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
+
+			var x = canvas.width / 2;
+      		var y = canvas.height / 2;
+
+			ctx.font = '25pt Verdana';
+      		ctx.textAlign = 'center';
+      		ctx.fillStyle = 'blue';
+      		ctx.fillText('[1] Iniciar', x, y);		
+
+			ctx.font = '25pt Verdana';
+      		ctx.textAlign = 'center';
+      		ctx.fillStyle = 'blue';
+      		ctx.fillText('[2] Creditos', x, y+50);	
+    						
+		}        
+
+        telaInicial();
+		
+    </script>
+</body>
+</html>
