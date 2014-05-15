@@ -22,7 +22,7 @@ canvas {
         songBackground, playBolaSom, contaVidas, vidasImg,
         numPokemon, contaPokemon, placarAltura,
         gameOverScreen, endGame, tocaMusica,
-        pontuacaoTotal, songGameOver;
+        pontuacaoTotal, songGameOver, gifPokemon;
 		
 		var bola = {
 			raio : 16,
@@ -62,7 +62,7 @@ canvas {
 			contaPokemon = new Array (0, 0, 0, 0); //pontuacao dos 4 pokemons diferentes
 			contaVidas = 3;//Quantidade de vidas iniciais
 			regulaVolume();//30% da musica de Background
-			endGame = false;//nao é game over
+			endGame = true;//nao é game over
 			pontuacaoTotal = 0;//placar total
 			continuaMusica();//continua musica se nao foi parada pelo usuario
 			preencheParede();
@@ -94,6 +94,8 @@ canvas {
 			bolaImg.src = "img/pokeball0.png";
 			vidasImg = new Image();
 			vidasImg.src = "img/pokeball_vidas.png";
+			gifPokemon = new Image(); 
+			gifPokemon.src = "img/gameover_gif.png";
 			frameCount = 0;
 			placarAltura = 43;
 
@@ -122,6 +124,7 @@ canvas {
 		//GAME OVER - Desenha a Tela de Game Over
 		function gameOver(){
 			context.drawImage(gameOverScreen,0,0);
+			context.drawImage(gifPokemon,35,438);
 			context.font = "80pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
 			context.fillStyle = "#1c30bd";//cor da fonte
 			var pontuaTexto = (pontuacaoTotal < 10 ? "0"+ pontuacaoTotal : pontuacaoTotal);// Acrescenta 0 na frente dos numeros menores que 10
