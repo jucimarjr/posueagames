@@ -32,22 +32,27 @@
     
     var quebrar = new Audio("sound/break.ogg");
     var bater = new Audio("sound/bounce.ogg");
+    var starterSound = new Audio ("sound/skratch1.wav");
 
 	function init(){
 
 		canvas = document.getElementById("canvas");// procura o canvas
         context = canvas.getContext("2d");// recupera o contexto 2d
-        jogador = new Jogador((canvas.width - tamanhoBarra)/2, canvas.height-alturaBarra, tamanhoBarra, alturaBarra);
+        jogador = new Jogador((canvas.width - tamanhoBarra)/2, (canvas.height-alturaBarra) - 30, tamanhoBarra, alturaBarra);
         jogador.draw();
-		pontosJogador = 0;
+
+        pontosJogador = 0;
 
 		criadorDeBlocos();
-        //starterSound.play();
+
+        starterSound.play();
 
         gameLoop = setInterval(animacao, 30);// chama a function gameLoop a cada 30 frames
+        drawPlacar();
+
 	}
 	
-	function end(){
+	function end(){//gameOver
 		clearInterval(gameLoop);
 	    context.fillText('Fim de jogo!!!!',canvas.width/2,canvas.height/2);
 	    

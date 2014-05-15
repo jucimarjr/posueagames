@@ -94,7 +94,7 @@ function Bola(x, y, raio){
 			}
 			this.inverterY();
 		}
-		//Se a posicao da bola for maior ou igual � altura do canvas finaliza a partida
+		//Se a posicao da bola for maior ou igual � altura do canvas finaliza a partida
 		if((this.y-this.raio)>=canvas.height){
 			//bater.pause();
 			end();
@@ -177,8 +177,8 @@ function drawPlacar(){
     }
 
     context.font = "42pt Helvetica";// tamanho e fonte para desenhar o texto
-    context.fillStyle = "#000000";// cor preta (opcional)
-    context.fillText(pontosA, (canvas.width / 2) - 70, 50); // escreve texto na tela na posiï¿½ï¿½o desejada
+    context.fillStyle = "white";// cor preta (opcional)
+    context.fillText(pontosA, (canvas.width -100), canvas.height-5); // escreve o texto na tela
 }
 
 
