@@ -129,6 +129,7 @@ canvas {
 		function gameOver(){
 		    context.drawImage(backgroundImg, 0, 0);
 		    context.drawImage(gameOverScreen, 0, 0);
+		    context.drawImage(gifPokemon, 35, 438);
 		    context.font = '90px "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
 			context.fillStyle = "#1c30bd";//cor da fonte
 			var pontuaTexto = (pontuacaoTotal < 10 ? "0"+ pontuacaoTotal : pontuacaoTotal);// Acrescenta 0 na frente dos numeros menores que 10
