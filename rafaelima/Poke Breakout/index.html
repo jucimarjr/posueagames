@@ -59,17 +59,18 @@ canvas {
 		//Reseta a tela e os dados
 		function beginsGame(){
 			reset();
-			contaPokemon = new Array (0, 0, 0, 0); //4 pokemons diferentes
-			contaVidas = 0;//Quantidade de vidas iniciais
-			regulaVolume();
-			endGame = false;//false
-			pontuacaoTotal = 0;
-			continuaMusica();
+			contaPokemon = new Array (0, 0, 0, 0); //pontuacao dos 4 pokemons diferentes
+			contaVidas = 3;//Quantidade de vidas iniciais
+			regulaVolume();//30% da musica de Background
+			endGame = false;//nao é game over
+			pontuacaoTotal = 0;//placar total
+			continuaMusica();//continua musica se nao foi parada pelo usuario
+			preencheParede();
 		}
 		
 		//Repete constantemente essas funcoes
 		function gameLoop() {
-			if(!endGame){
+			if(!endGame){//Verifica se é não é game over
 				checaColisaoParede();
 				movimentaJogador();
 				movimentaBola();
@@ -79,13 +80,13 @@ canvas {
 			}
 		}
 		
-		//Reseta a tela
+		//Reseta a tela, mas nao todos os dados
 		function reset() {
 			gameOverScreen = new Image(); 
 			gameOverScreen.src = "img/gameover.png";
 			barraImg = new Image(); 
 			barraImg.src = "img/bar.png";
-			barraImg.width = 87;//87
+			barraImg.width = 87;
 			barraImg.height = 24;
 			backgroundImg = new Image(); 
 			backgroundImg.src = "img/BG.png";
@@ -112,12 +113,10 @@ canvas {
 			lance = 0;
 			brickWidth = 42; 
 			brickHeight = 42;
-			paredeLinhas = 7;
+			paredeLinhas = 7;//7
 			paredeColunas = 12;
 			brickTypes = 4;
 			frameProportion = 3;
-			
-			preencheParede();
 		}
          
 		//GAME OVER - Desenha a Tela de Game Over
@@ -126,7 +125,7 @@ canvas {
 			context.font = "80pt Helvetica"; //tamanho da fonte e tipo da fonte para desenhar o texto
 			context.fillStyle = "#1c30bd";//cor da fonte
 			var pontuaTexto = (pontuacaoTotal < 10 ? "0"+ pontuacaoTotal : pontuacaoTotal);// Acrescenta 0 na frente dos numeros menores que 10
-			context.fillText( pontuaTexto ,  canvas.width/2 - 55, canvas.height/2 +10);
+			context.fillText( pontuaTexto ,  canvas.width/2 - 55, canvas.height/2 +10);//Desenha a pontuacao
 		}
 		
 		//30% do som do Background
@@ -185,12 +184,12 @@ canvas {
 				numPokemon[i] = [];
 			    for(var j=0; j < paredeColunas; j++) {
 					var brick = new Image();
-					numPokemon[i][j] = Math.floor(Math.random() * 4);
+					numPokemon[i][j] = Math.floor(Math.random() * 4);//numero do pokemon na posicao [i][j]
 					brick.src = "img/brick"+ numPokemon[i][j] +".png";
 						if(Math.random()<=0.7){
 						    parede[i][j] = brick; //tijolo(1) ou não tijolo(0)?
 						} else {
-						    parede[i][j] = null; 
+						    parede[i][j] = null; //tijolo nao existe
 						    numPokemon[i][j] = -1;
 						}
                                         
@@ -229,7 +228,7 @@ canvas {
 				//movimento no eixo X
 				if ((bola.posX - bola.raio <= 0) 
 						|| (bola.posX + bola.raio >= canvas.width)) {// se a bola bater dos lados da tela...
-					bola.posX = ((bola.posX - bola.raio <= 0) ? bola.raio : canvas.width-bola.raio);
+					bola.posX = ((bola.posX - bola.raio <= 0) ? bola.raio : canvas.width - bola.raio);
 					bola.angulo = bola.angulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo X
 				}
 				bola.posX += bola.angulo;// movemos a bola para os lados, de acordo com o cáculo acima
@@ -240,7 +239,8 @@ canvas {
 				} else {// se estiver indo para a baixo...
 					bola.posY += bola.velocidade;// movemos a bola para baixo
 				}
-				if ((bola.posY - (bola.raio/2) -placarAltura) <= 0) { //se a bola bater no topo ela deve descer
+				
+				if ((bola.posY - bola.raio - placarAltura ) <= 0) { //se a bola bater no topo ela deve descer
 					bola.paraCima = false;
 				} else if (((bola.posY + bola.raio - bola.velocidade) >= jogador.posY) //se a bola esta na altura da barra 
 					 && ((bola.posX >= jogador.posX) && (bola.posX <= (jogador.posX + barraImg.width)))) { //e se a bola esta dentro do comprimento da barra
@@ -279,17 +279,17 @@ canvas {
 			}
 		}
 
-		//A bola nunca vai em um angulo de 0 graus
+		//A bola nunca vai em um angulo de muito pequeno
 		function validaAngulo(){
 		        if(bola.angulo > 0 && bola.angulo < 10)
-		            bola.angulo = 11;
+		            bola.angulo = 9;
 		        else if (bola.angulo <= 0 && bola.angulo > -10)
-		            bola.angulo = -11;
+		            bola.angulo = -9;
 		}
 		
 		//Verifica se houve colisao na tijolo
 		function checaColisaoParede(){ //todas as possiveis colisoes do perímetro e centro da bola com a parede
-			if((bola.posY-bola.raio) <= (brickHeight* paredeLinhas)){ //se o topo da bola chegar no fundo da parede
+			if((bola.posY-bola.raio) <= (brickHeight* paredeLinhas + placarAltura)){ //se o topo da bola chegar no fundo da parede
 				for(var j = -1; j<=1; j++){ //indices que controlam qual 'extremidade' da bola esta tocando a parede
 					for(var i = -1; i<=1; i++){//em relação ao centro da bola
 						x = Math.floor((bola.posX + (i*bola.raio))/brickWidth); //x do ponto
