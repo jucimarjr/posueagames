@@ -60,7 +60,7 @@ var bola = {
 		if((bola.y + bola.raio >= y) &&
 			(bola.x >= x) &&
 			(bola.x <= x + w)){
-				bola.somColisaoJogador();
+				sound.colisaoJogador();
 				bola.baixo = false;
 			if(tecla.esquerda){
 				bola.angulo -= 4;
@@ -79,7 +79,7 @@ var bola = {
 
 			if(coluna >= 0 && linha >= 0){
 				if(bloco.blocos[linha][coluna] == 0){
-					bola.somColisaoBloco();
+					sound.colisaoBloco();
 					bola.baixo = !bola.baixo;
 					bloco.blocos[linha][coluna] = 1;
 					bola.pontuacao++;
@@ -112,13 +112,5 @@ var bola = {
 			jogador.vitoria = true;
 			clearInterval(polling);
 		}	
-	},
-	somColisaoBloco : function(){
-		var sound = new Audio("audio/powerdown.mp3");
-		sound.play();
-	},
-	somColisaoJogador : function(){
-		var sound = new Audio("audio/brickDeath.mp3");
-		sound.play();	
 	}
 };

@@ -31,6 +31,8 @@ var game = {
 		
 		game.initBotoes();
 		
+		sound.init();
+		
 		// Intervalo do Gameloop: 60 fps
 		game.polling = setInterval(game.gameLoop, 1000 / 60);
 	},
