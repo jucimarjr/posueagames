@@ -23,6 +23,7 @@ var inimigos = new Inimigos(ctx, canvas.width, canvas.height);
 var alvos = inimigos.inimigos;
 var pontuacao = new Pontuacao(ctx, 10, 38);
 var vidas = new Vidas(ctx);
+var audioGame = new AudioGame();
 
 const STARTED = 0;
 const GAMEOVER = 1;
@@ -61,21 +62,26 @@ function init() {
 
 function gameLoop() {
 	if(gameState == STARTED){
+		if (bola.state == bola.MOVIMENTANDO)
+			audioGame.tocarAudioJogo();
+		else
+			audioGame.pararAudioJogo();	
 		// movimenta
 		if (bola.state == bola.MOVIMENTANDO)
 			bola.movimentaBola(janela.width);
 		else
 			bola.movimentaParado(janela.width, isDireita, isEsquerda);
 		jogador.movimentaJogador(isDireita, isEsquerda, canvas.width);
+		
 
 		// verifica colisão
 		colisaoBolaJogador();
 		colisaoBolaInimigos();
 
 		// desenha
+		janela.desenhaJanela();
 		if(bola.state == bola.PARADO)
 			startGame();
-		janela.desenhaJanela();
 		bola.desenhaBola();
 		jogador.desenhaJogador()
 		inimigos.desenhaInimigos();
@@ -95,6 +101,7 @@ function colisaoBolaJogador() {
 			bola.posY = jogador.posY - bola.raio;
 			bola.velocidadeY = -bola.velocidadeY;
 			bola.velocidadeX = (bola.posX - (jogador.posX + (jogador.width / 2))) / 5; 
+			audioGame.paraAudioColisao();
 		} else {
 			vidas.removeVida();
 			if (vidas.qtd < 0) {
@@ -128,7 +135,7 @@ function colisaoBolaInimigos() {
 				var alvoY = (i * (inimigos.height + inimigos.DISTANCIA)) + inimigos.DISTANCIA;
 
 				if (houveColisao(alvoX, alvoY)) {
-
+					audioGame.tocarColisao();
 					var x1 = Math.abs(alvoX - (bola.posX + bola.raio)); // distancia entre a bola e a esquerda do alvo
 					var x2 = Math.abs((alvoX + inimigos.width) - (bola.posX - bola.raio)); // distancia entre a bola e a direita do alvo
 					if(x1 > x2) // se condição for verdadeira então a bola veio da direita, senão, da esquerda
@@ -154,11 +161,11 @@ function colisaoBolaInimigos() {
 							bola.posY = (alvoY + inimigos.height) + bola.raio;
 						}
 					}
-
+					
 					pontuacao.incrementa(10);
 					alvos[i][j] = 0;
 					inimigos.qtd -= 1;
-
+					
 				}
 
 			}
@@ -171,15 +178,17 @@ function colisaoBolaInimigos() {
 }
 
 function startGame() {
+	audioGame.pararAudioJogo();
 	this.ctx.font = "40pt Helvetica";
 	this.ctx.fillStyle = "#000000";
-	this.ctx.fillText("Pressione \"Barra de Espaco!\"", 5, (canvas.height / 2) + 20);
+	this.ctx.fillText("Pressione \"Barra de Espaco!\"", 60, (canvas.height / 2) + 20);
 }
 
 function gameOver() {
+	audioGame.pararAudioJogo();
 	this.ctx.font = "40pt Helvetica";
 	this.ctx.fillStyle = "#000000";
-	this.ctx.fillText("Game Over", canvas.width / 5, (canvas.height / 2) + 20);
+	this.ctx.fillText("Game Over", canvas.width / 3, (canvas.height / 2) + 20);
 }
 
 function win() {

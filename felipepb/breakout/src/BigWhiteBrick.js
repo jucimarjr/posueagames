@@ -29,6 +29,8 @@ BreakoutGame.BigWhiteBrick.prototype.render = function (time, context2D, debugDr
 };
 
 BreakoutGame.BigWhiteBrick.prototype.dispose = function () {
-    GameFramework.Sprite.prototype.dispose();
+    GameFramework.Sprite.prototype.dispose.apply(this);
     this.glow.dispose();
+    this.glow = undefined;
+    this._maxIndex = undefined;
 };

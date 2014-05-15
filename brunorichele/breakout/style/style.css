@@ -1,3 +1,10 @@
+@charset "utf-8";
+@font-face 
+{
+    font-family: Alégre Sans;
+    src: url('../font/Alegre_Sans.ttf');
+}
+
 @media screen and (max-height : 700px ){
 	html{ 
 		zoom: 80%;
@@ -14,19 +21,44 @@ canvas {
 }
 
 .menu{
-	width:600px; 
-	height:280px;
-	padding-top:200px;
+	background-image: url('../assets/background_menu.jpg');
+	width:1024px; 
+	height:440px;
+	padding-top:328px;
 	border:1px solid #000000;
+	font-family:Alégre Sans;
+	font-size:30px;
+	color:#8efffb;
 }
 
 .menu a{
-	border:1px solid #000000;
-	width:150px;
-	height:40px;
-	font-size:32px;
+	width:249px;
+	height:106px;
 	display:block; 
 	margin-bottom:20px;
-	text-decoration:none;
-	color:#000000;
+}
+
+.btn-jogar{
+	background-image: url('../assets/b_jogar.png');
+	margin-top:50px;
+}
+
+.btn-jogar:hover{
+	background-image: url('../assets/b_jogar2.png');
+}
+
+.btn-creditos{
+	background-image: url('../assets/b_credito.png');
+}
+
+.btn-creditos:hover{
+	background-image: url('../assets/b_credito2.png');
+}
+
+.btn-inicio{
+	background-image: url('../assets/b_inicio.png');
+}
+
+.btn-inicio:hover{
+	background-image: url('../assets/b_inicio2.png');
 }

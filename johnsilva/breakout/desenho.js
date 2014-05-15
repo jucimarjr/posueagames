@@ -69,15 +69,16 @@ function atualizarPlacar(){
 		placar = "0" + placar;
 	}
 
-	context.font = "38pt Square One";// tamanho e fonte para desenhar o texto
+	context.font = "30pt Square One";// tamanho e fonte para desenhar o texto
 	context.fillStyle = "#silver";// cor preta (opcional)
-	context.fillText(placar, (w/3), 90);
-	context.fillText(vidas, (w/3)+250, 90);
-	context.fillText(fase, (w/3)+400, 90);
+	context.fillText(placar, (w/3), 45);
+	context.fillText(vidas, (w/3)+250, 45);
+	context.fillText(fase, (w/3)+400, 45);
 }
 
 function gameOver(){
-	context.font = "38pt Square One";// tamanho e fonte para desenhar o texto
+	context.font = "30pt Square One";// tamanho e fonte para desenhar o texto
 	context.fillStyle = "#silver";// cor preta (opcional)
-	context.fillText("Game Over", w/5, h/2);
+	context.fillText("Game Over", w/4, h/2);
+	audioGameOver.play();
 }

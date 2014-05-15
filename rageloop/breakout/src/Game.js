@@ -10,10 +10,12 @@ function Game(id, width, height) {
     this.canvas = null;
     this.context = null;
 
+    //sound components
     this.bgSound = null;
     this.destroySound = null;
     this.gameOverSound = null;
     this.missBallSound = null;
+    this.winSound = null;
 
     //hud
     this.hud = null;
@@ -52,6 +54,7 @@ Game.prototype.init = function () {
     this.destroySound = new Audio("assets/audio/explosion.wav");
     this.gameOverSound = new Audio("assets/audio/gameOver.wav");
     this.missBallSound = new Audio("assets/audio/missBall.wav");
+    this.winSound = new Audio("assets/audio/winGame.mp3");
     
     this.hud = new HUD({
         'top' : 20,
@@ -120,11 +123,11 @@ Game.prototype.update = function () {
 
     //miss
     if (this.ball.y > this.height) {
-    	
-    	this.missBallSound.play();
-    	
-        if (this.delay === 0)
+    	    	
+        if (this.delay === 0) {
             this.hud.updateLifes(-1);
+            this.missBallSound.play();
+        }
 
         if (this.delay >= 50) {
             this.ball.x = this.width / 2;
@@ -193,6 +196,8 @@ Game.prototype.gameWin = function () {
     this.context.fillStyle = '#00ffff';
     this.context.fillText('YOU WIN!', (this.width / 2) - 130, (this.height / 2) - 50);    
     clearInterval(this.timer);
+    this.bgSound.pause();
+    this.winSound.play();
 };
 
 Game.prototype.clear = function () {

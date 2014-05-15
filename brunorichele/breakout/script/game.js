@@ -5,17 +5,21 @@
  * @version 1.0
  */
 var game = {
-	canvas  : null, // Canvas
-	context : null, // Objetos do HTML5 Canvas
-	height  : null,
-	width   : null,
-	polling : null, //Guarda a instacia do setInterval com gameLoop
+	canvas    : null, // Canvas
+	context   : null, // Objetos do HTML5 Canvas
+	height    : null, // altura da área do jogo
+	width     : null, // largura da área do jogo
+	polling   : null, //Guarda a instacia do setInterval com gameLoop
+	btnJogar  : null,
+	btnInicio : null,
 
 	init : function(){
+		// Inicialização de variáveis do HTML5 e tamanho do jogo
 		game.canvas = document.getElementById("canvas");
 		game.context = game.canvas.getContext("2d");
 		game.height = game.canvas.height;
-		game.width = game.canvas.width; \
+		game.width = game.canvas.width;
+		
 		//Iniciar informacoes do jogador
 		jogador.init(game.width, game.height);
 		//Iniciar informacoes da bola
@@ -24,6 +28,9 @@ var game = {
 		bloco.init();
 		//Inicia a escuta do teclado
 		game.bind();
+		
+		game.initBotoes();
+		
 		// Intervalo do Gameloop: 60 fps
 		game.polling = setInterval(game.gameLoop, 1000 / 60);
 	},
@@ -34,9 +41,9 @@ var game = {
 	},
 
 	gameLoop : function(){
-		//Atualiza posi����o do jogador
+		//Atualiza posição do jogador
 		jogador.atualizar(game.width);
-		// Atualiza posi����o da bola
+		// Atualiza posição da bola
 		bola.atualizar(jogador.y, jogador.x, jogador.w, game.width, game.height, game.polling);
 		// Atualizar tela do jogo
 		game.atualizar();
@@ -51,10 +58,10 @@ var game = {
 		jogador.render(game.context);
 		//Desenha Bola
 		bola.render(game.context);
-		//Exibi os pontos do usuario
+		//Exibe os pontos do usuario
 		game.pontuar();
 
-		//Exibi as vidas
+		//Exibe as vidas
 		game.exibirVidas();
 
 		//Verificar derrota e desenhar na tela
@@ -70,47 +77,49 @@ var game = {
 			mouse.listener(canvas);
 		}
 	},
-
+	// Limpeza da tela
 	clear : function(){
 		game.context.clearRect(0, 0, game.width, game.height);
 	},
-
+	// Texto de vitória
 	vitoria : function(){
-		game.context.font = "42px Helvetica";
-		game.context.fillStyle = "#ffffff";
-		game.context.fillText("Você venceu!", 380, 400);
+		game.context.font = "80px Alégre Sans";
+		game.context.fillStyle = "#8efffb";
+		game.context.fillText("Você venceu!", 360, 350);
 	},
-
+	// Texto de derrota
 	derrota : function(){
-		game.context.font = "42px Helvetica";
-		game.context.fillStyle = "#ffffff";
-		game.context.fillText("Você perdeu!", 380, 400);
+		game.context.font = "80px Alégre Sans";
+		game.context.fillStyle = "#8efffb";
+		game.context.fillText("Você perdeu!", 360, 350);
 	},
-
+	// Botão para jogar novamente
 	btnNewGame : function(){
-		game.context.font = "42px Helvetica";
-		game.context.fillStyle = "#ffffff";
-		game.context.fillText("Jogar Novamente", 340, 450);
+		game.context.drawImage(game.btnJogar, (game.width-250)/2, 400);
+		game.context.drawImage(game.btnInicio, (game.width-250)/2, 550);
 	},
-
+	// Função para desenhar a pontuação na tela
 	pontuar : function(){
         var ponto = bola.pontuacao;
         if (ponto < 10) {
         	ponto = "0" + ponto;
         }
-        game.context.font = "25pt Helvetica";
-        game.context.fillStyle = "#ffffff";
+        game.context.font = "25pt Alégre Sans";
+        game.context.fillStyle = "#8efffb";
         game.context.fillText(ponto + " ", (game.width/2) - 2, 87);
 	},
-
+	// Desenha blocos para as vidas
 	exibirVidas : function(){
-
-        var vida = jogador.vidas;
-        if (vida < 10) {
-        	vida = "0" + vida;
-        }
-        game.context.font = "25pt Helvetica";
-        game.context.fillStyle = "#ffffff";
-        game.context.fillText(vida + " ", (game.width/2) + 330, 87);
+		game.context.fillStyle = "cyan";
+		for(var i = 0; i < jogador.vidas; i++){
+			game.context.fillRect(820 + i * 50, 57, 40, 40);
+		}
+	},
+	initBotoes : function(){
+		game.btnJogar = new Image();
+		game.btnJogar.src = "assets/b_jogar.png";
+		
+		game.btnInicio = new Image();
+		game.btnInicio.src = "assets/b_inicio.png";	
 	}
 };

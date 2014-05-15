@@ -44,8 +44,7 @@ var	bolaRaio,
 	velocidadeBola,
 	velocidadeBolaX, velocidadeBolaY,
     bolaPosX, bolaPosY,
-    direcaoBolaX, direcaoBolaY,
-    anguloBola;
+    direcaoBolaX, direcaoBolaY;
 
 // Detecção das teclas
 var teclaEnterPressionada;
@@ -53,9 +52,14 @@ var contadorTeclaEnter;
 var teclaEsqPressionada;
 var teclaDirPressionada;
 
+// Número de vidas
+var numVidas;
+
+
 function init() {
 
 	pause = true;
+	numVidas = 3;
 	
 	// Inicializa controle de tecla pressionada
 	teclaEsqPressionada = false;
@@ -77,7 +81,6 @@ function init() {
 	velocidadeBolaX = 14;
 	velocidadeBolaY = 14;
 	bolaRaio = 10;
-    anguloBola = -6;
     reiniciarBola();
 	
 	// Configurar placar
@@ -160,6 +163,7 @@ function movimentarBola(){
 	
 	// Verificar colisão BAIXO
 	if (bolaPosY >= canvas.height - bolaRaio ){
+		numVidas = numVidas -1;
 		direcaoBolaY = direcaoBolaY * -1;
 	}
 	
@@ -212,14 +216,14 @@ function reiniciarBola(){
 	// Atribuir direção aleatório ao lançar a bola
 	if (Math.random() > 0.5 ){
 		direcaoBolaX = 1;
-	    direcaoBolaY = -1;
+	    direcaoBolaY = 1;
 	} else {
 		direcaoBolaX = -1;
-	    direcaoBolaY = -1;	
+	    direcaoBolaY = 1;	
 	}
 	// Atribuir posição inicial logo a frente da raquete
-	bolaPosX = jogadorPosX + barraWidth/2;
-	bolaPosY = jogadorPosY - 1.2*bolaRaio;
+	bolaPosX =  canvas.width/2;
+	bolaPosY = canvas.height/2;
 }
 
 function desenhar(){
@@ -245,7 +249,7 @@ function desenhar(){
 	context.fill();
 	
 	// Configura o desenho do placar
-	var pontos = pontosJogador;
+	var pontos = pontosJogador;	
 
 	// Se não foi definido algum ponto, atribuir o segundo "0" ao placar do Jogador
 	if (pontos < 10 ) {
@@ -259,6 +263,7 @@ function desenhar(){
 	// Desenhar placar
 	context.font = "42pt Helvetica";
 	context.fillText(pontos, canvas.width-133, 50);
+	context.fillText(numVidas, 10, 50);
 
 	// context.clear(0,0,canvas.width,canvas.height);
 }
