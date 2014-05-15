@@ -9,6 +9,7 @@ BreakoutGame.Brick = function (index) {
     GameFramework.Sprite.call(this, GameFramework.SpriteFactory.loadedSpriteSheets["images/bricks.png"]);
     
     this.glow = GameFramework.SpriteFactory.spriteFromSpriteSheet("images/bricksGlow.png");
+	this.innerWord = this.innerWordForIndex(index);
     this._spriteIndex = index;
     this._glowAnimation = new GameFramework.Animation(this.glow,
                                                       'opacity',
