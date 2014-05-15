@@ -1,7 +1,7 @@
 function Vidas(ctx) {
 
 	this.ctx = ctx;
-	this.qtd = 2;
+	this.qtd = 3;
 
 	this.desenha = function() {
 		this.ctx.beginPath();
