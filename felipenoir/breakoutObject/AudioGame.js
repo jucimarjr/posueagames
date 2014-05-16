@@ -1,10 +1,5 @@
 //Classe para Audio
 function AudioGame(){
-	//Audio colisao
-	var audioColisao = document.createElement("audio");
-	audioColisao.preload = false;	
-	audioColisao.src = "assets/colisao.mp3";
-	audioColisao.load();
 
 	//Audi Jogo
 	var audioJogo = document.createElement("audio");
@@ -15,9 +10,9 @@ function AudioGame(){
 	IS_PLAYNG = false;
 
 	this.tocarColisao = function(){
-		
-		setTimeout(function() { audioColisao.play(); },1);
-		
+		var audioColisao = document.createElement("audio");
+		audioColisao.src = "assets/colisao.mp3";
+		audioColisao.play();
 	}
 
 	this.paraAudioColisao = function(){

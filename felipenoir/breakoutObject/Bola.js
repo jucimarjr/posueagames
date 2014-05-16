@@ -12,8 +12,7 @@ function Bola(ctx, posX, posY) {
 	this.ORIGEM = 0;
 	this.tempo = 0;
 
-	this.VELX = 8;
-	this.VELY = 12;
+	this.VELY = 8;
 
 	this.PARADOX = 15;
 
