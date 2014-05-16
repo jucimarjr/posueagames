@@ -32,6 +32,10 @@ GameFramework.isInternetExplorer = function () {
     return msie > 0;
 };
 
+GameFramework.random = function (from, to) {
+    return Math.floor(Math.random() * (to - from + 1) + from);
+};
+
 // Constructor for the Game class.
 GameFramework.Game = function (canvas, backgroundColor, debugDraw) {
 	// Reference to the canvas html5 object.
