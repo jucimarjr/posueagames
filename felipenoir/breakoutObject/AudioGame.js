@@ -4,7 +4,7 @@ function AudioGame(){
 	//Audi Jogo
 	var audioJogo = document.createElement("audio");
 	audioJogo.preload = false;	
-	audioJogo.src = "assets/skrillex.mp3";
+	audioJogo.src = "assets/thesong.mp3";
 	audioJogo.volume = 0.8;
 	audioJogo.load();
 	IS_PLAYNG = false;
