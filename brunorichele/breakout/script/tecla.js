@@ -16,7 +16,7 @@ var tecla = {
 	/**
 	*@description Método responsável por iniciar a captura dos eventos do teclado
 	*/
-	listenerKey : function()
+	listener : function()
 	{
 		document.addEventListener('keydown', tecla.keyDown, false); //Ativa quando a tecla é pressionada
         document.addEventListener('keyup', tecla.keyUp, false);	//Ativa quando a tecla é liberada

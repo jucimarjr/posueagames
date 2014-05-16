@@ -1,17 +1,22 @@
 var BreakoutGame = { };
 
-BreakoutGame.GameScene = function (canvas, targetFPS) {
+BreakoutGame.GameScene = function (canvas, targetFPS, playerLives) {
 	this.canvas = canvas;
 	this.targetFPS = targetFPS;
-	this.game = new GameFramework.Game(canvas, "black", true);
+	this.game = new GameFramework.Game(canvas, "black", false);
 	this.player;
 	this.ball;
+	this.bricks = new Array();
+	this.bigBrick;
+	this.gamePhysics;
+	this.gameSound;
 	
 	this._resourcesLoadCount = 0;
 	
 	this._preloadTextures = [
-		{ path: "images/player_racket_block.png", isSpriteSheet: false },
+		{ path: "images/player_racket_block.png", isSpriteSheet: false },	
 		{ path: "images/player_racket_glow.png", isSpriteSheet: false },
+		{ path: "images/player_life.png", isSpriteSheet: false },
 		{ path: "images/player_ball.png", isSpriteSheet: false },
 		{ path: "images/whiteBricks.png", isSpriteSheet: true, rows: 1, collumns: 7 },
 		{ path: "images/whiteGlow.png", isSpriteSheet: false },
@@ -20,6 +25,8 @@ BreakoutGame.GameScene = function (canvas, targetFPS) {
 	];
 	
 	this.loadTextures(this._preloadTextures);
+	this.playerLives = playerLives;
+	this.heartSprites = new Array();
 };
 
 BreakoutGame.GameScene.prototype = {
@@ -47,12 +54,18 @@ BreakoutGame.GameScene.prototype = {
 	},
 	
 	startGame: function () {
-		// console.log("startGame");
+		//console.log("startGame");
 		
 		this.createBrickRows();
 		this.createPlayer();
+		this.createBall();
+		this.createPhysicsManager();
+		this.setUpLives();
+		this.createSoundManager();
 		
-		this.createAudioAndTweenDemo();
+		this.gamePhysics.onBallHit = this.gameSound.onBallHit;
+		
+		//this.createAudioAndTweenDemo();
         
 		this.game.startGame(this.targetFPS);
 	},
@@ -67,36 +80,68 @@ BreakoutGame.GameScene.prototype = {
         brick.transform.x = brick.boundingBox().width / 2.0;
         brick.transform.y = this.canvas.height - brick.boundingBox().height / 2;
         
-        var translation = new GameFramework.Animation(brick,
-                                                      'x',
-                                                      brick.x(),
-                                                      this.canvas.width / 2.0,
-                                                      3000,     // milliseconds
-                                                      GameFramework.Easing.Type.OutInBack,
-                                                      function () {
-                                                          console.log('translation completed');
-                                                          sound.play();
-                                                      });
+        var translation = new GameFramework.PropertyAnimation(brick,
+                                                              'x',
+                                                              brick.x(),
+                                                              this.canvas.width / 2.0,
+                                                              3000,     // milliseconds
+                                                              GameFramework.Easing.Type.OutInBack,
+                                                              function () {
+                                                                  console.log('translation completed');
+                                                                  sound.play();
+                                                              });
         translation.begin();
         this.game.addGameObject(translation);
 
-        var opacity = new GameFramework.Animation(brick,
-                                                  'opacity',
-                                                  0.0,
-                                                  1.0,
-                                                  4000,     // milliseconds
-                                                  GameFramework.Easing.Type.Linear);
+        var opacity = new GameFramework.PropertyAnimation(brick,
+                                                          'opacity',
+                                                          0.0,
+                                                          1.0,
+                                                          4000,     // milliseconds
+                                                          GameFramework.Easing.Type.Linear);
         opacity.begin();
         this.game.addGameObject(opacity);
         
-        var angle = new GameFramework.Animation(brick,
-                                                'angle',
-                                                0.0,
-                                                2 * Math.PI,
-                                                3000,     // milliseconds
-                                                GameFramework.Easing.Type.InOutBack);
+        var angle = new GameFramework.PropertyAnimation(brick,
+                                                        'angle',
+                                                        0.0,
+                                                        2 * Math.PI,
+                                                        3000,     // milliseconds
+                                                        GameFramework.Easing.Type.InOutBack);
         angle.begin();
         this.game.addGameObject(angle);
+        
+        
+        brick = new BreakoutGame.Brick(1);
+        this.game.addGameObject(brick);
+        brick.transform.x = this.canvas.width -  brick.boundingBox().width / 2.0;
+        brick.transform.y = this.canvas.height - brick.boundingBox().height / 2;
+        
+        var sequentialAnimation = new GameFramework.SequentialAnimation(function () {
+            console.log('sequential animation completed');
+        });
+        sequentialAnimation.add(new GameFramework.PropertyAnimation(brick,
+                                                                    'x',
+                                                                    brick.x(),
+                                                                    brick.boundingBox().width / 2.0,
+                                                                    3000,     // milliseconds
+                                                                    GameFramework.Easing.Type.OutInBack,
+                                                                    function () {
+                                                                        console.log('translation 2 completed');
+                                                                    }));
+        sequentialAnimation.add(new GameFramework.PauseAnimation(2000));
+        sequentialAnimation.add(new GameFramework.PropertyAnimation(brick,
+                                                                    'x',
+                                                                    brick.boundingBox().width / 2.0,
+                                                                    this.canvas.width -  brick.boundingBox().width / 2.0,
+                                                                    3000,     // milliseconds
+                                                                    GameFramework.Easing.Type.OutInBack,
+                                                                    function () {
+                                                                        console.log('translation 3 completed');
+                                                                    }));
+        
+        GameFramework.Animation.Play(sequentialAnimation);
+        
         
         BreakoutGame.MonitorBeat.play();
         BreakoutGame.MonitorBeat.dying();
@@ -106,13 +151,20 @@ BreakoutGame.GameScene.prototype = {
 	
 	createBrickRows: function () {
 	    this.game.clearGameObjects();
-	    
+	    GameFramework.clearArray(this.bricks);
+		
 	    var topMargin = 15;
 	    
 	    var bigBrick = new BreakoutGame.BigWhiteBrick();
         this.game.addGameObject(bigBrick);
+		this.bigBrick = bigBrick;
         bigBrick.transform.x = this.canvas.width / 2;
         bigBrick.transform.y = bigBrick.boundingBox().height / 2 + topMargin;
+		
+		var self = this;
+		this.bigBrick.onDestroyed = function () {
+			self.onBigBrickDestroyed();
+		};
         
         // first brick collumn
         var brickY = bigBrick.boundingBox().y;
@@ -123,6 +175,7 @@ BreakoutGame.GameScene.prototype = {
             var index = (i * 4) <= 12 ? i * 4 : 19;
             var brick = new BreakoutGame.Brick(index);
             this.game.addGameObject(brick);
+			this.bricks.push(brick);
             brickY += brick.boundingBox().height / 2.0;
             brick.transform.x = bigBrick.boundingBox().x - brick.boundingBox().width * 1.5 - brickRightMargin;
             brick.transform.y = brickY;
@@ -137,6 +190,7 @@ BreakoutGame.GameScene.prototype = {
             var index = ((i * 4) + 1) <= 13 ? ((i * 4) + 1) : 20;
             var brick = new BreakoutGame.Brick(index);
             this.game.addGameObject(brick);
+			this.bricks.push(brick);
             brickY += brick.boundingBox().height / 2.0;
             brick.transform.x = bigBrick.boundingBox().x - brick.boundingBox().width * 0.5 - brickRightMargin;
             brick.transform.y = brickY;
@@ -151,6 +205,7 @@ BreakoutGame.GameScene.prototype = {
             var index = ((i * 4) + 2) <= 13 ? ((i * 4) + 2) : 17;
             var brick = new BreakoutGame.Brick(index);
             this.game.addGameObject(brick);
+			this.bricks.push(brick);
             brickY += brick.boundingBox().height / 2.0;
             brick.transform.x = bigBrick.boundingBox().x
                                 + bigBrick.boundingBox().width
@@ -167,6 +222,7 @@ BreakoutGame.GameScene.prototype = {
             var index = ((i * 4) + 3) <= 14 ? ((i * 4) + 3) : 18;
             var brick = new BreakoutGame.Brick(index);
             this.game.addGameObject(brick);
+			this.bricks.push(brick);
             brickY += brick.boundingBox().height / 2.0;
             brick.transform.x = bigBrick.boundingBox().x
                                 + bigBrick.boundingBox().width
@@ -187,6 +243,7 @@ BreakoutGame.GameScene.prototype = {
                 var index = (14 + j) + (7 * i);
                 var brick = new BreakoutGame.Brick(index);
                 this.game.addGameObject(brick);
+				this.bricks.push(brick);
                 if (j == 0)
                     brickX += brick.boundingBox().width / 2.0;
                 brick.transform.x = brickX;
@@ -203,16 +260,98 @@ BreakoutGame.GameScene.prototype = {
 		this.game.addGameObject(this.player);
 		this.player.transform.x = this.canvas.width / 2;
 		this.player.transform.y = this.canvas.height * 3 / 4;
-		
-		this.ball = new BreakoutGame.Ball(this.canvas);
+	},
+	
+	createBall: function () {
+		this.ball = new BreakoutGame.Ball();
 		this.game.addGameObject(this.ball);
 		this.ball.transform.x = this.player.transform.x;
 		this.ball.transform.y = this.player.transform.y
 								- this.player.boundingBox().height / 2
 								- this.ball.boundingBox().height / 2;
-								
-		this.ball.velocity.x = 0.1;
-		this.ball.velocity.y = -0.1;
+		
+		if (this.gamePhysics) {
+			this.gamePhysics.ball = this.ball;
+		}
+	},
+	
+	createPhysicsManager: function () {
+		this.gamePhysics = new BreakoutGame.GamePhysics(this.canvas, 
+														this.bricks, 
+														this.bigBrick, 
+														this.player, 
+														this.ball);
+		this.game.addGameObject(this.gamePhysics);
+		
+		var self = this;
+		this.gamePhysics.onPlayerLooseLife = function () { 
+			self.onPlayerLooseLife();
+		};
+		this.gamePhysics.onBallHitBrick = function (arg) {
+			self.onBallHitBrick(arg);
+		};
+		
+		this.gamePhysics.start();
+	},
+	
+	setUpLives: function () {
+		for (var i = 0; i < this.playerLives; i++) {
+			var sprite = GameFramework.SpriteFactory.spriteFromTexture("images/player_life.png");
+			this.game.addGameObject(sprite);
+			this.heartSprites.push(sprite);
+			sprite.transform.x = this.canvas.width - (sprite.boundingBox().width + 5) * (this.playerLives - i);
+			sprite.transform.y = this.canvas.height - sprite.boundingBox().height;
+			GameFramework.Animation.play(new GameFramework.PropertyAnimation(this.heartSprites[i], "opacity", 0.0, 1.0, 500 * (this.playerLives - i), GameFramework.Easing.Type.Linear));
+		}
+	},
+	
+	createSoundManager: function () {
+		this.gameSound = new BreakoutGame.GameSound(this.bricks, this.bigBrick, this.player);
+		this.game.addGameObject(this.gameSound);
+		this.gameSound.heartSoundFrequence = 1000.0;
+	},
+	
+	onPlayerLooseLife: function () {
+		if (--this.playerLives >= 0) {
+			var heart = this.heartSprites[0];
+			this.game.removeGameObject(heart);
+			GameFramework.removeObjectFromArray(this.heartSprites, heart);
+			
+			if (this.playerLives != 0) {
+				var self = this;
+				setTimeout(function () {
+					self.createBall();
+				}, 1000);
+			} else {
+				//TODO: call game over scene.
+				this.player.onGameOver();
+			}
+		}
+		
+		this.game.removeGameObject(this.ball);
+		this.ball = null;
+	},
+	
+	onBallHitBrick: function (brick) {
+		this.game.removeGameObject(brick);
+		GameFramework.removeObjectFromArray(this.bricks, brick);
+		
+		if (this.bricks.length == 0) {
+			this.player.slowDownGlowAnimation();
+			this.gameSound.heartSoundFrequence = 2000;
+		}
+	},
+	
+	onBigBrickDestroyed: function () {
+		this.player.onGameWin();
+		this.ball.onGameOver();
+		this.gamePhysics.stop();		
+		this.gameSound.playGameWinSound();
+		this.gameSound.heartSoundFrequence = -1;
+		
+		for (var i = 0; i < this.heartSprites.length; i++) {
+			GameFramework.Animation.play(new GameFramework.PropertyAnimation(this.heartSprites[i], "opacity", 1.0, 0.0, 500 * i, GameFramework.Easing.Type.Linear));
+		}
 	},
 	
 	onResourceLoaded: function () {

@@ -8,7 +8,7 @@ GameFramework.Sound = function (audio) {
 };
 
 GameFramework.Sound.prototype = {
-    play: function () {
+    play: function (volume) {
         var audio = this.audio;
         if (this._playedOnce) {
             // you cannot play the same audio at same time...
@@ -21,6 +21,10 @@ GameFramework.Sound.prototype = {
                 audio.load();
             }
         }
+		
+		if (volume !== undefined)
+			audio.volume = volume;
+		
         this._playedOnce = true;
         audio.play();
     },

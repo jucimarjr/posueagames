@@ -31,16 +31,19 @@ var game = {
 		
 		game.initBotoes();
 		
+		sound.init();
+		
 		// Intervalo do Gameloop: 60 fps
 		game.polling = setInterval(game.gameLoop, 1000 / 60);
 	},
 
 	bind : function(){
 		// Eventos
-		tecla.listenerKey();
+		tecla.listener();
 	},
 
 	gameLoop : function(){
+		console.log("game mouse x: " + mouse.x + " mouse y: " + mouse.y);
 		//Atualiza posição do jogador
 		jogador.atualizar(game.width);
 		// Atualiza posição da bola
@@ -70,8 +73,8 @@ var game = {
 		}
 		//Verificar derrota e desenhar na tela
 		if(jogador.vitoria == true){
-			game.vitoria();
 			game.btnNewGame();
+			game.vitoria();
 			mouse.listener(canvas);
 		}
 	},
@@ -100,7 +103,7 @@ var game = {
 	},
 	// Função para desenhar a pontuação na tela
 	pontuar : function(){
-        var ponto = bola.pontuacao;
+        var ponto = jogador.pontuacao;
         if (ponto < 10) {
         	ponto = "0" + ponto;
         }

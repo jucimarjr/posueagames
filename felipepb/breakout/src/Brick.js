@@ -9,13 +9,27 @@ BreakoutGame.Brick = function (index) {
     GameFramework.Sprite.call(this, GameFramework.SpriteFactory.loadedSpriteSheets["images/bricks.png"]);
     
     this.glow = GameFramework.SpriteFactory.spriteFromSpriteSheet("images/bricksGlow.png");
+	this.innerWord = this.innerWordForIndex(index);
     this._spriteIndex = index;
-    this._glowAnimation = new GameFramework.Animation(this.glow,
-                                                      'opacity',
-                                                      0.5,
-                                                      1.0,
-                                                      600,
-                                                      GameFramework.Easing.Type.OutQuart);
+    this._glowAnimation = new GameFramework.SequentialAnimation();
+	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
+                            									'opacity',
+                                                                0.5,
+                                                                1.0,
+                                                                250,
+                                                                GameFramework.Easing.Type.OutQuart));
+	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
+                            									'opacity',
+                                                                0.5,
+                                                                1.0,
+                                                                250,
+                                                                GameFramework.Easing.Type.OutQuart));
+	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
+                            									'opacity',
+                                                                1.0,
+                                                                0.75,
+                                                                500,
+                                                                GameFramework.Easing.Type.OutQuart));
 };
 
 BreakoutGame.Brick.prototype = new GameFramework.Sprite();
@@ -33,6 +47,36 @@ BreakoutGame.Brick.prototype.glowIndex = function (brickIndex) {
     return 4;
 };
 
+BreakoutGame.Brick.prototype.innerWordForIndex = function (index) {
+	switch (index) {
+	case 0: return "why";
+	case 1: return "are";
+	case 2: return "you_blue";
+	case 3: return "doing";
+	case 4: return "t_green";
+	case 5: return "h";
+	case 6: return "i_green";
+	case 7: return "s";
+	case 8: return "t_yellow";
+	case 9: return "o";
+	case 10: return "m";
+	case 11: return "e";
+	case 12: return "i_orange";
+	case 13: return "used";
+	case 14: return "to_orange";
+	case 15: return "love";
+	case 16: return "you_orange";
+	case 17: return "but";
+	case 18: return "now";
+	case 19: return "i_red";
+	case 20: return "have";
+	case 21: return "to_red";
+	case 22: return "kill";
+	case 23: return "you_red";
+	default: return null;
+	}
+};
+
 BreakoutGame.Brick.prototype.init = function () {
     GameFramework.Sprite.prototype.init.apply(this);
     this.glow.init();
@@ -45,18 +89,19 @@ BreakoutGame.Brick.prototype.spriteIndex = function(index) {
 
 BreakoutGame.Brick.prototype.playGlowAnimation = function () {
     this._glowAnimation.begin();
-},
+};
 
 BreakoutGame.Brick.prototype.update = function (time) {
     GameFramework.Sprite.prototype.update.apply(this, [time]);
     
     this.glow.transform = this.transform;
     this.glow.update(time);
+	
     this._glowAnimation.update(time);
 };
 
 BreakoutGame.Brick.prototype.render = function (time, context2D, debugDraw) {
-    this.glow.opacity = this.opacity;
+    // this.glow.opacity = this.opacity;
     this.glow.render(time, context2D, false);
     GameFramework.Sprite.prototype.render.apply(this, [time, context2D, debugDraw]);
 };
