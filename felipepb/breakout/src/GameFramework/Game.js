@@ -26,6 +26,12 @@ GameFramework.clearArray = function (array) {
     array.splice(0, length + 1);
 };
 
+GameFramework.isInternetExplorer = function () {
+    var userAgent = window.navigator.userAgent;
+    var msie = userAgent.indexOf('MSIE');
+    return msie > 0;
+};
+
 // Constructor for the Game class.
 GameFramework.Game = function (canvas, backgroundColor, debugDraw) {
 	// Reference to the canvas html5 object.
