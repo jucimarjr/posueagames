@@ -26,6 +26,7 @@
 		<script src="src/HeartBeat.js"></script>
 		<script src="src/MonitorBeat.js"></script>
 		<script src="src/GamePhysics.js"></script>
+		<script src="src/GameSound.js"></script>
 	</head>
 	<body onload="init()">
 		<canvas id="canvas" width="600" height="480">
@@ -39,7 +40,8 @@
 				canvas = document.getElementById("canvas");
 				
 				var targetFPS = 60;
-				var gameScene = new BreakoutGame.GameScene(canvas, targetFPS);
+				var lifeCount = 3;
+				var gameScene = new BreakoutGame.GameScene(canvas, targetFPS, lifeCount);
 			}
 		</script>
 	</body>

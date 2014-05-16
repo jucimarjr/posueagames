@@ -5,10 +5,35 @@ BreakoutGame.BigWhiteBrick = function () {
 	
 	this._maxIndex = this.spriteSheet.totalCollumns;
 	this.glow = GameFramework.SpriteFactory.spriteFromTexture('images/whiteGlow.png');
-	this.opacity = 0.5;
+	this.opacity = 0.15;
+	this.glow.opacity = this.opacity;
 	this._active = false;
-	this._activateAnim = new GameFramework.PropertyAnimation(this, "opacity", 0.5, 1.0, 2000, GameFramework.Easing.Type.InQuart);
-	this._destroyedAnim = new GameFramework.Animation(this, "opacity", 1.0, 0.0, 2000, GameFramework.Easing.Type.InQuart);
+	this._dead = false;
+	this._activateAnimFinnished = false;
+	var self = this;
+	this._activateAnim = new GameFramework.PropertyAnimation(this, "opacity", 0.5, 1.0, 2000, GameFramework.Easing.Type.InQuart, function () {
+		self.onActivateAnimFinnished();
+	});
+    this._glowAnimation = new GameFramework.SequentialAnimation();
+	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
+                            									'opacity',
+                                                                0.0,
+                                                                1.0,
+                                                                250,
+                                                                GameFramework.Easing.Type.OutQuart));
+	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
+                            									'opacity',
+                                                                0.0,
+                                                                1.0,
+                                                                250,
+                                                                GameFramework.Easing.Type.OutQuart));
+	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
+                            									'opacity',
+                                                                1.0,
+                                                                0.0,
+                                                                1500,
+                                                                GameFramework.Easing.Type.OutQuart));
+																
 };
 
 BreakoutGame.BigWhiteBrick.prototype = new GameFramework.Sprite();
@@ -36,10 +61,13 @@ BreakoutGame.BigWhiteBrick.prototype.update = function (time) {
     GameFramework.Sprite.prototype.update.apply(this, [time]);
 	
 	this._activateAnim.update(time);
-	this._destroyedAnim.update(time);
 	
 	this.glow.transform = this.transform;
 	this.glow.update(time);
+	
+	if (!this._dead) {
+		this._glowAnimation.update(time);
+	}
 };
 
 BreakoutGame.BigWhiteBrick.prototype.onHit = function () {
@@ -48,7 +76,10 @@ BreakoutGame.BigWhiteBrick.prototype.onHit = function () {
 		if (this.onDestroyed)
 			this.onDestroyed();
 		
-		this._destroyedAnim.begin();
+		GameFramework.Animation.play(new GameFramework.PropertyAnimation(this, "opacity", 1.0, 0.0, 2000, GameFramework.Easing.OutQuart));
+		GameFramework.Animation.play(new GameFramework.PropertyAnimation(this.glow, "opacity", 1.0, 0.0, 2000, GameFramework.Easing.OutQuart));
+		
+		this._dead = true;
 		
 		return;
 	}
@@ -57,7 +88,6 @@ BreakoutGame.BigWhiteBrick.prototype.onHit = function () {
 };
 
 BreakoutGame.BigWhiteBrick.prototype.render = function (time, context2D, debugDraw) {
-	this.glow.opacity = this.opacity;
     this.glow.render(time, context2D, false);
     GameFramework.Sprite.prototype.render.apply(this, [time, context2D, debugDraw]);
 };
@@ -67,4 +97,13 @@ BreakoutGame.BigWhiteBrick.prototype.dispose = function () {
     this.glow.dispose();
     this.glow = undefined;
     this._maxIndex = undefined;
+};
+
+BreakoutGame.BigWhiteBrick.prototype.playGlowAnimation = function () {
+	if (this._activateAnimFinnished)
+		this._glowAnimation.begin();
+};
+
+BreakoutGame.BigWhiteBrick.prototype.onActivateAnimFinnished = function () {
+	this._activateAnimFinnished = true;
 };

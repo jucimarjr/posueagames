@@ -9,7 +9,7 @@ BreakoutGame.MonitorBeat = {
                                                            GameFramework.SoundFactory.Format.Wav);
             BreakoutGame.MonitorBeat._monitor = monitor;
         }
-        monitor.play();
+        monitor.play(0.3);
     },
     
     dying: function() {

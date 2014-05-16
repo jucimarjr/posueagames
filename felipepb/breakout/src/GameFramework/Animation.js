@@ -43,7 +43,7 @@ GameFramework.Animation.prototype.dispose = function () {
     this._currentTime = undefined;
 };
 
-GameFramework.Animation.Play = function (animation) {
+GameFramework.Animation.play = function (animation) {
     var game = GameFramework.Game.Instance;
     animation._onCompleted = function () {
         game.removeGameObject(animation);

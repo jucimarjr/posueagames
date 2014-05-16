@@ -7,6 +7,7 @@ BreakoutGame.GamePhysics = function (canvas, bricks, bigBrick, player, ball) {
 	
 	this.onPlayerLooseLife;
 	this.onBallHitBrick;
+	this.onBallHit;
 	this.leftWall = {
 		x: 0.0, y: 0.0,
 		width: 1.0, height: this.canvas.height,
@@ -170,6 +171,10 @@ BreakoutGame.GamePhysics.prototype.checkCollisionCircleAgainstRect = function (c
 };
 
 BreakoutGame.GamePhysics.prototype.calculateNewBallVelocity = function (boundingBox) {
+	if (this.onBallHit) {
+		this.onBallHit();
+	}
+	
 	var ballVelocity = this.ball.velocity;
 	var ballBoundingBox = this.ball.boundingBox();
 	var offsetBallBoundingBox = {

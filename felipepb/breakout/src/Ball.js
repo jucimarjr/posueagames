@@ -16,7 +16,7 @@ BreakoutGame.Ball = function () {
 	this.lastPos;
 	this.opacity = 0.0;
 	var self = this;
-	this._startAnimation = new GameFramework.Animation(this, "opacity", 0, 1.0, 1000, GameFramework.Easing.Type.Linear, function () {
+	this._startAnimation = new GameFramework.PropertyAnimation(this, "opacity", 0.0, 1.0, 1000, GameFramework.Easing.Type.Linear, function () {
 		self._startGame();
 	});
 	this._startAnimation.begin();
@@ -59,3 +59,8 @@ BreakoutGame.Ball.prototype.render = function (time, context2D, debugDraw) {
 		context2D.stroke();
 	}
 };
+
+BreakoutGame.Ball.prototype.onGameOver = function () {
+	GameFramework.Animation.play(new GameFramework.PropertyAnimation(this, "opacity", 1.0, 0.0, 1000, GameFramework.Easing.Type.Linear));
+};
+

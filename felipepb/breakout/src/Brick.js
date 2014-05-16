@@ -11,12 +11,25 @@ BreakoutGame.Brick = function (index) {
     this.glow = GameFramework.SpriteFactory.spriteFromSpriteSheet("images/bricksGlow.png");
 	this.innerWord = this.innerWordForIndex(index);
     this._spriteIndex = index;
-    this._glowAnimation = new GameFramework.PropertyAnimation(this.glow,
-                                                              'opacity',
-                                                              0.5,
-                                                              1.0,
-                                                              600,
-                                                              GameFramework.Easing.Type.OutQuart);
+    this._glowAnimation = new GameFramework.SequentialAnimation();
+	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
+                            									'opacity',
+                                                                0.0,
+                                                                1.0,
+                                                                250,
+                                                                GameFramework.Easing.Type.OutQuart));
+	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
+                            									'opacity',
+                                                                0.0,
+                                                                1.0,
+                                                                250,
+                                                                GameFramework.Easing.Type.OutQuart));
+	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
+                            									'opacity',
+                                                                1.0,
+                                                                0.0,
+                                                                500,
+                                                                GameFramework.Easing.Type.OutQuart));
 };
 
 BreakoutGame.Brick.prototype = new GameFramework.Sprite();
@@ -62,7 +75,7 @@ BreakoutGame.Brick.prototype.innerWordForIndex = function (index) {
 	case 23: return "you_red";
 	default: return null;
 	}
-}
+};
 
 BreakoutGame.Brick.prototype.init = function () {
     GameFramework.Sprite.prototype.init.apply(this);
@@ -76,18 +89,19 @@ BreakoutGame.Brick.prototype.spriteIndex = function(index) {
 
 BreakoutGame.Brick.prototype.playGlowAnimation = function () {
     this._glowAnimation.begin();
-},
+};
 
 BreakoutGame.Brick.prototype.update = function (time) {
     GameFramework.Sprite.prototype.update.apply(this, [time]);
     
     this.glow.transform = this.transform;
     this.glow.update(time);
+	
     this._glowAnimation.update(time);
 };
 
 BreakoutGame.Brick.prototype.render = function (time, context2D, debugDraw) {
-    this.glow.opacity = this.opacity;
+    // this.glow.opacity = this.opacity;
     this.glow.render(time, context2D, false);
     GameFramework.Sprite.prototype.render.apply(this, [time, context2D, debugDraw]);
 };

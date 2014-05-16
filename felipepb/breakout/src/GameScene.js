@@ -1,6 +1,6 @@
 var BreakoutGame = { };
 
-BreakoutGame.GameScene = function (canvas, targetFPS) {
+BreakoutGame.GameScene = function (canvas, targetFPS, playerLives) {
 	this.canvas = canvas;
 	this.targetFPS = targetFPS;
 	this.game = new GameFramework.Game(canvas, "black", false);
@@ -9,6 +9,7 @@ BreakoutGame.GameScene = function (canvas, targetFPS) {
 	this.bricks = new Array();
 	this.bigBrick;
 	this.gamePhysics;
+	this.gameSound;
 	
 	this._resourcesLoadCount = 0;
 	
@@ -24,7 +25,7 @@ BreakoutGame.GameScene = function (canvas, targetFPS) {
 	];
 	
 	this.loadTextures(this._preloadTextures);
-	this.playerLives;
+	this.playerLives = playerLives;
 	this.heartSprites = new Array();
 };
 
@@ -60,6 +61,9 @@ BreakoutGame.GameScene.prototype = {
 		this.createBall();
 		this.createPhysicsManager();
 		this.setUpLives();
+		this.createSoundManager();
+		
+		this.gamePhysics.onBallHit = this.gameSound.onBallHit;
 		
 		//this.createAudioAndTweenDemo();
         
@@ -291,30 +295,37 @@ BreakoutGame.GameScene.prototype = {
 	},
 	
 	setUpLives: function () {
-		this.playerLives = 3;
-		
 		for (var i = 0; i < this.playerLives; i++) {
 			var sprite = GameFramework.SpriteFactory.spriteFromTexture("images/player_life.png");
 			this.game.addGameObject(sprite);
 			this.heartSprites.push(sprite);
 			sprite.transform.x = this.canvas.width - (sprite.boundingBox().width + 5) * (this.playerLives - i);
 			sprite.transform.y = this.canvas.height - sprite.boundingBox().height;
+			GameFramework.Animation.play(new GameFramework.PropertyAnimation(this.heartSprites[i], "opacity", 0.0, 1.0, 500 * (this.playerLives - i), GameFramework.Easing.Type.Linear));
 		}
 	},
 	
+	createSoundManager: function () {
+		this.gameSound = new BreakoutGame.GameSound(this.bricks, this.bigBrick, this.player);
+		this.game.addGameObject(this.gameSound);
+		this.gameSound.heartSoundFrequence = 1000.0;
+	},
+	
 	onPlayerLooseLife: function () {
-		if (this.playerLives > 0) {
+		if (--this.playerLives >= 0) {
 			var heart = this.heartSprites[0];
 			this.game.removeGameObject(heart);
 			GameFramework.removeObjectFromArray(this.heartSprites, heart);
-			this.playerLives--;
 			
-			var self = this;
-			setTimeout(function () {
-				self.createBall();
-			}, 1000);
-		} else {
-			//TODO: call game over scene.
+			if (this.playerLives != 0) {
+				var self = this;
+				setTimeout(function () {
+					self.createBall();
+				}, 1000);
+			} else {
+				//TODO: call game over scene.
+				this.player.onGameOver();
+			}
 		}
 		
 		this.game.removeGameObject(this.ball);
@@ -324,10 +335,23 @@ BreakoutGame.GameScene.prototype = {
 	onBallHitBrick: function (brick) {
 		this.game.removeGameObject(brick);
 		GameFramework.removeObjectFromArray(this.bricks, brick);
+		
+		if (this.bricks.length == 0) {
+			this.player.slowDownGlowAnimation();
+			this.gameSound.heartSoundFrequence = 2000;
+		}
 	},
 	
 	onBigBrickDestroyed: function () {
-		this.gamePhysics.stop();
+		this.player.onGameWin();
+		this.ball.onGameOver();
+		this.gamePhysics.stop();		
+		this.gameSound.playGameWinSound();
+		this.gameSound.heartSoundFrequence = -1;
+		
+		for (var i = 0; i < this.heartSprites.length; i++) {
+			GameFramework.Animation.play(new GameFramework.PropertyAnimation(this.heartSprites[i], "opacity", 1.0, 0.0, 500 * i, GameFramework.Easing.Type.Linear));
+		}
 	},
 	
 	onResourceLoaded: function () {
