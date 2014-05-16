@@ -31,7 +31,7 @@ BreakoutGame.Ball = function (player) {
 BreakoutGame.Ball.prototype = new GameFramework.Sprite();
 
 BreakoutGame.Ball.prototype.keyDown = function (e) {
-	if (!this._startGame) {
+	if (this._started) {
 		return;
 	}
 	
