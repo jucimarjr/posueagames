@@ -55,8 +55,6 @@ function Bola(x, y, raio){
         	bater.play();
             this.direcaoX = -this.direcaoX;
         }
-
-
     };
 
     this.inverterX = function(){
@@ -98,10 +96,7 @@ function Bola(x, y, raio){
 		}
 		//Se a posicao da bola for maior ou igual � altura do canvas finaliza a partida
 		if((this.y-this.raio)>=canvas.height){
-			//bater.pause();
-            gameOver = true;
-			//end();
-			
+            gameOver = true;		
 		}
 		
 	};
@@ -166,22 +161,21 @@ function quebraTijolo(i,j){
     // ao bater atribui o valor zero ao bloco
     blocos[i][j] = 0;
     //marcar o ponto aki
-    score ++;
+    pontuacao+=1;
+    setarMaiorPontuacao();
     quebrar.play();
 }
 
+
 function drawPlacar(){
-    // PLACAR
-
-    var pontosA = pontosJogador;
-
-    if (pontosA < 10) {// se o nï¿½mero de pontos for menor que 10, colocamos o zero ï¿½ esquerda
-        pontosA = "0" + pontosA;
-    }
-
-    context.font = "42pt Helvetica";// tamanho e fonte para desenhar o texto
-    context.fillStyle = "#000000";// cor preta (opcional)
-    context.fillText(pontosA, (canvas.width / 2) - 70, 50); // escreve texto na tela na posiï¿½ï¿½o desejada
+    context.font = "20pt bold Helvetica";// tamanho e fonte para desenhar o texto
+    context.fillStyle = "#FFFFFF";// cor preta (opcional)
+    context.strokeStyle = "red";
+    context.fillText("Pontuação: "+pontuacao, (canvas.width)-180, canvas.height-10); // escreve texto na tela na posi��o desejada
+    context.strokeText("Pontuação: "+pontuacao, (canvas.width)-180, canvas.height-10);
+    
+    context.fillText("Recorde: "+maiorPontuacao,15,canvas.height-10);
+    context.strokeText("Recorde: "+maiorPontuacao,15,canvas.height-10);
 }
 
 
@@ -200,19 +194,15 @@ var blocos = [
 
 function criadorDeBlocos(){
     for (var i=0; i < blocos.length; i++) {
-        for (var j=0; j < blocos[i].length; j++) {
-        	
+        for (var j=0; j < blocos[i].length; j++) {	
         	desenhaBlocos(j,i,blocos[i][j]);
-           // tijolo = new Tijolo(j, i, blocoWidth, blocoHeight, blocos[i][j]);
-           /* tijolo.desenhaBloco();
-            tijolos.push(tijolo);*/
         }
     }
 }
 
-// draw a single brick
+// desenha um bloco
 function desenhaBlocos(x,y,type){  
-    switch(type){ // if brick is still visible; three colors for three types of bricks
+    switch(type){ // pega o valor da matriz e desenha um cor
         case 1:
             context.fillStyle = 'orange';
             break;
@@ -223,42 +213,16 @@ function desenhaBlocos(x,y,type){
             context.fillStyle = 'rgba(50,100,50,.5)';
             break;                             
         default:
-        	/*context.fillStyle = 'rgba(225,225,225,0.5)';
-            context.clearRect(x*blocoWidth,y*blocoHeight,blocoWidth,blocoHeight);
-*/            break;
+            break;
  
     }
     if (type){
-        //Draw rectangle with fillStyle color selected earlier
+        //Desenha o retangulo
         context.fillRect(x*blocoWidth,y*blocoHeight,blocoWidth,blocoHeight);
-        // Also draw blackish border around the bloco
+        // desenha o contorno do retangulo
         context.strokeRect(x*blocoWidth+1,y*blocoHeight+1,blocoWidth-2,blocoHeight-2);
     }
 }   
-
-/*function desenhaBloco(x, y, type){
-        switch(type){
-            case 1:
-                context.fillStyle = 'orange';
-                break;
-            case 2:
-                context.fillStyle = 'rgb(100,200,100)';
-                break;
-            case 3:
-                context.fillStyle = 'rgba(50,100,50,.5)';
-                break;
-            default:
-                context.clearRect(this.x*largura,this.y*altura,this.largura,this.altura);
-                break;
-
-        }
-        if (type){
-            //Desenha o retangulo e preenche com a cor selecionada
-            context.fillRect(this.x*this.largura,this.y*this.altura,this.largura, this.altura);
-            // Desenha o contorno do retangulo
-            context.strokeRect(this.x*this.largura+1,this.y*this.altura+1,this.largura-2,this.altura-2);
-        }
- }*/
 
 
 //Cria o objeto tijolo

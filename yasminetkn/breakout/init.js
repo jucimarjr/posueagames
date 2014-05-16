@@ -1,8 +1,4 @@
 
-
-
-
-
     var canvas, context,
     barraWidth, barraHeight,
     jogadorPosX, jogadorPosY,bolaRaio, bolaPosX, bolaPosY,
@@ -27,18 +23,16 @@
     teclaPause = false;
     gameOver = false;
     
+    var pontuacao = 0;
+    var maiorPontuacao;
     
-
-   /* var bouncingSound = new Audio("sound/bounce.ogg");
-    var breakingSound = new Audio("sound/break.ogg");
-    var starterSound = new Audio("sound/skratch.wav");
-    var gameOver = new Audio("sound/skratch17.wav");
-    var zap = new Audio("sound/zap.wav");*/
+    dado = parseInt(localStorage.getItem("maiorPontuacao"));
+    maiorPontuacao = (isNaN(dado))?0:dado;
     
     var quebrar = new Audio("sound/break.ogg");
     var bater = new Audio("sound/bounce.ogg");
     var starterSound = new Audio ("sound/skratch1.wav");//som de start do gamer
-    var gameOverSound = new Audio ("sound/skratch17.wav");//som do game over
+    var gameOverSound = new Audio("sound/alns-gameover.wav");/* ("sound/skratch17.wav")*/;//som do game over
 
 	function init(){
 
@@ -53,31 +47,21 @@
 
         starterSound.play();
 
-
-
-        //gameOverSound.play();
-        //document.addEventListener('keyup',keyUp,false);
         document.addEventListener('keydown',keyDown,false);
         gameLoop= setInterval(animacao, 30);// chama a function gameLoop a cada 30 frames
-       // drawPlacar();
-
 
 	}
 	
 	function end(){//gameOver
 
-        //context.stroke();
         context.fillStyle = "white";
-        context.font = "50pt Arial";
-		context.fillText("- Game Over - ",canvas.width/2,canvas.height/2);
-        console.log("gameOver");
+        context.font = "40pt Arial";
+		context.fillText("- Game Over - ",(canvas.width/2)-200, canvas.height/2);
+		context.fillText("- Aperte a tecla F5 para uma nova partida - ",(canvas.width)-1024, (canvas.height/2)+60);
         gameOverSound.play();
         clearInterval(gameLoop);
 
 	}
-
-
-
 
 	function teclaPressionada(tecla){
 		mapaTecla[tecla.keyCode] = true;
@@ -92,26 +76,22 @@
             teclaPause = !teclaPause;
         }
     }
+    
+    function setarMaiorPontuacao(){
+  	  if(pontuacao>maiorPontuacao){
+  	     maiorPontuacao = pontuacao;
+  	     localStorage.setItem("maiorPontuacao", pontuacao);
+  	  }
+  	}
 
 	function paint(){
 		 context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
 		 jogador.draw();
 		 bola.draw();
 		 criadorDeBlocos();
- 
-		/* for(t in tijolos){
-			 if(tijolos[t]!=0){
-				temTijolos = true; 
-			 } 
-		 }*/
-		 
-		 context.font = "18pt monospace";
-		 
-		/* 
-		 if(!temTijolos){
-			 context.fillText("Voce venceu",125,295);
-			 clearInterval(gameLoop);
-		 }*/
+
+		 drawPlacar();
+
 	}
 
 	//Funcao pra gerar um valor de limite
