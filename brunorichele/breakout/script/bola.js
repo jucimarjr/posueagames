@@ -96,7 +96,7 @@ var bola = {
 			bola.clear(); // A bola retorna a posicao inicial
 			jogador.clear(); // O jogador retorna a posicao inicial
 			jogador.vidas--;
-			if(jogador.vidas == 0){
+			if(jogador.vidas <= 0){
 				jogador.derrota = true;
 				clearInterval(polling);
 			}
