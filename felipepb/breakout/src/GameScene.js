@@ -263,12 +263,12 @@ BreakoutGame.GameScene.prototype = {
 	},
 	
 	createBall: function () {
-		this.ball = new BreakoutGame.Ball();
+		this.ball = new BreakoutGame.Ball(this.player);
 		this.game.addGameObject(this.ball);
 		this.ball.transform.x = this.player.transform.x;
-		this.ball.transform.y = this.player.transform.y
-								- this.player.boundingBox().height / 2
-								- this.ball.boundingBox().height / 2;
+		this.ball.transform.y = this.player.transform.y -
+								this.player.boundingBox().height / 2.0 -
+								this.ball.boundingBox().height / 2.0;
 		
 		if (this.gamePhysics) {
 			this.gamePhysics.ball = this.ball;
