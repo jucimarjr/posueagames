@@ -12,7 +12,6 @@ var bola = {
 	pontuacao : null,
 	randomInit : [-1, 1],
 	imagem: null,
-	somColisaoBloco: null,
 
 	init : function(width, y){// largura do canvas e y do jogador
 		bola.resetX = (width - bola.raio) / 2;

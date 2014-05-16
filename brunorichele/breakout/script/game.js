@@ -39,10 +39,11 @@ var game = {
 
 	bind : function(){
 		// Eventos
-		tecla.listenerKey();
+		tecla.listener();
 	},
 
 	gameLoop : function(){
+		console.log("game mouse x: " + mouse.x + " mouse y: " + mouse.y);
 		//Atualiza posição do jogador
 		jogador.atualizar(game.width);
 		// Atualiza posição da bola
