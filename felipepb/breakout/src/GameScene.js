@@ -50,14 +50,14 @@ BreakoutGame.GameScene.prototype = {
 	},
 	
 	startGame: function () {
-		// console.log("startGame");
+		//console.log("startGame");
 		
 		this.createBrickRows();
 		this.createPlayer();
 		this.createBall();
 		this.createPhysicsManager();
 		
-		// this.createAudioAndTweenDemo();
+		//this.createAudioAndTweenDemo();
         
 		this.game.startGame(this.targetFPS);
 	},
@@ -72,36 +72,68 @@ BreakoutGame.GameScene.prototype = {
         brick.transform.x = brick.boundingBox().width / 2.0;
         brick.transform.y = this.canvas.height - brick.boundingBox().height / 2;
         
-        var translation = new GameFramework.Animation(brick,
-                                                      'x',
-                                                      brick.x(),
-                                                      this.canvas.width / 2.0,
-                                                      3000,     // milliseconds
-                                                      GameFramework.Easing.Type.OutInBack,
-                                                      function () {
-                                                          console.log('translation completed');
-                                                          sound.play();
-                                                      });
+        var translation = new GameFramework.PropertyAnimation(brick,
+                                                              'x',
+                                                              brick.x(),
+                                                              this.canvas.width / 2.0,
+                                                              3000,     // milliseconds
+                                                              GameFramework.Easing.Type.OutInBack,
+                                                              function () {
+                                                                  console.log('translation completed');
+                                                                  sound.play();
+                                                              });
         translation.begin();
         this.game.addGameObject(translation);
 
-        var opacity = new GameFramework.Animation(brick,
-                                                  'opacity',
-                                                  0.0,
-                                                  1.0,
-                                                  4000,     // milliseconds
-                                                  GameFramework.Easing.Type.Linear);
+        var opacity = new GameFramework.PropertyAnimation(brick,
+                                                          'opacity',
+                                                          0.0,
+                                                          1.0,
+                                                          4000,     // milliseconds
+                                                          GameFramework.Easing.Type.Linear);
         opacity.begin();
         this.game.addGameObject(opacity);
         
-        var angle = new GameFramework.Animation(brick,
-                                                'angle',
-                                                0.0,
-                                                2 * Math.PI,
-                                                3000,     // milliseconds
-                                                GameFramework.Easing.Type.InOutBack);
+        var angle = new GameFramework.PropertyAnimation(brick,
+                                                        'angle',
+                                                        0.0,
+                                                        2 * Math.PI,
+                                                        3000,     // milliseconds
+                                                        GameFramework.Easing.Type.InOutBack);
         angle.begin();
         this.game.addGameObject(angle);
+        
+        
+        brick = new BreakoutGame.Brick(1);
+        this.game.addGameObject(brick);
+        brick.transform.x = this.canvas.width -  brick.boundingBox().width / 2.0;
+        brick.transform.y = this.canvas.height - brick.boundingBox().height / 2;
+        
+        var sequentialAnimation = new GameFramework.SequentialAnimation(function () {
+            console.log('sequential animation completed');
+        });
+        sequentialAnimation.add(new GameFramework.PropertyAnimation(brick,
+                                                                    'x',
+                                                                    brick.x(),
+                                                                    brick.boundingBox().width / 2.0,
+                                                                    3000,     // milliseconds
+                                                                    GameFramework.Easing.Type.OutInBack,
+                                                                    function () {
+                                                                        console.log('translation 2 completed');
+                                                                    }));
+        sequentialAnimation.add(new GameFramework.PauseAnimation(2000));
+        sequentialAnimation.add(new GameFramework.PropertyAnimation(brick,
+                                                                    'x',
+                                                                    brick.boundingBox().width / 2.0,
+                                                                    this.canvas.width -  brick.boundingBox().width / 2.0,
+                                                                    3000,     // milliseconds
+                                                                    GameFramework.Easing.Type.OutInBack,
+                                                                    function () {
+                                                                        console.log('translation 3 completed');
+                                                                    }));
+        
+        GameFramework.Animation.Play(sequentialAnimation);
+        
         
         BreakoutGame.MonitorBeat.play();
         BreakoutGame.MonitorBeat.dying();
