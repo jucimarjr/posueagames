@@ -103,7 +103,7 @@ var game = {
 	},
 	// Função para desenhar a pontuação na tela
 	pontuar : function(){
-        var ponto = bola.pontuacao;
+        var ponto = jogador.pontuacao;
         if (ponto < 10) {
         	ponto = "0" + ponto;
         }

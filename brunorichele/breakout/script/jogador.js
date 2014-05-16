@@ -10,6 +10,7 @@ var jogador = {
 	resetY : null,
 	derrota : null,
 	vitoria : null,
+	pontuacao : null,
 	imagem : null,
 
 	init : function(width, height){
@@ -17,6 +18,7 @@ var jogador = {
 		jogador.resetY = height - jogador.h;
 		jogador.derrota = false;
 		jogador.vitoria = false;
+		jogador.pontuacao = 0;
 		jogador.imagem = new Image();
 		jogador.imagem.src = "assets/nave_bloco.png";
 		jogador.clear();

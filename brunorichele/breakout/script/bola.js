@@ -9,15 +9,13 @@ var bola = {
 	resetX : null,
 	resetY : null,
 	countFail : null,
-	pontuacao : null,
 	randomInit : [-1, 1],
 	imagem: null,
 
 	init : function(width, y){// largura do canvas e y do jogador
 		bola.resetX = (width - bola.raio) / 2;
 		bola.resetY = y - 2 * bola.raio;
-		bola.countFail = 0;
-		bola.pontuacao = 0;
+		bola.countFail = 0;		
 		bola.imagem = new Image();
 		bola.imagem.src = "assets/bola1.png";
 		bola.clear();
@@ -81,7 +79,7 @@ var bola = {
 					sound.colisaoBloco();
 					bola.baixo = !bola.baixo;
 					bloco.blocos[linha][coluna] = 1;
-					bola.pontuacao++;
+					jogador.pontuacao++;
 					bola.verificarFinalVitoria(polling);
 				}
 				console.log("Colisao bloco");
@@ -105,7 +103,7 @@ var bola = {
 		}
 	},
 	verificarFinalVitoria : function(polling){
-		if(bola.pontuacao == bloco.numLinhas * bloco.numColunas){
+		if(jogador.pontuacao == bloco.numLinhas * bloco.numColunas){
 			bola.clear(); // A bola retorna a posicao inicial
 			jogador.clear(); // O jogador retorna a posicao inicial
 			jogador.vitoria = true;
