@@ -17,7 +17,7 @@ canvas {
 	<canvas id="canvas" width="504" height="752" >
 	Navegador não compatível com HTML5 Canvas
 	</canvas>
-	<script>
+	<script type="text/javascript">
 		var canvas, context, barraImg, backgroundImg, bolaImg, 
 		frameProportion, frameCount, lance,
 		teclaEsquerdaPressionada, teclaDireitaPressionada, 
@@ -26,7 +26,7 @@ canvas {
         songBackground, playBolaSom, contaVidas, vidasImg,
         numPokemon, contaPokemon, placarAltura,
         gameOverScreen, endGame, tocaMusica,
-        pontuacaoTotal, songGameOver, gifPokemon;
+        pontuacaoTotal, songGameOver, giFrameCount, gameOverGif;
 		
 		var bola = {
 			raio : 16,
@@ -57,8 +57,24 @@ canvas {
             
             tocaMusica = true;//Musica esta tocando
             beginsGame();//Reseta a tela e os dados
-			setInterval(gameLoop, 30);// chama a function gameLoop a cada 30 frames
-		}
+            setInterval(gameLoop, 30); // chama a function gameLoop a cada 30 frames
+            giFrameCount = 0;
+            loadGameOverGif();
+        }
+
+        function loadGameOverGif() {
+            gameOverGif = [];
+            for (var i = 0; i < 174; i++) {
+                var img = new Image();
+                var zeros = "";
+                if (i < 10)
+                    zeros = "00";
+                else if (i < 100)
+                    zeros = "0";
+                img.src = "img/pokemon_gif_png_seq/gameover__00" + zeros + i + ".png";
+                gameOverGif[i] = img;
+            }
+        }
 		
 		//Reseta a tela e os dados
 		function beginsGame(){
@@ -98,8 +114,6 @@ canvas {
 			bolaImg.src = "img/pokeball0.png";
 			vidasImg = new Image();
 			vidasImg.src = "img/pokeball_vidas.png";
-			gifPokemon = new Image(); 
-			gifPokemon.src = "img/gameover_gif.png";
 			frameCount = 0;
 			placarAltura = 129;
 
@@ -129,11 +143,17 @@ canvas {
 		function gameOver(){
 		    context.drawImage(backgroundImg, 0, 0);
 		    context.drawImage(gameOverScreen, 0, 0);
-		    context.drawImage(gifPokemon, 35, 438);
 		    context.font = '90px "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
 			context.fillStyle = "#1c30bd";//cor da fonte
 			var pontuaTexto = (pontuacaoTotal < 10 ? "0"+ pontuacaoTotal : pontuacaoTotal);// Acrescenta 0 na frente dos numeros menores que 10
-			context.fillText( pontuaTexto ,  canvas.width/2 - 55, canvas.height/2 +10);//Desenha a pontuacao
+			context.fillText(pontuaTexto, canvas.width / 2 - 55, canvas.height / 2 + 10); //Desenha a pontuacao
+
+			var pokegif = new Image();
+			if (giFrameCount < 174)
+			  giFrameCount++;
+			else
+			  giFrameCount = 0;
+			context.drawImage(gameOverGif[giFrameCount], 35, 438);
 		}
 		
 		//30% do som do Background
