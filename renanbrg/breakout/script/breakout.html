@@ -511,11 +511,20 @@ function gameLoop() {
 	
 	if(gameOver){
 		gameOverFunction();
+		
 		if (isGameOver == true) {
 			isGameOver = false;
 			snd_gameover.play();
 		}
-		else{
+
+	}else if(!startGame && showInicial){
+		drawInicial();
+	}else if(startGame){
+		checkCollisionWall();
+		getBarPosition();
+		getBallPosition();
+		drawGame();
+	}else{
 		drawInicial();
 		checkStartGame();
 		drawGame();
