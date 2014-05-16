@@ -1,29 +1,20 @@
 function Level() {
     this.bars = [];
+    this.delay = 0;
+    this.barWidth = 60;
+    this.barHeight = 25;
+    this.barsPerLine = 20;
+    this.barsLines = 6;
 }
 
 Level.prototype.init = function () {
-    var barsPerLine = 10;
-    var barWidth = 60;
-    var barHeight = 25;
-    var colors = [
-        'rgb(208, 58, 209)',
-        'rgb(247, 83, 82)',
-        'rgb(253, 128, 20)',
-        'rgb(255, 144, 36)',
-        'rgb(5, 179, 32)',
-        'rgb(109, 101, 246)'
-    ];
-
-    for (var i=0; i<colors.length; i++) {
-        for (var j=0; j<barsPerLine; j++) {
-
+    for (var i=0; i<this.barsLines; i++) {
+        for (var j=0; j<this.barsPerLine; j++) {
             this.bars.push(new Bar({
-                'x': j * barWidth,
-                'y': barHeight * (i+2),
-                'width': barWidth,
-                'height': barHeight,
-                'color': colors[i],
+                'x': j * this.barWidth,
+                'y': this.barHeight * (i+2),
+                'width': this.barWidth,
+                'height': this.barHeight,
                 'image': ImageLoader.get('brick')
             }));
 
@@ -33,6 +24,12 @@ Level.prototype.init = function () {
 
 Level.prototype.draw = function (context) {
     for (var i in this.bars) {
+        if (this.bars[i].x <= - (this.barWidth * this.barsPerLine) / 2) {
+            this.bars[i].x = this.barWidth * this.barsPerLine / 2;
+        } else {
+            this.bars[i].x -= 2;
+        }
+
         this.bars[i].draw(context);
     }
 };

@@ -13,6 +13,7 @@ var mouse = {
 	{
 		mouse.findPosition(root);
 		document.addEventListener('click', mouse.onClick, false); //Ativa quando a tecla é pressionada
+	//	document.addEventListener('mousemove', mouse.onMouseMove, false); //Ativa quando a tecla é pressionada
 	},
 	onClick : function (e)
 	{
@@ -21,15 +22,32 @@ var mouse = {
 
 		console.log("mouse x: " + mouse.x + "mouse y: " + mouse.y);
 
-		if(mouse.x > 388 && mouse.x < 635 && mouse.y > 401 && mouse.y < 506){
+		if(mouse.x > 377 && mouse.x < 501 && mouse.y > 407 && mouse.y < 447){
 			game.init();
 			console.log("Iniciar novo jogo");
 		}else
-		if(mouse.x > 388 && mouse.x < 635 && mouse.y > 550 && mouse.y < 654){
+		if(mouse.x > 521 && mouse.x < 645 && mouse.y > 407 && mouse.y < 447){
 			main.inicio();
 			console.log("Menu do jogo");
 		}	
 	},
+	/*Não remova será utilizado
+	onMouseMove : function (e)
+	{
+		mouse.x = e.pageX - mouse.currentX;
+		mouse.y = e.pageY - mouse.currentY;
+
+		console.log("mouse x: " + mouse.x + "mouse y: " + mouse.y);
+
+		if(mouse.x > 377 && mouse.x < 501 && mouse.y > 407 && mouse.y < 447){
+
+			console.log("Iniciar novo jogo");
+		}else
+		if(mouse.x > 521 && mouse.x < 645 && mouse.y > 407 && mouse.y < 447){
+
+			console.log("Menu do jogo");
+		}	
+	},	*/
 	findPosition : function (obj)
 	{
 		var curleft = curtop = 0;

@@ -29,29 +29,37 @@
 		var barraX = 200;
 		var barraY = 460;
 		var barraAltura = 14;
-		var barraLargura = 84;
+		var barraLargura = 80;
 		var moverBarra = 'PARAR'; // DIREITA ou ESQUERDA ou PARAR
 		var barraDeltaX; // sentido da barra
-		var barraVelocidadeX = 12; // deslocamento da barra em pixels
+		var barraVelocidadeX = 10; // deslocamento da barra em pixels
 		
 		// Variaveis para controle da bola 
 		var bola; // IMAGEM da bola
 		var bolaX = 300;
 		var bolaY = 300;
 		var bolaAltura = 15; 
-		var bolaDeltaY = -3;
-		var bolaDeltaX = -3;
+		var bolaDeltaY = -4;
+		var bolaDeltaX = -4;
 
 		// Matriz dos blocos a serem desenhados 10 X 6 inicialmente 
 		 var blocos = [
-			[0,0,0,0,0,0,0,0,0,0],
-			[1,1,1,1,1,1,1,1,1,1],
-			[1,1,1,0,1,1,0,1,1,1],
-			[1,1,1,1,1,1,1,1,1,1],
-			[1,1,1,1,1,1,1,1,1,1],
-			[1,1,1,1,1,1,1,1,1,1],
-			[1,1,1,1,1,1,1,1,1,1],
+			[3,3,3,3,3,3,3,3,3,3],
+			[3,3,3,3,3,3,3,3,3,3],
 		];
+	    
+	    var tijolo1 = new Image();
+	    tijolo1.src = 'images/tijolo.png';
+	    var tijolo2 = new Image();
+	    tijolo2.src = 'images/tijolo2.png';
+	    var tijolo3 = new Image();
+	    tijolo3.src = 'images/tijolo3.png';
+
+	    var tijolos = [tijolo3,tijolo2,tijolo1];
+		var imagemAberturaLogo;
+		var imagemAberturaInicio;
+		var imagemAberturaCreditos;
+		var aberturaAcao;
 	    
 		// Desenha a parede 
 		function desenhaParedeDeBlocos() {
@@ -65,9 +73,14 @@
 		// Desenha o bloco
 	    function desenharBloco(x,y, temBloco){
 	    	if (temBloco != 0) {
-		    	ctx.fillStyle = "green";
-		    	ctx.fillRect((x*blocoLargura)+(x+1),(y*blocoAltura)+y,blocoLargura,blocoAltura);
+		    	//ctx.fillStyle = cores[temBloco - 1];
+		    	//ctx.fillRect((x*blocoLargura)+(x*1),);
+		    	ctx.drawImage(tijolos[temBloco - 1], (x*blocoLargura)+(x+1),(y*blocoAltura)+y);
 	    	}
+	    	//if (temBloco != 0) {
+		    //	ctx.fillStyle = "green";
+		    //	ctx.fillRect((x*blocoLargura)+(x+1),(y*blocoAltura)+y,blocoLargura,blocoAltura);
+	    	//}
 	    }
 
 	    // Desenha a barra
@@ -225,12 +238,19 @@
 		}
 		
 		function telaInicial(){
-			
+			//var imagemFundo = new Image();
+			//imagemFundo.src = 'images/fundo.png';		
+			//imagemFundo.onload = function() {
+			//	ctx.drawImage(imagemFundo, 0,0);
+			//	};
+
 			imagemAberturaLogo = new Image();
 			imagemAberturaLogo.src = 'images/breakout3.png';		
 			imagemAberturaLogo.onload = function() {
 				ctx.drawImage(imagemAberturaLogo, ((canvas.width / 2) - (imagemAberturaLogo.width/2)), 100);
 			};
+
+
 
 			// var snd = new Audio("sounds/background.mp3"); // buffers automatically when created
 			// snd.play();

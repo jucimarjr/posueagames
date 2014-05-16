@@ -25,6 +25,7 @@ function init() {
 	background = new background();
 	showPoints = new showPoints();
 	showLives = new showLives();
+	gameOver = new gameOver();
 	player = new player(width / 2, height, 100, 10, 10);
 	ball = new ball(width / 2, height / 2, 5, 10);
 	blocks = new blocks();
@@ -56,6 +57,7 @@ function keyUp(e) {
 }
 
 function gameLoop() {
+	if(lives >= 0){
 	context.clearRect(0, 0, width, height);
 
 	// Titulo / Linha divisoria
@@ -64,7 +66,7 @@ function gameLoop() {
 	// Pontos
 	showPoints.draw(context);
 	
-	//Vidas
+	// Vidas
 	showLives.draw(context);
 
 	// Jogador
@@ -77,6 +79,11 @@ function gameLoop() {
 	// Bola
 	ball.update(player, blocks);
 	ball.draw(context);
+	
+	}else{
+		context.clearRect(0, 0, width, height);
+		gameOver.draw(context);
+	}
 }
 
 function background() {
@@ -102,6 +109,15 @@ function showPoints() {
 		context.font = "21pt Helvetica";
 		context.fillStyle = "red";
 		context.fillText("Pontos: " + points, (width / 2) + 150, 25);
+	};
+}
+
+function gameOver() {
+	this.draw = function(context) {
+		// Placar
+		context.font = "21pt Helvetica";
+		context.fillStyle = "red";
+		context.fillText("GAME OVER", (width / 2) , (height / 2));
 	};
 }
 

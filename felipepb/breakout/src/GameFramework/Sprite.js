@@ -27,7 +27,9 @@ GameFramework.Sprite = function (sprite) {
 	this._sourceRect;
 	this._boundingBox = {
 		x: 0.0, y: 0.0,
-		width: 0.0, height: 0.0
+		width: 0.0, height: 0.0,
+		top: 0.0, right: 0.0,
+		bottom: 0.0, left: 0.0
 	}
 
 	return this;
@@ -89,7 +91,11 @@ GameFramework.Sprite.prototype.boundingBox = function () {
 	this._boundingBox.y = this.transform.y - this._sourceRect.height * this.transform.scaleY / 2;
 	this._boundingBox.width = this._sourceRect.width * this.transform.scaleX;
 	this._boundingBox.height = this._sourceRect.height * this.transform.scaleY;
-	
+	this._boundingBox.top = this._boundingBox.y;
+	this._boundingBox.left = this._boundingBox.x;
+	this._boundingBox.right = this._boundingBox.x + this._sourceRect.width * this.transform.scaleX;
+	this._boundingBox.bottom = this._boundingBox.y + this._sourceRect.height * this.transform.scaleY;
+
 	return this._boundingBox;
 };
 

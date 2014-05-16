@@ -65,7 +65,7 @@ BreakoutGame.prototype.initBars = function() {
 
 BreakoutGame.prototype.initBall = function() {
 
-	var BALL_NBALLS = 1;
+	var BALL_NBALLS = 20;
 	var BALL_RADIUS = 10;
 	var BALL_X = (this.x + this.width) / 2;
 	var BALL_Y = (this.y + this.height) / 2;
