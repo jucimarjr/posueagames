@@ -1,68 +1,425 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8" />
-<title>Breakout</title>
-<style type="text/css">
-canvas {
-	border: 1px dashed #000000;
-}
-@font-face {
-    font-family: "pokeNumber";
-    src: url("font/04B_03__.TTF");
-}
-</style>
+    <meta charset="UTF-8" />
+    <title>Breakout</title>
+    <style type="text/css">
+        canvas
+        {
+            border: 1px dashed #000000;
+        }
+        @font-face
+        {
+            font-family: "pokeNumber";
+            src: url("font/04B_03__.TTF");
+        }
+    </style>
 </head>
-<body onload="init()" style="text-align: center">
-	<canvas id="canvas" width="504" height="752" >
+<body onload="init()" style="text-align: center; border-width: 0">
+    <canvas id="canvas" width="504" height="752">
 	Navegador não compatível com HTML5 Canvas
 	</canvas>
-	<script type="text/javascript">
-		var canvas, context, barraImg, backgroundImg, bolaImg, 
-		frameProportion, frameCount, lance,
-		teclaEsquerdaPressionada, teclaDireitaPressionada, 
-		brickTypes, brickWidth, brickHeight,
+    <script type="text/javascript">
+        //variaveis
+        var context, //variavel do contexto de dentro do canvas da pagina html
+        //estados
+		teclaEsquerdaPressionada, teclaDireitaPressionada, lance, fimJogo, tocaMusica, vitoriaJogo,
+        //contadores
+        contaFrame, contaFrameGif, contaVidas, contaPokemon, totalPontuacao, totalBloco,
+        //imagens
+        barraImg, backgroundImg, bolasImg, vidasImg, blocosImg, gameOverScreen, gameOverGif,
+        //sons
+        musicaBackground, somBola, somGameOver,
+        //atributos de objeto
+        tiposBloco, larguraBloco, alturaBloco,
 		parede, paredeLinhas, paredeColunas,
-        songBackground, playBolaSom, contaVidas, vidasImg,
-        numPokemon, contaPokemon, placarAltura,
-        gameOverScreen, endGame, tocaMusica,
-        pontuacaoTotal, songGameOver, giFrameCount, gameOverGif,
-        totalBrick, telaVitoria;
-		
-		var bola = {
-			raio : 16,
-			posX : 0,
-			posY : 0,
-			paraCima : true,
-			angulo : 0,
-			anguloR : Math.PI,
-			velocidade : 9//9
-		};
-		
-		var jogador = {
-			posX : 0,
-			posY : 0,
-			velocidade : 15
-		};
+        numPokemon, alturaPlacar, alturaParede,
+        divisorFrame;
+        //exemplos de objetos
+        var bola = {
+            raio: 16,
+            posX: 0,
+            posY: 0,
+            paraCima: true,
+            angulo: 0,
+            anguloR: Math.PI,
+            velocidade: 9//9
+        };
+        var jogador = {
+            posX: 0,
+            posY: 0,
+            velocidade: 15
+        };
 
-		//inicia a aplicacao
-		function init() {
-			canvas = document.getElementById("canvas");// procura o canvas
-			context = canvas.getContext("2d");// recupera o contexto 2d
-                        
-			document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
-			document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
-			songBackground = document.getElementById("bgsound");
-            playBolaSom = document.getElementById("audioPokeball");
-            songGameOver = document.getElementById("audioGameOver");
-            
-            tocaMusica = true;//Musica esta tocando
-            beginsGame();//Reseta a tela e os dados
+        //inicia a aplicacao
+        function init() {
+            var canvas = document.getElementById("canvas"); // procura o canvas
+            context = canvas.getContext("2d"); // recupera o contexto 2d
+
+            document.addEventListener('keyup', keyUp, false); // adiciona evento para keyup
+            document.addEventListener('keydown', keyDown, false); // adiciona evento para keydown
+
+            musicaBackground = document.getElementById("bgsound"); //recupera o objeto da musica d fundo
+            somBola = document.getElementById("audioPokeball"); //recupera o objeto do som da pokebola
+            somGameOver = document.getElementById("audioGameOver"); //recupera o objeto do som de Game Over
+
+            beginGame(); //Reseta a tela e os dados
+
             setInterval(gameLoop, 30); // chama a function gameLoop a cada 30 frames
-            giFrameCount = 0;
-            loadGameOverGif();
         }
 
+        //Reseta a tela e os dados que não mudam durante o jogo
+        function beginGame() {
+            //estados iniciais gerais
+            vitoriaJogo = false; //Não é vitória
+            fimJogo = false; //Nao é game over
+
+            //começo contadores gerais
+            contaPokemon = new Array(0, 0, 0, 0); //pontuacao dos 4 pokemons diferentes
+            contaVidas = 3; //Quantidade de vidas iniciais
+            contaFrameGif = 0;
+            totalPontuacao = 0; //placar total
+
+            //atributos de objetos globais
+            alturaPlacar = 43; //Altura do fim da barra
+            alturaParede = alturaPlacar * 3; //3 tijolos de diferenca ate a parde de tijolo
+            larguraBloco = 42;
+            alturaBloco = 42;
+            paredeLinhas = 7;
+            paredeColunas = 12;
+            tiposBloco = 4;
+            divisorFrame = 3;
+
+            //prepara som
+            musicaBackground.volume = 0.3; //30% da musica de Background            
+            tocaMusica = false; //Musica ainda não esta tocando
+            ativadorMusica(); //liga||desliga música
+
+            //carrega imagens
+            gameOverScreen = new Image();
+            gameOverScreen.src = "img/gameover.png";
+            barraImg = new Image();
+            barraImg.src = "img/bar.png";
+            barraImg.width = 87;
+            barraImg.height = 24;
+            backgroundImg = new Image();
+            backgroundImg.src = "img/BG.png";
+            vidasImg = new Image();
+            vidasImg.src = "img/pokeball_vidas.png";
+            loadBlocosImg();
+            loadGameOverGif();
+            loadBolasImg();
+            preencheParede(); // Preenche soh no inicio da partida
+
+            //reseta variaveis que mudam durante o jogo
+            reset();
+        }
+
+        //Reseta a tela, mas nao todos os dados
+        function reset() {
+            contaFrame = 0; //começa a contagem de frames p/ controle do gira da bola
+            lance = 0; //bola ainda não lançada
+
+            //posição inicial jogador
+            jogador.posX = (canvas.width - barraImg.width) / 2;
+            jogador.posY = canvas.height - barraImg.height;
+            jogador.velocidade = 15;
+
+            //posição inicial bola
+            bola.posX = canvas.width / 2;
+            bola.posY = jogador.posY - bola.raio;
+            bola.velocidade = 5;
+            bola.paraCima = true;
+
+            //estado inicial das teclas
+            teclaEsquerdaPressionada = false;
+            teclaDireitaPressionada = false;
+        }
+
+        //Repete constantemente essas funcoes
+        function gameLoop() {
+            if (!vitoriaJogo) {
+                if (!fimJogo) {//Verifica se não é game over
+                    verificaColisaoParede();
+                    movimentaJogador();
+                    movimentaBola();
+                    redesenhaTela();
+                    verificaVitoria();
+                } else {
+                    redesenhaTela();
+                    gameOver();
+                }
+            } else {
+                redesenhaTela();
+                verificaVitoria();
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////funções dentro do game loop
+        //Verifica se houve colisao na tijolo
+        function verificaColisaoParede() { //todas as possiveis colisoes do perímetro e centro da bola com a parede
+            if ((bola.posY - bola.raio) <= (alturaBloco * paredeLinhas + alturaParede)) { //se o topo da bola chegar no fundo da parede
+                for (var j = -1; j <= 1; j++) { //indices que controlam qual 'extremidade' da bola esta tocando a parede
+                    for (var i = -1; i <= 1; i++) {//em relação ao centro da bola
+                        x = Math.floor((bola.posX + (i * bola.raio)) / larguraBloco); //x do ponto
+                        y = Math.floor((bola.posY + (j * bola.raio) - alturaParede) / alturaBloco); //y do ponto
+                        if (x < paredeColunas && y < paredeLinhas && x >= 0 && y >= 0) //se teve colisão no ponto
+                            if (parede[y][x]) { //se tinha tijolo
+                                parede[y][x] = null; //tira tijolo
+                                contaPokemon[numPokemon[y][x]]++; //Conta +1 pokemon
+                                totalPontuacao++; //Soma mais um no total
+                                totalBloco--;
+                                numPokemon[y][x] = -1;
+                                reacaoColisao(i, j);
+                            }
+                    }
+                }
+            }
+        }
+
+        //EM qual ponto houve a colisao na bola
+        function reacaoColisao(x, y) {
+            //som quando acerta o pokemon
+            playPokeball();
+            if (x === 0 && y === -1) { //top center 0 -1 
+                bola.paraCima = false;
+            } else if (x === 0 && y === 1) { //bottom center 0 1 
+                bola.paraCima = true;
+            } else if ((x === -1 && y === 0) || (x === 0 && y === 0) || (x === 1 && y === 0)) { //side left -1 0 //center  0 0 //side right 1 0 
+                bola.angulo = bola.angulo * -1;
+            } else if ((x === -1 && y === -1) || (x === 1 && y === -1) || (x === -1 && y === 1) || (x === 1 && y === 1)) {//top left -1 -1 //top right 1 -1 //bottom left -1 1 //bottom right 1 1
+                bola.paraCima = !bola.paraCima;
+                bola.angulo = bola.angulo * -1;
+            }
+        }
+
+        //Movimento do jogador
+        function movimentaJogador() {
+            // se o jogador estiver pressionando a tecla Direita ou Esquerda
+            if (teclaEsquerdaPressionada) { // se for para Esquerda...
+                if (jogador.posX >= jogador.velocidade) { // se não sair da tela...
+                    jogador.posX -= jogador.velocidade; // muda a posição
+                }
+            } else if (teclaDireitaPressionada) { // se for para Direita...
+                if ((canvas.width - jogador.posX) >= (barraImg.width + jogador.velocidade)) {// se não sair da tela...
+                    jogador.posX += jogador.velocidade; // muda a posição
+                }
+            }
+        }
+
+        function movimentaBola() {
+            if (lance === 2) { //se o jogador já lançou a bola
+                //movimento no eixo X
+                if ((bola.posX - bola.raio <= 0)
+						|| (bola.posX + bola.raio >= canvas.width)) {// se a bola bater dos lados da tela...esquerdo ou direito
+                    bola.posX = ((bola.posX - bola.raio <= 0) ? bola.raio : canvas.width - bola.raio); //atualzia p/ um valor válido
+                    bola.angulo = bola.angulo * -1; // multiplicamos por -1 para inverter o sinal e a direção da bola no eixo X
+                }
+                bola.posX += bola.angulo; // movemos a bola para os lados
+
+                //movimento no eixo Y
+                if (bola.paraCima) {// se a bola estiver indo para cima...
+                    bola.posY -= bola.velocidade; // movemos a bola para cima
+                } else {// se estiver indo para a baixo...
+                    bola.posY += bola.velocidade; // movemos a bola para baixo
+                }
+
+                if ((bola.posY - bola.raio - alturaPlacar) <= 0) { //se a bola bater no topo ela deve descer
+                    bola.paraCima = false;
+                } else if (((bola.posY + bola.raio - bola.velocidade) >= jogador.posY) //se a bola esta na altura da barra 
+					 && ((bola.posX >= jogador.posX) && (bola.posX <= (jogador.posX + barraImg.width)))) { //e se a bola esta dentro do comprimento da barra
+                    bola.paraCima = true; //bola rebate na barra
+                    movimentaBolaBarra(); //da efeito
+                    bola.posY -= bola.velocidade; //aplica 'efeito'
+                } else if (bola.posY > jogador.posY) { //se a bola passou da barra
+                    //reinicia jogo
+                    if (contaVidas === 0) {
+                        fimJogo = true;
+                        playGameOver();
+                    } else {
+                        contaVidas--;
+                        reset();
+                    }
+                }
+            } else { //a bola deve acompanhar a barra antes do primeiro lance
+                movimentaBolaBarra();
+            }
+        }
+
+        function movimentaBolaBarra() {
+            // se o jogador estiver pressionando a tecla Direita ou Esquerda
+            if (teclaEsquerdaPressionada) { // se for para Esquerda...
+                if ((bola.posX > jogador.velocidade)) {
+                    bola.posX -= jogador.velocidade; // muda a posição
+                }
+                bola.angulo = Math.floor(Math.random() * (bola.raio + 4)) - (bola.raio - 2);
+            } else if (teclaDireitaPressionada) { // se for para Direita...
+                if (((bola.posX + bola.raio + jogador.velocidade) < canvas.width)) {
+                    bola.posX += jogador.velocidade; // muda a posição
+                }
+                bola.angulo = Math.floor(Math.random() * (bola.raio + 4));
+            }
+            jogador.velocidade = verificaVelocidade();
+            validaAngulo();
+        }
+
+        //aumenta velocidade da barra do jogador caso esteja mais lenta que a velocidade da bola
+        function verificaVelocidade() {
+            if (bola.angulo > jogador.velocidade) {
+                return jogador.velocidade = Math.abs(bola.angulo) + 1; //Aumenta velocidade se angulo muito grande
+            } else {
+                return jogador.velocidade = 15;
+            }
+        }
+
+        //A bola nunca vai em um angulo de muito pequeno
+        function validaAngulo() {
+            if (bola.angulo > 0 && bola.angulo < 6)
+                bola.angulo = 6;
+            else if (bola.angulo <= 0 && bola.angulo > -6)
+                bola.angulo = -6;
+        }
+
+        function redesenhaTela() {
+            context.clearRect(0, 0, canvas.width, canvas.height); // limpa a tela antes de desenhar
+            context.drawImage(backgroundImg, 0, 0); //desenha fundo
+            context.drawImage(barraImg, jogador.posX, jogador.posY); //desenha barra
+            desenhaParede();
+            desenhaVidas();
+            desenhaBola();
+            desenhaPontuacao();
+        }
+
+        //Desenha os tijolos
+        function desenhaParede() {
+            for (var i = 0; i < paredeLinhas; i++) {
+                for (var j = 0; j < paredeColunas; j++) {
+                    if (parede[i][j]) { //se for um tijolo cheio
+                        context.drawImage(parede[i][j], j * larguraBloco, i * alturaBloco + alturaParede); //desenha tijolo
+                    }
+                }
+            }
+        }
+
+        //Desenha as pokeballs na tela
+        function desenhaVidas() {
+            if (contaVidas !== 0) {
+                var vidas = contaVidas;
+                for (; vidas > 0; vidas--) {
+                    context.drawImage(vidasImg, (canvas.width) - 8 - (39 * vidas), 6);
+                }
+            }
+        }
+
+        //atualiza a bola girando
+        function desenhaBola() {
+            if (((bola.posY + bola.raio) < jogador.posY) && !vitoriaJogo && !fimJogo) { //se bola não estiver na barra e não tiver acabado o jogo
+                if ((contaFrame + 1) < (divisorFrame * tiposBloco)) //se o contador de frames + 1 for menor que o número máximo de frames, 
+                    contaFrame++; //continua a contar
+                else
+                    contaFrame = 0; //senão recomeça
+            }
+            context.drawImage(bolasImg[Math.floor(contaFrame / divisorFrame)], bola.posX - bola.raio, bola.posY - bola.raio); //desenha bola
+        }
+
+        //Desenha a Pontuacao x10 x05 x03 x01 na tela
+        function desenhaPontuacao() {
+            context.font = '20pt "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
+            context.fillStyle = "#ffffff"; //cor da fonte
+            var count = 3;
+            for (; count >= 0; count--) {
+                var number = (contaPokemon[count] < 10 ? "0" + contaPokemon[count] : contaPokemon[count]);
+                context.fillText(number, 66 + (83 * count), 30);
+            }
+        }
+
+        //confirma e desenah a tela de vitoria
+        function verificaVitoria() {
+            if (totalBloco === 0) {
+                vitoriaJogo = true;
+                context.font = '30pt "pokeNumber"';
+                context.fillStyle = "#1c30bd";
+                context.fillText("PARABENS!", canvas.width / 2 - 100, canvas.height / 2 - 200);
+                context.fillText("Voce capturou", canvas.width / 2 - 150, canvas.height / 2 - 130);
+                context.fillText("pokemons", canvas.width / 2 - 100, canvas.height / 2 + 20);
+                context.font = '90px "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
+                var pontuaTotal = (totalPontuacao < 10 ? "0" + totalPontuacao : totalPontuacao); // Acrescenta 0 na frente dos numeros menores que 10
+                context.fillText(pontuaTotal, canvas.width / 2 - 55, canvas.height / 2 - 40); //Desenha a pontuacao
+                desenhaGif();
+            }
+        }
+
+        //GAME OVER - Desenha a Tela de Game Over
+        function gameOver() {
+            context.drawImage(gameOverScreen, 0, 0);
+            context.font = '90px "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
+            context.fillStyle = "#1c30bd"; //cor da fonte
+            var pontuaTexto = (totalPontuacao < 10 ? "0" + totalPontuacao : totalPontuacao); // Acrescenta 0 na frente dos numeros menores que 10
+            context.fillText(pontuaTexto, canvas.width / 2 - 55, canvas.height / 2 + 10); //Desenha a pontuacao
+            desenhaGif();
+        }
+
+        ////////////////////////////////////////////////////funções do teclado
+        //Botao nao pressionado
+        function keyDown(e) {
+            if ((e.keyCode === 37) || (e.keyCode === 39))
+                lance = (lance === 0 ? 1 : lance); //jogador começou o primeiro lance? sim = 1 ou (já fez ou não fez) = lance
+            if (e.keyCode === 37) { // left
+                teclaEsquerdaPressionada = true;
+            } else if (e.keyCode === 39) { // rigth
+                teclaDireitaPressionada = true;
+            }
+        }
+
+        //Botao pressionado
+        function keyUp(e) {
+            if ((e.keyCode === 37) || (e.keyCode === 39))
+                lance = (lance === 1 ? 2 : lance); //jogador soltou o primeiro lance? sim = 2 ou (já fez ou não fez) = lance
+            if (e.keyCode === 37) { // left
+                teclaEsquerdaPressionada = false; // jogador soltou tecla Esquerda
+            } else if (e.keyCode === 39) { // right
+                teclaDireitaPressionada = false; // jogador soltou tecla Direita
+            } else if (e.keyCode === 13) { // Enter - recomeca o jogo
+                beginGame();
+            } else if (e.keyCode === 77) { // letra m - sem/com musica
+                ativadorMusica();
+            }
+        }
+
+        ////////////////////////////////////////////////////funções de som
+        //pausa/continua musica
+        function ativadorMusica() {
+            //Musica Pause
+            if (tocaMusica) {
+                tocaMusica = false;
+                somBola.pause();
+                musicaBackground.pause();
+            } else {
+                //Musica Continua
+                tocaMusica = true;
+                musicaBackground.autoplay = true;
+                musicaBackground.load();
+            }
+        }
+
+        //Toca a musica da pokeBall e nao toca se a musica estiver pausada
+        function playPokeball() {
+            if (tocaMusica) {
+                somBola.play();
+            }
+        }
+
+        //para musica quando gameover
+        function playGameOver() {
+            //Musica Pause
+            if (tocaMusica) {
+                somBola.pause();
+                musicaBackground.pause();
+                somGameOver.play();
+            }
+        }
+
+        /////////////////////////////////// funções para carregar array de imagens
         function loadGameOverGif() {
             gameOverGif = [];
             for (var i = 0; i < 174; i++) {
@@ -76,388 +433,64 @@ canvas {
                 gameOverGif[i] = img;
             }
         }
-		
-		//Reseta a tela e os dados
-		function beginsGame(){
-			reset();
-			telaVitoria = false;
-			contaPokemon = new Array (0, 0, 0, 0); //pontuacao dos 4 pokemons diferentes
-			contaVidas = 3;//Quantidade de vidas iniciais
-			regulaVolume();//30% da musica de Background
-			endGame = false;//nao é game over
-			pontuacaoTotal = 0;//placar total
-			continuaMusica();//continua musica se nao foi parada pelo usuario
-			preencheParede();// Preenche soh no inicio da partida
-		}
-		
-		//Repete constantemente essas funcoes
-		function gameLoop() {
-			if(!telaVitoria){
-				if(!endGame){//Verifica se é não é game over
-					checaColisaoParede();
-					movimentaJogador();
-					movimentaBola();
-					redesenhaTela();
-					verificaVitoria();
-				} else {
-					gameOver();
-				}
-			}
-		}
-		
-		//Reseta a tela, mas nao todos os dados
-		function reset() {
-			gameOverScreen = new Image(); 
-			gameOverScreen.src = "img/gameover.png";
-			barraImg = new Image(); 
-			barraImg.src = "img/bar.png";
-			barraImg.width = 87;
-			barraImg.height = 24;
-			backgroundImg = new Image(); 
-			backgroundImg.src = "img/BG.png";
-			bolaImg = new Image(); 
-			bolaImg.src = "img/pokeball0.png";
-			vidasImg = new Image();
-			vidasImg.src = "img/pokeball_vidas.png";
-			frameCount = 0;
-			placarAltura = 43;//Altura da barra
-			altura = placarAltura*3;//3 tijolos de diferenca ate a parde de tijolo
 
-			jogador.posX = (canvas.width - barraImg.width) / 2;
-			jogador.posY = canvas.height - barraImg.height ;
+        function loadBlocosImg() {
+            blocosImg = [];
+            for (var i = 0; i < 4; i++) {
+                var img = new Image();
+                img.src = "img/brick" + i + ".png";
+                blocosImg[i] = img;
+            }
+        }
 
-			bola.raio = 16;
-			bola.posX = canvas.width / 2;
-			bola.posY = jogador.posY - bola.raio;
-			bola.velocidade = 5;//5
-			bola.paraCima = true;
-			
-			teclaEsquerdaPressionada = false; 
-			teclaDireitaPressionada = false;
-			
-			lance = 0;
-			brickWidth = 42; 
-			brickHeight = 42;
-			paredeLinhas = 7;//7
-			paredeColunas = 12;
-			brickTypes = 4;
-			frameProportion = 3;
-		}
-         
-		//GAME OVER - Desenha a Tela de Game Over
-		function gameOver(){
-		    context.drawImage(backgroundImg, 0, 0);
-		    context.drawImage(gameOverScreen, 0, 0);
-		    context.font = '90px "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
-			context.fillStyle = "#1c30bd";//cor da fonte
-			var pontuaTexto = (pontuacaoTotal < 10 ? "0"+ pontuacaoTotal : pontuacaoTotal);// Acrescenta 0 na frente dos numeros menores que 10
-			context.fillText(pontuaTexto, canvas.width / 2 - 55, canvas.height / 2 + 10); //Desenha a pontuacao
+        function loadBolasImg() {
+            bolasImg = [];
+            for (var i = 0; i < 4; i++) {
+                var img = new Image();
+                img.src = "img/pokeball" + i + ".png";
+                bolasImg[i] = img;
+            }
+        }
 
-			var pokegif = new Image();
-			if (giFrameCount < 174)
-			  giFrameCount++;
-			else
-			  giFrameCount = 0;
-			context.drawImage(gameOverGif[giFrameCount], 35, 438);
-		}
-		
-		//30% do som do Background
-		function regulaVolume(){ 
-			songBackground.volume = 0.3;//0.3
-		}
-		
-		//Toca a musica da pokeBall e nao toca se a musica estiver pausada
-		function playPokeball() {
-			if(tocaMusica){
-			 	playBolaSom.play();
-			}
-		}
-		
-		//pausa/continua musica
-		function ativadorMusica() {
-			//Musica Pause
-			if(tocaMusica){
-				tocaMusica = false;
-				playBolaSom.pause();
-		        songBackground.pause();
-			} else {
-				//Musica Continua
-				tocaMusica = true;
-				songBackground.autoplay = true;
-				songBackground.load();
-			}
-		}
-		
-		//para musica quando gameover
-		function playGameOver() {
-			//Musica Pause
-			if(tocaMusica){
-				playBolaSom.pause();
-		        songBackground.pause();
-				songGameOver.play();
-			}
-		}
-		
-		//continua tocando se som ativado
-		function continuaMusica(){
-			if(tocaMusica){
-				songBackground.autoplay = true;
-				songBackground.load();
-			}
-		}
-		
-		//preenche uma matriz parede onde cada espaço tem 30% de chance de ser vazio
-		function preencheParede(){
-			totalBrick = 0;
-			parede = [];
-			numPokemon = [];
-			for(var i=0; i < paredeLinhas; i++) {
-			    parede[i] = [];
-				numPokemon[i] = [];
-			    for(var j=0; j < paredeColunas; j++) {
-					var brick = new Image();
-					numPokemon[i][j] = Math.floor(Math.random() * 4);//numero do pokemon na posicao [i][j]
-					brick.src = "img/brick"+ numPokemon[i][j] +".png";
-						if(Math.random()<=0.7){
-						    parede[i][j] = brick; //tijolo(1) ou não tijolo(0)?
-							totalBrick++;
-						} else {
-						    parede[i][j] = null; //tijolo nao existe
-						    numPokemon[i][j] = -1;
-						}
-                                        
-			    }
-			}
-		}
-		
-		//Botao nao pressionado
-		function keyDown(e) {
-			if ((e.keyCode === 37) || (e.keyCode === 39) )
-				lance = (lance === 0?1:lance); //jogador começou o primeiro lance? sim = 1 ou já fez = lance
-			if (e.keyCode === 37) { // left
-				teclaEsquerdaPressionada = true;
-			} else if (e.keyCode === 39) { // rigth
-				teclaDireitaPressionada = true;
-			} 
-		}
+        //preenche uma matriz parede onde cada espaço tem 30% de chance de ser vazio
+        function preencheParede() {
+            totalBloco = 0;
+            parede = [];
+            numPokemon = [];
+            for (var i = 0; i < paredeLinhas; i++) {
+                parede[i] = [];
+                numPokemon[i] = [];
+                for (var j = 0; j < paredeColunas; j++) {
+                    numPokemon[i][j] = Math.floor(Math.random() * 4); //numero do pokemon na posicao [i][j] da parede
+                    if (Math.random() <= 0.7) { //tijolo(<0.1) ou não tijolo(>0.7)?
+                        parede[i][j] = blocosImg[numPokemon[i][j]]; //coloca o pokemon do numero sorteado na parede
+                        totalBloco++;
+                    } else {
+                        parede[i][j] = null; //tijolo nao existe
+                        numPokemon[i][j] = -1;
+                    }
+                }
+            }
+        }
 
-		//Botao pressionado
-		function keyUp(e) {	
-			if ((e.keyCode === 37) || (e.keyCode === 39) )
-				lance = (lance === 1 ? 2 : lance); //jogador soltou o primeiro lance? sim = 2 ou já fez = lance
-			if (e.keyCode === 37) { // left
-				teclaEsquerdaPressionada = false; // jogador soltou tecla Esquerda
-			} else if (e.keyCode === 39) { // right
-				teclaDireitaPressionada = false; // jogador soltou tecla Direita
-			} else if (e.keyCode === 13) { // Enter - recomeca o jogo
-				beginsGame();
-			} else if (e.keyCode === 77) { // letra m - sem/com musica
-				ativadorMusica();
-			} 
-		}
-
-		function movimentaBola() {
-			if (lance===2) { //se o jogador já lançou a bola
-				//movimento no eixo X
-				if ((bola.posX - bola.raio <= 0) 
-						|| (bola.posX + bola.raio >= canvas.width)) {// se a bola bater dos lados da tela...
-					bola.posX = ((bola.posX - bola.raio <= 0) ? bola.raio : canvas.width - bola.raio);
-					bola.angulo = bola.angulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo X
-				}
-				bola.posX += bola.angulo;// movemos a bola para os lados, de acordo com o cáculo acima
-
-				//movimento no eixo Y
-				if (bola.paraCima) {// se a bola estiver indo para cima...
-					bola.posY -= bola.velocidade;// movemos a bola para cima
-				} else {// se estiver indo para a baixo...
-					bola.posY += bola.velocidade;// movemos a bola para baixo
-				}
-				
-				if ((bola.posY - bola.raio - placarAltura ) <= 0) { //se a bola bater no topo ela deve descer
-					bola.paraCima = false;
-				} else if (((bola.posY + bola.raio - bola.velocidade) >= jogador.posY) //se a bola esta na altura da barra 
-					 && ((bola.posX >= jogador.posX) && (bola.posX <= (jogador.posX + barraImg.width)))) { //e se a bola esta dentro do comprimento da barra
-						bola.paraCima = true; //bola rebate na barra
-						movimentaBolaBarra(); //da efeito
-						bola.posY -= bola.velocidade; //aplica 'efeito'
-					}else if (bola.posY > jogador.posY){ //se a bola passou da barra
-						//reinicia jogo
-						if(contaVidas === 0){
-							endGame = true;
-							playGameOver();
-						}else {
-							contaVidas--;
-							reset();
-						}
-					}
-			} else { //a bola deve acompanhar a barra antes do primeiro lance
-				movimentaBolaBarra();
-			}
-		}
-		
-		function movimentaBolaBarra(){
-			// se o jogador estiver pressionando a tecla Direita ou Esquerda
-			if (teclaEsquerdaPressionada) { // se for para Esquerda...
-				if((bola.posX > jogador.velocidade)){
-					bola.posX -= jogador.velocidade;// muda a posição
-				}
-				bola.angulo = Math.floor(Math.random() * (bola.raio + 4)) - (bola.raio - 2);
-				jogador.velocidade = verificaVelocidade();
-				validaAngulo();
-			} else if (teclaDireitaPressionada){ // se for para Direita...
-				if(((bola.posX + bola.raio + jogador.velocidade) < canvas.width)){
-					bola.posX += jogador.velocidade;// muda a posição
-				}
-				bola.angulo = Math.floor(Math.random() * (bola.raio + 4));
-				jogador.velocidade = verificaVelocidade();
-				validaAngulo();
-			}
-		}
-
-		//A bola nunca vai em um angulo de muito pequeno
-		function validaAngulo(){
-		        if(bola.angulo > 0 && bola.angulo < 6)
-		            bola.angulo = 6;
-		        else if (bola.angulo <= 0 && bola.angulo > -6)
-		            bola.angulo = -6;
-		}
-		
-		//Verifica se houve colisao na tijolo
-		function checaColisaoParede(){ //todas as possiveis colisoes do perímetro e centro da bola com a parede
-			if((bola.posY-bola.raio) <= (brickHeight* paredeLinhas + altura)){ //se o topo da bola chegar no fundo da parede
-				for(var j = -1; j<=1; j++){ //indices que controlam qual 'extremidade' da bola esta tocando a parede
-					for(var i = -1; i<=1; i++){//em relação ao centro da bola
-						x = Math.floor((bola.posX + (i*bola.raio))/brickWidth); //x do ponto
-						y = Math.floor((bola.posY + (j*bola.raio)- altura)/brickHeight); //y do ponto
-						if( x < paredeColunas && y < paredeLinhas &&  x >= 0 && y >= 0) //se teve colisão no ponto
-							if (parede[y][x]){ //se tinha tijolo
-								parede[y][x] = null; //tira tijolo
-								contaPokemon[numPokemon[y][x]]++; //Conta +1 pokemon
-								pontuacaoTotal++; //Soma mais um no total
-								totalBrick--;
-								numPokemon[y][x] = -1;
-								reacaoColisao(i,j);
-							}
-					}
-				}		
-			}
-		}
-		
-		//EM qual ponto houve a colisao na bola
-		function reacaoColisao(x, y){
-            //som quando acerta o pokemon
-            playPokeball();
-			if(x===0 && y===-1){ //top center 0 -1 //top left -1 -1 //top right 1 -1
-				bola.paraCima = false;
-			}else if(x===0 && y===1){ //bottom left -1 1 //bottom center 0 1 //bottom right 1 1
-					bola.paraCima = true;
-				 }else if((x===-1 && y===0)|| (x===0 && y===0) ||(x===1 && y===0)){ //side left -1 0 //center  0 0 //side right 1 0 
-                       		 bola.angulo = bola.angulo * -1;
-					  }else if((x===-1 && y===-1) || (x===1 && y===-1) || (x===-1 && y===1) || (x===1 && y===1)){
-		                     bola.paraCima = !bola.paraCima;
-		                     bola.angulo = bola.angulo * -1;
-		                   }
-		}
-		
-		//Desenha os tijolos
-		function desenhaParede(){
-			for(var i=0; i<paredeLinhas; i++) {
-			    for(var j=0; j<paredeColunas; j++) {
-			        if(parede[i][j]){ //se for um tijolo cheio
-			        	context.drawImage(parede[i][j],j*brickWidth, i*brickHeight + altura);//desenha tijolo
-			        }
-			    }
-			}
-		}
-		
-		//Movimento do jogador
-		function movimentaJogador() {
-			 // se o jogador estiver pressionando a tecla Direita ou Esquerda
-			if (teclaEsquerdaPressionada) { // se for para Esquerda...
-				if (jogador.posX >= jogador.velocidade) { // se não sair da tela...
-					jogador.posX -= jogador.velocidade;// muda a posição
-				}
-			} else if (teclaDireitaPressionada) { // se for para Direita...
-				if ((canvas.width - jogador.posX) >= (barraImg.width + jogador.velocidade)) {// se não sair da tela...
-					jogador.posX += jogador.velocidade;// muda a posição
-				}
-			}
-		}
-
-		function redesenhaTela() {
-			context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
-			context.drawImage(backgroundImg,0,0);//desenha fundo
-			desenhaParede(); 
-			context.drawImage(barraImg,jogador.posX,jogador.posY); //desenha nuvem
-			context.drawImage(bolaImg, bola.posX - bola.raio, bola.posY - bola.raio); //desenha bola
-			desenhaVidas();
-			rodaBola();
-			context.font = '20pt "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
-			context.fillStyle = "#ffffff"; //cor da fonte
-			desenhaPontuacao();
-		}
-		
-		//Desenha a bola girando
-		function rodaBola(){
-			if((bola.posY + bola.raio) < jogador.posY){ //se bola não estiver na barra
-				frameCount += ((frameCount + 1) < (frameProportion * brickTypes) ? 1 : -frameCount); //contador de frames, para controlar a velocidade de rotação da bola
-				bolaImg = new Image(); 
-				bolaImg.src = "img/pokeball"+Math.floor(frameCount/frameProportion)+".png"; //load posicao da bola	
-			}
-		}
-
-		//Desenha as pokeballs na tela
-		function desenhaVidas(){
-			 if(contaVidas !== 0){
-				var desenha = contaVidas;
-				for(;desenha > 0; desenha--){
-					context.drawImage(vidasImg, (canvas.width) - 8 -(39*desenha), 6);
-				}
-			}
-		}
-		
-		//Desenha a Pontuacao x10 x05 x03 x01 na tela
-		function desenhaPontuacao(){
-				var count = 3;
-				for(;count >= 0; count--){
-					var number = (contaPokemon[count]<10 ? "0"+contaPokemon[count] : contaPokemon[count]);
-					context.fillText(number, 66 +(83*count), 30);
-				}
-		}
-		
-		//aumenta velocidade da barra do jogador caso esteja mais lenta que a velocidade da bola
-		function verificaVelocidade(){
-			if (bola.angulo > jogador.velocidade){
-				return jogador.velocidade = bola.angulo +1; //Aumenta velocidade se angulo muito grande
-			} else {
-				return jogador.velocidade = 15;
-			}
-		}
-		
-		function verificaVitoria(){
-			if (totalBrick === 0){
-				telaVitoria = true;
-				context.font = '30pt "pokeNumber"'; 
-				context.fillStyle = "#1c30bd";
-				context.fillText( "PARABENS!" ,  canvas.width/2 - 100, canvas.height/2 - 200);
-				context.fillText( "Voce capturou" ,  canvas.width/2 - 150, canvas.height/2 - 130);
-				context.fillText( "pokemons" ,  canvas.width/2 - 100 , canvas.height/2 + 20);
-				
-				context.font = '90px "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
-				var pontuaTotal = (pontuacaoTotal < 10 ? "0"+ pontuacaoTotal : pontuacaoTotal);// Acrescenta 0 na frente dos numeros menores que 10
-				context.fillText( pontuaTotal ,  canvas.width/2 - 55, canvas.height/2 - 40);//Desenha a pontuacao
-			}
-		}
-	</script>
-        <audio autoplay loop="loop" id="bgsound">
+        function desenhaGif() {
+            var pokegif = new Image();
+            if (contaFrameGif < 174)
+                contaFrameGif++;
+            else
+                contaFrameGif = 0;
+            context.drawImage(gameOverGif[contaFrameGif], 35, 438);
+        }
+    </script>
+    <audio autoplay loop="loop" id="bgsound">
             <source src="sound/sound_bg.mp3" type="audio/mp3">
             Seu browser não suporta o formato do audio.
         </audio>
-        <audio id='audioPokeball'>
+    <audio id='audioPokeball'>
             <source src="sound/sound_pokeball.mp3" type="audio/mp3">
             Seu browser não suporta o formato do audio.
         </audio>
-        <audio id='audioGameOver'>
+    <audio id='audioGameOver'>
             <source src="sound/sound_gameover.mp3" type="audio/mp3">
             Seu browser não suporta o formato do audio.
         </audio>
