@@ -5,7 +5,7 @@ BreakoutGame.BigWhiteBrick = function () {
 	this.glow = GameFramework.SpriteFactory.spriteFromTexture('images/whiteGlow.png');
 	this.opacity = 0.5;
 	this._active = false;
-	this._activateAnim = new GameFramework.Animation(this, "opacity", 0.5, 1.0, 2000, GameFramework.Easing.Type.InQuart);
+	this._activateAnim = new GameFramework.PropertyAnimation(this, "opacity", 0.5, 1.0, 2000, GameFramework.Easing.Type.InQuart);
 };
 
 BreakoutGame.BigWhiteBrick.prototype = new GameFramework.Sprite();

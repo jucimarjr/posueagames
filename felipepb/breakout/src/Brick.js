@@ -11,12 +11,12 @@ BreakoutGame.Brick = function (index) {
     this.glow = GameFramework.SpriteFactory.spriteFromSpriteSheet("images/bricksGlow.png");
 	this.innerWord = this.innerWordForIndex(index);
     this._spriteIndex = index;
-    this._glowAnimation = new GameFramework.Animation(this.glow,
-                                                      'opacity',
-                                                      0.5,
-                                                      1.0,
-                                                      600,
-                                                      GameFramework.Easing.Type.OutQuart);
+    this._glowAnimation = new GameFramework.PropertyAnimation(this.glow,
+                                                              'opacity',
+                                                              0.5,
+                                                              1.0,
+                                                              600,
+                                                              GameFramework.Easing.Type.OutQuart);
 };
 
 BreakoutGame.Brick.prototype = new GameFramework.Sprite();
