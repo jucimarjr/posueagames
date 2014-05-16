@@ -33,12 +33,13 @@ var manPosX, manPosY;
 var ballUp, ballAngle, setBallOnce;
 var imgBarra, imgBall, imgFrame, imgBackground, imgLife;
 var imgMan, imgManLeft, imgManRight;
+var imgGameOver, imgButtonRestart;
 var leftPressed, rightPressed, previousPressed;
 var speedPlayer, speedBall;
 var wallMatrix, addNumRows;
 var wallNumRows, wallNumColumns, wallNumRowsDraw, wallNumColumnsDraw;
 var wallWidth, wallHeight, wallMargin;
-var startGame;
+var startGame, gameOver;
 var score;
 var totalBlocks;
 var totalLife;
@@ -63,7 +64,11 @@ function init(){
     posYGame = 40;
     
     startGame = false;
+    gameOver = false;
     totalLife = 3;
+    
+    imgGameOver = new Image();
+    imgGameOver.src = "../assets/game_over.png";
     
     imgFrame = new Image();
     imgFrame.src = "../assets/frame.png";
@@ -83,6 +88,10 @@ function init(){
     imgLife = new Image();
     imgLife.src =  "../assets/life.png";
     
+    imgButtonRestart = new Image();
+	imgButtonRestart.src =  "../assets/button_restart.png";
+	imgButtonRestart.onclick= function() { alert("hello world!"); };
+	
     manPosY = height - posYGame - 107; //altura do boneco? foi no olho mesmo
     manPosX = ((width - posXGame) + ((width - 2*posXGame)-120))/2;
     	
@@ -112,8 +121,10 @@ function init(){
 
     wallMatrix = new Array();
     wallWidth = 56; 
+
     wallHeight = 30;
     wallNumRows = 24;
+
     wallNumColumns = 10;
     wallNumRowsDraw = 5;
     wallNumColumnsDraw = 10;
@@ -127,16 +138,16 @@ function init(){
     drawGame();
     
     intervalo = 20; 
-//    Reiniciar();
     
     document.addEventListener('keyup', keyUp, false);
     document.addEventListener('keydown', keyDown, false);
     setInterval(gameLoop, 30);
-    setInterval(addWallNumRows, 10000);
+    setInterval(addWallNumRows, 3000);
 }
 
 function resetGame(){
     
+	gameOver = false;
     startGame = false;
     totalLife = 3;
     
@@ -201,9 +212,6 @@ function drawGameField() { //change name
 }
 
 function drawBackground(){
-	
-//	context.fillStyle = "red"; 
-//    context.fillRect(0, 0, width, height);
 	context.drawImage(imgBackground, 0, 0, width, height);
 }
 
@@ -232,13 +240,18 @@ function drawLife(){
 	}
 	
 	if(totalLife == 0){
-		gameOver();
+		gameOver = true;
 	}
 }
 
-function gameOver(){
-	alert("Game Over!");
-	resetGame();
+function gameOverFunction(){
+	startGame=false;
+	drawGameOver();
+}
+
+function drawGameOver(){
+	context.drawImage(imgGameOver, 0, 0, width, height);
+	context.drawImage(imgButtonRestart, (width-imgButtonRestart.width)/2, (height-imgButtonRestart.height)/2);
 }
 
 function createWall() {
@@ -273,8 +286,8 @@ function drawWall(){
         totalBlocks += wallNumColumns;
     }
     
-    if(wallNumRowsDraw == wallNumRows){
-    	gameOver();
+    if(playerPosY <= (posYGame + ((wallHeight + wallMargin) * contRows))){
+    	gameOver = true;
     }
 }
 
@@ -322,6 +335,10 @@ function keyUp(e) {
     	leftPressed = false; 
     } else if (e.keyCode == 39) {
     	rightPressed = false;
+    } else if(e.keyCode == 82) {
+    	if(gameOver){
+    		resetGame();
+    	}
     }
 }
 
@@ -438,16 +455,19 @@ function changeBallDirection(posXwall, posYwall) {
     }
 }
 
-function gameLoop() { 
-	if(startGame){
-	    checkCollisionWall();
-	    getBarPosition();
-	    getBallPosition();
+function gameLoop() {
+	if(gameOver){
+		gameOverFunction();
 	}else{
-		checkStartGame();
+		if(startGame){
+			checkCollisionWall();
+		    getBarPosition();
+		    getBallPosition();
+		}else{
+			checkStartGame();
+		}
+		drawGame();
 	}
-
-	drawGame();
 }
 
 function checkStartGame(){
