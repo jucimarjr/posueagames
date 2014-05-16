@@ -55,6 +55,8 @@ function Bola(x, y, raio){
         	bater.play();
             this.direcaoX = -this.direcaoX;
         }
+
+
     };
 
     this.inverterX = function(){
@@ -94,10 +96,11 @@ function Bola(x, y, raio){
 			}
 			this.inverterY();
 		}
-		//Se a posicao da bola for maior ou igual à altura do canvas finaliza a partida
+		//Se a posicao da bola for maior ou igual ï¿½ altura do canvas finaliza a partida
 		if((this.y-this.raio)>=canvas.height){
 			//bater.pause();
-			end();
+            gameOver = true;
+			//end();
 			
 		}
 		

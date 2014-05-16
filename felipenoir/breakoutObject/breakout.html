@@ -8,6 +8,21 @@
 			background-image: url("assets/bg.png");
 			border:1px solid black;
 		}
+		#div-canvas{
+			width:800px;
+			height:600px;
+			margin:0 auto;
+			display:block;
+			margin-top:15px;
+		}
+		#btnReiniciar{
+			color:#FFFFFF;
+			font-weight:bold;
+			background-color:#5DAEFD;
+			margin-top:20px;
+			width:100px;
+			height:30px;
+		}
 	</style>
 	<script>
 	function reloadPage() {
@@ -16,11 +31,14 @@
 	</script>
   </head>
   <body>
-    <canvas id="canvas" width="800" height="600">
-      Your browser does not support the HTML5 Canvas feature.
-    </canvas>
-	<div id="div-bota0">
-		<input type="button" value="reiniciar" onclick="reloadPage()" />
+	<div id= "div-canvas">
+		<canvas id="canvas" width="800" height="600">
+		  Your browser does not support the HTML5 Canvas feature.
+		</canvas>
+	
+		<div id="div-bota0">
+			<input type="button" id="btnReiniciar"  value="Reiniciar" onclick="reloadPage()" />
+		</div>
 	</div>
   </body>
     

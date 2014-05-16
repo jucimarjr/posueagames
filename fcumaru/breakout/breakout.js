@@ -10,7 +10,9 @@ var player, ball, blocks, background;
 
 var points, lives;
 
-var keyLeft, keyRight;
+var keyLeft, keyRight, restart;
+
+var audio = new Audio('bu.mp3');
 
 function init() {
 	canvas = document.getElementById("canvas");
@@ -18,13 +20,15 @@ function init() {
 
 	width = canvas.width;
 	height = canvas.height;
-	
+
 	points = 0;
 	lives = 3;
-	
+
 	background = new background();
 	showPoints = new showPoints();
 	showLives = new showLives();
+	gameOver = new gameOver();
+	youWin = new youWin();
 	player = new player(width / 2, height, 100, 10, 10);
 	ball = new ball(width / 2, height / 2, 5, 10);
 	blocks = new blocks();
@@ -32,10 +36,12 @@ function init() {
 
 	keyRight = false;
 	keyLeft = false;
+	restart = false;
+	win = false;
 
 	document.addEventListener('keyup', keyUp, false);
 	document.addEventListener('keydown', keyDown, false);
-	
+
 	setInterval(gameLoop, 30);
 }
 
@@ -44,6 +50,8 @@ function keyDown(e) {
 		keyLeft = true;
 	} else if (e.keyCode == 39) {
 		keyRight = true;
+	} else if (e.keyCode == 82) {
+		restart = true;
 	}
 }
 
@@ -56,27 +64,50 @@ function keyUp(e) {
 }
 
 function gameLoop() {
-	context.clearRect(0, 0, width, height);
+	if ((lives >= 0) && (!win)) {
+		context.clearRect(0, 0, width, height);
 
-	// Titulo / Linha divisoria
-	background.draw(context);
+		// Titulo / Linha divisoria
+		background.draw(context);
 
-	// Pontos
-	showPoints.draw(context);
-	
-	//Vidas
-	showLives.draw(context);
+		// Pontos
+		showPoints.draw(context);
 
-	// Jogador
-	player.update();
-	player.draw(context);
+		// Vidas
+		showLives.draw(context);
 
-	// Blocos
-	blocks.draw(context);
+		// Jogador
+		player.update();
+		player.draw(context);
 
-	// Bola
-	ball.update(player, blocks);
-	ball.draw(context);
+		// Blocos
+		blocks.draw(context);
+
+		// Bola
+		ball.update(player, blocks);
+		ball.draw(context);
+
+	} else if ((lives >= 0) && (win)) {
+		context.clearRect(0, 0, width, height);
+		youWin.draw(context);
+		if (restart) {
+			reset();
+		}
+	} else {
+		context.clearRect(0, 0, width, height);
+		gameOver.draw(context);
+		if (restart) {
+			reset();
+		}
+	}
+}
+
+function reset() {
+	win = false;
+	// blocks().init();
+	points = 0;
+	lives = 3;
+	restart = false;
 }
 
 function background() {
@@ -84,7 +115,7 @@ function background() {
 		// Titulo
 		context.font = "21pt Helvetica";
 		context.fillStyle = "red";
-		context.fillText("BREAKOUT", (width / 2) - 80, 25);
+		context.fillText("BREAKOUT", 20, 25);
 
 		// Linha divisoria
 		context.beginPath();
@@ -101,7 +132,7 @@ function showPoints() {
 		// Placar
 		context.font = "21pt Helvetica";
 		context.fillStyle = "red";
-		context.fillText("Pontos: " + points, (width / 2) + 150, 25);
+		context.fillText("Pontos: " + points, (width / 2) - 80, 25);
 	};
 }
 
@@ -110,10 +141,25 @@ function showLives() {
 		// Placar
 		context.font = "21pt Helvetica";
 		context.fillStyle = "red";
-		context.fillText("Vidas: " + lives, (width / 2) + 300, 25);
+		context.fillText("Vidas: " + lives, (width / 2) + 140, 25);
 	};
 }
 
+function gameOver() {
+	this.draw = function(context) {
+		context.font = "21pt Helvetica";
+		context.fillStyle = "red";
+		context.fillText("GAME OVER", (width / 2) - 80, (height / 2));
+	};
+}
+
+function youWin() {
+	this.draw = function(context) {
+		context.font = "21pt Helvetica";
+		context.fillStyle = "red";
+		context.fillText("YOU WIN !", (width / 2) - 80, (height / 2));
+	};
+}
 
 function ball(x, y, radius, speed) {
 	this.x = x;
@@ -147,7 +193,7 @@ function ball(x, y, radius, speed) {
 			}
 		} else if (blocks.collisions(ball)) {
 			if (blocks.items.length == 0) {
-				// GAME OVER
+				win = true;
 			}
 
 			if (this.direction == DOWN) {
@@ -155,7 +201,7 @@ function ball(x, y, radius, speed) {
 			} else {
 				this.direction = DOWN;
 			}
-		} else if ((this.y + this.radius) < 31) {
+		} else if ((this.y + this.radius) < 51) {
 			this.direction = DOWN;
 		}
 
@@ -174,7 +220,7 @@ function ball(x, y, radius, speed) {
 		} else {
 			this.y -= this.speed;
 		}
-		
+
 		// morreu
 		if ((this.y + this.radius) > height) {
 			lives--;
@@ -240,6 +286,7 @@ function block(x, y, w, h, color) {
 					&& ball.x - ball.radius <= this.x + this.w) {
 				// marcou ponto
 				points++;
+				audio.play();
 				return true;
 			}
 		}

@@ -71,11 +71,14 @@ BreakoutGame.GamePhysics.prototype.handleBallMovement = function (time, ballBoun
 
 	// Check if it hit the sides or top of the screen.
 	if (this.checkCollisionCircleAgainstRect(ballCircle, this.leftWall)) {
-		this.calculateNewBallVelocity(this.leftWall);
+		this.ball.transform.x = this.leftWall.right + ballBoundingBox.width / 2.0;
+		this.ball.velocity.x = -this.ball.velocity.x;
 	} else if (this.checkCollisionCircleAgainstRect(ballCircle, this.rightWall)) {
-		this.calculateNewBallVelocity(this.rightWall);
+		this.ball.transform.x = this.rightWall.left - ballBoundingBox.width / 2.0;
+		this.ball.velocity.x = -this.ball.velocity.x;
 	} else if (this.checkCollisionCircleAgainstRect(ballCircle, this.topWall)) {
-		this.calculateNewBallVelocity(this.topWall);
+		this.ball.transform.y = this.topWall.bottom + ballBoundingBox.height / 2.0;
+		this.ball.velocity.y = -this.ball.velocity.y;
 	}
 		
 	// Check if the ball hit the bottom of the screen and callback to the GameScene.

@@ -1,8 +1,12 @@
 var template = {
+	imgJogar : "assets/telajogo_jogar.png",
+	imgInicio : "assets/telajogo_inicio.png",
 	inicio : null,
-	init : function(){
-		
-		inicio
+	jogar : null,
+	root : null,
+	init : function(root){
+		template.jogar = template.image(imgJogar);
+		template.inicio = template.image(imgInicio);
 	},
 
 	image : function(path){
@@ -12,6 +16,8 @@ var template = {
 	},
 	
 	menu : function(){
+		template.btnJogar();
+		template.btnInicio();
 		if(jogador.status == true){
 		}else{
 		}
@@ -19,16 +25,10 @@ var template = {
 	},
 	
 	btnInicio : function(){
-		game.btnJogar = new Image();
-		game.btnJogar.src = "assets/telajogo_jogar.png";	
-		
-		game.context.drawImage(game.btnInicio, (game.width - 10)/2, 400);
+		root.drawImage(game.btnInicio, (game.width - 10)/2, 400);
 	},
 	
 	btnJogar : function(){
-		game.btnInicio = new Image();
-		game.btnInicio.src = "assets/telajogo_inicio.png";
-		
-		game.context.drawImage(game.btnJogar, (game.width - 300)/2, 400);
+		root.drawImage(game.btnJogar, (game.width - 300)/2, 400);
 	}
 };

@@ -10,7 +10,7 @@
 		}
 		canvas{
 			border:#333333 solid 30px;
-			background-color:#999999;
+			background-image:url(img/bg2.jpg);
 			margin-top:25px;
 			margin-left:300px;	
 		}
@@ -193,7 +193,7 @@
 	}   
 
 	function desenharJogador(){
-		context.fillStyle = "#FFFF00";
+		context.fillStyle = "#F90";
 		context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
 	}
 
@@ -201,7 +201,7 @@
 		context.beginPath();
 		context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); 
 		context.closePath();
-		context.fillStyle = "#006600";
+		context.fillStyle = "#FF0";
 		context.fill();
 	}
 
@@ -217,7 +217,7 @@
 		 vidas = 0;
 		}
 		context.font = "42pt Helvetica";
-		context.fillStyle = "#000000";
+		context.fillStyle = "#FFF";
 		context.fillText(pontos, 10, 50); 
 		context.fillText(vidas, canvas.width - 40, 50);
 	}

@@ -14,20 +14,20 @@ BreakoutGame.Brick = function (index) {
     this._glowAnimation = new GameFramework.SequentialAnimation();
 	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
                             									'opacity',
-                                                                0.0,
+                                                                0.5,
                                                                 1.0,
                                                                 250,
                                                                 GameFramework.Easing.Type.OutQuart));
 	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
                             									'opacity',
-                                                                0.0,
+                                                                0.5,
                                                                 1.0,
                                                                 250,
                                                                 GameFramework.Easing.Type.OutQuart));
 	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
                             									'opacity',
                                                                 1.0,
-                                                                0.0,
+                                                                0.75,
                                                                 500,
                                                                 GameFramework.Easing.Type.OutQuart));
 };

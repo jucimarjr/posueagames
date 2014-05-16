@@ -14,12 +14,12 @@
 		<script>
 		
 			var canvas, context, barraWidth, barraHeight, barraJogadorWidth, barraJogadorHeight, 
-				jogadorPosX, jogadorPosY,  teclaEsquerdaPressionada, teclaDireitaPressionada, teclaEnterPressionada,
-				oponentePosX, oponentePosY, oponenteParaCima, bolaRaio, bolaPosX, bolaPosY, 
-				bolaParaCima, bolaAngulo, bolaTempo, velocidadeJogador, 
+				jogadorPosX, jogadorPosY,  teclaEsquerdaPressionada, teclaDireitaPressionada, 
+				teclaEnterPressionada, bolaRaio, 
+				bolaPosX, bolaPosY, bolaParaCima, bolaAngulo, bolaTempo, velocidadeJogador, 
 				velocidadeOponente, velocidadeBola, pontosJogador, pontosOponente, 
 				mousePosicao, vidaJogador, gameOver, winner, blocos, bolaDirecaoY,
-				deslocamentoX, deslocamentoY, startGame, play, level;
+				deslocamentoX, deslocamentoY, startGame, play, level, passouLevel;
 				
 			function init(){
 
@@ -47,7 +47,7 @@
 				          [0,1,0,1,0,1],
 				          [1,0,1,0,1,0],
 				          [1,0,1,1,0,1],
-				          [0,1,0,0,1,0],
+				          [0,1,0,0,1,0]
 				          ];
 				
 				velocidadeJogador = 20;
@@ -83,6 +83,8 @@
 				
 				enemyship = new Image();
 				enemyship.src = 'images/enemyship.png';
+
+				passouLevel = false;
 
 				document.addEventListener('keyup', keyUp, false);// adiciona evento para keyup
                 document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
@@ -278,7 +280,15 @@
 								restartGame();
 							}
 						} else {
+							passouLevel = true;
 							nextLevel();
+						}
+					} else if (passouLevel) {
+						if (bolaTempo <= 10) {
+							bolaTempo++;
+						} else {
+							passouLevel = false;
+							bolaTempo = 0;
 						}
 					}
 				} else {
@@ -295,15 +305,16 @@
 			function restartGame() {
 				pontosJogador = 0;
 
-				blocos = [[0,1,0,1,0,1],
+				blocos = [[1,1,1,1,1,1],
+				          [0,1,0,1,0,1],
 				          [1,0,1,0,1,0],
-				          [1,1,1,1,0,1],
-				          [1,0,1,0,1,0],
-				          [1,1,1,1,1,1]
+				          [1,0,1,1,0,1],
+				          [0,1,0,0,1,0]
 				          ];
 				
 				velocidadeJogador = 20;
 				velocidadeBola = 16;
+				bolaParaCima = false;
 				
 				deslocamentoY =65;
 
@@ -327,8 +338,8 @@
 					blocos = [[1,1,1,1,1,1],
 					          [0,1,0,1,0,1],
 					          [1,1,1,1,1,1],
-					          [1,0,1,0,1,0],
-					          [0,1,0,0,1,0],
+					          [1,1,0,0,1,1],
+					          [0,0,1,1,0,0]
 					          ];
 					
 					deslocamentoY +=15; 
@@ -339,7 +350,7 @@
 					          [1,1,1,1,1,1],
 					          [1,0,1,0,1,0],
 					          [0,1,0,1,0,1],
-					          [1,1,1,1,1,1],
+					          [1,1,1,1,1,1]
 					          ];
 
 					deslocamentoY +=20;
@@ -350,6 +361,7 @@
 				}
 				
 				velocidadeBola += 2*level;
+				bolaParaCima = false;
 				
 				jogadorPosX = (canvas.width - barraJogadorWidth)/2;
 				jogadorPosY = canvas.height - barraJogadorHeight;
@@ -361,7 +373,6 @@
 				
 				bolaPosX = canvas.width / 2;
 				bolaPosY = canvas.height / 2;
-				bolaTempo = 0;
 			}
 		</script>
 	</body>
