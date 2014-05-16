@@ -104,10 +104,11 @@ function gameLoop() {
 
 function reset() {
 	win = false;
-	// blocks().init();
 	points = 0;
 	lives = 3;
 	restart = false;
+
+	blocks.init();
 }
 
 function background() {
@@ -149,7 +150,7 @@ function gameOver() {
 	this.draw = function(context) {
 		context.font = "21pt Helvetica";
 		context.fillStyle = "red";
-		context.fillText("GAME OVER", (width / 2) - 80, (height / 2));
+		context.fillText("GAME OVER ! Aperte 'r' para reiniciar", 100, (height / 2));
 	};
 }
 
@@ -157,7 +158,7 @@ function youWin() {
 	this.draw = function(context) {
 		context.font = "21pt Helvetica";
 		context.fillStyle = "red";
-		context.fillText("YOU WIN !", (width / 2) - 80, (height / 2));
+		context.fillText("YOU WIN ! Aperte 'r' para reiniciar", 100, (height / 2));
 	};
 }
 
@@ -299,6 +300,9 @@ function blocks() {
 	this.items = new Array();
 
 	this.init = function() {
+		
+		this.items = new Array();
+		
 		for (var j = 100; j < 180; j += 20) {
 			for (var i = 0; i < width; i += 102) {
 				this.items.push(new block(i + 10, j, 80, 10, "gold"));
