@@ -18,7 +18,7 @@
 				oponentePosX, oponentePosY, oponenteParaCima, bolaRaio, bolaPosX, bolaPosY, 
 				bolaParaCima, bolaAngulo, bolaTempo, velocidadeJogador, 
 				velocidadeOponente, velocidadeBola, pontosJogador, pontosOponente, 
-				mousePosicao, vidaJogador, gameOver, blocos, bolaDirecaoY;
+				mousePosicao, vidaJogador, gameOver, winner, blocos, bolaDirecaoY;
 				
 			function init(){
 
@@ -60,6 +60,13 @@
 				vidaJogador = 3;
 				gameOver = false;
 				
+				winner = false;
+				winnerImage = new Image();
+				winnerImage.src = 'images/breakout_win.gif';
+				
+				gameOverImage = new Image();
+				gameOverImage.src = 'images/breakout_over.gif';
+				
 				bolaPosX = canvas.width / 2;
 				bolaPosY = canvas.height / 2;
 				bolaimagem = new Image();
@@ -100,25 +107,8 @@
 			function mouseMove(e) {
 				mousePosicao = e.clientX - canvas.getBoundingClientRect().left;
 			}
-			
-			function estadoJogo(){
-				if(gameOver){
-					do{
-						
-					}while(!teclaEnterPressionada)
-					
-					if(teclaEnterPressionada){
-						
-						document.getElementById("gameOver").style.display ="none";
-						document.getElementById("canvas").style.display ="block";
-						init();
-					}
-				}
-			}
 
 			function gameLoop() {
-			
-				estadoJogo();
 
 				// Movimento do jogador com o teclado
 				if (teclaEsquerdaPressionada!=teclaDireitaPressionada) { // se o jogador estiver pressionando a tecla direita ou esquerda
@@ -148,9 +138,11 @@
 							bolaParaCima = true;// a bola muda de lado e é rebatida para o oponente
 							
 							if (teclaEsquerdaPressionada) {
-								bolaAngulo -= 5;
+								//bolaAngulo -= 5;
+								bolaAngulo = Math.floor(Math.random() * 10) - 9
 							} else if (teclaDireitaPressionada) {
-								bolaAngulo +=3;
+								//bolaAngulo +=3;
+								bolaAngulo = Math.floor((Math.random() * 10));
 							}
 						}
 					}
@@ -191,8 +183,21 @@
 					}
 				}
 				
+				var condVitoria = 0;
 				
-
+				
+				for(var posY = 0; posY < blocos.length; posY++) {
+					for(var posX = 0; posX < blocos[posY].length; posX++) {
+						if (!blocos[posY][posX]) {
+							condVitoria++;
+						}
+					}
+				}
+				
+				if(condVitoria == 30){
+					winner = true;
+				}
+				
 				if ((bolaPosY - bolaRaio) >= canvas.height) {// se a bola saiu da tela...
 					if (bolaTempo >= 50) {// se o tempo de deixar a bola invisível passou...
 						if(vidaJogador > 0) {
@@ -204,42 +209,43 @@
 							bolaTempo = 0;// zera o tempo de deixar a bola invisível e a coloca em jogo novamente
 						} else {
 							context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
-							
-							var div = document.createElement("div");
-								div.setAttribute("id", "gameOver");
-
-								div.className = "notice";
-								div.style.display = "block";
-								div.style.width = "1000px";
-								div.style.height = "683px";
-								div.style.position = "relative";
-								div.style.left = "50px";
-								div.style.zIndex = "2";
-								div.style.background = "url('images/breakout_over.gif')";
-								div.addEventListener('keydown', keyDown, false);
 								
-								document.getElementById("canvas").style.display ="none";
-							
-								// test case, append the div to the body
-								document.body.appendChild(div);
-								
-								gameOver = true;
+							gameOver = true;
 						}
-					} else {// se o tempo de deixar a bola invisível ainda não passou...
+						
+					}else {// se o tempo de deixar a bola invisível ainda não passou...
 						bolaTempo++;// continuamos contando até 50
 					}
 				}
 
 				context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
 
+				if(gameOver == false && winner == false){
 				// Jogador
-				context.drawImage(jogador, jogadorPosX, jogadorPosY);//desenha jogador
+					context.drawImage(jogador, jogadorPosX, jogadorPosY);//desenha jogador
 				
 				// Blocos
-				for(var posY = 0; posY < blocos.length; posY++) {
-					for(var posX = 0; posX < blocos[posY].length; posX++) {
-						if (blocos[posY][posX]) {
-							context.drawImage(enemyship, posX*barraWidth+posX+50, posY*barraHeight+posY+65);//desenha oponente
+					for(var posY = 0; posY < blocos.length; posY++) {
+						for(var posX = 0; posX < blocos[posY].length; posX++) {
+							if (blocos[posY][posX]) {
+								context.drawImage(enemyship, posX*barraWidth+posX+50, posY*barraHeight+posY+65);//desenha oponente
+							}
+						}
+					}
+				} else{
+					if(gameOver){
+						context.drawImage(gameOverImage, 0, 0);//desenha tela de gameOver
+						context.fill();
+						
+						if(teclaEnterPressionada){
+							init();
+						}
+					} else if(winner){
+						context.drawImage(winnerImage, 0, 0);//desenha tela de winner
+						context.fill();
+						
+						if(teclaEnterPressionada){
+							init();
 						}
 					}
 				}
