@@ -47,7 +47,7 @@ Game.prototype.init = function () {
     this.ball.speed = 15;
     this.ball.angle = 0;
 
-    this.level = new Level2();
+    this.level = new Level();
     this.level.init();
     
     this.bgSound = new Audio("assets/audio/background.wav");
