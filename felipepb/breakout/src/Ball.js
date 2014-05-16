@@ -66,7 +66,7 @@ BreakoutGame.Ball.prototype.update = function (time) {
 };
 
 BreakoutGame.Ball.prototype._startGame = function () {
-	this.velocity.x = 0.0;
+	this.velocity.x = Math.random() * 0.15 - 0.075;
 	this.velocity.y = -0.3;
 };
 
