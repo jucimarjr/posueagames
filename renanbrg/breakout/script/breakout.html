@@ -28,7 +28,7 @@ var posXGame, posYGame;
 var playerPosX, playerPosY;
 var playerWidth, playerHeight;
 var ballWidth, ballHeight;
-var ballPosX, ballPosY, ballRaio;
+var ballPosX, ballPosY, ballRaio, previousBallPosX;
 var manPosX, manPosY;
 var ballUp, ballAngle, setBallOnce;
 var imgBarra, imgBall, imgFrame, imgBackground, imgLife;
@@ -109,6 +109,7 @@ function init(){
     ballRaio = ballWidth / 2;
     ballPosX = posXGame + (gameFieldWidth / 2);
     ballPosY = posYGame + (gameFieldHeight - playerHeight - ballRaio);
+    previousBallPosX = ballPosX;
     ballAngle = Math.floor(Math.random() * 21) - 10;
     ballUp = false;
     setBallOnce = false;
@@ -142,7 +143,7 @@ function init(){
     document.addEventListener('keyup', keyUp, false);
     document.addEventListener('keydown', keyDown, false);
     setInterval(gameLoop, 30);
-    setInterval(addWallNumRows, 3000);
+    setInterval(addWallNumRows, 10000);
 }
 
 function resetGame(){
@@ -368,12 +369,7 @@ function getBallPosition(){
 	}else if (ballPosY + ballRaio >= playerPosY){
         if ((ballPosX-ballRaio >= playerPosX-(ballWidth*0.8)) && (ballPosX + ballRaio <= playerPosX + playerWidth + (ballWidth*0.8))) {
         	ballUp = true;
-            if (leftPressed) {
-            	ballAngle = Math.floor(Math.random() * 10) - 9;
-            }
-            else {
-            	ballAngle = Math.floor((Math.random() * 10));
-            }                        
+            calculateAngle();
         }     
         if (ballPosY + ballRaio > playerPosY){
         	startGame = false;
@@ -385,6 +381,7 @@ function getBallPosition(){
 		if ((ballPosX-ballRaio <= posXGame) || (ballPosX + ballRaio > gameFieldWidth+posXGame)) {
 			ballAngle = ballAngle * -1;
 		}
+        previousBallPosX = ballPosX;
 		ballPosX += ballAngle;
 
 		if (ballUp) {
@@ -393,6 +390,30 @@ function getBallPosition(){
 			ballPosY += speedBall;
 		}  
 	}
+}
+
+function calculateAngle() {
+    var divBar = playerWidth / 5;
+    var divBar1 = playerPosX + divBar;
+    var divBar2 = divBar1 + divBar;
+    var divBar3 = divBar2 + divBar;
+    var divBar4 = divBar3 + divBar;
+
+    if ((ballPosX >= playerPosX) && (ballPosX < divBar1)) {
+        ballAngle = Math.floor((Math.random() * 4)) + 6;
+    } else if ((ballPosX >= divBar1) && (ballPosX < divBar2)) {
+        ballAngle = Math.floor((Math.random() * 3)) + 3;
+    } else if ((ballPosX >= divBar2) && (ballPosX < divBar3)) {
+        ballAngle = Math.floor((Math.random() * 4));
+    } else if ((ballPosX >= divBar3) && (ballPosX < divBar4)) {
+        ballAngle = Math.floor((Math.random() * 3)) + 3;
+    } else if ((ballPosX >= divBar4) && (ballPosX <= playerPosX + playerWidth)) {
+        ballAngle = Math.floor((Math.random() * 4)) + 6;
+    }
+
+    if (ballPosX - previousBallPosX < 0) {
+        ballAngle = -ballAngle;
+    }
 }
 
 function checkCollisionWall(){
