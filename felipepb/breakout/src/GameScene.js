@@ -156,6 +156,11 @@ BreakoutGame.GameScene.prototype = {
 		this.bigBrick = bigBrick;
         bigBrick.transform.x = this.canvas.width / 2;
         bigBrick.transform.y = bigBrick.boundingBox().height / 2 + topMargin;
+		
+		var self = this;
+		this.bigBrick.onDestroyed = function () {
+			self.onBigBrickDestroyed();
+		};
         
         // first brick collumn
         var brickY = bigBrick.boundingBox().y;
@@ -281,6 +286,8 @@ BreakoutGame.GameScene.prototype = {
 		this.gamePhysics.onBallHitBrick = function (arg) {
 			self.onBallHitBrick(arg);
 		};
+		
+		this.gamePhysics.start();
 	},
 	
 	setUpLives: function () {
@@ -317,6 +324,10 @@ BreakoutGame.GameScene.prototype = {
 	onBallHitBrick: function (brick) {
 		this.game.removeGameObject(brick);
 		GameFramework.removeObjectFromArray(this.bricks, brick);
+	},
+	
+	onBigBrickDestroyed: function () {
+		this.gamePhysics.stop();
 	},
 	
 	onResourceLoaded: function () {

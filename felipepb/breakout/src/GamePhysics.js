@@ -25,11 +25,24 @@ BreakoutGame.GamePhysics = function (canvas, bricks, bigBrick, player, ball) {
 		top: 0.0, right: this.canvas.width - 1.0,
 		bottom: 1.0, left: 1.0
 	};
+	
+	this._isRunning = false;
 };
 
 BreakoutGame.GamePhysics.prototype = new GameFramework.GameObject();
 
+BreakoutGame.GamePhysics.prototype.start = function () {
+	this._isRunning = true;
+};
+
+BreakoutGame.GamePhysics.prototype.stop = function () {
+	this._isRunning = false;
+};
+
 BreakoutGame.GamePhysics.prototype.update = function (time) {
+	if (!this._isRunning)
+		return;
+	
 	GameFramework.GameObject.prototype.update.apply(this, [time]);
 	
 	this.step(time);

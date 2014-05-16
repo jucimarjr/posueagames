@@ -78,6 +78,10 @@ BreakoutGame.Player.prototype.dispose = function () {
     this.glow.dispose();
 };
 
+BreakoutGame.Player.prototype.onGameWin = function () {
+	
+};
+
 BreakoutGame.Player.prototype.clamp = function (x, min, max) {
 	return x < min ? min : (x > max ? max : x);
 }

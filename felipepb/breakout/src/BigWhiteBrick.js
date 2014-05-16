@@ -1,11 +1,14 @@
 BreakoutGame.BigWhiteBrick = function () {
 	GameFramework.Sprite.call(this, GameFramework.SpriteFactory.loadedSpriteSheets["images/whiteBricks.png"]);
 	
+	this.onDestroyed;
+	
 	this._maxIndex = this.spriteSheet.totalCollumns;
 	this.glow = GameFramework.SpriteFactory.spriteFromTexture('images/whiteGlow.png');
 	this.opacity = 0.5;
 	this._active = false;
 	this._activateAnim = new GameFramework.PropertyAnimation(this, "opacity", 0.5, 1.0, 2000, GameFramework.Easing.Type.InQuart);
+	this._destroyedAnim = new GameFramework.Animation(this, "opacity", 1.0, 0.0, 2000, GameFramework.Easing.Type.InQuart);
 };
 
 BreakoutGame.BigWhiteBrick.prototype = new GameFramework.Sprite();
@@ -33,6 +36,7 @@ BreakoutGame.BigWhiteBrick.prototype.update = function (time) {
     GameFramework.Sprite.prototype.update.apply(this, [time]);
 	
 	this._activateAnim.update(time);
+	this._destroyedAnim.update(time);
 	
 	this.glow.transform = this.transform;
 	this.glow.update(time);
@@ -40,7 +44,12 @@ BreakoutGame.BigWhiteBrick.prototype.update = function (time) {
 
 BreakoutGame.BigWhiteBrick.prototype.onHit = function () {
 	if (this.spriteIndex() == this._maxIndex - 1) {
-		// TODO: callback to game with win condition.
+		
+		if (this.onDestroyed)
+			this.onDestroyed();
+		
+		this._destroyedAnim.begin();
+		
 		return;
 	}
 	
