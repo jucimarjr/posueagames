@@ -7,8 +7,8 @@
     barraWidth, barraHeight,
     jogadorPosX, jogadorPosY,bolaRaio, bolaPosX, bolaPosY,
     pontosJogador, pontosOponente,teclaCimaPressionada, teclaBaixoPressionada, oponenteParaCima, velocidadeOponente,
-    bolaRaio, bolaParaDireita, bolaAngulo,velocidadeBola,teclaEsquerdaPressionada,teclaDireitaPressionada,
-    jogador, bola, mapaTeclas, estadoBola, tempo, tijolo, tijolos, score =0;
+    bolaRaio, bolaParaDireita, bolaAngulo,velocidadeBola,teclaEsquerdaPressionada,teclaDireitaPressionada, teclaPause,
+    jogador, bola, mapaTeclas, estadoBola, tempo, tijolo, tijolos, score = 0, gameOver;
 
     mapaTecla = new Array();
     velocidadeJogador = 20;
@@ -23,6 +23,9 @@
     var temTijolos = false;
     bola = new Bola(200, 560, 7);
     var tijolos = new Array();
+    gamePaused = true;
+    teclaPause = false;
+    gameOver = false;
     
     
 
@@ -34,7 +37,8 @@
     
     var quebrar = new Audio("sound/break.ogg");
     var bater = new Audio("sound/bounce.ogg");
-    var starterSound = new Audio ("sound/skratch1.wav");
+    var starterSound = new Audio ("sound/skratch1.wav");//som de start do gamer
+    var gameOverSound = new Audio ("sound/skratch17.wav");//som do game over
 
 	function init(){
 
@@ -49,16 +53,30 @@
 
         starterSound.play();
 
-        gameLoop = setInterval(animacao, 30);// chama a function gameLoop a cada 30 frames
+
+
+        //gameOverSound.play();
+        //document.addEventListener('keyup',keyUp,false);
+        document.addEventListener('keydown',keyDown,false);
+        gameLoop= setInterval(animacao, 30);// chama a function gameLoop a cada 30 frames
        // drawPlacar();
+
 
 	}
 	
 	function end(){//gameOver
 
-		context.fillText('Fim de jogo!!!!',canvas.width/2,canvas.height/2);
-		clearInterval(gameLoop);    
+        //context.stroke();
+        context.fillStyle = "white";
+        context.font = "50pt Arial";
+		context.fillText("- Game Over - ",canvas.width/2,canvas.height/2);
+        console.log("gameOver");
+        gameOverSound.play();
+        clearInterval(gameLoop);
+
 	}
+
+
 
 
 	function teclaPressionada(tecla){
@@ -68,6 +86,12 @@
 	function teclaSolta(tecla){
 		mapaTecla[tecla.keyCode] = false;
 	}
+
+    function keyDown(e) {
+        if (e.keyCode == 27) { // esc
+            teclaPause = !teclaPause;
+        }
+    }
 
 	function paint(){
 		 context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
@@ -107,23 +131,28 @@
 	}
 
 	function animacao() {
+        if(!gameOver){
+            if(!teclaPause){
+		        if(mapaTecla[37] == true){
 
-		if(mapaTecla[37] == true){
+	    		    if(jogador.x>0){
+		    		    jogador.mexer(-velocidadeJogador);
+			        }
 
-			if(jogador.x>0){
-				jogador.mexer(-velocidadeJogador);
-			}
+		        }else if (mapaTecla[39] == true){
+			        if(jogador.x < (canvas.width - tamanhoBarra)){
+			        	jogador.mexer(velocidadeJogador);
+                    }
 
-		}else if (mapaTecla[39] == true){
-			if(jogador.x < (canvas.width - tamanhoBarra)){
-				jogador.mexer(velocidadeJogador);
+		        }
+
+		        bola.mover();
+		        bola.verificaColisao();
+
+		        paint();
             }
-
-		}
-
-		bola.mover();
-		bola.verificaColisao();
-
-		paint();
-
+        }
+        else{
+            end();
+        }
     }
