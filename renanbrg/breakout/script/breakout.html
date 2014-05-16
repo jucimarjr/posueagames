@@ -379,6 +379,12 @@ function getBallPosition(){
     }
 	if (startGame){
 		if ((ballPosX-ballRaio <= posXGame) || (ballPosX + ballRaio > gameFieldWidth+posXGame)) {
+            if ((ballPosX-ballRaio <= posXGame) && (ballPosX + ballAngle <= posXGame)) {
+                ballPosX = posXGame + ballRaio;
+            } else if ((ballPosX + ballRaio > gameFieldWidth+posXGame) &&
+                    (ballPosX - ballAngle >= gameFieldWidth + posXGame)) {
+                ballPosX = gameFieldWidth - ballRaio;
+            }
 			ballAngle = ballAngle * -1;
 		}
         previousBallPosX = ballPosX;
