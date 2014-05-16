@@ -5,7 +5,8 @@ GameFramework.KeyCode = {
 	LeftArrow: 37,
 	UpArrow: 38,
 	RightArrow: 39,
-	DownArrow: 40
+	DownArrow: 40,
+	SpaceBar: 32
 };
 
 GameFramework.removeObjectFromArray = function (array, object) {
@@ -30,6 +31,10 @@ GameFramework.isInternetExplorer = function () {
     var userAgent = window.navigator.userAgent;
     var msie = userAgent.indexOf('MSIE');
     return msie > 0;
+};
+
+GameFramework.random = function (from, to) {
+    return Math.floor(Math.random() * (to - from + 1) + from);
 };
 
 // Constructor for the Game class.

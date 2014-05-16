@@ -11,26 +11,26 @@ BreakoutGame.BigWhiteBrick = function () {
 	this._dead = false;
 	this._activateAnimFinnished = false;
 	var self = this;
-	this._activateAnim = new GameFramework.PropertyAnimation(this, "opacity", 0.5, 1.0, 2000, GameFramework.Easing.Type.InQuart, function () {
+	this._activateAnim = new GameFramework.PropertyAnimation(this, "opacity", 0.5, 1.0, 1000, GameFramework.Easing.Type.Linear, function () {
 		self.onActivateAnimFinnished();
 	});
     this._glowAnimation = new GameFramework.SequentialAnimation();
 	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
                             									'opacity',
-                                                                0.0,
+                                                                0.5,
                                                                 1.0,
                                                                 250,
                                                                 GameFramework.Easing.Type.OutQuart));
 	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
                             									'opacity',
-                                                                0.0,
+                                                                0.5,
                                                                 1.0,
                                                                 250,
                                                                 GameFramework.Easing.Type.OutQuart));
 	this._glowAnimation.add(new GameFramework.PropertyAnimation(this.glow,
                             									'opacity',
                                                                 1.0,
-                                                                0.0,
+                                                                0.75,
                                                                 1500,
                                                                 GameFramework.Easing.Type.OutQuart));
 																
@@ -77,7 +77,7 @@ BreakoutGame.BigWhiteBrick.prototype.onHit = function () {
 			this.onDestroyed();
 		
 		GameFramework.Animation.play(new GameFramework.PropertyAnimation(this, "opacity", 1.0, 0.0, 2000, GameFramework.Easing.OutQuart));
-		GameFramework.Animation.play(new GameFramework.PropertyAnimation(this.glow, "opacity", 1.0, 0.0, 2000, GameFramework.Easing.OutQuart));
+		GameFramework.Animation.play(new GameFramework.PropertyAnimation(this.glow, "opacity", 1.0, 0.0, 500, GameFramework.Easing.OutQuart));
 		
 		this._dead = true;
 		

@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8" />
-<title>Breakout</title>
-</head>
-<body onload="init()">
- <canvas id="canvas" width="800" height="600">
-  Your browser does not support the HTML5 Canvas feature.
- </canvas>
- <script type="text/javascript" src="graphic.js"></script>
- <script type="text/javascript" src="breakout.js"></script>
- <script>
-		function init() {
-			var game = new BreakoutGame("canvas", 60);
-			game.init();
-			game.start();
-		}
-	</script>
-</body>
-
+	<head>
+		<meta charset="UTF-8" />
+		<title>Breakout</title>
+		<link href="styles.css" rel="stylesheet" media="screen" />		
+		<link href="assets/ASTRAMT.TTF" rel='ScoreFont' type='text/css'>
+	</head>
+	<body onload="init()">
+		<div id="game">
+			<canvas id="game-canvas" width="900" height="700">
+				Your browser does not support the HTML5 Canvas feature.
+			</canvas>		
+		</div>
+		<script type="text/javascript" src="utils.js"></script>
+		<script type="text/javascript" src="graphic.js"></script>
+		<script type="text/javascript" src="breakout.js"></script>
+		<script>
+			function init() {
+				playSound("game_start.mp3");
+				var game = new BreakoutGame("game-canvas", 60);
+				game.init();
+				game.start();
+			}
+		</script>
+	</body>
 </html>

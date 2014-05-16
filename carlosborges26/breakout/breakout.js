@@ -208,7 +208,6 @@ function gameLoop() {
 				
 				if ((bolaPosX + bolaRaio > jogadorPosX) && (bolaPosX - bolaRaio < jogadorPosX + barraWidth)) { // se o jogador enconstar na bola (eixo X)...
 					
-//					playerColSound.play();
 					plaMultiSound(playerColSound);
 					
 					bolaParaBaixo = false; // a bola muda de lado e é rebatida para cima

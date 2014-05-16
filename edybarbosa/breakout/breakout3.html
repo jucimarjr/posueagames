@@ -9,6 +9,7 @@
             	background:url(images/fundo.png);
              }           
 		</style>
+
 </head>
 <body>
 	<canvas id="canvas" width="512" height="500">
@@ -47,11 +48,9 @@
 
 		// Matriz dos blocos a serem desenhados 10 X 6 inicialmente 
 		 var blocos = [
-				[1,1,0,0,0,0,0,0,1,1],
-				[3,1,2,2,1,2,1,1,3,1],
-				[2,1,2,0,0,0,0,1,3,1],
-				[3,3,3,2,2,2,2,3,3,3],
-			];
+			[3,3,3,3,3,3,3,3,3,3],
+			[3,3,3,3,3,3,3,3,3,3],
+		];
 	    
 	    var tijolo1 = new Image();
 	    tijolo1.src = 'images/tijolo.png';
@@ -66,8 +65,16 @@
 		var imagemAberturaCreditos;
 		var aberturaAcao;
 
-		var bouncingSound = new Audio("sounds/bounce.ogg");
-		var breakingSound = new Audio("sounds/break.ogg");
+		var background;
+
+		// Insere background
+		function insereBackground(){
+			background = new Image();
+			background.src = 'images/fundo.png';
+			background.onload = function(){
+			    ctx.drawImage(background,0,0);   
+			}
+		}
 	    
 		// Desenha a parede 
 		function desenhaParedeDeBlocos() {
@@ -104,8 +111,7 @@
 		}
 		
 		function animarJogo() {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
-			checaNovaFase();
+			ctx.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar			
 		    desenhaParedeDeBlocos();
 		    desenhaBarra();
 		    desenhaBola();
@@ -114,41 +120,13 @@
 		    desenhaPontuacaoFase();
 		}
 
-		function checaNovaFase() {
-
-			if(!checaSeHaTijolos()) {
-				// Aumenta Nivel
-				level++;
-				//Aumenta velocidade bola
-				bolaDeltaY += 4;
-				//bolaDeltaX += 2;
-				// Monta matriz de tijolos
-				blocos = [
-					[3,3,3,3,3,3,3,3,3,3],
-					[3,3,3,3,3,3,3,3,3,3],
-				];
-			}
-		}
-
-		function checaSeHaTijolos() {
-			var temTijolos = false;
-			for (var x=0; x < blocos.length; x++) {
-				for (var y=0; y < blocos[x].length; y++) {
-					if (blocos[x][y] != 0) {
-						temTijolos = true;
-						return temTijolos;
-					}
-				}
-			}
-			return temTijolos;
-		}
-
 		function desenhaPontuacaoFase() {
-			ctx.font = '13pt Verdana';
-      		ctx.fillStyle = 'white';
+			ctx.font = '12pt Verdana';
+      		//ctx.textAlign = 'center';
+      		ctx.fillStyle = 'blue';
 
-			ctx.fillText('Score: '+ score, 50, 22);
-			ctx.fillText('Level: '+ level, 450,22);
+			ctx.fillText('Score: '+ score, 50, 25);
+			ctx.fillText('Level: '+ level, 450,25);
 		}
 		
 		function inicioDoJogo() {
@@ -172,14 +150,11 @@
 		
 		function fimDoJogo() {
 			clearInterval(gameLoop);
-			// TODO melhorar
-			//ctx.fillText('Fim de Jogo ', 200, 200);
-			var imagemFimJogo = new Image();
-			imagemFimJogo.src = 'images/endgame.png';		
-			imagemFimJogo.onload = function() {
-				ctx.drawImage(imagemFimJogo, ((canvas.width / 2) - (imagemFimJogo.width/2)), ((canvas.height / 2) - (imagemFimJogo.height/2)));
-			};
-
+			// imagem de end game
+//            var fimJogo = new Image();
+//            fimJogo.src = 'images/endgame2.png';
+//	    	ctx.drawImage(fimJogo, 10, 10);
+			ctx.fillText('Fim de Jogo ', 200, 200); // TODO melhorar
 		}
 		
 	    // Função para manipular variaveis das coordenadas (bolaX, bolaY) e direção (bolaDeltaX e bolaDeltaY) da bola
@@ -217,8 +192,6 @@
 						(bolaX + bolaAltura >= (barraX + (barraLargura * 0.8)) && (bolaX + bolaAltura) <= (barraX + barraLargura))) { //
 						bolaDeltaX = bolaDeltaX * -1; // inverte a coordenada	
 					}
-					//Tocou na barra
-					bouncingSound.play();
 				}
 			}
 
@@ -250,10 +223,7 @@
 			// decrementa valor na posicao da matriz blocos
 			blocos[i][j]--;
 			//TODO play na musica de colisão
-			if (blocos[i][j] == 0){ 
-				breakingSound.play();
-			}
-			// Aumento score por colisão
+			//TODO aumentar PONTOS
 			score++;
 		}
 
@@ -293,21 +263,12 @@
 		}
 		
 		function telaInicial(){
-			//var imagemFundo = new Image();
-			//imagemFundo.src = 'images/fundo.png';		
-			//imagemFundo.onload = function() {
-			//	ctx.drawImage(imagemFundo, 0,0);
-			//	};
-
 			ctx.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
-
 			imagemAberturaLogo = new Image();
 			imagemAberturaLogo.src = 'images/breakout3.png';		
 			imagemAberturaLogo.onload = function() {
 				ctx.drawImage(imagemAberturaLogo, ((canvas.width / 2) - (imagemAberturaLogo.width/2)), 100);
 			};
-
-
 
 			// var snd = new Audio("sounds/background.mp3"); // buffers automatically when created
 			// snd.play();
@@ -317,10 +278,14 @@
 			var x = canvas.width / 2;
       		var y = canvas.height / 2;
 
-			ctx.font = '25pt Verdana';
+			ctx.font = '20pt Verdana';
       		ctx.textAlign = 'center';
       		ctx.fillStyle = 'white';
       		ctx.fillText('[1] Iniciar', x, y);		
+
+			//ctx.font = '25pt Verdana';
+      		//ctx.textAlign = 'center';
+      		//ctx.fillStyle = 'blue';
       		ctx.fillText('[2] Creditos', x, y+50);	
     						
 		}        
@@ -345,13 +310,13 @@
       		ctx.fillText('Pós Graduação UEA', x, y-20);		
       		ctx.fillText('Equipe', x, y+30);	
       		ctx.font = '14pt Verdana';
-      		ctx.fillText('Edy Barbosa', x, y+80);
-      		ctx.fillText('Railton Nepomuceno', x, y+130);
-      		ctx.fillText('Rodrigo Diniz', x, y+180);
+      		ctx.fillText('Rodrigo Diniz', x, y+80);
+      		ctx.fillText('Edy Barbosa', x, y+130);
+      		ctx.fillText('Railton Nepomuceno', x, y+180);
       		ctx.font = '10pt Verdana';
       		ctx.fillText('[backspace] Voltar', x, y+240);
     						
-		}  	
+		}  		
 
         function keyDown(e) {
             if (e.keyCode == 39) { // direita
@@ -362,7 +327,7 @@
             	inicioDoJogo();
             } else if (e.keyCode == 50) { // numero 2
             	telaCreditos();
-            }else if (e.keyCode == 32 || e.keyCode == 8) { // tecla backspace 
+            }else if (e.keyCode == 32) { // tecla backspace 
             	telaInicial();
             }   
         }

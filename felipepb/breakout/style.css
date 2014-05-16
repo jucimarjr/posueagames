@@ -1,0 +1,101 @@
+/*  
+Theme Name: Breakup Game
+Theme URI: http://www.breakupgame.com
+Description: Breakup Game Page Theme
+Version: 1.0
+Author: Felipe Barcellos
+Author Contact: felipe.p.barcellos@gmail.com
+*/
+
+/* @font-face {
+  font-family: "Silkscreen";
+  src: url("./Silkscreen.ttf") format("truetype");
+} */
+
+/*
+basic structure of the page
+*/
+
+body {
+    background: #3d3d3d; 
+    margin: 0;
+    padding:0;
+    font-family: "System", "VT-100", monospace;
+    color: #fff;
+    font-size: 100%;
+    font-weight: 400;
+}
+
+.container {
+    width: 100%;
+    margin:0;
+    padding:0;
+    float:left;
+    height:100%;
+}
+
+.site {
+    width: 990px;
+    margin: 0 auto;
+    padding:0;
+}
+
+.header {
+    width: 100%;
+    margin: 1% 0;
+    padding: 0;
+    float: left;
+    font-family: "Silkscreen";
+}
+
+.content {
+    width: 100%;
+    margin: 1% 0;
+    padding: 0;
+    float: left;
+}
+
+.footer {
+    width: 100%;
+    margin: 1% 0;
+    padding: 0;
+    float: left;
+}
+
+/* 
+content styles
+*/
+#logotype {
+    color: #cd6464;
+    font-size: 200%;
+    text-align: center;
+    width: 100%;
+    float: left;
+}
+
+#decoder {
+    color: #fff;
+    font-size: 100%;
+    text-align: center;
+    width: 100%;
+    float: left;
+}
+
+#game {
+    background-color: #fff;
+    width: 600px;
+    height: 480px;
+    color: #000;
+    float: left;
+    margin: 0 195px 0 195px;
+}
+
+#credits {
+    width: 600px;
+    color: #777;
+    margin: 0 195px 0 195px;
+    text-align: center;
+    float: left;
+    font-size: 10px;
+}
+

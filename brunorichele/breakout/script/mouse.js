@@ -9,11 +9,10 @@ var mouse = {
 	y : null,
 	currentX : null,
 	currentY : null,
-	listener : function(root, exec)
+	listener : function(root)
 	{
 		mouse.findPosition(root);
 		document.addEventListener('click', mouse.onClick, false); //Ativa quando a tecla é pressionada
-	//	document.addEventListener('mousemove', mouse.onMouseMove, false); //Ativa quando a tecla é pressionada
 	},
 	onClick : function (e)
 	{
@@ -31,23 +30,6 @@ var mouse = {
 			console.log("Menu do jogo");
 		}	
 	},
-	/*Não remova será utilizado
-	onMouseMove : function (e)
-	{
-		mouse.x = e.pageX - mouse.currentX;
-		mouse.y = e.pageY - mouse.currentY;
-
-		console.log("mouse x: " + mouse.x + "mouse y: " + mouse.y);
-
-		if(mouse.x > 377 && mouse.x < 501 && mouse.y > 407 && mouse.y < 447){
-
-			console.log("Iniciar novo jogo");
-		}else
-		if(mouse.x > 521 && mouse.x < 645 && mouse.y > 407 && mouse.y < 447){
-
-			console.log("Menu do jogo");
-		}	
-	},	*/
 	findPosition : function (obj)
 	{
 		var curleft = curtop = 0;
