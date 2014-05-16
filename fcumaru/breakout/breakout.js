@@ -90,27 +90,24 @@ function gameLoop() {
 	} else if ((lives >= 0) && (win)) {
 		context.clearRect(0, 0, width, height);
 		youWin.draw(context);
-		win = false;
-		
 		if (restart) {
-			blocks().init();
-			points = 0;
-			lives = 3;
-			restart = false;
+			reset();
 		}
 	} else {
 		context.clearRect(0, 0, width, height);
 		gameOver.draw(context);
-		
-		win = false;
-
 		if (restart) {
-			blocks().init();
-			points = 0;
-			lives = 3;
-			restart = false;
+			reset();
 		}
 	}
+}
+
+function reset() {
+	win = false;
+	// blocks().init();
+	points = 0;
+	lives = 3;
+	restart = false;
 }
 
 function background() {
