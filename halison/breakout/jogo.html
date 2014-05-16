@@ -93,7 +93,7 @@
 
         document.addEventListener('keyup', keyUp, false);					// adiciona evento para keyup
         document.addEventListener('keydown', keyDown, false);				// adiciona evento para keydown
-//         document.addEventListener('mousemove', mouse, false); // Adiciona evento para mouse
+//      document.addEventListener('mousemove', mouse, false); // Adiciona evento para mouse
                 
         gameLoop = setInterval(gameLoop, 30);									// chama a funcao gameLoop a 				                                                                                    cada 30 frames
 	}
@@ -131,7 +131,9 @@
 				jogadorPosX += velocidadeJogador;
 			}
 		}
+
     	
+        
     	
 		// Limpar a tela
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -139,14 +141,16 @@
     	desenharTodosTijolos();
         desenharPlacar();
         desenharJogador();
-        desenharBola();
+
         
-        // Verifica CONDIÇÃO DE DERROTA
+    	// Verifica CONDIÇÃO DE DERROTA
 		if(vidasJogador <=0 || pontosJogador >=48){
 			clearInterval(gameLoop);
 			desenharGameOver();
 		}
-        
+    	
+        desenharBola();
+
 	}
 
 	// Desenhar todos os tijolos
@@ -162,22 +166,22 @@
 	function desenharTijolo(x,y,type){  
 	   switch(type){
 	        case 1:
-	            context.fillStyle = '#0099FF';
+	            context.fillStyle = '#2967FF';
 	            break;
 	        case 2:
-	            context.fillStyle = '#FFFFFF';                    
+	            context.fillStyle = '#2CC5FF';                    
 	            break;
 	        case 3:
-	            context.fillStyle = '#0099FF';
+	            context.fillStyle = '#C93B6D';
 	            break;
 	        case 4:
-	            context.fillStyle = '#FFFFFF';
+	            context.fillStyle = '#F2E01A';
 	            break;
 	        case 5:
-	            context.fillStyle = '#0099FF';
+	            context.fillStyle = '#2CC5FF';
 	            break;
 	        case 6:
-	            context.fillStyle = '#FFFFFF';
+	            context.fillStyle = '#2967FF';
 	            break;			                                    
 	        default:
 	            context.clearRect(x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight,tijolosWidth,tijolosHeight);
@@ -189,12 +193,12 @@
 
 	}   
 
-	function desenharJogador(){				
+	function desenharJogador(){
 		context.fillStyle = "#FFFF00";
 		context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
 	}
 
-	function desenharBola(){				
+	function desenharBola(){
 		context.beginPath();
 		context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); 
 		context.closePath();
@@ -219,6 +223,13 @@
 		context.fillText(vidas, canvas.width - 40, 50);
 	}
 
+	function desenharGameOver(){
+		// Desenhar bola fora da tela
+		bolaPosX = 0;
+		bolaPosY = canvas.height + 100;
+		// Desenhar 'GAME OVER'
+		context.fillText('GAME OVER',(canvas.width/4)-60,canvas.height/2-20);
+	}
 
 	function moverBola(){
 
@@ -226,7 +237,7 @@
 			bolaDeltaY = -bolaDeltaY;
 		}
 
-		if(bolaPosX - bolaRaio < 0||bolaPosX + bolaRaio > canvas.width || colisaoXComTijolo()){
+		if(bolaPosX - bolaRaio < 0||bolaPosX + bolaRaio > canvas.width){
 			bolaDeltaX = -bolaDeltaX;
 		}
 
@@ -239,7 +250,7 @@
 	}
 	
 	function reiniciarBola(){
-		// Atribuir direção aleatório ao lançar a bola
+		// Atribuir direção aleatória ao lançar a bola
 		if (Math.random() > 0.5 ){
 			bolaDeltaX = 2;
 			bolaDeltaY = 4;
@@ -342,20 +353,11 @@
 		return colidiuY;
 	}
 
-	function desenharGameOver(){
-		// Desenhar bola fora da tela
-		bolaPosX = 0;
-		bolaPosY = canvas.height + 100;
-		// Desenhar 'GAME OVER'
-		context.fillText('GAME OVER',(canvas.width/2)-60,canvas.height/2-20);
-	}
-
 	//Capturar posição do MOUSE
 // 	function mouse(e){
 // 		mousePos = e.clientX - canvas.getBoundingClientRect().left;
 // 	}
 
-	//Capturar TECLA
 	function keyUp(e){
 		if (e.keyCode == 37){   
 			teclaEsquerdaPressionada = false; // Soltou a tecla ESQUERDA
@@ -368,7 +370,6 @@
 		}
 	}
 
-	//Capturar TECLA
 	function keyDown(e){
 		if (e.keyCode == 37){
 			teclaEsquerdaPressionada = true; // Acertou a tecla ESQUERDA
@@ -384,5 +385,3 @@
         </script>
     </body>
 </html>
-
-
