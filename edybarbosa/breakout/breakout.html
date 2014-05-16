@@ -299,6 +299,8 @@
 			//	ctx.drawImage(imagemFundo, 0,0);
 			//	};
 
+			ctx.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+
 			imagemAberturaLogo = new Image();
 			imagemAberturaLogo.src = 'images/breakout3.png';		
 			imagemAberturaLogo.onload = function() {
@@ -360,7 +362,7 @@
             	inicioDoJogo();
             } else if (e.keyCode == 50) { // numero 2
             	telaCreditos();
-            }else if (e.keyCode == 32) { // tecla backspace 
+            }else if (e.keyCode == 32 || e.keyCode == 8) { // tecla backspace 
             	telaInicial();
             }   
         }
