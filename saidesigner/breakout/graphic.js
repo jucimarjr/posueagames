@@ -4,25 +4,26 @@
 
 function Drawable(x, y, width, height) {
 
+	this.parent;
 	this.x = x;
 	this.y = y;
 	this.width = width;
 	this.height = height;
 	this.velocity = {
+		speed : 0,		
 		x : 0,
 		y : 0,
 		a : 0
-	// acceleration
 	};
+	this.color = 'black';
 }
 
-Drawable.prototype.color = 'black';
-Drawable.prototype.x = 0;
-Drawable.prototype.y = 0;
-Drawable.prototype.width = 0;
-Drawable.prototype.height = 0;
-Drawable.prototype.parent = null;
-Drawable.prototype.velocity = null;
+Drawable.prototype.setSpeed = function (speed, degree) {
+
+	this.velocity.x = speed * Math.cos(Math.PI * (degree / 180));
+	this.velocity.y = speed * Math.sin(Math.PI * (degree / 180));
+	this.velocity.speed = speed;
+};
 
 Drawable.prototype.coordIsWithin = function(x, y) {
 
@@ -34,11 +35,11 @@ Drawable.prototype.coordIsWithin = function(x, y) {
 Drawable.prototype.paint = function(canvas) {
 };
 
-Drawable.prototype.animate = function() {
+Drawable.prototype.animate = function(delta) {
 };
 
-Drawable.prototype.setParent = function(parent) {
-	this.parent = parent;
+Drawable.prototype.calcSpeed = function(delta, pixelsPerSec) {
+	return ((pixelsPerSec * delta) / 1000);
 };
 
 /**
@@ -55,15 +56,23 @@ function Board(canvas, x, y, width, height) {
 
 Board.prototype = new Drawable();
 Board.prototype.constructor = Board;
-Board.prototype.items = null;
-Board.prototype.canvas = null;
 
 Board.prototype.add = function(item) {
 	if (item instanceof Drawable && this.items.indexOf(item) == -1) {
-		item.setParent(this);
+		item.parent = this;
 		this.items.push(item);
 	}
 	return item;
+};
+
+Board.prototype.del = function(item) {
+
+	var index = this.items.indexOf(item);
+
+	if (index >= 0) {
+		this.items.splice(index, 1);		
+	}
+
 };
 
 Board.prototype.paint = function() {
@@ -77,9 +86,9 @@ Board.prototype.paint = function() {
 	}
 };
 
-Board.prototype.animate = function() {
+Board.prototype.animate = function(delta) {
 	for ( var i in this.items) {
-		this.items[i].animate();
+		this.items[i].animate(delta);
 	}
 };
 
@@ -95,7 +104,6 @@ function Circle(x, y, radius) {
 
 Circle.prototype = new Drawable();
 Circle.prototype.constructor = Circle;
-Circle.prototype.radius = 0;
 
 Circle.prototype.paint = function(canvas) {
 

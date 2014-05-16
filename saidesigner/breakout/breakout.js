@@ -11,73 +11,93 @@ function BreakoutGame(canvasElementId, fps) {
 	Board.call(this, canvasElement.getContext("2d"), 0, 0, canvasElement.width,
 			canvasElement.height);
 
+	this.balls;
+	this.player;
 	this.keyLeftPressed = false;
 	this.keyRightPressed = false;
 	this.fps = fps;
+	this.lastUpdate;
 }
 
 BreakoutGame.prototype = new Board();
 BreakoutGame.prototype.constructor = BreakoutGame;
-BreakoutGame.prototype.balls = null;
-BreakoutGame.prototype.player = null;
-BreakoutGame.prototype.keyLeftPressed = false;
-BreakoutGame.prototype.keyRightPressed = false;
-BreakoutGame.prototype.fps = 0;
 
-BreakoutGame.prototype.KEY_LEFT = 37;
-BreakoutGame.prototype.KEY_RIGHT = 39;
+Key = {
+	LEFT: 37,
+	RIGHT: 39
+};
 
 BreakoutGame.prototype.initBars = function() {
 
-	var BAR_Y_OFFSET = 30;
+	var BAR_Y_OFFSET = 100;
 	var BAR_NCOL = 15;
 	var BAR_NLIN = 6;
-	var BAR_SPACE = 1;
+	var BAR_SPACE = 0;
 	var BAR_WIDTH = (this.width - ((BAR_NCOL + 1) * BAR_SPACE || 1)) / BAR_NCOL;
-	var BAR_HEIGHT = 35;
+	var BAR_HEIGHT = 25;
+	var VELOCITY_INC = 50;
 	var COLORS = [ "rgb(208, 58, 209)", "rgb(247, 83, 82)",
 			"rgb(253, 128, 20)", "rgb(255, 144, 36)", "rgb(5, 179, 32)",
 			"rgb(109, 101, 246)" ];
 
 	var posX = this.x + BAR_SPACE;
 	var posY = this.y + BAR_Y_OFFSET;
-	var colorIndex = 0;
+	var colorIndex = 0;	
+	var velocityPlus = BAR_NLIN * VELOCITY_INC;
 
 	for (var i = 0; i < BAR_NCOL * BAR_NLIN; i++) {
 
 		if (posX + BAR_WIDTH >= this.width) {
+			
 			posX = this.x + BAR_SPACE;
 			posY += BAR_HEIGHT + BAR_SPACE;
+			
+			velocityPlus -= VELOCITY_INC;
+			
 			colorIndex++;
 			if (colorIndex == COLORS.length) {
 				colorIndex = 0;
 			}
+			
 		}
 
 		var bar = new Bar(posX, posY, BAR_WIDTH + 1, BAR_HEIGHT);
 		bar.color = COLORS[colorIndex];
-		bar.velocityPlus = BAR_NLIN - colorIndex;
+		bar.velocityPlus = velocityPlus;
+		
+		
 		this.add(bar);
 
 		posX += BAR_WIDTH + BAR_SPACE;
 	}
 };
 
-BreakoutGame.prototype.initBall = function() {
+BreakoutGame.prototype.initBalls = function() {
 
-	var BALL_NBALLS = 20;
-	var BALL_RADIUS = 10;
+	var BALL_NBALLS = 1;
+	var BALL_RADIUS = 8;
 	var BALL_X = (this.x + this.width) / 2;
 	var BALL_Y = (this.y + this.height) / 2;
+	var COLORS = [ "rgb(208, 58, 209)", "rgb(247, 83, 82)",
+			"rgb(253, 128, 20)", "rgb(255, 144, 36)", "rgb(5, 179, 32)",
+			"rgb(109, 101, 246)" ];
 
+	var colorIndex = 0;
 	this.balls = new Array();
 
 	for (var i = 0; i < BALL_NBALLS; i++) {
 
+		var speed = Math.floor((Math.random() * 200) + 200);
+		var degree = Math.floor((Math.random() * 180) + 180);
+
 		var ball = new Ball(BALL_X, BALL_Y, BALL_RADIUS);
-		ball.color = "yellow";
-		ball.velocity.x = Math.floor((Math.random() * 21) - 10);
-		ball.velocity.y = Math.floor((Math.random() * 21) - 10);
+		ball.color = COLORS[colorIndex];
+		ball.setSpeed(speed, degree);		
+
+		colorIndex++;
+		if (colorIndex == COLORS.length) {
+			colorIndex = 0;
+		}
 
 		this.balls.push(ball);
 		this.add(ball);
@@ -86,22 +106,22 @@ BreakoutGame.prototype.initBall = function() {
 
 BreakoutGame.prototype.initPlayer = function() {
 
-	var PLAYER_WIDTH = 120;
-	var PLAYER_HEIGHT = 15;
+	var PLAYER_WIDTH = 140;
+	var PLAYER_HEIGHT = 20;
 	var PLAYER_X = (this.x + this.width - PLAYER_WIDTH) / 2;
-	var PLAYER_Y = this.y + this.height - PLAYER_HEIGHT - 5;
+	var PLAYER_Y = this.y + this.height - PLAYER_HEIGHT - 15;
 
 	this.player = new Player(PLAYER_X, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT);
 	this.player.color = "white";
-	this.player.velocity.x = 10;
-	this.player.velocity.a = 5;
+	this.player.velocity.x = 500;
+	this.player.velocity.a = 50;
 	this.add(this.player);
 };
 
 BreakoutGame.prototype.init = function() {
 
 	this.initBars();
-	this.initBall();
+	this.initBalls();
 	this.initPlayer();
 
 	var self = this;
@@ -112,53 +132,86 @@ BreakoutGame.prototype.init = function() {
 
 	document.addEventListener("keydown", function(event) {
 		self.keyDown(event);
-	}, false);
+	}, false);	
 };
+
+BreakoutGame.prototype.playSound = function(soundFile) {
+	var audio = new Audio("assets/" + soundFile);	
+	audio.play();	
+}
 
 BreakoutGame.prototype.start = function() {
 	var self = this;
 
+	this.lastUpdate = new Date().getTime();
+	
 	setInterval(function() {
 		self.loop();
 	}, 1000 / this.fps);
 };
 
 BreakoutGame.prototype.loop = function() {
-	this.animate();
-	this.checkCollison();
+
+	var t = new Date().getTime();
+	var delta = t - this.lastUpdate;
+
+	this.animate(delta);
+	this.checkCollision();
 	this.paint();
+
+	this.lastUpdate = new Date().getTime();
 };
 
-BreakoutGame.prototype.checkCollison = function() {
+BreakoutGame.prototype.treatCollision = function(collision) {
 
-	for ( var j in this.balls) {
+	this.playSound("ball_kick.wav");
 
-		if (this.balls[j].checkCollisionWithParent()) {
-			// TODO: Perdeu vida
-			//this.items.splice(this.items.indexOf(this.balls[j]), 1);
-			//this.balls.splice(j, 1);
+	if (collision.what instanceof BreakoutGame) {
+
+		if (collision.is(CollisionType.BOTTOM)) {
+			//alert('Perdeu!!!');
 		}
 
-		for ( var i in this.items) {
+	} else if (collision.what instanceof Bar) {
 
-			if (this.items[i] instanceof Bar) {
-				if (this.balls[j].checkCollision(this.items[i])) {
-					this.balls[j].velocityPlus = this.items[i].velocityPlus;
-					this.items.splice(i, 1);
-					break;
-				}
-			} else {
-				if (this.balls[j].checkCollision(this.items[i])) {
-					break;
-				}
+		collision.who.velocityPlus = collision.what.velocityPlus;
+		this.del(collision.what);		
+
+	} else if (collision.what instanceof Player) {
+
+		if (collision.is(CollisionType.TOP) || collision.is(CollisionType.LEFT) || collision.is(CollisionType.RIGHT)) {
+
+			var value = collision.location.left >= 0 ? collision.location.left : collision.location.right;
+			var speed = collision.who.velocity.speed;
+
+			if (collision.location.left >= 0 && collision.location.left <= 60) {
+				collision.who.setSpeed(speed, 190 + value);
+			} else if (collision.location.right >= 0 && collision.location.right <= 60) {				
+				collision.who.setSpeed(speed, 350 - value);
 			}
 		}
 	}
 };
 
+BreakoutGame.prototype.checkCollision = function() {
+
+	for ( var j in this.balls) {
+
+		if (this.balls[j].checkCollision(this, BreakoutGame.prototype.treatCollision.bind(this))) {
+			continue;
+		}
+
+		for ( var i in this.items) {
+			if (this.balls[j].checkCollision(this.items[i], BreakoutGame.prototype.treatCollision.bind(this))) {
+				break;
+			}
+		} 	
+	}
+};
+
 BreakoutGame.prototype.keyDown = function(event) {
 
-	if (event.keyCode == BreakoutGame.prototype.KEY_LEFT) {
+	if (event.keyCode == Key.LEFT) {
 
 		if (this.keyRightPressed) {
 			this.player.resetVelocity();
@@ -167,7 +220,7 @@ BreakoutGame.prototype.keyDown = function(event) {
 		this.keyLeftPressed = true;
 		this.player.turnLeft();
 
-	} else if (event.keyCode == BreakoutGame.prototype.KEY_RIGHT) {
+	} else if (event.keyCode == Key.RIGHT) {
 
 		if (this.keyLeftPressed) {
 			this.player.resetVelocity();
@@ -180,7 +233,7 @@ BreakoutGame.prototype.keyDown = function(event) {
 
 BreakoutGame.prototype.keyUp = function(event) {
 
-	if (event.keyCode == BreakoutGame.prototype.KEY_LEFT) {
+	if (event.keyCode == Key.LEFT) {
 
 		this.keyLeftPressed = false;
 
@@ -190,7 +243,7 @@ BreakoutGame.prototype.keyUp = function(event) {
 			this.player.turnRight();
 		}
 
-	} else if (event.keyCode == BreakoutGame.prototype.KEY_RIGHT) {
+	} else if (event.keyCode == Key.RIGHT) {
 
 		this.keyRightPressed = false;
 
@@ -200,6 +253,40 @@ BreakoutGame.prototype.keyUp = function(event) {
 			this.player.turnLeft();
 		}
 	}
+};
+
+
+/**
+ *
+ * Collision Info Object
+ *
+ */
+
+CollisionType = {
+	UNKNOWN: 0,
+	TOP: 2,
+	LEFT: 4,
+	RIGHT: 8,
+	BOTTOM: 16
+};
+
+function Collision(who, what) {
+
+ 	this.who = who;
+ 	this.what = what;
+
+ 	this.type = CollisionType.UNKNOWN;
+
+ 	this.location = {
+ 		left: -1,
+ 		top: -1,
+ 		right: -1,
+ 		bottom: -1
+ 	};
+}
+
+Collision.prototype.is = function(collisionType) {
+	return (this.type & collisionType) == collisionType;
 };
 
 /**
@@ -217,7 +304,6 @@ function Bar(x, y, width, height) {
 
 Bar.prototype = new Rectangle();
 Bar.prototype.constructor = Bar;
-Bar.prototype.velocityPlus = 0;
 
 /**
  * Ball Object
@@ -225,53 +311,31 @@ Bar.prototype.velocityPlus = 0;
  */
 
 function Ball(x, y, radius) {
+
 	Circle.call(this, x, y, radius);
+
 	this.velocityPlus = 0;
+	this.top = 0;
+	this.bottom = 0;
+	this.left = 0;
+	this.right = 0;
 }
 
 Ball.prototype = new Circle();
 Ball.prototype.constructor = Ball;
-Ball.prototype.velocityPlus = 0;
-Ball.prototype.top = 0;
-Ball.prototype.bottom = 0;
-Ball.prototype.left = 0;
-Ball.prototype.right = 0;
 
-Ball.prototype.animate = function() {
+Ball.prototype.animate = function(delta) {
 
-	this.x += this.velocity.x
-			+ (this.velocity.x > 0 ? this.velocityPlus : -this.velocityPlus);
-	this.y += this.velocity.y
-			+ (this.velocity.y > 0 ? this.velocityPlus : -this.velocityPlus);
+	this.x += this.calcSpeed(delta, this.velocity.x
+			+ (this.velocity.x > 0 ? this.velocityPlus : -this.velocityPlus));
+	
+	this.y += this.calcSpeed(delta, this.velocity.y
+			+ (this.velocity.y > 0 ? this.velocityPlus : -this.velocityPlus));
 
 	this.top = this.y - this.radius;
 	this.bottom = this.y + this.radius;
 	this.left = this.x - this.radius;
 	this.right = this.x + this.radius;
-};
-
-Ball.prototype.checkCollisionWithParent = function() {
-
-	var result = false;
-
-	if (this.velocity.x > 0) {
-		if (this.right >= this.parent.x + this.parent.width) {
-			this.velocity.x *= -1;
-		}
-	} else if (this.left <= this.parent.x) {
-		this.velocity.x *= -1;
-	}
-
-	if (this.velocity.y > 0) {
-		if (this.bottom >= this.parent.y + this.parent.height) {
-			this.velocity.y *= -1;
-			result = true;
-		}
-	} else if (this.top <= this.parent.y) {
-		this.velocity.y *= -1;
-	}
-
-	return result;
 };
 
 Ball.prototype.almostEqual = function(dist1, dist2) {
@@ -280,91 +344,119 @@ Ball.prototype.almostEqual = function(dist1, dist2) {
 
 };
 
-Ball.prototype.checkCollision = function(obj) {
+Ball.prototype.checkCollision = function(obj, callback) {
 
 	if (!(obj instanceof Drawable) || obj == this) {
-		return false;
+		return;
 	}
 
-	var topIsWithin = obj.coordIsWithin(this.x, this.top);
-	var bottomIsWithin = obj.coordIsWithin(this.x, this.bottom);
-	var leftIsWithin = obj.coordIsWithin(this.left, this.y);
-	var rightIsWithin = obj.coordIsWithin(this.right, this.y);
+	var collision = new Collision(this, obj);
 
-	var auxVelocity = {
-		x : this.velocity.x,
-		y : this.velocity.y
-	};
+	if (obj == this.parent) {
+		if (this.velocity.x > 0) {
+			if (this.right >= this.parent.x + this.parent.width) {			
+				collision.type = CollisionType.RIGHT;
+			}
+		} else if (this.left <= this.parent.x) {		
+			collision.type = CollisionType.LEFT;
+		}
 
-	if (this.velocity.x > 0) {
 		if (this.velocity.y > 0) {
-			if (bottomIsWithin || rightIsWithin) {
-
-				var distLeft = this.right - obj.x;
-				var distTop = this.bottom - obj.y;
-
-				if (this.almostEqual(distTop, distLeft)) {
-					this.velocity.x *= -1;
-					this.velocity.y *= -1;
-				} else if (distTop < distLeft) {
-					this.velocity.y *= -1;
-				} else {
-					this.velocity.x *= -1;
-				}
+			if (this.bottom >= this.parent.y + this.parent.height) {			
+				collision.type = CollisionType.BOTTOM;
 			}
-		} else {
-			if (topIsWithin || rightIsWithin) {
-
-				var distLeft = this.right - obj.x;
-				var distBottom = obj.y + obj.height - this.top;
-
-				if (this.almostEqual(distBottom, distLeft)) {
-					this.velocity.x *= -1;
-					this.velocity.y *= -1;
-				} else if (distBottom < distLeft) {
-					this.velocity.y *= -1;
-				} else {
-					this.velocity.x *= -1;
-				}
-			}
+		} else if (this.top <= this.parent.y) {		
+			collision.type = CollisionType.TOP;
 		}
 	} else {
-		if (this.velocity.y > 0) {
 
-			if (bottomIsWithin || leftIsWithin) {
+		var topIsWithin = obj.coordIsWithin(this.x, this.top);
+		var bottomIsWithin = obj.coordIsWithin(this.x, this.bottom);
+		var leftIsWithin = obj.coordIsWithin(this.left, this.y);
+		var rightIsWithin = obj.coordIsWithin(this.right, this.y);
 
-				var distRight = obj.x + obj.width - this.left;
-				var distTop = this.bottom - obj.y;
+		if (this.velocity.x > 0) {
+			if (this.velocity.y > 0) {
+				if (bottomIsWithin || rightIsWithin) {
 
-				if (this.almostEqual(distTop, distRight)) {
-					this.velocity.x *= -1;
-					this.velocity.y *= -1;
-				} else if (distTop < distRight) {
-					this.velocity.y *= -1;
-				} else {
-					this.velocity.x *= -1;
+					collision.location.left = this.right - obj.x;
+					collision.location.top = this.bottom - obj.y;
+
+					if (this.almostEqual(collision.location.top, collision.location.left)) {
+						collision.type = CollisionType.LEFT | CollisionType.TOP;						
+					} else if (collision.location.top < collision.location.left) {
+						collision.type = CollisionType.TOP;						
+					} else {
+						collision.type = CollisionType.LEFT;
+					}
+				}
+			} else {
+				if (topIsWithin || rightIsWithin) {
+
+					collision.location.left = this.right - obj.x;
+					collision.location.bottom = obj.y + obj.height - this.top;
+
+					if (this.almostEqual(collision.location.bottom, collision.location.left)) {
+						collision.type = CollisionType.LEFT | CollisionType.BOTTOM;
+					} else if (collision.location.bottom < collision.location.left) {
+						collision.type = CollisionType.BOTTOM;
+					} else {
+						collision.type = CollisionType.LEFT;
+					}
 				}
 			}
-
 		} else {
+			if (this.velocity.y > 0) {
 
-			if (topIsWithin || leftIsWithin) {
-				var distRight = obj.x + obj.width - this.left;
-				var distBottom = obj.y + obj.height - this.top;
+				if (bottomIsWithin || leftIsWithin) {
 
-				if (this.almostEqual(distRight, distBottom)) {
-					this.velocity.x *= -1;
-					this.velocity.y *= -1;
-				} else if (distBottom < distRight) {
-					this.velocity.y *= -1;
-				} else {
-					this.velocity.x *= -1;
+					collision.location.right = obj.x + obj.width - this.left;
+					collision.location.top = this.bottom - obj.y;
+
+					if (this.almostEqual(collision.location.top, collision.location.right)) {
+						collision.type = CollisionType.RIGHT | CollisionType.TOP;		
+					} else if (collision.location.top < collision.location.right) {
+						collision.type = CollisionType.TOP;
+					} else {
+						collision.type = CollisionType.RIGHT;
+					}
+				}
+
+			} else {
+
+				if (topIsWithin || leftIsWithin) {
+
+					collision.location.right = obj.x + obj.width - this.left;
+					collision.location.bottom = obj.y + obj.height - this.top;
+
+					if (this.almostEqual(collision.location.right, collision.location.bottom)) {
+						collision.type = CollisionType.RIGHT | CollisionType.BOTTOM;
+					} else if (collision.location.bottom < collision.location.right) {
+						collision.type = CollisionType.BOTTOM;
+					} else {
+						collision.type = CollisionType.RIGHT;
+					}
 				}
 			}
 		}
 	}
 
-	return this.velocity.x != auxVelocity.x || this.velocity.y != auxVelocity.y;
+	if (collision.type != CollisionType.UNKNOWN) {
+
+		if (collision.is(CollisionType.LEFT) || collision.is(CollisionType.RIGHT)) {
+			this.velocity.x *= -1;
+		}
+
+		if (collision.is(CollisionType.TOP) || collision.is(CollisionType.BOTTOM)) {
+			this.velocity.y *= -1;
+		}
+
+		callback(collision);
+
+		return true;
+	}
+
+	return false;
 };
 
 /**
@@ -381,14 +473,13 @@ function Player(x, y, width, height) {
 
 Player.prototype = new Rectangle();
 Player.prototype.constructor = Player;
-Player.prototype.velocityBkp = 0;
 
-Player.prototype.animate = function() {
+Player.prototype.animate = function(delta) {
 
 	if (!this.parent.keyLeftPressed && !this.parent.keyRightPressed)
 		return;
 
-	var posX = this.x + this.velocity.x;
+	var posX = this.x + this.calcSpeed(delta, this.velocity.x);
 	if (posX >= this.parent.x && posX <= this.parent.width - this.width) {
 		this.x = posX;
 	} else if (this.velocity.x < 0) {
