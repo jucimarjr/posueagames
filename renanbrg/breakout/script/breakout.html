@@ -388,7 +388,7 @@ function getBarPosition() {
 }
 
 function getBallPosition(){
-	if ((ballPosY - ballRaio) <= posXGame) {
+	if ((ballPosY - ballRaio) <= posYGame) {
 		ballUp = false;
 	}else if (ballPosY + ballRaio >= playerPosY){
         if ((ballPosX-ballRaio >= playerPosX-(ballWidth*0.8)) && (ballPosX + ballRaio <= playerPosX + playerWidth + (ballWidth*0.8))) {
