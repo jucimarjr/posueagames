@@ -14,8 +14,6 @@
         <canvas id="canvas" width="800" height="600">
             Navegador não compatível com HTML5 Canvas
         </canvas>
-        <button type="button" onClick="Pausar()" id = "btstart"> Iniciar </button>
-        <button type="button" onClick="Reiniciar()" id = "btstart"> Reiniciar </button>
         <p id="info"></p>
               
         <script>
@@ -30,12 +28,12 @@ var posXGame, posYGame;
 var playerPosX, playerPosY;
 var playerWidth, playerHeight;
 var ballWidth, ballHeight;
-var ballPosX, ballPosY, ballRaio;
+var ballPosX, ballPosY, ballRaio, previousBallPosX;
 var manPosX, manPosY;
 var ballUp, ballAngle, setBallOnce;
 var imgBarra, imgBall, imgFrame, imgBackground, imgLife;
 var imgMan, imgManLeft, imgManRight;
-var imgGameOver, imgButtonRestart;
+var imgGameOver, imgInicial, imgButtonRestart;
 var leftPressed, rightPressed, previousPressed;
 var speedPlayer, speedBall;
 var wallMatrix, addNumRows;
@@ -43,6 +41,7 @@ var wallNumRows, wallNumColumns, wallNumRowsDraw, wallNumColumnsDraw;
 var wallWidth, wallHeight, wallMargin;
 var startGame, gameOver;
 var score;
+var showInicial;
 var totalBlocks;
 var totalLife;
 var isGameOver;
@@ -72,6 +71,7 @@ function init(){
     posYGame = 40;
     
     startGame = false;
+    showInicial = true;
     gameOver = false;
     totalLife = 3;
     
@@ -87,6 +87,9 @@ function init(){
     imgManLeft = new Image();
     imgManLeft.src = "../assets/man_left.png";
     
+    imgManLeft = new Image();
+    imgManLeft.src = "../assets/man_left.png";
+    
     imgManRight = new Image();
     imgManRight.src = "../assets/man_right.png";
 
@@ -96,9 +99,11 @@ function init(){
     imgLife = new Image();
     imgLife.src =  "../assets/life.png";
     
+    imgInicial = new Image();
+    imgInicial.src =  "../assets/inicial.png";
+    
     imgButtonRestart = new Image();
 	imgButtonRestart.src =  "../assets/button_restart.png";
-	imgButtonRestart.onclick= function() { alert("hello world!"); };
 	
     manPosY = height - posYGame - 107; //altura do boneco? foi no olho mesmo
     manPosX = ((width - posXGame) + ((width - 2*posXGame)-120))/2;
@@ -117,6 +122,7 @@ function init(){
     ballRaio = ballWidth / 2;
     ballPosX = posXGame + (gameFieldWidth / 2);
     ballPosY = posYGame + (gameFieldHeight - playerHeight - ballRaio);
+    previousBallPosX = ballPosX;
     ballAngle = Math.floor(Math.random() * 21) - 10;
     ballUp = false;
     setBallOnce = false;
@@ -146,14 +152,14 @@ function init(){
     score = 0;
     isGameOver = true;
 
-    drawGame();
+//    drawGame();
     
     intervalo = 20; 
     
     document.addEventListener('keyup', keyUp, false);
     document.addEventListener('keydown', keyDown, false);
     setInterval(gameLoop, 30);
-    setInterval(addWallNumRows, 3000);
+    setInterval(addWallNumRows, 10000);
 }
 
 function resetGame(){
@@ -161,6 +167,7 @@ function resetGame(){
 	gameOver = false;
 	isGameOver = true;
     startGame = false;
+    showInicial = false;
     totalLife = 3;
     
     manPosY = height - posYGame - 107; //altura do boneco? foi no olho mesmo
@@ -189,6 +196,10 @@ function resetGame(){
 
 function drawFrame(){
 	context.drawImage(imgFrame, 0, 0, canvas.width, canvas.height);
+}
+
+function drawInicial(){
+	context.drawImage(imgInicial, 0, 0, canvas.width, canvas.height);
 }
 
 function Reiniciar()
@@ -351,6 +362,8 @@ function keyUp(e) {
     	if(gameOver){
     		resetGame();
     	}
+    } else if(e.keyCode == 73) {
+    	showInicial = false;
     }
 }
 
@@ -380,12 +393,7 @@ function getBallPosition(){
 	}else if (ballPosY + ballRaio >= playerPosY){
         if ((ballPosX-ballRaio >= playerPosX-(ballWidth*0.8)) && (ballPosX + ballRaio <= playerPosX + playerWidth + (ballWidth*0.8))) {
         	ballUp = true;
-            if (leftPressed) {
-            	ballAngle = Math.floor(Math.random() * 10) - 9;
-            }
-            else {
-            	ballAngle = Math.floor((Math.random() * 10));
-            }                        
+            calculateAngle();
         }     
         if (ballPosY + ballRaio > playerPosY){
         	startGame = false;
@@ -395,8 +403,15 @@ function getBallPosition(){
     }
 	if (startGame){
 		if ((ballPosX-ballRaio <= posXGame) || (ballPosX + ballRaio > gameFieldWidth+posXGame)) {
+            if ((ballPosX-ballRaio <= posXGame) && (ballPosX + ballAngle <= posXGame)) {
+                ballPosX = posXGame + ballRaio;
+            } else if ((ballPosX + ballRaio > gameFieldWidth+posXGame) &&
+                    (ballPosX - ballAngle >= gameFieldWidth + posXGame)) {
+                ballPosX = gameFieldWidth - ballRaio;
+            }
 			ballAngle = ballAngle * -1;
 		}
+        previousBallPosX = ballPosX;
 		ballPosX += ballAngle;
 
 		if (ballUp) {
@@ -405,6 +420,30 @@ function getBallPosition(){
 			ballPosY += speedBall;
 		}  
 	}
+}
+
+function calculateAngle() {
+    var divBar = playerWidth / 5;
+    var divBar1 = playerPosX + divBar;
+    var divBar2 = divBar1 + divBar;
+    var divBar3 = divBar2 + divBar;
+    var divBar4 = divBar3 + divBar;
+
+    if ((ballPosX >= playerPosX) && (ballPosX < divBar1)) {
+        ballAngle = Math.floor((Math.random() * 4)) + 6;
+    } else if ((ballPosX >= divBar1) && (ballPosX < divBar2)) {
+        ballAngle = Math.floor((Math.random() * 3)) + 3;
+    } else if ((ballPosX >= divBar2) && (ballPosX < divBar3)) {
+        ballAngle = Math.floor((Math.random() * 4));
+    } else if ((ballPosX >= divBar3) && (ballPosX < divBar4)) {
+        ballAngle = Math.floor((Math.random() * 3)) + 3;
+    } else if ((ballPosX >= divBar4) && (ballPosX <= playerPosX + playerWidth)) {
+        ballAngle = Math.floor((Math.random() * 4)) + 6;
+    }
+
+    if (ballPosX - previousBallPosX < 0) {
+        ballAngle = -ballAngle;
+    }
 }
 
 function checkCollisionWall(){
@@ -469,20 +508,16 @@ function changeBallDirection(posXwall, posYwall) {
 }
 
 function gameLoop() {
+	
 	if(gameOver){
 		gameOverFunction();
 		if (isGameOver == true) {
 			isGameOver = false;
 			snd_gameover.play();
 		}
-	}else{
-		if(startGame){
-			checkCollisionWall();
-		    getBarPosition();
-		    getBallPosition();
-		}else{
-			checkStartGame();
-		}
+		else{
+		drawInicial();
+		checkStartGame();
 		drawGame();
 	}
 }

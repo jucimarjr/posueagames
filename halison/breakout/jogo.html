@@ -47,7 +47,6 @@
 	              [5,5,5,5,5,5,5,5],
 	              [6,6,6,6,6,6,6,6]];
             
-
 	// Inicializa dados dos elementos do jogo
 	function init() {
 		
@@ -244,7 +243,7 @@
 		if(bolaPosY + bolaDeltaY + bolaRaio > jogadorPosY){
 			if(bolaPosX + bolaDeltaX >= jogadorPosX && bolaPosX + bolaDeltaX < jogadorPosX + barraWidth){
 				bolaDeltaY = - bolaDeltaY;
-// 				document.getElementById('toque').play();
+				document.getElementById('toque1').play();
 			}
 		}
 	}
@@ -342,7 +341,7 @@
 							pontosJogador = pontosJogador + 1;
 							
 							// Reproduz som do tijolo quebrando
-// 							document.getElementById('toque').play();
+// 							document.getElementById('toque1').play();
 
 							colidiuY = true;
 						}
