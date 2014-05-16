@@ -18,7 +18,8 @@
 				oponentePosX, oponentePosY, oponenteParaCima, bolaRaio, bolaPosX, bolaPosY, 
 				bolaParaCima, bolaAngulo, bolaTempo, velocidadeJogador, 
 				velocidadeOponente, velocidadeBola, pontosJogador, pontosOponente, 
-				mousePosicao, vidaJogador, gameOver, winner, blocos, bolaDirecaoY;
+				mousePosicao, vidaJogador, gameOver, winner, blocos, bolaDirecaoY,
+				deslocamentoX, deslocamentoY;
 				
 			function init(){
 
@@ -32,6 +33,9 @@
 				barraJogadorHeight = 30;
 				jogador = new Image();
 				jogador.src = 'images/player.png';
+				
+				deslocamentoX = 50;
+				deslocamentoY = 65;
 
 				teclaEsquerdaPressionada = false;
 				teclaDireitaPressionada = false;
@@ -145,24 +149,6 @@
 							}
 						}
 					}
-				
-					for(var posY = 0; posY < blocos.length; posY++) {
-						for(var posX = 0; posX < blocos[posY].length; posX++) {
-							if (blocos[posY][posX]) {
-								var blocoPosX = posX * barraWidth + posX + 50;
-								var blocoPosY = posY * barraHeight + posY + 65;
-									
-								if ((bolaPosY - bolaRaio <= blocoPosY+barraHeight) && (bolaPosY + bolaRaio >= blocoPosY)) {
-									if ((bolaPosX + bolaRaio >= blocoPosX) && (bolaPosX + bolaRaio <= blocoPosX + barraWidth)) {
-										blocos[posY][posX] = 0;
-										pontosJogador++;
-										bolaParaCima = !bolaParaCima;
-										break;
-									}
-								}
-							}
-						}
-					}	
 						
 					if ((bolaPosX - bolaRaio <= 0) || (bolaPosX + bolaRaio >= canvas.width)) {// se a bola bater na direita ou na esquerda da tela...
 						bolaAngulo = bolaAngulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
@@ -179,6 +165,24 @@
 						bolaPosY -= velocidadeBola;// movemos a bola para cima
 					} else {// se estiver indo para baixo...
 						bolaPosY += velocidadeBola;// movemos a bola para baixo
+					}
+				
+					for(var posY = 0; posY < blocos.length; posY++) {
+						for(var posX = 0; posX < blocos[posY].length; posX++) {
+							if (blocos[posY][posX]) {
+								var blocoPosX = posX * barraWidth + posX + deslocamentoX;
+								var blocoPosY = posY * barraHeight + posY + deslocamentoY;
+									
+								if ((bolaPosY - bolaRaio <= blocoPosY+barraHeight) && (bolaPosY + bolaRaio >= blocoPosY)) {
+									if ((bolaPosX + bolaRaio >= blocoPosX) && (bolaPosX + bolaRaio <= blocoPosX + barraWidth)) {
+										blocos[posY][posX] = 0;
+										pontosJogador++;
+										bolaParaCima = !bolaParaCima;
+										break;
+									}
+								}
+							}
+						}
 					}
 				}
 				
@@ -222,7 +226,7 @@
 				for(var posY = 0; posY < blocos.length; posY++) {
 					for(var posX = 0; posX < blocos[posY].length; posX++) {
 						if (blocos[posY][posX]) {
-							context.drawImage(enemyship, posX*barraWidth+posX+50, posY*barraHeight+posY+65);//desenha oponente
+							context.drawImage(enemyship, posX*barraWidth+posX+deslocamentoX, posY*barraHeight+posY+deslocamentoY);//desenha oponente
 						}
 					}
 				}
@@ -249,7 +253,7 @@
 					context.fill();
 					
 					if(teclaEnterPressionada){
-						init();
+						restartGame();
 					}
 				} else if(winner){
 					bolaTempo = 1;
@@ -257,9 +261,37 @@
 					context.fill();
 					
 					if(teclaEnterPressionada){
-						init();
+						restartGame();
 					}
 				}
+			}
+			
+			function restartGame() {
+				pontosJogador = 0;
+
+				blocos = [[0,1,0,1,0,1],
+				          [1,0,1,0,1,0],
+				          [1,1,1,1,0,1],
+				          [1,0,1,0,1,0],
+				          [1,1,1,1,1,1]
+				          ];
+				
+				velocidadeJogador = 20;
+				velocidadeBola = 18;
+				
+				jogadorPosX = (canvas.width - barraJogadorWidth)/2;
+				jogadorPosY = canvas.height - barraJogadorHeight;
+				
+				vidaJogador = 3;
+				
+				gameOver = false;
+				winner = false;
+				
+				bolaPosX = canvas.width / 2;
+				bolaPosY = canvas.height / 2;
+				bolaTempo = 0;
+				
+				teclaEnterPressionada = false;
 			}
 		</script>
 	</body>
