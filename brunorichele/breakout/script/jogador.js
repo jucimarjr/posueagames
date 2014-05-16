@@ -4,7 +4,7 @@ var jogador = {
 	h: 48, //altura
 	x: 0,
 	y: 0,
-	vidas: 4,
+	vidas: null,
 	velocidade: null,
 	resetX : null,
 	resetY : null,
@@ -21,6 +21,7 @@ var jogador = {
 		jogador.pontuacao = 0;
 		jogador.imagem = new Image();
 		jogador.imagem.src = "assets/nave_bloco.png";
+		jogador.vidas = 4;
 		jogador.clear();
 	},
 
