@@ -1,5 +1,5 @@
 /**
- * Drawable Object
+ * Drawable Class
  */
 
 function Drawable(x, y, width, height) {
@@ -16,6 +16,9 @@ function Drawable(x, y, width, height) {
 		a : 0
 	};
 	this.color = 'black';
+	this.elapsedTime = 0;
+	this.delay = 0;
+	this.canCollide = true;
 }
 
 Drawable.prototype.setSpeed = function (speed, degree) {
@@ -24,6 +27,8 @@ Drawable.prototype.setSpeed = function (speed, degree) {
 	this.velocity.y = speed * Math.sin(Math.PI * (degree / 180));
 	this.velocity.speed = speed;
 };
+
+
 
 Drawable.prototype.coordIsWithin = function(x, y) {
 
@@ -43,7 +48,7 @@ Drawable.prototype.calcSpeed = function(delta, pixelsPerSec) {
 };
 
 /**
- * Board Object
+ * Board Class
  */
 
 function Board(canvas, x, y, width, height) {
@@ -77,6 +82,7 @@ Board.prototype.del = function(item) {
 
 Board.prototype.paint = function() {
 
+	this.canvas.globalAlpha = 1.5;
 	this.canvas.clearRect(this.x, this.y, this.width, this.height);
 	this.canvas.fillStyle = this.color;
 	this.canvas.fillRect(this.x, this.y, this.width, this.height);
@@ -93,7 +99,7 @@ Board.prototype.animate = function(delta) {
 };
 
 /**
- * Circle Object
+ * Circle Class
  */
 function Circle(x, y, radius) {
 
@@ -114,7 +120,7 @@ Circle.prototype.paint = function(canvas) {
 };
 
 /**
- * Rectangle Object
+ * Rectangle Class
  */
 
 function Rectangle(x, y, width, height) {
@@ -129,4 +135,38 @@ Rectangle.prototype.paint = function(canvas) {
 
 	canvas.fillStyle = this.color;
 	canvas.fillRect(this.x, this.y, this.width, this.height);
+};
+
+/**
+ * Text Class
+ */
+
+ function Text(x, y, font, text) {
+ 	Drawable.call(this, x, y, 0, 0);	
+ 	this.font = font;
+ 	this.text = text;
+ 	this.color = "white";
+ 	this.align = "start";
+ 	this.canCollide = false;
+ 	this.oldText;
+ 	this.oldFont;
+ }
+
+Text.prototype = new Drawable();
+Text.prototype.constructor = Text;
+
+Text.prototype.paint = function(canvas) {
+
+	canvas.fillStyle = this.color;
+	canvas.font = this.font;      
+	canvas.textAlign = this.align;  	
+    canvas.fillText(this.text, this.x, this.y);
+
+    if (this.text != this.oldText || this.font != this.oldFont) {    	
+    	var metrics = canvas.measureText(this.text);
+    	this.width = metrics.width;
+    	this.height = parseInt(this.font);    	
+    	this.oldText = this.text;
+    	this.oldFont = this.font;
+    }
 };
