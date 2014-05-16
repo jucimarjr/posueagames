@@ -6,7 +6,25 @@ GameFramework.KeyCode = {
 	UpArrow: 38,
 	RightArrow: 39,
 	DownArrow: 40
-}
+};
+
+GameFramework.removeObjectFromArray = function (array, object) {
+	var index = array.indexOf(object);
+	
+	if (index !== -1) {
+		var removedObjects = array.splice(index, 1);
+		removedObjects[0] = null;
+	}
+};
+
+GameFramework.clearArray = function (array) {
+    var length = array.length;
+
+    for (var i = 0; i < length; i++)
+       array[i].dispose();
+    
+    array.splice(0, length + 1);
+};
 
 // Constructor for the Game class.
 GameFramework.Game = function (canvas, backgroundColor, debugDraw) {
@@ -83,6 +101,7 @@ GameFramework.Game.prototype = {
 		if (index !== -1) {
 			var removedObjects = this._gameObjects.splice(index, 1);
 			removedObjects[0].dispose();
+			removedObjects[0] = null;
 		}
 	},
 	

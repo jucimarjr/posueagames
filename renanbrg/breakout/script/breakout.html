@@ -30,7 +30,7 @@ var playerWidth, playerHeight;
 var ballWidth, ballHeight;
 var ballPosX, ballPosY, ballRaio;
 var manPosX, manPosY;
-var ballUp, ballAngle;
+var ballUp, ballAngle, setBallOnce;
 var imgBarra, imgBall, imgFrame, imgBackground, imgLife;
 var imgMan, imgManLeft, imgManRight;
 var leftPressed, rightPressed, previousPressed;
@@ -96,12 +96,13 @@ function init(){
 
     ballWidth = 20;
     ballHeight = 20;
-    speedBall = 20;
+    speedBall = 10;
     ballRaio = ballWidth / 2;
     ballPosX = posXGame + (gameFieldWidth / 2);
     ballPosY = posYGame + (gameFieldHeight - playerHeight - ballRaio);
     ballAngle = Math.floor(Math.random() * 21) - 10;
     ballUp = false;
+    setBallOnce = false;
     imgBall = new Image();
     imgBall.src = "../assets/bola.png";
 
@@ -111,7 +112,7 @@ function init(){
 
     wallMatrix = new Array();
     wallWidth = 56; 
-    wallHeight = 20;
+    wallHeight = 30;
     wallNumRows = 24;
     wallNumColumns = 10;
     wallNumRowsDraw = 5;
@@ -249,7 +250,7 @@ function createWall() {
         for (var j = 0; j < wallNumColumns; j++) { 
             wallMatrix[i][j] = img2;
         }
-    } 
+    }
 }
 
 function drawWall(){
@@ -384,27 +385,62 @@ function checkCollisionWall(){
             if (wallMatrix[i][j]) {
             	var posXwall = posXGame + ((wallWidth + wallMargin) * j) ;
                 var posYwall = posYGame + ((wallHeight + wallMargin) * contRows) + posYGame;
-        		
-            	if((ballPosX - ballRaio >= posXwall-ballWidth && ballPosX + ballRaio <= posXwall + wallWidth + ballWidth)){
-                	if((ballPosY - ballRaio >= posYwall-ballHeight && ballPosY + ballRaio <= posYwall + wallHeight + ballHeight)){
-                		wallMatrix[i][j] = null;
-                		ballUp = false;
-                        score = (score + 1) % 1000000;
-                        totalBlocks--;
-                        if (totalBlocks == 0) {
-                            addWallNumRows();
-                        }
-                    }
-            	}
+
+                if (ballCollidedBlock(posXwall, posYwall)) {
+                    changeBallDirection(posXwall, posYwall);
+                    wallMatrix[i][j] = null;
+                    score = (score + 1) % 1000000;
+                    totalBlocks--;
+                    if (totalBlocks == 0) {
+                        addWallNumRows();
+                    }                	
+                }
             }
         }
         contRows++;
+        setBallOnce = false;
     } 
+}
+
+function ballCollidedBlock(posXwall, posYwall) {
+    var ballCollidesHorizontally = (ballPosX - ballRaio >= posXwall - ballWidth) &&
+        (ballPosX + ballRaio <= posXwall + wallWidth + ballWidth);
+    var ballCollidesVertically = (ballPosY - ballRaio >= posYwall - ballHeight) &&
+        (ballPosY + ballRaio <= posYwall + wallHeight + ballHeight);
+
+    return (ballCollidesHorizontally && ballCollidesVertically);
+}
+
+function isBallCollidingHorizontally(posXwall, posYwall) {
+    var halfRaio = ballRaio / 2;
+
+    return (ballPosX + halfRaio > posXwall) && (ballPosX - halfRaio < posXwall + wallWidth);
+}
+
+function isBallCollidingVertically(posXwall, posYwall) {
+    var halfRaio = ballRaio / 2;
+
+    return (ballPosY + halfRaio > posYwall) && (ballPosY - halfRaio < posYwall + wallHeight);
+}
+
+function changeBallDirection(posXwall, posYwall) {
+    var ballCollidedHorizontally = isBallCollidingHorizontally(posXwall, posYwall);
+    var ballCollidedVertically = isBallCollidingVertically(posXwall, posYwall);
+
+    if (ballCollidedHorizontally) {
+        if (setBallOnce == false) {
+            ballUp = !ballUp;
+            setBallOnce = true;
+        }
+    }
+    if (ballCollidedVertically) {
+        ballAngle = -ballAngle;
+    }
 }
 
 function gameLoop() { 
 	if(startGame){
-		checkCollisionWall();
+	    checkCollisionWall();
 	    getBarPosition();
 	    getBallPosition();
 	}else{

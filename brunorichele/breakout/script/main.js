@@ -27,7 +27,9 @@ var main = {
 		document.getElementById("creditos").style.display = "block";	
 	},
 	inicio : function(){
+		document.getElementById("menu").style.display = "block";
 		document.getElementById("creditos").style.display = "none";
 		document.getElementById("links").style.display = "block";	
+		document.getElementById("canvas").style.display = "none";
 	}
 };

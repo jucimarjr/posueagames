@@ -94,7 +94,7 @@ function Bola(x, y, raio){
 			}
 			this.inverterY();
 		}
-		//Se a posicao da bola for maior ou igual � altura do canvas finaliza a partida
+		//Se a posicao da bola for maior ou igual � altura do canvas finaliza a partida
 		if((this.y-this.raio)>=canvas.height){
 			//bater.pause();
 			end();
@@ -177,8 +177,8 @@ function drawPlacar(){
     }
 
     context.font = "42pt Helvetica";// tamanho e fonte para desenhar o texto
-    context.fillStyle = "white";// cor preta (opcional)
-    context.fillText(pontosA, (canvas.width -100), canvas.height-5); // escreve o texto na tela
+    context.fillStyle = "#000000";// cor preta (opcional)
+    context.fillText(pontosA, (canvas.width / 2) - 70, 50); // escreve texto na tela na posiï¿½ï¿½o desejada
 }
 
 
@@ -189,7 +189,7 @@ var blocoWidth = canvas.width/blocosPorLinha;
 var blocos = [
     [1,1,1,1,1,1,1,2],
     [1,1,3,1,0,1,1,1],
-    [0,0,0,0,0,0,0,0],
+    [0,0,0,1,0,0,0,0],
     [0,0,0,0,0,0,0,0],
     [1,2,1,1,0,3,1,1],
     [2,1,2,2,3,1,3,1],
@@ -198,23 +198,42 @@ var blocos = [
 function criadorDeBlocos(){
     for (var i=0; i < blocos.length; i++) {
         for (var j=0; j < blocos[i].length; j++) {
-            tijolo = new Tijolo(j, i, blocoWidth, blocoHeight, blocos[i][j]);
-            tijolo.desenhaBloco();
-            tijolos.push(tijolo);
+        	
+        	desenhaBlocos(j,i,blocos[i][j]);
+           // tijolo = new Tijolo(j, i, blocoWidth, blocoHeight, blocos[i][j]);
+           /* tijolo.desenhaBloco();
+            tijolos.push(tijolo);*/
         }
     }
 }
 
+// draw a single brick
+function desenhaBlocos(x,y,type){  
+    switch(type){ // if brick is still visible; three colors for three types of bricks
+        case 1:
+            context.fillStyle = 'orange';
+            break;
+        case 2:
+            context.fillStyle = 'rgb(100,200,100)';                    
+            break;
+        case 3:
+            context.fillStyle = 'rgba(50,100,50,.5)';
+            break;                             
+        default:
+        	/*context.fillStyle = 'rgba(225,225,225,0.5)';
+            context.clearRect(x*blocoWidth,y*blocoHeight,blocoWidth,blocoHeight);
+*/            break;
+ 
+    }
+    if (type){
+        //Draw rectangle with fillStyle color selected earlier
+        context.fillRect(x*blocoWidth,y*blocoHeight,blocoWidth,blocoHeight);
+        // Also draw blackish border around the bloco
+        context.strokeRect(x*blocoWidth+1,y*blocoHeight+1,blocoWidth-2,blocoHeight-2);
+    }
+}   
 
-//Cria o objeto tijolo
-function Tijolo(x,y,largura, altura,type){
-    this.x = x;
-    this.y = y;
-    this.largura = largura;
-    this.altura = altura;
-
-    // pega o array de bloco atravÃ©s do desenhaBloco e preenche a tela()
-    this.desenhaBloco = function(){
+/*function desenhaBloco(x, y, type){
         switch(type){
             case 1:
                 context.fillStyle = 'orange';
@@ -236,5 +255,16 @@ function Tijolo(x,y,largura, altura,type){
             // Desenha o contorno do retangulo
             context.strokeRect(this.x*this.largura+1,this.y*this.altura+1,this.largura-2,this.altura-2);
         }
-    };
+ }*/
+
+
+//Cria o objeto tijolo
+function Tijolo(x,y,largura, altura,type){
+    this.x = x;
+    this.y = y;
+    this.largura = largura;
+    this.altura = altura;
+
+    // pega o array de bloco atravÃ©s do desenhaBloco e preenche a tela()
+   
 }

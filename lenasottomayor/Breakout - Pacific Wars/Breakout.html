@@ -51,7 +51,7 @@
 			
 				bolaRaio = 10; 
 				bolaParaCima = false;
-				bolaAngulo = Math.floor(Math.random() * 21) - 10;
+				bolaAngulo = Math.floor(Math.random() * 21) - 7;
 				bolaTempo = 0;
 				bolaDirecaoY = -1;
 
@@ -151,10 +151,8 @@
 								bolaAngulo -= 5;
 							} else if (teclaDireitaPressionada) {
 								bolaAngulo +=3;
-							} else {
-								bolaAngulo = (Math.floor(Math.random() * 21)-10);
 							}
-						}                    
+						}
 					}
 				
 					for(var posY = 0; posY < blocos.length; posY++) {
