@@ -51,7 +51,7 @@
 				          ];
 				
 				velocidadeJogador = 20;
-				velocidadeBola = 18;
+				velocidadeBola = 16;
 			
 				bolaRaio = 10; 
 				bolaParaCima = false;
@@ -145,7 +145,7 @@
 					// Bola
 					if (bolaTempo <= 0) {// se a bola estiver em jogo, o tempo é zero (após marcar ponto, a bola fica invisível por um tempo)
 						if ((bolaPosY + bolaRaio) >= jogadorPosY) {// se o jogador enconstar na bola (eixo Y)...
-							if ((bolaPosX > jogadorPosX) && (bolaPosX < (jogadorPosX + barraJogadorWidth))) {// se o jogador enconstar na bola (eixo X)...
+							if ((bolaPosX + (bolaRaio/2) > jogadorPosX) && (bolaPosX - (bolaRaio/2) < (jogadorPosX + barraJogadorWidth))) {// se o jogador enconstar na bola (eixo X)...
 								bolaParaCima = true;// a bola muda de lado e é rebatida para o oponente
 								
 								if (teclaEsquerdaPressionada) {
@@ -182,7 +182,7 @@
 									var blocoPosY = posY * barraHeight + posY + deslocamentoY;
 										
 									if ((bolaPosY - bolaRaio <= blocoPosY+barraHeight) && (bolaPosY + bolaRaio >= blocoPosY)) {
-										if ((bolaPosX + bolaRaio >= blocoPosX) && (bolaPosX + bolaRaio <= blocoPosX + barraWidth)) {
+										if ((bolaPosX + bolaRaio >= blocoPosX) && (bolaPosX - bolaRaio <= blocoPosX + barraWidth)) {
 											blocos[posY][posX] = 0;
 											pontosJogador++;
 											bolaParaCima = !bolaParaCima;
@@ -258,6 +258,8 @@
 					if(gameOver){
 						context.drawImage(gameOverImage, 0, 0);//desenha tela de gameOver
 						context.fill();
+						context.font = '36pt GreatLakesNF';
+						context.fillText("YOUR SCORE: "+pontos, 2*canvas.width/6, 200); // escreve texto na tela na posiï¿½ï¿½o desejada
 						
 						if(teclaEnterPressionada){
 							restartGame();
@@ -269,6 +271,8 @@
 						if (level>3) {
 							context.drawImage(winnerImage, 0, 0);//desenha tela de winner
 							context.fill();
+							context.font = '36pt GreatLakesNF';
+							context.fillText("YOUR SCORE: "+pontos, 2*canvas.width/6, 200); // escreve texto na tela na posicao desejada
 							
 							if(teclaEnterPressionada){
 								restartGame();
@@ -283,6 +287,7 @@
 					} else {
 						context.drawImage(startGame, 0, 0);//desenha tela de gameOver
 						context.fill();
+
 					}
 				}
 			}
@@ -298,8 +303,10 @@
 				          ];
 				
 				velocidadeJogador = 20;
-				velocidadeBola = 18;
+				velocidadeBola = 16;
 				
+				deslocamentoY =65;
+
 				jogadorPosX = (canvas.width - barraJogadorWidth)/2;
 				jogadorPosY = canvas.height - barraJogadorHeight;
 				
@@ -323,6 +330,8 @@
 					          [1,0,1,0,1,0],
 					          [0,1,0,0,1,0],
 					          ];
+					
+					deslocamentoY +=15; 
 					break;
 
 				case 3:
@@ -332,14 +341,15 @@
 					          [0,1,0,1,0,1],
 					          [1,1,1,1,1,1],
 					          ];
+
+					deslocamentoY +=20;
 					break;
 					
 				default:
 					break;
 				}
 				
-				velocidadeJogador += 2*level;
-				velocidadeBola += 2*level+1;
+				velocidadeBola += 2*level;
 				
 				jogadorPosX = (canvas.width - barraJogadorWidth)/2;
 				jogadorPosY = canvas.height - barraJogadorHeight;
