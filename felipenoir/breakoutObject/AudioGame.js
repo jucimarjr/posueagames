@@ -15,11 +15,6 @@ function AudioGame(){
 		audioColisao.play();
 	}
 
-	this.paraAudioColisao = function(){
-		console.log("parou");
-		audioColisao.pause();
-	}
-
 	this.tocarAudioJogo = function(){
 		if(IS_PLAYNG === false){
 			audioJogo.currentTime = 67;
