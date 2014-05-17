@@ -37,6 +37,7 @@
         	this.player.body.gravity.y = 500;
         	this.player.scale.set(0.5,0.5);
         	this.player.body.collideWorldBounds = true;
+        	this.player.animations.add('walk', [0,1], 6, true);
         	
         	this.trofeu = this.game.add.sprite(600, 20 , 'trofeu');
         	this.game.physics.enable(this.trofeu, Phaser.Physics.ARCADE);
@@ -68,18 +69,25 @@
         	
         	// PEGA A ENTRADA (tecla pressionada):	
         	if ( this.game.input.keyboard.isDown (Phaser.Keyboard.RIGHT) ) { // vai para esquerda
-        		this.player.x += 5;        		
-        	}
-        	
-        	if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
-        		this.player.x -= 5;        		
-        	}
-        	
-        	if ( this.game.input.keyboard.isDown (Phaser.Keyboard.UP) ) { // vai para esquerda
+        		this.player.x += 5;
+        		this.player.animations.play('walk');
+        	} else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
+        		this.player.x -= 5;
+        		this.player.animations.play('walk');
+        	} else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.UP) ) { // vai para esquerda
     			
+        		this.player.animations.stop();
+        		this.player.frame = 0;
+        		
      			if (this.player.body.touching.down) {
      				this.player.body.velocity.y = -400;
      			}
+     			
+        	} else {
+        		
+        		this.player.animations.stop();
+        		this.player.frame = 0;
+        		
         	}
         },
         
@@ -91,6 +99,7 @@
         killPlayer: function(player, bomb) {
         	
         	player.kill();
+        	bomb.kill();
         	
         }
     };
