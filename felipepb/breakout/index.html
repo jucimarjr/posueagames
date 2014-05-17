@@ -1,48 +1,73 @@
-<!DOCTYPE HTML>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
-		<title>Breakup Game</title>
-		<meta charset="utf-8">
-		<link rel="stylesheet" href="css/stylesheet.css" type="text/css">
-		<!-- GameFramework -->
-		<script src="src/GameFramework/Game.js"></script>
-		<script src="src/GameFramework/GameObject.js"></script>
-		<script src="src/GameFramework/SpriteSheet.js"></script>
-		<script src="src/GameFramework/Sprite.js"></script>
-		<script src="src/GameFramework/SpriteFactory.js"></script>
-		<script src="src/GameFramework/Sound.js"></script>
-		<script src="src/GameFramework/SoundFactory.js"></script>
-		<script src="src/GameFramework/Easing.js"></script>
-		<script src="src/GameFramework/Animation.js"></script>
-		<script src="src/GameFramework/PauseAnimation.js"></script>
-		<script src="src/GameFramework/PropertyAnimation.js"></script>
-		<script src="src/GameFramework/SequentialAnimation.js"></script>
-		<!-- Game logic -->
-		<script src="src/GameScene.js"></script>
-		<script src="src/BigWhiteBrick.js"></script>
-		<script src="src/Brick.js"></script>
-		<script src="src/Player.js"></script>
-		<script src="src/Ball.js"></script>
-		<script src="src/HeartBeat.js"></script>
-		<script src="src/MonitorBeat.js"></script>
-		<script src="src/GamePhysics.js"></script>
-		<script src="src/GameSound.js"></script>
-	</head>
-	<body onload="init()">
-		<canvas id="canvas" width="600" height="480">
+<head>
+	<title>Break Up - A Breakout DTR</title>
+	<link rel="stylesheet" href="./style.css" type="text/css" media="screen" />
+	<meta charset="utf-8">
+	<!-- GameFramework -->
+	<script src="src/GameFramework/Game.js"></script>
+	<script src="src/GameFramework/GameObject.js"></script>
+	<script src="src/GameFramework/SpriteSheet.js"></script>
+	<script src="src/GameFramework/Sprite.js"></script>
+	<script src="src/GameFramework/SpriteFactory.js"></script>
+	<script src="src/GameFramework/Sound.js"></script>
+	<script src="src/GameFramework/SoundFactory.js"></script>
+	<script src="src/GameFramework/Easing.js"></script>
+	<script src="src/GameFramework/Animation.js"></script>
+	<script src="src/GameFramework/PauseAnimation.js"></script>
+	<script src="src/GameFramework/PropertyAnimation.js"></script>
+	<script src="src/GameFramework/SequentialAnimation.js"></script>
+	<!-- Game logic -->
+	<script src="src/GameScene.js"></script>
+	<script src="src/BigWhiteBrick.js"></script>
+	<script src="src/Brick.js"></script>
+	<script src="src/Player.js"></script>
+	<script src="src/Ball.js"></script>
+	<script src="src/HeartBeat.js"></script>
+	<script src="src/MonitorBeat.js"></script>
+	<script src="src/GamePhysics.js"></script>
+	<script src="src/GameSound.js"></script>
+</head>
+
+<body onload="init()">
+	<div class="container">
 	
-		</canvas>
+		<div class="site">
+		
+			<div class="header">
+				<div id="logotype">Break Up</div>
+				<div id="decoder">A breakout DTR</div>
+			</div>
+		
+			<div class="content">
+				<div id="game">
+					<canvas id="canvas" width="600" height="480">
+					</canvas>
 
-		<script type="text/javascript">
-			var canvas;
+					<script type="text/javascript">
+						var canvas;
 
-			function init() {
-				canvas = document.getElementById("canvas");
-				 
-				var targetFPS = 60;
-				var lifeCount = 3;
-				var gameScene = new BreakoutGame.GameScene(canvas, targetFPS, lifeCount);
-			}
-		</script>
-	</body>
+						function init() {
+							canvas = document.getElementById("canvas");
+    						var targetFPS = 60;
+    						var lifeCount = 5;
+    						var gameScene = new BreakoutGame.GameScene(canvas, targetFPS, lifeCount);
+						}
+					</script>
+				</div>
+			</div>
+		
+			<div class="footer">
+				<div id="credits">
+				Team: Felipe Barcellos, Heitor Carlos, Paulo Mendonça.<br/>
+				Professor Jucimar Junior<br/>
+				Pós-graduação em Desenvolvimento de Jogos Eletrônicos<br/>
+				Universidade do Estado do Amazonas
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</body>
+
 </html>
