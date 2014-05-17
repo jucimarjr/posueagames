@@ -37,20 +37,24 @@ function create () {
 	//Adicionando piramide
 	beSprite = game.add.sprite(game.world.width - 250, game.world.height - 200, 'blocoescuro');
 	beSprite.scale.setTo(5, 1);
+	game.physics.enable(beSprite, Phaser.Physics.ARCADE);
+	beSprite.body.immovable = true;
+	
 	beSprite2 = game.add.sprite(game.world.width - 100, game.world.height - 400, 'blocoescuro');
 	beSprite2.scale.setTo(2, 1);
+	game.physics.enable(beSprite2, Phaser.Physics.ARCADE);
+	beSprite2.body.immovable = true;
+	
 	bcSprite3 = game.add.sprite(game.world.width - 150, game.world.height - 300, 'blococlaro');
+	game.physics.enable(bcSprite3, Phaser.Physics.ARCADE);
+	bcSprite3.body.immovable = true;
 
 	//Adicionando nuvem
 	nuvemSprite = game.add.sprite(game.world.width - 565, game.world.height - 555, 'nuvem');
 	nuvemSprite2 = game.add.sprite(game.world.width - 857, game.world.height - 450, 'nuvem');
 	nuvemSprite3 = game.add.sprite(game.world.width - 320, game.world.height - 457, 'nuvem');
 	
-	//Adicionando platarforma
-//	beSprite4 = game.add.sprite(game.world.width - 500, game.world.height - 300, 'blocoescuro');
-//	game.physics.enable(bcSprite4, Phaser.Physics.ARCADE);
-//	beSprite4.scale.setTo(2, .2);
-//	beSprite4.body.immovable = true; // deixa o bloco imovivel
+	
 	
 	//Adicionando mrdigger
 	mrdiggerSprite = game.add.sprite(0, game.world.height - 260, 'mrdigger');
@@ -73,8 +77,11 @@ function update () {
 	// COLISAO COM O CHÃO:
 	game.physics.arcade.collide(mrdiggerSprite, bcSprite);
 	game.physics.arcade.collide(mrdiggerSprite, bcSprite2);
-//	game.physics.arcade.collide(mrdiggerSprite, beSprite4);
-
+    game.physics.arcade.collide(mrdiggerSprite, beSprite);
+    game.physics.arcade.collide(mrdiggerSprite, beSprite2);
+    game.physics.arcade.collide(mrdiggerSprite, bcSprite3);
+    
+    
 	// PEGA A ENTRADA (tecla pressionada):	
 	if ( game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
 
