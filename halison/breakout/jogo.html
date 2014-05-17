@@ -17,6 +17,15 @@
 
 </style>
 
+<audio preload id="toque1">
+  			<source src="som/toque1.mp3" type="audio/mpeg">
+</audio>
+
+<audio preload id="toque2">
+  			<source src="som/toque2.mp3" type="audio/mpeg">
+</audio>
+
+
     </head>
     
     <body onload="init()">
@@ -29,7 +38,6 @@
 		
 	// Tela de Desenho e Contexto do Desenho do Jogo
 	var canvas, context;
-	
 	// Jogador
 	var barraWidth, barraHeight, jogadorPosX, jogadorPosY, teclaEsquerdaPressionada, teclaDireitaPressionada,velocidadeJogador, pontosJogador, vidasJogador;
 	var mousePos, teclaEnterPressionada;
@@ -92,7 +100,7 @@
 
         document.addEventListener('keyup', keyUp, false);					// adiciona evento para keyup
         document.addEventListener('keydown', keyDown, false);				// adiciona evento para keydown
-//      document.addEventListener('mousemove', mouse, false); // Adiciona evento para mouse
+     	document.addEventListener('mousemove', mouse, false); 				// Adiciona evento para mouse
                 
         gameLoop = setInterval(gameLoop, 30);									// chama a funcao gameLoop a 				                                                                                    cada 30 frames
 	}
@@ -126,8 +134,21 @@
 					jogadorPosX -= velocidadeJogador;
 				}
 			}
-		else if (jogadorPosX < (canvas.width - barraWidth)) {
+			else if (jogadorPosX < (canvas.width - barraWidth)) {
 				jogadorPosX += velocidadeJogador;
+			}
+			mousePos = jogadorPosX;
+		}
+    	
+		if (teclaEsquerdaPressionada == false  && teclaDireitaPressionada == false){
+			if (mousePos >= 0 ){
+				jogadorPosX = mousePos - barraWidth/2;
+			}
+			if (jogadorPosX <= 1){
+				jogadorPosX = 0;
+			}
+			if (jogadorPosX > canvas.width - barraWidth){
+				jogadorPosX = canvas.width - barraWidth;
 			}
 		}
 
@@ -287,12 +308,13 @@
 				dir /= (barraWidth/2);
 				bolaDeltaX = dir*(velocidadeBola*0.75);
 				bolaDeltaY = -(velocidadeBola-Math.abs(dir));
+				document.getElementById('toque1').play();
+
 			}
 		}
 	}
 
 	function colisaoBolaTijolo(){
-		var colidiuY = false;
 		for(var i = 0; i < bricks.length; i++){
 			for(var j = 0; j < bricks[i].length; j++){
 						
@@ -336,26 +358,26 @@
 					
 							// Apaga o tijolo
 							bricks[i][j] = 0;
-							
+
 							// Aumenta o ponto do jogador
 							pontosJogador = pontosJogador + 1;
 							
 							// Reproduz som do tijolo quebrando
-// 							document.getElementById('toque1').play();
+							document.getElementById('toque2').play();
 
-							colidiuY = true;
+							return true;
 						}
 					}
 				}
 			}
 		}
-		return colidiuY;
+		return false;
 	}
 
 	//Capturar posição do MOUSE
-// 	function mouse(e){
-// 		mousePos = e.clientX - canvas.getBoundingClientRect().left;
-// 	}
+	function mouse(e){
+		mousePos = e.clientX - canvas.getBoundingClientRect().left;
+	}
 
 	function keyUp(e){
 		if (e.keyCode == 37){   
