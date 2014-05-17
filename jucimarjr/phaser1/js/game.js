@@ -10,15 +10,15 @@ function preload () {
 }
 
 function create () {
+	
+	game.physics.startSystem(Phaser.Physics.ARCADE);
+	 
 	game.add.sprite(0, 0, 'ceu');
 	platformas = game.add.group();
     platformas.enableBody = true;
 
-    var chao = plataformas.create(0, game.world.height - 64, 'plataforma');
-
-    chao.scale.setTo(2, 2);
-
-    chao.body.immovable = true;
+//    var barreira = plataformas.create(400, 400, 'plataforma');
+ //   barreira.body.immovable = true;
 	
 	
 }

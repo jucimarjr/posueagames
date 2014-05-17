@@ -1,7 +1,7 @@
 
 var dinoSprite, ossos, plataformas;
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload () {
 
@@ -9,7 +9,7 @@ function preload () {
 	game.load.spritesheet('dino', 'assets/dinossauro.png', 200,160);
 	game.load.image('osso', 'assets/osso.png');
 	game.load.image('sky', 'assets/sky.png');
-    game.load.image('ground', 'assets/platform.png');
+    game.load.image('bloco', 'assets/platform.png');
 
 }
 
@@ -18,7 +18,7 @@ function create () {
 	game.add.sprite(0, 0, 'sky');
 	
 	// CREATE A dino:
-	dinoSprite = game.add.sprite(400, 0, 'dino');
+	dinoSprite = game.add.sprite(200, 0, 'dino');
 	dinoSprite.animations.add('walk',[1,2],6,true);
 	dinoSprite.animations.add('jump',[3,4,5],4,true);
 	game.physics.enable(dinoSprite, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
@@ -33,14 +33,28 @@ function create () {
    
     // CREATE A OSSO GROUP:
     ossos = game.add.group();
-    ossos.create( 50, 100, 'osso');
-    ossos.create( 50, 200, 'osso');
-    ossos.create( 50, 300, 'osso'); 
+    ossos.create( 500, 50, 'osso');
     game.physics.enable(ossos, Phaser.Physics.ARCADE);
+    
+    // cria o grupo para plataformas
+    plataformas = game.add.group();
+    plataformas.enableBody = true;
+    
+    // cria um bloco para o dino ficar em cima
+    var bloco = plataformas.create(350, 350, 'bloco');
+    bloco.body.immovable = true; // deixa o bloco imovivel
+    
+    // cria  ch‹o
+    var tablado = plataformas.create(0, 550, 'bloco');
+    tablado.body.immovable = true;
+    tablado.scale.setTo(2, 2); // amplia o bloco pra ficar o chao todo
 }
 
 
 function update () {
+	
+	// cria uma barreira que o sprite pode pisar
+	game.physics.arcade.collide(dinoSprite, plataformas);
 
 	// COLISAO COM OSSO:
 	game.physics.arcade.overlap(dinoSprite, ossos, dinoEatosso,null,this);
