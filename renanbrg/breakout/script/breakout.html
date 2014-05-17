@@ -208,6 +208,8 @@ function drawInicial() {
 
 function drawWinGame() {
     context.drawImage(imgWinGame, 0, 0, canvas.width, canvas.height);
+    snd_musica.pause();
+    snd_vitoria.play();
 }
 
 function Pausar() {
@@ -538,8 +540,6 @@ function gameLoop() {
         }
     } else if (winGame) {
         drawWinGame();
-        snd_musica.pause();
-        snd_vitoria.play();
     } else if (!startGame && showInicial) {
         drawInicial();
         snd_inicial.play();
