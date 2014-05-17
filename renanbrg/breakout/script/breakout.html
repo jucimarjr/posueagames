@@ -4,6 +4,10 @@
         <meta charset="UTF-8" />
         <title>Breakout</title>
             <style type="text/css">
+                div
+                {
+                text-align:center
+                }
                 canvas {
                 border:1px dashed #000000;
                 }
@@ -11,10 +15,12 @@
     </head>
 
     <body onload="init()">
-        <canvas id="canvas" width="800" height="600">
-            Navegador não compatível com HTML5 Canvas
-        </canvas>
-        <p id="info"></p>
+        <div>
+            <canvas id="canvas" width="800" height="600">
+                Navegador não compatível com HTML5 Canvas
+            </canvas>
+            <p id="info"></p>
+        </div>
 
         <script>
 
