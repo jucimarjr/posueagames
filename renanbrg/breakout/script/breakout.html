@@ -20,7 +20,7 @@
 
 var canvas, context, btnStart, relogio,intervalo,info_display;
 var width, height;
-var snd_bola, snd_gameover, snd_inicial, snd_teto;
+var snd_bola, snd_gameover, snd_inicial, snd_musica;
 var gameFieldWidth, gameFieldHeight;
 var heroFieldWidth, heroFieldHeight;
 var frameWidth, frameHeight;
@@ -55,7 +55,7 @@ function init() {
     snd_bola = document.getElementById("bola");
     snd_gameover = document.getElementById("gameOver");
     snd_inicial = document.getElementById("inicial");
-    snd_teto = document.getElementById("teto")
+    snd_musica = document.getElementById("musica")
 
     width = canvas.width;
     height = canvas.height;
@@ -375,6 +375,9 @@ function keyUp(e) {
         }
     } else if(e.keyCode == 73) {
         showInicial = false;
+        snd_inicial.pause();
+        snd_musica.loop = true;
+    	snd_musica.play();
     }
 }
 
@@ -527,12 +530,16 @@ function gameLoop() {
         gameOverFunction();
         if (isGameOver == true) {
             isGameOver = false;
+            snd_musica.pause();
             snd_gameover.play();
         }
     } else if (winGame) {
         drawWinGame();
+        snd_musica.pause();
+        snd_vitoria.play();
     } else if (!startGame && showInicial) {
         drawInicial();
+        snd_inicial.play();
     } else if (startGame) {
         checkCollisionWall();
         getBarPosition();
@@ -582,8 +589,12 @@ function addWallNumRows() {
         <source src="sounds/Inicial.mp3" type="audio/mp3">
         Seu browser não suporta o formato do audio.
     </audio>
-    <audio id='teto'>
-        <source src="sounds/Teto.mp3" type="audio/mp3">
+    <audio id='musica'>
+        <source src="sounds/Musica2.mp3" type="audio/mp3">
+        Seu browser não suporta o formato do audio.
+    </audio>
+        <audio id='vitoria'>
+        <source src="sounds/Victory.mp3" type="audio/mp3">
         Seu browser não suporta o formato do audio.
     </audio>
     </body>
