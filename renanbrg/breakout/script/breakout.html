@@ -20,7 +20,7 @@
 
 var canvas, context, btnStart, relogio,intervalo,info_display;
 var width, height;
-var snd_bola, snd_gameover, snd_inicial, snd_musica;
+var snd_bola, snd_gameover, snd_inicial, snd_musica, snd_vitoria;
 var gameFieldWidth, gameFieldHeight;
 var heroFieldWidth, heroFieldHeight;
 var frameWidth, frameHeight;
@@ -55,7 +55,8 @@ function init() {
     snd_bola = document.getElementById("bola");
     snd_gameover = document.getElementById("gameOver");
     snd_inicial = document.getElementById("inicial");
-    snd_musica = document.getElementById("musica")
+    snd_musica = document.getElementById("musica");
+    snd_vitoria = document.getElementById("vitoria");
 
     width = canvas.width;
     height = canvas.height;
