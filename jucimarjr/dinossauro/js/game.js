@@ -9,7 +9,7 @@ function preload () {
 	game.load.spritesheet('dino', 'assets/dinossauro.png', 200,160); // 200x160 eh o tamanho do frame da sprite
 	game.load.image('osso', 'assets/osso.png');
 	game.load.image('sky', 'assets/sky.jpg');
-    game.load.image('bloco', 'assets/platform.png');
+    game.load.image('bloco', 'assets/tijolos.png');
 
 }
 
