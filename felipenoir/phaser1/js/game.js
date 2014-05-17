@@ -1,4 +1,4 @@
-
+var coins;
 var plataformas;
 var spriteRobo;
 var chao;
@@ -6,9 +6,10 @@ var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create
 
 function preload () {
 	game.load.image('ceu', 'assets/sky.png');
-	game.load.spritesheet('robo','assets/personagem_66-100-3.png', 66, 100);
+	game.load.spritesheet('robo','assets/personagem_66-100-3.png', 66, 108);
 	game.load.image('plataforma','assets/plataforma_250-32.png');
     game.load.image('chao', 'assets/chao_960-90.png');
+	game.load.image('coin', 'assets/item_54-54.png');
 }
 
 function create () {
@@ -39,12 +40,15 @@ function create () {
 	chao.body.immovable = true;
 	chao.scale.setTo(2, 2);
 	
-	//game.physics.enable(plataformas, Phaser.Physics.ARCADE);
+	coins = game.add.group();
+	coins.create(500,250,'coin');
+	game.physics.enable(coins, Phaser.Physics.ARCADE);
 }
 
 
 function update () {
 
+	game.physics.arcade.overlap(spriteRobo, coins, pegaCoin, null, this);
 	
 	game.physics.arcade.collide(spriteRobo, plataformas);
 
@@ -67,3 +71,6 @@ function update () {
 	}
 }
 
+function pegaCoin(spriteRobo, coin) {
+	coin.kill();
+}
