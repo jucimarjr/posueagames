@@ -25,19 +25,21 @@ function create () {
 	spriteRobo.body.collideWorldBounds = true;
 	spriteRobo.body.drag.x = 100;
 	spriteRobo.anchor.setTo(.5,.5);
+	spriteRobo.body.gravity.y = 150;
 	
 	// plataformas
 	plataformas = game.add.group();
 	plataformas.enableBody = true; 
 	var p1 = plataformas.create(42,379,'plataforma');
-	p1.body.imovable = true;
+	p1.body.immovable = true;
 	var p2 = plataformas.create(663,221,'plataforma');
-	p2.body.imovable = true;
+	p2.body.immovable = true;
 	//Chao
 	chao = plataformas.create(0, game.world.height - 90, 'chao');
-	chao.body.imovable = true;
+	chao.body.immovable = true;
+	chao.scale.setTo(2, 2);
 	
-	game.physics.enable(plataformas, Phaser.Physics.ARCADE);
+	//game.physics.enable(plataformas, Phaser.Physics.ARCADE);
 }
 
 
