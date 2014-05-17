@@ -56,12 +56,14 @@ function update () {
 		spriteRobo.body.velocity.x = 100;
 		spriteRobo.scale.x = +1;
 		spriteRobo.animations.play('walk');
-	} else if(game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-		spriteRobo.body.velocity.y = -100;
-		spriteRobo.animations.play('jump');
 	} else {
 		spriteRobo.animations.stop();
 		spriteRobo.frame = 0;
+	}
+	
+	if(game.input.keyboard.isDown(Phaser.Keyboard.UP) && spriteRobo.body.touching.down){
+		spriteRobo.body.velocity.y = -300;
+		spriteRobo.animations.play('jump');
 	}
 }
 
