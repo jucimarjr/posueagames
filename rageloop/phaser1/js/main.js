@@ -3,8 +3,8 @@
 	var init = function() {
 
 		// Initialize Phaser, and creates a game
-		app_container.game = new Phaser.Game(600, 960, Phaser.AUTO, 'game_container');
-		
+		app_container.game = new Phaser.Game(960, 600, Phaser.AUTO, 'game_container');
+
 		// add phaser states
 		app_container.game.state.add('Preload', app_container.Preload);
 		app_container.game.state.add('Menu', app_container.Menu);

@@ -1,7 +1,11 @@
+body {
+	background: #eee;
+}
+
 
 #game_container {
-    width: 600px;
-    height: 960px;
+    width: 960px;
+    height: 600px;
     margin: 0 auto;
     margin-top: 20px;
 }
