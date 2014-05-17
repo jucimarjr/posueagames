@@ -372,6 +372,8 @@ function keyUp(e) {
     } else if (e.keyCode == 82) {
         if (gameOver) {
             resetGame();
+            snd_musica.loop = true;
+        	snd_musica.play();
         }
     } else if(e.keyCode == 73) {
         showInicial = false;
