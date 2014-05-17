@@ -15,10 +15,10 @@ function preload () {
 
 function create () {
 	
-	// CREATE A dino:
+	// Criar o 'dino'
 	dinoSprite = game.add.sprite(400, 400, 'dino');
-	dinoSprite.animations.add('walk',[1,2,3],10,true); // ( <string de identificacao>, <numero do sprite>, <velocidade da animcacao>, <true?>) 
-	dinoSprite.animations.add('jump',[4,5],4,true);
+	dinoSprite.animations.add('walk',[1,2,3,4],15,true); // ( <string de identificacao>, <numero do sprite>, <velocidade da animcacao>, <true?>) 
+	dinoSprite.animations.add('jump',[4,5,6],4,true);
 	game.physics.enable(dinoSprite, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
     dinoSprite.body.acceleration.y = 50;
     dinoSprite.body.collideWorldBounds = true; // para no limite inferior da tela
@@ -26,7 +26,7 @@ function create () {
     dinoSprite.anchor.setTo(.5,.5); // diminui o espaço do deslocamento do espelhamento 
     dinoSprite.body.gravity.y = 250;
    
-    // CREATE A OSSO GROUP:
+    // Criar o osso
     ossos = game.add.group();
     ossos.create( 50, 350, 'osso');
     ossos.create( 550, 350, 'osso');
@@ -37,22 +37,20 @@ function create () {
 
 function update () {
 
-	// COLISAO COM OSSO:
-	game.physics.arcade.overlap(dinoSprite, ossos, dinoEatosso,null,this);
+	// Realizar colisão entre 'osso' e 'dino', chama função dinoEatOsso
+	game.physics.arcade.overlap(dinoSprite, ossos, dinoEatOsso,null,this);
 
-
-	// PEGA A ENTRADA (tecla pressionada):	
-	if ( game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
-
+	// Capturar entrada (tecla esquerda)	
+	if ( game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { 
 		dinoSprite.body.velocity.x = -100;
 		dinoSprite.animations.play('walk');
 		dinoSprite.scale.x = -1; // espelha se antes -1
 	}
 
-	else if ( game.input.keyboard.isDown (Phaser.Keyboard.RIGHT) ) { // vai para direita
-
+	// Capturar entrada (tecla direita)
+	else if ( game.input.keyboard.isDown (Phaser.Keyboard.RIGHT) ) {
 		dinoSprite.body.velocity.x = 100;
-		dinoSprite.scale.x = +1;  // espelha se antes 1
+		dinoSprite.scale.x = 1;
 		dinoSprite.animations.play('walk');
 	}
 
@@ -68,8 +66,7 @@ function update () {
 		}	
 }
 
-function dinoEatosso (dino,osso)	{
-
+function dinoEatOsso (dino,osso)	{
 		osso.kill();
 }
 
