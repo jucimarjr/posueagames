@@ -5,10 +5,12 @@
     Preload.prototype = {
         preload: function () {
             this.stage.backgroundColor = '#ccc';
+
+            this.game.load.image('bike', './assets/bike_227-112.png');
         },
         create: function () {},
         update: function() {            
-            //this.game.state.start('Menu');
+            this.game.state.start('Gameplay');
         }
     };
 
