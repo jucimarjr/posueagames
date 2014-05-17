@@ -156,6 +156,7 @@ function init() {
 
     score = 0;
     isGameOver = true;
+    isWinGame = true;
 
     intervalo = 20;
 
@@ -169,6 +170,7 @@ function resetGame() {
 
     gameOver = false;
     isGameOver = true;
+    isWinGame = true;
     startGame = false;
     showInicial = false;
     winGame = false;
@@ -208,9 +210,7 @@ function drawInicial() {
 
 function drawWinGame() {
     context.drawImage(imgWinGame, 0, 0, canvas.width, canvas.height);
-    snd_musica.pause();
-    snd_vitoria.play();
-}
+    }
 
 function Pausar() {
     startGame = !startGame;
@@ -540,6 +540,11 @@ function gameLoop() {
         }
     } else if (winGame) {
         drawWinGame();
+        if (isWinGame == true) {
+            isWinGame = false;
+            snd_musica.pause();
+            snd_vitoria.play();
+        }
     } else if (!startGame && showInicial) {
         drawInicial();
         snd_inicial.play();
