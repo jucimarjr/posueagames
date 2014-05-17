@@ -708,7 +708,7 @@ Player.prototype.animate = function(delta) {
 	if (posX >= this.parent.x && posX <= this.parent.width - this.width) {
 		this.x = posX;
 	} else if (this.velocity.x < 0) {
-		this.x = this.parent.x;
+		this.x = this.parent.x; 
 	} else {
 		this.x = this.parent.width - this.width;
 	}
