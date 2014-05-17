@@ -1,0 +1,1 @@
+var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: Flappybird.preload, create: Flappybird.create, update: Flappybird.update });
