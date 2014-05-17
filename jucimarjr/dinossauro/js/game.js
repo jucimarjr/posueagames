@@ -1,5 +1,5 @@
 
-var dinoSprite, ossos;
+var dinoSprite, ossos, plataformas;
 
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
@@ -8,10 +8,14 @@ function preload () {
 	game.stage.backgroundColor = "#ffffff";
 	game.load.spritesheet('dino', 'assets/dinossauro.png', 200,160);
 	game.load.image('osso', 'assets/osso.png');
+	game.load.image('sky', 'assets/sky.png');
+    game.load.image('ground', 'assets/platform.png');
 
 }
 
 function create () {
+	//fundo
+	game.add.sprite(0, 0, 'sky');
 	
 	// CREATE A dino:
 	dinoSprite = game.add.sprite(400, 0, 'dino');
@@ -23,7 +27,7 @@ function create () {
  
     dinoSprite.body.collideWorldBounds = true; // para no limite inferio da tela
     dinoSprite.body.drag.x = 100; //desloca 100 e para, só desloca de novo se clicada alguma tecla e quanto maior for seu valor, menos desloca
-    dinoSprite.anchor.setTo(.5,.5); // diminui o espaço do deslocamento do espelhamento 
+    dinoSprite.anchor.setTo(.5,.5); // diminui o espaco do deslocamento do espelhamento 
     dinoSprite.body.gravity.y = 150;
     
    
