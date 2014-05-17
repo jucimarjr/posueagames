@@ -6,9 +6,9 @@ var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create
 function preload () {
 
 	game.stage.backgroundColor = "#ffffff";
-	game.load.spritesheet('dino', 'assets/dinossauro.png', 200,160);
+	game.load.spritesheet('dino', 'assets/dinossauro.png', 200,160); // 200x160 eh o tamanho do frame da sprite
 	game.load.image('osso', 'assets/osso.png');
-	game.load.image('sky', 'assets/sky.png');
+	game.load.image('sky', 'assets/sky.jpg');
     game.load.image('bloco', 'assets/platform.png');
 
 }
@@ -62,25 +62,20 @@ function update () {
 
 	// PEGA A ENTRADA (tecla pressionada):	
 	if ( game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
-
 		dinoSprite.body.velocity.x = -100;
 		dinoSprite.animations.play('walk');
 		dinoSprite.scale.x = -1; // espelha se antes -1
 	}
-
 	else if ( game.input.keyboard.isDown (Phaser.Keyboard.RIGHT) ) { // vai para direita
-
 		dinoSprite.body.velocity.x = 100;
 		dinoSprite.scale.x = +1;  // espelha se antes 1
 		dinoSprite.animations.play('walk');
 	}
-
 	else if ( game.input.keyboard.isDown (Phaser.Keyboard.UP) ) { // vai para cima
 
 		dinoSprite.body.velocity.y = -100;
 		dinoSprite.animations.play('jump');
 	}
-
 	else{
 	    	dinoSprite.animations.stop();
 			dinoSprite.frame = 0;
