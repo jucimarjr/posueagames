@@ -14,7 +14,7 @@ var HelloPhaser = {
         this.estrela = game.add.sprite(362, 189, 'estrela');
         this.porta = game.add.sprite(49,236,'porta');
         this.jogador = game.add.sprite(450, 423, 'jogador');
-        this.jogador.animations.add('walk', [1, 2, 3, 4, 5, 6, 7], 10, true);
+        this.jogador.animations.add('walk', [1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2], 10, true);
         for(var i = 0; i < this.blocos.length; i++){
             this.blocos[i] = game.add.sprite(this.blocos[i][0], this.blocos[i][1], 'bloco');
         }
