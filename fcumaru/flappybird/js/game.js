@@ -1,4 +1,4 @@
-var celulaSprite, fundo, cena, tubo;
+var celulaSprite, fundo, cena;
 var style = {
 	font : "40px Arial",
 	fill : "#ff0044",
@@ -7,6 +7,8 @@ var style = {
 
 var points;
 var scored;
+var tubos;
+var gameOver;
 
 var game = new Phaser.Game(960, 600, Phaser.AUTO, '', {
 	preload : preload,
@@ -28,19 +30,30 @@ function preload() {
 
 function create() {
 
-	scored = false; 
+	tubos = new Array();
+	scored = new Array();
+
 	points = 0;
-	
+	gameOver = false;
+
 	// CREATE A fundo:
 	// fundo = game.add.image(0, 0, 'fundo');
 	// game.physics.enable(fundo, Phaser.Physics.ARCADE);
 
-	// CREATE A tubo superior:
-	tubo = game.add.group();
-	tubo.create(600, -200, 'tubosuperior');
-	tubo.create(600, 400, 'tuboinferior');
-	
-	game.physics.enable(tubo, Phaser.Physics.ARCADE);
+	// CREATE A tubos:
+	for (var i = 0; i < 4; i++) {
+		var tubo = game.add.group();
+		
+		posYtuboSuperior = (Math.floor((Math.random() * 300) + 100) * (-1));
+		
+		tubo.create(1000 + (i * 260), posYtuboSuperior, 'tubosuperior');
+		tubo.create(1000 + (i * 260), posYtuboSuperior + 600, 'tuboinferior');
+
+		game.physics.enable(tubo, Phaser.Physics.ARCADE);
+
+		tubos.push(tubo);
+		scored.push(false);
+	}
 
 	// CREATE A cena:
 	cena = game.add.group();
@@ -66,53 +79,69 @@ function create() {
 	celulaSprite.anchor.setTo(.5, .5); // diminui o espaço do deslocamento do
 	// espelhamento
 	celulaSprite.body.gravity.y = 350;
-	
-	//exibe titulo
+
+	// exibe titulo
 	title = game.add.text(game.world.centerX - 150, 10, "FLAPPY BIRD", style);
-	
-	//exibe score
-	score = game.add.text(game.world.centerX + 220, 10, "SCORE: " + points, style);
+
+	// exibe score
+	score = game.add.text(game.world.centerX + 220, 10, "SCORE: " + points,
+			style);
 
 }
 
 function update() {
 
-	if ((celulaSprite.body.x > tubo.getAt(0).body.x + tubo.getAt(0).body.width)
-			&& (!scored)){
-		scored = true;
-		points++;
-		score.setText("SCORE: " + points);
-	}
-	
-	// COLISAO:
-	game.physics.arcade.overlap(celulaSprite, cena, colisaoCena, null, this);
-	game.physics.arcade.overlap(celulaSprite, tubo, colisaoTubo, null, this);
+	if (!gameOver) {
+		// COLISAO:
+		game.physics.arcade
+				.overlap(celulaSprite, cena, colisaoCena, null, this);
 
-	tubo.setAll('body.velocity.x', -100);
-	if (tubo.getAt(0).body.x < -tubo.getAt(0).body.width) {
-		tubo.setAll('body.x', game.width);
-		
-		//gera a posicao y do tubo superior de forma aleatoria
-		posYtuboSuperior = (Math.floor((Math.random() * 300) + 100) * (-1));
-		tubo.getAt(0).body.y = posYtuboSuperior;
-		//a posicao y do tubo inferior sempre sera 600 a mais do superior
-		tubo.getAt(1).body.y = posYtuboSuperior + 600;
-		scored = false;
-	}
+		for (var i = 0; i < 4; i++) {
+			var tubo = tubos[i];
 
-	celulaSprite.animations.play('jump');
+			game.physics.arcade.overlap(celulaSprite, tubo, colisaoTubo, null,
+					this);
 
-	// PEGA A ENTRADA (tecla pressionada):
-	if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-		// vai para cima
-		celulaSprite.body.velocity.y = -200;
+			if ((celulaSprite.body.x > tubo.getAt(0).body.x
+					+ tubo.getAt(0).body.width)
+					&& (!scored[i])) {
+				scored[i] = true;
+				points++;
+				score.setText("SCORE: " + points);
+			}
+
+			tubo.setAll('body.velocity.x', -100);
+			if (tubo.getAt(0).body.x < -tubo.getAt(0).body.width) {
+				tubo.setAll('body.x', game.width);
+
+				// gera a posicao y do tubo superior de forma aleatoria
+				posYtuboSuperior = (Math.floor((Math.random() * 300) + 100) * (-1));
+				tubo.getAt(0).body.y = posYtuboSuperior;
+				// a posicao y do tubo inferior sempre sera 600 a mais do
+				// superior
+				tubo.getAt(1).body.y = posYtuboSuperior + 600;
+				scored[i] = false;
+			}
+		}
+
+		celulaSprite.animations.play('jump');
+
+		// PEGA A ENTRADA (tecla pressionada):
+		if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+			// vai para cima
+			celulaSprite.body.velocity.y = -200;
+		}
+	} else {
+		alert("Game Over");
 	}
 }
 
 function colisaoCena(celula, cena) {
 	celula.kill();
+	gameOver = true;
 }
 
 function colisaoTubo(celula, tubo) {
 	celula.kill();
+	gameOver = true;
 }
