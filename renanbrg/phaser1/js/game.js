@@ -4,6 +4,8 @@ var plataformas;
 var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload () {
+	console.log("testing log");
+	
 	game.load.image('background', 'assets/background_960-600.png');
 	game.load.image('blococlaro', 'assets/blococlaro_150-100.png');
 	game.load.image('blocoescuro', 'assets/blocoescuro_50-100.png');
@@ -32,6 +34,7 @@ function create () {
 	//Adicionando água
 	
 	aguaSprite = game.add.sprite(game.world.width - 510, game.world.height - 60, 'agua');
+	game.physics.enable(aguaSprite, Phaser.Physics.ARCADE);
 	
 	
 	//Adicionando piramide
@@ -81,6 +84,10 @@ function update () {
     game.physics.arcade.collide(mrdiggerSprite, beSprite2);
     game.physics.arcade.collide(mrdiggerSprite, bcSprite3);
     
+    //Colisão com a água
+    
+    game.physics.arcade.overlap(mrdiggerSprite, aguaSprite,afogar,null,this);
+    
     
 	// PEGA A ENTRADA (tecla pressionada):	
 	if ( game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
@@ -107,5 +114,9 @@ function update () {
 	    	mrdiggerSprite.animations.stop();
 			mrdiggerSprite.frame = 0;
 		}	
+}
+function afogar (mrdigger,agua)	{
+
+	mrdigger.kill();
 }
 
