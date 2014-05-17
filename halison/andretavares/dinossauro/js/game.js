@@ -1,7 +1,9 @@
 
 var dinoSprite, ossos;
 
-var game = new Phaser.Game(800, 500, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game;
+
+game = new Phaser.Game(800, 500, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload () {
 
@@ -11,9 +13,6 @@ function preload () {
 
 }
 
-// Mudança da posição inicial do dino
-// Mudança da possição dos ossos
-// Inclusão de fundo
 function create () {
 	
 	// CREATE A dino:
