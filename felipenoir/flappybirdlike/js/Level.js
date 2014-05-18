@@ -21,18 +21,17 @@ Level.prototype = {
 		this.game.add.sprite(0, 0, 'bg');
 
 		// ground
-		this.ground = this.game.add.tileSprite(0, this.game.world.height - 90,
-				this.game.world.width, 90, 'ground');
+		this.ground = this.game.add.tileSprite(0, this.game.world.height - 90, this.game.world.width, 90, 'ground');
 		this.ground.autoScroll(-200, 0);
+		
+		// physics
+		this.game.physics.enable(this.ground, Phaser.Physics.ARCADE);
+		this.ground.body.immovable = true;
 
 		// barriers
 		this.barrierGenerator = this.game.time.events.loop(
-				Phaser.Timer.SECOND * 1.25, this.generateBarrier, this);
+				Phaser.Timer.SECOND * 2, this.generateBarrier, this);
 		this.barrierGenerator.timer.start();
-	},
-
-	update : function() {
-
 	},
 
 	generateBarrier : function() {

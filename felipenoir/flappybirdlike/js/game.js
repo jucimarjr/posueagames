@@ -11,14 +11,17 @@ function preload() {
 	player = new Player(game);
 	level = new Level(game);
 
-	player.preload();
 	level.preload();
+	player.preload();
 }
 
 function create() {
+	game.physics.startSystem(Phaser.Physics.ARCADE);
+
 	level.create();
+	player.create();
 }
 
 function update() {
-
+	player.update();
 }
