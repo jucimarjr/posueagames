@@ -1,0 +1,1 @@
+var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: PirarucuRun.preload, create: PirarucuRun.create, update: PirarucuRun.update  });
