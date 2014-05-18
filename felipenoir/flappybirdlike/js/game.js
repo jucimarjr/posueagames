@@ -16,7 +16,7 @@ function preload() {
 }
 
 function create() {
-
+	level.create();
 }
 
 function update() {
