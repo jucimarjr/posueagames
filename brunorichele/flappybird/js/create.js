@@ -5,7 +5,7 @@ var create = {
  		create.pirarucu();
 	},
 	pirarucu : function(){
-		pirarucu = game.add.sprite(100, 100, 'pirarucu');
+		pirarucu = game.add.sprite(game.width/2, game.height/2, 'pirarucu');
 		game.physics.enable(pirarucu, Phaser.Physics.ARCADE);
 		pirarucu.body.gravity.y = 1000;		
 	},
