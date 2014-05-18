@@ -25,5 +25,9 @@ Player.prototype = {
 	update : function() {
 		this.game.physics.arcade.collide(this.sprite, level.ground);
 		this.game.physics.arcade.collide(this.sprite, level.objects);
+		
+		if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+			this.sprite.body.velocity.y = -600;
+		}
 	}
 }
