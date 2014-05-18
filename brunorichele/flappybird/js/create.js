@@ -1,6 +1,8 @@
 var create = {
-	space_key : null,
+	space_key   : null,
+	enemy_group : null,
 	init : function(){
+		create.group();
 		create.keyboard();
  		create.pirarucu();
 		create.anzol();
@@ -13,19 +15,22 @@ var create = {
 		pirarucu.body.gravity.y = 100;		
 	},
 	anzol : function(){
-		anzol = game.add.sprite(game.width - 30, 0, 'anzol');	
+		anzol = create.enemy_group.create(game.width - 30, 0, 'anzol');
 		game.physics.enable(anzol, Phaser.Physics.ARCADE);
 		anzol.body.velocity.x = -100;	
 	},
 	ariranha : function(){
-		ariranha = game.add.sprite(game.width + 300, 0, 'ariranha');	
+		ariranha = create.enemy_group.create(game.width + 300, 0, 'ariranha');
 		game.physics.enable(ariranha, Phaser.Physics.ARCADE);
 		ariranha.body.velocity.x = -100;			
 	},
 	arraia : function(){
-		arraia = game.add.sprite(game.width + 600, game.height - 50, 'arraia');	
+		arraia = create.enemy_group.create(game.width + 600, game.height - 50, 'arraia');	
 		game.physics.enable(arraia, Phaser.Physics.ARCADE);
 		arraia.body.velocity.x = -100;			
+	},
+	group : function(){
+		create.enemy_group = game.add.group();
 	},
 	keyboard : function(){
         create.space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
