@@ -1,5 +1,5 @@
 var preload = {
 	init : function(){
-		game.load.image('dinossauro', 'assets/phaser.png');
+		game.load.image('pirarucu', 'assets/001.jpg');
 	}
 };

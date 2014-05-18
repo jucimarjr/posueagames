@@ -1,5 +1,10 @@
 var create = {
 	init : function(){
-		this.dinossauro = game.add.sprite(0, 0, 'dinossauro');
+ 		create.pirarucu();
+	},
+	pirarucu : function(){
+		pirarucu = game.add.sprite(100, 100, 'pirarucu');
+		game.physics.enable(pirarucu, Phaser.Physics.ARCADE);
+		pirarucu.body.gravity.y = 1000;		
 	}
 };
