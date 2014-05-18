@@ -1,5 +1,18 @@
 var update = {
 	init : function(){
-		game.physics.arcade.collide(pirarucu, create.enemy_group);
+		update.collisionEnemyGroup();
+		update.collisionFloor();
+	},
+	collisionEnemyGroup : function(){
+		if(game.physics.arcade.collide(pirarucu, create.enemy_group)){
+			var style = { font: "50px helvetica", fill: "#ffffff" };
+        	status = game.add.text(100, 100, "Morreu pro inimigo, fim de jogo", style);		
+		}
+	},
+	collisionFloor : function(){
+		if (pirarucu.inWorld == false){
+			var style = { font: "50px helvetica", fill: "#ffffff" };
+        	status = game.add.text(50, 50, "Morreu no chão, fim de jogo", style);
+		}	
 	}
 };
