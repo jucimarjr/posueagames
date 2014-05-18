@@ -1,5 +1,6 @@
 Level = function(game) {
 	this.game = game;
+	this.objects;
 	this.ground;
 	this.barriers;
 	this.barrierGenerator;
@@ -20,6 +21,9 @@ Level.prototype = {
 		// background
 		this.game.add.sprite(0, 0, 'bg');
 
+		this.objects = this.game.add.group();
+		this.objects.enableBody = true;
+		
 		// ground
 		this.ground = this.game.add.tileSprite(0, this.game.world.height - 90, this.game.world.width, 90, 'ground');
 		this.ground.autoScroll(-200, 0);
@@ -36,7 +40,7 @@ Level.prototype = {
 
 	generateBarrier : function() {
 		console.log('level -> generateBarrier');
-		var barrier = this.game.add.sprite(this.game.world.width,
+		var barrier = this.objects.create(this.game.world.width,
 				this.game.world.height - 300, 'tallbarrier');
 		this.game.physics.arcade.enableBody(barrier);
 		barrier.body.allowGravity = false;
