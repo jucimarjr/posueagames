@@ -9,6 +9,3 @@ var game = new Phaser.Game(
 		update  : update.init 
 	}
 );
-
-
-

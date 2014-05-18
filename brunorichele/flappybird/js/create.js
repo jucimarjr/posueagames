@@ -3,11 +3,21 @@ var create = {
 	init : function(){
 		create.keyboard();
  		create.pirarucu();
+		create.anzol();
 	},
 	pirarucu : function(){
 		pirarucu = game.add.sprite(game.width/2, game.height/2, 'pirarucu');
 		game.physics.enable(pirarucu, Phaser.Physics.ARCADE);
-		pirarucu.body.gravity.y = 1000;		
+		pirarucu.body.gravity.y = 100;		
+	},
+	anzol : function(){
+		anzol = game.add.sprite(game.width - 30, 0, 'anzol');	
+		game.physics.enable(anzol, Phaser.Physics.ARCADE);
+		anzol.body.velocity.x = -100;	
+	},
+	ariranha : function(){
+	},
+	arraia : function(){
 	},
 	keyboard : function(){
         create.space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
