@@ -10,6 +10,7 @@
             this.game.load.image('bg', './assets/bg_1600-600.jpg');
             this.game.load.image('fg', './assets/fg_1998-224.png');
             this.game.load.image('enemy', './assets/enemy_463-127.png');
+            this.game.load.image('bullet', './assets/bullet_43-43.png');
         },
         create: function () {},
         update: function() {            

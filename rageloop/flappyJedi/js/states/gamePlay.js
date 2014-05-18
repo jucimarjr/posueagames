@@ -6,6 +6,8 @@
         this.fg = null;
         this.enemies = null;
         this.timer = null;
+        this.bullets = null;
+        this.bulletTimer = null;
     };
 
     Gameplay.prototype = {
@@ -25,7 +27,13 @@
             this.enemies = this.game.add.group();
             this.enemies.createMultiple(20, 'enemy');
 
-            this.timer = this.game.time.events.loop(1500, this.addEnemy, this);
+            this.bullets = this.game.add.group();
+            this.bullets.createMultiple(10, 'bullet');
+            this.bullets.setAll('anchor.x', 0.5);
+            this.bullets.setAll('anchor.y', 0.5);
+            this.bullets.setAll('outOfBoundsKill', true);
+
+            this.timer = this.game.time.events.loop(700, this.addEnemy, this);
         },
 
         update: function() {
@@ -34,6 +42,7 @@
             }
 
             this.game.physics.arcade.overlap(this.player, this.enemies, this.restart, null, this);
+            this.game.physics.arcade.overlap(this.bullets, this.enemies, this.killEnemy, null, this);
 
             if (this.player.y == 0 || this.player.y == (this.game.height - this.player.height)) {
                 this.restart();
@@ -57,6 +66,37 @@
             enemy.outOfBoundsKill = true;
         },
 
+        fireBullet: function () {
+            if (this.bulletTimer) {
+                return;
+            }
+
+            var bullet = this.bullets.getFirstDead();
+
+            if (!bullet) {
+                return;
+            }
+
+            this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
+
+            bullet.scale.set(0.5, 0.5);
+            bullet.reset(this.player.x + this.player.width, this.player.y + this.player.height -25);
+            bullet.body.velocity.x = 1000;
+            bullet.checkWorldBounds = true;
+            bullet.outOfBoundsKill = true;
+
+            var self = this;
+            this.bulletTimer = setTimeout(function () {
+                clearTimeout(self.bulletTimer);
+                self.bulletTimer = null;
+            }, 300);
+        },
+
+        killEnemy: function (bullet, enemy) {
+            bullet.kill();
+            enemy.kill();
+        },
+
         restart: function () {
             this.game.time.events.remove(this.timer);  
 
@@ -72,6 +112,10 @@
         handleKeyDown: function() {
             if (this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR)) {
                 this.player.body.velocity.y = -400;
+            }
+
+            if (this.game.input.keyboard.isDown (Phaser.Keyboard.ENTER)) {
+                this.fireBullet();
             } 
         },
     };
