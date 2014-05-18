@@ -6,7 +6,10 @@
         preload: function () {
             this.stage.backgroundColor = '#ccc';
 
-            this.game.load.image('bike', './assets/bike_227-112.png');
+            this.game.load.image('player', './assets/player_205-94.png');
+            this.game.load.image('bg', './assets/bg_1600-600.jpg');
+            this.game.load.image('fg', './assets/fg_1998-224.png');
+            this.game.load.image('enemy', './assets/enemy_463-127.png');
         },
         create: function () {},
         update: function() {            
