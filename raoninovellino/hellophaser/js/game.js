@@ -16,7 +16,7 @@ window.onload = function() {
 		game.load.image('base', assets + 'base_960-50.png');
 //		game.load.image('boneco', assets + 'boneco_80-100.png');
 		
-		game.load.spritesheet('macaco', assets + '/macaco_44-62-6.png', 45, 62); // 44x62 eh o tamanho do frame da sprite
+		game.load.spritesheet('macaco', assets + '/macaco_45-62-7.png', 45, 62); // 44x62 eh o tamanho do frame da sprite
 	}
 
 	function create () {
