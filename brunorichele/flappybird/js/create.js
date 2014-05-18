@@ -4,6 +4,8 @@ var create = {
 		create.keyboard();
  		create.pirarucu();
 		create.anzol();
+		create.ariranha();
+		create.arraia();
 	},
 	pirarucu : function(){
 		pirarucu = game.add.sprite(game.width/2, game.height/2, 'pirarucu');
@@ -16,8 +18,14 @@ var create = {
 		anzol.body.velocity.x = -100;	
 	},
 	ariranha : function(){
+		ariranha = game.add.sprite(game.width + 300, 0, 'ariranha');	
+		game.physics.enable(ariranha, Phaser.Physics.ARCADE);
+		ariranha.body.velocity.x = -100;			
 	},
 	arraia : function(){
+		arraia = game.add.sprite(game.width + 600, game.height - 50, 'arraia');	
+		game.physics.enable(arraia, Phaser.Physics.ARCADE);
+		arraia.body.velocity.x = -100;			
 	},
 	keyboard : function(){
         create.space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
