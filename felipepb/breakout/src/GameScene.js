@@ -10,10 +10,16 @@ BreakoutGame.GameScene = function (canvas, targetFPS, playerLives) {
 	this.bigBrick;
 	this.gamePhysics;
 	this.gameSound;
+	this.gameRetryScreen;
+	this.gameStartScreen;
+	this.gameWinScreen;
 	
 	this._resourcesLoadCount = 0;
 	
 	this._preloadTextures = [
+	    { path: "images/gamestart.png", isSpriteSheet: false },
+	    { path: "images/gameretry.png", isSpriteSheet: false },
+	    { path: "images/gamewin.png", isSpriteSheet: false },
 		{ path: "images/player_racket_block.png", isSpriteSheet: false },	
 		{ path: "images/player_racket_glow.png", isSpriteSheet: false },
 		{ path: "images/player_life.png", isSpriteSheet: false },
@@ -53,6 +59,73 @@ BreakoutGame.GameScene.prototype = {
 		}
 	},
 	
+	showStartScreen: function() {
+	    var self = this;
+	    this.gameStartScreen = GameFramework.SpriteFactory.spriteFromTexture('images/gamestart.png'); 
+	    this.gameStartScreen.x(this.canvas.width / 2.0);
+	    this.gameStartScreen.y(this.canvas.height / 2.0);
+	    this.game.addGameObject(this.gameStartScreen);
+	    this.game.startGame(this.targetFPS);
+	    
+	    document.addEventListener('keydown', function (args) {
+	        if (self.player == null && args.keyCode == GameFramework.KeyCode.EnterKey) {
+	            var animation = new GameFramework.PropertyAnimation(self.gameStartScreen,
+	                                                                'opacity',
+	                                                                1.0,
+	                                                                0.0,
+	                                                                250,
+	                                                                GameFramework.Easing.Type.Linear,
+	                                                                function () {
+	                                                                    self.startGame();
+	                                                                });
+	            GameFramework.Animation.play(animation);
+	        }
+	    });
+	},
+	
+	showGameRetryScreen: function () {
+	    var self = this;
+        this.gameRetryScreen = GameFramework.SpriteFactory.spriteFromTexture('images/gameretry.png'); 
+        this.gameRetryScreen.x(this.canvas.width / 2.0);
+        this.gameRetryScreen.y(this.canvas.height / 2.0);
+        this.gameRetryScreen.zOrder = 1000;
+        this.game.addGameObject(this.gameRetryScreen);
+        
+        var callback = function () {
+            document.addEventListener('keydown', function (args) {
+                if (self.player != null && args.keyCode == GameFramework.KeyCode.EnterKey) {
+                    location.reload();
+                }
+            });
+        };
+        
+        var animation = new GameFramework.PropertyAnimation(self.gameRetryScreen,
+                                                            'opacity',
+                                                            0.0,
+                                                            1.0,
+                                                            3500,
+                                                            GameFramework.Easing.Type.InQuart,
+                                                            callback);
+        GameFramework.Animation.play(animation);
+        
+        
+	},
+	
+	showGameWinScreen: function() {
+        this.gameWinScreen = GameFramework.SpriteFactory.spriteFromTexture('images/gamewin.png'); 
+        this.gameWinScreen.x(this.canvas.width / 2.0);
+        this.gameWinScreen.y(this.canvas.height / 2.0);
+        this.game.addGameObject(this.gameWinScreen);
+        
+        var opacityAnimation = new GameFramework.PropertyAnimation(this.gameWinScreen,
+                                                                    'opacity',
+                                                                    0.0,
+                                                                    1.0,
+                                                                    6000,
+                                                                    GameFramework.Easing.Type.InQuart);
+        GameFramework.Animation.play(opacityAnimation);
+    },
+	
 	startGame: function () {
 		//console.log("startGame");
 		
@@ -66,8 +139,6 @@ BreakoutGame.GameScene.prototype = {
 		this.gamePhysics.onBallHit = this.gameSound.onBallHit;
 		
 		//this.createAudioAndTweenDemo();
-        
-		this.game.startGame(this.targetFPS);
 	},
 	
 	createAudioAndTweenDemo: function () {
@@ -252,7 +323,6 @@ BreakoutGame.GameScene.prototype = {
             }
             brickY += brick.boundingBox().height / 2.0 + topMargin;
         }
-
 	},
 	
 	createPlayer: function () {
@@ -263,12 +333,12 @@ BreakoutGame.GameScene.prototype = {
 	},
 	
 	createBall: function () {
-		this.ball = new BreakoutGame.Ball();
+		this.ball = new BreakoutGame.Ball(this.player);
 		this.game.addGameObject(this.ball);
 		this.ball.transform.x = this.player.transform.x;
-		this.ball.transform.y = this.player.transform.y
-								- this.player.boundingBox().height / 2
-								- this.ball.boundingBox().height / 2;
+		this.ball.transform.y = this.player.transform.y -
+								this.player.boundingBox().height / 2.0 -
+								this.ball.boundingBox().height / 2.0;
 		
 		if (this.gamePhysics) {
 			this.gamePhysics.ball = this.ball;
@@ -323,8 +393,8 @@ BreakoutGame.GameScene.prototype = {
 					self.createBall();
 				}, 1000);
 			} else {
-				//TODO: call game over scene.
 				this.player.onGameOver();
+				this.showGameRetryScreen();
 			}
 		}
 		
@@ -343,6 +413,7 @@ BreakoutGame.GameScene.prototype = {
 	},
 	
 	onBigBrickDestroyed: function () {
+	    var self = this;
 		this.player.onGameWin();
 		this.ball.onGameOver();
 		this.gamePhysics.stop();		
@@ -350,12 +421,22 @@ BreakoutGame.GameScene.prototype = {
 		this.gameSound.heartSoundFrequence = -1;
 		
 		for (var i = 0; i < this.heartSprites.length; i++) {
-			GameFramework.Animation.play(new GameFramework.PropertyAnimation(this.heartSprites[i], "opacity", 1.0, 0.0, 500 * i, GameFramework.Easing.Type.Linear));
+			GameFramework.Animation.play(new GameFramework.PropertyAnimation(this.heartSprites[i],
+			                             "opacity",
+			                             1.0,
+			                             0.0,
+			                             500 * i,
+			                             GameFramework.Easing.Type.Linear,
+			                             i == this.heartSprites.length ? function () {
+			                                 self.showGameWinScreen();
+			                             } : null));
 		}
+		
+		this.showGameWinScreen();
 	},
 	
 	onResourceLoaded: function () {
 		if (--this._resourcesLoadCount <= 0)
-			this.startGame();
+			this.showStartScreen();
 	}
 }

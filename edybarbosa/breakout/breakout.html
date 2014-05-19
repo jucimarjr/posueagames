@@ -5,8 +5,9 @@
 	<title>Breakout UEA</title>
 		<style type="text/css">
         	canvas {
-            	border:1px dashed #000000;
-             }
+            	border:1px dashed #000000;            	
+            	background:url(images/fundo.png);
+             }           
 		</style>
 </head>
 <body>
@@ -143,12 +144,11 @@
 		}
 
 		function desenhaPontuacaoFase() {
-			ctx.font = '12pt Verdana';
-      		//ctx.textAlign = 'center';
-      		ctx.fillStyle = 'blue';
+			ctx.font = '13pt Verdana';
+      		ctx.fillStyle = 'white';
 
-			ctx.fillText('Score: '+ score, 50, 25);
-			ctx.fillText('Level: '+ level, 450,25);
+			ctx.fillText('Score: '+ score, 50, 22);
+			ctx.fillText('Level: '+ level, 450,22);
 		}
 		
 		function inicioDoJogo() {
@@ -299,6 +299,8 @@
 			//	ctx.drawImage(imagemFundo, 0,0);
 			//	};
 
+			ctx.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+
 			imagemAberturaLogo = new Image();
 			imagemAberturaLogo.src = 'images/breakout3.png';		
 			imagemAberturaLogo.onload = function() {
@@ -317,15 +319,39 @@
 
 			ctx.font = '25pt Verdana';
       		ctx.textAlign = 'center';
-      		ctx.fillStyle = 'blue';
+      		ctx.fillStyle = 'white';
       		ctx.fillText('[1] Iniciar', x, y);		
-
-			//ctx.font = '25pt Verdana';
-      		//ctx.textAlign = 'center';
-      		//ctx.fillStyle = 'blue';
       		ctx.fillText('[2] Creditos', x, y+50);	
     						
 		}        
+
+		function telaCreditos(){
+			ctx.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar	
+
+			document.addEventListener('keydown', keyDown, false);// adiciona evento para keydown
+
+			var x = canvas.width / 2;
+      		var y = canvas.height / 2;
+
+			imagemAberturaLogo = new Image();
+			imagemAberturaLogo.src = 'images/breakout3.png';		
+			imagemAberturaLogo.onload = function() {
+				ctx.drawImage(imagemAberturaLogo, ((canvas.width / 2) - (imagemAberturaLogo.width/2)), 100);
+			};      		
+
+			ctx.font = '18pt Verdana';
+      		ctx.textAlign = 'center';
+      		ctx.fillStyle = 'white';
+      		ctx.fillText('Pós Graduação UEA', x, y-20);		
+      		ctx.fillText('Equipe', x, y+30);	
+      		ctx.font = '14pt Verdana';
+      		ctx.fillText('Edy Barbosa', x, y+80);
+      		ctx.fillText('Railton Nepomuceno', x, y+130);
+      		ctx.fillText('Rodrigo Diniz', x, y+180);
+      		ctx.font = '10pt Verdana';
+      		ctx.fillText('[backspace] Voltar', x, y+240);
+    						
+		}  	
 
         function keyDown(e) {
             if (e.keyCode == 39) { // direita
@@ -333,10 +359,11 @@
             } else if (e.keyCode == 37) { // esquerda
             	moverBarra = 'ESQUERDA';
             } else if (e.keyCode == 49) { // numero 1
-            	aberturaAcao = 'INICIAR';
             	inicioDoJogo();
             } else if (e.keyCode == 50) { // numero 2
-            	aberturaAcao = 'CREDITOS';
+            	telaCreditos();
+            }else if (e.keyCode == 32 || e.keyCode == 8) { // tecla backspace 
+            	telaInicial();
             }   
         }
     

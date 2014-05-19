@@ -16,7 +16,7 @@
     </style>
 </head>
 <body onload="init()" style="text-align: center; border-width: 0">
-    <canvas id="canvas" width="504" height="752">
+    <canvas id="canvas" width="504" height="652">
 	Navegador não compatível com HTML5 Canvas
 	</canvas>
     <script type="text/javascript">
@@ -59,9 +59,12 @@
             document.addEventListener('keyup', keyUp, false); // adiciona evento para keyup
             document.addEventListener('keydown', keyDown, false); // adiciona evento para keydown
 
-            musicaBackground = document.getElementById("bgsound"); //recupera o objeto da musica d fundo
-            somBola = document.getElementById("audioPokeball"); //recupera o objeto do som da pokebola
-            somGameOver = document.getElementById("audioGameOver"); //recupera o objeto do som de Game Over
+            //recupera componentes de som do documento
+			musicaBackground = document.getElementById("bgsound"); 
+            somBola = document.getElementById("audioPokeball"); 
+            somGameOver = document.getElementById("audioGameOver"); 
+			
+			
 
             beginGame(); //Reseta a tela e os dados
 
@@ -94,8 +97,8 @@
             musicaBackground.volume = 0.3; //30% da musica de Background            
             tocaMusica = false; //Musica ainda não esta tocando
             ativadorMusica(); //liga||desliga música
-
-            //carrega imagens
+			
+			//carrega imagens
             gameOverScreen = new Image();
             gameOverScreen.src = "img/gameover.png";
             barraImg = new Image();
@@ -143,23 +146,26 @@
                     verificaColisaoParede();
                     movimentaJogador();
                     movimentaBola();
-                    redesenhaTela();
+					redesenhaTela();
                     verificaVitoria();
                 } else {
-                    redesenhaTela();
+					redesenhaTela();
                     gameOver();
                 }
             } else {
-                redesenhaTela();
+				redesenhaTela();
                 verificaVitoria();
             }
+			
         }
 
         ///////////////////////////////////////////////////////////////////////funções dentro do game loop
         //Verifica se houve colisao na tijolo
         function verificaColisaoParede() { //todas as possiveis colisoes do perímetro e centro da bola com a parede
             if ((bola.posY - bola.raio) <= (alturaBloco * paredeLinhas + alturaParede)) { //se o topo da bola chegar no fundo da parede
+				var colidiu = false;
                 for (var j = -1; j <= 1; j++) { //indices que controlam qual 'extremidade' da bola esta tocando a parede
+					if(!colidiu)
                     for (var i = -1; i <= 1; i++) {//em relação ao centro da bola
                         x = Math.floor((bola.posX + (i * bola.raio)) / larguraBloco); //x do ponto
                         y = Math.floor((bola.posY + (j * bola.raio) - alturaParede) / alturaBloco); //y do ponto
@@ -171,6 +177,8 @@
                                 totalBloco--;
                                 numPokemon[y][x] = -1;
                                 reacaoColisao(i, j);
+								colidiu = true;
+								break;
                             }
                     }
                 }
@@ -345,7 +353,7 @@
                 context.font = '90px "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
                 var pontuaTotal = (totalPontuacao < 10 ? "0" + totalPontuacao : totalPontuacao); // Acrescenta 0 na frente dos numeros menores que 10
                 context.fillText(pontuaTotal, canvas.width / 2 - 55, canvas.height / 2 - 40); //Desenha a pontuacao
-                desenhaGif();
+                //desenhaGif();
             }
         }
 
@@ -355,7 +363,7 @@
             context.font = '90px "pokeNumber"'; //tamanho da fonte e tipo da fonte para desenhar o texto
             context.fillStyle = "#1c30bd"; //cor da fonte
             var pontuaTexto = (totalPontuacao < 10 ? "0" + totalPontuacao : totalPontuacao); // Acrescenta 0 na frente dos numeros menores que 10
-            context.fillText(pontuaTexto, canvas.width / 2 - 55, canvas.height / 2 + 10); //Desenha a pontuacao
+            context.fillText(pontuaTexto, canvas.width / 2 - 55, canvas.height / 2 + 50); //Desenha a pontuacao
             desenhaGif();
         }
 

@@ -1,5 +1,7 @@
-BreakoutGame.Ball = function () {
+BreakoutGame.Ball = function (player) {
 	GameFramework.Sprite.call(this, GameFramework.SpriteFactory.loadedTextures["images/player_ball.png"]);
+	
+	this.player = player;
 	
 	this.velocity = {
 		x: 0.0,
@@ -16,13 +18,28 @@ BreakoutGame.Ball = function () {
 	this.lastPos;
 	this.opacity = 0.0;
 	var self = this;
-	this._startAnimation = new GameFramework.PropertyAnimation(this, "opacity", 0.0, 1.0, 1000, GameFramework.Easing.Type.Linear, function () {
-		self._startGame();
-	});
+	this._startAnimation = new GameFramework.PropertyAnimation(this, "opacity", 0.0, 1.0, 250, GameFramework.Easing.Type.Linear);
 	this._startAnimation.begin();
+	
+	document.addEventListener('keydown', function (e) {
+		self.keyDown(e);
+	}, false);
+	
+	this._started = false;
 };
 
 BreakoutGame.Ball.prototype = new GameFramework.Sprite();
+
+BreakoutGame.Ball.prototype.keyDown = function (e) {
+	if (this._started) {
+		return;
+	}
+	
+	if (e.keyCode == GameFramework.KeyCode.SpaceBar) {
+		this._startGame();
+		this._started = true;
+	}
+};
 
 BreakoutGame.Ball.prototype.circleShape = function () {
 	this._circleShape.radius = this.boundingBox().width / 2.0;
@@ -35,14 +52,21 @@ BreakoutGame.Ball.prototype.circleShape = function () {
 BreakoutGame.Ball.prototype.update = function (time) {
 	GameFramework.Sprite.prototype.update.apply(this, [time]);
 	
-	this._startAnimation.update(time);
+	if (!this._started) {
+		this.transform.x = this.player.transform.x;
+		this.transform.y = this.player.transform.y - 
+						   this.player.boundingBox().height / 2.0 -
+						   this.boundingBox().height / 2.0;
+	} else {
+		this.velocity.angular = this.velocity.x / 50.0;
+		this.transform.angle += this.velocity.angular * time.deltaTime;
+	}
 	
-	this.velocity.angular = this.velocity.x / 50.0;
-	this.transform.angle += this.velocity.angular * time.deltaTime;
+	this._startAnimation.update(time);
 };
 
 BreakoutGame.Ball.prototype._startGame = function () {
-	this.velocity.x = Math.random() * 0.6 - 0.3;
+	this.velocity.x = Math.random() * 0.15 - 0.075;
 	this.velocity.y = -0.3;
 };
 

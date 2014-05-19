@@ -9,27 +9,43 @@
 			background-color:black;
 		}
 		canvas{
-			border:#333333 solid 30px;
+			border:#333333 solid 10px;
 			background-image:url(img/bg2.jpg);
+			margin-top:5px;
+			margin-left:-5px;
+		}
+		
+		#tela{
 			margin-top:25px;
-			margin-left:300px;	
+			margin-left:180px;
+			width: 600px;
+			height:550px;
+			margin:0 auto;
 		}
 
 </style>
 
+<audio preload id="toque1">
+  			<source src="som/toque1.mp3" type="audio/mpeg">
+</audio>
+
+<audio preload id="toque2">
+  			<source src="som/toque2.mp3" type="audio/mpeg">
+</audio>
+
+
     </head>
     
     <body onload="init()">
-    	        
-       	<canvas id="canvas" width="600" height="550">
-       		Navegador nao compativel com HTML5 Canvas
-       	</canvas>  
-        
+		<div id="tela"> 
+	       	<canvas id="canvas" width="600" height="550">
+	       		Navegador nao compativel com HTML5 Canvas
+	       	</canvas>  
+        </div>
         <script>
 		
 	// Tela de Desenho e Contexto do Desenho do Jogo
 	var canvas, context;
-	
 	// Jogador
 	var barraWidth, barraHeight, jogadorPosX, jogadorPosY, teclaEsquerdaPressionada, teclaDireitaPressionada,velocidadeJogador, pontosJogador, vidasJogador;
 	var mousePos, teclaEnterPressionada;
@@ -92,7 +108,7 @@
 
         document.addEventListener('keyup', keyUp, false);					// adiciona evento para keyup
         document.addEventListener('keydown', keyDown, false);				// adiciona evento para keydown
-//      document.addEventListener('mousemove', mouse, false); // Adiciona evento para mouse
+     	document.addEventListener('mousemove', mouse, false); 				// Adiciona evento para mouse
                 
         gameLoop = setInterval(gameLoop, 30);									// chama a funcao gameLoop a 				                                                                                    cada 30 frames
 	}
@@ -126,8 +142,21 @@
 					jogadorPosX -= velocidadeJogador;
 				}
 			}
-		else if (jogadorPosX < (canvas.width - barraWidth)) {
+			else if (jogadorPosX < (canvas.width - barraWidth)) {
 				jogadorPosX += velocidadeJogador;
+			}
+			mousePos = jogadorPosX;
+		}
+    	
+		if (teclaEsquerdaPressionada == false  && teclaDireitaPressionada == false){
+			if (mousePos >= 0 ){
+				jogadorPosX = mousePos - barraWidth/2;
+			}
+			if (jogadorPosX <= 1){
+				jogadorPosX = 0;
+			}
+			if (jogadorPosX > canvas.width - barraWidth){
+				jogadorPosX = canvas.width - barraWidth;
 			}
 		}
 
@@ -143,11 +172,15 @@
 
         
     	// Verifica CONDIÇÃO DE DERROTA
-		if(vidasJogador <=0 || pontosJogador >=48){
+		if(vidasJogador <=0){
 			clearInterval(gameLoop);
-			desenharGameOver();
+			desenharFimDeJogo();
 		}
     	
+		if (pontosJogador >=48){
+			clearInterval(gameLoop);
+			desenharParabens();
+		}
         desenharBola();
 
 	}
@@ -222,12 +255,20 @@
 		context.fillText(vidas, canvas.width - 40, 50);
 	}
 
-	function desenharGameOver(){
+	function desenharFimDeJogo(){
 		// Desenhar bola fora da tela
 		bolaPosX = 0;
 		bolaPosY = canvas.height + 100;
-		// Desenhar 'GAME OVER'
-		context.fillText('GAME OVER',(canvas.width/4)-60,canvas.height/2-20);
+		// Desenhar 'FIM DE JOGO'
+		context.fillText('FIM DE JOGO!',(canvas.width/4)-60,canvas.height/2-20);
+	}
+	
+	function desenharParabens(){
+		// Desenhar bola fora da tela
+		bolaPosX = 0;
+		bolaPosY = canvas.height + 100;
+		// Desenhar 'PARABÉNS'
+		context.fillText('PARABÉNS',(canvas.width/4)-60,canvas.height/2-20);
 	}
 
 	function moverBola(){
@@ -287,12 +328,13 @@
 				dir /= (barraWidth/2);
 				bolaDeltaX = dir*(velocidadeBola*0.75);
 				bolaDeltaY = -(velocidadeBola-Math.abs(dir));
+				document.getElementById('toque1').play();
+
 			}
 		}
 	}
 
 	function colisaoBolaTijolo(){
-		var colidiuY = false;
 		for(var i = 0; i < bricks.length; i++){
 			for(var j = 0; j < bricks[i].length; j++){
 						
@@ -336,26 +378,26 @@
 					
 							// Apaga o tijolo
 							bricks[i][j] = 0;
-							
+
 							// Aumenta o ponto do jogador
 							pontosJogador = pontosJogador + 1;
 							
 							// Reproduz som do tijolo quebrando
-// 							document.getElementById('toque1').play();
+							document.getElementById('toque2').play();
 
-							colidiuY = true;
+							return true;
 						}
 					}
 				}
 			}
 		}
-		return colidiuY;
+		return false;
 	}
 
 	//Capturar posição do MOUSE
-// 	function mouse(e){
-// 		mousePos = e.clientX - canvas.getBoundingClientRect().left;
-// 	}
+	function mouse(e){
+		mousePos = e.clientX - canvas.getBoundingClientRect().left;
+	}
 
 	function keyUp(e){
 		if (e.keyCode == 37){   

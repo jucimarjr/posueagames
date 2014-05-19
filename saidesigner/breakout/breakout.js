@@ -44,7 +44,7 @@ Key = {
 	SPACE: 32
 };
 
-BAR_DELAY = 20000;
+BAR_DELAY = 15000;
 BAR_Y_OFFSET = 100;
 BAR_NCOL = 15;
 BAR_NLIN = 6;
@@ -57,17 +57,17 @@ PLAYER_HEIGHT = 20;
 PLAYER_VELOCITY = 500;
 PLAYER_ACCELERATION = 50; 
 
-BALL_NBALLS = 20;
+BALL_NBALLS = 15;
 BALL_RADIUS = 10; 
 BALL_DELAY = 1000;      
 
 N_LIVES = 5;
-N_NITROS = 2;  
+N_NITROS = 3;  
 
 //COLORS = [ "rgb(208, 58, 209)", "rgb(247, 83, 82)", "rgb(253, 128, 20)", 
 //          "rgb(255, 144, 36)", "rgb(5, 179, 32)", "rgb(109, 101, 246)" ];
 
-COLORS = [ "rgba(13, 131, 34, 0.65)", "rgba(210, 178, 33, 0.65)", "rgba(1, 104, 171, 0.65)", "rgba(255, 255, 255, 0.65)"];
+COLORS = [ "rgba(13, 131, 34, 1)", "rgba(210, 178, 33, 1)", "rgba(1, 104, 171, 1)", "rgba(255, 255, 255, 0.8)"];
 
 
 BreakoutGame.prototype.createBars = function(newLine) {
@@ -157,7 +157,7 @@ BreakoutGame.prototype.createBall = function() {
 	var BALL_X = this.player.x + this.player.width / 2;
 	var BALL_Y = this.player.y - BALL_RADIUS;
 	
-	var speed = Math.floor((Math.random() * 400) + 300);
+	var speed = Math.floor((Math.random() * 100) + 300);
 	var degree = Math.floor((Math.random() * 80) + 220);
 
 	this.ball = new Ball(BALL_X, BALL_Y, BALL_RADIUS);
@@ -178,10 +178,10 @@ BreakoutGame.prototype.createPowerUp = function() {
 
 	for (var i = 0; i < BALL_NBALLS; i++) {
 
-		var speed = Math.floor((Math.random() * 100) + 300);
+		var speed = Math.floor((Math.random() * 200) + 300);
 		var degree = Math.floor((Math.random() * 80) + 220);
 
-		var ball = new Ball(BALL_X, BALL_Y, BALL_RADIUS / 2);
+		var ball = new Ball(BALL_X, BALL_Y, BALL_RADIUS - 2);
 		ball.color = COLORS[colorIndex];
 		ball.setSpeed(speed, degree);		
 
@@ -399,12 +399,14 @@ BreakoutGame.prototype.checkCollision = function() {
 
 	for ( var j in this.balls) {
 
-		if (this.balls[j].checkCollision(this, BreakoutGame.prototype.treatCollision.bind(this))) {
+		if (this.balls[j].checkCollision(this, 
+			BreakoutGame.prototype.treatCollision.bind(this))) {
 			continue;
 		}
 
 		for ( var i in this.items) {
-			if (this.balls[j].checkCollision(this.items[i], BreakoutGame.prototype.treatCollision.bind(this))) {
+			if (this.balls[j].checkCollision(this.items[i], 
+				BreakoutGame.prototype.treatCollision.bind(this))) {
 				break;
 			}
 		} 	
@@ -706,7 +708,7 @@ Player.prototype.animate = function(delta) {
 	if (posX >= this.parent.x && posX <= this.parent.width - this.width) {
 		this.x = posX;
 	} else if (this.velocity.x < 0) {
-		this.x = this.parent.x;
+		this.x = this.parent.x; 
 	} else {
 		this.x = this.parent.width - this.width;
 	}

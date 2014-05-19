@@ -305,7 +305,7 @@ function blocks() {
 		
 		for (var j = 100; j < 180; j += 20) {
 			for (var i = 0; i < width; i += 102) {
-				this.items.push(new block(i + 10, j, 80, 10, "gold"));
+				this.items.push(new block(i + 10, j, 80, 10, "black"));
 			}
 		}
 	};

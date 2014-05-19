@@ -51,10 +51,15 @@ Game.prototype.init = function () {
     this.level.init();
     
     this.bgSound = new Audio("assets/audio/background.wav");
+    this.bgSound.volume = 0.3;
     this.destroySound = new Audio("assets/audio/explosion.wav");
+    this.destroySound.volume = 0.3;
     this.gameOverSound = new Audio("assets/audio/gameOver.wav");
+    this.gameOverSound.volume = 0.3;
     this.missBallSound = new Audio("assets/audio/missBall.wav");
+    this.missBallSound.volume = 0.3;
     this.winSound = new Audio("assets/audio/winGame.mp3");
+    this.winSound.volume = 0.3;
     
     this.hud = new HUD({
         'top' : 20,

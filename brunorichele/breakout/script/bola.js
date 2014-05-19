@@ -69,7 +69,7 @@ var bola = {
 	},
 	colisaoBloco : function(polling){
 		//Colisao bloco
-		if(bola.y - bola.raio <= (bloco.h * bloco.numLinhas) + bloco.h && bola.y >= 0){
+		if(bola.y - bola.raio <= (bloco.h * bloco.numLinhas) + (bloco.h * 2) && bola.y >= 0){
 			var linha  = Math.floor(((bola.y) - bloco.h) / bloco.h) - 1;
 			var coluna = Math.floor((bola.x) / bloco.w);
 			console.log("linha: " + linha + "coluna:" + coluna);
@@ -96,7 +96,7 @@ var bola = {
 			bola.clear(); // A bola retorna a posicao inicial
 			jogador.clear(); // O jogador retorna a posicao inicial
 			jogador.vidas--;
-			if(jogador.vidas == 0){
+			if(jogador.vidas <= 0){
 				jogador.derrota = true;
 				clearInterval(polling);
 			}
