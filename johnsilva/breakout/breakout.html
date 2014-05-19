@@ -29,6 +29,7 @@ canvas {
             var audioGameOver = new Audio('sons/game_over.wav');
             var bg = new Image();
             var bgBarra = new Image();
+            var bgBloco = new Image();
             bg.src = "imagens/fundo_800-600.png";
             bgBarra.src = "imagens/barra_80-14.png";
             bgBloco.src = "imagens/mulher_130-50.png";
@@ -41,8 +42,8 @@ canvas {
             		this.x = x;
             		this.y = y;
             		this.style = style;
-            		this.w  = 40;
-            		this.h = 20;
+            		this.w  = 130;
+            		this.h = 50;
             		this.vivo=true;
             }
             
@@ -61,10 +62,10 @@ canvas {
 				initDy = dy+2*(bordaW+10);
 				initDx = bordaW;
 				qtdLinhas = 6;
-				qtdColunas = 18;
+				qtdColunas = 6;
 				pontosPorFase = 0;
-				blocoW = 40;
-				blocoH = 20;
+				blocoW = 130;
+				blocoH = 50;
 				jogadorPosX = (canvas.width - barraWidth) / 2;
 				jogadorPosY = (canvas.height - barraHeight) - 10;
 				teclaDireitaPressionada = false; teclaEsquerdaPressionada = false;

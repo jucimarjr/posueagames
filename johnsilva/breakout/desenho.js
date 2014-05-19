@@ -1,5 +1,5 @@
 function desenharBola(){
-	context.fillStyle = "black";
+	context.fillStyle = "white";
 	context.beginPath();// inicia o modo de desenho
 	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true); // desenha o círculo desejado com as coordenadas no centro.
 	context.closePath();// finaliza o caminho (opcional)
@@ -59,8 +59,8 @@ function desenharBlocos(){
 }
 
 function desenharBloco(bloco){
-	desenhar(bloco.x, bloco.y, bloco.w, bloco.h, bloco.style);
-	//context.drawImage(bgBloco, jogadorPosX, jogadorPosY);
+	//desenhar(bloco.x, bloco.y, bloco.w, bloco.h, bloco.style);
+	context.drawImage(bgBloco, bloco.x, bloco.y);
 }
 
 function atualizarPlacar(){
