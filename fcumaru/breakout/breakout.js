@@ -230,6 +230,9 @@ function ball(x, y, radius, speed) {
 			lives--;
 			this.x = width / 2;
 			this.y = height / 2;
+			this.angle = Math.floor(Math.random() * 21) - 10;
+			
+			player.reset();
 		}
 	};
 }
@@ -266,6 +269,11 @@ function player(x, y, w, h, speed) {
 		}
 
 		return false;
+	};
+
+	this.reset = function() {
+		// reseta para a poscao inicial
+		this.x = x - (w / 2);
 	};
 }
 
