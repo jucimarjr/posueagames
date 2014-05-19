@@ -200,7 +200,7 @@ Game.prototype.update = function () {
     this.hud.draw(this.context);    
 };
 
-Game.prototype.gameOver = function () {
+Game.prototype.gameOver2 = function () {
     this.clear();
 
     this.context.font = '42pt Tr2n';
@@ -213,7 +213,7 @@ Game.prototype.gameOver = function () {
     this.showRestartButton();
 };
 
-Game.prototype.gameWin = function () {
+Game.prototype.gameOver = function () {
     this.clear();
 
     this.context.font = '42pt Tr2n';
@@ -222,6 +222,8 @@ Game.prototype.gameWin = function () {
     clearInterval(this.timer);
     this.bgSound.pause();
     this.winSound.play();
+
+    this.showRestartButton();
 };
 
 Game.prototype.clear = function () {
