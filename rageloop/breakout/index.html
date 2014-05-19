@@ -37,13 +37,7 @@
         color: #00bfff;
     }
 
-    #canvas-container {
-        position: relative;
-        display: none;
-        margin: 0 auto;
-        width: 600px;
-        height: 480px;
-
+    .container_border {
         -webkit-box-shadow: 1px 1px 40px #00bfff;
         -moz-box-shadow: 1px 1px 40px #00bfff;
         -ms-box-shadow: 1px 1px 40px #00bfff;
@@ -56,6 +50,15 @@
         -o-border-radius: 10px;
         border-radius: 10px;
     }
+
+    #canvas-container {
+        position: relative;
+        display: none;
+        margin: 0 auto;
+        width: 600px;
+        height: 480px;
+    }
+
 
     #restart_btn {
         position: absolute;
@@ -117,14 +120,14 @@
 <body onload="init()">
     <h1>Breakout Tron Legacy</h1>
 
-    <div id="canvas-container">
+    <div id="canvas-container" class="container_border">
         <canvas id="canvas" width="600" height="480">
             Navegador não compatível com HTML5 Canvas
         </canvas>
         <button id="restart_btn" class="button">Restart</button>
     </div>
 
-    <div id="menu-container">
+    <div id="menu-container" class="container_border">
         <button id="start_btn" class="button">Start</button>
     </div>
 
