@@ -1,27 +1,12 @@
-var game = new Phaser.Game(960, 600, Phaser.AUTO, '', {
-	preload : preload,
-	create : create,
-	update : update
-});
+var game = new Phaser.Game(960, 600, Phaser.AUTO, '');
+
 
 var player = null;
 var level = null;
 
-function preload() {
-	player = new Player(game);
-	level = new Level(game);
 
-	level.preload();
-	player.preload();
-}
+game.state.add('load', loadState);  
+game.state.add('menu', menuState);  
+game.state.add('play', playState);  
 
-function create() {
-	game.physics.startSystem(Phaser.Physics.ARCADE);
-
-	level.create();
-	player.create();
-}
-
-function update() {
-	player.update();
-}
+game.state.start('load'); 
