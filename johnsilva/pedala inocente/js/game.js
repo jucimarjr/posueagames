@@ -1,15 +1,18 @@
 var game = new Phaser.Game(500, 600, Phaser.AUTO, 'game_div', { preload: preload, create: create, update: update  });
 var bike;
+var objetos;
 var velocity = 200;
 function preload () {
-	game.load.image('fundo', 'assets/bg_500-600.jpg');
+	game.load.spritesheet('fundo', 'assets/bg_500-600-2.jpg', 500, 600,2);
 	game.load.spritesheet('bike', 'assets/bike_37-80-4.jpg', 37,80,4);//200,160
+	game.load.image('buraco', 'assets/buraco_100-67.jpg');
 }
 
 function create () {
 	//var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'fundo');
-	game.add.sprite(0,0, 'fundo');
-	
+	this.fundo = game.add.sprite(0,0, 'fundo');
+	this.fundo.animations.add('go');
+	this.fundo.play('go',4,true);
 	// personagem:
 	bike = game.add.sprite((500-37)/2, 600-80-10, 'bike');
 	bike.animations.add('run');
@@ -28,6 +31,20 @@ function create () {
 	initBarrasPqnas();
 	bolas();
 	pegarObejtos();*/
+	initObjetos();
+}
+
+function initObjetos(){
+	
+	objetos = game.add.group();
+	objetos.enableBody = true;	
+    objetos.physicsBodyType = Phaser.Physics.ARCADE;
+	var obj = objetos.create(10,10, 'buraco');	
+    obj.checkWorldBounds = true;
+	//obj.gravity.y = 100;
+	//obj.acceleration.y = 100;
+	//obj.body.collideWorldBounds = true;
+    game.physics.enable(objetos, Phaser.Physics.ARCADE);
 }
 
 /*function initPlataforma(){
