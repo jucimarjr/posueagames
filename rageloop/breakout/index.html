@@ -28,11 +28,21 @@
     }
 
     canvas {
-        display: block;
+        background-image: url('assets/bg03.png');
+    }
+
+    h1 {
+        font-family: 'Tr2n';
+        text-align: center;
+        color: #00bfff;
+    }
+
+    #canvas-container {
+        position: relative;
+        display: none;
         margin: 0 auto;
         width: 600px;
         height: 480px;
-        background-image: url('assets/bg03.png');
 
         -webkit-box-shadow: 1px 1px 40px #00bfff;
         -moz-box-shadow: 1px 1px 40px #00bfff;
@@ -47,10 +57,46 @@
         border-radius: 10px;
     }
 
-    h1 {
-        font-family: 'Tr2n';
-        text-align: center;
+    #restart_btn {
+        position: absolute;
+        top: 300px;
+        left:220px;
+        visibility: hidden;
+    }
+
+    /* Menu Style */
+    #menu-container {
+        display: block;
+        margin: 0 auto;
+        width: 600px;
+        height: 480px;
+        background-image: url('assets/bg_menu.png');
+    }
+
+    #start_btn {
+        position: relative;
+        top: 300px;
+        left:240px;
+    }
+
+    /* button styles*/
+
+    .button {
         color: #00bfff;
+        font-size: 24px;
+        background: transparent;
+        font-family: Tr2n;
+        border: none;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        border: none;
+        color: #fff;
+    }
+
+    .button:active  {
+        border: none;
     }
 
     .credits > p {
@@ -71,9 +117,16 @@
 <body onload="init()">
     <h1>Breakout Tron Legacy</h1>
 
-    <canvas id="canvas" width="600" height="480">
-        Navegador não compatível com HTML5 Canvas
-    </canvas>
+    <div id="canvas-container">
+        <canvas id="canvas" width="600" height="480">
+            Navegador não compatível com HTML5 Canvas
+        </canvas>
+        <button id="restart_btn" class="button">Restart</button>
+    </div>
+
+    <div id="menu-container">
+        <button id="start_btn" class="button">Start</button>
+    </div>
 
     <div class="text-container">
         <div class="like-button">
@@ -97,6 +150,7 @@
     <script src="src/Bar.js"></script>
     <script src="src/Level.js"></script>
     <script src="src/Game.js"></script>
+    <script src="src/menu.js"></script>
     <script src="src/main.js"></script>
 </body>
 </html>
