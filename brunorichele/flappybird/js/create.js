@@ -1,6 +1,7 @@
 var create = {
 	space_key   : null,
 	enemy_group : null,
+	timer : null,
 	init : function(){
 		create.group();
 		create.keyboard();
@@ -8,6 +9,7 @@ var create = {
 		create.anzol();
 		create.ariranha();
 		create.arraia();
+		create.loop();
 	},
 	pirarucu : function(){
 		pirarucu = game.add.sprite(game.width/2, game.height/2, 'pirarucu');
@@ -38,5 +40,18 @@ var create = {
 	},
     jump: function() {
         pirarucu.body.velocity.y = -200;
-    },	
+    },
+	loop : function(){
+        create.timer = game.time.events.loop(17000, create.loopAction, this);  	
+	},
+	loopAction : function(){
+		anzol.reset(game.width - 30, 0);
+		anzol.body.velocity.x = -100;
+	
+		ariranha.reset(game.width + 300, 0);
+		ariranha.body.velocity.x = -100;
+	
+		arraia.reset(game.width + 600, game.height - 50);
+		arraia.body.velocity.x = -100;
+	},	
 };
