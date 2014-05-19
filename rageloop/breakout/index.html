@@ -23,20 +23,70 @@
         src: url('assets/Tr2n.ttf');
     }
 
+    body {
+        background: #000;
+    }
+
     canvas {
         display: block;
         margin: 0 auto;
         width: 600px;
         height: 480px;
         background-image: url('assets/bg03.png');
+
+        -webkit-box-shadow: 1px 1px 40px #00bfff;
+        -moz-box-shadow: 1px 1px 40px #00bfff;
+        -ms-box-shadow: 1px 1px 40px #00bfff;
+        -o-box-shadow: 1px 1px 40px #00bfff;
+        box-shadow: 1px 1px 40px #00bfff;
+
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+        border-radius: 10px;
+    }
+
+    h1 {
+        font-family: 'Tr2n';
+        text-align: center;
+        color: #00bfff;
+    }
+
+    .credits > p {
+        font-family: Verdana, Arial, sans-serif;
+        color:  #00bfff;
+        margin: 5px 0 0 0;
+    }
+
+    .text-container {
+        font-size: 14px;
+        margin: 35px auto;
+        width: 600px;
+        text-align: center;
     }
     </style>
 </head>
 
 <body onload="init()">
+    <h1>Breakout Tron Legacy</h1>
+
     <canvas id="canvas" width="600" height="480">
         Navegador não compatível com HTML5 Canvas
     </canvas>
+
+    <div class="text-container">
+        <div class="like-button">
+            <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fcomputacao.uea.edu.br%2Fludus%2Fposgames%2Frageloop%2Findex.html&amp;width&amp;layout=standard&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=35&amp;appId=428243533973217&amp;colorscheme=light" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:35px;" width="60px" allowTransparency="true"></iframe>
+        </div>
+
+        <div class="credits">
+            <p>Time: Moacir de Oliveira, Paulo Alexandre, Petrina Kimura, Rodrigo Braga</p>
+            <p>Professor Jucimar Junior</p>
+            <p>Pós-graduação em Desenvolvimento de Jogos Eletrônicos</p>
+            <p>Universidade do Estado do Amazonas</p>
+        </div>
+    </div>
 
     <script src="src/libs/stats.min.js"></script>
 
