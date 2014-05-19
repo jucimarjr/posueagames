@@ -70,7 +70,7 @@ Game.prototype.init = function () {
         'lifeImage': ImageLoader.get('ball')
     });
 
-    this.stats = this.initStats();
+    //this.stats = this.initStats();
 };
 
 Game.prototype.show = function() {
@@ -95,7 +95,7 @@ Game.prototype.start = function () {
     
     this.timer = setInterval(function () {
         self.update();
-        self.stats.update();
+        //self.stats.update();
     }, 30);
 };
 
