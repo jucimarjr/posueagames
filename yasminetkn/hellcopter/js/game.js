@@ -3,18 +3,13 @@ var floor,bonecoSprite,obstacle;
 
 var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
-
-
-
-
-
 function preload () {
 
 	game.load.spritesheet('boneco', 'assets/bonecoSpriteSheet2_240-60-4.png', 60,60);
 	game.load.image('chao', 'assets/chao2_325-28.png');
     game.load.image('ground', 'assets/backchop.png');
     game.load.image('bloco', 'assets/bloco_80-30.png');
-
+    game.load.spritesheet('helicoptero', 'assets/helicopteroSpritesheet_180-60-3.png', 60, 60);
 
 
 }
@@ -34,8 +29,8 @@ function create () {
 
 	
 	// Criando o Helicoptero
-	bonecoSprite = game.add.sprite(400, 460, 'boneco');
-	bonecoSprite.animations.add('walk',[1,2],6,true);
+	bonecoSprite = game.add.sprite(128, 80, 'helicoptero');
+	bonecoSprite.animations.add('walk',[1,3],6,true);
 
 	game.physics.enable(bonecoSprite, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 
