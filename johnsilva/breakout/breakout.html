@@ -27,6 +27,16 @@ canvas {
             var audioBarra = new Audio('sons/barra.mp3');
             var audioBloco = new Audio('sons/bloco.mp3');
             var audioGameOver = new Audio('sons/game_over.wav');
+            var bg = new Image();
+            var bgBarra = new Image();
+            bg.src = "imagens/fundo_800-600.png";
+            bgBarra.src = "imagens/barra_80-14.png";
+            bgBloco.src = "imagens/mulher_130-50.png";
+            /*bgBarra.width = 80;
+            bgBarra.height = 14;*/
+            //bgBarra
+            bg.width = 800;
+            bg.height = 600;
             function bloco(x, y, style){
             		this.x = x;
             		this.y = y;
@@ -147,6 +157,7 @@ canvas {
 					}
 					// Desenha tudo na tela
 					context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+					context.drawImage(bg,0,0);
 					//placar
 					atualizarPlacar();
 					//borda
