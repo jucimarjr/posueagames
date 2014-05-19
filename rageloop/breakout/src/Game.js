@@ -35,8 +35,11 @@ function Game(id, width, height) {
 }
 
 Game.prototype.init = function () {
+    this.canvas_container = document.getElementById('canvas-container');
     this.canvas = document.getElementById(this.id);
     this.context = this.canvas.getContext('2d');
+
+    this.delay = 0;
 
     this.canvas.width = this.width;
     this.canvas.height = this.height;
@@ -67,22 +70,36 @@ Game.prototype.init = function () {
         'lifeImage': ImageLoader.get('ball')
     });
 
-    this.stats = this.initStats();
+    //this.stats = this.initStats();
+};
+
+Game.prototype.show = function() {
+
+    if (this.canvas_container) {
+        this.canvas_container.style.display = 'block';
+    }
+};
+
+Game.prototype.hide = function() {
+
+    if (this.canvas_container) {
+        this.canvas_container.style.display = 'none';
+    }
 };
 
 Game.prototype.start = function () {
     var self = this;
     
     this.bgSound.loop = true;
-    this.bgSound.play();            
+    this.bgSound.play();
     
     this.timer = setInterval(function () {
         self.update();
-        self.stats.update();
+        //self.stats.update();
     }, 30);
 };
 
-Game.prototype.update = function () {   
+Game.prototype.update = function () {
 
     //move player
     if (this.keys.right != this.keys.left) {
@@ -128,7 +145,7 @@ Game.prototype.update = function () {
 
     //miss
     if (this.ball.y > this.height) {
-    	    	
+                
         if (this.delay === 0) {
             this.hud.updateLifes(-1);
             this.missBallSound.play();
@@ -187,26 +204,45 @@ Game.prototype.gameOver = function () {
     this.clear();
 
     this.context.font = '42pt Tr2n';
-    this.context.fillStyle = '#00ffff';
+    this.context.fillStyle = '#00bfff';
     this.context.fillText('GAME OVER!', (this.width / 2) - 180, (this.height / 2) - 50);
     this.bgSound.pause();
-    this.gameOverSound.play();    
+    this.gameOverSound.play();
     clearInterval(this.timer);
+
+    this.showRestartButton();
 };
 
 Game.prototype.gameWin = function () {
     this.clear();
 
     this.context.font = '42pt Tr2n';
-    this.context.fillStyle = '#00ffff';
+    this.context.fillStyle = '#00bfff';
     this.context.fillText('YOU WIN!', (this.width / 2) - 130, (this.height / 2) - 50);    
     clearInterval(this.timer);
     this.bgSound.pause();
     this.winSound.play();
+
+    this.showRestartButton();
 };
 
 Game.prototype.clear = function () {
     this.canvas.width = this.canvas.width;
+};
+
+Game.prototype.showRestartButton = function () {
+
+    var self = this;
+
+    this.restart_btn = document.getElementById('restart_btn');
+    this.restart_btn.style.visibility = 'visible';
+    this.restart_btn.onclick = function(){
+        
+        self.restart_btn.style.visibility = 'hidden';
+        self.init();
+        self.start();
+    };
+
 };
 
 //===============================================================

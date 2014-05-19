@@ -5,7 +5,7 @@ var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create
 
 function preload () {
 	game.load.image('ceu', 'assets/background_960-600.png');
-    game.load.image('plataforma', 'assets/chao_963-54.png');
+    //game.load.image('plataforma', 'assets/chao_963-54.png');
 
 }
 
@@ -14,7 +14,7 @@ function create () {
 	platformas = game.add.group();
     platformas.enableBody = true;
 
-    var chao = plataformas.create(0, game.world.height - 64, 'plataforma');
+   // var chao = plataformas.create(0, game.world.height - 64, 'plataforma');
 
     chao.scale.setTo(2, 2);
 

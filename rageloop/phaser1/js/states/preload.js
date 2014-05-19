@@ -4,11 +4,17 @@
 
     Preload.prototype = {
         preload: function () {
-            this.stage.backgroundColor = '#ccc';
+            this.game.load.image('bg', 'assets/bg_960-600.png');
+            this.game.load.image('platmaior', 'assets/platmaior_960-70.png');
+            this.game.load.image('platmenor', 'assets/platmenor_510-61.png');
+            this.game.load.image('escada', 'assets/escada_41-95.png');
+            this.game.load.spritesheet('doll', 'assets/doll_75-116.png', 75, 116);
+            this.game.load.image('trofeu', 'assets/trofeu_183-82.png');
+            this.game.load.image('bomb', 'assets/bomb_46-54.png');
         },
         create: function () {},
-        update: function() {            
-            //this.game.state.start('Menu');
+        update: function() {
+            this.game.state.start('Gameplay');
         }
     };
 
