@@ -1,6 +1,7 @@
 (function (app_container) {
     
     function Gameplay() {
+        this.isStarted = false;
         this.score = 0;
         this.player = null;
         this.bg = null;
@@ -23,8 +24,9 @@
             this.player = this.game.add.sprite(100, this.game.height/2, 'player');
             this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
 
-            this.player.body.gravity.y = 1000;
             this.player.body.collideWorldBounds = true;
+
+            this.player_tween = this.game.add.tween(this.player).to( { y: 200 }, 1000, Phaser.Easing.Linear.None, true, 0, 1000, true);
 
             this.enemies = this.game.add.group();
             this.enemies.createMultiple(20, 'enemy');
@@ -40,7 +42,6 @@
             var style = { font: "40px Arial", fill: "#000000", align: "center" };
             this.score_text = this.game.add.text(this.game.world.centerX, 0, "Score: " + this.score, style);
             this.score_text.anchor.set(0.5, 0);
-
         },
 
         update: function() {
@@ -68,7 +69,20 @@
             }
         },
 
+        start: function() {
+
+            this.isStarted = true;
+            this.player.body.gravity.y = 1000;
+
+            this.player_tween.pause();
+        },
+
         addEnemy: function () {
+
+            if (!this.isStarted) {
+                return;
+            }
+
             var enemy = this.enemies.getFirstDead();
 
             this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
@@ -116,6 +130,9 @@
         },
 
         restart: function () {
+
+            this.isStarted = false;
+
             this.game.time.events.remove(this.timer);
 
             this.player.kill();
@@ -138,11 +155,18 @@
 
         handleKeyDown: function() {
             if (this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR)) {
+                
+                if (!this.isStarted) {
+                    this.start();
+                }
+
                 this.player.body.velocity.y = -400;
             }
 
             if (this.game.input.keyboard.isDown (Phaser.Keyboard.ENTER)) {
-                this.fireBullet();
+                if(this.isStarted) {
+                    this.fireBullet();
+                }
             } 
         },
     };

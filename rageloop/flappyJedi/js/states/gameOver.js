@@ -23,7 +23,11 @@
 
         },
 
-        update: function() {},
+        update: function() {
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.R)) {
+                this.onPlayClick();
+            }
+        },
 
         onPlayClick: function() {
             this.game.state.start('Gameplay');
