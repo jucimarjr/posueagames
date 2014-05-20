@@ -36,6 +36,11 @@
             this.bullets.setAll('outOfBoundsKill', true);
 
             this.timer = this.game.time.events.loop(700, this.addEnemy, this);
+
+            var style = { font: "40px Arial", fill: "#000000", align: "center" };
+            this.score_text = this.game.add.text(this.game.world.centerX, 0, "Score: " + this.score, style);
+            this.score_text.anchor.set(0.5, 0);
+
         },
 
         update: function() {
@@ -54,6 +59,13 @@
 
             this.bg.tilePosition.x -= 1;
             this.fg.tilePosition.x -= 20;
+        },
+
+        update_score: function() {
+
+            if (this.score_text) {
+                this.score_text.setText("Score: " + this.score);
+            }
         },
 
         addEnemy: function () {
@@ -97,6 +109,7 @@
         killEnemy: function (bullet, enemy) {
 
             this.score += 1;
+            this.update_score();
 
             bullet.kill();
             enemy.kill();
