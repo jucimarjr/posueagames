@@ -4,6 +4,7 @@ Level = function(game) {
 	this.ground;
 	this.barriers;
 	this.barrierGenerator;
+	this.bg;
 }
 
 Level.prototype = {
@@ -17,11 +18,9 @@ Level.prototype = {
 	},
 
 	create : function() {
-		console.log('level -> create');
-
+		
 		// background
-		this.game.add.sprite(0, 0, 'bg');
-
+		this.bg = this.game.add.tileSprite(0, 0,game.stage.bounds.width,game.cache.getImage('bg').height,'bg');
 		this.objects = this.game.add.group();
 		this.objects.enableBody = true;
 		
@@ -37,8 +36,8 @@ Level.prototype = {
 		this.barrierGenerator = this.game.time.events.loop(
 				Phaser.Timer.SECOND * 2, this.generateBarrier, this);
 		this.barrierGenerator.timer.start();
-	},
-
+	}
+	,
 	generateBarrier : function() {
 		console.log('level -> generateBarrier');
 		var barrier = this.objects.create(this.game.world.width,

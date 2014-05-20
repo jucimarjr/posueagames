@@ -12,11 +12,9 @@ Player.prototype = {
 	},
 
 	create : function() {
-		console.log('player -> create');
 		this.sprite = this.game.add.sprite(60, 100, 'player');
 		this.sprite.animations.add('floating', [ 0, 1, 2 ], 2, true);
 		this.sprite.animations.play('floating');
-		
 		// physics
 		this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 		this.sprite.body.acceleration.y = 3000;
