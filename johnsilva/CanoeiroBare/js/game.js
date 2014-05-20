@@ -1,25 +1,31 @@
-var game = new Phaser.Game(500, 600, Phaser.AUTO, 'game_div', { preload: preload, create: create, update: update  });
+var game = new Phaser.Game(900, 600, Phaser.AUTO, 'game_div', { preload: preload, create: create, update: update  });
 var boat;
 var b;
 var objects;
 var velocity = 200;
-var width = 500;
-var height = 600;
+var score = 0;
+var style = { font: "30px Arial", fill: "#ffffff" };  
+var label_score;
 
 function preload () {
-	game.load.spritesheet('backGround', 'assets/bg_500-600-2.jpg', width, height, 2);
+//	game.load.spritesheet('backGround', 'assets/bg/river_512-600.jpg', 500, 600, 2);
+	game.load.image('river', 'assets/bg/river_512-600.png');
+	game.load.image('jungleLeft', 'assets/bg/jungleLeft_196-600.png');
+	game.load.image('jungleRight', 'assets/bg/jungleRight_196-600.png');
 	game.load.spritesheet('boat', 'assets/boat_37-80-4.jpg', 37,80,4);//200,160
 	game.load.image('buraco', 'assets/buraco_100-67.jpg');
 }
 
 function create () {
 	game.physics.arcade.gravity.y = 90;
+	game.add.sprite(0,0, 'jungleLeft');
+	game.add.sprite(197,0, 'river');	
+	game.add.sprite(197+512,0, 'jungleRight');
+	//this.backGround = game.add.sprite(197,0, 'river');
+	/*this.backGround.animations.add('go');
+	this.backGround.play('go',4,true);*/
 
-	this.backGround = game.add.sprite(0,0, 'backGround');
-	this.backGround.animations.add('go');
-	this.backGround.play('go',4,true);
-
-	boat = game.add.sprite(game.world.centerX, height-50, 'boat');
+	boat = game.add.sprite(game.world.centerX, 600-50, 'boat');
 	boat.animations.add('run');
 	boat.animations.play('run', 8, true);
 	game.physics.enable(boat, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
@@ -36,8 +42,9 @@ function create () {
 
 	initObjects();
 
-
+	label_score = game.add.text(20, 20, "0", style); 
 	game.time.events.loop(150, addBuraco, this);
+	game.time.events.loop(3, addScore, this);
 }
 
 function initObjects(){
@@ -47,13 +54,19 @@ function initObjects(){
 	/*b.body.collideWorldBounds = true;
 	b.body.moves = true;*/
 	objects = game.add.group();
-	objects.create(10,10, 'buraco');	
+	objects.create(10,10, 'buraco');		
+    //objects.createMultiple(100, 'buraco', 0, false);
 	game.physics.arcade.enable(objects);
-    //objects.createMultiple(250, 'bullets', 0, false);
+}
+
+function addScore(){
+	score++;
+	label_score.content = this.score;  
 }
 
 function addBuraco() {
-
+	
+	label_score.content = "1";  
     var obj = objects.getFirstExists(false);
 
     if (obj)
