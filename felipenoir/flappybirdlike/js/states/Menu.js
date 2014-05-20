@@ -7,7 +7,7 @@ var menuState = {
 	
 	
 	preload: function(){
-		game.load.image('logoMenu', 'assets/phaser2.png');
+		game.load.image('logoMenu', 'assets/tela inicial.png');
 		game.load.audio('audioMenu', 'assets/song_menu_otimizada.mp3');
 
 	},
@@ -19,14 +19,11 @@ var menuState = {
 		audioMenu = game.add.audio('audioMenu',1,true);
 		audioMenu.play('',0,1,true);
 		
-		//Animacao do menu
-		var spriteLogoMenu =  game.add.sprite(this.game.world.width/2, -50, 'logoMenu', 0);
-		spriteLogoMenu.anchor.setTo(0.5, 0.5);
-		game.add.tween(spriteLogoMenu).to( { y: this.game.world.height/2 - 50}, 2400, Phaser.Easing.Bounce.Out, true);
-		
+		var spriteLogoMenu =  game.add.sprite(0, 0, 'logoMenu');
 		//Texto do menu
-		var text = this.game.add.text(game.world.width/2 , game.world.height/2 + 150, "Press space to start", style);
-		text.anchor.setTo(0.5, 0.5);
+		var text = this.game.add.text(game.world.width/2 - 180, 0, "Press Space To Start", style);
+		//text.anchor.setTo(0.5, 0.5);
+		game.add.tween(text).to( { y: this.game.world.height/2}, 2400, Phaser.Easing.Bounce.Out, true);
     },
 	
     start: function() {
