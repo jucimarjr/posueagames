@@ -1,5 +1,6 @@
 
 var audioMenu;
+ var style = { font: "30px Arial", fill: "#ffffff" };
 //Menu.js
 var menuState = { 
 	
@@ -22,7 +23,10 @@ var menuState = {
 		//Animacao do menu
 		var spriteLogoMenu =  game.add.sprite(this.game.world.width/2, -50, 'logoMenu', 0);
 		spriteLogoMenu.anchor.setTo(0.5, 0.5);
-		game.add.tween(spriteLogoMenu).to( { y: this.game.world.height/2 }, 2400, Phaser.Easing.Bounce.Out, true);
+		game.add.tween(spriteLogoMenu).to( { y: this.game.world.height/2 - 50}, 2400, Phaser.Easing.Bounce.Out, true);
+		
+		var text = this.game.add.text(game.world.width/2 , game.world.height/2 + 150, "Press space to start", style);
+		text.anchor.setTo(0.5, 0.5);
     },
 	
     start: function() {
