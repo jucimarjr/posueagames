@@ -12,7 +12,11 @@ var points, lives;
 
 var keyLeft, keyRight, restart;
 
-var audio = new Audio('bu.mp3');
+var audio;
+
+var playerImg;
+var ballImg;
+var blockImg;
 
 function init() {
 	canvas = document.getElementById("canvas");
@@ -24,6 +28,17 @@ function init() {
 	points = 0;
 	lives = 3;
 
+	audio = new Audio('bu.mp3');
+	
+	playerImg = new Image();
+	playerImg.src = 'assets/ic_player.png';
+
+	ballImg = new Image();
+	ballImg.src = 'assets/ic_ball.png';
+
+	blockImg = new Image();
+	blockImg.src = 'assets/ic_block.png';
+	
 	background = new background();
 	showPoints = new showPoints();
 	showLives = new showLives();
@@ -50,7 +65,7 @@ function keyDown(e) {
 		keyLeft = true;
 	} else if (e.keyCode == 39) {
 		keyRight = true;
-	} else if (e.keyCode == 82) {
+	} else if (e.keyCode == 13) {
 		restart = true;
 	}
 }
@@ -113,52 +128,43 @@ function reset() {
 
 function background() {
 	this.draw = function(context) {
-		// Titulo
-		context.font = "21pt Helvetica";
-		context.fillStyle = "red";
-		context.fillText("BREAKOUT", 20, 25);
-
-		// Linha divisoria
-		context.beginPath();
-		context.moveTo(0, 30);
-		context.lineTo(width, 30);
-		context.strokeStyle = "black";
-		context.stroke();
-		context.closePath();
+		fundo = new Image();
+		fundo.src = 'assets/bg_breakout.png';
+		context.drawImage(fundo, 0, 0);
 	};
 }
 
 function showPoints() {
 	this.draw = function(context) {
-		// Placar
-		context.font = "21pt Helvetica";
-		context.fillStyle = "red";
-		context.fillText("Pontos: " + points, (width / 2) - 80, 25);
+		// Score
+		context.font = "21pt Cassannet Outline";
+		context.fillStyle = "white";
+		context.fillText("Pontos: " + points, (width / 2) + 100, 35);
 	};
 }
 
 function showLives() {
 	this.draw = function(context) {
 		// Placar
-		context.font = "21pt Helvetica";
-		context.fillStyle = "red";
-		context.fillText("Vidas: " + lives, (width / 2) + 140, 25);
+		context.font = "21pt Cassannet Outline";
+		context.fillStyle = "white";
+		context.fillText("Vidas: " + lives, (width / 2) + 240, 35);
 	};
 }
 
 function gameOver() {
 	this.draw = function(context) {
-		context.font = "21pt Helvetica";
-		context.fillStyle = "red";
-		context.fillText("GAME OVER ! Aperte 'r' para reiniciar", 100, (height / 2));
+		gameOverScreen = new Image();
+		gameOverScreen.src = 'assets/bg_gameover.png';
+		context.drawImage(gameOverScreen, 0, 0);
 	};
 }
 
 function youWin() {
 	this.draw = function(context) {
-		context.font = "21pt Helvetica";
-		context.fillStyle = "red";
-		context.fillText("YOU WIN ! Aperte 'r' para reiniciar", 100, (height / 2));
+		winScreen = new Image();
+		winScreen.src = 'assets/bg_win.png';
+		context.drawImage(winScreen, 0, 0);
 	};
 }
 
@@ -171,10 +177,7 @@ function ball(x, y, radius, speed) {
 	this.direction = DOWN;
 
 	this.draw = function(context) {
-		context.beginPath();
-		context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
-		context.fillStyle = "red";
-		context.fill();
+		context.drawImage(ballImg, this.x, this.y);
 	};
 
 	this.update = function(player, blocks) {
@@ -202,12 +205,12 @@ function ball(x, y, radius, speed) {
 			} else {
 				this.direction = DOWN;
 			}
-		} else if ((this.y + this.radius) < 51) {
+		} else if ((this.y + this.radius) < 81) {
 			this.direction = DOWN;
 		}
 
 		// se a bola bater na lateral da tela...
-		if ((this.x - this.radius <= 0) || (this.x + radius > width)) {
+		if ((this.x - this.radius <= 32) || (this.x + radius > width - 52)) {
 			// multiplicamos por -1 para inverter o sinal e a direção da bola
 			// no
 			// eixo X
@@ -227,6 +230,9 @@ function ball(x, y, radius, speed) {
 			lives--;
 			this.x = width / 2;
 			this.y = height / 2;
+			this.angle = Math.floor(Math.random() * 21) - 10;
+			
+			player.reset();
 		}
 	};
 }
@@ -239,16 +245,15 @@ function player(x, y, w, h, speed) {
 	this.speed = speed;
 
 	this.draw = function(context) {
-		context.fillStyle = "black";
-		context.fillRect(this.x, this.y, this.w, this.h);
+		context.drawImage(playerImg, this.x, this.y);
 	};
 
 	this.update = function() {
-		if ((keyRight) && ((this.x + this.w) <= width)) {
+		if ((keyRight) && ((this.x + this.w) <= width - 52)) {
 			this.x += 10;
 		}
 
-		if ((keyLeft) && (this.x >= 0)) {
+		if ((keyLeft) && (this.x >= 40)) {
 			this.x -= 10;
 		}
 	};
@@ -265,18 +270,21 @@ function player(x, y, w, h, speed) {
 
 		return false;
 	};
+
+	this.reset = function() {
+		// reseta para a poscao inicial
+		this.x = x - (w / 2);
+	};
 }
 
-function block(x, y, w, h, color) {
+function block(x, y, w, h) {
 	this.x = x;
 	this.y = y;
 	this.w = w;
 	this.h = h;
-	this.color = color;
 
 	this.draw = function() {
-		context.fillStyle = this.color;
-		context.fillRect(this.x, this.y, this.w, this.h);
+		context.drawImage(blockImg, this.x, this.y);
 	};
 
 	this.collision = function(ball) {
@@ -300,12 +308,12 @@ function blocks() {
 	this.items = new Array();
 
 	this.init = function() {
-		
+
 		this.items = new Array();
-		
-		for (var j = 100; j < 180; j += 20) {
-			for (var i = 0; i < width; i += 102) {
-				this.items.push(new block(i + 10, j, 80, 10, "black"));
+
+		for (var j = 100; j < 220; j += 30) {
+			for (var i = 50; i < 568; i += 102) {
+				this.items.push(new block(i, j, 93, 30));
 			}
 		}
 	};

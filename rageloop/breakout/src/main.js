@@ -1,4 +1,5 @@
 var game = null;
+var menu = null;
 
 var KEY_LEFT = 37;
 var KEY_RIGHT = 39;
@@ -7,6 +8,7 @@ var SCREEN_WIDTH = 600;
 var SCREEN_HEIGHT = 480;
 
 function init() {
+    menu = new Menu('menu-container');
     game = new Game('canvas', SCREEN_WIDTH, SCREEN_HEIGHT);
 
     document.addEventListener('keyup', keyUp, false);
@@ -17,10 +19,7 @@ function init() {
         'player': 'assets/player_tron.png',
         'brick': 'assets/bricks_tron60x20.png'
     }, function(){
-
-        game.init();
-        game.start();
-
+        menu.init();
     });
 }
 

@@ -10,7 +10,7 @@
 		}
 		canvas{
 			border:#333333 solid 10px;
-			background-image:url(img/bg2.jpg);
+			background-image:url(img2/background_green_600-550.png);
 			margin-top:5px;
 			margin-left:-5px;
 		}
@@ -46,33 +46,86 @@
 		
 	// Tela de Desenho e Contexto do Desenho do Jogo
 	var canvas, context;
+	var frames = 30;
+	
+	// Controle dos menus
+	var isMenu, isJogo, isCreditos, isComoJogar, isGameoOver;
+	var selecaoMenu;
+	
+	var menuRacketPosX;
+	var menuRacketPosY;
+	var menuRacketWidth;
+	var menuRacketHeight;
+	
+    var sources = {
+		backgroundBlack: 'img2/background_black_480-272.png',
+		backgroundGreen: 'img2/background_green_600-550.png',
+		racket1:  'img2/racket1_90-24.png',
+		racket2:  'img2/racket2_179-46.png',
+		brick: 	  'img2/brick_20-75.png',
+		comoJogar:'img2/comoJogar_197-45.png',
+		comoJogar2:'img2/comoJogar2_197-45.png',
+		creditos: 'img2/creditos_161-45.png',
+		creditos2:'img2/creditos2_161-45.png',
+		iniciar:  'img2/iniciar_161-45.png',
+		iniciar2:  'img2/iniciar2_161-45.png',
+		breakut:  'img2/breakut_466x88.png',
+		o:        'img2/o_84-75.png',
+		gameover: 'img2/gameover_436-82.png',
+		parabens: 'img2/parabens_642-146.png',
+		tituloComoJogar: 'img2/intrucoes_576-48.png',
+		tituloCreditos: 'img2/modulo2_359-61.png',
+		enterEscolher: 'img2/useEnterEscolher_411-48.png',
+		enterVoltar: 'img2/useEnterVoltar_382-48.png',
+		leftAndRight: 'img2/left_right_key_190-79.png'
+			
+    };
+    
+    var nivel;
+	
 	// Jogador
 	var barraWidth, barraHeight, jogadorPosX, jogadorPosY, teclaEsquerdaPressionada, teclaDireitaPressionada,velocidadeJogador, pontosJogador, vidasJogador;
 	var mousePos, teclaEnterPressionada;
 
-	
 	// Bola
 	var bolaRaio, bolaPosX, bolaPosY, bolaParaDireita, bolaTempo, velocidadeBola, bolaDeltaX, bolaDeltaY, bolaDirecaoX, bolaDirecaoY;
 	
 	// Tijolo
 	var tijolosHeight, tijolosWidth;
-	var bricks = [[1,1,1,1,1,1,1,1],
-	              [2,2,2,2,2,2,2,2],
-	              [3,3,3,3,3,3,3,3],
-	              [4,4,4,4,4,4,4,4],
-	              [5,5,5,5,5,5,5,5],
-	              [6,6,6,6,6,6,6,6]];
+	var bricks;
             
+	var images;
+	
 	// Inicializa dados dos elementos do jogo
 	function init() {
+		
+		loadImages(sources, function(images) {
+	        images2 = images;
+		});
 		
 		// Tela
 		canvas = document.getElementById("canvas");							// procura o canvas
 		context = canvas.getContext("2d");									// recupera o contexto 2d
+
+		// Inicializa menu
+		selecaoMenu = 2;
+		isMenu = true;
+		isJogo = false;
+		isCreditos = false;
+		isComoJogar = false;
+		isGameoOver = false;
+		nivel = 1;
 		
+		menuRacketWidth = 90;
+		menuRacketHeight = 24;
+		menuRacketPosX = canvas.width/2-menuRacketWidth/2;
+		menuRacketPosY = 400;
+		contadorOpcao = 15;
+		contadorEnter = 0;
+
 		// Jogador
 		barraWidth = 90;													// largura do jogador
-		barraHeight = 10;													// altura do jogador
+		barraHeight = 10													// altura do jogador
 		jogadorPosX = (canvas.width / 2) - (barraWidth / 2);				// posicao x jogador
 		jogadorPosY = canvas.height - barraHeight;							// posicao y jogador
 		velocidadeJogador = 12;												// velocidade do jogador
@@ -94,6 +147,7 @@
 		totalHeight = canvas.height;										// total da altura
 		
 		// Tijolo
+		loadBricks();
 		auxBrick = tetoHeight;												
 		bricksPerRow = 8;                               					// tijolos
         tijolosHeight = 20;													// largura tijolo
@@ -102,24 +156,194 @@
      	// Input de Movimento do Jogador
 		teclaEsquerdaPressionada = false;									// movimenta tecla esquerda
 		teclaDireitaPressionada = false;									// movimenta tecla direita
-		mousePos = jogadorPosX;
 		teclaEnterPressionada = false;
 
+		mousePos = jogadorPosX;
 
         document.addEventListener('keyup', keyUp, false);					// adiciona evento para keyup
         document.addEventListener('keydown', keyDown, false);				// adiciona evento para keydown
      	document.addEventListener('mousemove', mouse, false); 				// Adiciona evento para mouse
-                
-        gameLoop = setInterval(gameLoop, 30);									// chama a funcao gameLoop a 				                                                                                    cada 30 frames
+        
+        gameLoop = setInterval(gameLoop, 1000/frames);									// chama a funcao gameLoop a cada 30 frames
+		
 	}
                    
 	
-    function gameLoop() {         
-	    
+
+	
+    function gameLoop() { 
+    	
+    	if (isMenu){
+    	
+			// Limpar a tela
+	        context.clearRect(0, 0, canvas.width, canvas.height);
+			
+			// Desenhar 'BREAK UT'
+			context.drawImage(images2.breakut,70, 86, 466, 88);
+			
+			// Desenhar 'O'
+			context.drawImage(images2.o, 340, 120, 84, 75);
+			
+			// Desenhar Raquete e marcar seleção do menu
+			if ( selecaoMenu == 1){
+				context.drawImage(images2.racket1, 77, menuRacketPosY, menuRacketWidth, menuRacketHeight);
+			} else if (selecaoMenu == 2){
+				context.drawImage(images2.racket1, 267, menuRacketPosY, menuRacketWidth, menuRacketHeight);
+			} else if (selecaoMenu == 3){
+				context.drawImage(images2.racket1, 438, menuRacketPosY, menuRacketWidth, menuRacketHeight);
+			}
+			
+			// Desenhar 'Como Jogar'
+			if ( selecaoMenu == 1){
+				context.drawImage(images2.comoJogar2, 20, menuRacketPosY-38, 197, 45);
+			} else {
+				context.drawImage(images2.comoJogar, 20, menuRacketPosY-38, 197, 45);
+			}
+			
+			// Desenhar 'Iniciar'
+			if ( selecaoMenu == 2){
+				context.drawImage(images2.iniciar2, 234, menuRacketPosY-38, 161, 45);
+			} else {
+				context.drawImage(images2.iniciar, 234, menuRacketPosY-38, 161, 45);
+			} 
+			
+			// Desenhar 'Creditos'
+			if ( selecaoMenu == 3){
+				context.drawImage(images2.creditos2, 406, menuRacketPosY-38, 161, 45);
+			} else {
+				context.drawImage(images2.creditos, 406, menuRacketPosY-38, 161, 45);
+			}
+			
+			// Instrução para escolha
+			context.drawImage(images2.enterEscolher, 97, 450, 411, 48);
+			
+			 
+        	// Opções do menu: barra de seleção (raquete) e botal de seleção (enter)
+    		if (teclaDireitaPressionada!=teclaEsquerdaPressionada) { 
+    			if (teclaEsquerdaPressionada) {
+    				teclaEsquerdaPressionada = false;
+    				if (selecaoMenu > 1)
+    					selecaoMenu--;
+    				
+    			}
+    			else if (teclaDireitaPressionada) {
+    				teclaDireitaPressionada = false;
+    				if (selecaoMenu < 3)
+    					selecaoMenu++;
+    				
+    			}
+    			
+    		} else if (teclaEnterPressionada){
+    			teclaEnterPressionada = false;
+				isMenu = false;
+    			if (selecaoMenu == 1 ){
+					isComoJogar= true;
+    			}
+    			if (selecaoMenu == 2){
+    				isJogo = true;
+    			}
+    			if (selecaoMenu == 3){
+    				isCreditos = true;
+    			}
+    		}  
+        	
+
+    	} else if (isJogo){
+ 				jogar();
+ 				
+    	} else if (isGameoOver){
+   			if (teclaEnterPressionada){
+       			teclaEnterPressionada = false;
+
+       			desenharFimDeJogo();
+
+   				isMenu = true;
+   				vidasJogador = 3;
+   				pontosJogador = 0;
+   				isGameOver = false;
+   				isJogo = false;
+   				isMenu = true;
+   			}
+        	
+    	} else if (isComoJogar){
+    		if (teclaEnterPressionada){
+    			teclaEnterPressionada = false;
+				isMenu = true;
+				isComoJogar= false;
+    		} else {
+    			context.clearRect(0, 0, canvas.width, canvas.height);
+    			context.drawImage(images2.tituloComoJogar, 14, 100, 576, 48);	
+    			context.drawImage(images2.enterVoltar, 115, 450, 382, 48);
+    			context.font = "15pt Helvetica";
+    			context.textAlign = 'center';
+    			context.fillStyle = 'yellow';
+    			context.fillText("Movimentar o Jogador: Utilize as Setas de Direção",canvas.width/2, 250);
+    			context.drawImage(images2.leftAndRight, canvas.width/2-(190/2), 300, 190,79);
+    		}
+    		
+    	} else if (isCreditos){
+    		if (teclaEnterPressionada){
+    			teclaEnterPressionada = false;
+				isMenu = true;
+				isCreditos = false;
+    		} else {
+    			context.clearRect(0, 0, canvas.width, canvas.height);
+    			context.drawImage(images2.tituloCreditos, 130, 80, 359, 61);	
+    			context.drawImage(images2.enterVoltar, 115, 450, 382, 48);
+    			context.font = "15pt Helvetica";
+    			context.textAlign = 'center';
+    			context.fillStyle = 'yellow';
+    			var string1 = "Introdução a Programação de Jogos Eletrônicos";
+    			var string2 = "Professor: Jucimar Jr.";
+    			var string3 = "Equipe:";
+    			var string4 = "Programador: André Tavares";
+    			var string5 = "Programadora: Daniele Vieira";
+    			var string6 = "Design: Hálison Maia";
+    			var string7 = "Pós Graduação em Desenvolvimento de Jogos Eletrônicos - UEA";
+    			context.fillText(string1,canvas.width/2, 200);
+    			context.fillText(string2,canvas.width/2, 225);
+    			context.fillText(string3,canvas.width/2, 270);
+    			context.fillText(string4,canvas.width/2, 300);
+    			context.fillText(string5,canvas.width/2, 325);
+    			context.fillText(string6,canvas.width/2, 350);
+    			context.fillText(string7,canvas.width/2, 400);
+    		}
+    	}
+	}
+    
+    function loadImages(sources, callback) {
+        var images = {};
+        var loadedImages = 0;
+        var numImages = 0;
+        // get num of sources
+        for(var src in sources) {
+          numImages++;
+        }
+        for(var src in sources) {
+          images[src] = new Image();
+          images[src].onload = function() {
+            if(++loadedImages >= numImages) {
+              callback(images);
+            }
+          };
+          images[src].src = sources[src];
+        }
+      }
+    
+    function loadBricks(){
+    	bricks = [[1,1,1,1,1,1,1,1],
+	              [2,2,2,2,2,2,2,2],
+	              [3,3,3,3,3,3,3,3],
+	              [4,4,4,4,4,4,4,4],
+	              [5,5,5,5,5,5,5,5],
+	              [6,6,6,6,6,6,6,6]];
+    }
+    	
+    function jogar(){
+
     	// Calcula nova direção da bola
         calcularDirecaoBola();
         
-    	
     	// Colisão da bola
         colisaoBolaParede();													
         colisaoBolaTijolo();
@@ -145,7 +369,7 @@
 			else if (jogadorPosX < (canvas.width - barraWidth)) {
 				jogadorPosX += velocidadeJogador;
 			}
-			mousePos = jogadorPosX;
+			mousePos = -1;
 		}
     	
 		if (teclaEsquerdaPressionada == false  && teclaDireitaPressionada == false){
@@ -159,9 +383,11 @@
 				jogadorPosX = canvas.width - barraWidth;
 			}
 		}
+		if (teclaEnterPressionada){
 
-    	
-        
+			isJogo = false;
+			isMenu = true;
+		}
     	
 		// Limpar a tela
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -169,21 +395,21 @@
     	desenharTodosTijolos();
         desenharPlacar();
         desenharJogador();
-
+        
+        if (pontosJogador % 48 == 0){
+	        loadBricks();
+	        velocidadeBola = velocidadeBola + velocidadeBola*0.001;
+		}
         
     	// Verifica CONDIÇÃO DE DERROTA
 		if(vidasJogador <=0){
-			clearInterval(gameLoop);
-			desenharFimDeJogo();
+			isGameOver = true;
+			isJogo = false;
+			return;
 		}
-    	
-		if (pontosJogador >=48){
-			clearInterval(gameLoop);
-			desenharParabens();
-		}
+		
         desenharBola();
-
-	}
+    }
 
 	// Desenhar todos os tijolos
 	function desenharTodosTijolos(){
@@ -217,17 +443,20 @@
 	            break;			                                    
 	        default:
 	            context.clearRect(x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight,tijolosWidth,tijolosHeight);
+// 	        	context.drawImage(images2.brick,x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight,tijolosWidth,tijolosHeight);
 	            break;
 		    }
 	    if (type){			        
-	        context.fillRect(x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight, tijolosWidth,tijolosHeight);				                
+	        context.fillRect(x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight, tijolosWidth,tijolosHeight);
+//         	context.drawImage(images2.brick,x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight,tijolosWidth,tijolosHeight);
 	    } 
 
 	}   
 
 	function desenharJogador(){
 		context.fillStyle = "#F90";
-		context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);
+// 		context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight); aqui
+		context.drawImage(images2.racket1, jogadorPosX, jogadorPosY, barraWidth, barraHeight);
 	}
 
 	function desenharBola(){
@@ -260,7 +489,8 @@
 		bolaPosX = 0;
 		bolaPosY = canvas.height + 100;
 		// Desenhar 'FIM DE JOGO'
-		context.fillText('FIM DE JOGO!',(canvas.width/4)-60,canvas.height/2-20);
+		context.drawImage(images2.gameover, 85, 220, 436, 82);
+		context.drawImage(images2.enterVoltar, 115, 450, 382, 48);
 	}
 	
 	function desenharParabens(){
@@ -268,7 +498,8 @@
 		bolaPosX = 0;
 		bolaPosY = canvas.height + 100;
 		// Desenhar 'PARABÉNS'
-		context.fillText('PARABÉNS',(canvas.width/4)-60,canvas.height/2-20);
+		context.drawImage(images2.parabens, 0, 120, 642, 146); //parabens_642-146
+// 		context.fillText('PARABÉNS',(canvas.width/4)-60,canvas.height/2-20);
 	}
 
 	function moverBola(){
@@ -310,13 +541,13 @@
 	}
 
 	function colisaoBolaParede(){
-		if(bolaPosX - bolaRaio <= 0){
+		if(bolaPosX - bolaRaio <= 1){ // Esquerda
 			bolaDeltaX = -bolaDeltaX;
 		}
-		if(bolaPosX + bolaRaio >= canvas.width -1){
+		if(bolaPosX + bolaRaio >= canvas.width -1){ // Direita
 			bolaDeltaX = -bolaDeltaX;
 		}
-		if(bolaPosY - bolaRaio <= 0){
+		if(bolaPosY - bolaRaio <= 0){ // Cima
 			bolaDeltaY = -bolaDeltaY;
 		}		
 	}
@@ -400,7 +631,8 @@
 	}
 
 	function keyUp(e){
-		if (e.keyCode == 37){   
+		
+		if (e.keyCode == 37){
 			teclaEsquerdaPressionada = false; // Soltou a tecla ESQUERDA
 		}
 		else if (e.keyCode == 39){
@@ -409,6 +641,7 @@
 		else if (e.keyCode == 13){
 			teclaEnterPressionada = false; // Soltou a tecla ENTER
 		}
+
 	}
 
 	function keyDown(e){
@@ -422,6 +655,7 @@
 			teclaEnterPressionada = true; // Acertou a tecla ENTER
 		}
 	}
+	
 	
         </script>
     </body>

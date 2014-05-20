@@ -170,7 +170,7 @@ function quebraTijolo(i,j){
 function drawPlacar(){
     context.font = "20pt bold Helvetica";// tamanho e fonte para desenhar o texto
     context.fillStyle = "#FFFFFF";// cor preta (opcional)
-    context.strokeStyle = "red";
+    context.strokeStyle = "#FFFFFF";
     context.fillText("Pontuação: "+pontuacao, (canvas.width)-180, canvas.height-10); // escreve texto na tela na posi��o desejada
     context.strokeText("Pontuação: "+pontuacao, (canvas.width)-180, canvas.height-10);
     

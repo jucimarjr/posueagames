@@ -1,36 +1,41 @@
-/**
- * THE FOLLOWING GAME MAKES NO APOLOGY TO DRUGS, CONTAINS COARSE LANGUAGE AND
- * DUE TO ITS CONTENT IT SHOULD NOT BE PLAYED BY ANYONE
- */
+var warningState = {
 
-function Warning(game) {
-	this.game = game;
-	this.tween = null;
-}
-
-Warning.prototype = {
-
-	create : function() {
-		var style = {
+	preload : function() {
+		this.style = {
 			font : "55px Arial",
 			fill : "#FFFFFF",
 			align : "center"
 		};
-		var text = this.game.add.text(this.game.world.centerX,
+	},
+
+	create : function() {
+		text = this.game.add.text(this.game.world.centerX,
 				this.game.world.centerY, "THE FOLLOWING GAME\n"
 						+ "MAKES NO APOLOGY TO\nDRUGS, CONTAINS COARSE\n"
 						+ "LANGUAGE AND DUE TO\nITS CONTENT IT SHOULD\n"
-						+ "NOT BE PLAYED BY ANYONE", style);
+						+ "NOT BE PLAYED BY ANYONE", this.style);
+
 		text.anchor.set(0.5);
 		text.alpha = 0;
-		this.tween = this.game.add.tween(text).to({
-			alpha : 1
-		}, 3000, Phaser.Easing.Linear.None, true, 0, 1000, true);
-		this.tween.onComplete.add(onComplete, this);
-	}
 
+		t1 = this.game.add.tween(text);
+		t1.to({
+			alpha : 1
+		}, 2000, Phaser.Easing.Linear.None, true);
+		t1.onComplete.add(secondTween, text, this);
+
+	},
+
+};
+
+function secondTween(text) {
+	t2 = this.game.add.tween(text);
+	t2.to({
+		alpha : 0
+	}, 2000, Phaser.Easing.Linear.None, true, 5000, 0);
+	t2.onComplete.add(onComplete, this)
 }
 
 function onComplete() {
-	console.log('complete tween');
+	game.state.start('load');
 }

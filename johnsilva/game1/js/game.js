@@ -131,7 +131,7 @@ function update () {
 		dinoSprite.scale.x = +1;  // espelha se antes 1
 		dinoSprite.animations.play('walk');
 	}
-	else if ( game.input.keyboard.isDown (Phaser.Keyboard.UP) ) { // vai para cima
+	else if ( game.input.keyboard.isDown (Phaser.Keyboard.UP)  && this.dinoSprite.body.onFloor() ) { // vai para cima
 
 		dinoSprite.body.velocity.y = -100;
 		dinoSprite.animations.play('jump');
