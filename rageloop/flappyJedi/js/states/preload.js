@@ -6,6 +6,11 @@
         preload: function () {
             this.stage.backgroundColor = '#ccc';
 
+            /*menu images*/
+            this.game.load.image('playbtn','assets/menu/playbtn_160-160.jpg');
+
+            /*gameplay images*/
+
             this.game.load.image('player', './assets/player_205-94.png');
             this.game.load.image('bg', './assets/bg_1600-600.jpg');
             this.game.load.image('fg', './assets/fg_1998-224.png');
@@ -14,7 +19,7 @@
         },
         create: function () {},
         update: function() {            
-            this.game.state.start('Gameplay');
+            this.game.state.start('Menu');
         }
     };
 
