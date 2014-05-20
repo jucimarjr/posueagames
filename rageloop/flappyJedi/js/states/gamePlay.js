@@ -1,6 +1,7 @@
 (function (app_container) {
     
     function Gameplay() {
+        this.score = 0;
         this.player = null;
         this.bg = null;
         this.fg = null;
@@ -13,6 +14,7 @@
     Gameplay.prototype = {
 
         create: function () {
+
             this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
             this.bg = this.game.add.tileSprite(0, 0, this.game.stage.bounds.width, 600, 'bg');
@@ -93,20 +95,32 @@
         },
 
         killEnemy: function (bullet, enemy) {
+
+            this.score += 1;
+
             bullet.kill();
             enemy.kill();
         },
 
         restart: function () {
-            this.game.time.events.remove(this.timer);  
+            this.game.time.events.remove(this.timer);
 
             this.player.kill();
 
             var self = this;
 
-            setTimeout(function () {
+            // store the last score to access it in game over view.
+            app_container.last_score = this.score;
+
+            //reset score.
+            this.score = 0;
+
+            // call game over view
+            this.game.state.start('Gameover');
+
+            /*setTimeout(function () {
                 self.game.state.start('Gameplay');
-            }, 3000);
+            }, 3000);*/
         },
 
         handleKeyDown: function() {
