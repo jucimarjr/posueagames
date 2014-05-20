@@ -21,16 +21,18 @@ function desenhar(x, y, w, h, style) {
 
 function desenharBorda() {
 	context.beginPath();
-	context.moveTo(bordaW,h); 
+	/*context.moveTo(bordaW,h); 
 	context.lineTo(bordaW,dy+bordaW); 
 	context.lineTo(w - bordaW,dy+bordaW); 
 	context.lineTo(w - bordaW,h);
 	context.lineTo(w,h);
+	context.lineTo(w,dy);*/
+	context.moveTo(0,dy+bordaW);
+	context.lineTo(w,dy+bordaW);
 	context.lineTo(w,dy);
 	context.lineTo(0,dy);
-	context.lineTo(0,h);
 	context.closePath(); 
-	context.fillStyle = "silver"; 
+	context.fillStyle = "#5c7a54"; 
 	context.fill();
 }
 
@@ -71,7 +73,7 @@ function atualizarPlacar(){
 		placar = "0" + placar;
 	}
 
-	context.font = "30pt Square One";// tamanho e fonte para desenhar o texto
+	context.font = "30pt ObelixPro";// tamanho e fonte para desenhar o texto
 	context.fillStyle = "#silver";// cor preta (opcional)
 	context.fillText(placar, (w/3), 45);
 	context.fillText(vidas, (w/3)+250, 45);
@@ -79,8 +81,11 @@ function atualizarPlacar(){
 }
 
 function gameOver(){
-	context.font = "30pt Square One";// tamanho e fonte para desenhar o texto
-	context.fillStyle = "#silver";// cor preta (opcional)
-	context.fillText("Game Over", w/4, h/2);
+	context.drawImage(bgGameOver,0,0);
 	audioGameOver.play();
+	context.font = "30pt ObelixPro";// tamanho e fonte para desenhar o texto
+	context.fillStyle = "#white";// cor preta (opcional)
+	context.fillText("F5 para reiniciar", w/4, 350);
+	
+	flagGameOver = true;
 }

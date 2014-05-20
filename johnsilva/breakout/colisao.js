@@ -7,7 +7,7 @@ function verificarColisao(){
 
 function colisaoLateral(){
 	
-	if ((bolaPosX - bolaRaio <= bordaW) || (bolaPosX + bolaRaio > canvas.width-bordaW)) {// se a bola bater nas laterais da tela...
+	if ((bolaPosX - bolaRaio <= 0) || (bolaPosX + bolaRaio > canvas.width)) {// se a bola bater nas laterais da tela...
 		bolaAngulo = bolaAngulo * -1;// multiplicamos por -1 para inverter o sinal e a direção da bola no eixo Y
 	}
 	bolaPosX += bolaAngulo;// movemos a bola para esquerda ou para direita	

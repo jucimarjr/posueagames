@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>HTML5 - Canvas API</title>
+<title>BreakOut Inocente</title>
 <style type="text/css">
 canvas {
 	border: 1px dashed #ffffff;
@@ -23,27 +23,26 @@ canvas {
             	bolaRaio, bolaPosX, bolaPosY, bolaParaCima, bolaAngulo, bolaTempo, vidas, fase,
                 velocidadeJogador, velocidadeBola, velocidadeBolaInicial, pontos, pontosPorFase, 
                 teclaEsquerdaPressionada, teclaDireitaPressionada, bordaW, dy, initDx, initDy, 
-                qtdLinhas, qtdColunas, blocoW, blocoH;
+                qtdLinhas, qtdColunas, blocoW, blocoH, flagGameOver;
             var audioBarra = new Audio('sons/barra.mp3');
-            var audioBloco = new Audio('sons/bloco.mp3');
-            var audioGameOver = new Audio('sons/game_over.wav');
+            var audioBloco = new Audio('sons/queabundancia.mp3');
+            var audioPerderVida = new Audio('sons/assimvcvaimatar.mp3');       
+            var audioGameOver = new Audio('sons/sabedenadainocente.mp3');
+            
             var bg = new Image();
             var bgBarra = new Image();
             var bgBloco = new Image();
+            var bgGameOver = new Image();
             bg.src = "imagens/fundo_800-600.png";
             bgBarra.src = "imagens/barra_80-14.png";
-            bgBloco.src = "imagens/mulher_130-50.png";
-            /*bgBarra.width = 80;
-            bgBarra.height = 14;*/
-            //bgBarra
-            bg.width = 800;
-            bg.height = 600;
+            bgBloco.src = "imagens/mulher_74-28.png";
+            bgGameOver.src = "imagens/gameover_800-600.png";
             function bloco(x, y, style){
             		this.x = x;
             		this.y = y;
             		this.style = style;
-            		this.w  = 130;
-            		this.h = 50;
+            		this.w  = 74;
+            		this.h = 28;
             		this.vivo=true;
             }
             
@@ -54,18 +53,19 @@ canvas {
             function init() {
             	canvas = document.getElementById("canvas");// procura o canvas
             	context = canvas.getContext("2d");// recupera o contexto 2d
+            	flagGameOver = false;
             	w = canvas.width;
             	h = canvas.height;
 				barraWidth = 80; barraHeight = 14;
-				bordaW = barraWidth/2;
+				bordaW = barraWidth/4;
 				dy = 50;
 				initDy = dy+2*(bordaW+10);
-				initDx = bordaW;
-				qtdLinhas = 6;
-				qtdColunas = 6;
+				initDx = bordaW+25;
+				qtdLinhas = 5;
+				qtdColunas = 9;
 				pontosPorFase = 0;
-				blocoW = 130;
-				blocoH = 50;
+				blocoW = 74;
+				blocoH = 28;
 				jogadorPosX = (canvas.width - barraWidth) / 2;
 				jogadorPosY = (canvas.height - barraHeight) - 10;
 				teclaDireitaPressionada = false; teclaEsquerdaPressionada = false;
@@ -104,9 +104,11 @@ canvas {
 			}
 			
 			function gameLoop() {
-				if(vidas == 0 ){// se game over
-					context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
-					gameOver();
+				if(vidas == 0){// se game over
+					if(flagGameOver == false){
+						context.clearRect(0, 0, canvas.width, canvas.height);// limpa a tela antes de desenhar
+						gameOver();
+					}
 				}
 				else{ //se nao for game over, contiua o jogo
 					if(pontosPorFase == qtdLinhas*qtdColunas){//Passou de fase;
@@ -122,11 +124,11 @@ canvas {
 					// Jogador
 					if (teclaDireitaPressionada != teclaEsquerdaPressionada) { // se o jogador estiver pressionando a tecla left ou right
 						if (teclaEsquerdaPressionada) { // se for para esquerda...
-							if (jogadorPosX > 0 + bordaW) { // se não sair da tela...
+							if (jogadorPosX > 0) { // se não sair da tela...
 								jogadorPosX -= velocidadeJogador;// muda a posição
 							}
 						} else { // se for para direita...
-							if (jogadorPosX < (canvas.width - bordaW - barraWidth)) {// se não sair da tela...
+							if (jogadorPosX < (canvas.width - barraWidth)) {// se não sair da tela...
 								jogadorPosX += velocidadeJogador;// muda a posição
 							}
 						}
@@ -144,6 +146,9 @@ canvas {
 					}
 		
 					if ( perdeuVida() ) {// se a bola saiu da tela...
+						if(bolaTempo == 0){
+							audioPerderVida.play();
+						}
 						if (bolaTempo >= 50) {// se so tempo de deixar a bola invisível passou...
 							vidas --;
 		
@@ -173,5 +178,6 @@ canvas {
 				
 		}
 	</script>
+        
 </body>
 </html>
