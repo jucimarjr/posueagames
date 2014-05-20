@@ -39,12 +39,16 @@ function create () {
 
     bonecoSprite.body.collideWorldBounds = true; // para no limite inferio da tela
 //    bonecoSprite.anchor.setTo(.5,.5); // diminui o espaco do deslocamento do espelhamento
+    game.add.tween(this.player).to({angle: -15}, 300);
+
+
 
 
     obstacle = game.add.group();
     obstacle.createMultiple(20,'bloco');
 
-    this.timer = this.game.time.events.loop(1500, addLinhaDeObstaculos(), this);
+    //this.timer = this.
+        game.time.events.loop(1500, addLinhaDeObstaculos(), this);
 
 
 }
