@@ -1,12 +1,9 @@
 var game = new Phaser.Game(900, 600, Phaser.AUTO, 'game_div', { preload: preload, create: create, update: update  });
 var boat;
-var b;
 var objects;
-var velocity = 200;
-var score = 0;
-var style = { font: "30px Arial", fill: "#ffffff" };  
-var label_score;
-
+var velocity = 300;
+var score = 0; 
+var jungle;
 function preload () {
 //	game.load.spritesheet('backGround', 'assets/bg/river_512-600.jpg', 500, 600, 2);
 	game.load.image('river', 'assets/bg/river_512-600.png');
@@ -19,8 +16,8 @@ function preload () {
 function create () {
 	game.physics.arcade.gravity.y = 90;
 	game.add.sprite(0,0, 'jungleLeft');
-	game.add.sprite(197,0, 'river');	
-	game.add.sprite(197+512,0, 'jungleRight');
+	game.add.sprite(196,0, 'river');	
+	game.add.sprite(196+512,0, 'jungleRight');
 	//this.backGround = game.add.sprite(197,0, 'river');
 	/*this.backGround.animations.add('go');
 	this.backGround.play('go',4,true);*/
@@ -42,9 +39,11 @@ function create () {
 
 	initObjects();
 
-	label_score = game.add.text(20, 20, "0", style); 
+	var style = { font: "30px Arial", fill: "#ffffff" }; 	
+	this.labelScore = game.add.text(this.game.world.centerX, 10, score+"m", style); 
+	this.labelScore.anchor.set(0.5, 0);
 	game.time.events.loop(150, addBuraco, this);
-	game.time.events.loop(3, addScore, this);
+	game.time.events.loop(3000, addScore, this);
 }
 
 function initObjects(){
@@ -61,12 +60,13 @@ function initObjects(){
 
 function addScore(){
 	score++;
-	label_score.content = this.score;  
+	if(this.labelScore){
+		this.labelScore.setText(score+"m");
+	}  
 }
 
 function addBuraco() {
 	
-	label_score.content = "1";  
     var obj = objects.getFirstExists(false);
 
     if (obj)
