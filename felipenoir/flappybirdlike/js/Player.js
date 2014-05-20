@@ -8,7 +8,7 @@ Player.prototype = {
 	preload : function() {
 		console.log('player -> preload');
 		this.game.load.spritesheet('player', 'assets/player_125-80-3.png', 125,80);
-		game.load.audio('audioVoar', 'assets/laser_jump.wav');
+		game.load.audio('audioVoar', 'assets/jump.mp3');
 	},
 
 	create : function() {
@@ -31,7 +31,7 @@ Player.prototype = {
 		if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			this.sprite.body.velocity.y = -500;
 			this.sprite.body.velocity.x = 10;
-			
+			this.audioVoar.play();
 			if(!this.sprite.body.touching.down){
 				this.game.add.tween(this.sprite).to({angle: -10}, 100).start();
 		    }
