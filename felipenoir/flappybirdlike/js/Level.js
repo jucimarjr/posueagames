@@ -9,6 +9,7 @@ Level = function(game) {
 Level.prototype = {
 	preload : function() {
 		console.log('level -> preload');
+		this.game.load.spritesheet('char1','assets/char_121-134.png', 121, 134);
 		this.game.load.image('bg', 'assets/bg.png');
 		this.game.load.image('ground', 'assets/ground.png');
 		this.game.load.image('tallbarrier', 'assets/tallbarrier.png');
@@ -41,7 +42,7 @@ Level.prototype = {
 	generateBarrier : function() {
 		console.log('level -> generateBarrier');
 		var barrier = this.objects.create(this.game.world.width,
-				this.game.world.height - 300, 'tallbarrier');
+				this.game.world.height - 224, 'char1');
 		this.game.physics.arcade.enableBody(barrier);
 		barrier.body.allowGravity = false;
 		barrier.body.immovable = true;
