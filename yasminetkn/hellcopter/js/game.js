@@ -53,7 +53,7 @@ function create () {
     obstacles = game.add.group();
     obstacles.enableBody = true;
     obstacles.createMultiple(20,'bloco');
-
+    game.time.events.loop(1500, createBlocos, this);
     //this.timer = this.
     //game.time.events.loop(1500, addLinhaDeObstaculos(), this);
 
@@ -64,7 +64,7 @@ function update () {
     if ( game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) { // tecla do pulo
         bonecoSprite.body.velocity.y = -350;
         //player.body.gravity.y = 650;
-        game.time.events.loop(1500, createBlocos, this);
+        //game.time.events.loop(1500, createBlocos, this);
         start = 1;
         count = 0; 
     }
@@ -76,8 +76,8 @@ function update () {
 
 
 function createBlocos() {
-	ledge = ledges.create(game.world.width, game.rnd.integerInRange(35, game.world.height - 32) - 70, 'bloco');
-	ledge.body.velocity.x = -450;
+	ledge = ledges.create(game.world.width, game.rnd.integerInRange(35, game.world.height) - 70, 'bloco');
+	ledge.body.velocity.x = -650;
 	ledge.body.immovable = true;
 	ledge.outOfBoundsKill = true;
 } 
