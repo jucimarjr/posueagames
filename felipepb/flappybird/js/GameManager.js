@@ -48,8 +48,8 @@ BasicGame.GameManager.prototype = {
     update: function() {
 
         this.ground.tilePosition.x += BasicGame.Obstacle.velocity;
-        this.trees.tilePosition.x += -0.5;
-        this.city.tilePosition.x += -0.25;
+        this.trees.tilePosition.x += BasicGame.Obstacle.velocity / 4.0;
+        this.city.tilePosition.x += BasicGame.Obstacle.velocity / 8.0;
         
         this.obstaclesManager.update();
     },
