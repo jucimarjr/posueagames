@@ -13,12 +13,12 @@ function preload () {
 
 	game.load.spritesheet('boneco', 'assets/bonecoSpriteSheet2_240-60-4.png', 60,60);
 	//game.load.image('chao', 'assets/chao2_325-28.png');
-	game.load.image('chao', 'assets/flor_50-50.png');
-	game.load.image('top', 'assets/top_50-50.png');
-    game.load.image('ground', 'assets/backchop.png');
+	game.load.image('chao', 'assets/top2_100-100.png');
+	game.load.image('top', 'assets/top3_50-50.png');
+    game.load.image('ground', 'assets/hellcopter_background2.png');
    // game.load.image('bloco', 'assets/bloco_80-30.png');
-    game.load.image('bloco', 'assets/block3.png');
-    game.load.spritesheet('helicoptero', 'assets/helicopteroSpritesheet_365-60-4.png', 90, 59);
+    game.load.image('bloco', 'assets/block4.png');
+    game.load.spritesheet('helicoptero', 'assets/helicopteroSpritesheet_365-60-4.png', 91, 59);
 
 
 }
@@ -35,7 +35,7 @@ function create () {
     this.ground = this.game.add.tileSprite(0, 500, 960, 100, 'chao');//(x,y,tamanho em x,?)
     this.ground.autoScroll(-400, 0);
 
-    this.top = this.game.add.tileSprite(0,0,960,100,'top');
+    this.top = this.game.add.tileSprite(0,0,960,25,'top');
     this.top.autoScroll(-400, 0);
     
     game.physics.enable(this.top, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
