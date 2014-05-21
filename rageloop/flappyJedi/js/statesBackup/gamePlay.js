@@ -29,7 +29,7 @@
             this.player_tween = this.game.add.tween(this.player).to( { y: 200 }, 1000, Phaser.Easing.Linear.None, true, 0, 1000, true);
 
             this.enemies = this.game.add.group();
-            this.enemies.createMultiple(20, 'enemy');            
+            this.enemies.createMultiple(20, 'enemy');
 
             this.weaponFactory = new WeaponFactory(this.game, this.player);
             this.weaponFactory.create();
@@ -48,7 +48,7 @@
                 return;
             }
 
-            this.game.physics.arcade.overlap(this.player, this.enemies, this.restart, null, this);            
+            this.game.physics.arcade.overlap(this.player, this.enemies, this.restart, null, this);
             this.game.physics.arcade.overlap(this.weapon.group, this.enemies, this.killEnemy, null, this);
 
             if (this.player.y == 0 || this.player.y == (this.game.height - this.player.height)) {
@@ -89,7 +89,7 @@
                 return;
             }
 
-            enemy = this.enemies.getFirstDead();
+            var enemy = this.enemies.getFirstDead();
 
             this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
 
@@ -111,17 +111,15 @@
         restart: function () {
 
             this.isStarted = false;
-            
-            this.game.time.events.remove(this.timer);            
-            
+
+            this.game.time.events.remove(this.timer);
+
+            this.player.kill();
+
             var self = this;
 
             // store the last score to access it in game over view.
-            app_container.last_score = this.score;     
-            
-            // player current position
-            app_container.player_posX = this.player.x; 
-            app_container.player_posY = this.player.y;
+            app_container.last_score = this.score;
 
             //reset score.
             this.score = 0;
