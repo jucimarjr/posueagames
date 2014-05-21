@@ -5,9 +5,10 @@
         this.game = game || null;
 
         this.types = [
-            'simpleBlasterFast',
             'multiBlaster',
-            'multiBlasterFast',
+            'simpleBlasterFast',
+            'shield',
+            'multiBlasterFast'
         ];
 
         this.group = null;
@@ -22,7 +23,6 @@
         this.group = this.game.add.group();
         this.group.createMultiple(this.amount, this.asset);
         this.group.setAll('anchor.x', 0.5);
-        this.group.setAll('anchor.y', 0.5);
         this.group.setAll('outOfBoundsKill', true);
 
     };
@@ -32,6 +32,7 @@
     PowerUps.prototype.spawnNew = function(x, y) {
 
         var item;
+        var typeIdx;
 
         if (!this.group) {
             return;
@@ -43,7 +44,11 @@
             
             this.game.physics.enable(item, Phaser.Physics.ARCADE);
 
-            item.type = this.types[Utils.randomIntFromInterval(0, 2)];
+            typeIdx = Utils.randomIntFromInterval(0, 3);
+
+            item.frame = typeIdx;
+
+            item.type = this.types[typeIdx];
             item.reset(x, y);
 
             item.body.velocity.x = -700;

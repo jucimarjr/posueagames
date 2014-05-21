@@ -101,13 +101,14 @@
             }
 
             x = this.game.width; 
-            y = Math.round(Math.random() * (this.game.height - 94));
 
             value = Utils.randomIntFromInterval(0, 10);
 
-            if (value <= 5) {
+            if (value <= 8) {
+                y = Math.round(Math.random() * (this.game.height - 94));
                 this.addEnemy(x, y);
             } else {
+                y = Math.round(Math.random() * (this.game.height - 60));
                 this.powerUps.spawnNew(x, y);
             }
 
@@ -136,7 +137,12 @@
 
         getPowerUp: function(player, powerUp) {
 
-            this.weapon = this.weaponFactory.getWeapon(powerUp.type);
+            var powerUpType = powerUp.type;
+
+            if (powerUpType !== 'shield') {
+                this.weapon = this.weaponFactory.getWeapon(powerUpType);
+            }
+            
             powerUp.kill();
 
         },

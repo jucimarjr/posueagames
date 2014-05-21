@@ -18,7 +18,9 @@
             this.game.load.image('fg', './assets/fg_1998-224.png');
             this.game.load.image('enemy', './assets/enemy_205-94.png');
             this.game.load.image('bullet', './assets/bullet_43-43.png');
-            this.game.load.image('powerups', './assets/powerup_225-225.jpg');
+            
+            this.game.load.spritesheet('powerups', './assets/powerups_240-60.png', 60, 60);
+
         },
         create: function () {},
         update: function() {            
