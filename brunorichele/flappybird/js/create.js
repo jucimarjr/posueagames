@@ -1,10 +1,9 @@
-var arrows;
-var tilesprite;
-
 var create = {
     space_key   : null,
     enemy_group : null,
     timer : null,
+    arrows : null,
+    tilesprite : null,
 
     
     init : function(){
