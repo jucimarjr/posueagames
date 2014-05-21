@@ -20,13 +20,13 @@ var play_state = { create: create, update: update, render: render };
         billySprite.animations.add('walk', [0, 1, 2], 13, true);
         game.physics.enable(billySprite, Phaser.Physics.ARCADE);
         billySprite.body.gravity.y = 1000;
-        billySprite.body.collideWorldBounds = false; // para no limite inferio da tela
+        billySprite.body.collideWorldBounds = false; // para no limite inferior da tela
         game.camera.follow(billySprite);
 
         background4 = game.add.sprite(0, 0, 'background4');
         game.physics.arcade.enable(background4);
 
-        // Call the 'jump' function when the spacekey is hit
+        // Call the 'jump' function when the spacebar key is hit
         space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space_key.onDown.add(jump, this);
         space_key.onUp.add(notJump, this);
