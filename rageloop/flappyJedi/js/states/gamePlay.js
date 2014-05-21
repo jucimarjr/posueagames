@@ -93,8 +93,7 @@
 
             this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
 
-            enemy.scale.set(0.5, 0.5);
-            enemy.reset(this.game.width, Math.round(Math.random() * (this.game.height - 100)));
+            enemy.reset(this.game.width, Math.round(Math.random() * (this.game.height - 94)));
             enemy.body.velocity.x = -700;
             enemy.checkWorldBounds = true;
             enemy.outOfBoundsKill = true;
