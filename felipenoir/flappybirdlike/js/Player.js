@@ -7,38 +7,46 @@ Player = function(game) {
 Player.prototype = {
 	preload : function() {
 		console.log('player -> preload');
-		this.game.load.spritesheet('player', 'assets/player_125-80-3.png', 125,80);
+		this.game.load.spritesheet('player', 'assets/player_110-134-4.png',
+				110, 134);
 		game.load.audio('audioVoar', 'assets/jump.mp3');
 	},
 
 	create : function() {
 		this.sprite = this.game.add.sprite(60, 100, 'player');
-		this.sprite.animations.add('floating', [ 0, 1, 2 ], 2, true);
-		this.sprite.animations.play('floating');
+		this.sprite.animations.add('walk', [ 0, 1 ], 2, true);
+		this.sprite.animations.add('jump', [ 2 ], 2, true);
+//		this.sprite.animations.play('walk');
 		// physics
 		this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 		this.sprite.body.acceleration.y = 3000;
 		this.sprite.body.gravity.y = 1000;
-		
-		//Audio
+
+		// Audio
 		this.audioVoar = game.add.audio('audioVoar');
 	},
-	
+
 	update : function() {
 		this.game.physics.arcade.collide(this.sprite, level.ground);
 		this.game.physics.arcade.collide(this.sprite, level.objects);
-		
-		if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+
+		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			this.sprite.body.velocity.y = -500;
 			this.sprite.body.velocity.x = 10;
 			this.audioVoar.play();
-			if(!this.sprite.body.touching.down){
-				this.game.add.tween(this.sprite).to({angle: -10}, 100).start();
-		    }
+			if (!this.sprite.body.touching.down) {
+				this.game.add.tween(this.sprite).to({
+					angle : -10
+				}, 100).start();
+				this.sprite.animations.play('jump');
+			}
 		}
-		
-		if(this.sprite.body.touching.down){
-			this.game.add.tween(this.sprite).to({angle: 0}, 100).start();
+
+		if (this.sprite.body.touching.down) {
+			this.game.add.tween(this.sprite).to({
+				angle : 0
+			}, 100).start();
+			this.sprite.animations.play('walk');
 		}
 	}
 }
