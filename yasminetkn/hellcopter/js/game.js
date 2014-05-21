@@ -50,7 +50,7 @@ function create () {
 	
 	// Criando o Helicoptero
 	bonecoSprite = game.add.sprite(128, 80, 'helicoptero');
-	bonecoSprite.animations.add('walk',[1,4],47,true);
+	bonecoSprite.animations.add('walk',[1,4],4,true);
 
 	game.physics.enable(bonecoSprite, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 
@@ -63,10 +63,10 @@ function create () {
 
     ledges = game.add.group();
     ledges.enableBody = true;
-    obstacles = game.add.group();
+   /* obstacles = game.add.group();
     obstacles.enableBody = true;
-    obstacles.createMultiple(20,'bloco');
-    game.time.events.loop(1500, createBlocos, this);
+    obstacles.createMultiple(20,'bloco');*/
+    game.time.events.loop(900, createBlocos, this);
     //this.timer = this.
     //game.time.events.loop(1500, addLinhaDeObstaculos(), this);
 
@@ -90,7 +90,10 @@ function update () {
 
 
 function createBlocos() {
-	ledge = ledges.create(game.world.width, game.rnd.integerInRange(35, game.world.height) - 70, 'bloco');
+	ledge = ledges.create(game.world.width, game.rnd.integerInRange(35, game.world.height) - 100, 'bloco');
+	
+	
+	
 	ledge.body.velocity.x = -950;
 	ledge.body.immovable = true;
 	ledge.outOfBoundsKill = true;
