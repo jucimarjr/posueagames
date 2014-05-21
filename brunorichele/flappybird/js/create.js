@@ -2,14 +2,21 @@ var create = {
     space_key   : null,
     enemy_group : null,
     timer : null,
+    arrows : null,
+    tilesprite : null,
+
+    
     init : function(){
         //game defs
         game.world.setBounds(0, 0, 960, 800);
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         // background
-        // TODO: parallax background
-        this.bg = game.add.sprite(0, 0, 'background');
+        // TODO: parallax background     
+        //Tentativa de parallax background, não sei se era esse o conceito.
+        tilesprite = game.add.tileSprite(0, 0, 960,800, 'background');
+    	//Implementado para testar o tileSprite
+        arrows = game.input.keyboard.createCursorKeys();
 
         //player defs
         this.createPlayer();

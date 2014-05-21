@@ -1,7 +1,7 @@
 var game = new Phaser.Game(900, 600, Phaser.AUTO, 'game_div', { preload: preload, create: create, update: update  });
 var boat;
 var objects;
-var velocity = 300;
+var velocity = 150;
 var score = 0; 
 var jungles;
 var rivers;
@@ -14,14 +14,14 @@ function preload () {
 	game.load.image('river', 'assets/bg/river_512-1200.jpeg');
 	game.load.image('jungleLeft', 'assets/bg/jungleLeft_196-1200.jpg');
 	game.load.image('jungleRight', 'assets/bg/jungleRight_196-1200.jpg');
-	game.load.spritesheet('boat', 'assets/boat_37-80-4.jpg', 37,80,4);//200,160
 	game.load.image('buraco', 'assets/buraco_100-67.jpg');
+	game.load.spritesheet('boat', 'assets/sprite/canoeiro/canoeiroLeft_50-100-6.png', 50,100,6);//200,160
 }
 
 function create () {
 
-	game.physics.arcade.gravity.y = 90;
-	//game.physics.startSystem(Phaser.Physics.ARCADE);
+	//game.physics.arcade.gravity.y = 50;
+	game.physics.startSystem(Phaser.Physics.ARCADE);
     //river = game.add.tileSprite(196, 0, 512, 600, 'river');
     //this.fg = this.game.add.tileSprite(0, this.game.height -224, this.game.stage.bounds.width, 224, 'fg');
 	/*game.add.sprite(0,0, 'jungleLeft');
@@ -35,8 +35,8 @@ function create () {
 	initObjects();
 
 	boat = game.add.sprite(game.world.centerX, 600-50, 'boat');
-	boat.animations.add('run');
-	boat.animations.play('run', 8, true);
+	boat.animations.add('run',[1,2,3,4,5],5, true);
+	boat.animations.play('run');
 	game.physics.enable(boat, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 	boat.body.collideWorldBounds = true; // para no limite inferio da tela
     boat.body.drag.x = 200; //desloca 100 e para, só desloca de novo se clicada alguma tecla e quanto maior for seu valor, menos desloca
@@ -79,8 +79,8 @@ function initObjects(){
 	/*b.body.collideWorldBounds = true;
 	b.body.moves = true;*/
 	objects = game.add.group();
-	objects.create(10,10, 'buraco');
-    //objects.createMultiple(100, 'buraco', 0, false);
+	//objects.create(10,10, 'buraco');
+    objects.createMultiple(5, 'buraco', 0, false);
 	//game.physics.arcade.enable(objects);	
     game.physics.enable(objects, Phaser.Physics.ARCADE);
 }
@@ -121,16 +121,6 @@ function update () {
 	// COLISAO COM OSSO:
 	game.physics.arcade.overlap(boat, objects, pegarObjetos,null,this);
 	/*game.physics.arcade.overlap(boat, plataforma, gameOver,null,this);*/
-
-	/*river.y += 2;
-	river2.y += 2;
-
-	if(river.y >= 600){
-		river.y = -1800;
-	}
-	if(river2.y >= 600){
-		river2.y = -1800;
-	}*/
 
 	//boat.body.angularAcceleration = 0;
 	// PEGA A ENTRADA (tecla pressionada):	
@@ -177,6 +167,7 @@ function checkBoundsJungles(obj) {
 }
 
 function checkBounds(obj) {
+	obj.y += tileSpeedRiver;
 
     if (obj.y > 600)
     {

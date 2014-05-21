@@ -26,11 +26,11 @@
 </style>
 
 <audio preload id="toque1">
-  			<source src="som/toque1.mp3" type="audio/mpeg">
+  			<source src="som/toque1.wav" type="audio/wav">
 </audio>
 
 <audio preload id="toque2">
-  			<source src="som/toque2.mp3" type="audio/mpeg">
+  			<source src="som/toque2.wav" type="audio/wav">
 </audio>
 
 
@@ -58,10 +58,7 @@
 	var menuRacketHeight;
 	
     var sources = {
-		backgroundBlack: 'img/background_black_480-272.png',
-		backgroundGreen: 'img/background_green_600-550.png',
 		racket1:  'img/racket1_90-24.png',
-		racket2:  'img/racket2_179-46.png',
 		brick: 	  'img/brick_20-75.png',
 		comoJogar:'img/comoJogar_197-45.png',
 		comoJogar2:'img/comoJogar2_197-45.png',
@@ -73,12 +70,11 @@
 		o:        'img/o_84-75.png',
 		quebrandoTudo: 'img/qt_234_41.png',
 		gameover: 'img/gameover_436-82.png',
-		parabens: 'img/parabens_642-146.png',
 		tituloComoJogar: 'img/intrucoes_576-48.png',
 		tituloCreditos: 'img/modulo2_359-61.png',
 		enterEscolher: 'img/useEnterEscolher_411-48.png',
 		enterVoltar: 'img/useEnterVoltar_382-48.png',
-		leftAndRight: 'img/left_right_key_190-79.png'
+		leftAndRight: 'img/left_right_key_110-54.png'
 			
     };
     
@@ -257,7 +253,7 @@
        			teclaEnterPressionada = false;
    				isGameOver = false;
    				isMenu = true;
-   				vidasJogador = 3;
+   				vidasJogador = 4;
    				pontosJogador = 0;
    			}
         	
@@ -274,7 +270,8 @@
     			context.textAlign = 'center';
     			context.fillStyle = 'yellow';
     			context.fillText("Utilize as Setas de Direção para Movimentar a Raquete",canvas.width/2, 250);
-    			context.drawImage(images2.leftAndRight, canvas.width/2-(190/2), 300, 190,79);
+    			context.drawImage(images2.leftAndRight, canvas.width/2-(110/2), 280, 110, 54);
+//     			context.drawImage(images2.leftAndRight, canvas.width/2-(110/2), 280, 110, 54);
     		}
     		
     	} else if (isCreditos){
