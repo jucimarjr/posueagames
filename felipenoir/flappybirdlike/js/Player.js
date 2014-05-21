@@ -16,7 +16,6 @@ Player.prototype = {
 		this.sprite = this.game.add.sprite(60, 100, 'player');
 		this.sprite.animations.add('walk', [ 0, 1 ], 2, true);
 		this.sprite.animations.add('jump', [ 2 ], 2, true);
-//		this.sprite.animations.play('walk');
 		// physics
 		this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 		this.sprite.body.acceleration.y = 3000;
@@ -34,12 +33,6 @@ Player.prototype = {
 			this.sprite.body.velocity.y = -500;
 			this.sprite.body.velocity.x = 10;
 			this.audioVoar.play();
-			if (!this.sprite.body.touching.down) {
-				this.game.add.tween(this.sprite).to({
-					angle : -10
-				}, 100).start();
-				this.sprite.animations.play('jump');
-			}
 		}
 
 		if (this.sprite.body.touching.down) {
@@ -47,6 +40,11 @@ Player.prototype = {
 				angle : 0
 			}, 100).start();
 			this.sprite.animations.play('walk');
+		} else {
+			this.game.add.tween(this.sprite).to({
+				angle : -10
+			}, 100).start();
+			this.sprite.animations.play('jump');
 		}
 	}
 }
