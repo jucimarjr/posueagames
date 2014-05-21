@@ -31,12 +31,15 @@
             this.enemies = this.game.add.group();
             this.enemies.createMultiple(20, 'enemy');
 
+            this.powerUps = new PowerUps(this.game);
+            this.powerUps.init();
+
             this.weaponFactory = new WeaponFactory(this.game, this.player);
             this.weaponFactory.create();
 
             this.weapon = this.weaponFactory.nextWeapon();
 
-            this.timer = this.game.time.events.loop(700, this.addEnemy, this);
+            this.timer = this.game.time.events.loop(700, this.addElement, this);
 
             var style = { font: "40px Arial", fill: "#000000", align: "center" };
             this.score_text = this.game.add.text(this.game.world.centerX, 0, "Score: " + this.score, style);
@@ -44,11 +47,13 @@
         },
 
         update: function() {
+
             if (!this.player.exists) {
                 return;
             }
 
             this.game.physics.arcade.overlap(this.player, this.enemies, this.restart, null, this);
+            this.game.physics.arcade.overlap(this.player, this.powerUps.group, this.getPowerUp, null, this);
             this.game.physics.arcade.overlap(this.weapon.group, this.enemies, this.killEnemy, null, this);
 
             if (this.player.y == 0 || this.player.y == (this.game.height - this.player.height)) {
@@ -57,7 +62,7 @@
 
             this.handleKeyDown();
 
-            this.bg.tilePosition.x -= 1;
+            this.bg.tilePosition.x -= 15;
             this.fg.tilePosition.x -= 20;
         },
 
@@ -68,32 +73,52 @@
             }
 
             //FIXME: Choose a way to update weapons
-            if (this.score % 10 == 0) {
+            /*if (this.score % 10 == 0) {
                 if (this.weaponFactory.hasWeapon()) {
                     this.weapon = this.weaponFactory.nextWeapon();
                 }
-            }
+            }*/
         },
 
         start: function() {
 
+
+            // /this.player_tween.pause();
+            this.player_tween.stop();
+
             this.isStarted = true;
             this.player.body.gravity.y = 1000;
 
-            this.player_tween.pause();
         },
 
-        addEnemy: function () {
+        addElement: function() {
+
+            var x, y, value;
 
             if (!this.isStarted) {
                 return;
             }
 
+            x = this.game.width; 
+            y = Math.round(Math.random() * (this.game.height - 94));
+
+            value = Utils.randomIntFromInterval(0, 10);
+
+            if (value <= 5) {
+                this.addEnemy(x, y);
+            } else {
+                this.powerUps.spawnNew(x, y);
+            }
+
+        },
+
+        addEnemy: function (x, y) {
+
             var enemy = this.enemies.getFirstDead();
 
             this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
 
-            enemy.reset(this.game.width, Math.round(Math.random() * (this.game.height - 94)));
+            enemy.reset(x, y);
             enemy.body.velocity.x = -700;
             enemy.checkWorldBounds = true;
             enemy.outOfBoundsKill = true;
@@ -108,6 +133,13 @@
             enemy.kill();
         },
 
+        getPowerUp: function(player, powerUp) {
+
+            this.weapon = this.weaponFactory.getWeapon(powerUp.type);
+            powerUp.kill();
+
+        },
+
         restart: function () {
 
             this.isStarted = false;
@@ -115,6 +147,7 @@
             this.game.time.events.remove(this.timer);
 
             this.player.kill();
+            this.player_tween.stop();
 
             var self = this;
 
@@ -133,9 +166,9 @@
                 
                 if (!this.isStarted) {
                     this.start();
+                } else {
+                    this.player.body.velocity.y = -400;
                 }
-
-                this.player.body.velocity.y = -400;
             }
 
             if (this.game.input.keyboard.isDown (Phaser.Keyboard.ENTER)) {
