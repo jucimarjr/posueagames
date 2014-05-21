@@ -4,13 +4,11 @@
 
     Preload.prototype = {
         preload: function () {
-            //this.stage.backgroundColor = '#ccc';
+            this.stage.backgroundColor = '#ccc';
 
             /*menu images*/
-            this.game.load.image('playbtn','assets/menu/playbtn_160-160.jpg');            
-            this.game.load.image('replaybtn','assets/menu/play_again_button.png');
-            this.game.load.image('gameover','assets/menu/gameover.png');
-            
+            this.game.load.image('playbtn','assets/menu/playbtn_160-160.jpg');
+
             /*gameplay images*/
 
             this.game.load.image('player', './assets/player_205-94.png');
