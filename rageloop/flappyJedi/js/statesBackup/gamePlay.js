@@ -29,17 +29,14 @@
             this.player_tween = this.game.add.tween(this.player).to( { y: 200 }, 1000, Phaser.Easing.Linear.None, true, 0, 1000, true);
 
             this.enemies = this.game.add.group();
-            this.enemies.createMultiple(20, 'enemy');            
-
-            this.powerUps = new PowerUps(this.game);
-            this.powerUps.init();
+            this.enemies.createMultiple(20, 'enemy');
 
             this.weaponFactory = new WeaponFactory(this.game, this.player);
             this.weaponFactory.create();
 
             this.weapon = this.weaponFactory.nextWeapon();
 
-            this.timer = this.game.time.events.loop(700, this.addElement, this);
+            this.timer = this.game.time.events.loop(700, this.addEnemy, this);
 
             var style = { font: "40px Arial", fill: "#000000", align: "center" };
             this.score_text = this.game.add.text(this.game.world.centerX, 0, "Score: " + this.score, style);
@@ -47,14 +44,11 @@
         },
 
         update: function() {
-
             if (!this.player.exists) {
                 return;
             }
 
-
             this.game.physics.arcade.overlap(this.player, this.enemies, this.restart, null, this);
-            this.game.physics.arcade.overlap(this.player, this.powerUps.group, this.getPowerUp, null, this);
             this.game.physics.arcade.overlap(this.weapon.group, this.enemies, this.killEnemy, null, this);
 
             if (this.player.y == 0 || this.player.y == (this.game.height - this.player.height)) {
@@ -63,7 +57,7 @@
 
             this.handleKeyDown();
 
-            this.bg.tilePosition.x -= 15;
+            this.bg.tilePosition.x -= 1;
             this.fg.tilePosition.x -= 20;
         },
 
@@ -74,53 +68,32 @@
             }
 
             //FIXME: Choose a way to update weapons
-            /*if (this.score % 10 == 0) {
+            if (this.score % 10 == 0) {
                 if (this.weaponFactory.hasWeapon()) {
                     this.weapon = this.weaponFactory.nextWeapon();
                 }
-            }*/
+            }
         },
 
         start: function() {
 
-
-            // /this.player_tween.pause();
-            this.player_tween.stop();
-
             this.isStarted = true;
             this.player.body.gravity.y = 1000;
 
+            this.player_tween.pause();
         },
 
-        addElement: function() {
-
-            var x, y, value;
+        addEnemy: function () {
 
             if (!this.isStarted) {
                 return;
             }
 
-            x = this.game.width; 
-
-            value = Utils.randomIntFromInterval(0, 10);
-
-            if (value <= 8) {
-                y = Math.round(Math.random() * (this.game.height - 94));
-                this.addEnemy(x, y);
-            } else {
-                y = Math.round(Math.random() * (this.game.height - 60));
-                this.powerUps.spawnNew(x, y);
-            }
-
-        },
-
-        addEnemy: function (x, y) {
-
             var enemy = this.enemies.getFirstDead();
 
             this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
 
-            enemy.reset(x, y);
+            enemy.reset(this.game.width, Math.round(Math.random() * (this.game.height - 94)));
             enemy.body.velocity.x = -700;
             enemy.checkWorldBounds = true;
             enemy.outOfBoundsKill = true;
@@ -135,18 +108,6 @@
             enemy.kill();
         },
 
-        getPowerUp: function(player, powerUp) {
-
-            var powerUpType = powerUp.type;
-
-            if (powerUpType !== 'shield') {
-                this.weapon = this.weaponFactory.getWeapon(powerUpType);
-            }
-            
-            powerUp.kill();
-
-        },
-
         restart: function () {
 
             this.isStarted = false;
@@ -154,16 +115,11 @@
             this.game.time.events.remove(this.timer);
 
             this.player.kill();
-            this.player_tween.stop();
 
             var self = this;
 
             // store the last score to access it in game over view.
-            app_container.last_score = this.score;     
-            
-            // player current position
-            app_container.player_posX = this.player.x; 
-            app_container.player_posY = this.player.y;
+            app_container.last_score = this.score;
 
             //reset score.
             this.score = 0;
@@ -177,9 +133,9 @@
                 
                 if (!this.isStarted) {
                     this.start();
-                } else {
-                    this.player.body.velocity.y = -400;
                 }
+
+                this.player.body.velocity.y = -400;
             }
 
             if (this.game.input.keyboard.isDown (Phaser.Keyboard.ENTER)) {

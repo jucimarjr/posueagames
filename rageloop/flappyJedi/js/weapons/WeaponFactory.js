@@ -4,6 +4,7 @@
         this.game = game;
         this.player = player;
         this.list = [];
+        this.map = {};
     }
 
     WeaponFactory.prototype = {
@@ -13,10 +14,22 @@
             var multi = new MultiBlaster(this.game, this.player);
             var multiFast = new MultiBlaster(this.game, this.player);
 
+            simple.create();
+            simpleFast.create();
+            multi.create();
+            multiFast.create();
+
             simpleFast.delay = 250;
             multiFast.delay = 250;
 
             this.list = [simple, simpleFast, multi, multiFast];
+
+            this.map = {
+                'simpleBlasterFast': simpleFast,
+                'multiBlaster': multi,
+                'multiBlasterFast': multiFast
+            };
+
         },
 
         nextWeapon: function () {
@@ -30,6 +43,16 @@
 
         hasWeapon: function () {
             return this.list.length > 0;
+        },
+
+        getWeapon: function(id) {
+
+            if (typeof id !== 'string') {
+                return -1;
+            }
+
+            return this.map[id];
+
         }
     };
 
