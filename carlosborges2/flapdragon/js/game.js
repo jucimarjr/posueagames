@@ -1,42 +1,23 @@
 
 var assets = "assets/";
 
-var KEY_BG_SKY = 'sky_960-600.jpg';
-var KEY_BG_MOUNTAIN = 'mountain_1366-500.png';
-var KEY_BG_CITY = 'bg_city_1000-350..png';
 var KEY_BACKGROUND = 'background';
-var KEY_DRAGON = 'dragon_480-90.png';
+var KEY_DRAGON = 'dragon';
+var KEY_GOKU = 'goku';
 
 var MAX_NUM_DRAGON = 10;
-
-var BG_MOUNTAIN_Y = 190;
-var BG_CITY_Y = 350;
-
-var VEL_MOUNTAIN = -20;
-var VEL_CITY = -100;
-var VEL_DRAGON = -200;
-
 
 window.onload = function() {
 
 //	var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create });
 	var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-
 	var dragons, arrayDragon = [];
-//	var macaco;
-	
-	var mountainGroup = null;
-	var arrayMountain = [];
-	
-	var cityGroup = null;
-	var arrayCity = [];
+	var goku;
 	
 	function preload () {
-		game.load.image(KEY_BG_SKY, assets + KEY_BG_SKY);
-		game.load.image(KEY_BG_MOUNTAIN, assets + KEY_BG_MOUNTAIN);
-		game.load.image(KEY_BG_CITY, assets + KEY_BG_CITY);
 		game.load.image(KEY_BACKGROUND, assets + 'background_960-600.png');
-		game.load.image(KEY_DRAGON, assets + KEY_DRAGON);
+		game.load.image(KEY_DRAGON, assets + 'dragon_480-90.png');
+		game.load.image(KEY_GOKU, assets + 'goku_45-62.png');
 		
 //		game.load.spritesheet('macaco', assets + '/macaco_44-62-6.png', 45, 62); // 44x62 eh o tamanho do frame da sprite
 		
@@ -48,41 +29,17 @@ window.onload = function() {
 	}
 
 	function create () {
+		game.physics.startSystem(Phaser.Game.ARCADE);
 		
-		game.add.sprite(0, 0, KEY_BG_SKY); // background
-		
-		// creating mountains
-		mountainGroup = game.add.group();
-		
-		arrayMountain[0] = mountainGroup.create(0, BG_MOUNTAIN_Y, KEY_BG_MOUNTAIN);
-		arrayMountain[1] = mountainGroup.create(arrayMountain[0].x + arrayMountain[0].width, BG_MOUNTAIN_Y, KEY_BG_MOUNTAIN);
-		
-		game.physics.enable(arrayMountain[0], Phaser.Physics.ARCADE);
-		game.physics.enable(arrayMountain[1], Phaser.Physics.ARCADE);
-		
-		arrayMountain[0].body.velocity.x = VEL_MOUNTAIN;
-		arrayMountain[1].body.velocity.x = VEL_MOUNTAIN;
-		
-		
-		// creating cities
-		cityGroup = game.add.group();
-		
-		arrayCity[0] = cityGroup.create(0, BG_CITY_Y, KEY_BG_CITY);
-		arrayCity[1] = cityGroup.create(arrayCity[0].x + arrayCity[0].width, BG_CITY_Y, KEY_BG_CITY);
-		
-		game.physics.enable(arrayCity[0], Phaser.Physics.ARCADE);
-		game.physics.enable(arrayCity[1], Phaser.Physics.ARCADE);
-		
-		arrayCity[0].body.velocity.x = VEL_CITY;
-		arrayCity[1].body.velocity.x = VEL_CITY;
-		
-		
-		
-		
+		game.add.sprite(0, 0, KEY_BACKGROUND); // background
+		var goku = game.add.sprite(350, 200, KEY_GOKU);	
+		game.physics.enable(goku, Phaser.Physics.ARCADE);
 		dragons = game.add.group();
 		dragons.enableBody = true;
+		game.physics.arcade.gravity.y = 1200;	
+		setTimeout(createDragon, 500);
 		
-		setTimeout(createDragon, 1000);
+		
 		
 		//createDragon();
 		
@@ -132,69 +89,23 @@ window.onload = function() {
 	
 	function update() {
 		
-		moveMountains();
-		moveCities();
-		
-		
 		moveDragons();
+		
+		if (game.input.activePointer.isDown)
+		{
+			goku.body.velocity.y -= 60;
+		}
+		
 		
 	}
 	
-	function moveCities() {
-
-//		console.log("arrayMountain: "+arrayMountain[0].body.x);
-
-		// move dragons
-		for(var count = 0; count < 2; count++) {
-
-			if(arrayCity[count] != null) {
-
-				if( arrayCity[count].body.x < -arrayCity[count].body.width ) {
-
-					// getting other image index
-					var otherIndex = 0;
-					if(count == 0) {
-						otherIndex = 1;
-					} 
-
-					arrayCity[count].body.x = arrayCity[otherIndex].body.x + arrayCity[otherIndex].body.width;
-
-				}
-			}
-		}
-
-	}
-	function moveMountains() {
-
-//		console.log("arrayMountain: "+arrayMountain[0].body.x);
-
-		// move dragons
-		for(var count = 0; count < 2; count++) {
-
-			if(arrayMountain[count] != null) {
-
-				if( arrayMountain[count].body.x < -arrayMountain[count].body.width ) {
-
-					// getting other image index
-					var otherIndex = 0;
-					if(count == 0) {
-						otherIndex = 1;
-					} 
-
-					arrayMountain[count].body.x = arrayMountain[otherIndex].body.x + arrayMountain[otherIndex].body.width;
-
-				}
-			}
-		}
-
-	}
-
 	function moveDragons() {
 		
 		// move dragons
 		for(var count = 0; count < MAX_NUM_DRAGON; count++) {
 			
 			if(arrayDragon[count] != null) {
+				arrayDragon[count].body.velocity.x = -200;
 				
 				if( (arrayDragon[count].body.x + arrayDragon[count].body.width) < 0 ) {
 					arrayDragon[count].kill();
@@ -249,13 +160,16 @@ window.onload = function() {
 			
 			if(arrayDragon[count] == null) {
 				arrayDragon[count] = dragons.create(game.world.bounds.width, y, KEY_DRAGON);
-				
-				arrayDragon[count].body.velocity.x = VEL_DRAGON;
 				break;
 			}
 		}
 		
 		setTimeout(createDragon, 1000);
 	}
+
+	
+	
+	
+	
 	
 };
