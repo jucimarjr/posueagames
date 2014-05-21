@@ -16,7 +16,7 @@ var play_state = { create: create, update: update, render: render };
         plataformas.enableBody = true;
         plataformas.createMultiple(20, 'obstacle2');
 
-        billySprite = game.add.sprite(0, 481.5, 'billy');
+        billySprite = game.add.sprite(200, 281.5, 'billy');
         billySprite.animations.add('walk', [0, 1, 2], 13, true);
         game.physics.enable(billySprite, Phaser.Physics.ARCADE);
         billySprite.body.gravity.y = 1000;
