@@ -3,6 +3,7 @@ var assets = "assets/";
 
 var KEY_BACKGROUND = 'background';
 var KEY_DRAGON = 'dragon';
+var KEY_GOKU = 'goku';
 
 var MAX_NUM_DRAGON = 10;
 
@@ -12,11 +13,12 @@ window.onload = function() {
 	var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 	var dragons, arrayDragon = [];
-//	var macaco;
+	var goku;
 	
 	function preload () {
 		game.load.image(KEY_BACKGROUND, assets + 'background_960-600.png');
 		game.load.image(KEY_DRAGON, assets + 'dragon_480-90.png');
+		game.load.image(KEY_GOKU, assets + 'goku_45-62.png');
 		
 //		game.load.spritesheet('macaco', assets + '/macaco_44-62-6.png', 45, 62); // 44x62 eh o tamanho do frame da sprite
 		
@@ -28,14 +30,19 @@ window.onload = function() {
 	}
 
 	function create () {
+		game.physics.startSystem(Phaser.Game.ARCADE);
 		
 		game.add.sprite(0, 0, KEY_BACKGROUND); // background
-		
-		
+		var goku = game.add.sprite(350, 200, KEY_GOKU);	
+		game.physics.enable(goku, Phaser.Physics.ARCADE);
 		dragons = game.add.group();
 		dragons.enableBody = true;
+		game.physics.arcade.gravity.y = 1200;	
+		setTimeout(createDragon, 500);
 		
-		setTimeout(createDragon, 1000);
+	
+		
+		
 		
 		//createDragon();
 		
@@ -85,8 +92,13 @@ window.onload = function() {
 	
 	function update() {
 		
-		
 		moveDragons();
+		
+		if (game.input.activePointer.isDown)
+		{
+			goku.body.velocity.y -= 60;
+		}
+		
 		
 	}
 	
@@ -157,5 +169,10 @@ window.onload = function() {
 		
 		setTimeout(createDragon, 1000);
 	}
+
+	
+	
+	
+	
 	
 };
