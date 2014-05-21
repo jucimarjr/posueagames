@@ -5,16 +5,17 @@ var create = {
     space_key   : null,
     enemy_group : null,
     timer : null,
+
     
     init : function(){
         //game defs
-        game.world.setBounds(0, 0, 960, 600);
+        game.world.setBounds(0, 0, 960, 800);
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         // background
-        // TODO: parallax background
+        // TODO: parallax background     
         //Tentativa de parallax background, não sei se era esse o conceito.
-        tilesprite = game.add.tileSprite(0, 0, 960,600, 'background');
+        tilesprite = game.add.tileSprite(0, 0, 960,800, 'background');
     	//Implementado para testar o tileSprite
         arrows = game.input.keyboard.createCursorKeys();
 
