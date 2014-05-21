@@ -3,11 +3,13 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Phaser Basic Project Template</title>
-	<script src="../../phaser/phaser.min.js"></script>
+	<script src="phaser/phaser.min.js"></script>
 	<script src="js/Boot.js"></script>
 	<script src="js/Preloader.js"></script>
 	<script src="js/MainMenu.js"></script>
-	<script src="js/Game.js"></script>
+	<script src="js/GameManager.js"></script>
+	<script src="js/Obstacle.js"></script>
+	<script src="js/ObstaclesManager.js"></script>
 </head>
 <body>
 
@@ -26,7 +28,7 @@ window.onload = function() {
 	game.state.add('Boot', BasicGame.Boot);
 	game.state.add('Preloader', BasicGame.Preloader);
 	//game.state.add('MainMenu', BasicGame.MainMenu);
-	game.state.add('Game', BasicGame.Game);
+	game.state.add('Game', BasicGame.GameManager);
 
 	//	Now start the Boot state.
 	game.state.start('Boot');

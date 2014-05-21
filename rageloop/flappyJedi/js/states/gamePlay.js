@@ -8,8 +8,8 @@
         this.fg = null;
         this.enemies = null;
         this.timer = null;
-        this.bullets = null;
-        this.bulletTimer = null;
+        this.weapon = null;
+        this.weaponFactory = null;
     };
 
     Gameplay.prototype = {
@@ -31,11 +31,10 @@
             this.enemies = this.game.add.group();
             this.enemies.createMultiple(20, 'enemy');
 
-            this.bullets = this.game.add.group();
-            this.bullets.createMultiple(10, 'bullet');
-            this.bullets.setAll('anchor.x', 0.5);
-            this.bullets.setAll('anchor.y', 0.5);
-            this.bullets.setAll('outOfBoundsKill', true);
+            this.weaponFactory = new WeaponFactory(this.game, this.player);
+            this.weaponFactory.create();
+
+            this.weapon = this.weaponFactory.nextWeapon();
 
             this.timer = this.game.time.events.loop(700, this.addEnemy, this);
 
@@ -50,7 +49,7 @@
             }
 
             this.game.physics.arcade.overlap(this.player, this.enemies, this.restart, null, this);
-            this.game.physics.arcade.overlap(this.bullets, this.enemies, this.killEnemy, null, this);
+            this.game.physics.arcade.overlap(this.weapon.group, this.enemies, this.killEnemy, null, this);
 
             if (this.player.y == 0 || this.player.y == (this.game.height - this.player.height)) {
                 this.restart();
@@ -66,6 +65,13 @@
 
             if (this.score_text) {
                 this.score_text.setText("Score: " + this.score);
+            }
+
+            //FIXME: Choose a way to update weapons
+            if (this.score % 10 == 0) {
+                if (this.weaponFactory.hasWeapon()) {
+                    this.weapon = this.weaponFactory.nextWeapon();
+                }
             }
         },
 
@@ -87,37 +93,10 @@
 
             this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
 
-            enemy.scale.set(0.5, 0.5);
-            enemy.reset(this.game.width, Math.round(Math.random() * (this.game.height - 100)));
+            enemy.reset(this.game.width, Math.round(Math.random() * (this.game.height - 94)));
             enemy.body.velocity.x = -700;
             enemy.checkWorldBounds = true;
             enemy.outOfBoundsKill = true;
-        },
-
-        fireBullet: function () {
-            if (this.bulletTimer) {
-                return;
-            }
-
-            var bullet = this.bullets.getFirstDead();
-
-            if (!bullet) {
-                return;
-            }
-
-            this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
-
-            bullet.scale.set(0.5, 0.5);
-            bullet.reset(this.player.x + this.player.width, this.player.y + this.player.height -25);
-            bullet.body.velocity.x = 1000;
-            bullet.checkWorldBounds = true;
-            bullet.outOfBoundsKill = true;
-
-            var self = this;
-            this.bulletTimer = setTimeout(function () {
-                clearTimeout(self.bulletTimer);
-                self.bulletTimer = null;
-            }, 300);
         },
 
         killEnemy: function (bullet, enemy) {
@@ -147,10 +126,6 @@
 
             // call game over view
             this.game.state.start('Gameover');
-
-            /*setTimeout(function () {
-                self.game.state.start('Gameplay');
-            }, 3000);*/
         },
 
         handleKeyDown: function() {
@@ -165,7 +140,7 @@
 
             if (this.game.input.keyboard.isDown (Phaser.Keyboard.ENTER)) {
                 if(this.isStarted) {
-                    this.fireBullet();
+                    this.weapon.fire();
                 }
             } 
         },

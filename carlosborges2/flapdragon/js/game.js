@@ -11,7 +11,6 @@ window.onload = function() {
 
 //	var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create });
 	var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-
 	var dragons, arrayDragon = [];
 	var goku;
 	
@@ -39,8 +38,6 @@ window.onload = function() {
 		dragons.enableBody = true;
 		game.physics.arcade.gravity.y = 1200;	
 		setTimeout(createDragon, 500);
-		
-	
 		
 		
 		
