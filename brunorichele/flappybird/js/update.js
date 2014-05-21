@@ -2,6 +2,28 @@ var update = {
     player : null,
     enemyTimer: null,
     update : function(){
+    	
+    	//Utilização das setas direcionais para testar o tilesprite
+    	
+	    if (arrows.left.isDown)
+	    {
+	        tilesprite.tilePosition.x += 8;
+	    }
+	    else if (arrows.right.isDown)
+	    {
+	        tilesprite.tilePosition.x -= 8;
+	    }
+
+	    if (arrows.up.isDown)
+	    {
+	        tilesprite.tilePosition.y += 8;
+	    }
+	    else if (arrows.down.isDown)
+	    {
+	        tilesprite.tilePosition.y -= 8;
+	    }
+    	
+    	
         // fazer o angulo apontar para baixo quando o jogador nÃ£o esta pulando
         if(this.player.angle < 20){
             this.player.angle += 1;
