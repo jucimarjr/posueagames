@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Simulacao Pong</title>
+
+		<style type="text/css">
+			canvas {
+				border: 3px dashed #000000;
+				background: #009900;
+			}
+		</style>
+	</head>
+	<body onload="init()">
+		<canvas id="canvas" width="600" height="480">
+			Navegador n√£o compat√≠vel com HTML5 Canvas
+		</canvas>
+
+		<script>
+			// Vari√°veis globais utilizadas no jogo
+			var canvas, context, barraWidth, barraHeight, jogadorPosX, jogadorPosY, teclaCimaPressionada, teclaBaixoPressionada, oponentePosX, oponentePosY, oponenteParaCima, bolaRaio, bolaPosX, bolaPosY, bolaParaDireita, bolaAngulo, bolaTempo, velocidadeJogador, velocidadeOponente, velocidadeBola, pontosJogador, pontosOponente;
+
+			function init() {
+
+				canvas = document.getElementById("canvas");
+				// procura o canvas
+				context = canvas.getContext("2d");
+				// recupera o contexto 2d
+
+				barraWidth = 30;
+				barraHeight = 90;
+
+				jogadorPosX = 0;
+				jogadorPosY = (canvas.height - barraHeight) / 2;
+				velocidadeJogador = 15;
+
+				teclaCimaPressionada = false;
+				teclaBaixoPressionada = false;
+
+				oponentePosX = canvas.width - barraWidth;
+				oponentePosY = 0;
+				oponenteParaCima = false;
+				velocidadeOponente = 20;
+
+				bolaRaio = 10;
+				bolaPosX = canvas.width / 2;
+				bolaPosY = canvas.height / 2;
+
+				pontosJogador = 0;
+				pontosOponente = 0;
+				imagem = new Image();
+				imagem.src = 'tenista.jpeg';
+
+				document.addEventListener('keyup', keyUp, false);
+				// adiciona evento para keyup
+				document.addEventListener('keydown', keyDown, false);
+				// adiciona evento para keydown
+				setInterval(gameLoop, 30);
+				// chama a function gameLoop a cada 30 frames
+			}
+
+			function keyDown(e) {
+				if (e.keyCode == 38) {// up
+					teclaCimaPressionada = true;
+				} else if (e.keyCode == 40) {// down
+					teclaBaixoPressionada = true;
+				}
+			}
+
+			function keyUp(e) {
+				if (e.keyCode == 38) {// up
+					teclaCimaPressionada = false;
+					// jogador soltou tecla cima
+				} else if (e.keyCode == 40) {// down
+					teclaBaixoPressionada = false;
+					// jogador soltou tecla baixo
+				}
+			}
+
+			function gameLoop() {
+
+				// Jogador
+				if (teclaCimaPressionada != teclaBaixoPressionada) {// se o jogador estiver pressionando a tecla baixo ou cima
+					if (teclaCimaPressionada) {// se for para cima...
+						if (jogadorPosY > 0) {// se n√£o sair da tela...
+							jogadorPosY -= velocidadeJogador;
+							// muda a posi√ß√£o
+						}
+					} else {// se for para baixo...
+						if (jogadorPosY < (canvas.height - barraHeight)) {// se n√£o sair da tela...
+							jogadorPosY += velocidadeJogador;
+							// muda a posi√ß√£o
+						}
+					}
+				}
+
+				// Oponente
+				if (oponenteParaCima) {// se o oponente estiver se movendo para cima...
+					oponentePosY -= velocidadeOponente;
+					// muda a posi√ß√£o
+					if (oponentePosY <= 0) {// se estiver saindo da tela...
+						oponenteParaCima = false;
+						// muda a dire√ß√£o
+					}
+				} else {// se o oponente estiver se movendo para baixo...
+					oponentePosY += velocidadeOponente;
+					// muda a posi√ß√£o
+					if (oponentePosY >= canvas.height - barraHeight) {// se estiver saindo da tela...
+						oponenteParaCima = true;
+						// muda a dire√ß√£o
+					}
+				}
+
+				// Desenha tudo na tela
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				// limpa a tela antes de desenhar
+
+				// Jogador e Oponente
+				context.drawImage(imagem, jogadorPosX, jogadorPosY);
+				context.fill();
+				//desenha jogador
+				context.fillStyle = "blue";
+				context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight);
+				//desenha oponente
+
+				// Bola
+				context.fillStyle = "yellow";
+				context.beginPath();
+				// inicia o modo de desenho
+				context.arc(bolaPosX, bolaPosY, bolaRaio, 0, Math.PI * 2, true);
+				// desenha o c√≠rculo desejado com as coordenadas no centro.
+				context.closePath();
+				// finaliza o caminho (opcional)
+				context.fill();
+
+				// Placar
+				var pontosA = pontosJogador;
+				// vari·vel tempor·ria para n„o alterar pontosJogador
+				var pontosB = pontosOponente;
+				// vari·vel tempor·ria para n„o alterar pontosOponente
+
+				if (pontosA < 10) {// se o n˙mero de pontos for menor que 10, colocamos o zero · esquerda
+					pontosA = "0" + pontosA;
+				}
+
+				if (pontosB < 10) {// se o n˙mero de pontos for menor que 10, colocamos o zero · esquerda
+					pontosB = "0" + pontosB;
+				}
+
+				context.font = "42pt Helvetica";
+				// tamanho e fonte para desenhar o texto
+				context.fillStyle = "#000000";
+				// cor preta (opcional)
+				context.fillText(pontosA + " " + pontosB, (canvas.width / 2) - 70, 50);
+				// escreve texto na tela na posiÁ„o desejada
+
+				// Linha divis√≥ria
+				context.beginPath();// inicia o modo de desenho
+				context.moveTo(canvas.width / 2, 0);
+				// posiciona o "lapis" para desenhar
+				context.lineTo(canvas.width / 2, canvas.height);
+				// faz o "risco" na tela
+				context.strokeStyle = "#FFFFFF";
+				context.stroke();
+				// aplica o risco na tela
+				context.closePath();
+				// finaliza o caminho (opcional)
+
+			}
+		</script>
+	</body>
+</html>
