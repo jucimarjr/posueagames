@@ -6,6 +6,7 @@ var KEY_BG_MOUNTAIN = 'mountain_1366-500.png';
 var KEY_BG_CITY = 'bg_city_1000-350..png';
 var KEY_BACKGROUND = 'background';
 var KEY_DRAGON = 'dragon_480-90.png';
+var KEY_DRAGON_SHEET = 'dragon_sheet_vert_480-90-3.png';
 
 var MAX_NUM_DRAGON = 10;
 
@@ -16,6 +17,7 @@ var VEL_MOUNTAIN = -20;
 var VEL_CITY = -100;
 var VEL_DRAGON = -200;
 
+var ANIM_DRAGON_FLY = 'ANIM_DRAGON_FLY';
 
 window.onload = function() {
 
@@ -38,7 +40,7 @@ window.onload = function() {
 		game.load.image(KEY_BACKGROUND, assets + 'background_960-600.png');
 		game.load.image(KEY_DRAGON, assets + KEY_DRAGON);
 		
-//		game.load.spritesheet('macaco', assets + '/macaco_44-62-6.png', 45, 62); // 44x62 eh o tamanho do frame da sprite
+		game.load.spritesheet(KEY_DRAGON_SHEET, assets + KEY_DRAGON_SHEET, 480, 90); // 44x62 eh o tamanho do frame da sprite
 		
 		// init array
 		for(var count = 0; count < MAX_NUM_DRAGON; count++) {
@@ -141,24 +143,24 @@ window.onload = function() {
 	}
 	
 	function moveCities() {
-
+		
 //		console.log("arrayMountain: "+arrayMountain[0].body.x);
-
+		
 		// move dragons
 		for(var count = 0; count < 2; count++) {
-
+			
 			if(arrayCity[count] != null) {
-
+				
 				if( arrayCity[count].body.x < -arrayCity[count].body.width ) {
-
+					
 					// getting other image index
 					var otherIndex = 0;
 					if(count == 0) {
 						otherIndex = 1;
 					} 
-
+					
 					arrayCity[count].body.x = arrayCity[otherIndex].body.x + arrayCity[otherIndex].body.width;
-
+					
 				}
 			}
 		}
@@ -248,9 +250,14 @@ window.onload = function() {
 		for(var count = 0; count < MAX_NUM_DRAGON; count++) {
 			
 			if(arrayDragon[count] == null) {
-				arrayDragon[count] = dragons.create(game.world.bounds.width, y, KEY_DRAGON);
+				arrayDragon[count] = dragons.create(game.world.bounds.width, y, KEY_DRAGON_SHEET);
 				
 				arrayDragon[count].body.velocity.x = VEL_DRAGON;
+				
+				arrayDragon[count].animations.add(ANIM_DRAGON_FLY, [0, 1, 2], 8, true); /// key, frames, speed, loop
+				
+				arrayDragon[count].animations.play(ANIM_DRAGON_FLY);
+				
 				break;
 			}
 		}
