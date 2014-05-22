@@ -4,6 +4,7 @@ var SuperMouse  = {};
 SuperMouse.Game = function(game) {
 	
 	this.asteroids;
+	this.player;
 	this.sameColumn = false;	
 }; 
 
@@ -12,12 +13,15 @@ SuperMouse.Game.prototype.preload = function() {
 	
 	this.load.image('universe', 'assets/universe_900-600.png');
     this.load.image('asteroid', 'assets/asteroid_80-80.png');
+    this.load.image('player', 'assets/player_120-40.png');
 
 };
 
 SuperMouse.Game.prototype.create = function() {
 
 	this.add.sprite(0, 0, 'universe');
+
+	this.player = this.add.sprite(300, 300, 'player');
 	
 	this.asteroids = this.add.group();
 	this.asteroids.enableBody = true;

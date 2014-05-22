@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="85.333278"
-     inkscape:cy="717.28058"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="-311.76977"
+     inkscape:cy="724.74772"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -52,7 +52,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#00ffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.998613px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#1c1f24;fill-rule:evenodd;stroke:#000000;stroke-width:0.99861299999999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="rect2987"
        width="899.0014"
        height="599.0014"
@@ -68,25 +68,72 @@
        height="100"
        x="448.57144"
        y="815.21936" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#0000ff"
-       id="path3025"
-       sodipodi:cx="184.28572"
-       sodipodi:cy="298.79074"
-       sodipodi:rx="90"
-       sodipodi:ry="67.85714"
-       d="m 274.28572,298.79074 a 90,67.85714 0 1 1 -179.999999,0 90,67.85714 0 1 1 179.999999,0 z"
-       transform="matrix(0.44444444,0,0,0.58947371,-510.47619,306.23288)"
-       inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\asteroid_100-100.png"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
     <rect
        style="fill:#ff0000"
        id="rect3027"
        width="120"
        height="40"
-       x="-130"
-       y="219.50504" />
+       x="-414.48877"
+       y="166.28896"
+       inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\player_120-40.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       id="g3063"
+       transform="translate(72.730983,-204.05081)">
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\asteroid_80-80.png"
+         transform="matrix(0.44444444,0,0,0.58947371,-510.47619,306.23288)"
+         d="m 274.28572,298.79074 c 0,37.47646 -40.29437,67.85714 -90,67.85714 -49.70563,0 -89.999999,-30.38068 -89.999999,-67.85714 0,-37.47646 40.294369,-67.85714 89.999999,-67.85714 49.70563,0 90,30.38068 90,67.85714 z"
+         sodipodi:ry="67.85714"
+         sodipodi:rx="90"
+         sodipodi:cy="298.79074"
+         sodipodi:cx="184.28572"
+         id="path3025"
+         style="fill:#d4aa00"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.70612127,-0.70809093,0.70809093,0.70612127,-472.67888,-165.3435)"
+         d="m -427.14287,467.36218 c 0,5.12836 -5.11675,9.28572 -11.42857,9.28572 -6.31183,0 -11.42857,-4.15736 -11.42857,-9.28572 0,-5.12836 5.11674,-9.28571 11.42857,-9.28571 6.31182,0 11.42857,4.15735 11.42857,9.28571 z"
+         sodipodi:ry="9.2857141"
+         sodipodi:rx="11.428572"
+         sodipodi:cy="467.36218"
+         sodipodi:cx="-438.57144"
+         id="path3029"
+         style="fill:#ffd42a"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.70612127,-0.70809093,0.70809093,0.70612127,-435.89316,-179.27209)"
+         d="m -427.14287,467.36218 c 0,5.12836 -5.11675,9.28572 -11.42857,9.28572 -6.31183,0 -11.42857,-4.15736 -11.42857,-9.28572 0,-5.12836 5.11674,-9.28571 11.42857,-9.28571 6.31182,0 11.42857,4.15735 11.42857,9.28571 z"
+         sodipodi:ry="9.2857141"
+         sodipodi:rx="11.428572"
+         sodipodi:cy="467.36218"
+         sodipodi:cx="-438.57144"
+         id="path3029-7"
+         style="fill:#ffcc00"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.58499173,-0.56241335,0.58662351,0.56084892,-422.96212,-19.987247)"
+         d="m -427.14287,467.36218 c 0,5.12836 -5.11675,9.28572 -11.42857,9.28572 -6.31183,0 -11.42857,-4.15736 -11.42857,-9.28572 0,-5.12836 5.11674,-9.28571 11.42857,-9.28571 6.31182,0 11.42857,4.15735 11.42857,9.28571 z"
+         sodipodi:ry="9.2857141"
+         sodipodi:rx="11.428572"
+         sodipodi:cy="467.36218"
+         sodipodi:cx="-438.57144"
+         id="path3029-5"
+         style="fill:#aa8800"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.70612127,-0.70809093,0.70809093,0.70612127,-458.7503,-139.62923)"
+         d="m -427.14287,467.36218 c 0,5.12836 -5.11675,9.28572 -11.42857,9.28572 -6.31183,0 -11.42857,-4.15736 -11.42857,-9.28572 0,-5.12836 5.11674,-9.28571 11.42857,-9.28571 6.31182,0 11.42857,4.15735 11.42857,9.28571 z"
+         sodipodi:ry="9.2857141"
+         sodipodi:rx="11.428572"
+         sodipodi:cy="467.36218"
+         sodipodi:cx="-438.57144"
+         id="path3029-8"
+         style="fill:#806600"
+         sodipodi:type="arc" />
+    </g>
   </g>
 </svg>
