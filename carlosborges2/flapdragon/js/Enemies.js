@@ -2,7 +2,7 @@ Enemies = function(game) {
 	this.game = game;
 	this.enemies;
 	this.sprites = [ 'char1', 'char2', 'char3' ];
-}
+};
 
 Enemies.prototype = {
 	preload : function() {
@@ -16,8 +16,7 @@ Enemies.prototype = {
 
 	create : function() {
 		this.enemies = this.game.add.group();
-		this.game.time.events.loop(Phaser.Timer.SECOND * 2,
-				this.generateBarrier, this).timer.start();
+		this.game.time.events.loop(Phaser.Timer.SECOND * 2, this.generateBarrier, this).timer.start();
 	},
 
 	generateBarrier : function() {
@@ -32,4 +31,4 @@ Enemies.prototype = {
 		enemy.body.immovable = true;
 		enemy.body.velocity.x = -200;
 	}
-}
+};

@@ -4,10 +4,10 @@ var player = null;
 var level = null;
 var enemies = null;
 
-game.state.add('warning', warningState);
-game.state.add('load', loadState);
-game.state.add('menu', menuState);
-game.state.add('play', playState);
+game.state.add(STATE_WARNING, warningState);
+game.state.add(STATE_LOAD, loadState);
+game.state.add(STATE_MENU, menuState);
+game.state.add(STATE_PLAY, playState);
 
 // game.state.start('warning');
-game.state.start('load');
+game.state.start(STATE_LOAD);

@@ -1,30 +1,33 @@
-Level = function(game) {
-	this.game = game;
+
+var BG_SKY = PATH_ASSETS + 'sky_960-600.png';
+var BG_GROUND = PATH_ASSETS + 'mountain_1366-500.png';
+
+Level = function(/*game*/) {
+	
+//	this.game = game;
 	this.ground;
-	this.bg;
-}
+	this.bgSky;
 
-Level.prototype = {
-
-	preload : function() {
+	this.preload = function() {
+		
 		console.log('level -> preload');
-		this.game.load.image('bg', 'assets/sky_960-600.png');
-		this.game.load.image('ground', 'assets/  mountain_1366-500.png');
-	},
+		
+		game.load.image(BG_SKY, BG_SKY);
+		game.load.image(BG_GROUND, BG_GROUND);
+		
+	};
 
-	create : function() {
+	this.create = function() {
 		// background
-		this.bg = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
-				game.cache.getImage('bg').height, 'bg');
-
+		this.bgSky = game.add.sprite(0, 0, BG_SKY);
+		
 		// ground
-		this.ground = this.game.add.tileSprite(0, this.game.world.height - 90,
-				this.game.world.width, 90, 'ground');
+		this.ground = game.add.tileSprite(0, game.world.height - 90, game.world.width, 90, BG_GROUND);
 		this.ground.autoScroll(-200, 0);
-
+		
 		// physics
-		this.game.physics.enable(this.ground, Phaser.Physics.ARCADE);
+		game.physics.enable(this.ground, Phaser.Physics.ARCADE);
 		this.ground.body.immovable = true;
-	},
+	};
 
-}
+};
