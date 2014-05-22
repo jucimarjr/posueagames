@@ -69,10 +69,10 @@
         	
         	// PEGA A ENTRADA (tecla pressionada):	
         	if ( this.game.input.keyboard.isDown (Phaser.Keyboard.RIGHT) ) { // vai para esquerda
-        		this.player.x += 5;
+        		this.player.x += 10;
         		this.player.animations.play('walk');
         	} else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
-        		this.player.x -= 5;
+        		this.player.x -= 10;
         		this.player.animations.play('walk');
         	} else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.UP) ) { // vai para esquerda
     			
@@ -80,7 +80,7 @@
         		this.player.frame = 0;
         		
      			if (this.player.body.touching.down) {
-     				this.player.body.velocity.y = -400;
+     				this.player.body.velocity.y = -500;
      			}
      			
         	} else {

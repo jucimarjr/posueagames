@@ -1,7 +1,7 @@
 
 var dinoSprite, ossos, plataformas;
 
-var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(960, 500, Phaser.AUTO, 'phaser-game', { preload: preload, create: create, update: update });
 
 function preload () {
 

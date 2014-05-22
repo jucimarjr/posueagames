@@ -12,11 +12,13 @@ var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create
 function preload () {
 
 	game.load.spritesheet('boneco', 'assets/bonecoSpriteSheet2_240-60-4.png', 60,60);
-	game.load.image('chao', 'assets/chao2_325-28.png');
-    game.load.image('ground', 'assets/backchop.png');
+	//game.load.image('chao', 'assets/chao2_325-28.png');
+	game.load.image('chao', 'assets/top2_100-100.png');
+	game.load.image('top', 'assets/top3_50-50.png');
+    game.load.image('ground', 'assets/hellcopter_background2.png');
    // game.load.image('bloco', 'assets/bloco_80-30.png');
-    game.load.image('bloco', 'assets/block3.png');
-    game.load.spritesheet('helicoptero', 'assets/helicopteroSpritesheet_365-60-4.png', 90, 59);
+    game.load.image('bloco', 'assets/block4.png');
+    game.load.spritesheet('helicoptero', 'assets/helicopteroSpritesheet_365-60-4.png', 91, 59);
 
 
 }
@@ -24,20 +26,31 @@ function preload () {
 function create () {
 
 	game.add.sprite(0, 0, 'chao');
-
+	game.add.sprite(0, 0, 'top');
 
     //faz a chao rolar em loop
     this.ground2 = this.game.add.tileSprite(0, 0, 960, 600, 'ground');//(x,y,tamanho em x,?)
     this.ground2.autoScroll(-20, 0);
 
-    this.ground = this.game.add.tileSprite(0, 575, 960, 112, 'chao');//(x,y,tamanho em x,?)
-    this.ground.autoScroll(-200, 0);
+    this.ground = this.game.add.tileSprite(0, 500, 960, 100, 'chao');//(x,y,tamanho em x,?)
+    this.ground.autoScroll(-400, 0);
 
-
+    this.top = this.game.add.tileSprite(0,0,960,25,'top');
+    this.top.autoScroll(-400, 0);
+    
+    game.physics.enable(this.top, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
+    game.physics.enable(this.ground, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
+    
+    this.ground.body.immovable = true;
+    this.ground.body.width = this.game.world.width;
+    
+    this.top.body.immovable = true;
+    this.top.body.width = this.game.world.width;
+    
 	
 	// Criando o Helicoptero
 	bonecoSprite = game.add.sprite(128, 80, 'helicoptero');
-	bonecoSprite.animations.add('walk',[1,4],47,true);
+	bonecoSprite.animations.add('walk',[1,4],4,true);
 
 	game.physics.enable(bonecoSprite, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 
@@ -50,10 +63,10 @@ function create () {
 
     ledges = game.add.group();
     ledges.enableBody = true;
-    obstacles = game.add.group();
+   /* obstacles = game.add.group();
     obstacles.enableBody = true;
-    obstacles.createMultiple(20,'bloco');
-    game.time.events.loop(1500, createBlocos, this);
+    obstacles.createMultiple(20,'bloco');*/
+    game.time.events.loop(900, createBlocos, this);
     //this.timer = this.
     //game.time.events.loop(1500, addLinhaDeObstaculos(), this);
 
@@ -68,7 +81,8 @@ function update () {
         start = 1;
         count = 0; 
     }
-
+    game.physics.arcade.collide(bonecoSprite, this.ground);
+    game.physics.arcade.collide(bonecoSprite, this.top);
     game.physics.arcade.collide(bonecoSprite, ledges);
     game.physics.arcade.overlap(bonecoSprite, ledges, gameEnd, null, this); 
 
@@ -76,8 +90,11 @@ function update () {
 
 
 function createBlocos() {
-	ledge = ledges.create(game.world.width, game.rnd.integerInRange(35, game.world.height) - 70, 'bloco');
-	ledge.body.velocity.x = -650;
+	ledge = ledges.create(game.world.width, game.rnd.integerInRange(35, game.world.height) - 100, 'bloco');
+	
+	
+	
+	ledge.body.velocity.x = -950;
 	ledge.body.immovable = true;
 	ledge.outOfBoundsKill = true;
 } 
