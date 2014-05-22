@@ -68,34 +68,20 @@ function createRivers() {
     rivers.create(jungleWidth, -1800, 'river');
 }
 
+function addEnemie(_sprite, x, y, speed, loop){
+    var enemie = game.add.sprite(x, y, _sprite);
+    enemie.animations.add('run');
+    enemie.animations.play('run',speed, loop);
+    enemies.add(enemie);  
+}
+
 function initEnemies() {
-    var alligator = game.add.sprite(game.world.centerX, 200, 'alligator');
-    alligator.animations.add('run');
-    alligator.animations.play('run',4,true);
-
-    var boto = game.add.sprite(game.world.centerX, 150, 'boto');
-    boto.animations.add('run');
-    boto.animations.play('run',6,true);
-
-    var sand = game.add.sprite(game.world.centerX, 100, 'sand');
-    sand.animations.add('run');
-    sand.animations.play('run',2,true);
-
-    var trunk = game.add.sprite(game.world.centerX, 50, 'trunk');
-    trunk.animations.add('run');
-    trunk.animations.play('run',2,true);
-
-    var trunk2 = game.add.sprite(game.world.centerX, 50, 'trunk');
-    trunk2.animations.add('run');
-    trunk2.animations.play('run',2,true);
-
     enemies = game.add.group();
-    //enemies.create(game.world.centerX, -100, 'alligator');
-    enemies.add(alligator);    
-    enemies.add(sand);
-    enemies.add(boto);
-    enemies.add(trunk);
-    enemies.add(trunk2);
+    addEnemie('trunk',     196, 300, 2, true);
+    addEnemie('alligator', 500, 200, 4, true); 
+    addEnemie('sand',      196, 100  , 2, true);    
+    addEnemie('trunk',     350, -0, 2, true);    
+    addEnemie('boto',      200, -100, 6, true);
     //enemies.createMultiple(5, 'buraco', 0, false);
     //game.physics.arcade.enable(enemies);	
     game.physics.enable(enemies, Phaser.Physics.ARCADE);
@@ -129,7 +115,7 @@ function addEnemies() {
         } else if (positionX < jungleWidth) {
             positionX = jungleWidth;
         }*/
-        enemie.reset(positionX, -70);
+        enemie.reset(positionX, -80);
 
         //enemie.body.bounce.y = 0.8;
     }
@@ -230,8 +216,4 @@ function pegarObjetos(_boat, _enemies) {
     boat.play('dead');
     boat.kill();
     game.state.start('gameOver');
-}
-
-function gameOver(){
-    
 }

@@ -2,6 +2,13 @@ Enemies = function(game) {
 	this.game = game;
 	this.enemies;
 	this.sprites = [ 'char1', 'char2', 'char3' ];
+	this.x = game.world.randomX;
+    this.y = game.world.randomY;
+	this.minSpeed = -75;
+    this.maxSpeed = 75;
+	this.vx = Math.random()*(this.maxSpeed - this.minSpeed+1)-this.minSpeed;
+    this.vy = Math.random()*(this.maxSpeed - this.minSpeed+1)-this.minSpeed;
+	
 }
 
 Enemies.prototype = {
@@ -17,8 +24,20 @@ Enemies.prototype = {
 	create : function() {
 		this.enemies = this.game.add.group();
 		this.game.time.events.loop(Phaser.Timer.SECOND * 2,
-				this.generateBarrier, this).timer.start();
+				this.createEnemy, this).timer.start();
 	},
+	createEnemy : function(){
+		var enemy = this.enemies.create(this.x,this.y, this.sprites[this.game.rnd
+						.integerInRange(0, 2)]);
+						
+		enemy.anchor.setTo(0.5, 0.5);
+		enemy.body.collideWorldBounds = true;
+		enemy.body.bounce.setTo(1, 1);
+		enemy.body.velocity.x = this.vx;
+		enemy.body.velocity.y = this.vy;
+		enemy.body.immovable = true;
+	}
+	/*,
 
 	generateBarrier : function() {
 		console.log('level -> generateBarrier');
@@ -31,5 +50,5 @@ Enemies.prototype = {
 		enemy.body.allowGravity = false;
 		enemy.body.immovable = true;
 		enemy.body.velocity.x = -200;
-	}
+	}*/
 }

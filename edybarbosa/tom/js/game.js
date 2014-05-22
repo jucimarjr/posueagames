@@ -3,6 +3,8 @@ var cat;
 var fence;
 var cursors;
 var obstacles;
+var metrosPercorridos = 0;
+var score;
 
 function preload() {
 	game.stage.backgroundColor = "#ffffff";
@@ -28,7 +30,6 @@ function create() {
 
     cat.body.collideWorldBounds = true;
 
-    
 	//cat.animations.add('run');
 	cat.animations.add('run', [0, 3], 7, true);
 	cat.animations.add('jump', [2], 7, true);
@@ -40,12 +41,20 @@ function create() {
 	game.physics.enable(fence, Phaser.Physics.ARCADE);
 	fence.body.immovable = true;
 
-	
 	obstacles = game.add.group();
     game.time.events.repeat(Phaser.Timer.SECOND * 1.4, 100, createObstacle, this);
 
-    
+    // Conta metros
+    timer = game.time.create(false);
+    timer.loop(200, updateScore, this);
+    timer.start();
+    score = game.add.text(720, 64, metrosPercorridos + "m");
+
     cursors = game.input.keyboard.createCursorKeys();
+}
+
+function updateScore() {
+    metrosPercorridos++;
 }
 
 function createObstacle() {
@@ -67,11 +76,11 @@ function createObstacle() {
 }
 
 function update() {
-	fence.tilePosition.x -= 5;
+	fence.tilePosition.x -= 6;
 
 	game.physics.arcade.collide(cat, fence);
 	game.physics.arcade.collide(cat, obstacles, collisionHandler, null, this);
-	 
+	
  	// Pulo do gato
     if (cursors.up.isDown && cat.body.touching.down) {
         cat.body.velocity.y = -230;
@@ -83,8 +92,9 @@ function update() {
     } else if(cat.body.touching.down) {
        cat.animations.play('run');
        cat.angle = 0;
-       
     }
+    
+    score.setText(metrosPercorridos + "m")
 }
 
 function collisionHandler (obj1, obj2) {
