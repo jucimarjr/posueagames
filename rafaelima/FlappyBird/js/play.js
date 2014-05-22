@@ -16,12 +16,12 @@ var play_state = { create: create, update: update, render: render };
         plataformas.enableBody = true;
         plataformas.createMultiple(20, 'obstacle2');
 
-        billySprite = game.add.sprite(480, 281.5, 'billy');
-        billySprite.animations.add('walk', [0, 1, 2], 13, true);
-        game.physics.enable(billySprite, Phaser.Physics.ARCADE);
-        billySprite.body.gravity.y = 1000;
-        billySprite.body.collideWorldBounds = false; // para no limite inferior da tela
-        game.camera.follow(billySprite.sprite);
+        playerSprite = game.add.sprite(480, 281.5, 'player');
+        playerSprite.animations.add('walk', [0, 1, 2, 3], 13, true);
+        game.physics.enable(playerSprite, Phaser.Physics.ARCADE);
+        playerSprite.body.gravity.y = 1000;
+        playerSprite.body.collideWorldBounds = false; // para no limite inferior da tela
+        game.camera.follow(playerSprite.sprite);
 
         background4 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background4').height, 'background4');
         game.physics.arcade.enable(background4);
@@ -39,12 +39,12 @@ var play_state = { create: create, update: update, render: render };
 
     // Start the actual game
     function update() {
-        game.physics.arcade.overlap(billySprite, plataformas, playerDies, null, this)
+        game.physics.arcade.overlap(playerSprite, plataformas, playerDies, null, this)
 
-        if (billySprite.inWorld === false)
+        if (playerSprite.inWorld === false)
             restart_game();
 
-        billySprite.body.velocity.x = 0;
+        playerSprite.body.velocity.x = 0;
         background1.tilePosition.x -= 0.5;
         background2.tilePosition.x -= 2;
         background3.tilePosition.x -= 3;
@@ -59,13 +59,13 @@ var play_state = { create: create, update: update, render: render };
     }
 
     function jump() {
-        billySprite.body.velocity.y = -450;
-        billySprite.animations.play('walk');
+        playerSprite.body.velocity.y = -450;
+        playerSprite.animations.play('walk');
     }
 
     function notJump() {
-        billySprite.animations.stop();
-        billySprite.frame = 0;
+        playerSprite.animations.stop();
+        playerSprite.frame = 0;
     }
 
     function playerDies() {
@@ -80,8 +80,8 @@ var play_state = { create: create, update: update, render: render };
     }
 
     function playDeadAnimation() {
-        billySprite.exists = false;
-        deathSprite = game.add.sprite(billySprite.body.position.x, billySprite.body.position.y, 'dino');
+        playerSprite.exists = false;
+        deathSprite = game.add.sprite(playerSprite.body.position.x, playerSprite.body.position.y, 'dino');
         deathSprite.animations.add('walk', [0, 1, 2, 4, 5], 13, true);
         game.physics.enable(deathSprite, Phaser.Physics.ARCADE);        
         deathSprite.body.gravity.y = 1000;
@@ -115,5 +115,5 @@ var play_state = { create: create, update: update, render: render };
 
     function render() {
 //        game.debug.cameraInfo(game.camera, 32, 32);
-//        game.debug.spriteCoords(billySprite, 32, 200);
+//        game.debug.spriteCoords(playerSprite, 32, 200);
     }

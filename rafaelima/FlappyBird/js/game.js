@@ -3,7 +3,7 @@ var game = new Phaser.Game(960, 600, Phaser.AUTO, 'game_div');
 //variavel global
 var score = 0;
 
-var billySprite, deathSprite;
+var playerSprite, deathSprite;
 var plataformas;
 var space_key;
 var soungFlag = true;
