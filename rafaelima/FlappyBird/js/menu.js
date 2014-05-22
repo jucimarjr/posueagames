@@ -31,8 +31,6 @@ var menu_state = { create: create, update: update, start: start };
         two_keyboar.onDown.add(soung, this);
         
         billySprite = game.add.sprite(0, game.world.height/2, 'billy');
-//		billySprite.animations.add('jump',[0,1,2],6,true);
-//		game.physics.enable(billySprite, Phaser.Physics.ARCADE); 
 
 		game.add.tween(billySprite).to({y:15}, 500, Phaser.Easing.Linear.NONE, true, 0, 1000, true);  
 	}

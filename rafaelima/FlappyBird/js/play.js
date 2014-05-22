@@ -54,7 +54,7 @@ var play_state = { create: create, update: update, render: render };
     }
 
     function jump() {
-        billySprite.body.velocity.y = -350;
+        billySprite.body.velocity.y = -450;
         billySprite.animations.play('walk');
     }
 
@@ -77,7 +77,7 @@ var play_state = { create: create, update: update, render: render };
         obstacle.reset(x, y);
 
         // Add velocity to the pipe to make it move left
-        obstacle.body.velocity.x = -200;
+        obstacle.body.velocity.x = -300;
 
         // Kill the pipe when it's no longer visible 
         obstacle.outOfBoundsKill = true;

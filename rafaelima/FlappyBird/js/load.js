@@ -16,8 +16,3 @@ var load_state = { preload: preload, create: create };
     function create() {
         game.state.start('menu');
     }
-
-
-//var main_state = { preload: preload, create: create, update: update };
-//game.state.add('main', main_state);
-//game.state.start('main');
