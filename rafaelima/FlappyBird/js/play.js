@@ -1,5 +1,4 @@
-var play_state = { create: create, update: update, render: render };
-	
+var play_state = { create: create, update: update };	
 	//Sem function preload() pq já existe no load.js
     function create() {
     	
@@ -16,14 +15,14 @@ var play_state = { create: create, update: update, render: render };
         plataformas.enableBody = true;
         plataformas.createMultiple(20, 'obstacle2');
 
-        playerSprite = game.add.sprite(480, 281.5, 'player');
-        playerSprite.animations.add('walk', [0, 1, 2, 3], 13, true);
+        playerSprite = game.add.sprite(180, 281.5, 'player');
+        playerSprite.animations.add('walk', [0, 1, 2, 3], 8, true);
         game.physics.enable(playerSprite, Phaser.Physics.ARCADE);
         playerSprite.body.gravity.y = 1000;
         playerSprite.body.collideWorldBounds = false; // para no limite inferior da tela
         game.camera.follow(playerSprite.sprite);
 
-        deathSprite = game.add.sprite(playerSprite.body.position.x, playerSprite.body.position.y, 'dino');
+        deathSprite = game.add.sprite(playerSprite.body.position.x, playerSprite.body.position.y, 'death');
         deathSprite.exists = false;
         deathSprite.animations.add('walk', [0, 1, 2, 4, 5], 13, true);
         game.physics.enable(deathSprite, Phaser.Physics.ARCADE);
@@ -36,16 +35,24 @@ var play_state = { create: create, update: update, render: render };
         background5 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background5').height, 'background5');
         game.physics.arcade.enable(background5);
 
+        powerUp_multiply(); //comment to not multiply
         // Call the 'jump' function when the spacebar key is hit
         space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space_key.onDown.add(jump, this);
         space_key.onUp.add(notJump, this);
-
+        
         this.timer = this.game.time.events.loop(1500, add_obstacle, this);
     }
 
     // Start the actual game
     function update() {
+        playerSprite.animations.play('walk');
+
+        if (playersGroup.exists) {
+            playersGroup.callAll('animations.play', 'animations', 'walk');
+            playersGroup.forEach(function (item) { game.physics.arcade.overlap(item, plataformas, function () { item.kill(); }, null, this); });
+        }
+
         game.physics.arcade.overlap(playerSprite, plataformas, playerDies, null, this)
 
         if (playerSprite.inWorld === false)
@@ -57,17 +64,13 @@ var play_state = { create: create, update: update, render: render };
         background3.tilePosition.x -= 3;
         background4.tilePosition.x -= 4;
         background5.tilePosition.x -= 0;
-
-        /*if (game.camera.x >= 0) {
-            background2.body.velocity.x = -10;
-            background3.tilePosition.x  = -25;
-            background4.body.velocity.x = -70;
-        }*/
     }
 
     function jump() {
         playerSprite.body.velocity.y = -450;
-        playerSprite.animations.play('walk');
+        if (playersGroup.exists === true) {
+            playersGroup.forEach(function (item) { item.body.velocity.y = -450; }, null, this);
+        }
     }
 
     function notJump() {
@@ -119,7 +122,21 @@ var play_state = { create: create, update: update, render: render };
                 add_one_obstacle(800, i * 154);
     }
 
-    function render() {
-//        game.debug.cameraInfo(game.camera, 32, 32);
-//        game.debug.spriteCoords(playerSprite, 32, 200);
+    function powerUp_multiply() {
+        playersGroup = game.add.group();
+        playersGroup.enableBody = true;
+        for (var i = 0; i < 10; i++) {
+            player = playersGroup.create(game.world.randomX, game.world.randomY, 'player');
+            player.animations.add('walk', [0, 1, 2, 3], 8, true);
+            game.physics.enable(player, Phaser.Physics.ARCADE);
+            player.body.gravity.y = 1000;
+            player.body.collideWorldBounds = false; // para no limite inferior da tela
+            player.animations.play('walk');
+        }
+        setTimeout(powerUp_multiply_Off, 5000);
     }
+
+    function powerUp_multiply_Off() {
+        playersGroup.forEach(function (item) { item.kill(); }, null, this);
+        playersGroup.kill();
+     }
