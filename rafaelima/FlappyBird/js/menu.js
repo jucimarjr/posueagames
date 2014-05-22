@@ -30,9 +30,9 @@ var menu_state = { create: create, update: update, start: start };
         var two_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
         two_keyboar.onDown.add(soung, this);
         
-        billySprite = game.add.sprite(0, game.world.height/2, 'billy');
+        playerSprite = game.add.sprite(0, game.world.height/2, 'player');
 
-		game.add.tween(billySprite).to({y:15}, 500, Phaser.Easing.Linear.NONE, true, 0, 1000, true);  
+		game.add.tween(playerSprite).to({y:15}, 500, Phaser.Easing.Linear.NONE, true, 0, 1000, true);  
 	}
 	
 	function update(){
