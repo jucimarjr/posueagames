@@ -3,7 +3,8 @@ var play_state = { create: create, update: update, render: render };
 	//Sem function preload() pq já existe no load.js
     function create() {
     	
-        background1 = game.add.sprite(0, 0, 'background1');
+    	background1 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background1').height, 'background1');
+    	game.physics.arcade.enable(background1);
 
         background2 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background2').height, 'background2');
         game.physics.arcade.enable(background2);
@@ -25,6 +26,9 @@ var play_state = { create: create, update: update, render: render };
         background4 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background4').height, 'background4');
         game.physics.arcade.enable(background4);
 
+        background5 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background5').height, 'background5');
+        game.physics.arcade.enable(background5);
+
         // Call the 'jump' function when the spacebar key is hit
         space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space_key.onDown.add(jump, this);
@@ -41,9 +45,11 @@ var play_state = { create: create, update: update, render: render };
             restart_game();
 
         billySprite.body.velocity.x = 0;
-        background2.tilePosition.x -= 0.3;
-        background3.tilePosition.x -= 0.5;
-        background4.tilePosition.x -= 1;
+        background1.tilePosition.x -= 0.5;
+        background2.tilePosition.x -= 2;
+        background3.tilePosition.x -= 3;
+        background4.tilePosition.x -= 4;
+        background5.tilePosition.x -= 0;
 
         /*if (game.camera.x >= 0) {
             background2.body.velocity.x = -10;
@@ -91,6 +97,6 @@ var play_state = { create: create, update: update, render: render };
     }
 
     function render() {
-        game.debug.cameraInfo(game.camera, 32, 32);
-        game.debug.spriteCoords(billySprite, 32, 200);
+//        game.debug.cameraInfo(game.camera, 32, 32);
+//        game.debug.spriteCoords(billySprite, 32, 200);
     }

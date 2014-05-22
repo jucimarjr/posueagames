@@ -9,6 +9,7 @@ var load_state = { preload: preload, create: create };
         game.load.image('background2', 'assets/background2.png');
         game.load.image('background3', 'assets/background3.png');
         game.load.image('background4', 'assets/background4.png');
+        game.load.image('background5', 'assets/background5.png');
 		game.load.audio('flap_song', 'assets/flap.wav');
 		game.load.image('logo', 'assets/logo_547_421.png');
     }
