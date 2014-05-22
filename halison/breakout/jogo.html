@@ -97,7 +97,7 @@
 	function init() {
 		
 		loadImages(sources, function(images) {
-	        images2 = images;
+	        this.images = images;
 		});
 		
 		// Tela
@@ -176,46 +176,46 @@
 	        context.clearRect(0, 0, canvas.width, canvas.height);
 
 			// Desenhar 'BREAK UT'
-			context.drawImage(images2.breakut,70, 86, 466, 88);
+			context.drawImage(images.breakut,70, 86, 466, 88);
 			
 			// Desenhar 'O'
-			context.drawImage(images2.o, 340, 120, 84, 75);
+			context.drawImage(images.o, 340, 120, 84, 75);
 
 			// Desenhar 'QUEBRANDO TUDO!'
-			context.drawImage(images2.quebrandoTudo, 68, 150, 234, 41);
+			context.drawImage(images.quebrandoTudo, 68, 150, 234, 41);
 
 			// Desenhar Raquete e marcar seleção do menu
 			if ( selecaoMenu == 1){
-				context.drawImage(images2.racket1, 77, menuRacketPosY, menuRacketWidth, menuRacketHeight);
+				context.drawImage(images.racket1, 77, menuRacketPosY, menuRacketWidth, menuRacketHeight);
 			} else if (selecaoMenu == 2){
-				context.drawImage(images2.racket1, 267, menuRacketPosY, menuRacketWidth, menuRacketHeight);
+				context.drawImage(images.racket1, 267, menuRacketPosY, menuRacketWidth, menuRacketHeight);
 			} else if (selecaoMenu == 3){
-				context.drawImage(images2.racket1, 438, menuRacketPosY, menuRacketWidth, menuRacketHeight);
+				context.drawImage(images.racket1, 438, menuRacketPosY, menuRacketWidth, menuRacketHeight);
 			}
 			
 			// Desenhar 'Como Jogar'
 			if ( selecaoMenu == 1){
-				context.drawImage(images2.comoJogar2, 20, menuRacketPosY-38, 197, 45);
+				context.drawImage(images.comoJogar2, 20, menuRacketPosY-38, 197, 45);
 			} else {
-				context.drawImage(images2.comoJogar, 20, menuRacketPosY-38, 197, 45);
+				context.drawImage(images.comoJogar, 20, menuRacketPosY-38, 197, 45);
 			}
 			
 			// Desenhar 'Iniciar'
 			if ( selecaoMenu == 2){
-				context.drawImage(images2.iniciar2, 234, menuRacketPosY-38, 161, 45);
+				context.drawImage(images.iniciar2, 234, menuRacketPosY-38, 161, 45);
 			} else {
-				context.drawImage(images2.iniciar, 234, menuRacketPosY-38, 161, 45);
+				context.drawImage(images.iniciar, 234, menuRacketPosY-38, 161, 45);
 			} 
 			
 			// Desenhar 'Creditos'
 			if ( selecaoMenu == 3){
-				context.drawImage(images2.creditos2, 406, menuRacketPosY-38, 161, 45);
+				context.drawImage(images.creditos2, 406, menuRacketPosY-38, 161, 45);
 			} else {
-				context.drawImage(images2.creditos, 406, menuRacketPosY-38, 161, 45);
+				context.drawImage(images.creditos, 406, menuRacketPosY-38, 161, 45);
 			}
 			
 			// Instrução para escolha
-			context.drawImage(images2.enterEscolher, 97, 450, 411, 48);
+			context.drawImage(images.enterEscolher, 97, 450, 411, 48);
 			 
         	// Opções do menu: barra de seleção (raquete) e botal de seleção (enter)
     		if (teclaDireitaPressionada!=teclaEsquerdaPressionada) { 
@@ -264,14 +264,14 @@
 				isComoJogar= false;
     		} else {
     			context.clearRect(0, 0, canvas.width, canvas.height);
-    			context.drawImage(images2.tituloComoJogar, 14, 100, 576, 48);	
-    			context.drawImage(images2.enterVoltar, 115, 450, 382, 48);
+    			context.drawImage(images.tituloComoJogar, 14, 100, 576, 48);	
+    			context.drawImage(images.enterVoltar, 115, 450, 382, 48);
     			context.font = "12pt Courier New";
     			context.textAlign = 'center';
     			context.fillStyle = 'yellow';
     			context.fillText("Utilize as Setas de Direção para Movimentar a Raquete",canvas.width/2, 250);
-    			context.drawImage(images2.leftAndRight, canvas.width/2-(110/2), 280, 110, 54);
-//     			context.drawImage(images2.leftAndRight, canvas.width/2-(110/2), 280, 110, 54);
+    			context.drawImage(images.leftAndRight, canvas.width/2-(110/2), 280, 110, 54);
+//     			context.drawImage(images.leftAndRight, canvas.width/2-(110/2), 280, 110, 54);
     		}
     		
     	} else if (isCreditos){
@@ -281,8 +281,8 @@
 				isCreditos = false;
     		} else {
     			context.clearRect(0, 0, canvas.width, canvas.height);
-    			context.drawImage(images2.tituloCreditos, 130, 80, 359, 61);	
-    			context.drawImage(images2.enterVoltar, 115, 450, 382, 48);
+    			context.drawImage(images.tituloCreditos, 130, 80, 359, 61);	
+    			context.drawImage(images.enterVoltar, 115, 450, 382, 48);
     			context.font = "12pt Courier New";
     			context.textAlign = 'center';
     			context.fillStyle = 'yellow';
@@ -431,19 +431,19 @@
 	            break;			                                    
 	        default:
 	            context.clearRect(x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight,tijolosWidth,tijolosHeight);
-// 	        	context.drawImage(images2.brick,x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight,tijolosWidth,tijolosHeight);
+// 	        	context.drawImage(images.brick,x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight,tijolosWidth,tijolosHeight);
 	            break;
 		    }
 	    if (type){			        
 // 	        context.fillRect(x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight, tijolosWidth,tijolosHeight);
-        	context.drawImage(images2.brick,x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight,tijolosWidth,tijolosHeight);
+        	context.drawImage(images.brick,x*tijolosWidth,y*tijolosHeight + 3*tijolosHeight,tijolosWidth,tijolosHeight);
 	    } 
 	}   
 
 	function desenharJogador(){
 		context.fillStyle = "#F90";
 // 		context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight); aqui
-		context.drawImage(images2.racket1, jogadorPosX, jogadorPosY, barraWidth, barraHeight);
+		context.drawImage(images.racket1, jogadorPosX, jogadorPosY, barraWidth, barraHeight);
 	}
 
 	function desenharBola(){
@@ -474,8 +474,8 @@
 
 	function desenharFimDeJogo(){
 		// Desenhar 'FIM DE JOGO'
-		context.drawImage(images2.gameover, 85, 220, 436, 82);
-		context.drawImage(images2.enterVoltar, 115, 450, 382, 48);
+		context.drawImage(images.gameover, 85, 220, 436, 82);
+		context.drawImage(images.enterVoltar, 115, 450, 382, 48);
 	}
 	
 	function moverBola(){
