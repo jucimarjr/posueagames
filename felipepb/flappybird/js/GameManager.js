@@ -25,7 +25,10 @@ BasicGame.GameManager = function(game) {
     this.ground;
     this.city;
     this.trees;
+    this.player;
 };
+
+BasicGame.GameManager.pixelsToUnit = 150;
 
 BasicGame.GameManager.prototype = {
 
@@ -43,6 +46,11 @@ BasicGame.GameManager.prototype = {
         
         this.ground = this.add.tileSprite(0, this.camera.height - this.cache.getImage('ground').height,
                                           this.camera.width, this.cache.getImage('ground').height, 'ground');
+        this.physics.enable(this.ground, Phaser.Physics.ARCADE);
+        this.ground.body.immovable = true;
+                                          
+        this.player = new BasicGame.Player(this);
+        this.player.create();
     },
 
     update: function() {
@@ -52,6 +60,12 @@ BasicGame.GameManager.prototype = {
         this.city.tilePosition.x += BasicGame.Obstacle.velocity / 8.0;
         
         this.obstaclesManager.update();
+        
+        if (this.physics.arcade.collide(this.player.sprite, this.ground)) {
+            BasicGame.Obstacle.velocity = 0.0;
+        }
+        
+        this.player.update();
     },
 
     quitGame: function(pointer) {

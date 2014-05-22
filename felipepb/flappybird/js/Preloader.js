@@ -27,7 +27,10 @@ BasicGame.Preloader.prototype = {
 		this.load.image('city', 'assets/city.png');
 		this.load.image('trees', 'assets/trees.png');
 		this.load.image('ground', 'assets/ground.png');
-		this.load.image('clumsy', 'assets/clumsy.png');
+		this.load.spritesheet('clumsy', 'assets/clumsy.png',
+		                      BasicGame.Player.frameWidth,
+		                      BasicGame.Player.frameHeight,
+		                      BasicGame.Player.frameCount);
 		this.load.image('pipe', 'assets/pipe.png');
 		//this.load.atlas('playButton', 'assets/play_button.png', 'assets/play_button.json');
 		//this.load.audio('titleMusic', ['audio/main_menu.mp3']);

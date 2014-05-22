@@ -8,7 +8,8 @@ BasicGame.Obstacle = function(gameManager, group) {
     this._spriteHeight = this.gameManager.cache.getImage('pipe').height;
 };
 
-BasicGame.Obstacle.velocity = -2;
+BasicGame.Obstacle.defaultVelocity = -2;
+BasicGame.Obstacle.velocity = BasicGame.Obstacle.defaultVelocity;
 
 BasicGame.Obstacle.prototype = {
     create: function() {
