@@ -18,11 +18,11 @@ var create = {
         // TODO: parallax background     
         //Tentativa de parallax background
         
-    	tilesprite = game.add.tileSprite(0, 0, 960, 600, 'background');
-    	tilesprite.autoScroll(-100, 0);
+    	tilesprite = game.add.tileSprite(0, 0, 960,600,  'background');
+    	tilesprite.autoScroll(-200, 0);
 
-    	//tilespritedois = game.add.tileSprite(0, game.world.height - 100, 960, 100, 'river');
-    	//tilespritedois.autoScroll(-100, 0);
+    	tilespritedois = game.add.tileSprite(0, 500, 960, 100, 'river');
+    	tilespritedois.autoScroll(-100, 0);
         
 
         //player defs
