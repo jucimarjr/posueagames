@@ -5,6 +5,10 @@
     Preload.prototype = {
         preload: function () {
             //this.stage.backgroundColor = '#ccc';
+            
+           	/* game sounds */
+        	this.game.load.audio('startsound','assets/audio/startgame.mp3');
+        	this.game.load.audio('bgsound','assets/audio/marchTeme.mp3');
 
             /*menu images*/
             this.game.load.image('menubg','assets/menu/bgmenu_960-600.png');
