@@ -2,7 +2,7 @@
 var BG_SKY = PATH_ASSETS + 'skyday_960-600.png';
 //var BG_GROUND = PATH_ASSETS + 'mountain_1366-500.png';
 var BG_GROUND = PATH_ASSETS + 'mountains_1280-150.png';
-var BG_BIGCITY = PATH_ASSETS + 'bg_city_1000-350.png';
+var BG_BIGCITY = PATH_ASSETS + 'bg_city_1000-350..png';
 Level = function(/*game*/) {
 	
 //	this.game = game;
