@@ -3,27 +3,19 @@ var create = {
     enemy_group : null,
     timer : null,
     arrows : null,
-    tilesprite : null,
-    tilespritedois : null,
+    nearBackground : null,
+    farBackground : null,
 
-    
     init : function(){
         //game defs
         game.world.setBounds(0, 0, 960, 600);
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        
-      //  game.add.sprite(0,0,'background');
 
-        // background
-        // TODO: parallax background     
-        //Tentativa de parallax background
-        
-    	tilesprite = game.add.tileSprite(0, 0, 960,600,  'background');
-    	tilesprite.autoScroll(-200, 0);
+        farBackground = game.add.tileSprite(0, 0, 960, 600,  'background');
+        farBackground.autoScroll(-200, 0);
 
-    	tilespritedois = game.add.tileSprite(0, game.world.height - 100, 960, 100, 'river');
-    	tilespritedois.autoScroll(-100, 0);
-        
+        nearBackground = game.add.tileSprite(0, game.world.height - 100, 960, 100, 'river');
+        nearBackground.autoScroll(-400, 0);
 
         //player defs
         this.createPlayer();
