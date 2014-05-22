@@ -27,11 +27,11 @@ BasicGame.ObstaclesManager.prototype = {
 	        var randomY = this.random(this._obstaclesMinY, this._obstaclesMaxY);
 	        console.log("randomY: " + randomY);
 	        var obstacle = new BasicGame.Obstacle(this.gameManager,
-	                                              this.obstaclesGroup,
-	                                              cameraWidth + (obstacleWidth / 2.0) + i * this._obstaclesHorizontalMargin,
-	                                              randomY,
-	                                              this._obstaclesGap);
+	                                              this.obstaclesGroup);
             obstacle.create();
+            obstacle.setGap(cameraWidth + (obstacleWidth / 2.0) + i * this._obstaclesHorizontalMargin,
+                            randomY,
+                            this._obstaclesGap);
             this.obstacles.push(obstacle);
 	    }
 		 
@@ -50,8 +50,10 @@ BasicGame.ObstaclesManager.prototype = {
         }
         
         if (obstacleToMove) {
-            obstacleToMove.x(obstacles[length - 1].x() +
-                             this._obstaclesHorizontalMargin);
+            var randomY = this.random(this._obstaclesMinY, this._obstaclesMaxY);
+            obstacleToMove.setGap(obstacles[length - 1].x() + this._obstaclesHorizontalMargin,
+                                  randomY,
+                                  this._obstaclesGap);
 
             var firstObstacle = obstacles[0];
             for (var i = 0; i < length - 1; i++) {

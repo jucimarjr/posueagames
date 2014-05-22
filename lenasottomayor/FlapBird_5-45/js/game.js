@@ -1,82 +1,105 @@
 
-var plataformas, caoSprite, piso, bloco, ossos;
+var plataformas, base, jogadorSprite, background, sky, keySpaceBar, mouseClickLeft, obstacles;
 
 var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload () {
 	
-	game.load.spritesheet('cao', 'assets/dogstylesheet-552-196-4.png', 138,196);
-	game.load.image('ceu', 'assets/background_960-600.png');
-    game.load.image('chao', 'assets/chao_960-54.png');
-    game.load.image('bloco', 'assets/bloco_276-107.png');
-    game.load.image('osso', 'assets/osso_109-87.png');
+	game.load.spritesheet('player', 'assets/manspritesshet_485-131-4.png', 121.25,131);
+	game.load.image('base', 'assets/base_200-200.png');
+	game.load.image('obstacle', 'assets/Obstacle_129-509.png');
+	game.load.image('sky', 'assets/sky_1920-600.png');
+    //game.load.image('chao', 'assets/chao_960-54.png');
+    //game.load.image('bloco', 'assets/bloco_276-107.png');
+    //game.load.image('osso', 'assets/osso_109-87.png');
 
 }
 //
 function create () {
-	game.add.sprite(0, 0, 'ceu');
 	
-	caoSprite = game.add.sprite(400, 0, 'cao');
-	caoSprite.animations.add('andar',[0,1,2,3],3,true);
-	caoSprite.animations.add('pular',[1],2,true);
-	game.physics.enable(caoSprite, Phaser.Physics.ARCADE);
+	sky = game.add.sprite(0, 0, 'sky');
+    game.physics.arcade.enable(sky);
 	
-	caoSprite.body.acceleration.y = 300;
+	jogadorSprite = game.add.sprite(100, 0, 'player');
+	jogadorSprite.animations.add('jump',[0,2],5,true);
+	game.physics.enable(jogadorSprite, Phaser.Physics.ARCADE);
+	jogadorSprite.body.acceleration.y = 500;
+	jogadorSprite.body.collideWorldBounds = true;
+    game.camera.follow(jogadorSprite);
 	
-	caoSprite.body.collideWorldBounds = true;
-	caoSprite.body.drag.x = 100; //desloca 100 e para, só desloca de novo se clicada alguma tecla e quanto maior for seu valor, menos desloca
-	caoSprite.anchor.setTo(.5,.5); // diminui o espaco do deslocamento do espelhamento 
-	caoSprite.body.gravity.y = 150;
+	obstacles = game.add.group();  
+	obstacles.createMultiple(20, 'obstacle'); 
 	
-    ossos = game.add.group();
+	
+//	jogadorSprite.body.drag.x = 100; //desloca 100 e para, só desloca de novo se clicada alguma tecla e quanto maior for seu valor, menos desloca
+//	jogadorSprite.anchor.setTo(.5,.5); // diminui o espaco do deslocamento do espelhamento 
+//	jogadorSprite.body.gravity.y = 150;
+	
+    /*ossos = game.add.group();
     ossos.create( 500, 50, 'osso');
     ossos.create( 620, 60, 'osso');
     ossos.create( 100, 450, 'osso');
     ossos.create( 700, 450, 'osso');
     ossos.create( 800, 450, 'osso');
-    game.physics.enable(ossos, Phaser.Physics.ARCADE);
+    game.physics.enable(ossos, Phaser.Physics.ARCADE);*/
 
-    plataformas = game.add.group();
-    plataformas.enableBody = true;
+//    plataformas = game.add.group();
+//    plataformas.enableBody = true;
     
-    bloco = plataformas.create(500, 200, 'bloco');
-    bloco.body.immovable = true; // deixa o bloco imovivel
+//    base = plataformas.create(0, 400, 'base');
+//    base.body.immovable = true; // deixa o bloco imovivel
     
-    chao = plataformas.create(0, 546, 'chao');
-    chao.body.immovable = true;
+    //chao = plataformas.create(0, 546, 'chao');
+    //chao.body.immovable = true;
+    
+    keySpaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    keySpaceBar.onDown.add(jump, this);
+    keySpaceBar.onUp.add(stop(), this);
 	
+	game.time.events.loop(1500, add_row_of_obstacles(), this);
 }
 
 
 function update () {
 	
-	game.physics.arcade.collide(caoSprite, plataformas);
+	jogadorSprite.body.velocity.x = 0;
+    sky.body.velocity.x = 0;
 	
-	game.physics.arcade.overlap(caoSprite, ossos, caoEatosso,null,this);
+    if (game.camera.x >= 0) {
+    	 sky.body.velocity.x = -50;
+    }
 	
-	if ( game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
-		caoSprite.body.velocity.x = -100;
-		caoSprite.scale.x = -1; // espelha se antes -1
-		caoSprite.animations.play('andar');
-	}
-	else if ( game.input.keyboard.isDown (Phaser.Keyboard.RIGHT) ) { // vai para direita
-		caoSprite.body.velocity.x = 100;
-		caoSprite.scale.x = +1;  // espelha se antes 1
-		caoSprite.animations.play('andar');
-	}
-	else if ( game.input.keyboard.isDown (Phaser.Keyboard.UP) ) { // vai para cima
-
-		caoSprite.body.velocity.y = -300;
-		caoSprite.animations.play('pular');
-	}
-	else {
-		caoSprite.animations.stop();
-		caoSprite.frame = 0;
+	if(game.input.activePointer.isDown){
+		jump();
+	} else {
+		stop();
 	}	
 }
 
-function caoEatosso (cao,osso)	{
-
-		osso.kill();
+function jump() {
+	jogadorSprite.body.velocity.y = -300;
+	jogadorSprite.body.velocity.x = 0;
+	jogadorSprite.animations.play('jump');
 }
 
+function stop() {
+	jogadorSprite.animations.stop();
+	jogadorSprite.frame = 0;
+}
+
+function add_one_obstacle(x, y) {
+	var obstacle = this.obstacles.getFirstDead();
+	
+	obstacle.reset(x, y);
+	
+	obstacle.body.velocity.x = -200;
+	
+	obstacle.outOfBoundsKill = true;
+}
+
+
+function add_row_of_obstacles() {  
+    var value = Math.floor(Math.random()*5)+1;
+
+    add_one_obstacle(400, value*60+10);   
+}

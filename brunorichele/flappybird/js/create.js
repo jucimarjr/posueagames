@@ -3,20 +3,19 @@ var create = {
     enemy_group : null,
     timer : null,
     arrows : null,
-    tilesprite : null,
+    nearBackground : null,
+    farBackground : null,
 
-    
     init : function(){
         //game defs
-        game.world.setBounds(0, 0, 960, 800);
+        game.world.setBounds(0, 0, 960, 600);
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        // background
-        // TODO: parallax background     
-        //Tentativa de parallax background, n�o sei se era esse o conceito.
-        tilesprite = game.add.tileSprite(0, 0, 960,800, 'background');
-    	//Implementado para testar o tileSprite
-        arrows = game.input.keyboard.createCursorKeys();
+        farBackground = game.add.tileSprite(0, 0, 960, 600,  'background');
+        farBackground.autoScroll(-200, 0);
+
+        nearBackground = game.add.tileSprite(0, game.world.height - 100, 960, 100, 'river');
+        nearBackground.autoScroll(-400, 0);
 
         //player defs
         this.createPlayer();
@@ -29,7 +28,16 @@ var create = {
         this.space_key.onDown.add(this.jump, this);
 
         // timer defs
-        this.enemyTimer = game.time.events.loop(3000, this.createEnemy, this);
+        this.enemyTimer = game.time.events.loop(2000, this.createEnemy, this);
+
+        // misc
+        this.easingFunctions = [
+            Phaser.Easing.Linear.In,
+            Phaser.Easing.Quadratic.In,
+            Phaser.Easing.Cubic.In,
+            Phaser.Easing.Quartic.In,
+            Phaser.Easing.Quintic.In,
+        ]
     },
     createPlayer : function(){
         this.player = game.add.sprite(200, 423, 'pirarucu');
@@ -39,7 +47,7 @@ var create = {
         this.player.jumpForce = -500;
         this.player.anchor.setTo(0.5, 0.5);
         this.player.alive = true;
-        // animação de rotação para cima, quando o jogador pula
+        // anima����o de rota����o para cima, quando o jogador pula
         this.player.rotateAnim = game.add.tween(this.player).to({angle: -15}, 300);
         // adicionando player a classe update
         update.player = this.player;
@@ -48,49 +56,50 @@ var create = {
     createEnemy : function() {
         if(!this.player.alive) return;
         var enemyIndex = this.random(1, 3);
+        var enemySpeedMultiplier = this.random(1, 9);
+        var enemyEasingFunction = this.random(1, 5);
         switch(enemyIndex){
             case 1:
-                this.createAriranha();
+                this.createAriranha(enemySpeedMultiplier, enemyEasingFunction);
                 break;
             case 2:
-                this.createArraia();
+                this.createArraia(enemySpeedMultiplier, enemyEasingFunction);
                 break;
             case 3:
-                this.createAnzol();
+                this.createAnzol(enemySpeedMultiplier);
                 break;
             default:
-                alert("we shouldn't never get here");
-                this.createAriranha();
+                this.createAriranha(enemySpeedMultiplier, enemyEasingFunction);
         }
     },
 
     //criacao dos inimigos
-    createAnzol : function(){
-        var anzol = this.enemy_group.create(970, 0, 'anzol'); // criando do lado de fora
+    createAnzol : function(enemySpeedMultiplier){
+        var anzol = this.enemy_group.create(970, -100, 'anzol'); // criando do lado de fora
         game.physics.arcade.enable(anzol);
-        anzol.body.velocity.x = -300;
+        anzol.body.velocity.x = -300 * (1 + enemySpeedMultiplier / 10);
         anzol.outOfBoundsKill = true;
     },
-    createAriranha : function(){
+    createAriranha : function(enemySpeedMultiplier, easingIndex){
         var ariranha = this.enemy_group.create(1160, 170, 'ariranha'); // criando do lado de fora
         game.physics.arcade.enable(ariranha);
-        ariranha.body.velocity.x = -300;
+        ariranha.body.velocity.x = -300* (1 + enemySpeedMultiplier / 10);
         ariranha.outOfBoundsKill = true;
         ariranha.anchor.setTo(0.5, 0.5);
-        game.add.tween(ariranha) //animação da ariranha descendo
-            .to({y: 370, angle: -20}, 1000, null, false, 500) // em 500ms, descer e apontar angulo para cima, levando 1000ms
+        game.add.tween(ariranha) //anima����o da ariranha descendo
+            .to({y: 370, angle: -20}, 1000, this.easingFunctions[easingIndex], false, 500) // em 500ms, descer e apontar angulo para cima, levando 1000ms
             .to({y: 270, angle: 20}, 1000) // subir e apontar angulo para baixo, em 1000ms
             .to({y: 170, angle: 0}, 500) // voltar a altura normal, zerar angulo
             .start();
     },
-    createArraia : function(){
+    createArraia : function(enemySpeedMultiplier, easingIndex){
         var arraia = this.enemy_group.create(1160, 570, 'arraia'); // criando do lado de fora
         game.physics.arcade.enable(arraia);
-        arraia.body.velocity.x = -300;
+        arraia.body.velocity.x = -300* (1 + enemySpeedMultiplier / 10);
         arraia.outOfBoundsKill = true;
         arraia.anchor.setTo(0.5, 0.5);
-        game.add.tween(arraia) // animação da arraia subindo
-            .to({y: 370, angle: 20}, 1000, null, false, 500) // em 500ms, subir e apontar angulo para baixo, levando 1000ms
+        game.add.tween(arraia) // anima����o da arraia subindo
+            .to({y: 370, angle: 20}, 1000, this.easingFunctions[easingIndex], false, 500) // em 500ms, subir e apontar angulo para baixo, levando 1000ms
             .to({y: 470, angle: -20}, 1000) // descer e apontar angulo para cima, em 1000ms
             .to({y: 570, angle: 0}, 500) // voltar a altura normal, zerar angulo
             .start();

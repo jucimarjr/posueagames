@@ -14,11 +14,11 @@ var menu_state = { create: create, update: update, start: start };
         text.anchor.setTo(0.5, 0.5); 
         
         y += 30;
-        var text = game.add.text(x, y, "[1] CREDITOS", style);
+        var text = game.add.text(x, y, "[1] CREDITS", style);
         text.anchor.setTo(0.5, 0.5);
         
         y += 30;
-        var text = game.add.text(x, y, "[2] SOUNG", style);
+        var text = game.add.text(x, y, "[2] SOUND", style);
         text.anchor.setTo(0.5, 0.5);
 
         var spacebar_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -30,11 +30,9 @@ var menu_state = { create: create, update: update, start: start };
         var two_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
         two_keyboar.onDown.add(soung, this);
         
-        billySprite = game.add.sprite(0, game.world.height/2, 'billy');
-//		billySprite.animations.add('jump',[0,1,2],6,true);
-//		game.physics.enable(billySprite, Phaser.Physics.ARCADE); 
+        playerSprite = game.add.sprite(0, game.world.height/2, 'player');
 
-		game.add.tween(billySprite).to({y:15}, 500, Phaser.Easing.Linear.NONE, true, 0, 1000, true);  
+		game.add.tween(playerSprite).to({y:15}, 500, Phaser.Easing.Linear.NONE, true, 0, 1000, true);  
 	}
 	
 	function update(){

@@ -10,13 +10,21 @@ function preload () {
 	game.load.image('osso', 'assets/osso.png');
 	game.load.image('sky', 'assets/sky.jpg');
     game.load.image('bloco', 'assets/tijolos.png');
-
+    game.load.image('chao', 'assets/chao.jpg');
 }
 
 function create () {
 	//fundo
-	game.add.sprite(0, 0, 'sky');
+	//game.add.sprite(0, 0, 'sky');
 	
+	var bg = game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('sky').height, 'sky');
+    bg.autoScroll(-200, 0);
+	
+	var ground = game.add.tileSprite(0, game.world.height - 100, 960, 100, 'chao');
+    ground.autoScroll(-100, 0);
+
+
+
 	// CREATE A dino:
 	dinoSprite = game.add.sprite(200, 0, 'dino');
 	dinoSprite.animations.add('walk',[1,2],6,true);
@@ -40,14 +48,16 @@ function create () {
     plataformas = game.add.group();
     plataformas.enableBody = true;
     
-    // cria um bloco para o dino ficar em cima
-    var bloco = plataformas.create(350, 350, 'bloco');
+    //cria um bloco para o dino ficar em cima
+    var bloco = plataformas.create(350, 250, 'bloco');
     bloco.body.immovable = true; // deixa o bloco imovivel
     
-    // cria  ch‹o
-    var tablado = plataformas.create(0, 550, 'bloco');
-    tablado.body.immovable = true;
-    tablado.scale.setTo(2, 2); // amplia o bloco pra ficar o chao todo
+    // cria  c
+    //var tablado = plataformas.create(0, 450, 'bloco');
+    //tablado.body.immovable = true;
+    //tablado.scale.setTo(2, 2); // amplia o bloco pra ficar o chao todo
+
+
 }
 
 

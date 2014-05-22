@@ -33,7 +33,7 @@ function secondTween(text) {
 	t2.to({
 		alpha : 0
 	}, 2000, Phaser.Easing.Linear.None, true, 5000, 0);
-	t2.onComplete.add(onComplete, this)
+	t2.onComplete.add(onComplete, this);
 }
 
 function onComplete() {
