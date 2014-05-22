@@ -49,7 +49,7 @@ function create() {
     var style = { font: "30px Arial", fill: "#ffffff" };
     this.labelScore = game.add.text(this.game.world.centerX, 10, score + "m", style);
     this.labelScore.anchor.set(0.5, 0);
-    game.time.events.loop(150, addBuraco, this);
+    game.time.events.loop(150, addEnemies, this);
     game.time.events.loop(3000, addScore, this);
 }
 
@@ -59,6 +59,7 @@ function createJungles() {
     jungles.create(0, -1800, 'jungleLeft');
     jungles.create(jungleWidth + 512, -600, 'jungleRight');
     jungles.create(jungleWidth + 512, -1800, 'jungleRight');
+    game.physics.enable(jungles, Phaser.Physics.ARCADE);
 }
 
 function createRivers() {
@@ -107,23 +108,28 @@ function addScore() {
     }
 }
 
-function addBuraco() {
+function addEnemies() {
 
-    var obj = enemies.getFirstExists(false);
+    //var enemie = enemies.getFirstExists(false);
+    var enemie = enemies.getFirstDead();
 
-    if (obj) {
-        obj.frame = game.rnd.integerInRange(0, 6);
-        obj.exists = true;
-        var positionX = game.world.randomX;
+    if (enemie) {
+        //enemie.frame = game.rnd.integerInRange(0, 6);
+        //enemie.exists = true;
+        //var positionX = game.world.randomX;
+        var max = game.world.width - jungleWidth - enemie.body.width;
+        var min = jungleWidth;
+        var positionX = Math.round(Math.random() * (max - min)) + min;
+        var positionY = -80;
 
-        if (positionX > (game.world.width - obj.body.width - jungleWidth)) {
-            positionX = game.world.width - obj.body.width - jungleWidth;
+        /*if (positionX > (game.world.width - enemie.body.width - jungleWidth)) {
+            positionX = game.world.width - enemie.body.width - jungleWidth;
         } else if (positionX < jungleWidth) {
             positionX = jungleWidth;
-        }
-        obj.reset(positionX, -70);
+        }*/
+        enemie.reset(positionX, -70);
 
-        //obj.body.bounce.y = 0.8;
+        //enemie.body.bounce.y = 0.8;
     }
 
 }
@@ -140,10 +146,9 @@ function update() {
     boat.body.velocity.y = 0;*/
     //boat.body.angularVelocity = 0;
     game.physics.arcade.overlap(boat, enemies, pegarObjetos, null, this);
+    game.physics.arcade.overlap(boat, jungles, pegarObjetos, null, this);
     /*game.physics.arcade.overlap(boat, plataforma, gameOver,null,this);*/
 
-    //boat.body.angularAcceleration = 0;
-    // PEGA A ENTRADA (tecla pressionada):	
     if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) { // vai para esquerda
         changeAngle(angleVelocity);
         //goRight();
@@ -221,6 +226,10 @@ function goLeft() {
 
 function pegarObjetos(_boat, _enemies) {
     boat.play('dead');
-    _boat.kill();
+    boat.kill();
     game.state.start('gameOver');
+}
+
+function gameOver(){
+    
 }
