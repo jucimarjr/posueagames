@@ -1,4 +1,6 @@
 var play_state = { create: create, update: update };	
+	
+	var speed = 1;
 	//Sem function preload() pq já existe no load.js
     function create() {
     	
@@ -15,7 +17,7 @@ var play_state = { create: create, update: update };
         plataformas.enableBody = true;
         plataformas.createMultiple(20, 'obstacle2');
 
-        playerSprite = game.add.sprite(180, 281.5, 'player');
+        playerSprite = game.add.sprite(272, 281.5, 'player');
         playerSprite.animations.add('walk', [0, 1, 2, 3], 8, true);
         game.physics.enable(playerSprite, Phaser.Physics.ARCADE);
         playerSprite.body.gravity.y = 1000;
@@ -26,7 +28,7 @@ var play_state = { create: create, update: update };
         deathSprite.exists = false;
         deathSprite.animations.add('walk', [0, 1, 2, 4, 5], 13, true);
         game.physics.enable(deathSprite, Phaser.Physics.ARCADE);
-        deathSprite.body.gravity.y = 1000;
+        deathSprite.body.gravity.y = 1500;
         deathSprite.body.collideWorldBounds = false; // para no limite inferior da tela
 
         background4 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background4').height, 'background4');
@@ -42,6 +44,8 @@ var play_state = { create: create, update: update };
         space_key.onUp.add(notJump, this);
         
         this.timer = this.game.time.events.loop(1500, add_obstacle, this);
+        
+        cursors = game.input.keyboard.createCursorKeys();
     }
 
     // Start the actual game
@@ -58,12 +62,21 @@ var play_state = { create: create, update: update };
         if (playerSprite.inWorld === false)
             restart_game();
 
-        playerSprite.body.velocity.x = 0;
-        background1.tilePosition.x -= 0.5;
-        background2.tilePosition.x -= 2;
-        background3.tilePosition.x -= 3;
-        background4.tilePosition.x -= 4;
-        background5.tilePosition.x -= 0;
+        if (cursors.left.isDown){
+        	slow();
+        }else if(cursors.right.isDown){
+        	fast();
+        }else if (cursors.up.isDown){
+        	normal();
+        }
+        
+		playerSprite.body.velocity.x = 0;
+        background1.tilePosition.x -= 0.5 * speed;
+        background2.tilePosition.x -= 2 * speed;
+        background3.tilePosition.x -= 3 * speed;
+        background4.tilePosition.x -= 4 * speed;
+        background5.tilePosition.x -= 0 * speed;
+        
     }
 
     function jump() {
@@ -80,13 +93,26 @@ var play_state = { create: create, update: update };
 
     function playerDies() {
         playDeadAnimation();
+    }
+    
+    function fast(){
+    	playerSprite.body.gravity.y = 3000;
+    	speed = 4;
+    }
+    
+    function slow(){
+    	playerSprite.body.gravity.y = 500;
+    	speed = 0.3;
+    }
+    
+    function normal(){
+    	playerSprite.body.gravity.y = 1500;
+    	speed = 1;
+    }
+    
+    function restart_game() {
         // Start the 'main' state, which restarts the game
         setTimeout(restart_game, 1000);
-    }
-
-    function restart_game() {
-        game.time.events.remove(this.timer);
-        game.state.start('play');
     }
 
     function playDeadAnimation() {
