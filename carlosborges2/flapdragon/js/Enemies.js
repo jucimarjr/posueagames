@@ -22,10 +22,10 @@ Enemies.prototype = {
 	generateBarrier : function() {
 		console.log('level -> generateBarrier');
 		var enemy = this.enemies.create(this.game.world.width,
-				this.game.world.height - 224, this.sprites[this.game.rnd
+				game.world.randomY, this.sprites[this.game.rnd
 						.integerInRange(0, 2)]);
-		enemy.animations.add('run', [ 0, 1 ], 2, true);
-		enemy.animations.play('run');
+		//enemy.animations.add('run', [ 0, 1 ], 2, true);
+		//enemy.animations.play('run');
 		this.game.physics.arcade.enableBody(enemy);
 		enemy.body.allowGravity = false;
 		enemy.body.immovable = true;

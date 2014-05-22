@@ -1,13 +1,13 @@
 
-var plataformas, base, jogadorSprite, background, sky, keySpaceBar, mouseClickLeft;
+var plataformas, base, jogadorSprite, background, sky, keySpaceBar, mouseClickLeft, obstacles;
 
 var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload () {
 	
-	game.load.spritesheet('player', 'assets/manspritesheet_245-102-3.png', 77,102);
+	game.load.spritesheet('player', 'assets/manspritesshet_485-131-4.png', 121.25,131);
 	game.load.image('base', 'assets/base_200-200.png');
-	game.load.image('background', 'assets/background_960-600.png');
+	game.load.image('obstacle', 'assets/Obstacle_129-509.png');
 	game.load.image('sky', 'assets/sky_1920-600.png');
     //game.load.image('chao', 'assets/chao_960-54.png');
     //game.load.image('bloco', 'assets/bloco_276-107.png');
@@ -16,17 +16,19 @@ function preload () {
 }
 //
 function create () {
-	background = game.add.sprite(0, 0, 'background');
 	
 	sky = game.add.sprite(0, 0, 'sky');
     game.physics.arcade.enable(sky);
 	
 	jogadorSprite = game.add.sprite(100, 0, 'player');
-	jogadorSprite.animations.add('jump',[0,1,3],5,true);
+	jogadorSprite.animations.add('jump',[0,2],5,true);
 	game.physics.enable(jogadorSprite, Phaser.Physics.ARCADE);
 	jogadorSprite.body.acceleration.y = 500;
 	jogadorSprite.body.collideWorldBounds = true;
     game.camera.follow(jogadorSprite);
+	
+	obstacles = game.add.group();  
+	obstacles.createMultiple(20, 'obstacle'); 
 	
 	
 //	jogadorSprite.body.drag.x = 100; //desloca 100 e para, só desloca de novo se clicada alguma tecla e quanto maior for seu valor, menos desloca
@@ -53,6 +55,8 @@ function create () {
     keySpaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     keySpaceBar.onDown.add(jump, this);
     keySpaceBar.onUp.add(stop(), this);
+	
+	game.time.events.loop(1500, add_row_of_obstacles(), this);
 }
 
 
@@ -62,14 +66,13 @@ function update () {
     sky.body.velocity.x = 0;
 	
     if (game.camera.x >= 0) {
-    	 sky.body.velocity.x = -10;
+    	 sky.body.velocity.x = -50;
     }
 	
 	if(game.input.activePointer.isDown){
 		jump();
 	} else {
-		jogadorSprite.animations.stop();
-		jogadorSprite.frame = 0;
+		stop();
 	}	
 }
 
@@ -84,3 +87,19 @@ function stop() {
 	jogadorSprite.frame = 0;
 }
 
+function add_one_obstacle(x, y) {
+	var obstacle = this.obstacles.getFirstDead();
+	
+	obstacle.reset(x, y);
+	
+	obstacle.body.velocity.x = -200;
+	
+	obstacle.outOfBoundsKill = true;
+}
+
+
+function add_row_of_obstacles() {  
+    var value = Math.floor(Math.random()*5)+1;
+
+    add_one_obstacle(400, value*60+10);   
+}
