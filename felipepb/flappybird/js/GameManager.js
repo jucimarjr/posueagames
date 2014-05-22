@@ -1,4 +1,4 @@
-BasicGame.GameManager = function(game) {
+BasicGame.GameManager = function (game) {
 
     //	When a State is added to Phaser it automatically has the following properties set on it, even if they already exist:
 
@@ -28,55 +28,69 @@ BasicGame.GameManager = function(game) {
     this.player;
 };
 
-BasicGame.GameManager.pixelsToUnit = 150;
+BasicGame.GameManager.pixelsToUnit = 60;
 
 BasicGame.GameManager.prototype = {
 
-    create: function() {
+    create: function () {
+
+        var cameraWidth = this.camera.width;
+        var cameraHeight = this.camera.height;
         
-        this.city = this.add.tileSprite(0, this.camera.height - this.cache.getImage('city').height - this.cache.getImage('ground').height,
-            this.camera.width, this.cache.getImage('city').height, 'city');
-        this.trees = this.add.tileSprite(0, this.camera.height - this.cache.getImage('ground').height - this.cache.getImage('trees').height,
-            this.camera.width, this.cache.getImage('trees').height, 'trees');
+        var cityHeight = this.cache.getImage('city').height;
+        var treesHeight = this.cache.getImage('trees').height;
+        var groundHeight = this.cache.getImage('ground').height;
+
+        var cityY = cameraHeight - cityHeight - groundHeight;
+        var treesY = cameraHeight - groundHeight - treesHeight;
+        var groundY = cameraHeight - groundHeight;
+
+        this.city = this.add.tileSprite(0, cityY, cameraWidth, cityHeight, 'city');
+        this.trees = this.add.tileSprite(0, treesY, cameraWidth, treesHeight, 'trees');
 
         this.obstaclesGroup = this.game.add.group();
         this.obstaclesGroup.enableBody = true;
-        
+
         this.obstaclesManager = new BasicGame.ObstaclesManager(this, this.obstaclesGroup);
-        
+
         this.obstaclesManager.create();
-        
-        this.ground = this.add.tileSprite(0, this.camera.height - this.cache.getImage('ground').height,
-                                          this.camera.width, this.cache.getImage('ground').height, 'ground');
+
+        this.ground = this.add.tileSprite(0, groundY, cameraWidth, groundHeight, 'ground');
         this.physics.enable(this.ground, Phaser.Physics.ARCADE);
         this.ground.body.immovable = true;
-                                          
+
         this.player = new BasicGame.Player(this);
         this.player.create();
     },
 
-    update: function() {
+    update: function () {
 
         this.ground.tilePosition.x += BasicGame.Obstacle.velocity;
         this.trees.tilePosition.x += BasicGame.Obstacle.velocity / 4.0;
         this.city.tilePosition.x += BasicGame.Obstacle.velocity / 8.0;
-        
+
         this.obstaclesManager.update();
-        
-        if (this.physics.arcade.collide(this.player.sprite, this.ground) ||
-            this.physics.arcade.overlap(this.player.sprite, this.obstaclesGroup)) {
-            BasicGame.Obstacle.velocity = 0.0;
-        }
-        
+
         this.player.update();
+
+        this.handleCollision();
     },
 
-    quitGame: function(pointer) {
+    handleCollision: function () {
+        if (this.physics.arcade.collide(this.player.sprite, this.ground) ||
+            this.physics.arcade.overlap(this.player.sprite, this.obstaclesGroup)) {
+
+            this.player.onPlayerCollided();
+            BasicGame.Obstacle.velocity = 0.0;
+        }
+    },
+
+    quitGame: function (pointer) {
 
         //	Here you should destroy anything you no longer need.
         //	Stop music, delete sprites, purge caches, free resources, all that good stuff.
 
         //	Then let's go back to the main menu.
-        this.state.start('MainMenu');
+        this.state.start ('MainMenu');
     }
 };
