@@ -2,7 +2,6 @@
 
 var boat;
 var objects;
-var velocity = 150;
 var score = 0;
 var jungles;
 var rivers;
@@ -10,6 +9,7 @@ var jungles;
 var tileSpeedRiver = 1.5;
 var tileSpeedJungles = 0.3;
 var jungleWidth = 196;
+var angleVelocity = 2;
 
 function preload() {
     //	game.load.spritesheet('backGround', 'assets/bg/river_512-600.jpg', 500, 600, 2);
@@ -17,37 +17,35 @@ function preload() {
     game.load.image('jungleLeft', 'assets/bg/jungleLeft_196-1200.jpg');
     game.load.image('jungleRight', 'assets/bg/jungleRight_196-1200.jpg');
     game.load.image('buraco', 'assets/buraco_100-67.jpg');
-    game.load.spritesheet('boat', 'assets/sprite/canoeiro/canoeiroLeft_50-100-6.png', 50, 100, 6);//200,160
+    game.load.spritesheet('leftCanoeman', 'assets/sprite/canoeman/Left_50-100-5.png', 50, 100, 5);
+    game.load.spritesheet('rightCanoeman', 'assets/sprite/canoeman/Right_50-100-5.png', 50, 100, 5);
+    game.load.spritesheet('leftDiagonal', 'assets/sprite/canoeman/leftDiagonal_50-100-5.png', 50, 100, 5);
+    //game.load.spritesheet('alligator', 'assets/sprite/enemies/alligator_80-80-10.png', 80, 80, 10);
 }
 
 function create() {
 
     //game.physics.arcade.gravity.y = 50;
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    //river = game.add.tileSprite(196, 0, 512, 600, 'river');
-    //this.fg = this.game.add.tileSprite(0, this.game.height -224, this.game.stage.bounds.width, 224, 'fg');
-    /*game.add.sprite(0,0, 'jungleLeft');
-	game.add.sprite(196+512,0, 'jungleRight');*/
-    //this.backGround = game.add.sprite(197,0, 'river');
-    /*this.backGround.animations.add('go');
-	this.backGround.play('go',4,true);*/
 
     createRivers();
     createJungles();
     initObjects();
 
-    boat = game.add.sprite(game.world.centerX, 600 - 50, 'boat');
-    boat.animations.add('run', [1, 2, 3, 4, 5], 5, true);
-    boat.animations.play('run');
+    boat = game.add.sprite(game.world.centerX, 600 - 50, 'leftCanoeman');
+    boat.animations.add('run');
+    boat.animations.play('run',5,true);
+    //boat.animations.add('run', [0,1, 2, 3, 4], 5, true);
+    //boat.animations.play('run');
     game.physics.enable(boat, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
     boat.body.collideWorldBounds = true; // para no limite inferio da tela
-    boat.body.drag.x = 200; //desloca 100 e para, só desloca de novo se clicada alguma tecla e quanto maior for seu valor, menos desloca
+    boat.body.drag.x = 30; //desloca 100 e para, só desloca de novo se clicada alguma tecla e quanto maior for seu valor, menos desloca
     boat.anchor.setTo(0.5, 0.5);
     boat.body.allowGravity = 0;
     boat.body.immovable = true;
 
     //game.time.events.loop(150, addBuraco, this);
-    /*boat.body.maxAngular = 90;*/
+    //boat.body.maxAngular = 90;
     //  Apply a drag otherwise the sprite will just spin and never slow down
     //boat.body.angularDrag = 30;
 
@@ -75,7 +73,6 @@ function createRivers() {
 }
 
 function initObjects() {
-
     /*b = game.add.sprite(10,10, 'buraco');
 	/*game.physics.arcade.enable(b);*/
     /*b.body.collideWorldBounds = true;
@@ -123,17 +120,24 @@ function update() {
 	game.physics.arcade.collide(boat, barraInicial);
 	game.physics.arcade.collide(boat, objects);*/
     // COLISAO COM OSSO:
+    /*boat.body.velocity.x = 0;
+    boat.body.velocity.y = 0;*/
+    //boat.body.angularVelocity = 0;
     game.physics.arcade.overlap(boat, objects, pegarObjetos, null, this);
     /*game.physics.arcade.overlap(boat, plataforma, gameOver,null,this);*/
 
     //boat.body.angularAcceleration = 0;
     // PEGA A ENTRADA (tecla pressionada):	
     if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) { // vai para esquerda
-        goRight();
+        changeAngle(angleVelocity);
+        //goRight();
         //boat.scale.x = -1; // espelha se antes -1
     }
     else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) { // vai para direita
-        goLeft();
+        changeAngle(-1*angleVelocity);
+        //goLeft();
+    }else {
+        boat.body.velocity.x = 2*boat.angle;//velocity;
     }
     /*else if ( game.input.keyboard.isDown (Phaser.Keyboard.UP) ) { // vai para cima
 
@@ -144,13 +148,22 @@ function update() {
 	    	boat.animations.stop();
 			boat.frame = 0;
 		}	*/
-
-    objects.forEachAlive(checkBounds, this);
-    rivers.forEachAlive(checkBoundsRivers, this);
-    jungles.forEachAlive(checkBoundsJungles, this);
+    checkBounds();    
+}
+function changeAngle(angle){
+    var toChange = boat.angle + angle;
+    if ( toChange > -90 && toChange < 90) {
+        boat.angle += angle;
+    }    
 }
 
-function checkBoundsRivers(obj) {
+function checkBounds(){
+    objects.forEachAlive(checkObjectsBounds, this);
+    rivers.forEachAlive(checkRiversBounds, this);
+    jungles.forEachAlive(checkJunglesBounds, this);
+}
+
+function checkRiversBounds(obj) {
     obj.y += tileSpeedRiver;
 
     if (obj.y >= 600) {
@@ -159,7 +172,7 @@ function checkBoundsRivers(obj) {
 
 }
 
-function checkBoundsJungles(obj) {
+function checkJunglesBounds(obj) {
     obj.y += tileSpeedJungles;
 
     if (obj.y >= 600) {
@@ -168,7 +181,7 @@ function checkBoundsJungles(obj) {
 
 }
 
-function checkBounds(obj) {
+function checkObjectsBounds(obj) {
     obj.y += tileSpeedRiver;
 
     if (obj.y > 600) {
@@ -178,16 +191,16 @@ function checkBounds(obj) {
 }
 
 function goRight() {
-    boat.body.velocity.x = velocity;
-    //boat.body.angularAcceleration += 30;
-    boat.animations.play('walk');
+    //boat.body.velocity.x = velocity;
+    boat.angle += angleVelocity;
+    //boat.animations.play('walk');
 }
 
 
 function goLeft() {
-    boat.body.velocity.x = -velocity;
-    //boat.body.angularAcceleration -= 30;
-    boat.animations.play('walk');
+    //boat.body.velocity.x = -velocity;
+    boat.angle -= angleVelocity;
+    //boat.animations.play('walk');
 }
 
 function pegarObjetos(_boat, _objects) {
