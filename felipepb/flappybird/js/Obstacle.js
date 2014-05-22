@@ -15,9 +15,16 @@ BasicGame.Obstacle.prototype = {
     create: function() {
         this.topSprite = this.group.create(0, 0, 'pipe');
         this.bottomSprite = this.group.create(0, 0, 'pipe');
+        
         this.topSprite.anchor.setTo(0.5, 0.5);
         this.bottomSprite.anchor.setTo(0.5, 0.5);
         this.bottomSprite.angle = 180;
+        
+        this.gameManager.physics.enable(this.topSprite, Phaser.Physics.ARCADE);
+        this.gameManager.physics.enable(this.bottomSprite, Phaser.Physics.ARCADE);
+        
+        this.topSprite.body.immovable = true;
+        this.bottomSprite.body.immovable = true;
     },
     
     setGap: function (x, y, gapHeight) {

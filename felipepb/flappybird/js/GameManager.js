@@ -40,6 +40,8 @@ BasicGame.GameManager.prototype = {
             this.camera.width, this.cache.getImage('trees').height, 'trees');
 
         this.obstaclesGroup = this.game.add.group();
+        this.obstaclesGroup.enableBody = true;
+        
         this.obstaclesManager = new BasicGame.ObstaclesManager(this, this.obstaclesGroup);
         
         this.obstaclesManager.create();
@@ -61,7 +63,8 @@ BasicGame.GameManager.prototype = {
         
         this.obstaclesManager.update();
         
-        if (this.physics.arcade.collide(this.player.sprite, this.ground)) {
+        if (this.physics.arcade.collide(this.player.sprite, this.ground) ||
+            this.physics.arcade.overlap(this.player.sprite, this.obstaclesGroup)) {
             BasicGame.Obstacle.velocity = 0.0;
         }
         
