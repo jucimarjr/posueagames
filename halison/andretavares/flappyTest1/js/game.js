@@ -5,7 +5,8 @@ var nave;
 
 var background;
 
-var velocidade = 350;
+var velocity = 350;
+var bottomPosX = 350;
 
 game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
@@ -16,14 +17,14 @@ function preload () {
 	game.load.image('asteroid1', 'assets/asteroids1_48-43.png');
 	game.load.image('asteroid2', 'assets/asteroids2_87-100.png');
 	game.load.image('asteroid3', 'assets/asteroids3_178-175.png');
+	game.load.image('bottom', 'assets/bottom_960-100.png');
 }
 
 function create () {
     background = game.add.sprite(0, 0, 'ceu');
-
-	// Criar 'nave'
 	nave = game.add.sprite(450, 400, 'nave1');
-
+	bottomPosX = 0;
+	bottom = game.add.sprite(bottomPosX, 500, 'bottom');
 //	game.physics.enable(nave, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 //    nave.body.acceleration.y = 150;
 //    nave.body.collideWorldBounds = true; // para no limite inferior da tela
@@ -35,19 +36,19 @@ function create () {
 
 
 function update () {
-
+	bottomPosX--;
 //	Realizar colisão entre 'osso' e 'dino', chama função dinoEatOsso
 //	game.physics.arcade.overlap(nave, ossos, dinoEatOsso,null,this);
 //
 //  Capturar entrada (tecla esquerda)	
 //	if ( game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ) { 
-//		nave.body.velocity.y = -velocidade;
+//		nave.body.velocity.y = -velocity;
 //		nave.animations.play('move');
 //	}
 //	
 //	Capturar entrada (tecla direita)
 //	else if ( game.input.keyboard.isDown (Phaser.Keyboard.UP) ) {
-//		nave.body.velocity.y = velocidade;
+//		nave.body.velocity.y = velocity;
 //		nave.animations.play('moveTop');
 		
 //	} else {
