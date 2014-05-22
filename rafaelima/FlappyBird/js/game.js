@@ -4,6 +4,7 @@ var game = new Phaser.Game(960, 600, Phaser.AUTO, 'game_div');
 var score = 0;
 
 var playerSprite, deathSprite;
+var playersGroup; //for multiply Power up
 var plataformas;
 var space_key;
 var soungFlag = true;

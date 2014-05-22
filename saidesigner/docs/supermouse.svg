@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="supermouse.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="7.919596"
+     inkscape:cx="-197.38984"
+     inkscape:cy="644.25573"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#1c1f24;fill-rule:evenodd;stroke:#000000;stroke-width:0.998613px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="rect2987"
+       width="899.0014"
+       height="599.0014"
+       x="-227.68944"
+       y="10.147205"
+       inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\universe_900-600.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#ff0000"
+       id="rect3027"
+       width="120"
+       height="40"
+       x="-414.48877"
+       y="166.28896"
+       inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\player_120-40.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       id="g3063"
+       transform="translate(72.730983,-204.05081)">
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\asteroid_80-80.png"
+         transform="matrix(0.44444444,0,0,0.58947371,-510.47619,306.23288)"
+         d="m 274.28572,298.79074 c 0,37.47646 -40.29437,67.85714 -90,67.85714 -49.70563,0 -89.999999,-30.38068 -89.999999,-67.85714 0,-37.47646 40.294369,-67.85714 89.999999,-67.85714 49.70563,0 90,30.38068 90,67.85714 z"
+         sodipodi:ry="67.85714"
+         sodipodi:rx="90"
+         sodipodi:cy="298.79074"
+         sodipodi:cx="184.28572"
+         id="path3025"
+         style="fill:#d4aa00"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.70612127,-0.70809093,0.70809093,0.70612127,-472.67888,-165.3435)"
+         d="m -427.14287,467.36218 c 0,5.12836 -5.11675,9.28572 -11.42857,9.28572 -6.31183,0 -11.42857,-4.15736 -11.42857,-9.28572 0,-5.12836 5.11674,-9.28571 11.42857,-9.28571 6.31182,0 11.42857,4.15735 11.42857,9.28571 z"
+         sodipodi:ry="9.2857141"
+         sodipodi:rx="11.428572"
+         sodipodi:cy="467.36218"
+         sodipodi:cx="-438.57144"
+         id="path3029"
+         style="fill:#ffd42a"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.70612127,-0.70809093,0.70809093,0.70612127,-435.89316,-179.27209)"
+         d="m -427.14287,467.36218 c 0,5.12836 -5.11675,9.28572 -11.42857,9.28572 -6.31183,0 -11.42857,-4.15736 -11.42857,-9.28572 0,-5.12836 5.11674,-9.28571 11.42857,-9.28571 6.31182,0 11.42857,4.15735 11.42857,9.28571 z"
+         sodipodi:ry="9.2857141"
+         sodipodi:rx="11.428572"
+         sodipodi:cy="467.36218"
+         sodipodi:cx="-438.57144"
+         id="path3029-7"
+         style="fill:#ffcc00"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.58499173,-0.56241335,0.58662351,0.56084892,-422.96212,-19.987247)"
+         d="m -427.14287,467.36218 c 0,5.12836 -5.11675,9.28572 -11.42857,9.28572 -6.31183,0 -11.42857,-4.15736 -11.42857,-9.28572 0,-5.12836 5.11674,-9.28571 11.42857,-9.28571 6.31182,0 11.42857,4.15735 11.42857,9.28571 z"
+         sodipodi:ry="9.2857141"
+         sodipodi:rx="11.428572"
+         sodipodi:cy="467.36218"
+         sodipodi:cx="-438.57144"
+         id="path3029-5"
+         style="fill:#aa8800"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.70612127,-0.70809093,0.70809093,0.70612127,-458.7503,-139.62923)"
+         d="m -427.14287,467.36218 c 0,5.12836 -5.11675,9.28572 -11.42857,9.28572 -6.31183,0 -11.42857,-4.15736 -11.42857,-9.28572 0,-5.12836 5.11674,-9.28571 11.42857,-9.28571 6.31182,0 11.42857,4.15735 11.42857,9.28571 z"
+         sodipodi:ry="9.2857141"
+         sodipodi:rx="11.428572"
+         sodipodi:cy="467.36218"
+         sodipodi:cx="-438.57144"
+         id="path3029-8"
+         style="fill:#806600"
+         sodipodi:type="arc" />
+    </g>
+    <path
+       sodipodi:type="star"
+       style="opacity:0.2;fill:#ffffff"
+       id="path2991"
+       sodipodi:sides="5"
+       sodipodi:cx="-211.12189"
+       sodipodi:cy="406.87469"
+       sodipodi:r1="29.137255"
+       sodipodi:r2="14.568627"
+       sodipodi:arg1="0.98279372"
+       sodipodi:arg2="1.6111123"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m -194.95945,431.11836 -16.74963,-9.68688 -17.47543,8.30631 4.03684,-18.92325 -13.29997,-14.05333 19.24453,-2.00835 9.2556,-16.99174 7.85693,17.68203 19.02025,3.55185 -14.38868,12.93644 z"
+       inkscape:transform-center-x="-0.01311046"
+       inkscape:transform-center-y="-0.091267617"
+       transform="matrix(0.03611587,0,0,0.0374832,-193.27626,389.06749)"
+       inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\star_2-2.png"
+       inkscape:export-xdpi="175.77"
+       inkscape:export-ydpi="175.77" />
+    <path
+       sodipodi:type="star"
+       style="opacity:0.4;fill:#ffffff"
+       id="path2991-1"
+       sodipodi:sides="5"
+       sodipodi:cx="-211.12189"
+       sodipodi:cy="406.87469"
+       sodipodi:r1="29.137255"
+       sodipodi:r2="14.568627"
+       sodipodi:arg1="0.98279372"
+       sodipodi:arg2="1.6111123"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m -194.95945,431.11836 -16.74963,-9.68688 -17.47543,8.30631 4.03684,-18.92325 -13.29997,-14.05333 19.24453,-2.00835 9.2556,-16.99174 7.85693,17.68203 19.02025,3.55185 -14.38868,12.93644 z"
+       inkscape:transform-center-x="-0.01311046"
+       inkscape:transform-center-y="-0.091267617"
+       transform="matrix(0.03611587,0,0,0.0374832,-191.21612,389.06749)"
+       inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\star_2-2.png"
+       inkscape:export-xdpi="175.77"
+       inkscape:export-ydpi="175.77" />
+    <path
+       sodipodi:type="star"
+       style="opacity:0.6;fill:#ffffff"
+       id="path2991-1-7"
+       sodipodi:sides="5"
+       sodipodi:cx="-211.12189"
+       sodipodi:cy="406.87469"
+       sodipodi:r1="29.137255"
+       sodipodi:r2="14.568627"
+       sodipodi:arg1="0.98279372"
+       sodipodi:arg2="1.6111123"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m -194.95945,431.11836 -16.74963,-9.68688 -17.47543,8.30631 4.03684,-18.92325 -13.29997,-14.05333 19.24453,-2.00835 9.2556,-16.99174 7.85693,17.68203 19.02025,3.55185 -14.38868,12.93644 z"
+       inkscape:transform-center-x="-0.01311046"
+       inkscape:transform-center-y="-0.091267617"
+       transform="matrix(0.03611587,0,0,0.0374832,-189.15598,389.06749)"
+       inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\star_2-2.png"
+       inkscape:export-xdpi="175.77"
+       inkscape:export-ydpi="175.77" />
+    <path
+       sodipodi:type="star"
+       style="opacity:0.8;fill:#ffffff"
+       id="path2991-1-7-4"
+       sodipodi:sides="5"
+       sodipodi:cx="-211.12189"
+       sodipodi:cy="406.87469"
+       sodipodi:r1="29.137255"
+       sodipodi:r2="14.568627"
+       sodipodi:arg1="0.98279372"
+       sodipodi:arg2="1.6111123"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m -194.95945,431.11836 -16.74963,-9.68688 -17.47543,8.30631 4.03684,-18.92325 -13.29997,-14.05333 19.24453,-2.00835 9.2556,-16.99174 7.85693,17.68203 19.02025,3.55185 -14.38868,12.93644 z"
+       inkscape:transform-center-x="-0.01311046"
+       inkscape:transform-center-y="-0.091267617"
+       transform="matrix(0.03611587,0,0,0.0374832,-187.09583,389.06749)"
+       inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\star_2-2.png"
+       inkscape:export-xdpi="175.77"
+       inkscape:export-ydpi="175.77" />
+    <path
+       sodipodi:type="star"
+       style="fill:#ffffff"
+       id="path2991-1-7-4-0"
+       sodipodi:sides="5"
+       sodipodi:cx="-211.12189"
+       sodipodi:cy="406.87469"
+       sodipodi:r1="29.137255"
+       sodipodi:r2="14.568627"
+       sodipodi:arg1="0.98279372"
+       sodipodi:arg2="1.6111123"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m -194.95945,431.11836 -16.74963,-9.68688 -17.47543,8.30631 4.03684,-18.92325 -13.29997,-14.05333 19.24453,-2.00835 9.2556,-16.99174 7.85693,17.68203 19.02025,3.55185 -14.38868,12.93644 z"
+       inkscape:transform-center-x="-0.01311046"
+       inkscape:transform-center-y="-0.091267617"
+       transform="matrix(0.03611587,0,0,0.0374832,-185.03568,389.06749)"
+       inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\star_2-2.png"
+       inkscape:export-xdpi="175.77"
+       inkscape:export-ydpi="175.77" />
+  </g>
+</svg>

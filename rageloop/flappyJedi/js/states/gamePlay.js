@@ -13,6 +13,9 @@
         this.weapon = null;
         this.weaponFactory = null;
 
+        this.startSound = null;
+        this.bgSound = null;
+
         //powerUpProgress
         this.powerUpTimer = null;
         this.powerUpProgress = 0;
@@ -52,6 +55,13 @@
             var style = { font: "40px Arial", fill: "#000000", align: "center" };
             this.score_text = this.game.add.text(this.game.world.centerX, 0, "Score: " + this.score, style);
             this.score_text.anchor.set(0.5, 0);
+
+            // sounds
+            this.startSound = this.game.add.audio("startsound");
+            this.bgSound = this.game.add.audio("bgsound");
+            this.bgSound.volume = 0.4;            
+            this.startSound.play();
+            this.startSound.loop = true; 
 
             var progressBg = this.game.add.graphics(0, 0);
             progressBg.lineStyle(2, 0x000000, 1);
@@ -110,7 +120,13 @@
 
             this.isStarted = true;
             this.player.body.gravity.y = 1000;
-
+            
+			this.bgSound.currentTime = 0;
+            this.startSound.currentTime = 0;
+            
+            this.bgSound.play(); 
+            this.bgSound.loop = true;
+            this.startSound.stop();
         },
 
         addElement: function() {
@@ -216,6 +232,9 @@
 
             //reset score.
             this.score = 0;
+            
+            this.startSound.stop();
+            this.bgSound.stop();
 
             // call game over view
             this.game.state.start('Gameover');
