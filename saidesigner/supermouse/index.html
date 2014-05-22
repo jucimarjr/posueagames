@@ -10,7 +10,7 @@
 	<div id="gameContainer"></div>
 	<script type="text/javascript">
 		window.onload = function() {
-			var game = new Phaser.Game(960, 600, Phaser.AUTO, 'gameContainer');
+			var game = new Phaser.Game(900, 600, Phaser.AUTO, 'gameContainer');
 			game.state.add('Game', SuperMouse.Game);
 			game.state.start('Game');
 		};
