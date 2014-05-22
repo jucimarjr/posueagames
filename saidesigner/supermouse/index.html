@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Super Mouse</title>
+	<script src="phaser/phaser.min.js"></script>
+	<script src="js/Game.js"></script>
+</head>
+<body>
+	<div id="gameContainer"></div>
+	<script type="text/javascript">
+		window.onload = function() {
+			var game = new Phaser.Game(960, 600, Phaser.AUTO, 'gameContainer');
+			game.state.add('Game', SuperMouse.Game);
+			game.state.start('Game');
+		};
+	</script>
+</body>
+</html>
