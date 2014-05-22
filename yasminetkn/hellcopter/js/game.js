@@ -1,5 +1,5 @@
 
-var floor,bonecoSprite,obstacles, ledges, ledge;
+var floor,bonecoSprite,obstacles, ledges, ledge, music;
 
 var start = 0;
 var count = 0;
@@ -19,19 +19,26 @@ function preload () {
    // game.load.image('bloco', 'assets/bloco_80-30.png');
     game.load.image('bloco', 'assets/block4.png');
     game.load.spritesheet('helicoptero', 'assets/helicopteroSpritesheet_365-60-4.png', 91, 59);
+    
+    //Firefox nao suporta mp3
+    //music = game.add.audio('assets/helicopter-hovering-01.mp3');
+    //music.override = true;
 
-    music = game.add.audio('assets/helicopter-hovering-01.mp3');
-    music.override = true;
-
-    music.addMarker('sobe', 3, 6, 1, true);
-
-
+   // music.addMarker('sobe', 3, 6, 1, true);
+   // game.load.audio('musica', 'assets/bt_bike_race.ogg');
+    game.load.audio('sfx', ['assets/bt_bike_race.ogg']);
+    //game.load.crossOrigin = true;
+   // game.load.audio('sfx', 'assets/bt_bike_race.ogg', true);
+    music = game.add.audio('sfx');
 }
 
 function create () {
 
 	game.add.sprite(0, 0, 'chao');
 	game.add.sprite(0, 0, 'top');
+	
+	//music.addMarker('sobe', 3, 6, 1, true);
+	music.play();
 	
 	
 	
