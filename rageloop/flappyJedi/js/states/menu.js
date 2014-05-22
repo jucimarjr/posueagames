@@ -5,9 +5,11 @@
     Menu.prototype = {
 
         create: function () {
-            this.stage.backgroundColor = '#ccc';
+            //this.stage.backgroundColor = '#ccc';
 
-            this.playbutton = this.game.add.button(this.game.world.centerX, this.game.world.centerY, 'playbtn', this.onPlayClick, this);
+            this.game.add.image(0, 0, 'menubg');
+
+            this.playbutton = this.game.add.button(this.game.world.centerX, this.game.world.centerY + 130, 'playbtn', this.onPlayClick, this);
             this.playbutton.anchor.set(0.5, 0.5);
 
             var style = { font: "40px Arial", fill: "#000000", align: "center" };
