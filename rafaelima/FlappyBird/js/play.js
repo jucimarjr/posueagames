@@ -2,28 +2,27 @@ var play_state = { create: create, update: update, render: render };
 	
 	//Sem function preload() pq já existe no load.js
     function create() {
-        var background = game.add.sprite(0, 0, 'background');
-        
+    	
         background1 = game.add.sprite(0, 0, 'background1');
 
-        background2 = game.add.sprite(0, 0, 'background2');
+        background2 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background2').height, 'background2');
         game.physics.arcade.enable(background2);
-
-        background3 = game.add.sprite(0, 0, 'background3');
+        
+        background3  = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background3').height, 'background3');
         game.physics.arcade.enable(background3);
 
         plataformas = game.add.group();
         plataformas.enableBody = true;
         plataformas.createMultiple(20, 'obstacle2');
 
-        billySprite = game.add.sprite(200, 281.5, 'billy');
+        billySprite = game.add.sprite(480, 281.5, 'billy');
         billySprite.animations.add('walk', [0, 1, 2], 13, true);
         game.physics.enable(billySprite, Phaser.Physics.ARCADE);
         billySprite.body.gravity.y = 1000;
         billySprite.body.collideWorldBounds = false; // para no limite inferior da tela
-        game.camera.follow(billySprite);
+        game.camera.follow(billySprite.sprite);
 
-        background4 = game.add.sprite(0, 0, 'background4');
+        background4 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background4').height, 'background4');
         game.physics.arcade.enable(background4);
 
         // Call the 'jump' function when the spacebar key is hit
@@ -42,15 +41,15 @@ var play_state = { create: create, update: update, render: render };
             restart_game();
 
         billySprite.body.velocity.x = 0;
-        background2.body.velocity.x = 0;
-        background3.body.velocity.x = 0;
-        background4.body.velocity.x = 0;
+        background2.tilePosition.x -= 0.3;
+        background3.tilePosition.x -= 0.5;
+        background4.tilePosition.x -= 1;
 
-        if (game.camera.x >= 0) {
+        /*if (game.camera.x >= 0) {
             background2.body.velocity.x = -10;
-            background3.body.velocity.x = -25;
+            background3.tilePosition.x  = -25;
             background4.body.velocity.x = -70;
-        }
+        }*/
     }
 
     function jump() {
