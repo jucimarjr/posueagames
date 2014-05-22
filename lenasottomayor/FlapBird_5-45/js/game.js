@@ -55,7 +55,7 @@ function update () {
 	
 	//game.physics.arcade.overlap(jogadorSprite, ossos, caoEatosso,null,this);
 	
-	if ( game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
+	/*if ( game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
 		jogadorSprite.body.velocity.x = -100;
 		jogadorSprite.scale.x = -1; // espelha se antes -1
 		jogadorSprite.animations.play('andar');
@@ -65,16 +65,23 @@ function update () {
 		jogadorSprite.scale.x = +1;  // espelha se antes 1
 		jogadorSprite.animations.play('andar');
 	}
-	else if ( game.input.keyboard.isDown (Phaser.Keyboard.UP) ) { // vai para cima
-
-		jogadorSprite.body.velocity.y = -300;
-		jogadorSprite.animations.play('pular');
+	else*/ if ( game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) { // vai para cima
+		pular();
+	}
+	else if(game.input.activePointer.isDown){
+		pular();
 	}
 	else {
 		jogadorSprite.animations.stop();
 		jogadorSprite.frame = 0;
 	}	
 }
+
+	function pular() {
+		jogadorSprite.body.velocity.y = -300;
+		jogadorSprite.body.velocity.x = 150;
+		jogadorSprite.animations.play('pular');
+	}
 
 /*function caoEatosso (cao,osso)	{
 
