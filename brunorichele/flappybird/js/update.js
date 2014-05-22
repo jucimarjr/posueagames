@@ -3,9 +3,9 @@ var update = {
     enemyTimer: null,
     update : function(){
     	
-    	//Utilização das setas direcionais para testar o tilesprite
+    	//Utilizaï¿½ï¿½o das setas direcionais para testar o tilesprite
     	
-	    if (arrows.left.isDown)
+/*	    if (arrows.left.isDown)
 	    {
 	        tilesprite.tilePosition.x += 8;
 	    }
@@ -21,10 +21,10 @@ var update = {
 	    else if (arrows.down.isDown)
 	    {
 	        tilesprite.tilePosition.y -= 8;
-	    }
+	    }*/
     	
     	
-        // fazer o angulo apontar para baixo quando o jogador nÃ£o esta pulando
+        // fazer o angulo apontar para baixo quando o jogador nï¿½ï¿½o esta pulando
         if(this.player.angle < 20){
             this.player.angle += 1;
         }
@@ -46,7 +46,7 @@ var update = {
     collisionFloor : function(){
         if (this.player.alive && this.player.y > game.world.bounds.height){
             var style = { font: "50px helvetica", fill: "#000000" };
-            status = game.add.text(50, 400, "Morreu no chÃ£o, fim de jogo", style);
+            status = game.add.text(50, 400, "Morreu no chï¿½ï¿½o, fim de jogo", style);
             this.player.alive = false;
             this.player.body.velocity.y = 0;
         }

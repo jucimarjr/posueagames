@@ -4,6 +4,7 @@ var create = {
     timer : null,
     arrows : null,
     tilesprite : null,
+    tilespritedois : null,
 
     
     init : function(){
@@ -13,10 +14,14 @@ var create = {
 
         // background
         // TODO: parallax background     
-        //Tentativa de parallax background, n�o sei se era esse o conceito.
-        tilesprite = game.add.tileSprite(0, 0, 960,800, 'background');
-    	//Implementado para testar o tileSprite
-        arrows = game.input.keyboard.createCursorKeys();
+        //Tentativa de parallax background
+        
+    	tilesprite = game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
+    	tilesprite.autoScroll(-200, 0);
+
+    	//tilespritedois = game.add.tileSprite(0, game.world.height - 100, 960, 100, 'river');
+    	//tilespritedois.autoScroll(-100, 0);
+        
 
         //player defs
         this.createPlayer();
@@ -39,7 +44,7 @@ var create = {
         this.player.jumpForce = -500;
         this.player.anchor.setTo(0.5, 0.5);
         this.player.alive = true;
-        // animação de rotação para cima, quando o jogador pula
+        // anima����o de rota����o para cima, quando o jogador pula
         this.player.rotateAnim = game.add.tween(this.player).to({angle: -15}, 300);
         // adicionando player a classe update
         update.player = this.player;
@@ -77,7 +82,7 @@ var create = {
         ariranha.body.velocity.x = -300* (1 + enemySpeedMultiplier / 10);
         ariranha.outOfBoundsKill = true;
         ariranha.anchor.setTo(0.5, 0.5);
-        game.add.tween(ariranha) //animação da ariranha descendo
+        game.add.tween(ariranha) //anima����o da ariranha descendo
             .to({y: 370, angle: -20}, 1000, null, false, 500) // em 500ms, descer e apontar angulo para cima, levando 1000ms
             .to({y: 270, angle: 20}, 1000) // subir e apontar angulo para baixo, em 1000ms
             .to({y: 170, angle: 0}, 500) // voltar a altura normal, zerar angulo
@@ -89,7 +94,7 @@ var create = {
         arraia.body.velocity.x = -300* (1 + enemySpeedMultiplier / 10);
         arraia.outOfBoundsKill = true;
         arraia.anchor.setTo(0.5, 0.5);
-        game.add.tween(arraia) // animação da arraia subindo
+        game.add.tween(arraia) // anima����o da arraia subindo
             .to({y: 370, angle: 20}, 1000, null, false, 500) // em 500ms, subir e apontar angulo para baixo, levando 1000ms
             .to({y: 470, angle: -20}, 1000) // descer e apontar angulo para cima, em 1000ms
             .to({y: 570, angle: 0}, 500) // voltar a altura normal, zerar angulo

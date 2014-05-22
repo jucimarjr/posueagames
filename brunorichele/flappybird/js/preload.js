@@ -4,6 +4,7 @@ var preload = {
         game.load.image('anzol', 'assets/anzol_10-400.png');
         game.load.image('ariranha', 'assets/ariranha_200-60.png');
         game.load.image('arraia', 'assets/arraia_200-100.png');
-        game.load.image('background', 'assets/bg_960-800.png');
+        game.load.image('background', 'assets/back.jpg');
+        game.load.image('background-2', 'assets/back.jpg');
     }
 };
