@@ -22,7 +22,7 @@ function create() {
         text.anchor.setTo(0.5, 0.5);
     }
     else {
-        var text = game.add.text(game.world.width / 2, game.world.height / 2 + 50, 'Não deu! Seu maior ponto foi ' + localStorage.getItem("highscore"), style);
+        var text = game.add.text(game.world.width / 2, game.world.height / 2 + 50, 'Não deu! Voce fez: ' + score + 'Mas sua maior pontuação foi: ' + localStorage.getItem("highscore"), style);
         text.anchor.setTo(0.5, 0.5);
     }  
 
@@ -33,6 +33,7 @@ function create() {
 
 // Começa o jogo
 function start() {
+    score = 0;
     console.log("menu start");
     game.state.start('fase');
 }

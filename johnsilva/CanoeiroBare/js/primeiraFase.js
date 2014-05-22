@@ -103,7 +103,9 @@ function initEnemies() {
 
 function addScore() {
     score++;
-    if (this.labelScore) {
+    if (score >= 10) {
+        game.state.start('gameWin');
+    } else {
         this.labelScore.setText(score + "m");
     }
 }
