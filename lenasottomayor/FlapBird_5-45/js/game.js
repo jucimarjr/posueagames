@@ -1,13 +1,14 @@
 
-var plataformas, base, jogadorSprite;
+var plataformas, base, jogadorSprite, background, sky, keySpaceBar, mouseClickLeft;
 
 var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload () {
 	
-	game.load.spritesheet('jogador', 'assets/jogador_60-80.png', 60,80);
+	game.load.spritesheet('player', 'assets/manspritesheet_245-102-3.png', 77,102);
 	game.load.image('base', 'assets/base_200-200.png');
-	game.load.image('ceu', 'assets/background_960-600.png');
+	game.load.image('background', 'assets/background_960-600.png');
+	game.load.image('sky', 'assets/sky_1920-600.png');
     //game.load.image('chao', 'assets/chao_960-54.png');
     //game.load.image('bloco', 'assets/bloco_276-107.png');
     //game.load.image('osso', 'assets/osso_109-87.png');
@@ -15,19 +16,22 @@ function preload () {
 }
 //
 function create () {
-	game.add.sprite(0, 0, 'ceu');
+	background = game.add.sprite(0, 0, 'background');
 	
-	jogadorSprite = game.add.sprite(100, 0, 'jogador');
-	jogadorSprite.animations.add('andar',[0],3,true);
-	jogadorSprite.animations.add('pular',[0],2,true);
+	sky = game.add.sprite(0, 0, 'sky');
+    game.physics.arcade.enable(sky);
+	
+	jogadorSprite = game.add.sprite(100, 0, 'player');
+	jogadorSprite.animations.add('jump',[0,1,3],5,true);
 	game.physics.enable(jogadorSprite, Phaser.Physics.ARCADE);
-	
-	jogadorSprite.body.acceleration.y = 300;
-	
+	jogadorSprite.body.acceleration.y = 500;
 	jogadorSprite.body.collideWorldBounds = true;
-	jogadorSprite.body.drag.x = 100; //desloca 100 e para, só desloca de novo se clicada alguma tecla e quanto maior for seu valor, menos desloca
-	jogadorSprite.anchor.setTo(.5,.5); // diminui o espaco do deslocamento do espelhamento 
-	jogadorSprite.body.gravity.y = 150;
+    game.camera.follow(jogadorSprite);
+	
+	
+//	jogadorSprite.body.drag.x = 100; //desloca 100 e para, só desloca de novo se clicada alguma tecla e quanto maior for seu valor, menos desloca
+//	jogadorSprite.anchor.setTo(.5,.5); // diminui o espaco do deslocamento do espelhamento 
+//	jogadorSprite.body.gravity.y = 150;
 	
     /*ossos = game.add.group();
     ossos.create( 500, 50, 'osso');
@@ -37,54 +41,46 @@ function create () {
     ossos.create( 800, 450, 'osso');
     game.physics.enable(ossos, Phaser.Physics.ARCADE);*/
 
-    plataformas = game.add.group();
-    plataformas.enableBody = true;
+//    plataformas = game.add.group();
+//    plataformas.enableBody = true;
     
-    base = plataformas.create(0, 400, 'base');
-    base.body.immovable = true; // deixa o bloco imovivel
+//    base = plataformas.create(0, 400, 'base');
+//    base.body.immovable = true; // deixa o bloco imovivel
     
     //chao = plataformas.create(0, 546, 'chao');
     //chao.body.immovable = true;
-	
+    
+    keySpaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    keySpaceBar.onDown.add(jump, this);
+    keySpaceBar.onUp.add(stop(), this);
 }
 
 
 function update () {
 	
-	game.physics.arcade.collide(jogadorSprite, plataformas);
+	jogadorSprite.body.velocity.x = 0;
+    sky.body.velocity.x = 0;
 	
-	//game.physics.arcade.overlap(jogadorSprite, ossos, caoEatosso,null,this);
+    if (game.camera.x >= 0) {
+    	 sky.body.velocity.x = -10;
+    }
 	
-	/*if ( game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
-		jogadorSprite.body.velocity.x = -100;
-		jogadorSprite.scale.x = -1; // espelha se antes -1
-		jogadorSprite.animations.play('andar');
-	}
-	else if ( game.input.keyboard.isDown (Phaser.Keyboard.RIGHT) ) { // vai para direita
-		jogadorSprite.body.velocity.x = 100;
-		jogadorSprite.scale.x = +1;  // espelha se antes 1
-		jogadorSprite.animations.play('andar');
-	}
-	else*/ if ( game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) { // vai para cima
-		pular();
-	}
-	else if(game.input.activePointer.isDown){
-		pular();
-	}
-	else {
+	if(game.input.activePointer.isDown){
+		jump();
+	} else {
 		jogadorSprite.animations.stop();
 		jogadorSprite.frame = 0;
 	}	
 }
 
-	function pular() {
-		jogadorSprite.body.velocity.y = -300;
-		jogadorSprite.body.velocity.x = 150;
-		jogadorSprite.animations.play('pular');
-	}
+function jump() {
+	jogadorSprite.body.velocity.y = -300;
+	jogadorSprite.body.velocity.x = 0;
+	jogadorSprite.animations.play('jump');
+}
 
-/*function caoEatosso (cao,osso)	{
-
-		osso.kill();
-}*/
+function stop() {
+	jogadorSprite.animations.stop();
+	jogadorSprite.frame = 0;
+}
 

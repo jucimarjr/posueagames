@@ -1,72 +1,103 @@
-var play_state = { create: create, update: update, render: render };
-	
+var play_state = { create: create, update: update };	
 	//Sem function preload() pq já existe no load.js
     function create() {
-        var background = game.add.sprite(0, 0, 'background');
-        
-        background1 = game.add.sprite(0, 0, 'background1');
+    	
+    	background1 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background1').height, 'background1');
+    	game.physics.arcade.enable(background1);
 
-        background2 = game.add.sprite(0, 0, 'background2');
+        background2 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background2').height, 'background2');
         game.physics.arcade.enable(background2);
-
-        background3 = game.add.sprite(0, 0, 'background3');
+        
+        background3  = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background3').height, 'background3');
         game.physics.arcade.enable(background3);
 
         plataformas = game.add.group();
         plataformas.enableBody = true;
         plataformas.createMultiple(20, 'obstacle2');
 
-        billySprite = game.add.sprite(200, 281.5, 'billy');
-        billySprite.animations.add('walk', [0, 1, 2], 13, true);
-        game.physics.enable(billySprite, Phaser.Physics.ARCADE);
-        billySprite.body.gravity.y = 1000;
-        billySprite.body.collideWorldBounds = false; // para no limite inferior da tela
-        game.camera.follow(billySprite);
+        playerSprite = game.add.sprite(180, 281.5, 'player');
+        playerSprite.animations.add('walk', [0, 1, 2, 3], 8, true);
+        game.physics.enable(playerSprite, Phaser.Physics.ARCADE);
+        playerSprite.body.gravity.y = 1000;
+        playerSprite.body.collideWorldBounds = false; // para no limite inferior da tela
+        game.camera.follow(playerSprite.sprite);
 
-        background4 = game.add.sprite(0, 0, 'background4');
+        deathSprite = game.add.sprite(playerSprite.body.position.x, playerSprite.body.position.y, 'death');
+        deathSprite.exists = false;
+        deathSprite.animations.add('walk', [0, 1, 2, 4, 5], 13, true);
+        game.physics.enable(deathSprite, Phaser.Physics.ARCADE);
+        deathSprite.body.gravity.y = 1000;
+        deathSprite.body.collideWorldBounds = false; // para no limite inferior da tela
+
+        background4 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background4').height, 'background4');
         game.physics.arcade.enable(background4);
 
+        background5 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background5').height, 'background5');
+        game.physics.arcade.enable(background5);
+
+        powerUp_multiply(); //comment to not multiply
         // Call the 'jump' function when the spacebar key is hit
         space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space_key.onDown.add(jump, this);
         space_key.onUp.add(notJump, this);
-
+        
         this.timer = this.game.time.events.loop(1500, add_obstacle, this);
     }
 
     // Start the actual game
     function update() {
-        game.physics.arcade.overlap(billySprite, plataformas, restart_game, null, this)
+        playerSprite.animations.play('walk');
 
-        if (billySprite.inWorld === false)
+        if (playersGroup.exists) {
+            playersGroup.callAll('animations.play', 'animations', 'walk');
+            playersGroup.forEach(function (item) { game.physics.arcade.overlap(item, plataformas, function () { item.kill(); }, null, this); });
+        }
+
+        game.physics.arcade.overlap(playerSprite, plataformas, playerDies, null, this)
+
+        if (playerSprite.inWorld === false)
             restart_game();
 
-        billySprite.body.velocity.x = 0;
-        background2.body.velocity.x = 0;
-        background3.body.velocity.x = 0;
-        background4.body.velocity.x = 0;
-
-        if (game.camera.x >= 0) {
-            background2.body.velocity.x = -10;
-            background3.body.velocity.x = -25;
-            background4.body.velocity.x = -70;
-        }
+        playerSprite.body.velocity.x = 0;
+        background1.tilePosition.x -= 0.5;
+        background2.tilePosition.x -= 2;
+        background3.tilePosition.x -= 3;
+        background4.tilePosition.x -= 4;
+        background5.tilePosition.x -= 0;
     }
 
     function jump() {
-        billySprite.body.velocity.y = -450;
-        billySprite.animations.play('walk');
+        playerSprite.body.velocity.y = -450;
+        if (playersGroup.exists === true) {
+            playersGroup.forEach(function (item) { item.body.velocity.y = -450; }, null, this);
+        }
     }
 
     function notJump() {
-        billySprite.animations.stop();
-        billySprite.frame = 0;
+        playerSprite.animations.stop();
+        playerSprite.frame = 0;
+    }
+
+    function playerDies() {
+        playDeadAnimation();
+        // Start the 'main' state, which restarts the game
+        setTimeout(restart_game, 1000);
     }
 
     function restart_game() {
-        // Start the 'main' state, which restarts the game
         game.time.events.remove(this.timer);
         game.state.start('play');
+    }
+
+    function playDeadAnimation() {
+        deathSprite.body.position.x = playerSprite.body.position.x;
+        deathSprite.body.position.y = playerSprite.body.position.y;
+        deathSprite.exists = true;
+        playerSprite.exists = false;
+        
+        game.camera.follow(deathSprite.sprite);
+        deathSprite.animations.play('walk');
+        
     }
 
     function add_one_obstacle(x, y) {
@@ -91,7 +122,21 @@ var play_state = { create: create, update: update, render: render };
                 add_one_obstacle(800, i * 154);
     }
 
-    function render() {
-        game.debug.cameraInfo(game.camera, 32, 32);
-        game.debug.spriteCoords(billySprite, 32, 200);
+    function powerUp_multiply() {
+        playersGroup = game.add.group();
+        playersGroup.enableBody = true;
+        for (var i = 0; i < 10; i++) {
+            player = playersGroup.create(game.world.randomX, game.world.randomY, 'player');
+            player.animations.add('walk', [0, 1, 2, 3], 8, true);
+            game.physics.enable(player, Phaser.Physics.ARCADE);
+            player.body.gravity.y = 1000;
+            player.body.collideWorldBounds = false; // para no limite inferior da tela
+            player.animations.play('walk');
+        }
+        setTimeout(powerUp_multiply_Off, 5000);
     }
+
+    function powerUp_multiply_Off() {
+        playersGroup.forEach(function (item) { item.kill(); }, null, this);
+        playersGroup.kill();
+     }
