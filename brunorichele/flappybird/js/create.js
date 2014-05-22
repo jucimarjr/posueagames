@@ -16,7 +16,7 @@ var create = {
         // TODO: parallax background     
         //Tentativa de parallax background
         
-    	tilesprite = game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
+    	tilesprite = game.add.tileSprite(0, 0, 960, 800, 'background');
     	tilesprite.autoScroll(-200, 0);
 
     	//tilespritedois = game.add.tileSprite(0, game.world.height - 100, 960, 100, 'river');
