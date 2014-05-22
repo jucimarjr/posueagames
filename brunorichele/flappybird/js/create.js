@@ -48,33 +48,33 @@ var create = {
     createEnemy : function() {
         if(!this.player.alive) return;
         var enemyIndex = this.random(1, 3);
+        var enemySpeedMultiplier = this.random(1, 9);
         switch(enemyIndex){
             case 1:
-                this.createAriranha();
+                this.createAriranha(enemySpeedMultiplier);
                 break;
             case 2:
-                this.createArraia();
+                this.createArraia(enemySpeedMultiplier);
                 break;
             case 3:
-                this.createAnzol();
+                this.createAnzol(enemySpeedMultiplier);
                 break;
             default:
-                alert("we shouldn't never get here");
-                this.createAriranha();
+                this.createAriranha(enemySpeedMultiplier);
         }
     },
 
     //criacao dos inimigos
-    createAnzol : function(){
+    createAnzol : function(enemySpeedMultiplier){
         var anzol = this.enemy_group.create(970, 0, 'anzol'); // criando do lado de fora
         game.physics.arcade.enable(anzol);
-        anzol.body.velocity.x = -300;
+        anzol.body.velocity.x = -300 * (1 + enemySpeedMultiplier / 10);
         anzol.outOfBoundsKill = true;
     },
-    createAriranha : function(){
+    createAriranha : function(enemySpeedMultiplier){
         var ariranha = this.enemy_group.create(1160, 170, 'ariranha'); // criando do lado de fora
         game.physics.arcade.enable(ariranha);
-        ariranha.body.velocity.x = -300;
+        ariranha.body.velocity.x = -300* (1 + enemySpeedMultiplier / 10);
         ariranha.outOfBoundsKill = true;
         ariranha.anchor.setTo(0.5, 0.5);
         game.add.tween(ariranha) //animação da ariranha descendo
@@ -83,10 +83,10 @@ var create = {
             .to({y: 170, angle: 0}, 500) // voltar a altura normal, zerar angulo
             .start();
     },
-    createArraia : function(){
+    createArraia : function(enemySpeedMultiplier){
         var arraia = this.enemy_group.create(1160, 570, 'arraia'); // criando do lado de fora
         game.physics.arcade.enable(arraia);
-        arraia.body.velocity.x = -300;
+        arraia.body.velocity.x = -300* (1 + enemySpeedMultiplier / 10);
         arraia.outOfBoundsKill = true;
         arraia.anchor.setTo(0.5, 0.5);
         game.add.tween(arraia) // animação da arraia subindo
