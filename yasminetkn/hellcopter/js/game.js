@@ -20,6 +20,11 @@ function preload () {
     game.load.image('bloco', 'assets/block4.png');
     game.load.spritesheet('helicoptero', 'assets/helicopteroSpritesheet_365-60-4.png', 91, 59);
 
+    music = game.add.audio('assets/helicopter-hovering-01.mp3');
+    music.override = true;
+
+    music.addMarker('sobe', 3, 6, 1, true);
+
 
 }
 
@@ -46,7 +51,9 @@ function create () {
     
     this.top.body.immovable = true;
     this.top.body.width = this.game.world.width;
-    
+
+
+    music.play('sobe');
 	
 	// Criando o Helicoptero
 	bonecoSprite = game.add.sprite(128, 80, 'helicoptero');
