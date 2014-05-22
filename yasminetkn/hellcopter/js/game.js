@@ -1,13 +1,20 @@
 
-var floor,bonecoSprite,obstacles, ledges, ledge, music;
+var floor,bonecoSprite,obstacles, ledges, ledge, fuels, fuel, music;
 
 var start = 0;
 var count = 0;
 var highscore = 0; 
 
+var _VELOCIDADE_PULO = -250;
+
 var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
+var timer;
+var milliseconds = 0;
+var seconds = 0;
+var minutes = 0;
 
+var counter = 3000;
 
 function preload () {
 
@@ -18,6 +25,7 @@ function preload () {
     game.load.image('ground', 'assets/hellcopter_background2.png');
    // game.load.image('bloco', 'assets/bloco_80-30.png');
     game.load.image('bloco', 'assets/block4.png');
+    game.load.image('fuel', 'assets/bird.png');
     game.load.spritesheet('helicoptero', 'assets/helicopteroSpritesheet_365-60-4.png', 91, 59);
     
     //Firefox nao suporta mp3
@@ -26,10 +34,10 @@ function preload () {
 
    // music.addMarker('sobe', 3, 6, 1, true);
    // game.load.audio('musica', 'assets/bt_bike_race.ogg');
-    game.load.audio('sfx', ['assets/bt_bike_race.ogg']);
+   // game.load.audio('sfx', ['assets/bt_bike_race.ogg']);
     //game.load.crossOrigin = true;
    // game.load.audio('sfx', 'assets/bt_bike_race.ogg', true);
-    music = game.add.audio('sfx');
+    //music = game.add.audio('sfx');
 }
 
 function create () {
@@ -38,7 +46,7 @@ function create () {
 	game.add.sprite(0, 0, 'top');
 	
 	//music.addMarker('sobe', 3, 6, 1, true);
-	music.play();
+	//music.play();
 	
 	
 	
@@ -46,7 +54,7 @@ function create () {
     this.ground2 = this.game.add.tileSprite(0, 0, 960, 600, 'ground');//(x,y,tamanho em x,?)
     this.ground2.autoScroll(-20, 0);
 
-    this.ground = this.game.add.tileSprite(0, 500, 960, 100, 'chao');//(x,y,tamanho em x,?)
+    this.ground = this.game.add.tileSprite(0, 450, 960, 100, 'chao');//(x,y,tamanho em x,?)
     this.ground.autoScroll(-400, 0);
 
     this.top = this.game.add.tileSprite(0,0,960,25,'top');
@@ -64,15 +72,15 @@ function create () {
     game.input.keyboard.addKeyCapture([Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.SPACEBAR]);
     cursors = game.input.keyboard.createCursorKeys();
 
-    music.play('sobe');
+//   / music.play('sobe');
 	
 	// Criando o Helicoptero
-	bonecoSprite = game.add.sprite(128, 80, 'helicoptero');
+	bonecoSprite = game.add.sprite(200, 100, 'helicoptero');
 	bonecoSprite.animations.add('jumpHeli',[0,3],4,true).play();
 
 	game.physics.enable(bonecoSprite, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 
-    bonecoSprite.body.velocity.y=-250;
+    bonecoSprite.body.velocity.y= _VELOCIDADE_PULO;
     bonecoSprite.body.gravity.y=1000;
 
     bonecoSprite.body.collideWorldBounds = true; // para no limite inferio da tela
@@ -81,12 +89,17 @@ function create () {
 
     ledges = game.add.group();
     ledges.enableBody = true;
-
-    game.time.events.loop(950, createBlocos, this);
+    
+    fuels = game.add.group();
+    game.physics.enable(fuels, Phaser.Physics.ARCADE);
+    fuels.enableBody = true;
+    
+    game.time.events.loop(1100, createBlocos, this);
+    game.time.events.loop(500, createFuels, this);
     
     game.input.onDown.add(listener, this);
     
-    text = game.add.text(game.world.width - 150, 15, "Pontuação: 0", {
+    text = game.add.text(100, 15, "Pontuação: 0", {
     	font: "25px Arial",
     	fill: "#fff",
     	align: "center"
@@ -99,48 +112,73 @@ function create () {
     });
     text.anchor.setTo(0.5, 0.5);
 
-    text4 = game.add.text(game.world.width - 150, 45, "Highscore: 0", {
+    text4 = game.add.text(game.world.width - 150, 15, "Highscore: 0", {
     	font: "25px Arial",
     	fill: "#fff",
     	align: "center"
     });
     	text4.anchor.setTo(0.5, 0.5); 
+    
+    var textStyle = { font: '25px Arial', 
+    				  align: 'center', 
+    				  fill:'#fff'};
+    
+    timer = game.add.text(game.world.centerX/2, 0, 'Combustível: '+counter, textStyle);
+    
 }
 
 function update () {
-	
-/*	if(start == 0){*/
+	game.time.events.add(Phaser.Timer.SECOND, updateCounter, this);
+
 		if ( game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) { // tecla do pulo
-	        bonecoSprite.body.velocity.y = -250;
+	        bonecoSprite.body.velocity.y = _VELOCIDADE_PULO;
 	    }
-//	}
-	
 	//Verifica se chocou com o topo, o chão ou com blocos	
     game.physics.arcade.collide(bonecoSprite, [this.ground, this.top, ledges], gameEnd, null, this);
-    game.physics.arcade.overlap(bonecoSprite, ledges, gameEnd, null, this); 
+    game.physics.arcade.overlap(bonecoSprite, fuels, incrementCounter, null, this); 
 
+}
+
+
+function createFuels(){
+	fuel = fuels.create(game.world.width, game.rnd.integerInRange(35, game.world.height) - 100, 'fuel');
+	if((fuel.y + fuel.height)>500 ){
+		fuel.y += -200;
+	}else if (fuel.y < 50){
+		fuel.y+= 100; 
+	}else if ((fuel.y + fuel.height)<=200){
+		fuel.y+=100;
+	}
 }
 
 
 function createBlocos() {
 	ledge = ledges.create(game.world.width, game.rnd.integerInRange(35, game.world.height) - 100, 'bloco');
-	ledge.body.velocity.x = -950;
+	
+	if((ledge.y + ledge.height)>500 ){
+		ledge.y += -200;
+	}else if (ledge.y < 50){
+		ledge.y+= 100; 
+	}else if ((ledge.y + ledge.height)<=200){
+		ledge.y+=100;
+	}
+
+	ledge.body.velocity.x = -700;
 	ledge.body.immovable = true;
 	ledge.outOfBoundsKill = true;
-	
+
 	count = count + 25;
 	text.setText("Pontuação: " + count);
 } 
 
 function gameEnd(player, ledge) {
+	game.time.events.stop(true);
 	bonecoSprite.kill();
 	//explosion.play();
 	game.time.events.events = [];
-	
 	if(ledge==null){
 		//ledge.kill();
 	}
-
 	text2.setText("Game over. Pontuação: " + count + "\nPressione SPACE para reiniciar.");
 	text2.anchor.setTo(0.5, 0.5);
 	
@@ -150,12 +188,48 @@ function gameEnd(player, ledge) {
 	bonecoSprite.body.velocity.x = 0;
 	bonecoSprite.body.gravity.y = 0;
 	start = 0;*/
-	
 	if (highscore < count) {
 		highscore = count;
 		text4.setText("Seu maior placar eh: " + highscore);
 	}
 } 
+
+
+/*function timerOver(){
+	bonecoSprite.kill();
+	//explosion.play();
+	game.time.events.events = [];
+	if(ledge==null){
+		//ledge.kill();
+	}
+	text2.setText("Game over. Pontuação: " + count + "\nPressione SPACE para reiniciar.");
+	text2.anchor.setTo(0.5, 0.5);
+	
+	bonecoSprite.x = 150;
+	bonecoSprite.y = game.world.centerY - 55;
+	bonecoSprite.body.velocity.y = 0;
+	bonecoSprite.body.velocity.x = 0;
+	bonecoSprite.body.gravity.y = 0;
+	start = 0;
+	if (highscore < count) {
+		highscore = count;
+		text4.setText("Seu maior placar eh: " + highscore);
+	}
+}*/
+
+function updateCounter(){
+	
+	if(counter>0){
+		counter--;
+	    timer.setText('Combustível: '+counter);
+	}else{
+		gameEnd();
+	}
+}
+
+function incrementCounter(){
+	counter+=150;
+}
 
 function listener() {
 	
@@ -163,21 +237,3 @@ function listener() {
 		player.body.velocity.y = -250;
 	}
 }
-
-
-/*function addUmObstacle(x,y){
-
-   var obstaculo = obstacles.create(x, game.world.height/2 -32,'bloco');
-    obstaculo.reset(x,y);//setando a nova posicao do obstaculo
-    obstaculo.body.velocity.x= -200;//velocidade para se mover a direita
-    obstaculo.body.immovable = true;
-    obstaculo.outOfBoundsKill = true;
-}
-
-function addLinhaDeObstaculos(){
-
-    var regra = Math.floor(Math.random()*5)+1;
-    for (var i = 0; i < 8; i++)
-        if (i != regra && i != regra +1)
-            addUmObstacle(400, i*60+10);
-}*/
