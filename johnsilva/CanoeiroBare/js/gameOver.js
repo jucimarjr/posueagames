@@ -16,6 +16,16 @@ function create() {
     var text = game.add.text(game.world.width / 2, game.world.height / 2, "Aperte o SPACE para reiniciar o Jogo", style);
     text.anchor.setTo(0.5, 0.5);
 
+    if (score > localStorage.getItem("highscore")) {
+        localStorage.setItem("highscore", score);
+        var text = game.add.text(game.world.width / 2, game.world.height / 2 + 50, 'HIGHSCORE: ' + localStorage.getItem("highscore"), style);
+        text.anchor.setTo(0.5, 0.5);
+    }
+    else {
+        var text = game.add.text(game.world.width / 2, game.world.height / 2 + 50, 'Não deu! Seu maior ponto foi ' + localStorage.getItem("highscore"), style);
+        text.anchor.setTo(0.5, 0.5);
+    }  
+
     var spacebar_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spacebar_keyboar.onDown.add(start, this);
 }

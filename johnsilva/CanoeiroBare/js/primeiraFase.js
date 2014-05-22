@@ -4,6 +4,7 @@ var boat;
 var objects;
 var velocity = 150;
 var score = 0;
+var highscore = 0;
 var jungles;
 var rivers;
 var jungles;
