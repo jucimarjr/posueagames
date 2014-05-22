@@ -23,6 +23,13 @@ var play_state = { create: create, update: update, render: render };
         playerSprite.body.collideWorldBounds = false; // para no limite inferior da tela
         game.camera.follow(playerSprite.sprite);
 
+        deathSprite = game.add.sprite(playerSprite.body.position.x, playerSprite.body.position.y, 'dino');
+        deathSprite.exists = false;
+        deathSprite.animations.add('walk', [0, 1, 2, 4, 5], 13, true);
+        game.physics.enable(deathSprite, Phaser.Physics.ARCADE);
+        deathSprite.body.gravity.y = 1000;
+        deathSprite.body.collideWorldBounds = false; // para no limite inferior da tela
+
         background4 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background4').height, 'background4');
         game.physics.arcade.enable(background4);
 
@@ -80,12 +87,11 @@ var play_state = { create: create, update: update, render: render };
     }
 
     function playDeadAnimation() {
+        deathSprite.body.position.x = playerSprite.body.position.x;
+        deathSprite.body.position.y = playerSprite.body.position.y;
+        deathSprite.exists = true;
         playerSprite.exists = false;
-        deathSprite = game.add.sprite(playerSprite.body.position.x, playerSprite.body.position.y, 'dino');
-        deathSprite.animations.add('walk', [0, 1, 2, 4, 5], 13, true);
-        game.physics.enable(deathSprite, Phaser.Physics.ARCADE);        
-        deathSprite.body.gravity.y = 1000;
-        deathSprite.body.collideWorldBounds = false; // para no limite inferior da tela
+        
         game.camera.follow(deathSprite.sprite);
         deathSprite.animations.play('walk');
         
