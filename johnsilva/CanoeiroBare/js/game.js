@@ -8,6 +8,7 @@ var rivers;
 var jungles;
 var tileSpeedRiver = 1.5;
 var tileSpeedJungles = 0.3;
+var jungleWidth = 196;
 
 function preload () {
 //	game.load.spritesheet('backGround', 'assets/bg/river_512-600.jpg', 500, 600, 2);
@@ -62,14 +63,14 @@ function createJungles(){
 	jungles = game.add.group();
 	jungles.create(0,-600, 'jungleLeft');
 	jungles.create(0,-1800, 'jungleLeft');
-	jungles.create(196+512,-600, 'jungleRight');
-	jungles.create(196+512,-1800, 'jungleRight');
+	jungles.create(jungleWidth+512,-600, 'jungleRight');
+	jungles.create(jungleWidth+512,-1800, 'jungleRight');
 }
 
 function createRivers(){
 	rivers = game.add.group();
-	rivers.create(196,-600, 'river');
-	rivers.create(196,-1800, 'river');
+	rivers.create(jungleWidth,-600, 'river');
+	rivers.create(jungleWidth,-1800, 'river');
 }
 
 function initObjects(){
@@ -79,8 +80,8 @@ function initObjects(){
 	/*b.body.collideWorldBounds = true;
 	b.body.moves = true;*/
 	objects = game.add.group();
-	//objects.create(10,10, 'buraco');
-    objects.createMultiple(5, 'buraco', 0, false);
+	objects.create(game.world.centerX, -100, 'buraco');
+    //objects.createMultiple(5, 'buraco', 0, false);
 	//game.physics.arcade.enable(objects);	
     game.physics.enable(objects, Phaser.Physics.ARCADE);
 }
@@ -100,11 +101,14 @@ function addBuraco() {
     {
         obj.frame = game.rnd.integerInRange(0,6);
         obj.exists = true;
-        x = game.world.randomX;
-        if(x > game.world.width-obj.body.width){
-        	x = game.world.width-obj.body.width;
+        var position = game.world.randomX;
+
+        if(position > (game.world.width-obj.body.width-jungleWidth)){
+        	position = game.world.width-obj.body.width-jungleWidth;
+        }else if(position < jungleWidth){
+        	position = jungleWidth;
         }
-        obj.reset(x, -70);
+        obj.reset(position, -70);
 
         //obj.body.bounce.y = 0.8;
     }
