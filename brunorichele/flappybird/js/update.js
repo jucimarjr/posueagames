@@ -2,28 +2,6 @@ var update = {
     player : null,
     enemyTimer: null,
     update : function(){
-    	
-    	//Utiliza��o das setas direcionais para testar o tilesprite
-    	
-/*	    if (arrows.left.isDown)
-	    {
-	        tilesprite.tilePosition.x += 8;
-	    }
-	    else if (arrows.right.isDown)
-	    {
-	        tilesprite.tilePosition.x -= 8;
-	    }
-
-	    if (arrows.up.isDown)
-	    {
-	        tilesprite.tilePosition.y += 8;
-	    }
-	    else if (arrows.down.isDown)
-	    {
-	        tilesprite.tilePosition.y -= 8;
-	    }*/
-    	
-    	
         // fazer o angulo apontar para baixo quando o jogador n��o esta pulando
         if(this.player.angle < 20){
             this.player.angle += 1;
@@ -46,7 +24,7 @@ var update = {
     collisionFloor : function(){
         if (this.player.alive && this.player.y > game.world.bounds.height){
             var style = { font: "50px helvetica", fill: "#000000" };
-            status = game.add.text(50, 400, "Morreu no ch��o, fim de jogo", style);
+            status = game.add.text(50, 400, "Morreu no chao, fim de jogo", style);
             this.player.alive = false;
             this.player.body.velocity.y = 0;
         }
