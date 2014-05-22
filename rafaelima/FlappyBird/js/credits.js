@@ -14,13 +14,13 @@ var credits_state = { create: create, update: update };
         var text = game.add.text(x, y, "Juliana", style);
         
         y+=20;
-        var text = game.add.text(x, y, "yumi", style);
+        var text = game.add.text(x, y, "Yumi", style);
         
         y+=20;
-        var text = game.add.text(x, y, "rafa", style);
+        var text = game.add.text(x, y, "Rafael", style);
         
         y+=20;
-        var text = game.add.text(x, y, "vivian", style);
+        var text = game.add.text(x, y, "Vivian", style);
     }
 
     function update() {

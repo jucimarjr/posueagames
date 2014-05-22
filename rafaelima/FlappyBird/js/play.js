@@ -39,7 +39,7 @@ var play_state = { create: create, update: update, render: render };
 
     // Start the actual game
     function update() {
-        game.physics.arcade.overlap(billySprite, plataformas, restart_game, null, this)
+        game.physics.arcade.overlap(billySprite, plataformas, playerDies, null, this)
 
         if (billySprite.inWorld === false)
             restart_game();
@@ -68,10 +68,27 @@ var play_state = { create: create, update: update, render: render };
         billySprite.frame = 0;
     }
 
-    function restart_game() {
+    function playerDies() {
+        playDeadAnimation();
         // Start the 'main' state, which restarts the game
+        setTimeout(restart_game, 1000);
+    }
+
+    function restart_game() {
         game.time.events.remove(this.timer);
         game.state.start('play');
+    }
+
+    function playDeadAnimation() {
+        billySprite.exists = false;
+        deathSprite = game.add.sprite(billySprite.body.position.x, billySprite.body.position.y, 'dino');
+        deathSprite.animations.add('walk', [0, 1, 2, 4, 5], 13, true);
+        game.physics.enable(deathSprite, Phaser.Physics.ARCADE);        
+        deathSprite.body.gravity.y = 1000;
+        deathSprite.body.collideWorldBounds = false; // para no limite inferior da tela
+        game.camera.follow(deathSprite.sprite);
+        deathSprite.animations.play('walk');
+        
     }
 
     function add_one_obstacle(x, y) {

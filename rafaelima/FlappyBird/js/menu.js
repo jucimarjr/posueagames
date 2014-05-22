@@ -10,15 +10,15 @@ var menu_state = { create: create, update: update, start: start };
 		var style = { font: "20px Arial", fill: "#ffffff" };
         var x = game.world.width/2, y = game.world.height -100;
         
-		var text = game.add.text(x, y, "Pressione [espaco] para comecar", style);
+		var text = game.add.text(x, y, "Pressione [espaco] para começar", style);
         text.anchor.setTo(0.5, 0.5); 
         
         y += 30;
-        var text = game.add.text(x, y, "[1] CREDITOS", style);
+        var text = game.add.text(x, y, "[1] CREDITS", style);
         text.anchor.setTo(0.5, 0.5);
         
         y += 30;
-        var text = game.add.text(x, y, "[2] SOUNG", style);
+        var text = game.add.text(x, y, "[2] SOUND", style);
         text.anchor.setTo(0.5, 0.5);
 
         var spacebar_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
