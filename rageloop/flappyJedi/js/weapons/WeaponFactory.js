@@ -25,6 +25,7 @@
             this.list = [simple, simpleFast, multi, multiFast];
 
             this.map = {
+                'simpleBlaster': simple,
                 'simpleBlasterFast': simpleFast,
                 'multiBlaster': multi,
                 'multiBlasterFast': multiFast

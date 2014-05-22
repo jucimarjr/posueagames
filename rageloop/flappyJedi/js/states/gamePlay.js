@@ -8,8 +8,16 @@
         this.fg = null;
         this.enemies = null;
         this.timer = null;
+
+        //weapons
         this.weapon = null;
         this.weaponFactory = null;
+
+        //powerUpProgress
+        this.powerUpTimer = null;
+        this.powerUpProgress = 0;
+        this.powerUpFill = null;
+        this.powerUpImage = null;
     };
 
     Gameplay.prototype = {
@@ -44,6 +52,19 @@
             var style = { font: "40px Arial", fill: "#000000", align: "center" };
             this.score_text = this.game.add.text(this.game.world.centerX, 0, "Score: " + this.score, style);
             this.score_text.anchor.set(0.5, 0);
+
+            var progressBg = this.game.add.graphics(0, 0);
+            progressBg.lineStyle(2, 0x000000, 1);
+            progressBg.beginFill(0xFFFFFF, 1);
+            progressBg.drawRect(10, 10, 100, 20);
+
+            this.powerUpFill = this.game.add.graphics(0, 0);
+            this.powerUpFill.beginFill(0x0000FF, 1);
+            this.powerUpFill.drawRect(11, 11, 0, 18);
+
+            this.powerUpImage = this.game.add.sprite(120, 6, 'powerups');
+            this.powerUpImage.scale.setTo(0.5, 0.5);
+            this.powerUpImage.visible = false;
         },
 
         update: function() {
@@ -141,10 +162,38 @@
 
             if (powerUpType !== 'shield') {
                 this.weapon = this.weaponFactory.getWeapon(powerUpType);
+                this.startPowerUpTimer(powerUp);
             }
             
             powerUp.kill();
+        },
 
+        startPowerUpTimer: function (powerUp) {
+            this.powerUpProgress = 99;
+
+            if (this.powerUpTimer) {
+                this.game.time.events.remove(this.powerUpTimer);
+            }
+
+            this.powerUpTimer = this.game.time.events.loop(200, this.updatePowerUpTimer, this);
+
+            this.powerUpImage.frame = powerUp.frame;
+            this.powerUpImage.visible = true;
+        },
+
+        updatePowerUpTimer: function () {
+            if (this.powerUpProgress == 0) {
+                this.game.time.events.remove(this.powerUpTimer);
+                this.weapon = this.weaponFactory.getWeapon('simpleBlaster');
+                this.powerUpImage.visible = false;
+                return;
+            }
+
+            this.powerUpFill.beginFill(0xFFFFFF, 1);
+            this.powerUpFill.drawRect(11, 11, 98, 18);
+
+            this.powerUpFill.beginFill(0x0000FF, 1);
+            this.powerUpFill.drawRect(11, 11, --this.powerUpProgress, 18);
         },
 
         restart: function () {
