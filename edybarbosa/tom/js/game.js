@@ -1,7 +1,6 @@
 var game = new Phaser.Game(960, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
+
 var cat;
-var catCrash;
-var catEffect;
 var fence;
 var cursors;
 var obstacles;
@@ -18,9 +17,7 @@ function preload() {
 	game.load.image('caixa', 'assets/caixas_142-174.png');
 	game.load.image('lata', 'assets/lixeira_89-174.png');
 	game.load.image('cerca', 'assets/cerca_690-182.png');
-	game.load.spritesheet('gato', 'assets/gato_132-81-4.png', 132, 81, 4);
-	game.load.spritesheet('gatoTonto', 'assets/tonto_515-82.png', 64, 82, 8);
-	game.load.spritesheet('gatoEnrolado', 'assets/enrolado_482-82.png', 80, 82, 6);
+	game.load.spritesheet('gato', 'assets/sequencias_150-80-18.png', 150, 80, 18);
 	
 	game.load.audio('boden', ['assets/audio/bodenstaendig_2000_in_rock_4bit.mp3', 'assets/audio/bodenstaendig_2000_in_rock_4bit.ogg']);
 }
@@ -61,13 +58,10 @@ function createPlayer() {
     cat.body.gravity.y = 600;
 	cat.animations.add('run', [0, 3], 7, true);
 	cat.animations.add('jump', [2,3], 2, true);
+	cat.animations.add('roll', [4,9], 6, true);
+	cat.animations.add('noise', [10,17], 6, true);
 	cat.animations.play('run');
 	
-//	catCrash   = game.add.sprite(270,270,'gatoTonto');
-//	catCrash.animations.add('tonto');
-
-	catEffect = game.add.sprite(270,270,'gatoEnrolado');
-	catEffect.animations.add('effect');
 }
 
 function createScore() {
@@ -109,36 +103,34 @@ function createObstacle() {
 }
 
 function update() {
-	if(!gameOver) {
+	
 		createObstacle();
-		game.physics.arcade.collide(cat, fence);
 		game.physics.arcade.collide(cat, obstacles, collisionHandler, null, this);
-
-	 	// Pulo do gato
-	    if (cursors.up.isDown && cat.body.touching.down) {
-	        cat.body.velocity.y = -300;
-	        cat.animations.play('jump');
-	        //var rotation = game.add.tween(cat).to({angle: cat.angle - 15}, 700, Phaser.Easing.Linear.None);
-	        //rotation.start();	        
-	    } else if (cursors.left.isDown && cat.body.touching.down) {
-	        catEffect.body.velocity.y = -300;
-	        catEffect.animations.play('effect');
-	    } else if(cat.body.touching.down) {
-	       cat.animations.play('run');
-	       cat.angle = 0;	
-	    }
-	    // movimento cerca
-	    fence.tilePosition.x -= 6;
-	    score.setText(metrosPercorridos + "m");
+		game.physics.arcade.collide(cat, fence);
+	
+		if(!gameOver) {
+		 	// Pulo do gato
+			 if (cursors.up.isDown && cat.body.touching.down) {
+		        cat.body.velocity.y = -300;
+		        cat.animations.play('jump');
+		        //var rotation = game.add.tween(cat).to({angle: cat.angle - 15}, 700, Phaser.Easing.Linear.None);
+		        //rotation.start();	        
+		    } else if (cursors.left.isDown && cat.body.touching.down) {
+		    	cat.body.velocity.y = -300;
+		    	//cat.animations.play('roll');
+		    	cat.animations.play('roll');
+		    } else if(cat.body.touching.down) {
+			       cat.animations.play('run');
+			       cat.angle = 0;	
+		    }
+		    // movimento cerca
+		    fence.tilePosition.x -= 6;
+		    score.setText(metrosPercorridos + "m");
 	}
 }
 
 function collisionHandler (obj1, obj2) {
 	gameOver = true;
-    obstacles.paused = true;
-    //cat.animations.stop();
     fence.tilePosition.x = 0;
-//    cat.destroy();
-    //catCrash.animations.play('tonto', 10, true);
-    //obsta
+    cat.animations.play('noise');    
 }
