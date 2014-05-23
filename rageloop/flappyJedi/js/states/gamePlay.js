@@ -40,6 +40,10 @@
 
             this.player_tween = this.game.add.tween(this.player).to( { y: 200 }, 1000, Phaser.Easing.Linear.None, true, 0, 1000, true);
 
+            this.player_fire = this.game.add.sprite(0, 0, 'player_fire');
+            this.player_fire.animations.add('fire', [0, 1, 2], 10, true);
+            this.player_fire.visible = false;
+
             this.enemies = this.game.add.group();
             this.enemies.createMultiple(20, 'enemy');
 
@@ -100,8 +104,16 @@
 
             this.handleKeyDown();
 
+            this.update_player_fire();
+
             this.bg.tilePosition.x -= 10;
             this.fg.tilePosition.x -= 15;
+        },
+
+        update_player_fire: function() {
+
+            this.player_fire.x = this.player.x + 200;
+            this.player_fire.y = this.player.y + 56;
         },
 
         update_score: function() {
@@ -287,6 +299,10 @@
 
             if (this.game.input.keyboard.isDown (Phaser.Keyboard.ENTER)) {
                 if(this.isStarted) {
+
+                    this.player_fire.revive();
+                    this.player_fire.animations.play('fire', 20, false, true);
+
                     this.weapon.fire();
                 }
             } 
