@@ -10,8 +10,7 @@
 
         this.playerDestroyTimer = null;
         this.fallingSound = null;
-        this.explosionSound = null;
-
+        this.explosionSound = null;        
     };
 
     Gameover.prototype = {
@@ -98,6 +97,8 @@
 
         onPlayClick: function() {
             clearTimeout(this.playerDestroyTimer);
+            this.explosionSound.stop();
+            this.fallingSound.stop();
             this.game.state.start('Gameplay');
         }
     };
