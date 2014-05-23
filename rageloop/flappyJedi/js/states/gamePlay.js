@@ -8,6 +8,7 @@
         this.fg = null;
         this.enemies = null;
         this.timer = null;
+        this.player_tween = null;
 
         //weapons
         this.weapon = null;
@@ -65,14 +66,12 @@
 
             var progressBg = this.game.add.graphics(0, 0);
             progressBg.lineStyle(2, 0x000000, 1);
-            progressBg.beginFill(0xFFFFFF, 1);
-            progressBg.drawRect(10, 10, 100, 20);
+            progressBg.beginFill(0xF7931E, 1);
+            progressBg.drawRect(10, 10, 230, 30);
 
             this.powerUpFill = this.game.add.graphics(0, 0);
-            this.powerUpFill.beginFill(0x0000FF, 1);
-            this.powerUpFill.drawRect(11, 11, 0, 18);
 
-            this.powerUpImage = this.game.add.sprite(120, 6, 'powerups');
+            this.powerUpImage = this.game.add.sprite(250, 10, 'powerups');
             this.powerUpImage.scale.setTo(0.5, 0.5);
             this.powerUpImage.visible = false;
         },
@@ -185,7 +184,7 @@
         },
 
         startPowerUpTimer: function (powerUp) {
-            this.powerUpProgress = 99;
+            this.powerUpProgress = 100;
 
             if (this.powerUpTimer) {
                 this.game.time.events.remove(this.powerUpTimer);
@@ -205,11 +204,11 @@
                 return;
             }
 
-            this.powerUpFill.beginFill(0xFFFFFF, 1);
-            this.powerUpFill.drawRect(11, 11, 98, 18);
+            this.powerUpFill.beginFill(0xF7931E, 1);
+            this.powerUpFill.drawRect(13, 13, 226, 24);
 
-            this.powerUpFill.beginFill(0x0000FF, 1);
-            this.powerUpFill.drawRect(11, 11, --this.powerUpProgress, 18);
+            this.powerUpFill.beginFill(0x000000, 1);
+            this.powerUpFill.drawRect(13, 13, (--this.powerUpProgress*226)/100, 24);
         },
 
         restart: function () {
@@ -236,11 +235,17 @@
             this.startSound.stop();
             this.bgSound.stop();
 
+            this.player_tween = null;
+
             // call game over view
             this.game.state.start('Gameover');
         },
 
         handleKeyDown: function() {
+            if (this.player_tween == null) {
+                return;
+            }
+
             if (this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR)) {
                 
                 if (!this.isStarted) {

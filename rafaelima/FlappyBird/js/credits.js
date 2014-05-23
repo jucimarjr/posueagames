@@ -14,14 +14,20 @@ var credits_state = { create: create, update: update };
         var text = game.add.text(x, y, "Juliana Figueira", style);
         
         y+=20;
-        var text = game.add.text(x, y, "Yumi Ouchi", style);
+        var text = game.add.text(x-70, y, "Yumi Ouchi", style);
         
         y+=20;
-        var text = game.add.text(x, y, "Rafael Lima", style);
+        var text = game.add.text(x-70, y, "Rafael Lima", style);
         
         y+=20;
-        var text = game.add.text(x, y, "Vivian Lô", style);
+        var text = game.add.text(x-70, y, "Vivian Lô", style);
     }
 
     function update() {
+    	var backspace_key = game.input.keyboard.addKey(Phaser.Keyboard.BACKSPACE);
+    	backspace_key.onDown.add(menu, this);
     }
+    
+    function menu() {
+		game.state.start('menu');
+	}

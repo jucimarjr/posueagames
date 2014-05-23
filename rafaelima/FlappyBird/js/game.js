@@ -9,8 +9,11 @@ var playersGroup; //for multiply Power up
 var plataformas;
 var porwerUps;
 var space_key;
-var soungFlag = true;
+var sound_flag = true;
 var jump_sound;
+
+//text
+var text_sound;
 
 //parallax
 var background1;

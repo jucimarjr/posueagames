@@ -27,7 +27,7 @@ var play_state = { create: create, update: update };
         deathSprite.animations.add('walk', [0, 1, 2, 4, 5], 13, true);
         game.physics.enable(deathSprite, Phaser.Physics.ARCADE);
         deathSprite.body.gravity.y = 1500;
-        deathSprite.body.collideWorldBounds = false; // para no limite inferior da tela
+        deathSprite.body.collideWorldBounds = true; // parar no limite inferior da tela
 
         background4 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background4').height, 'background4');
         game.physics.arcade.enable(background4);
@@ -72,7 +72,8 @@ var play_state = { create: create, update: update };
 
         game.physics.arcade.overlap(playerSprite, plataformas, playerDies, null, this)
 
-        if (playerSprite.inWorld === false)
+        //bate no chao
+        if ((Math.round(playerSprite.y) + playerSprite.height) >= game.world.height)
             restart_game();
 
         if (cursors.left.isDown){
