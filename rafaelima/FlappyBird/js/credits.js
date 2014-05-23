@@ -10,17 +10,17 @@ var credits_state = { create: create, update: update };
 		var text = game.add.text(x, y, "Developer by", style);
         text.anchor.setTo(0.5, 0.5); 
         
-        y+=20;
-        var text = game.add.text(x, y, "Juliana Fogueira", style);
+        y+=60;
+        var text = game.add.text(x-70, y, "Juliana Fogueira", style);
         
         y+=20;
-        var text = game.add.text(x, y, "Yumi Ouchi", style);
+        var text = game.add.text(x-70, y, "Yumi Ouchi", style);
         
         y+=20;
-        var text = game.add.text(x, y, "Rafael Lima", style);
+        var text = game.add.text(x-70, y, "Rafael Lima", style);
         
         y+=20;
-        var text = game.add.text(x, y, "Vivian Lô", style);
+        var text = game.add.text(x-70, y, "Vivian Lô", style);
     }
 
     function update() {
