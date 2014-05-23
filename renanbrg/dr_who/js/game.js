@@ -15,7 +15,7 @@ function preload () {
 
 function create () {
 	// Add the background image
-    game.add.sprite(0, 0, 'background');
+    background = game.add.tileSprite(0, 0, game.world.width, game.world.height, 'background');
 
     // Add TARDIS (the player)
     tardisSprite = game.add.sprite(100, (game.world.height - 110) / 2, 'tardis');
@@ -39,6 +39,7 @@ function create () {
 }
 
 function update () {
+    background.tilePosition.x--;
     game.physics.arcade.overlap(tardisSprite, meteors, kill, null, this);
     
     snd_musica.loop = true;

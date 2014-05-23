@@ -10,6 +10,7 @@ function preload () {
 	game.load.image('base', 'assets/base_200-200.png');
 	game.load.image('obstacle', 'assets/Obstacle_129-509.png');
 	game.load.image('sky', 'assets/background_980-600.png');
+	game.load.image('bgtile','assets/bgtiles_256-256.png');
     //game.load.image('chao', 'assets/chao_960-54.png');
     //game.load.image('bloco', 'assets/bloco_276-107.png');
     //game.load.image('osso', 'assets/osso_109-87.png');
@@ -55,7 +56,6 @@ function create () {
     //chao = plataformas.create(0, 546, 'chao');
     //chao.body.immovable = true;
     
-	
 	music = game.add.audio('music',0.5,true);
     music.play('',0,1,true);
 	
@@ -68,27 +68,27 @@ function create () {
 
 
 
-function update () {
-	
-	jogadorSprite.body.velocity.x = 0;
-    sky.body.velocity.x = 0;
-	
-    if (game.camera.x >= 0) {
-    	 sky.body.velocity.x = -50;
-    }
-	
-	if(game.input.activePointer.isDown){
-		jump();
-	} else {
-		stop();
-	}	
-}
+	function update () {
+		
+		jogadorSprite.body.velocity.x = 0;
+	    sky.body.velocity.x = 0;
+		
+	    if (game.camera.x >= 0) {
+	    	 sky.body.velocity.x = -150;
+	    }
+		
+		if(game.input.activePointer.isDown){
+			jump();
+		} else {
+			stop();
+		}	
+	}
 
 
 function jump() {
 	jogadorSprite.body.velocity.y = -300;
 	jogadorSprite.body.velocity.x = 0;
-	jogadorSprite.animations.play('jump');
+	jogadorSprite.frame = 2;
 
 }
 
