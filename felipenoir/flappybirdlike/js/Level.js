@@ -7,7 +7,6 @@ Level = function(game) {
 Level.prototype = {
 
 	preload : function() {
-		console.log('level -> preload');
 		this.game.load.image('ground', 'assets/ground.png');
 		this.game.load.image('mountains', 'assets/montanhas.png');
 		this.game.load.image('trees', 'assets/arvores.png');

@@ -268,7 +268,7 @@ function bossFight() {
         bossSprite.destroy();
     var X = game.world.randomX;
     if (X < 258)
-        X = playerSprite.body.position.x + 258;
+        X = playerSprite.body.position.x;
     else if (X > 702)
         X = 702;
     if (bossDirection >= 0.5) { //começa p/ cima

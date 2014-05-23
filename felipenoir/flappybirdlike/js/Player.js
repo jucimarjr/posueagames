@@ -8,7 +8,7 @@ Player.prototype = {
 	preload : function() {
 		console.log('player -> preload');
 		this.game.load.spritesheet('player', 'assets/player_110-134-4.png',
-				110, 134);
+				110, 130);
 		game.load.audio('audioVoar', 'assets/jump.mp3');
 	},
 
@@ -32,7 +32,7 @@ Player.prototype = {
 
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			this.sprite.body.velocity.y = -500;
-			this.sprite.body.velocity.x = 10;
+			//this.sprite.body.velocity.x = 10;
 			this.audioVoar.play();
 		}
 

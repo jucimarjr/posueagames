@@ -43,6 +43,10 @@
             this.enemies = this.game.add.group();
             this.enemies.createMultiple(20, 'enemy');
 
+            this.enemy_explosions = this.game.add.group();
+            this.enemy_explosions.createMultiple(5, 'enemy_explosion');
+            this.enemy_explosions.callAll('animations.add', 'animations', 'explosion', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 5, true);
+
             this.powerUps = new PowerUps(this.game);
             this.powerUps.init();
 
@@ -173,6 +177,18 @@
             enemy.outOfBoundsKill = true;
         },
 
+        addEnemyExplosion: function(x, y) {
+
+            var explosion = this.enemy_explosions.getFirstDead();
+
+            explosion.reset(x, y);
+            explosion.checkWorldBounds = true;
+            explosion.outOfBoundsKill = true;
+
+            explosion.animations.play('explosion', 20, false, true);
+
+        },
+
         killEnemy: function (bullet, enemy) {
 
             this.score += 1;
@@ -180,15 +196,16 @@
 
             bullet.kill();
             enemy.kill();
+
+            this.addEnemyExplosion(enemy.x, enemy.y);
         },
 
         getPowerUp: function(player, powerUp) {
 
             var powerUpType = powerUp.type;
 
-            this.setPowerUpBarVisibility(true);
-
             if (powerUpType !== 'shield') {
+                this.setPowerUpBarVisibility(true);
                 this.weapon = this.weaponFactory.getWeapon(powerUpType);
                 this.startPowerUpTimer(powerUp);
             }
