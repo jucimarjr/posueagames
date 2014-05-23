@@ -36,6 +36,12 @@ var obstacle;
 //power up
 var cursors;
 var timerPowerUp;
+var timeoutPowerUp = 11000;
+var timeoutNormalSize = 10000;
+var powerUp1;
+var powerUp2;
+var powerUp3;
+var powerUp4;
 
 var img_sound;
 

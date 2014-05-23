@@ -48,23 +48,7 @@ function create() {
     jump_sound = this.game.add.audio('flap_song');
 
     this.timer = this.game.time.events.loop(2000, add_obstacle, this);
-
-    cursors = game.input.keyboard.createCursorKeys();
-
-    if (cursors.left.isDown) {
-        speedPlayerSlow();
-    } else if (cursors.right.isDown) {
-        speedPlayerFast();
-    } else if (cursors.up.isDown) {
-        speedPlayerNormal();
-    } else if (cursors.down.isDown) {
-        smallSizePlayer();
-    }
-
-    playerSprite.body.velocity.x = 0;
-    background2.tilePosition.x -= 2 * speed;
-    background3.tilePosition.x -= 3 * speed;
-    background4.tilePosition.x -= 4 * speed;
+    timerPowerUp = this.game.time.events.loop(15000, add_power_up, this);
     
     //bloqueia novos obstaculos por 3 ataques do boss e depois o jogo volta ao normal IMPORTANTE P/ MINI BOSS!!!!!!!!!!!!!!!!!!!!11111
     /*SEQUENCIA IMPORTANTE P/ MINI BOSS!!!!!!!!!!!!!!!!!!!!11111 */
@@ -79,7 +63,7 @@ function create() {
 function update() {
 
 	if(!stop_score){
-    	score += 0.05;
+    	score += 0.01;
         this.label_score.text = score.toFixed(0) +"m";  //sem casa decimal
 	}
 	
@@ -109,13 +93,9 @@ function update() {
         playersGroup.callAll('animations.play', 'animations', 'walk');
         playersGroup.forEach(function (item) { game.physics.arcade.overlap(item, plataformas, function () { item.kill(); }, null, this); });
     }
-
-    if (powerUps != null) {
-        powerUps.animations.play('glow');
-        powerUps.body.velocity.x = -2;
-        game.physics.arcade.overlap(powerUps, playerSprite, powerUp_multiply, null, this);
-    }
-
+    
+    updatePowerUps();
+    
     game.physics.arcade.overlap(playerSprite, plataformas, playerDies, null, this)
 
     //bate no chao playerSprite
@@ -124,10 +104,36 @@ function update() {
     	//    	playerDies();
 //    	floor_death();//restart_game();
 	}
+    
+    playerSprite.body.velocity.x = 0;
+    background2.tilePosition.x -= 2 * speed;
+    background3.tilePosition.x -= 3 * speed;
+    background4.tilePosition.x -= 4 * speed;
+    
     //bate no chao o deathSprite
     if ((Math.round(deathSprite.y) + deathSprite.height) >= game.world.height)
     	floor_death();
 
+}
+
+function updatePowerUps(){
+	if (powerUp1 != null) {
+		powerUp1.animations.play('glow');
+		powerUp1.body.velocity.x = -100;
+		game.physics.arcade.overlap(powerUp1, playerSprite, smallSizePlayer, null, this);
+	}else if (powerUp2 != null) {
+		powerUp2.animations.play('glow');
+		powerUp2.body.velocity.x = -100;
+		game.physics.arcade.overlap(powerUp2, playerSprite, powerUp_multiply, null, this);
+	}else if (powerUp3 != null) {
+		powerUp3.animations.play('glow');
+		powerUp3.body.velocity.x = -100;
+		game.physics.arcade.overlap(powerUp3, playerSprite, speedPlayerFast, null, this);
+	}else if (powerUp4 != null) {
+		powerUp4.animations.play('glow');
+		powerUp4.body.velocity.x = -100;
+		game.physics.arcade.overlap(powerUp4, playerSprite, speedPlayerSlow, null, this);
+	}
 }
 
 function jump() {
@@ -148,31 +154,36 @@ function playerDies() {
     setTimeout(restart_game, 2000);
 }
 
-function speedPlayerFast() {
-    playerSprite.body.gravity.y = 3000;
-    speed = 4;
+function speedPlayerFast(){
+	powerUp3.kill();
+	playerSprite.body.gravity.y = 3000;
+	speed = 4;
+	setTimeout(speedPlayerNormal, timeoutNormalSize);
 }
 
-function speedPlayerSlow() {
-    playerSprite.body.gravity.y = 500;
-    speed = 0.3;
+function speedPlayerSlow(){
+	powerUp4.kill();
+	playerSprite.body.gravity.y = 500;
+	speed = 0.3;
+	setTimeout(speedPlayerNormal, timeoutNormalSize);
 }
 
-function speedPlayerNormal() {
-    playerSprite.body.gravity.y = 1500;
-    speed = 1;
-    normalSizePlayer();
+function speedPlayerNormal(){
+	playerSprite.body.gravity.y = 1500;
+	speed = 1;
+	normalSizePlayer();
 }
 
-function smallSizePlayer() {
-    playerSprite.width = 104;
-    playerSprite.height = 44.5;
-    //    	playerSprite.body.setSize(40,50);
+function smallSizePlayer(){
+	powerUp1.kill();
+	playerSprite.width  = 104;
+	playerSprite.height  = 44.5;
+	setTimeout(normalSizePlayer, timeoutNormalSize);
 }
 
-function normalSizePlayer() {
-    playerSprite.width = 208;
-    playerSprite.height = 89;
+function normalSizePlayer(){
+	playerSprite.width  = 208;
+	playerSprite.height  = 89;
 }
 
 function restart_game() {
@@ -224,6 +235,54 @@ function add_obstacle() {
     }
 }
 
+function add_power_up(){
+	
+	var type = Math.floor(Math.random() * 4);
+
+	switch (type) {
+	case 0:
+		powerUp1 = game.add.sprite(960, 100, 'powerup1');
+		powerUp1.animations.add('glow', [0, 1, 2, 3], 8, true);
+		game.physics.arcade.enable(powerUp1);
+		break;
+	case 1:
+		powerUp2 = game.add.sprite(960, 100, 'powerup2');
+		powerUp2.animations.add('glow', [0, 1, 2, 3], 8, true);
+		game.physics.arcade.enable(powerUp2);
+		break;
+	case 2:
+		powerUp3 = game.add.sprite(960, 100, 'powerup3');
+		powerUp3.animations.add('glow', [0, 1, 2, 3], 8, true);
+		game.physics.arcade.enable(powerUp3);
+		break;
+	case 3:
+		powerUp4 = game.add.sprite(960, 100, 'powerup4');
+		powerUp4.animations.add('glow', [0, 1, 2, 3], 8, true);
+		game.physics.arcade.enable(powerUp4);
+		break;
+	default:
+		break;
+	}
+	
+	setTimeout(killPowerUp, timeoutPowerUp);
+}
+
+function killPowerUp(){
+	if (powerUp1 != null) {
+		powerUp1.kill();
+		powerUp1 = null;
+	}else if (powerUp2 != null) {
+		powerUp_multiply_Off();
+		powerUp2 = null;
+	}else if (powerUp3 != null) {
+		powerUp3.kill();
+		powerUp3 = null;
+	}else if (powerUp4 != null) {
+		powerUp4.kill();
+		powerUp4 = null;
+	}
+}
+
 function addOutBoundEvent(obstacle) {
     obstacle.exists = true;
     obstacle.events.onOutOfBounds.add(
@@ -233,7 +292,7 @@ function addOutBoundEvent(obstacle) {
 }
 
 function powerUp_multiply() {
-    powerUps.destroy();
+    powerUp2.destroy();
     playersGroup = game.add.group();
     playersGroup.enableBody = true;
     for (var i = 0; i < 7; i++) {
@@ -256,9 +315,9 @@ function loadExtras() {
     plataformas = game.add.group();
     plataformas.enableBody = true;
 
-    powerUps = game.add.sprite(390, 281.5, 'powerup2');
-    powerUps.animations.add('glow', [0, 1, 2, 3], 8, true);
-    game.physics.arcade.enable(powerUps);
+//    powerUp2 = game.add.sprite(390, 281.5, 'powerup2');
+//    powerUp2.animations.add('glow', [0, 1, 2, 3], 8, true);
+//    game.physics.arcade.enable(powerUp2);
 }
 
 function bossFight() {
