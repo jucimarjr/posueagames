@@ -27,6 +27,20 @@ function preload () {
     game.load.image('bloco', 'assets/block4.png');
     game.load.image('fuel', 'assets/bird.png');
     game.load.spritesheet('helicoptero', 'assets/helicopteroSpritesheet_365-60-4.png', 91, 59);
+
+
+
+
+    game.load.audio('musica', 'assets/helicopter-hovering-01.mp3');
+    game.load.audio('musicBackground', 'assets/bt_bike_race.ogg.ogg');
+    game.load.audio('explosion', 'assets/explosion.mp3');
+
+
+//    music = game.add.audio('assets/helicopter-hovering-01.mp3');
+//    music.addMarker('sobe', 3, 6, 1, true);
+
+   // badSound = game.add.audio("assets/bt_bike_race.ogg");
+
     
     //Firefox nao suporta mp3
     //music = game.add.audio('assets/helicopter-hovering-01.mp3');
@@ -44,11 +58,18 @@ function create () {
 
 	game.add.sprite(0, 0, 'chao');
 	game.add.sprite(0, 0, 'top');
-	
+
+
+    music = game.add.audio('musica');
+   // music.addMarker('sobe', 4,4, 1, false);
+    music2 = game.add.audio('musicBackground');
+    explosion = game.add.audio('explosion');
+    explosion.addMarker('boom', 3, 6, 1, false);
+    music2.play();
+
 	//music.addMarker('sobe', 3, 6, 1, true);
 	//music.play();
-	
-	
+
 	
     //faz a chao rolar em loop
     this.ground2 = this.game.add.tileSprite(0, 0, 960, 600, 'ground');//(x,y,tamanho em x,?)
@@ -72,7 +93,7 @@ function create () {
     game.input.keyboard.addKeyCapture([Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.SPACEBAR]);
     cursors = game.input.keyboard.createCursorKeys();
 
-//   / music.play('sobe');
+
 	
 	// Criando o Helicoptero
 	bonecoSprite = game.add.sprite(200, 100, 'helicoptero');
@@ -132,7 +153,10 @@ function update () {
 
 		if ( game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) { // tecla do pulo
 	        bonecoSprite.body.velocity.y = _VELOCIDADE_PULO;
+            //music.play('sobe');
 	    }
+
+
 	//Verifica se chocou com o topo, o chão ou com blocos	
     game.physics.arcade.collide(bonecoSprite, [this.ground, this.top, ledges], gameEnd, null, this);
     game.physics.arcade.overlap(bonecoSprite, fuels, incrementCounter, null, this); 
@@ -173,8 +197,12 @@ function createBlocos() {
 
 function gameEnd(player, ledge) {
 	game.time.events.stop(true);
-	bonecoSprite.kill();
-	//explosion.play();
+	music2.stop();
+    bonecoSprite.kill();
+	explosion.play('boom');
+
+    //explosion.stop();
+
 	game.time.events.events = [];
 	if(ledge==null){
 		//ledge.kill();
@@ -192,8 +220,9 @@ function gameEnd(player, ledge) {
 		highscore = count;
 		text4.setText("Seu maior placar eh: " + highscore);
 	}
-} 
 
+
+}
 
 /*function timerOver(){
 	bonecoSprite.kill();
