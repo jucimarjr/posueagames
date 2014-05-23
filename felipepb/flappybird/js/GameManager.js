@@ -25,6 +25,7 @@ BasicGame.GameManager = function (game) {
     this.player;
     this.missions;
     this.backgroundManager;
+    this.hud;
 };
 
 BasicGame.GameManager.debugDraw = false;
@@ -46,6 +47,9 @@ BasicGame.GameManager.prototype = {
 
         // this.obstaclesManager = new BasicGame.ObstaclesManager(this, this.obstaclesGroup);
         // this.obstaclesManager.create();
+
+        this.hud = new BasicGame.HUD(this);
+        this.hud.create();
 
         this.player = new BasicGame.Player(this);
         this.player.create();

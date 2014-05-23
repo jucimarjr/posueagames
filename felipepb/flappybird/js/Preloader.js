@@ -34,7 +34,7 @@ BasicGame.Preloader.prototype = {
         
         this.load.image('backgroundPhrases', 'assets/backgroundphrases_960-600.png');
         
-        this.load.image('backgroundStarsBig', 'assets/backgroundstarsbig_960-600.png');
+        this.load.image('backgroundPlanets', 'assets/backgroundplanets_960-600.png');
         this.load.image('backgroundStarsMedium', 'assets/backgroundstarsmedium_960-600.png');
         this.load.image('backgroundStarsSmall', 'assets/backgroundstarssmall_960-600.png');
 
