@@ -43,6 +43,8 @@ var play_state = { create: create, update: update };
         space_key.onDown.add(jump, this);
         space_key.onUp.add(notJump, this);
         
+        jump_sound = this.game.add.audio('flap_song'); 
+        
         this.timer = this.game.time.events.loop(1500, add_obstacle, this);
         
         cursors = game.input.keyboard.createCursorKeys();
@@ -84,6 +86,7 @@ var play_state = { create: create, update: update };
         if (playersGroup.exists === true) {
             playersGroup.forEach(function (item) { item.body.velocity.y = -450; }, null, this);
         }
+        jump_sound.play();
     }
 
     function notJump() {
