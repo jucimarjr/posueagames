@@ -7,7 +7,7 @@ Enemies = function(game) {
 Enemies.prototype = {
 	preload : function() {
 		this.game.load.spritesheet(this.sprites[0], 'assets/dragon1_480-90.png', 480, 90);
-		this.game.load.spritesheet(this.sprites[1], 'assets/dragon2_480-90.png', 480, 90);
+		this.game.load.spritesheet(this.sprites[1], 'assets/shen_400-60.png', 400, 60);
 		this.game.load.spritesheet(this.sprites[2], 'assets/dragon3_480-90.png', 480, 90);
 		
 		//this.game.load.spritesheet(this.sprites[1], 'assets/char2_110-134.png',	 110, 134);

@@ -11,6 +11,7 @@
 		window.onload = function() {
 			var game = new Phaser.Game(900, 600, Phaser.AUTO, 'gameContainer');
 			game.state.add('Game', SuperMouse.Game);
+			game.state.add('GameOver', SuperMouse.GameOver);
 			game.state.start('Game');
 		};
 	</script>

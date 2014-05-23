@@ -12,7 +12,7 @@
 
             /*menu images*/
             this.game.load.image('menubg','assets/menu/bgmenu_960-600.png');
-            this.game.load.image('playbtn','assets/menu/btnplay1_50-50.png');
+            this.game.load.spritesheet('playbtn','assets/menu/btnplay_434-50.png', 217, 50);
 
             /*gameover images*/
             //this.game.load.image('replaybtn','assets/menu/play_again_button.png');

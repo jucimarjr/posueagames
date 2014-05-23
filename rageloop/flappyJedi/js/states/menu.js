@@ -9,11 +9,11 @@
 
             this.game.add.image(0, 0, 'menubg');
 
-            this.playbutton = this.game.add.button(this.game.world.centerX, this.game.world.centerY + 130, 'playbtn', this.onPlayClick, this);
+            this.playbutton = this.game.add.button(this.game.world.centerX + 50, this.game.world.centerY + 130, 'playbtn', this.onPlayClick, this, 1, 0, 1);
             this.playbutton.anchor.set(0.5, 0.5);
 
-            var style = { font: "40px Arial", fill: "#000000", align: "center" };
-            this.highscore = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 200, "Score: " + UserData.highscore.get(), style);
+            var style = { font: "36px Starjedi", fill: "#f3b40b"};
+            this.highscore = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 210, "Record: " + UserData.highscore.get(), style);
             this.highscore.anchor.set(0.5);
 
         },

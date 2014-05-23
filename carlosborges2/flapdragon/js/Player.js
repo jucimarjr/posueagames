@@ -57,8 +57,6 @@ Player.prototype = {
 			this.spaceIsUped = false;
 			
 			this.player.body.velocity.y = this.playerYJump;
-			//this.player.body.velocity.x = 10;
-			//this.audioVoar.play();
 			
 			this.soundCloud.play();
 		}
@@ -71,12 +69,12 @@ Player.prototype = {
 		
 		if(this.player.body.velocity.y < 0) {
 			game.add.tween(this.player).to({
-				angle : -10
+				angle : -15
 			}, 100).start();
 		}
 		else {
 			game.add.tween(this.player).to({
-				angle : 10
+				angle : 15
 			}, 100).start();
 		}
 		

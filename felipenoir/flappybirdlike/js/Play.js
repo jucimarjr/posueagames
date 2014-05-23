@@ -14,7 +14,7 @@ var playState = {
 
 	create : function() {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
-//		game.world.setBounds(0, 0, game.stage.bounds.width, game.cache.getImage('mountains').height);
+//		game.world.setBounds(0, 0, player.height*4, game.cache.getImage('mountains').height);
 //		game.world.setBounds(0, 0, game.stage.bounds.width, game.cache.getImage('trees').height);
 		level.create();
 		player.create();

@@ -10,3 +10,8 @@
     font-family: 'Starjhol';
     src: url('../assets/font/Starjhol.ttf') format("truetype");
 }
+
+@font-face {
+    font-family: 'Starjedi';
+    src: url('../assets/font/Starjedi.ttf') format("truetype");
+}

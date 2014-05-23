@@ -1,34 +1,60 @@
 <!doctype html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://opengraphprotocol.org/schema/" >
     <head>
+        <meta charset="UTF-8"/>
         <meta property="og:locale" content="pt_BR">
-        <meta property="og:url" content="http://computacao.uea.edu.br/ludus/posgames/nomedesigner/CanoeiroBare/">
-        <meta property="og:title" content=“Canoeiro Bar&eacute;”>
-        <meta property="og:site_name" content=“Especialização em Desenvolvimento de Jogos Eletrônicos da UEA”>
-        <meta property="og:description" content=“Abstract/Descricão para vender o peixe do seu jogo. Não use acentos. Use códigos HTML>
-        <meta property="og:image" content="http://computacao.uea.edu.br/ludus/posgames/nomedesigner/nomejogo/assets/adgame_800-600.jpg>
+        <meta property="og:url" content="http://computacao.uea.edu.br/ludus/posgames/johnsilva/CanoeiroBare/">
+        <meta property="og:title" content="Canoeiro Bar&eacute;">
+        <meta property="og:site_name" content="specialização em Desenvolvimento de Jogos Eletrônicos da UEA">
+        <meta property="og:description" content="Abstract/Em um rio muito perigoso, um grande canoeiro sofre um acidente e perde sua 
+            consci&ecirc;ncia. Ao acordar percebe que esse rio &eacute; cheio de bixos e armadilhas e para piorar sua situa&ccedil;&atilde;o, o seu filho mais novo est&aacute; perdido. Ele deve nadar contra a correnteza em uma busca desenfreada de reencontr&aacute;-lo.">
+
+        <meta property="og:image" content="http://computacao.uea.edu.br/ludus/posgames/johnsilva/CanoeiroBare/assets/adgame_800-600.png">
         <meta property="og:image:type" content="image/jpeg">
-        <meta property="og:image:width" content=“900">
+        <meta property="og:image:width" content="800">
         <meta property="og:image:height" content="600">
         <meta property="og:type" content="website">
-        <meta charset="UTF-8" />
+
         <title>Canoeiro Bar&eacute;</title>
+    </head>
+
+    <body>
+        <div id="fb-root"></div>
+            <script>
+                (function(d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) return;
+                    js = d.createElement(s); js.id = id;
+                    js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
+            <div class="fb-like"
+                 data-href="http://computacao.uea.edu.br/ludus/posueagames/johnsilva/CanoeiroBare/"
+                 data-layout="button_count" data-action="like" data-show-faces="true"
+                 data-share="false">
+            </div>
+
+    	<div id="game_div"></div>
+            <audio autoplay loop="loop" id="bgsound">
+                <source src="songs/canoeman.mp3" type="audio/mp3">
+                Seu browser não suporta o formato do audio.
+            </audio>
+        
+        <div class="fb-comments"
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/johnsilva/CanoeiroBare/"
+             data-width="960" data-numposts="10" data-colorscheme="light">
+        </div>
+
         <script src="../../phaser/phaser.min.js"></script>
         <script type="text/javascript" src="js/primeiraFase.js"></script>
         <script type="text/javascript" src="js/menu.js"></script>
         <script type="text/javascript" src="js/gameOver.js"></script>
         <script type="text/javascript" src="js/gameWin.js"></script>
         <script type="text/javascript" src="js/game.js"></script>
+
         <link rel="stylesheet" href="css/styles.css" type="text/css" media="screen"> 
 
-    </head>
-
-    <body>
-    	<div id="game_div"></div>
-        <audio autoplay loop="loop" id="bgsound">
-            <source src="sons/fundo.mp3" type="audio/mp3">
-            Seu browser não suporta o formato do audio.
-        </audio>
     </body>
     
 </html>

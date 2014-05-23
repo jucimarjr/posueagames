@@ -31,7 +31,7 @@
             this.score = app_container.last_score;
             UserData.highscore.set(this.score);
 
-            var style = { font: "40px Starjhol", fill: "#ffffff", align: "center" };
+            var style = { font: "36px Starjedi", fill: "#f3b40b", align: "center" };
             this.highscore = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 200, "Your score: " + this.score, style);
             this.highscore.anchor.set(0.5);
 

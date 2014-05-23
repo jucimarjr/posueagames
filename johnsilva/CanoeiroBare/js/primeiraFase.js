@@ -13,7 +13,6 @@ var jungleWidth = 196;
 var angleVelocity = 2;
 
 function preload() {
-    //	game.load.spritesheet('backGround', 'assets/bg/river_512-600.jpg', 500, 600, 2);
     game.load.image('river', 'assets/bg/river_512-1200.jpeg');
     game.load.image('jungleLeft', 'assets/bg/jungleLeft_196-1200.jpg');
     game.load.image('jungleRight', 'assets/bg/jungleRight_196-1200.jpg');
@@ -25,8 +24,10 @@ function preload() {
     game.load.spritesheet('trunk', 'assets/sprite/enemies/trunk_80-80-4.png', 80, 80, 4);
     game.load.image('mainScore', 'assets/botoes/score_900-110.png');
     game.load.image('record', 'assets/botoes/score_250-100.png');
-    game.load.audio('remosound', 'sons/remada.mp3');
-    game.load.audio('explodesound', 'sons/explode.mp3');
+    game.load.audio('remosound', 'songs/remada.mp3');
+    game.load.audio('explodesound', 'songs/explode.mp3');
+    game.load.audio('botosound', 'songs/boto.mp3');
+    game.load.audio('alligatorsound', 'songs/alligator.wav');
 }
 
 function create() {
@@ -42,9 +43,9 @@ function create() {
     boat.animations.add('run', [0,1,2,3,4,5,6,7,8,9], 7, true);
     boat.animations.add('dead', [10,11,12,13,14,15,16,17,18,19], 7, false);
     boat.animations.play('run');
-    game.physics.enable(boat, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
-    boat.body.collideWorldBounds = true; // para no limite inferio da tela
-    boat.body.drag.x = 30; //desloca 100 e para, só desloca de novo se clicada alguma tecla e quanto maior for seu valor, menos desloca
+    game.physics.enable(boat, Phaser.Physics.ARCADE);
+    boat.body.collideWorldBounds = true;
+    boat.body.drag.x = 30;
     boat.anchor.setTo(0.5, 0.5);
     boat.body.allowGravity = 0;
     boat.body.immovable = true
@@ -81,8 +82,12 @@ function createRivers() {
     rivers.create(jungleWidth, -1800, 'river');
 }
 
-function addEnemie(_sprite, x, y, speed, loop){
-    var enemie = game.add.sprite(x, y, _sprite);
+function addEnemie(_sprite, y, speed, loop, name){
+    var max = game.world.width - jungleWidth - 80;
+    var min = jungleWidth;
+    var positionX = Math.round(Math.random() * (max - min)) + min;
+    var enemie = game.add.sprite(positionX, y, _sprite);
+    enemie.name = name;
     enemie.animations.add('run');
     enemie.animations.play('run',speed, loop);
     enemies.add(enemie);  
@@ -90,11 +95,11 @@ function addEnemie(_sprite, x, y, speed, loop){
 
 function initEnemies() {
     enemies = game.add.group();
-    addEnemie('trunk',     196, 300, 2, true);
-    addEnemie('alligator', 500, 200, 4, true); 
-    addEnemie('sand',      196, 100  , 2, true);    
-    addEnemie('trunk',     350, -0, 2, true);    
-    addEnemie('boto',      200, -100, 6, true);
+    addEnemie('trunk',     180, 2, true, "trunk");
+    addEnemie('alligator', 100, 4, true, "alligatorsound"); 
+    addEnemie('sand',      20, 2, true, "sand");    
+    addEnemie('trunk',     -60 , 2, true, "trunk");    
+    addEnemie('boto',      -140, 6, true, "botosound");
     //enemies.createMultiple(5, 'buraco', 0, false);
     //game.physics.arcade.enable(enemies);	
     game.physics.enable(enemies, Phaser.Physics.ARCADE);
@@ -110,27 +115,22 @@ function addScore() {
 }
 
 function addEnemies() {
-
-    //var enemie = enemies.getFirstExists(false);
     var enemie = enemies.getFirstDead();
-
+    
     if (enemie) {
-        //enemie.frame = game.rnd.integerInRange(0, 6);
-        //enemie.exists = true;
-        //var positionX = game.world.randomX;
+        var b = game.add.audio(enemie.name);
+        b.play();
+        /*if(enemie.name == "boto"){
+            b = game.add.audio("botosound");
+            //remo.volume = 0.4;
+            b.play();
+        }*/
         var max = game.world.width - jungleWidth - enemie.body.width;
         var min = jungleWidth;
         var positionX = Math.round(Math.random() * (max - min)) + min;
         var positionY = -80;
 
-        /*if (positionX > (game.world.width - enemie.body.width - jungleWidth)) {
-            positionX = game.world.width - enemie.body.width - jungleWidth;
-        } else if (positionX < jungleWidth) {
-            positionX = jungleWidth;
-        }*/
         enemie.reset(positionX, -80);
-
-        //enemie.body.bounce.y = 0.8;
     }
 
 }
@@ -239,6 +239,7 @@ function goLeft() {
 
 function pegarObjetos(_boat, _enemies) {
     var explode = game.add.audio("explodesound");
+    explode.volume = 0.3;
     explode.play();
     boat.play('dead');
     boat.kill();
