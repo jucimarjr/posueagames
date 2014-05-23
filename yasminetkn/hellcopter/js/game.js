@@ -31,7 +31,7 @@ function preload () {
 
 
 
-    game.load.audio('musica', 'assets/helicopter-hovering-01.mp3');
+    game.load.audio('helice', 'assets/zap.wav');
     game.load.audio('musicBackground', 'assets/bt_bike_race.ogg.ogg');
     game.load.audio('explosion', 'assets/explosion.mp3');
 
@@ -60,12 +60,14 @@ function create () {
 	game.add.sprite(0, 0, 'top');
 
 
-    music = game.add.audio('musica');
-   // music.addMarker('sobe', 4,4, 1, false);
+    music = game.add.audio('helice');
+    music.addMarker('sobe', 1,1, 0.3, false);
+
     music2 = game.add.audio('musicBackground');
+    music2.addMarker ('backMusic',3,0,1,true);
     explosion = game.add.audio('explosion');
     explosion.addMarker('boom', 3, 6, 1, false);
-    music2.play();
+    music2.play('backMusic');
 
 	//music.addMarker('sobe', 3, 6, 1, true);
 	//music.play();
@@ -153,8 +155,10 @@ function update () {
 
 		if ( game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) { // tecla do pulo
 	        bonecoSprite.body.velocity.y = _VELOCIDADE_PULO;
-            //music.play('sobe');
+            music.override=false;
+            music.play('sobe');
 	    }
+
 
 
 	//Verifica se chocou com o topo, o chão ou com blocos	
