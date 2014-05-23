@@ -2,8 +2,9 @@
 
 function preload() {
     game.load.image('initBg', 'assets/bg/initBg_900-600.jpg');
-    game.load.image('btIniciar', 'assets/botoes/startgame_350-120.png');
-    game.load.image('btTutorial', 'assets/botoes/tutorial_350-120.png');
+
+    game.load.spritesheet('btIniciar', 'assets/botoes/iniciar-350-120.png', 350, 120, 2);
+    game.load.spritesheet('btTutorial', 'assets/botoes/tutorial-350-120.png', 350, 120, 2);
 }
 
 //Tela de Menu
