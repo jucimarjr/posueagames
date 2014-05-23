@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Resgate Espacial</title>
+	<script src="phaser/phaser.min.js"></script>
+	<script src="js/Game.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = function() {
+			var game = new Phaser.Game(900, 600, Phaser.AUTO, 'gameContainer');
+			game.state.add('Game', ResgateEspacial.Game);
+			game.state.add('GameOver', ResgateEspacial.GameOver);
+			game.state.start('Game');
+		};
+	</script>
+</body>
+</html>
