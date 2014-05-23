@@ -237,11 +237,26 @@ function goLeft() {
     //boat.animations.play('walk');
 }
 
-function overlapWithEnemies(_boat, _enemies) {
+function overlapWithEnemies(_boat, _enemies) {    
+    boat.play('dead');
+    boat.body.velocity.x = 0;
     var explode = game.add.audio("explodesound");
     explode.volume = 0.3;
     explode.play();
-    boat.play('dead');
+    setTimeout(gameOv, 1300);
+}
+
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds) {
+            break;
+        }
+    }
+}
+
+function gameOv() {
+    
     boat.kill();
     game.state.start('gameOver');
 }
