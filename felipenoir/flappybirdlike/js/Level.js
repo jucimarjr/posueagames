@@ -8,8 +8,8 @@ Level.prototype = {
 
 	preload : function() {
 		console.log('level -> preload');
-		this.game.load.image('bg', 'assets/bg.png');
 		this.game.load.image('ground', 'assets/ground.png');
+		this.game.load.image('bg', 'assets/bg.png');
 	},
 
 	create : function() {
