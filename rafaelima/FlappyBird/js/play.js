@@ -4,8 +4,7 @@ var play_state = { create: create, update: update };
 	//Sem function preload() pq já existe no load.js
     function create() {
     	
-    	background1 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background1').height, 'background1');
-    	game.physics.arcade.enable(background1);
+    	game.add.sprite(0, 0, 'background1');
 
         background2 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background2').height, 'background2');
         game.physics.arcade.enable(background2);
@@ -32,8 +31,8 @@ var play_state = { create: create, update: update };
         background4 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background4').height, 'background4');
         game.physics.arcade.enable(background4);
 
-        background5 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background5').height, 'background5');
-        game.physics.arcade.enable(background5);
+        game.add.sprite(0, 0, 'background5');
+        
         // Call the 'jump' function when the spacebar key is hit
         space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space_key.onDown.add(jump, this);
@@ -87,11 +86,9 @@ var play_state = { create: create, update: update };
         }
         
 		playerSprite.body.velocity.x = 0;
-        background1.tilePosition.x -= 0.5 * speed;
         background2.tilePosition.x -= 2 * speed;
         background3.tilePosition.x -= 3 * speed;
         background4.tilePosition.x -= 4 * speed;
-        background5.tilePosition.x -= 0 * speed;
         
     }
 
