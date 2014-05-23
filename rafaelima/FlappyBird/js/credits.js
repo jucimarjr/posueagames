@@ -11,7 +11,7 @@ var credits_state = { create: create, update: update };
         text.anchor.setTo(0.5, 0.5); 
         
         y+=20;
-        var text = game.add.text(x, y, "Juliana Fogueira", style);
+        var text = game.add.text(x, y, "Juliana Figueira", style);
         
         y+=20;
         var text = game.add.text(x, y, "Yumi Ouchi", style);
