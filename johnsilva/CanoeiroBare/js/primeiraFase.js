@@ -26,6 +26,7 @@ function preload() {
     game.load.image('mainScore', 'assets/botoes/score_900-110.png');
     game.load.image('record', 'assets/botoes/score_250-100.png');
     game.load.audio('remosound', 'sons/remada.mp3');
+    game.load.audio('explodesound', 'sons/explode.mp3');
 }
 
 function create() {
@@ -237,6 +238,8 @@ function goLeft() {
 }
 
 function pegarObjetos(_boat, _enemies) {
+    var explode = game.add.audio("explodesound");
+    explode.play();
     boat.play('dead');
     boat.kill();
     game.state.start('gameOver');
