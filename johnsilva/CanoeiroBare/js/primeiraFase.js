@@ -23,6 +23,10 @@ function preload() {
     game.load.spritesheet('boto', 'assets/sprite/enemies/boto_80-80-10.png', 80, 80, 10);
     game.load.spritesheet('sand', 'assets/sprite/enemies/sand_80-80-4.png', 80, 80, 4);
     game.load.spritesheet('trunk', 'assets/sprite/enemies/trunk_80-80-4.png', 80, 80, 4);
+    game.load.image('mainScore', 'assets/botoes/score_900-110.png');
+    game.load.image('record', 'assets/botoes/score_250-100.png');
+    game.load.audio('remosound', 'sons/remada.mp3');
+    game.load.audio('explodesound', 'sons/explode.mp3');
 }
 
 function create() {
@@ -45,9 +49,18 @@ function create() {
     boat.body.allowGravity = 0;
     boat.body.immovable = true
 
+    var style = { font: "20px Arial Bold", fill: "#ffffff" };
+    var styleBig = { font: "40px Arial Bold", fill: "#ffffff" };
 
-    var style = { font: "30px Arial", fill: "#ffffff" };
-    this.labelScore = game.add.text(this.game.world.centerX, 10, score + "m", style);
+    var recordScore = game.add.sprite(700, 500, 'record');
+    var text = game.add.text(830, 550, 'RECORD', style);
+    text.anchor.setTo(0.5, 0.5);
+    var text = game.add.text(830, 580, localStorage.getItem("highscore"), styleBig);
+    text.anchor.setTo(0.5, 0.5);
+
+    var imgScore = game.add.sprite(0, 0, 'mainScore');
+    var style = { font: "40px Arial Bold", fill: "#ffffff" };
+    this.labelScore = game.add.text(this.game.world.centerX, 50, score + "m", style);
     this.labelScore.anchor.set(0.5, 0);
     game.time.events.loop(150, addEnemies, this);
     game.time.events.loop(3000, addScore, this);
@@ -89,10 +102,10 @@ function initEnemies() {
 
 function addScore() {
     score++;
-    if (score >= 10) {
+    if (score >= 100) {
         game.state.start('gameWin');
     } else {
-        this.labelScore.setText(score + "m");
+        this.labelScore.setText(score);
     }
 }
 
@@ -139,11 +152,17 @@ function update() {
 
     if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) { // vai para esquerda
         changeAngle(angleVelocity);
+        var remo = game.add.audio("remosound");
+        remo.volume = 0.4;
+        remo.play();
         //goRight();
         //boat.scale.x = -1; // espelha se antes -1
     }
     else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) { // vai para direita
-        changeAngle(-1*angleVelocity);
+        changeAngle(-1 * angleVelocity);
+        var remo = game.add.audio("remosound");
+        remo.volume = 0.4;
+        remo.play();
         //goLeft();
     }else {
         boat.body.velocity.x = 2*boat.angle;//velocity;
@@ -202,6 +221,9 @@ function checkEnemiesBounds(obj) {
 function goRight() {
     //boat.body.velocity.x = velocity;
     boat.angle += angleVelocity;
+    var remo = game.add.audio("remosound");
+    //remo.volume = 0.4;
+    remo.play();
     //boat.animations.play('walk');
 }
 
@@ -209,10 +231,15 @@ function goRight() {
 function goLeft() {
     //boat.body.velocity.x = -velocity;
     boat.angle -= angleVelocity;
+    var remo = game.add.audio("remosound");
+    //remo.volume = 0.4;
+    remo.play();
     //boat.animations.play('walk');
 }
 
 function pegarObjetos(_boat, _enemies) {
+    var explode = game.add.audio("explodesound");
+    explode.play();
     boat.play('dead');
     boat.kill();
     game.state.start('gameOver');

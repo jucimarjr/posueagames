@@ -7,7 +7,7 @@ var credits_state = { create: create, update: update };
     	var style = { font: "20px Arial", fill: "#ffffff" };
         var x = game.world.width/2, y = game.world.height/2 -100;
         
-		var text = game.add.text(x, y, "Developer by", style);
+		var text = game.add.text(x, y, "Developed by", style);
         text.anchor.setTo(0.5, 0.5); 
         
         y+=20;

@@ -4,14 +4,14 @@ var speed = 1;
 //Sem function preload() pq já existe no load.js
 function create() {
 
-    background1 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background1').height, 'background1');
-    game.physics.arcade.enable(background1);
+    game.add.sprite(0, 0, 'background1');
 
     background2 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background2').height, 'background2');
     game.physics.arcade.enable(background2);
 
     background3 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background3').height, 'background3');
     game.physics.arcade.enable(background3);
+
 
     loadExtras();
 
@@ -28,12 +28,11 @@ function create() {
     game.physics.enable(deathSprite, Phaser.Physics.ARCADE);
     deathSprite.body.gravity.y = 1500;
     deathSprite.body.collideWorldBounds = true; // parar no limite inferior da tela
-    
+
     background4 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background4').height, 'background4');
     game.physics.arcade.enable(background4);
 
-    background5 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background5').height, 'background5');
-    game.physics.arcade.enable(background5); 
+    game.add.sprite(0, 0, 'background5');
     // Call the 'jump' function when the spacebar key is hit
     space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     space_key.onDown.add(jump, this);
@@ -45,6 +44,20 @@ function create() {
 
     cursors = game.input.keyboard.createCursorKeys();
 
+    if (cursors.left.isDown) {
+        speedPlayerSlow();
+    } else if (cursors.right.isDown) {
+        speedPlayerFast();
+    } else if (cursors.up.isDown) {
+        speedPlayerNormal();
+    } else if (cursors.down.isDown) {
+        smallSizePlayer();
+    }
+
+    playerSprite.body.velocity.x = 0;
+    background2.tilePosition.x -= 2 * speed;
+    background3.tilePosition.x -= 3 * speed;
+    background4.tilePosition.x -= 4 * speed;
     //score  metros
     score = 0;
     var style = { font: "30px Arial", fill: "#ffffff" };
@@ -104,23 +117,6 @@ function update() {
     if ((Math.round(playerSprite.y) + playerSprite.height) >= game.world.height)
         restart_game();
 
-    if (cursors.left.isDown) {
-        speedPlayerSlow();
-    } else if (cursors.right.isDown) {
-        speedPlayerFast();
-    } else if (cursors.up.isDown) {
-        speedPlayerNormal();
-    } else if (cursors.down.isDown) {
-        smallSizePlayer();
-    }
-    
-    playerSprite.body.velocity.x = 0; 
-    background1.tilePosition.x -= 0.5 * speed;
-    background2.tilePosition.x -= 2 * speed;
-    background3.tilePosition.x -= 3 * speed;
-    background4.tilePosition.x -= 4 * speed;
-    background5.tilePosition.x -= 0 * speed;
-    
 }
 
 function jump() {
@@ -267,15 +263,15 @@ function bossFight() {
     if (bossDirection >= 0.5) { //começa p/ cima
         bossSprite = game.add.sprite(X, 600, 'boss');
         game.physics.enable(bossSprite, Phaser.Physics.ARCADE);
-        bossSprite.body.velocity.y = -100; 
-    } else { 
+        bossSprite.body.velocity.y = -100;
+    } else {
         bossSprite = game.add.sprite(X, 0, 'boss');
         game.physics.enable(bossSprite, Phaser.Physics.ARCADE);
         bossSprite.anchor.setTo(.5, .5);
         bossSprite.scale.y *= -1;
-        bossSprite.anchor.setTo(0, 0);        
+        bossSprite.anchor.setTo(0, 0);
         bossSprite.body.velocity.y = 100;
-    } 
+    }
 
     bossSprite.animations.add('blink', [0, 1], 30, true);
     bossSprite.frame = 1;

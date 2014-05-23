@@ -17,12 +17,24 @@ var bossDirection;
 var text_sound;
 
 //parallax
-var background1;
 var background2;
 var background3;
 var background4;
-var background5;
 var bossBackground;
+var speed;
+
+//obstacle
+var timer;
+var deathSprite;
+var obstacle1;
+var obstacle2;
+var obstacle3;
+var obstacle4;
+var obstacle;
+
+//power up
+var cursors;
+var timerPowerUp;
 
 // Define all the states
 game.state.add('credits', credits_state);  

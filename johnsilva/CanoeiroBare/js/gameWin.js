@@ -1,8 +1,9 @@
 ﻿var gameWin = { preload: preload, create: create, start: start };
 
 function preload() {
-    game.load.image('splashscreen', 'assets/splashscreen.png');
-    game.load.image('bt_iniciar', 'assets/iniciarjogo_288-58.png');
+    game.load.image('splashscreen', 'assets/bg/jungleriver_900-1200.jpg');
+    game.load.image('win', 'assets/botoes/win_350-200.png');
+    game.load.image('play', 'assets/botoes/play_100-70.png');
     console.log("menu preload");
 }
 
@@ -10,15 +11,9 @@ function preload() {
 function create() {
     console.log("menu create");
     var splashscreen = game.add.sprite(0, 0, 'splashscreen');
-
-    var style = { font: "36px Arial", fill: "#ffffff" };
-    var style2 = { font: "20px Arial", fill: "#ffffff" };
-
-    var text = game.add.text(game.world.width / 2, game.world.height / 2, "Voce Venceu!!", style);
-    text.anchor.setTo(0.5, 0.5);
-
-    var text = game.add.text(game.world.width / 2, game.world.height / 2 + 50, "Aperte o SPACE para reiniciar o Jogo", style2);
-    text.anchor.setTo(0.5, 0.5);
+    var btWin = game.add.sprite(280, 100, 'win');
+    var btPlay = game.add.button(450, 300 + 100, 'play', start, this, 1, 0, 1);
+    btPlay.anchor.set(0.5, 0.5);
 
     var spacebar_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spacebar_keyboar.onDown.add(start, this);
@@ -31,3 +26,4 @@ function start() {
     console.log("menu start");
     game.state.start('fase');
 }
+

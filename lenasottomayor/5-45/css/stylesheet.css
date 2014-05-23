@@ -1,0 +1,9 @@
+body {
+            	margin: 0;
+        	}
+        	
+
+@font-face {
+	font-family: 'Visitor TT1 BRK' ;
+	src: url('../assets/visitor1.ttf');
+}

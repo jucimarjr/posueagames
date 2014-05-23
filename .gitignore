@@ -5,12 +5,20 @@
 Thumbs.db
 .workspace
 .idea
+.config
+__MACOSX/
+.swp
 
 # Eclipse #
 ###########
 .metadata/
 .settings/
 .project
+
+#not assets
+.pptx
+.psd
+.ai
 
 # JavaScript #
 ##############
