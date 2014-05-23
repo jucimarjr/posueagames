@@ -3,10 +3,14 @@ var plataformas;
 var game = new Phaser.Game(960, 600, Phaser.AUTO, '', {preload: preload,
         create: create, update: update});
 
+var snd_inicio, snd_musica;
+
 function preload () {
     game.load.image('background', 'assets/background_960-600.png');
     game.load.image('meteoro', 'assets/meteor_170-135.png');
     game.load.image('tardis', 'assets/tardis_77-110.png');
+    snd_inicial = document.getElementById("inicial");
+    snd_musica = document.getElementById("musica");
 }
 
 function create () {
@@ -18,13 +22,15 @@ function create () {
     game.physics.enable(tardisSprite, Phaser.Physics.ARCADE);
     tardisSprite.body.collideWorldBounds = true;
 
-    // Add a group of mateors
+    // Add a group of meteoros
     meteors = game.add.group();
     meteors.createMultiple(10, 'meteoro');
     game.physics.enable(meteors, Phaser.Physics.ARCADE);
     timer = game.time.events.loop(2000, addMeteor, this);
 
     meteorCounter = 0;
+    
+    
 
     // Add the score
     score = 0;
@@ -35,7 +41,10 @@ function create () {
 function update () {
     background.tilePosition.x--;
     game.physics.arcade.overlap(tardisSprite, meteors, kill, null, this);
-
+    
+    snd_musica.loop = true;
+	snd_musica.play();
+	
     if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
         tardisSprite.body.velocity.y = -250;
     } else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
@@ -81,4 +90,8 @@ function addMeteorInPosition(x, y) {
 function kill (tardis, meteoro)	{
     tardis.kill();
     meteoro.kill();
+    snd_musica.pause();
+    
 }
+
+
