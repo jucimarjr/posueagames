@@ -33,6 +33,11 @@ function preload() {
 	game.load.image('tuboinferior', 'assets/tuboinferior_80-480.png', 80, 480);
 	game.load.image('tubosuperior', 'assets/tubosuperior_80-480.png', 80, 480);
 
+	// Audio
+	game.load.audio('background_sound', 'audio/som_principal.mp3');
+	game.load.audio('collision_sound', 'audio/som_quando_houver_colisa_o.mp3');
+	game.load.audio('game_over_sound', 'audio/som_tela_de_game_over.mp3');
+
 	// game over screen
 	game.load.image('game_over', 'assets/game_over_screen_960_600.png', 960,
 			600);
@@ -41,6 +46,7 @@ function preload() {
 }
 
 function create() {
+
 	// firstScreen();
 	startGame();
 	// gameOverScreen();
@@ -90,6 +96,8 @@ function update() {
 			celulaSprite.body.velocity.y = -200;
 		}
 	} else {
+		backgroundSound = game.add.audio("collision_sound", 1, false);
+		backgroundSound.play();
 		alert("Game Over");
 	}
 }
@@ -122,6 +130,9 @@ function firstScreen() {
 }
 
 function startGame() {
+
+	backgroundSound = game.add.audio("background_sound", 1, true);
+	backgroundSound.play('', 0, 1, true);
 
 	tubos = new Array();
 	scored = new Array();
@@ -183,6 +194,10 @@ function startGame() {
 }
 
 function gameOverScreen() {
+
+	backgroundSound = game.add.audio("game_over_sound", 1, false);
+	backgroundSound.play();
+
 	// background
 	background = game.add.image(0, 0, 'game_over');
 	restart = game.add.image(230, 404, 'bt_restart');
