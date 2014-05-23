@@ -16,6 +16,7 @@
 
         this.startSound = null;
         this.bgSound = null;
+        this.hitSound = null;
 
         //powerUpProgress
         this.powerUpTimer = null;
@@ -61,14 +62,15 @@
 
             this.timer = this.game.time.events.loop(700, this.addElement, this);
 
-            var style = { font: "36px Starjedi", fill: "#000000", align: "center" };
+            var style = { font: "36px Starjedi", fill: "#ffffff", align: "center" };
             this.score_text = this.game.add.text(this.game.world.centerX, 0, "Score: " + this.score, style);
             this.score_text.anchor.set(0.5, 0);
 
             // sounds
             this.startSound = this.game.add.audio("startsound");
             this.bgSound = this.game.add.audio("bgsound");
-            this.bgSound.volume = 0.4;
+            this.hitSound = this.game.add.audio("crash");
+            //this.bgSound.volume = 0.3;
             this.startSound.play();
             this.startSound.loop = true; 
 
@@ -274,6 +276,7 @@
             //reset score.
             this.score = 0;
             
+            this.hitSound.play();
             this.startSound.stop();
             this.bgSound.stop();
 
