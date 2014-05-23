@@ -47,16 +47,16 @@ function create() {
 
     jump_sound = this.game.add.audio('flap_song');
 
-    this.timer = this.game.time.events.loop(2000, add_obstacle, this);
+//    this.timer = this.game.time.events.loop(2000, add_obstacle, this);
     timerPowerUp = this.game.time.events.loop(15000, add_power_up, this);
     
     //bloqueia novos obstaculos por 3 ataques do boss e depois o jogo volta ao normal IMPORTANTE P/ MINI BOSS!!!!!!!!!!!!!!!!!!!!11111
     /*SEQUENCIA IMPORTANTE P/ MINI BOSS!!!!!!!!!!!!!!!!!!!!11111 */
-    game.time.events.remove(this.timer);
-    countHeadButts = 0;
-    bossFight();
-    bossBackground = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('bossbg').height, 'bossbg');
-    game.physics.arcade.enable(bossBackground); 
+//    game.time.events.remove(this.timer);
+//    countHeadButts = 0;
+//    bossFight();
+//    bossBackground = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('bossbg').height, 'bossbg');
+//    game.physics.arcade.enable(bossBackground); 
 }
 
 // Start the actual game
@@ -69,25 +69,25 @@ function update() {
 	
     playerSprite.animations.play('walk');
 
-    if ((bossSprite != null) && (bossSprite.exists === true)) {
-        game.physics.arcade.overlap(bossSprite, playerSprite, playerDies, null, this);
-        if (bossDirection >= 0.5) {
-            if (bossSprite.body.position.y < 230) { //começa p/ cima
-                bossSprite.body.velocity.y = 100;
-                bossSprite.frame = 0;
-            } else if (bossSprite.body.position.y >= 600 && countHeadButts < 3) {
-                bossFight();
-            }
-
-        } else {
-            if (bossSprite.body.position.y > 370) {
-                bossSprite.body.velocity.y = -100;
-                bossSprite.frame = 0;
-            } else if (bossSprite.body.position.y <= 0 && countHeadButts < 3) {
-                bossFight();
-            }
-        }
-    }
+//    if ((bossSprite != null) && (bossSprite.exists === true)) {
+//        game.physics.arcade.overlap(bossSprite, playerSprite, playerDies, null, this);
+//        if (bossDirection >= 0.5) {
+//            if (bossSprite.body.position.y < 230) { //começa p/ cima
+//                bossSprite.body.velocity.y = 100;
+//                bossSprite.frame = 0;
+//            } else if (bossSprite.body.position.y >= 600 && countHeadButts < 3) {
+//                bossFight();
+//            }
+//
+//        } else {
+//            if (bossSprite.body.position.y > 370) {
+//                bossSprite.body.velocity.y = -100;
+//                bossSprite.frame = 0;
+//            } else if (bossSprite.body.position.y <= 0 && countHeadButts < 3) {
+//                bossFight();
+//            }
+//        }
+//    }
 
     if (playersGroup != null) {
         playersGroup.callAll('animations.play', 'animations', 'walk');
@@ -156,6 +156,7 @@ function playerDies() {
 
 function speedPlayerFast(){
 	powerUp3.kill();
+	powerUp3 = null;
 	playerSprite.body.gravity.y = 3000;
 	speed = 4;
 	setTimeout(speedPlayerNormal, timeoutNormalSize);
@@ -163,6 +164,7 @@ function speedPlayerFast(){
 
 function speedPlayerSlow(){
 	powerUp4.kill();
+	powerUp4 = null;
 	playerSprite.body.gravity.y = 500;
 	speed = 0.3;
 	setTimeout(speedPlayerNormal, timeoutNormalSize);
@@ -176,6 +178,7 @@ function speedPlayerNormal(){
 
 function smallSizePlayer(){
 	powerUp1.kill();
+	powerUp1 = null;
 	playerSprite.width  = 104;
 	playerSprite.height  = 44.5;
 	setTimeout(normalSizePlayer, timeoutNormalSize);
@@ -303,6 +306,7 @@ function powerUp_multiply() {
         player.body.collideWorldBounds = false; // para no limite inferior da tela
         player.animations.play('walk');
     }
+    powerUp2 = null;
     setTimeout(powerUp_multiply_Off, 5000);
 }
 
