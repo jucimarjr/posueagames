@@ -25,6 +25,11 @@ function create () {
     timer = game.time.events.loop(2000, addMeteor, this);
 
     meteorCounter = 0;
+
+    // Add the score
+    score = 0;
+    var style = { font: "30px Arial", fill: "#ffffff" };
+    labelScore = game.add.text(game.world.width / 2, 20, "0", style);
 }
 
 function update () {
@@ -38,6 +43,9 @@ function update () {
 }
 
 function addMeteor() {
+    score += 1;
+    labelScore.setText(score);
+
     if (meteorCounter != 10) {
         var meteorX = game.world.width;
         var meteorY = Math.floor(Math.random() * (game.world.height - 135));
