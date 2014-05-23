@@ -8,6 +8,7 @@
         this.fg = null;
         this.enemies = null;
         this.timer = null;
+        this.player_tween = null;
 
         //weapons
         this.weapon = null;
@@ -236,11 +237,17 @@
             this.startSound.stop();
             this.bgSound.stop();
 
+            this.player_tween = null;
+
             // call game over view
             this.game.state.start('Gameover');
         },
 
         handleKeyDown: function() {
+            if (this.player_tween == null) {
+                return;
+            }
+
             if (this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR)) {
                 
                 if (!this.isStarted) {
