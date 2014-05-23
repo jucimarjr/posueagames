@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+	    <meta charset="UTF-8" />
+	    <title>COLISAO BOLA!</title>
+	    <style type="text/css">
+	    	canvas {
+			  border:1px dashed #000;
+	    	}
+	    </style>
+	</head>
+    
+	<body onload="init()">
+	    <canvas id="canvas" height="150" width="150"> Navegador não compatível com HTML5 Canvas </canvas>
+	    <p>Capturar colisão nas paredes</p>
+	</body>
+	
+	<script>
+	
+var canvas = document.getElementById("canvas"); 
+var context = canvas.getContext("2d"); 
+
+// Posição do Mouse
+var mousePos; 
+
+// Jogador 
+var barraWidth, barraHeight,
+	jogadorPosX, jogadorPosY,
+	aceleracaoJogador, velocidadeJogador;
+
+// Posição e raio da bola
+var	bolaRaio,
+	velocidadeBola,
+	velocidadeBolaX, velocidadeBolaY,
+    bolaPosX, bolaPosY,
+    direcaoBolaX, direcaoBolaY,
+    anguloBola;
+
+// Detecção das teclas
+var teclaEnterPressionada;
+var contadorTeclaEnter;
+var teclaEsqPressionada;
+var teclaDirPressionada;
+
+function init() {
+
+	// Inicializa controle de tecla pressionada
+	teclaEsqPressionada = false;
+	teclaDirPressionada = false;
+	teclaEnterPressionada = false;
+	contadorTeclaEnter = 0;
+
+	// Configurar barra do Jogador
+	barraWidth = 50;
+	barraHeight = 15;
+
+	// Configurar posição do Jogador
+    jogadorPosX =  (canvas.width - barraWidth) / 2;
+    jogadorPosY = canvas.height - barraHeight - 30;
+    velocidadeJogador = 10;
+    		
+	// Configurar tamanho, posicionamento e velocidade da bola
+	velocidadeBola = 3;
+	velocidadeBolaX = 3;
+	velocidadeBolaY = 3;
+	bolaRaio = 10;
+    anguloBola = -6;
+    reiniciarBola();
+	
+	document.addEventListener('keyup', keyUp, false);     // Adiciona evento para o teclado
+	document.addEventListener('keydown', keyDown, false); // Adiciona evento para o teclado
+	document.addEventListener('mousemove', mouse, false); // Adiciona evento para mouse
+	
+	setInterval(gameLoop, 1000/30);                       // Executa gameLoop a cada 30 frames
+}
+
+function gameLoop(){
+	
+	if (teclaEnterPressionada){
+		if (contadorTeclaEnter == 0)
+			contadorTeclaEnter++;
+		if (contadorTeclaEnter > 1)
+			contadorTeclaEnter = 0;
+	}
+	
+	if (contadorTeclaEnter == 1){
+		// Relizar movimento da barra
+		movimentarBarra();
+	
+		// Relizar movimento da bola
+		movimentarBola();
+	}
+	
+	// Realizar desenho de todos os elementos da tela
+	desenhar();
+}
+
+function movimentarBarra(){
+	if (teclaEsqPressionada!=teclaDirPressionada){
+		if (teclaEsqPressionada){
+			jogadorPosX = jogadorPosX - velocidadeJogador;
+			
+			if (jogadorPosX < 0){
+				jogadorPosX = 0;
+			}
+		} 
+		if (teclaDirPressionada){
+			jogadorPosX = jogadorPosX + velocidadeJogador;
+			if (jogadorPosX > canvas.width - barraWidth){
+				jogadorPosX = canvas.width - barraWidth ;
+			}
+		}
+		mousePos = -1;
+	}
+	
+	if (teclaEsqPressionada == false  && teclaDirPressionada == false){
+		if (mousePos >= 0 ){
+			jogadorPosX = mousePos - barraWidth/2;
+		}
+		if (jogadorPosX <= 1){
+			jogadorPosX = 0;
+		}
+		if (jogadorPosX > canvas.width - barraWidth){
+			jogadorPosX = canvas.width - barraWidth;
+		}
+	}
+}
+
+function movimentarBola(){
+
+	// Verificar colisão ACIMA
+	if (bolaPosY - bolaRaio <= 1){
+// 		alert(direcaoBolaX+", cima antes");
+		direcaoBolaY = -direcaoBolaY;
+// 		alert(direcaoBolaX+", cima depois");
+	} else 
+	// Verificar colisão com a ESQUERDA
+	if (bolaPosX - bolaRaio <= 1){
+// 		alert(direcaoBolaX+", esq antes");
+	    direcaoBolaX = -direcaoBolaX;
+// 	    alert(direcaoBolaX+", esq depois");
+	} 
+	// Verificar colisão com a DIREITA
+	if (bolaPosX + bolaRaio >= canvas.width){
+// 		alert(direcaoBolaX+", dir antes");
+	    direcaoBolaX = -direcaoBolaX;
+// 	    alert(direcaoBolaX+", dir depois");
+	}
+	
+	// Verificar colisão BAIXO
+	if (bolaPosY + bolaRaio >= canvas.height ){
+		direcaoBolaY = direcaoBolaY * -1;
+	}
+	
+	bolaPosX = bolaPosX +(velocidadeBolaX*direcaoBolaX);
+    bolaPosY = bolaPosY +(velocidadeBolaY*direcaoBolaY);
+    
+	/*
+	
+	
+	
+		// Verificar colisão com JOGADOR
+		
+//if (bolaPosY >= jogadorPosY - bolaRaio){ // se está na altura da raquete
+	/*
+	if ((bolaPosY-bolaRaio)<=0 || colisaoJogadorBola()){ // verifica colisao no Y, e muda direcao do Y
+		direcaoBolaY = direcaoBolaY * -1;
+	} 
+	if ((bolaPosX-bolaRaio)<=0 || colisaoJogadorBola()){ // verifica colisao no X, e muda direcao do X
+		direcaoBolaX = direcaoBolaX * -1;
+	}
+	*/
+	/*
+	if ((bolaPosY-bolaRaio)<=0 || colisaoJogadorBola()){ // verifica colisao no Y, e muda direcao do Y
+		direcaoBolaY = direcaoBolaY * -1;
+	} 
+	if ((bolaPosX-bolaRaio)<=0 || colisaoJogadorBola()){ // verifica colisao no X, e muda direcao do X
+		direcaoBolaX = direcaoBolaX * -1;
+	}
+	*/
+//}
+	
+	// CONDIÇÃO DE DERROTA
+	/*
+	if (bolaPosY >= canvas.height - bolaRaio){
+		direcaoBolaX = direcaoBolaX * -1;
+
+	//	reiniciarBola();
+	}
+	*/
+	
+    //direcaoBola =  2*Math.PI;
+    //direcaoBola = Math.floor(Math.random() * 21) - 10;
+}
+
+function colisaoJogadorBola(){
+	var xProx = maisProximo(bolaPosX,jogadorPosX,jogadorPosX+barraWidth);
+	var yProx = maisProximo(bolaPosY,jogadorPosY,jogadorPosY+barraHeight);
+	var distX = bolaPosX - xProx;
+	var distY = bolaPosY - yProx;
+	var dist = (distX*distX)+(distY*distY);
+	return dist < (bolaRaio*bolaRaio);	
+}
+
+// Retorna o valor mais proximo de v: min ou max
+function maisProximo(v, min, max){
+	return Math.max(min, Math.min(max,v));
+}
+
+function calcularAnguloBolaJogador(){
+	var posicaoDaBolaNaRaquete = bolaPosX - jogadorPosX;	
+	var percentualAcerto = (posicaoDaBolaNaRaquete/(barraWidth-bolaRaio*2)) - 0.5
+	velocidadeBolaX = percentualAcerto*10;
+	velocidadeBolaY = velocidadeBolaY - 1;  
+}
+
+function reiniciarBola(){
+	if (Math.random() > 0.5 ){
+		direcaoBolaX = 1;
+	    direcaoBolaY = -1;
+	} else {
+		direcaoBolaX = -1;
+	    direcaoBolaY = -1;	
+	}
+	bolaPosX = jogadorPosX + barraWidth/2;
+	bolaPosY = jogadorPosY - 1.2*bolaRaio;
+}
+
+function desenhar(){
+
+	// Limpar tela
+	context.clearRect(0,0,canvas.width,canvas.height);
+	
+	// Desenhar jogador
+    context.beginPath();
+	context.rect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);   // desenho do jogador
+    context.strokeStyle = 'black';
+    context.stroke();
+
+	// Desenhar bola
+	context.beginPath();   
+    context.fillStyle = 'black';
+    context.fill();// Inicia o modo de desenho
+	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, 2*Math.PI,true); // desenho da bola
+	context.closePath();						                  // Fim do modo de desenho
+	context.fill();
+	
+}
+
+//Capturar posição do MOUSE
+function mouse(e){
+	mousePos = e.clientX - canvas.getBoundingClientRect().left;
+}
+
+//Capturar TECLAS
+function keyUp(e){
+	if (e.keyCode == 37){   
+		teclaEsqPressionada = false; // Soltou a tecla ESQUERDA
+	}
+	else if (e.keyCode == 39){
+		teclaDirPressionada = false; // Soltou a tecla DIRETIA
+	}
+	else if (e.keyCode == 13){
+		teclaEnterPressionada = false; // Soltou a tecla ENTER
+	}
+}
+
+//Capturar TECLAS
+function keyDown(e){
+	if (e.keyCode == 37){
+		teclaEsqPressionada = true; // Acertou a tecla ESQUERDA
+	}
+	else if (e.keyCode == 39){
+		teclaDirPressionada = true; // Acertou a tecla DIREITA
+	}
+	else if (e.keyCode == 13){
+		teclaEnterPressionada = true; // Acertou a tecla ENTER
+	}
+}
+	</script>
+	
+</html>

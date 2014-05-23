@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+	    <meta charset="UTF-8" />
+	    <title>Mais um pong! Pong Halison</title>
+	    <style type="text/css">
+	    	canvas {
+			  border:1px dashed #000;
+			  background-color:green;
+	    	}
+	    </style>
+	</head>
+    
+	<body onload="init()">
+	    <canvas id="canvas" width="600" height="480">
+			Navegador não compatível com HTML5 Canvas
+	    </canvas>
+	
+	</body>
+	
+	<script>
+	
+	
+	
+	
+var canvas, context, 
+ 	barraWidth, barraHeight,
+	jogadorPosX, jogadorPosY,
+	oponentePosX, oponentePosY,
+	bolaRaio, bolaPosX, bolaPosY,
+	pontosJogador, pontosOponente;
+	
+
+var canvas = document.getElementById("canvas"); 
+var context = canvas.getContext("2d"); 
+
+function init() {
+
+	barraWidth = 30;
+	barraHeight = 90;
+
+    jogadorPosX = 0;
+    jogadorPosY = (canvas.height - barraHeight) / 2;
+
+    oponentePosX = canvas.width - barraWidth;
+	oponentePosY = 0;
+	
+/*
+    jogadorPosX = 0;
+	jogadorPosY = canvas.height - barraHeight;
+	oponentePosX = canvas.width - barraWidth;
+	oponentePosY = canvas.height - barraHeight;
+	*/
+	
+	bolaRaio = 10;
+	bolaPosX = canvas.width / 2;
+//	bolaPosY = canvas.height / 2; // bola no meio
+	bolaPosY = canvas.height - bolaRaio; // bola embaixo
+	
+	desenhar();
+}
+
+function desenhar(){
+
+	// Jogadores
+	context.fillRect(jogadorPosX, jogadorPosY, barraWidth, barraHeight);   // desenho do jogador
+	context.fillRect(oponentePosX, oponentePosY, barraWidth, barraHeight); // desenho do oponente
+	
+	// Bola
+	context.beginPath();                 						  // Inicia o modo de desenho
+	context.arc(bolaPosX, bolaPosY, bolaRaio, 0, 2*Math.PI,true); // desenho da bola
+	context.closePath();						                  // Fim do modo de desenho
+	context.fill();
+	
+	// Placar
+	var pontosA = pontosJogador;
+	var pontosB = pontosOponente;
+	if (pontosA < 10 ) {
+		pontosA = "0" + pontosA;
+	}
+	if (pontosB < 10 ) {
+		pontosB = "0" + pontosB;
+	}
+	
+	context.font = "42pt Helvetica";
+	context.fillStype = "#000000";
+	context.fillText(pontosA + " " + pontos B, (canvas.width/2)-70,50);
+	
+	// Linha Divisória
+	context.beginPath();                 // Inicia o modo de desenho
+	context.moveTo(canvas.width / 2, 0); // Posiciona "lápis" para desenho
+	context.lineTo(canvas.width / 2, canvas.height); // 
+	context.strokeStyle = "#000000"; // Cor da divisória (opcional)
+	context.stroke();    // Aplica a divisória
+	context.closePath(); // Finaliza o caminho
+	
+	
+	
+	alert("Nenhum erro!");
+		
+}
+
+window.addEventListener('keydown', function(event) {
+	
+	switch (event.keyCode) {
+	case 40: // DOWN
+		if (jogadorPosY < canvas.height - barraHeight){
+			jogadorPosY = jogadorPosY + 10;
+	
+		}
+	case 38: // UP
+
+		if (Key.isDown(Key.UP)){
+			if (jogadorPosY > 0){
+				jogadorPosY = jogadorPosY - 10;
+			}
+		}
+		 break;
+	}
+	
+	desenhar();
+}
+	
+	</script>
+	
+</html>
