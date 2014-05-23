@@ -1,20 +1,20 @@
-﻿var GameMenu = { preload: preload, create: create, start: start };
+﻿var GameMenu = { preload: preload, create: create, start: start};
 
 function preload() {
-    game.load.image('splashscreen', 'assets/splashscreen.png');
-    game.load.image('bt_iniciar', 'assets/iniciarjogo_288-58.png');
-    console.log("menu preload");
+    game.load.image('splashscreen', 'assets/bg/jungleriver_900-1200.jpg');
+    game.load.image('btIniciar', 'assets/botoes/startgame_350-120.png');
+    game.load.image('btTutorial', 'assets/botoes/tutorial_350-120.png');
 }
 
 //Tela de Menu
 function create() {
-    console.log("menu create");
     var splashscreen = game.add.sprite(0, 0, 'splashscreen');
 
-    var style = { font: "20px Arial", fill: "#ffffff" };
+    var bt_iniciar = game.add.button(450, 300, 'btIniciar', start, this, 1, 0, 1);
+    bt_iniciar.anchor.set(0.5, 0.5);
 
-    var text = game.add.text(game.world.width / 2, game.world.height / 2, "Aperte o SPACE para remar", style);
-    text.anchor.setTo(0.5, 0.5);
+    var bt_tutorial = game.add.button(450, 440, 'btTutorial', start, this, 1, 0, 1);
+    bt_tutorial.anchor.set(0.5, 0.5);
 
     var spacebar_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spacebar_keyboar.onDown.add(start, this);

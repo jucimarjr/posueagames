@@ -4,6 +4,7 @@ function preload() {
     game.load.image('splashscreen', 'assets/bg/jungleriver_900-1200.jpg');
     game.load.image('btGameOver', 'assets/botoes/gameover_350-280.png');
     game.load.image('btRanking', 'assets/botoes/rank_100-70.png');
+    game.load.image('play', 'assets/botoes/play_100-70.png');
     console.log("menu preload");
 }
 
@@ -15,10 +16,13 @@ function create() {
     var btRank = game.add.sprite(340, 310, 'btRanking');
 
     var style = { font: "28px Arial Bold", fill: "#ffffff" };
+    var styleBig = { font: "40px Arial Bold", fill: "#ffffff" };
 
     if (score > localStorage.getItem("highscore")) {
         localStorage.setItem("highscore", score);
-        var text = game.add.text(460, 240, 'Novo Record: ' + localStorage.getItem("highscore"), style);
+        var text = game.add.text(450, 240, 'Novo Record ' + localStorage.getItem("highscore"), style);
+        text.anchor.setTo(0.5, 0.5);
+        var text = game.add.text(450, 300, localStorage.getItem("highscore"), styleBig);
         text.anchor.setTo(0.5, 0.5);
     }
     else {
@@ -26,7 +30,10 @@ function create() {
         text.anchor.setTo(0.5, 0.5);
         var text = game.add.text(450, 290, 'Record: ' + localStorage.getItem("highscore"), style);
         text.anchor.setTo(0.5, 0.5);
-    }  
+    }
+
+    var btPlay = game.add.button(450, 500, 'play', start, this, 1, 0, 1);
+    btPlay.anchor.set(0.5, 0.5);
 
     var spacebar_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     spacebar_keyboar.onDown.add(start, this);

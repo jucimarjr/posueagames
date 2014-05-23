@@ -23,6 +23,8 @@ function preload() {
     game.load.spritesheet('boto', 'assets/sprite/enemies/boto_80-80-10.png', 80, 80, 10);
     game.load.spritesheet('sand', 'assets/sprite/enemies/sand_80-80-4.png', 80, 80, 4);
     game.load.spritesheet('trunk', 'assets/sprite/enemies/trunk_80-80-4.png', 80, 80, 4);
+    game.load.image('mainScore', 'assets/botoes/score_900-110.png');
+    game.load.image('record', 'assets/botoes/score_250-100.png');
 }
 
 function create() {
@@ -45,9 +47,18 @@ function create() {
     boat.body.allowGravity = 0;
     boat.body.immovable = true
 
+    var style = { font: "20px Arial Bold", fill: "#ffffff" };
+    var styleBig = { font: "40px Arial Bold", fill: "#ffffff" };
 
-    var style = { font: "30px Arial", fill: "#ffffff" };
-    this.labelScore = game.add.text(this.game.world.centerX, 10, score + "m", style);
+    var recordScore = game.add.sprite(700, 500, 'record');
+    var text = game.add.text(830, 550, 'RECORD', style);
+    text.anchor.setTo(0.5, 0.5);
+    var text = game.add.text(830, 580, localStorage.getItem("highscore"), styleBig);
+    text.anchor.setTo(0.5, 0.5);
+
+    var imgScore = game.add.sprite(0, 0, 'mainScore');
+    var style = { font: "40px Arial Bold", fill: "#ffffff" };
+    this.labelScore = game.add.text(this.game.world.centerX, 50, score + "m", style);
     this.labelScore.anchor.set(0.5, 0);
     game.time.events.loop(150, addEnemies, this);
     game.time.events.loop(3000, addScore, this);
@@ -89,10 +100,10 @@ function initEnemies() {
 
 function addScore() {
     score++;
-    if (score >= 10) {
+    if (score >= 100) {
         game.state.start('gameWin');
     } else {
-        this.labelScore.setText(score + "m");
+        this.labelScore.setText(score);
     }
 }
 
