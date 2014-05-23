@@ -70,8 +70,8 @@ var play_state = { create: create, update: update };
 
         game.physics.arcade.overlap(playerSprite, plataformas, playerDies, null, this)
 
-        //bate no teto e no chao
-        if (((Math.round(playerSprite.y) + playerSprite.height) >= game.world.height)|| (Math.round(playerSprite.y) <= 0))
+        //bate no chao
+        if ((Math.round(playerSprite.y) + playerSprite.height) >= game.world.height)
             restart_game();
 
         if (cursors.left.isDown){

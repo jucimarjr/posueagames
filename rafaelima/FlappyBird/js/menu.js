@@ -18,8 +18,8 @@ var menu_state = { create: create, update: update, start: start };
         text.anchor.setTo(0.5, 0.5);
         
         y += 30;
-        textsound = game.add.text(x, y, "[2] SOUND", style);
-        textsound.anchor.setTo(0.5, 0.5);
+        text_sound = game.add.text(x, y, "[2] SOUND", style);
+        text_sound.anchor.setTo(0.5, 0.5);
 
         playerSprite = game.add.sprite(0, game.world.height/2, 'player');
 
@@ -45,12 +45,12 @@ var menu_state = { create: create, update: update, start: start };
 		game.state.start('credits');
 	}
 	function soung() {
-		if(soungFlag){
-			soungFlag = false;
-			textsound.text ="[2] NO SOUND";
+		if(sound_flag){
+			sound_flag = false;
+			text_sound.text ="[2] NO SOUND";
 		}else {
-			soungFlag = true;
-			textsound.text = "[2] SOUND";
+			sound_flag = true;
+			text_sound.text = "[2] SOUND";
 		}
 	}
 	
