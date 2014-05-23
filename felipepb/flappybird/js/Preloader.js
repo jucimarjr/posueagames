@@ -26,6 +26,8 @@ BasicGame.Preloader.prototype = {
         this.load.image('ground', 'assets/ground.png');
         this.load.image('pipe', 'assets/pipe.png');
         this.load.atlas('shipAtlas', 'assets/shipatlas_512-512-20.png', 'assets/shipatlas_512-512-20.json');
+        this.load.atlas('playbutton', 'assets/playbutton_512-256-3.png', 'assets/playbutton_512-256-3.json');
+        this.load.image('splashWithName', 'assets/splash_960-600.png');
         this.load.image('backgroundColor', 'assets/backgroundcolor_960-600.png');
         this.load.image('backgroundPhrases', 'assets/backgroundphrases_960-600.png');
         this.load.image('backgroundStarsBig', 'assets/backgroundstarsbig_960-600.png');
@@ -33,6 +35,8 @@ BasicGame.Preloader.prototype = {
         this.load.image('backgroundStarsSmall', 'assets/backgroundstarssmall_960-600.png');
 
         this.load.physics('physicsData', 'assets/ship_84-80.json');
+        
+        this.load.bitmapFont('silkscreen', 'assets/silkscreen.png', 'assets/silkscreen.fnt');
         //this.load.atlas('playButton', 'assets/play_button.png', 'assets/play_button.json');
         //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
         //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
@@ -67,6 +71,6 @@ BasicGame.Preloader.prototype = {
         //}
 
         if (this.ready)
-            this.state.start('Game');
+            this.state.start('MainMenu');
     }
 };
