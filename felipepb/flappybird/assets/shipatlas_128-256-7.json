@@ -1,0 +1,68 @@
+{"frames": [
+
+{
+	"filename": "ship_64-80.png",
+	"frame": {"x":0,"y":0,"w":64,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":80},
+	"sourceSize": {"w":64,"h":80}
+},
+{
+	"filename": "ship_bottom-thrusters_1.png",
+	"frame": {"x":64,"y":0,"w":20,"h":39},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":6,"y":2,"w":20,"h":39},
+	"sourceSize": {"w":32,"h":79}
+},
+{
+	"filename": "ship_bottom-thrusters_2.png",
+	"frame": {"x":84,"y":0,"w":26,"h":57},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":0,"w":26,"h":57},
+	"sourceSize": {"w":32,"h":79}
+},
+{
+	"filename": "ship_bottom-thrusters_3.png",
+	"frame": {"x":0,"y":80,"w":32,"h":79},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":79},
+	"sourceSize": {"w":32,"h":79}
+},
+{
+	"filename": "ship_bottom-thrusters_4.png",
+	"frame": {"x":32,"y":80,"w":24,"h":59},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":0,"w":24,"h":59},
+	"sourceSize": {"w":32,"h":79}
+},
+{
+	"filename": "ship_left-thrusters_1.png",
+	"frame": {"x":56,"y":80,"w":46,"h":66},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":46,"h":66},
+	"sourceSize": {"w":46,"h":66}
+},
+{
+	"filename": "ship_left-thrusters_2.png",
+	"frame": {"x":0,"y":159,"w":51,"h":69},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":51,"h":69},
+	"sourceSize": {"w":51,"h":69}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "shipAtlas.png",
+	"format": "RGBA8888",
+	"size": {"w":128,"h":256},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ffa8aa6be4a76ac8b6d90c26b12fd679:6a3c32219a4135829a6dc7dfab070896:e696b1a5c9e543dbf26d7c8d29a6d04f$"
+}
+}
