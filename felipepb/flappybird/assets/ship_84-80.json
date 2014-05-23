@@ -1,0 +1,22 @@
+	{ 
+		
+		"ship": [
+			
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   0, 68  ,  0, 52  ,  11, 40  ,  64, 41  ,  47, 63  ,  25, 80  ,  10, 80  ]
+				}  ,
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   0, 12  ,  20, 0  ,  40, 9  ,  58, 30  ,  64, 41  ,  11, 40  ,  0, 28  ]
+				}  ,
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   20, 0  ,  0, 12  ,  11, 0  ]
+				}  
+		]
+		
+	}

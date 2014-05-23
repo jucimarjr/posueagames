@@ -8,10 +8,7 @@ BasicGame.Player = function (gameManager) {
     this._leftMargin = 20 + BasicGame.Player.frameWidth / 2.0;
 };
 
-BasicGame.Player.frameWidth = 85;
-BasicGame.Player.frameHeight = 60;
-BasicGame.Player.frameCount = 3;
-BasicGame.Player.jumpForce = -5 * BasicGame.GameManager.pixelsToUnit;
+BasicGame.Player.frameWidth = 84;
 BasicGame.Player.jumpKey = Phaser.Keyboard.SPACEBAR;
 
 BasicGame.Player.prototype = {
@@ -19,12 +16,17 @@ BasicGame.Player.prototype = {
         var cameraHeight = this.gameManager.camera.height;
         var sprite = this.gameManager.add.sprite(this._leftMargin,
                                                  cameraHeight / 2.0,
-                                                 'clumsy');
-        this.gameManager.physics.enable(sprite, Phaser.Physics.ARCADE);
-        sprite.frame = 0;
+                                                 'shipAtlas');
+
+        sprite.frameName = 'ship_64-80.png';
         sprite.anchor.setTo(0.5, 0.5);
-        sprite.body.gravity.y = 9.8 * BasicGame.GameManager.pixelsToUnit;
-        sprite.body.velocity.y = BasicGame.Player.jumpForce;
+
+        // Physics code!
+        this.gameManager.game.physics.p2.enableBody(sprite, BasicGame.GameManager.debugDraw);
+        
+        sprite.body.clearShapes();
+        sprite.body.loadPolygon('physicsData', 'ship');
+        sprite.body.velocity.y = BasicGame.GameManager.jumpForce;
         sprite.body.collideWorldBounds = true;
 
         this.sprite = sprite;
@@ -44,7 +46,7 @@ BasicGame.Player.prototype = {
         if (!this.appliedJumpForce &&
             keyboard.isDown(jumpKey)) {
             this.appliedJumpForce = true;
-            this.sprite.body.velocity.y = BasicGame.Player.jumpForce;
+            this.sprite.body.velocity.y = BasicGame.GameManager.jumpForce;
         } else if (!keyboard.isDown(jumpKey)) {
             this.appliedJumpForce = false;
         }

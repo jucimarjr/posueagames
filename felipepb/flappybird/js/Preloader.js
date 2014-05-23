@@ -23,14 +23,16 @@ BasicGame.Preloader.prototype = {
 
         //	Here we load the rest of the assets our game needs.
         //	As this is just a Project Template I've not provided these assets, swap them for your own.
-        this.load.image('city', 'assets/city.png');
-        this.load.image('trees', 'assets/trees.png');
         this.load.image('ground', 'assets/ground.png');
-        this.load.spritesheet('clumsy', 'assets/clumsy.png',
-           					  BasicGame.Player.frameWidth,
-      				          BasicGame.Player.frameHeight,
-     					      BasicGame.Player.frameCount);
         this.load.image('pipe', 'assets/pipe.png');
+        this.load.atlas('shipAtlas', 'assets/shipatlas_512-512-20.png', 'assets/shipatlas_512-512-20.json');
+        this.load.image('backgroundColor', 'assets/backgroundcolor_960-600.png');
+        this.load.image('backgroundPhrases', 'assets/backgroundphrases_960-600.png');
+        this.load.image('backgroundStarsBig', 'assets/backgroundstarsbig_960-600.png');
+        this.load.image('backgroundStarsMedium', 'assets/backgroundstarsmedium_960-600.png');
+        this.load.image('backgroundStarsSmall', 'assets/backgroundstarssmall_960-600.png');
+
+        this.load.physics('physicsData', 'assets/ship_84-80.json');
         //this.load.atlas('playButton', 'assets/play_button.png', 'assets/play_button.json');
         //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
         //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');

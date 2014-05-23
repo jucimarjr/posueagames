@@ -22,44 +22,30 @@ BasicGame.GameManager = function (game) {
     this.obstaclesGroup;
     this.obstaclesManager;
 
-    this.ground;
-    this.city;
-    this.trees;
     this.player;
-
     this.missions;
+    this.backgroundManager;
 };
 
-BasicGame.GameManager.pixelsToUnit = 60;
+BasicGame.GameManager.debugDraw = true;
+BasicGame.GameManager.pixelsToUnit = 80;
+BasicGame.GameManager.jumpForce = -5 * BasicGame.GameManager.pixelsToUnit;
+BasicGame.GameManager.gravity = 9.8 * BasicGame.GameManager.pixelsToUnit;
 
 BasicGame.GameManager.prototype = {
 
     create: function () {
+        this.game.physics.startSystem(Phaser.Physics.P2JS);
+        this.game.physics.p2.gravity.y = BasicGame.GameManager.gravity;
 
-        var cameraWidth = this.camera.width;
-        var cameraHeight = this.camera.height;
-        
-        var cityHeight = this.cache.getImage('city').height;
-        var treesHeight = this.cache.getImage('trees').height;
-        var groundHeight = this.cache.getImage('ground').height;
+        // this.backgroundManager = new BasicGame.BackgroundManager(this);
+        // this.backgroundManager.create();
 
-        var cityY = cameraHeight - cityHeight - groundHeight;
-        var treesY = cameraHeight - groundHeight - treesHeight;
-        var groundY = cameraHeight - groundHeight;
+        // this.obstaclesGroup = this.game.add.group();
+        // this.obstaclesGroup.enableBody = true;
 
-        this.city = this.add.tileSprite(0, cityY, cameraWidth, cityHeight, 'city');
-        this.trees = this.add.tileSprite(0, treesY, cameraWidth, treesHeight, 'trees');
-
-        this.obstaclesGroup = this.game.add.group();
-        this.obstaclesGroup.enableBody = true;
-
-        this.obstaclesManager = new BasicGame.ObstaclesManager(this, this.obstaclesGroup);
-
-        this.obstaclesManager.create();
-
-        this.ground = this.add.tileSprite(0, groundY, cameraWidth, groundHeight, 'ground');
-        this.physics.enable(this.ground, Phaser.Physics.ARCADE);
-        this.ground.body.immovable = true;
+        // this.obstaclesManager = new BasicGame.ObstaclesManager(this, this.obstaclesGroup);
+        // this.obstaclesManager.create();
 
         this.player = new BasicGame.Player(this);
         this.player.create();
@@ -72,16 +58,12 @@ BasicGame.GameManager.prototype = {
     },
 
     update: function () {
-
-        this.ground.tilePosition.x += BasicGame.Obstacle.velocity;
-        this.trees.tilePosition.x += BasicGame.Obstacle.velocity / 4.0;
-        this.city.tilePosition.x += BasicGame.Obstacle.velocity / 8.0;
-
-        this.obstaclesManager.update();
+        // this.backgroundManager.update();
+        // this.obstaclesManager.update();
 
         this.player.update();
 
-        this.handleCollision();
+        // this.handleCollision();
     },
 
     handleCollision: function () {
@@ -91,6 +73,13 @@ BasicGame.GameManager.prototype = {
             this.player.onPlayerCollided();
             BasicGame.Obstacle.velocity = 0.0;
         }
+    },
+
+    render: function () {
+        // if (this.player.sprite.body.renderDebug) {
+        //     console.log('draw');
+        //     this.player.sprite.body.renderDebug(this.game.context, this.player.sprite.body, "red", true);
+        // }
     },
 
     quitGame: function (pointer) {
