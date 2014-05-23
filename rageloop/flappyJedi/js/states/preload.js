@@ -15,8 +15,9 @@
             this.game.load.image('playbtn','assets/menu/btnplay1_50-50.png');
 
             /*gameover images*/
-            this.game.load.image('replaybtn','assets/menu/play_again_button.png');
-            this.game.load.image('gameover','assets/menu/gameover.png');
+            //this.game.load.image('replaybtn','assets/menu/play_again_button.png');
+            this.game.load.image('gameoverbg','assets/gameover/gameover_960-600.png');
+            this.game.load.spritesheet('replaybtn', 'assets/gameover/playagain_479-25.png', 239.5, 25);
             
             /*gameplay images*/
             this.game.load.image('player', './assets/player_205-94.png');

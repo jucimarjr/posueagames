@@ -26,6 +26,8 @@ var create = {
         //input defs
         this.space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.space_key.onDown.add(this.jump, this);
+        this.reset_key = game.input.keyboard.addKey(Phaser.Keyboard.R);
+        this.reset_key.onDown.add(this.reset, this);
 
         // timer defs
         this.enemyTimer = game.time.events.loop(2000, this.createEnemy, this);
@@ -40,7 +42,7 @@ var create = {
         ]
     },
     createPlayer : function(){
-        this.player = game.add.sprite(200, 423, 'pirarucu');
+        this.player = game.add.sprite(200, 200, 'pirarucu');
         game.physics.enable(this.player, Phaser.Physics.ARCADE);
         game.camera.follow(this.player);
         this.player.body.gravity.y = 1000;
@@ -110,6 +112,15 @@ var create = {
             this.player.body.velocity.y = this.player.jumpForce;
             this.player.rotateAnim.start();
         }
+    },
+
+    reset: function(){
+        this.enemy_group.destroy(true);
+        this.player.destroy();
+        update.status.destroy();
+
+        this.enemy_group = game.add.group();
+        this.createPlayer();
     },
 
     // numero aleatorio entre [max, min]

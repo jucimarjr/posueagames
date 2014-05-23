@@ -5,3 +5,8 @@
     margin: 0 auto;
     margin-top: 20px;
 }
+
+@font-face {
+    font-family: 'Starjhol';
+    src: url('../assets/font/Starjhol.ttf') format("truetype");
+}

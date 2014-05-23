@@ -20,6 +20,7 @@ Player.prototype = {
 		this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 		this.sprite.body.acceleration.y = 3000;
 		this.sprite.body.gravity.y = 1000;
+		this.sprite.body.collideWorldBounds = true;
 
 		// Audio
 		this.audioVoar = game.add.audio('audioVoar');

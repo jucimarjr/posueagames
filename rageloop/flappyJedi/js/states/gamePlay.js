@@ -53,7 +53,7 @@
 
             this.timer = this.game.time.events.loop(700, this.addElement, this);
 
-            var style = { font: "40px Arial", fill: "#000000", align: "center" };
+            var style = { font: "40px Starjhol", fill: "#000000", align: "center" };
             this.score_text = this.game.add.text(this.game.world.centerX, 0, "Score: " + this.score, style);
             this.score_text.anchor.set(0.5, 0);
 
