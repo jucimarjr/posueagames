@@ -42,7 +42,7 @@ var create = {
         ]
     },
     createPlayer : function(){
-        this.player = game.add.sprite(200, 423, 'pirarucu');
+        this.player = game.add.sprite(200, 200, 'pirarucu');
         game.physics.enable(this.player, Phaser.Physics.ARCADE);
         game.camera.follow(this.player);
         this.player.body.gravity.y = 1000;

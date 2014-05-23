@@ -1,18 +1,31 @@
 //Play.js
 var playState = {
 
+	preload : function() {
+		player = new Player(game);
+		level = new Level(game);
+		enemies = new Enemies(game);
+
+		level.preload();
+		player.preload();
+		enemies.preload();
+		coins.preload();
+	},
+
 	create : function() {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
-		game.world.setBounds(0, 0, game.stage.bounds.width, game.cache.getImage('bg').height);
+//		game.world.setBounds(0, 0, game.stage.bounds.width, game.cache.getImage('mountains').height);
+//		game.world.setBounds(0, 0, game.stage.bounds.width, game.cache.getImage('trees').height);
 		level.create();
 		player.create();
 		enemies.create();
+		coins.create();
 		game.camera.follow(player.sprite);
 	},
 
 	update : function() {
 		player.update();
-		level.bg.tilePosition.x -= 1;
+		level.mountains.tilePosition.x -= 1;
 	}
 
 };
