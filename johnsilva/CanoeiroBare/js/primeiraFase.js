@@ -15,17 +15,24 @@ var finalSound;
 var remosSound;
 
 function preload() {
+    //Imagens
     game.load.image('river', 'assets/bg/river_512-1200.jpeg');
     game.load.image('jungleLeft', 'assets/bg/jungleLeft_196-1200.jpg');
     game.load.image('jungleRight', 'assets/bg/jungleRight_196-1200.jpg');
     game.load.image('buraco', 'assets/buraco_100-67.jpg');
+    game.load.image('mainScore', 'assets/botoes/score_900-110.png');
+    game.load.image('record', 'assets/botoes/score_250-100.png');
+    game.load.image('logo', 'asets/bg/logo.png');
+    game.load.image('logoBarra', 'assets/bg/logo_barra-160-64.png');
+
+    //Sprites
     game.load.spritesheet('canoeman', 'assets/sprite/canoeman/canoeman_50-100-20.png', 50, 100, 20);
     game.load.spritesheet('alligator', 'assets/sprite/enemies/alligator_80-80-10.png', 80, 80, 10);
     game.load.spritesheet('boto', 'assets/sprite/enemies/boto_80-80-10.png', 80, 80, 10);
     game.load.spritesheet('sand', 'assets/sprite/enemies/sand_80-80-4.png', 80, 80, 4);
     game.load.spritesheet('trunk', 'assets/sprite/enemies/trunk_80-80-4.png', 80, 80, 4);
-    game.load.image('mainScore', 'assets/botoes/score_900-110.png');
-    game.load.image('record', 'assets/botoes/score_250-100.png');
+
+    // Sons
     game.load.audio('remosound', 'songs/remada.mp3');
     game.load.audio('explodesound', 'songs/explode.mp3');
     game.load.audio('botosound', 'songs/boto.mp3');
@@ -55,12 +62,14 @@ function create() {
     var style = { font: "20px Arial Bold", fill: "#ffffff" };
     var styleBig = { font: "40px Arial Bold", fill: "#ffffff" };
 
+    // Record Score
     var recordScore = game.add.sprite(700, 500, 'record');
     var text = game.add.text(830, 550, 'RECORD', style);
     text.anchor.setTo(0.5, 0.5);
     var text = game.add.text(830, 580, localStorage.getItem("highscore"), styleBig);
     text.anchor.setTo(0.5, 0.5);
 
+    //Main Score
     var imgScore = game.add.sprite(0, 0, 'mainScore');
     var style = { font: "40px Arial Bold", fill: "#ffffff" };
     this.labelScore = game.add.text(this.game.world.centerX, 50, score + "m", style);
@@ -68,8 +77,11 @@ function create() {
     game.time.events.loop(150, addEnemies, this);
     game.time.events.loop(3000, addScore, this);
 
-    finalSound = false;
+    //Logo na Barra Lateral
+    var loguinho = game.add.sprite(90, 570, 'logoBarra');
+    loguinho.anchor.setTo(0.5, 0.5);
 
+    finalSound = false;
     remosSound = game.add.audio("remosound",1,true);
     //remo.volume = 0.4;
     remosSound.play('',0,1,true);
@@ -116,6 +128,7 @@ function initEnemies() {
 function addScore() {
     score++;
     if (score >= 100) {
+        remosSound.stop();
         game.state.start('gameWin');
     } else {
         this.labelScore.setText(score);
