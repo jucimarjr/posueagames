@@ -13,6 +13,7 @@ var jungleWidth = 196;
 var angleVelocity = 2;
 var finalSound;
 var remosSound;
+var timerBarra;
 
 function preload() {
     //Imagens
@@ -31,6 +32,7 @@ function preload() {
     game.load.spritesheet('boto', 'assets/sprite/enemies/boto_80-80-10.png', 80, 80, 10);
     game.load.spritesheet('sand', 'assets/sprite/enemies/sand_80-80-4.png', 80, 80, 4);
     game.load.spritesheet('trunk', 'assets/sprite/enemies/trunk_80-80-4.png', 80, 80, 4);
+    game.load.spritesheet('timer', 'assets/botoes/timer-1500-369.png', 150,369,10);
 
     // Sons
     game.load.audio('remosound', 'songs/remada.mp3');
@@ -58,6 +60,19 @@ function create() {
     boat.anchor.setTo(0.5, 0.5);
     boat.body.allowGravity = 0;
     boat.body.immovable = true
+
+    timerBarra = game.add.sprite(0, 150, 'timer');
+    timerBarra.animations.add('fase1', [0], 1, true);
+    timerBarra.animations.add('fase2', [1], 1, true);
+    timerBarra.animations.add('fase3', [2], 1, true);
+    timerBarra.animations.add('fase4', [3], 1, false);
+    timerBarra.animations.add('fase5', [4], 1, false);
+    timerBarra.animations.add('fase6', [5], 7, false);
+    timerBarra.animations.add('fase7', [6], 7, false);
+    timerBarra.animations.add('fase8', [7], 7, false);
+    timerBarra.animations.add('fase9', [8], 7, false);
+    timerBarra.animations.add('fase10', [9], 7, false);
+    timerBarra.animations.play('fase1');
 
     var style = { font: "20px Arial Bold", fill: "#ffffff" };
     var styleBig = { font: "40px Arial Bold", fill: "#ffffff" };
@@ -132,6 +147,34 @@ function addScore() {
         game.state.start('gameWin');
     } else {
         this.labelScore.setText(score);
+
+        if (score >= 90) {
+            timerBarra.play('fase10')
+        }
+        else if (score >= 80) {
+            timerBarra.play('fase9');
+        }
+        else if (score >= 70) {
+            timerBarra.play('fase8');
+        }
+        else if (score >= 60) {
+            timerBarra.play('fase7');
+        }
+        else if (score >= 50) {
+            timerBarra.play('fase6');
+        }
+        else if (score >= 40) {
+            timerBarra.play('fase5');
+        }
+        else if (score >= 30) {
+            timerBarra.play('fase4');
+        }
+        else if (score >= 20) {
+            timerBarra.play('fase3');
+        }
+        else if (score >= 10) {
+            timerBarra.play('fase2');
+        }
     }
 }
 
