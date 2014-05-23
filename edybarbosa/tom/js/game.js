@@ -26,13 +26,13 @@ function preload() {
 function create() {
 	game.add.sprite(0, 0, 'fundo');
 	game.physics.startSystem(Phaser.Physics.ARCADE);
-	
+
 	//Nuvens
 	cloud = game.add.tileSprite(0, 10, 600, 227,'nuvens');
 	game.physics.enable(cloud, Phaser.Physics.ARCADE);
 	cloud.body.velocity.x = -2;
 	// Fence
-	fence = game.add.tileSprite(0, 372, 960, 182,'cerca');
+	fence = game.add.tileSprite(0, 410, 960, 182,'cerca');
 	game.physics.enable(fence, Phaser.Physics.ARCADE);
 	fence.body.immovable = true;
 
@@ -85,7 +85,7 @@ function createObstacle() {
 	 if (game.time.now > obstacleTime) {
 		var posicaoXObstaculo = 1000+(Math.random()*500);
 		//var posicaoXObstaculo  = game.world.randomX + 960;
-		var posicaoYObstaculo = 320;
+		var posicaoYObstaculo = 356;
 		var velocidade = -400;
 		if(Math.random() < 0.6) {
 			var trash = game.add.sprite(posicaoXObstaculo, posicaoYObstaculo,'lata');
@@ -102,7 +102,7 @@ function createObstacle() {
 			box.body.checkCollision.up = false;
 			obstacles.add(box);
 		}
-		obstacleTime = game.time.now + 2200;
+		obstacleTime = game.time.now + 1600;
 	 }
 }
 
@@ -120,7 +120,7 @@ function update() {
 		        //var rotation = game.add.tween(cat).to({angle: cat.angle - 15}, 700, Phaser.Easing.Linear.None);
 		        //rotation.start();	        
 		    } else if (cursors.left.isDown && cat.body.touching.down) {
-		    	cat.body.velocity.y = -300;
+		    	cat.body.velocity.y = -420;
 		    	//cat.animations.play('roll');
 		    	cat.animations.play('roll');
 		    } else if(cat.body.touching.down) {
@@ -139,7 +139,6 @@ function updateScore() {
 		metrosPercorridos++;	
 		scoreTime = game.time.now + 300;
 	}
-    
 }
 
 function collisionHandler (obj1, obj2) {
