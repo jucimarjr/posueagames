@@ -21,6 +21,9 @@ var coins = {
 				- game.cache.getImage('coin').height, 'coin');
 		game.physics.arcade.enableBody(coin);
 		coin.body.velocity.x = -200;
+	},
+	createRandomCoin : function(){
+	
 	}
 
 }
