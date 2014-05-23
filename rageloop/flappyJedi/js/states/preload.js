@@ -8,7 +8,7 @@
             
            	/* game sounds */
         	this.game.load.audio('startsound','assets/audio/startgame.mp3');
-        	this.game.load.audio('bgsound','assets/audio/marchTeme.mp3');
+        	this.game.load.audio('bgsound','assets/audio/playing.mp3');
 
             /*menu images*/
             this.game.load.image('menuTitle', 'assets/menu/titlemenu_346-193.png');
