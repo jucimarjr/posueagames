@@ -1,4 +1,4 @@
-var menu = { create: create, update: update, start: start };
+var mainMenu = { create: create, update: update, start: start };
 
 function create() {
 	var mainMenu = game.add.sprite(0, 0, 'startMenu');
@@ -13,9 +13,9 @@ function update(){
 }
 
 function start() {
-	game.state.start(GAME_PLAY);
+	game.state.start('playGame');
 }
 
 function credits() {
-	game.state.start(GAME_CREDITS);
+	game.state.start('credits');
 }
