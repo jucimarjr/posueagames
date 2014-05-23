@@ -77,11 +77,13 @@ var play_state = { create: create, update: update };
             restart_game();
 
         if (cursors.left.isDown){
-        	slow();
+        	speedPlayerSlow();
         }else if(cursors.right.isDown){
-        	fast();
+        	speedPlayerFast();
         }else if (cursors.up.isDown){
-        	normal();
+        	speedPlayerNormal();
+        }else if (cursors.down.isDown){
+        	smallSizePlayer();
         }
         
 		playerSprite.body.velocity.x = 0;
@@ -111,19 +113,31 @@ var play_state = { create: create, update: update };
         setTimeout(restart_game, 5000);
     }
     
-    function fast(){
+    function speedPlayerFast(){
     	playerSprite.body.gravity.y = 3000;
     	speed = 4;
     }
     
-    function slow(){
+    function speedPlayerSlow(){
     	playerSprite.body.gravity.y = 500;
     	speed = 0.3;
     }
     
-    function normal(){
+    function speedPlayerNormal(){
     	playerSprite.body.gravity.y = 1500;
     	speed = 1;
+    	normalSizePlayer();
+    }
+    
+    function smallSizePlayer(){
+    	playerSprite.width  = 104;
+    	playerSprite.height  = 44.5;
+//    	playerSprite.body.setSize(40,50);
+    }
+    
+    function normalSizePlayer(){
+    	playerSprite.width  = 208;
+    	playerSprite.height  = 89;
     }
     
     function restart_game() {
