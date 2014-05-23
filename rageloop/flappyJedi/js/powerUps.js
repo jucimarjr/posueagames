@@ -7,7 +7,6 @@
         this.types = [
             'multiBlaster',
             'simpleBlasterFast',
-            'shield',
             'multiBlasterFast'
         ];
 
@@ -44,7 +43,7 @@
             
             this.game.physics.enable(item, Phaser.Physics.ARCADE);
 
-            typeIdx = Utils.randomIntFromInterval(0, 3);
+            typeIdx = Utils.randomIntFromInterval(0, 2);
 
             item.frame = typeIdx;
 

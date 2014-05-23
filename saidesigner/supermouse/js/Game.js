@@ -38,7 +38,7 @@ SuperMouse.Game.prototype.create = function() {
 
 	this.stars = this.add.group();
 	this.stars.enableBody = true;
-	this.stars.createMultiple(50, 'star');
+	this.stars.createMultiple(200, 'star');
 	this.stars.setAll('checkWorldBounds', true);
     this.stars.setAll('outOfBoundsKill', true);
 
@@ -107,9 +107,9 @@ SuperMouse.Game.prototype.create = function() {
 
 SuperMouse.Game.prototype.update = function() {
 
-	this.physics.arcade.overlap(this.player, this.asteroids, this.collisionHandler, null, this);
-	this.physics.arcade.overlap(this.player, this.cheeses, this.collisionHandler, null, this);
-	this.physics.arcade.overlap(this.player, this.rats, this.collisionHandler, null, this);
+	this.physics.arcade.overlap(this.player, this.asteroids, this.collisionHandler, this.collisionCheck, this);
+	this.physics.arcade.overlap(this.player, this.cheeses, this.collisionHandler, this.collisionCheck, this);
+	this.physics.arcade.overlap(this.player, this.rats, this.collisionHandler, this.collisionCheck, this);
 
 	this.movPlayer();
 	this.fireAsteroid();
@@ -161,8 +161,10 @@ SuperMouse.Game.prototype.fireAsteroid = function() {
 		var asteroid = this.asteroids.getFirstDead();
 
         asteroid.reset(980, Math.floor((Math.random() * 500) + 1));
-        asteroid.body.velocity.x = -250;
-        this.nextAsteroid = this.time.now + Math.floor((Math.random() * 1000) + 500);
+        asteroid.body.velocity.x = -350;
+        asteroid.anchor.setTo(.5,.5);
+        asteroid.body.acceleration.x = -50;
+        this.nextAsteroid = this.time.now + Math.floor((Math.random() * 500) + 500);
     }    
 };
 
@@ -174,6 +176,7 @@ SuperMouse.Game.prototype.fireCheese = function() {
 
         cheese.reset(980, Math.floor((Math.random() * 500) + 1));
         cheese.body.velocity.x = -150;
+        cheese.anchor.setTo(.5,.5);
         this.nextCheese = this.time.now + Math.floor((Math.random() * 5000) + 1000);
     }    
 };
@@ -186,6 +189,7 @@ SuperMouse.Game.prototype.fireRat = function() {
 
         rat.reset(980, Math.floor((Math.random() * 500) + 1));
         rat.body.velocity.x = -150;
+        rat.anchor.setTo(.5,.5);
         this.nextRat = this.time.now + Math.floor((Math.random() * 500) + 500);
     }    
 };
@@ -200,26 +204,33 @@ SuperMouse.Game.prototype.fireStar = function() {
 		this.physics.enable(star, Phaser.Physics.ARCADE);
 		star.animations.add('blink', [1, 2, 3, 4, 5, 4, 3, 2, 1],  Math.floor((Math.random() * 6) + 1), true);
 		star.animations.play('blink');
-		star.body.velocity.x = Math.floor((Math.random() * 50) + 50) * -1;
+		star.body.velocity.x = Math.floor((Math.random() * 150) + 200) * -1;
 	}	
 };
 
 
-SuperMouse.Game.prototype.collisionHandler = function(superMouse, object) {
-
-	if (this.asteroids.getIndex(object) >= 0) {
+SuperMouse.Game.prototype.collisionHandler = function(source, target) {
+	if (this.asteroids.getIndex(target) >= 0) {
 		this.lifeLevel--;
-	} else if (this.cheeses.getIndex(object) >= 0){
+		target.kill();
+	} else if (this.cheeses.getIndex(target) >= 0){
 		this.lifeLevel++
-	} else {
+		target.kill();
+	} else {		
+		this.physics.arcade.moveToXY(target, 800, 10, 200, 200, 2000);		 
 		this.score++;
 	}
-
-	object.kill();
 };
+
+SuperMouse.Game.prototype.collisionCheck = function(source, target) {
+
+	console.log(this.physics.arcade.distanceBetween(target, source));
+
+	return this.physics.arcade.distanceBetween(target, source) < 100;
+};
+
 SuperMouse.Game.prototype.createText = function(posX, posY) {
-
-
+	
     text = this.add.text(posX, posY);
     text.font = 'Arial';
     text.fontSize = 60;
