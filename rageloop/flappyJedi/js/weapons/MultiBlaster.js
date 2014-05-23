@@ -27,7 +27,7 @@
 
         fire: function () {
             if (this.timer) {
-                return;
+                return false;
             }
 
             var bullets = [];
@@ -37,7 +37,7 @@
             bullets.push(this.group.next());
 
             if (!bullets[0] || !bullets[1] || !bullets[2]) {
-                return;
+                return false;
             }
 
             for (var i=0; i<bullets.length; i++) {
@@ -54,6 +54,8 @@
             bullets[2].body.velocity.y = 100;
 
             this.startTimer();
+
+            return true;
         },
 
         startTimer: function () {
