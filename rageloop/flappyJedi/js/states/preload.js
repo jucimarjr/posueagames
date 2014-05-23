@@ -27,6 +27,7 @@
             this.game.load.image('bullet', './assets/bullet_86-43.png');
             this.game.load.spritesheet('powerups', './assets/powerups_240-60.png', 60, 60);
             this.game.load.spritesheet('enemy_explosion', './assets/xplosionsprite_2145-100.png', 165, 100);
+            this.game.load.spritesheet('player_fire', './assets/shooting_150-24.png', 50, 24);
             
 
         },
