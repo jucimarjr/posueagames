@@ -11,6 +11,9 @@ var space_key;
 var soungFlag = true;
 var jump_sound;
 
+//text
+var textsound;
+
 //parallax
 var background1;
 var background2;

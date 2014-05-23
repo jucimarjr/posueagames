@@ -10,7 +10,7 @@ var menu_state = { create: create, update: update, start: start };
 		var style = { font: "20px Arial", fill: "#ffffff" };
         var x = game.world.width/2, y = game.world.height -100;
         
-		var text = game.add.text(x, y, "Pressione [espaco] para comecar", style);
+		var text = game.add.text(x, y, "Press [space] to start", style);
         text.anchor.setTo(0.5, 0.5); 
         
         y += 30;
@@ -18,24 +18,23 @@ var menu_state = { create: create, update: update, start: start };
         text.anchor.setTo(0.5, 0.5);
         
         y += 30;
-        var text = game.add.text(x, y, "[2] SOUND", style);
-        text.anchor.setTo(0.5, 0.5);
+        textsound = game.add.text(x, y, "[2] SOUND", style);
+        textsound.anchor.setTo(0.5, 0.5);
 
-        var spacebar_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        spacebar_keyboar.onDown.add(start, this);
-        
-        var one_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
-        one_keyboar.onDown.add(credits, this);
-        
-        var two_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
-        two_keyboar.onDown.add(soung, this);
-        
         playerSprite = game.add.sprite(0, game.world.height/2, 'player');
 
 		game.add.tween(playerSprite).to({y:15}, 500, Phaser.Easing.Linear.NONE, true, 0, 1000, true);  
 	}
 	
 	function update(){
+		var spacebar_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        spacebar_key.onDown.add(start, this);
+        
+        var one_key = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+        one_key.onDown.add(credits, this);
+        
+        var two_key = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+        two_key.onDown.add(soung, this);
 	}
 	
 	// Começa o jogo
@@ -48,8 +47,10 @@ var menu_state = { create: create, update: update, start: start };
 	function soung() {
 		if(soungFlag){
 			soungFlag = false;
+			textsound.text ="[2] NO SOUND";
 		}else {
 			soungFlag = true;
+			textsound.text = "[2] SOUND";
 		}
 	}
 	

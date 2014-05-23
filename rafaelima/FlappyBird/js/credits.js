@@ -24,4 +24,10 @@ var credits_state = { create: create, update: update };
     }
 
     function update() {
+    	var backspace_key = game.input.keyboard.addKey(Phaser.Keyboard.BACKSPACE);
+    	backspace_key.onDown.add(menu, this);
     }
+    
+    function menu() {
+		game.state.start('menu');
+	}
