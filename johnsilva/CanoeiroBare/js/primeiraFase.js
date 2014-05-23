@@ -128,6 +128,7 @@ function initEnemies() {
 function addScore() {
     score++;
     if (score >= 100) {
+        remosSound.stop();
         game.state.start('gameWin');
     } else {
         this.labelScore.setText(score);
