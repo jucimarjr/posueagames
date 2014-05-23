@@ -38,8 +38,8 @@ BasicGame.GameManager.prototype = {
         this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.gravity.y = BasicGame.GameManager.gravity;
 
-        // this.backgroundManager = new BasicGame.BackgroundManager(this);
-        // this.backgroundManager.create();
+        this.backgroundManager = new BasicGame.BackgroundManager(this);
+        this.backgroundManager.create();
 
         // this.obstaclesGroup = this.game.add.group();
         // this.obstaclesGroup.enableBody = true;
@@ -58,7 +58,7 @@ BasicGame.GameManager.prototype = {
     },
 
     update: function () {
-        // this.backgroundManager.update();
+        this.backgroundManager.update();
         // this.obstaclesManager.update();
 
         this.player.update();

@@ -1,37 +1,32 @@
 BasicGame.BackgroundManager = function (gameManager) {
 	this.gameManager = gameManager;
 
-	this.phrases;
-	this.stars;
-	// this.city;
-    // this.trees;
-    // this.ground;
+	this.background;
+	this.parallaxLayers = new Array();
 };
 
 BasicGame.BackgroundManager.prototype = {
 	create: function () {
-		// var cameraWidth = this.camera.width;
-  //       var cameraHeight = this.camera.height;
-        
-  //       var cityHeight = this.cache.getImage('city').height;
-  //       var treesHeight = this.cache.getImage('trees').height;
-  //       var groundHeight = this.cache.getImage('ground').height;
+		var cameraWidth = this.gameManager.camera.width;
+        var cameraHeight = this.gameManager.camera.height;
 
-  //       var cityY = cameraHeight - cityHeight - groundHeight;
-  //       var treesY = cameraHeight - groundHeight - treesHeight;
-  //       var groundY = cameraHeight - groundHeight;
+        this.background = this.gameManager.add.sprite(0, 0, 'backgroundColor');
 
-        // this.city = this.add.tileSprite(0, cityY, cameraWidth, cityHeight, 'city');
-        // this.trees = this.add.tileSprite(0, treesY, cameraWidth, treesHeight, 'trees');
+        var phrases = this.gameManager.add.tileSprite(0, 0, cameraWidth, cameraHeight, 'backgroundPhrases');
 
-        // this.ground = this.add.tileSprite(0, groundY, cameraWidth, groundHeight, 'ground');
-        // this.physics.enable(this.ground, Phaser.Physics.ARCADE);
-        // this.ground.body.immovable = true;
+        // var starsBig = this.gameManager.add.sprite(cameraWidth / 2.0, cameraHeight / 2.0, 'backgroundStarsBig');
+        var starsMedium = this.gameManager.add.tileSprite(0, 0, cameraWidth, cameraHeight, 'backgroundStarsMedium');
+		var starsSmall = this.gameManager.add.tileSprite(0, 0, cameraWidth, cameraHeight, 'backgroundStarsSmall');
+
+        this.parallaxLayers.push(phrases);
+        // this.parallaxLayers.push(starsBig);
+        this.parallaxLayers.push(starsMedium);
+        this.parallaxLayers.push(starsSmall);
 	},
 
 	update: function () {
-		// this.ground.tilePosition.x += BasicGame.Obstacle.velocity;
-        // this.trees.tilePosition.x += BasicGame.Obstacle.velocity / 4.0;
-        // this.city.tilePosition.x += BasicGame.Obstacle.velocity / 8.0;	
+		for (var i = 0; i < this.parallaxLayers.length; i ++) {
+			this.parallaxLayers[i].tilePosition.x += BasicGame.Obstacle.velocity / (i + 1);
+		}
 	}
 };

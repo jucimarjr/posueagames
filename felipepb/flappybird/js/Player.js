@@ -26,13 +26,17 @@ BasicGame.Player.prototype = {
 
     update: function () {
         this.handleInput();
+
+        this.ship.x = this._leftMargin;
+        this.ship.body.x = this._leftMargin;
+        this.ship.body.velocity.x = 0.0;
     },
 
     createShip: function () {
         var cameraHeight = this.gameManager.camera.height;
         var ship = this.gameManager.add.sprite(this._leftMargin,
                                                cameraHeight / 2.0,
-                                               'shipAtlas');
+                                               'mainGameAtlas');
 
         ship.frameName = 'ship_64-80.png';
         ship.smoothed = false;
@@ -57,7 +61,7 @@ BasicGame.Player.prototype = {
             'ship_left-thrusters_2.png'
         ];
 
-        this.leftThrusters = this.gameManager.add.sprite(0, 0, 'shipAtlas');
+        this.leftThrusters = this.gameManager.add.sprite(0, 0, 'mainGameAtlas');
         this.leftThrusters.parent = this.ship;
         this.leftThrusters.anchor.setTo(1.0, 0.5);
         this.leftThrusters.x -= 10;
@@ -79,7 +83,7 @@ BasicGame.Player.prototype = {
             'ship_bottom-thrusters_4.png'
         ];
 
-        this.bottomThrusters = this.gameManager.add.sprite(0, 0, 'shipAtlas');
+        this.bottomThrusters = this.gameManager.add.sprite(0, 0, 'mainGameAtlas');
         this.bottomThrusters.parent = this.ship;
         this.bottomThrusters.anchor.setTo(0.5, 0.0);
         this.bottomThrusters.x += 17;
