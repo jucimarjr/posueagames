@@ -1,7 +1,7 @@
 var loadGame = { preload: preload, create: create };
 
 function preload() {
-	game.load.image('startMenu', 'assets/startscreen_960-600.png');
+	game.load.image('startMenu', 'assets/startspritesheet_960-600-5.png');
 	game.load.image('creditscreen', 'assets/creditscreen_960-600.png');
 	game.load.image('score', 'assets/scorescreen_960-600.png');
 	game.load.image('obstacle', 'assets/Obstacle_129-509.png');
@@ -9,7 +9,7 @@ function preload() {
 	game.load.image('background', 'assets/background_980-600.png');
 	game.load.bitmapFont('font', 'assets/Font.png', 'assets/Font.fnt');
 	game.load.audio('music', 'assets/AirDucts.wav');
-	game.load.audio('jump', 'assets/Blip.wav');
+	game.load.audio('jumpSound', 'assets/Blip.wav');
 
 }
 
