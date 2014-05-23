@@ -25,6 +25,7 @@ function preload() {
     game.load.spritesheet('trunk', 'assets/sprite/enemies/trunk_80-80-4.png', 80, 80, 4);
     game.load.image('mainScore', 'assets/botoes/score_900-110.png');
     game.load.image('record', 'assets/botoes/score_250-100.png');
+    game.load.audio('remosound', 'sons/remada.mp3');
 }
 
 function create() {
@@ -150,11 +151,17 @@ function update() {
 
     if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) { // vai para esquerda
         changeAngle(angleVelocity);
+        var remo = game.add.audio("remosound");
+        remo.volume = 0.4;
+        remo.play();
         //goRight();
         //boat.scale.x = -1; // espelha se antes -1
     }
     else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) { // vai para direita
-        changeAngle(-1*angleVelocity);
+        changeAngle(-1 * angleVelocity);
+        var remo = game.add.audio("remosound");
+        remo.volume = 0.4;
+        remo.play();
         //goLeft();
     }else {
         boat.body.velocity.x = 2*boat.angle;//velocity;
@@ -213,6 +220,9 @@ function checkEnemiesBounds(obj) {
 function goRight() {
     //boat.body.velocity.x = velocity;
     boat.angle += angleVelocity;
+    var remo = game.add.audio("remosound");
+    //remo.volume = 0.4;
+    remo.play();
     //boat.animations.play('walk');
 }
 
@@ -220,6 +230,9 @@ function goRight() {
 function goLeft() {
     //boat.body.velocity.x = -velocity;
     boat.angle -= angleVelocity;
+    var remo = game.add.audio("remosound");
+    //remo.volume = 0.4;
+    remo.play();
     //boat.animations.play('walk');
 }
 
