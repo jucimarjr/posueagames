@@ -11,16 +11,22 @@ Enemies = function(game) {
 	
 }
 
+var TRIANGLE_ENEMY = 0;
+var SNAKE_ENEMY = 1;
+var STAIRS_ENEMY = 2;
+var SIMPLE_ENEMY = 3;
+var ESCAPE = 5;
+
 function geraEnemyFloor(){
-	return game.world.height -90;
+	return (game.world.height -90) -134;
 }
 
 function geraEnemyMiddle(){
-	return (game.world.height -90) - 134;
+	return (game.world.height -90) - 2*134;
 }
 
 function geraEnemyTop(){
-	return (game.world.height -90) - 2*134;
+	return (game.world.height -90) - 3*134;
 }
 
 function selecionaEnemy(){
@@ -48,31 +54,81 @@ Enemies.prototype = {
 	create : function() {
 		this.enemies = this.game.add.group();
 		this.game.time.events.loop(Phaser.Timer.SECOND * 2,
-				this.generateBarrier, this).timer.start();
+				this.generateEnemy, this).timer.start();
 	},
-
-	/*createEnemy : function(){
-		var enemy = this.enemies.create(this.x,this.y, this.sprites[this.game.rnd
+	generateBarrier : function(x, y) {
+		var enemy = this.enemies.create(x,
+				y, this.sprites[this.game.rnd
 						.integerInRange(0, 2)]);
-						
-		enemy.anchor.setTo(0.5, 0.5);
-		enemy.body.collideWorldBounds = true;
-		enemy.body.bounce.setTo(1, 1);
-		enemy.body.velocity.x = this.vx;
-		enemy.body.velocity.y = this.vy;
-		enemy.body.immovable = true;
-	}*/
-
-	generateBarrier : function() {
-		console.log('level -> generateBarrier');
-		var enemy = this.enemies.create(this.x,
-				selecionaEnemy(), this.sprites[this.game.rnd
-						.integerInRange(0, 2)]);
-		enemy.animations.add('run', [ 0, 1 ], 2, true);
-		enemy.animations.play('run');
 		this.game.physics.arcade.enableBody(enemy);
 		enemy.body.allowGravity = false;
 		enemy.body.immovable = true;
-		enemy.body.velocity.x = -200;
+		enemy.body.velocity.x = -300;
+		
+		return enemy;
+	},
+	
+	generateEnemy : function(){
+		var randonType = Math.round(Math.random()*5);
+		if(randonType === SNAKE_ENEMY){
+			this.geraEnemySnake();
+		}else if(randonType === TRIANGLE_ENEMY){
+			this.geraEnemyTriagle();
+		}else if(randonType === STAIRS_ENEMY){
+			this.geraStairsEnemy();
+		}else if(randonType === SIMPLE_ENEMY){
+			this.geraSimpleEnemy();
+		}
+		
+	},
+	geraSimpleEnemy : function(){
+		var initYEneMy = selecionaEnemy();
+		var initXenemY = game.world.width;
+		var enemy = this.generateBarrier(initXenemY,initYEneMy);
+		enemy.animations.add('run', [ 0, 1 ], 2, true);
+		enemy.animations.play('run');
+	}
+	,
+	geraStairsEnemy : function(){
+		var initYEneMy = selecionaEnemy();
+		var initXenemY = game.world.width;
+		
+		for(var i = 0; i < 3;i++){
+			var enemy = this.generateBarrier(initXenemY + i*121,initYEneMy - i*134);
+			enemy.animations.add('run', [ 0, 1 ], 2, true);
+			enemy.animations.play('run');
+		}
+	}
+	,
+	geraEnemySnake : function(){
+		var initYEneMy = selecionaEnemy();
+		var initXenemY = game.world.width;
+		for(var i = 0; i < 3;i++){
+			var enemy = this.generateBarrier(initXenemY + i*121,initYEneMy);
+			enemy.animations.add('run', [ 0, 1 ], 2, true);
+			enemy.animations.play('run');
+		}
+	}
+	,
+	geraEnemyTriagle : function(tipo){
+		var initYEneMy = selecionaEnemy();
+		var initXenemY = game.world.width;
+		
+		for(var i = 0; i < 3;i++){
+			if(i === 0 ){
+				var enemy = this.generateBarrier(initXenemY,initYEneMy);
+				enemy.animations.add('run', [ 0, 1 ], 2, true);
+				enemy.animations.play('run');
+			}else if(i === 1){
+				var enemy = this.generateBarrier(initXenemY + i*121,initYEneMy - i*134);
+				enemy.animations.add('run', [ 0, 1 ], 2, true);
+				enemy.animations.play('run');
+			}else if(i === 2){
+				var enemy = this.generateBarrier(initXenemY + i*121,initYEneMy);
+				enemy.animations.add('run', [ 0, 1 ], 2, true);
+				enemy.animations.play('run');
+			}
+		}
+	
 	}
 }
