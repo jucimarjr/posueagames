@@ -8,10 +8,14 @@
             
            	/* game sounds */
         	this.game.load.audio('startsound','assets/audio/startgame.mp3');
-        	this.game.load.audio('bgsound','assets/audio/marchTeme.mp3');
+        	this.game.load.audio('bgsound','assets/audio/playing.mp3');
+        	this.game.load.audio('falling','assets/audio/falling.mp3');
+        	this.game.load.audio('bomb','assets/audio/bomb.mp3');
 
             /*menu images*/
-            this.game.load.image('menubg','assets/menu/bgmenu_960-600.png');
+            this.game.load.image('menuTitle', 'assets/menu/titlemenu_346-193.png');
+            this.game.load.image('menubg','assets/menu/bgmenu_1600-600.png');
+            //this.game.load.image('menubg','assets/menu/bgmenu_960-600.png');
             this.game.load.spritesheet('playbtn','assets/menu/btnplay_434-50.png', 217, 50);
 
             /*gameover images*/

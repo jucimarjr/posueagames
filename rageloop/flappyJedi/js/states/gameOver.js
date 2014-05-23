@@ -9,6 +9,8 @@
         this.smokeEmitter = null;
 
         this.playerDestroyTimer = null;
+        this.fallingSound = null;
+        this.explosionSound = null;
 
     };
 
@@ -47,9 +49,14 @@
             // game over logo
             /*this.gameoverlogo = this.game.add.button(this.game.world.centerX, this.game.world.centerY-50, 'gameover');
             this.gameoverlogo.anchor.set(0.5, 0.5);*/
+            
+            this.fallingSound = this.game.add.audio("falling");
+            this.fallingSound.play();
+            
+            this.explosionSound = this.game.add.audio("bomb");            
 
             this.score = app_container.last_score;
-            UserData.highscore.set(this.score);
+            UserData.highscore.set(this.score);         
 
             var style = { font: "36px Starjedi", fill: "#f3b40b", align: "center" };
             this.highscore = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 200, "Your score: " + this.score, style);
@@ -86,7 +93,7 @@
 
             this.player_explosion.visible = true;
             this.player_explosion.animations.play('explosion', 20, false, true);
-
+            this.explosionSound.play();
         },
 
         onPlayClick: function() {
