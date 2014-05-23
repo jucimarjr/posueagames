@@ -28,7 +28,7 @@
         fire: function () {
             var bullet = this.group.getFirstDead();
 
-            if (!bullet || this.timer) return;
+            if (!bullet || this.timer) return false;
 
             this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
 
@@ -39,6 +39,8 @@
             bullet.outOfBoundsKill = true;
 
             this.startTimer();
+
+            return true;
         },
 
         startTimer: function () {
