@@ -15,7 +15,7 @@ SuperMouse.Game.prototype.preload = function() {
 	
 	this.load.image('universe', 'assets/universe_900-600.png');
     this.load.image('asteroid', 'assets/asteroid_80-80.png');
-    this.load.image('player', 'assets/player_120-40.png');
+    this.load.image('player', 'assets/player_120-50.png');
     this.load.spritesheet('star', 'assets/star_4-4.png', 4, 4);
 
 };
@@ -51,6 +51,7 @@ SuperMouse.Game.prototype.create = function() {
 	this.player.body.angularVelocity = 100;	
 	this.player.body.gravity.y = 50;
 	this.player.body.acceleration.y = 100;	
+	this.player.anchor.setTo(.5,.5);
 
 	// create asteroids
 
@@ -92,23 +93,22 @@ SuperMouse.Game.prototype.update = function() {
 
 			this.keyPressed = true;
 
-			this.player.body.velocity.y = -100;
-			
-			this.player.body.angularVelocity = -200;
+			this.player.body.velocity.y = -110;
+			this.player.rotation = 0;
+			this.player.body.angularVelocity = -50;
 			this.player.body.allowRotation = true;
 		}
 
 	} else {
 		this.keyPressed = false;
+		this.player.body.angularVelocity = 50;
 	}
 
 	if (this.player.body.allowRotation) {
-		if (this.player.body.angularVelocity > 0) {
-			
+		if (this.player.body.angularVelocity > 0) {			
 			if (this.player.rotation > 0.5) {
 				this.player.body.allowRotation = false;
 			}
-
 		} else {			
 
 			if (this.player.rotation < -0.5) {
