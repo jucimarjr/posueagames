@@ -48,10 +48,19 @@ var play_state = { create: create, update: update };
         this.timer = this.game.time.events.loop(1500, add_obstacle, this);
         
         cursors = game.input.keyboard.createCursorKeys();
+        
+        //score  metros
+        score = 0; 
+        var style = { font: "30px Arial", fill: "#ffffff" };
+        this.label_score = this.game.add.text(20, 20, "0", style);
     }
 
     // Start the actual game
     function update() {
+    	
+    	score += 0.05;
+        this.label_score.text = score.toFixed(0);  //sem casa decimal
+        
         playerSprite.animations.play('walk');
 
         if (playersGroup.exists) {
