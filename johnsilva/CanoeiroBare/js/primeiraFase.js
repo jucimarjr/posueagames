@@ -12,6 +12,7 @@ var tileSpeedJungles = 0.3;
 var jungleWidth = 196;
 var angleVelocity = 2;
 var finalSound;
+var remosSound;
 
 function preload() {
     game.load.image('river', 'assets/bg/river_512-1200.jpeg');
@@ -68,6 +69,10 @@ function create() {
     game.time.events.loop(3000, addScore, this);
 
     finalSound = false;
+
+    remosSound = game.add.audio("remosound",1,true);
+    //remo.volume = 0.4;
+    remosSound.play('',0,1,true);
 }
 
 function createJungles() {
@@ -123,11 +128,6 @@ function addEnemies() {
     if (enemie) {
         var b = game.add.audio(enemie.name);
         b.play();
-        /*if(enemie.name == "boto"){
-            b = game.add.audio("botosound");
-            //remo.volume = 0.4;
-            b.play();
-        }*/
         var max = game.world.width - jungleWidth - enemie.body.width;
         var min = jungleWidth;
         var positionX = Math.round(Math.random() * (max - min)) + min;
@@ -140,41 +140,18 @@ function addEnemies() {
 
 function update() {
 
-    // cria uma barreira que o sprite pode pisar
-    /*game.physics.arcade.collide(boat, barrasPqnas);
-	game.physics.arcade.collide(boat, barrasMedias);
-	game.physics.arcade.collide(boat, barraInicial);
-	game.physics.arcade.collide(boat, enemies);*/
-    // COLISAO COM OSSO:
-    /*boat.body.velocity.x = 0;
-    boat.body.velocity.y = 0;*/
-    //boat.body.angularVelocity = 0;
     game.physics.arcade.overlap(boat, enemies, overlapWithEnemies, null, this);
     game.physics.arcade.overlap(boat, jungles, overlapWithEnemies, null, this);
-    /*game.physics.arcade.overlap(boat, plataforma, gameOver,null,this);*/
 
     if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) { // vai para esquerda
         changeAngle(angleVelocity);
-        var remo = game.add.audio("remosound");
-        remo.volume = 0.4;
-        remo.play();
-        //goRight();
-        //boat.scale.x = -1; // espelha se antes -1
     }
     else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) { // vai para direita
         changeAngle(-1 * angleVelocity);
-        var remo = game.add.audio("remosound");
-        remo.volume = 0.4;
-        remo.play();
-        //goLeft();
+        
     }else {
         boat.body.velocity.x = 2*boat.angle;//velocity;
     }
-    /*else if ( game.input.keyboard.isDown (Phaser.Keyboard.UP) ) { // vai para cima
-
-		boat.body.velocity.y = -100;
-		boat.animations.play('jump');
-	}*/
     /*else{
 	    	boat.animations.stop();
 			boat.frame = 0;
@@ -185,7 +162,8 @@ function changeAngle(angle){
     var toChange = boat.angle + angle;
     if ( toChange > -90 && toChange < 90) {
         boat.angle += angle;
-    }    
+    }
+     
 }
 
 function checkBounds(){
@@ -221,26 +199,13 @@ function checkEnemiesBounds(obj) {
 
 }
 
-function goRight() {
-    //boat.body.velocity.x = velocity;
-    boat.angle += angleVelocity;
-    var remo = game.add.audio("remosound");
-    //remo.volume = 0.4;
-    remo.play();
-    //boat.animations.play('walk');
-}
-
-
-function goLeft() {
-    //boat.body.velocity.x = -velocity;
-    boat.angle -= angleVelocity;
-    var remo = game.add.audio("remosound");
-    //remo.volume = 0.4;
-    remo.play();
-    //boat.animations.play('walk');
-}
-
-function overlapWithEnemies(_boat, _enemies) {    
+function overlapWithEnemies(_boat, _enemies) { 
+    if(_boat.x <= jungleWidth){
+        _boat.x = jungleWidth;
+    }else if(_boat.x >= game.world.width - jungleWidth){
+        _boat.x = game.world.width - jungleWidth;
+    }
+    remosSound.stop();
     boat.play('dead');
     boat.body.velocity.x = 0;
     if(finalSound == false){
@@ -248,6 +213,9 @@ function overlapWithEnemies(_boat, _enemies) {
         explode.volume = 0.3;
         explode.play();
         finalSound = true;
+    }
+    if(_enemies.name){
+        _enemies.kill();
     }
     setTimeout(gameOv, 1300);
 }
