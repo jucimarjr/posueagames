@@ -87,7 +87,7 @@ function update () {
 
 function jump() {
 	jogadorSprite.body.velocity.y = -300;
-	jogadorSprite.body.velocity.x = 0;
+	jogadorSprite.body.velocity.x = 300;
 	jogadorSprite.animations.play('jump');
 
 }
