@@ -12,19 +12,27 @@ var tileSpeedJungles = 0.3;
 var jungleWidth = 196;
 var angleVelocity = 2;
 var finalSound;
+var remosSound;
 
 function preload() {
+    //Imagens
     game.load.image('river', 'assets/bg/river_512-1200.jpeg');
     game.load.image('jungleLeft', 'assets/bg/jungleLeft_196-1200.jpg');
     game.load.image('jungleRight', 'assets/bg/jungleRight_196-1200.jpg');
     game.load.image('buraco', 'assets/buraco_100-67.jpg');
+    game.load.image('mainScore', 'assets/botoes/score_900-110.png');
+    game.load.image('record', 'assets/botoes/score_250-100.png');
+    game.load.image('logo', 'asets/bg/logo.png');
+    game.load.image('logoBarra', 'assets/bg/logo_barra-160-64.png');
+
+    //Sprites
     game.load.spritesheet('canoeman', 'assets/sprite/canoeman/canoeman_50-100-20.png', 50, 100, 20);
     game.load.spritesheet('alligator', 'assets/sprite/enemies/alligator_80-80-10.png', 80, 80, 10);
     game.load.spritesheet('boto', 'assets/sprite/enemies/boto_80-80-10.png', 80, 80, 10);
     game.load.spritesheet('sand', 'assets/sprite/enemies/sand_80-80-4.png', 80, 80, 4);
     game.load.spritesheet('trunk', 'assets/sprite/enemies/trunk_80-80-4.png', 80, 80, 4);
-    game.load.image('mainScore', 'assets/botoes/score_900-110.png');
-    game.load.image('record', 'assets/botoes/score_250-100.png');
+
+    // Sons
     game.load.audio('remosound', 'songs/remada.mp3');
     game.load.audio('explodesound', 'songs/explode.mp3');
     game.load.audio('botosound', 'songs/boto.mp3');
@@ -54,12 +62,14 @@ function create() {
     var style = { font: "20px Arial Bold", fill: "#ffffff" };
     var styleBig = { font: "40px Arial Bold", fill: "#ffffff" };
 
+    // Record Score
     var recordScore = game.add.sprite(700, 500, 'record');
     var text = game.add.text(830, 550, 'RECORD', style);
     text.anchor.setTo(0.5, 0.5);
     var text = game.add.text(830, 580, localStorage.getItem("highscore"), styleBig);
     text.anchor.setTo(0.5, 0.5);
 
+    //Main Score
     var imgScore = game.add.sprite(0, 0, 'mainScore');
     var style = { font: "40px Arial Bold", fill: "#ffffff" };
     this.labelScore = game.add.text(this.game.world.centerX, 50, score + "m", style);
@@ -67,7 +77,14 @@ function create() {
     game.time.events.loop(150, addEnemies, this);
     game.time.events.loop(3000, addScore, this);
 
+    //Logo na Barra Lateral
+    var loguinho = game.add.sprite(90, 570, 'logoBarra');
+    loguinho.anchor.setTo(0.5, 0.5);
+
     finalSound = false;
+    remosSound = game.add.audio("remosound",1,true);
+    //remo.volume = 0.4;
+    remosSound.play('',0,1,true);
 }
 
 function createJungles() {
@@ -111,6 +128,7 @@ function initEnemies() {
 function addScore() {
     score++;
     if (score >= 100) {
+        remosSound.stop();
         game.state.start('gameWin');
     } else {
         this.labelScore.setText(score);
@@ -123,11 +141,6 @@ function addEnemies() {
     if (enemie) {
         var b = game.add.audio(enemie.name);
         b.play();
-        /*if(enemie.name == "boto"){
-            b = game.add.audio("botosound");
-            //remo.volume = 0.4;
-            b.play();
-        }*/
         var max = game.world.width - jungleWidth - enemie.body.width;
         var min = jungleWidth;
         var positionX = Math.round(Math.random() * (max - min)) + min;
@@ -140,41 +153,18 @@ function addEnemies() {
 
 function update() {
 
-    // cria uma barreira que o sprite pode pisar
-    /*game.physics.arcade.collide(boat, barrasPqnas);
-	game.physics.arcade.collide(boat, barrasMedias);
-	game.physics.arcade.collide(boat, barraInicial);
-	game.physics.arcade.collide(boat, enemies);*/
-    // COLISAO COM OSSO:
-    /*boat.body.velocity.x = 0;
-    boat.body.velocity.y = 0;*/
-    //boat.body.angularVelocity = 0;
     game.physics.arcade.overlap(boat, enemies, overlapWithEnemies, null, this);
     game.physics.arcade.overlap(boat, jungles, overlapWithEnemies, null, this);
-    /*game.physics.arcade.overlap(boat, plataforma, gameOver,null,this);*/
 
     if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) { // vai para esquerda
         changeAngle(angleVelocity);
-        var remo = game.add.audio("remosound");
-        remo.volume = 0.4;
-        remo.play();
-        //goRight();
-        //boat.scale.x = -1; // espelha se antes -1
     }
     else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) { // vai para direita
         changeAngle(-1 * angleVelocity);
-        var remo = game.add.audio("remosound");
-        remo.volume = 0.4;
-        remo.play();
-        //goLeft();
+        
     }else {
         boat.body.velocity.x = 2*boat.angle;//velocity;
     }
-    /*else if ( game.input.keyboard.isDown (Phaser.Keyboard.UP) ) { // vai para cima
-
-		boat.body.velocity.y = -100;
-		boat.animations.play('jump');
-	}*/
     /*else{
 	    	boat.animations.stop();
 			boat.frame = 0;
@@ -185,7 +175,8 @@ function changeAngle(angle){
     var toChange = boat.angle + angle;
     if ( toChange > -90 && toChange < 90) {
         boat.angle += angle;
-    }    
+    }
+     
 }
 
 function checkBounds(){
@@ -221,26 +212,13 @@ function checkEnemiesBounds(obj) {
 
 }
 
-function goRight() {
-    //boat.body.velocity.x = velocity;
-    boat.angle += angleVelocity;
-    var remo = game.add.audio("remosound");
-    //remo.volume = 0.4;
-    remo.play();
-    //boat.animations.play('walk');
-}
-
-
-function goLeft() {
-    //boat.body.velocity.x = -velocity;
-    boat.angle -= angleVelocity;
-    var remo = game.add.audio("remosound");
-    //remo.volume = 0.4;
-    remo.play();
-    //boat.animations.play('walk');
-}
-
-function overlapWithEnemies(_boat, _enemies) {    
+function overlapWithEnemies(_boat, _enemies) { 
+    if(_boat.x <= jungleWidth){
+        _boat.x = jungleWidth;
+    }else if(_boat.x >= game.world.width - jungleWidth){
+        _boat.x = game.world.width - jungleWidth;
+    }
+    remosSound.stop();
     boat.play('dead');
     boat.body.velocity.x = 0;
     if(finalSound == false){
@@ -248,6 +226,9 @@ function overlapWithEnemies(_boat, _enemies) {
         explode.volume = 0.3;
         explode.play();
         finalSound = true;
+    }
+    if(_enemies.name){
+        _enemies.kill();
     }
     setTimeout(gameOv, 1300);
 }

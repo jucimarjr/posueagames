@@ -4,6 +4,7 @@ function preload() {
     game.load.image('splashscreen', 'assets/bg/jungleriver_900-1200.jpg');
     game.load.image('win', 'assets/botoes/win_350-200.png');
     game.load.image('play', 'assets/botoes/play_100-70.png');
+    game.load.image('logoMain', 'assets/bg/logo.png');
     console.log("menu preload");
 }
 
@@ -11,8 +12,9 @@ function preload() {
 function create() {
     console.log("menu create");
     var splashscreen = game.add.sprite(0, 0, 'splashscreen');
-    var btWin = game.add.sprite(280, 100, 'win');
-    var btPlay = game.add.button(450, 300 + 100, 'play', start, this, 1, 0, 1);
+    var mainLogo = game.add.sprite(250, 10, 'logoMain');
+    var btWin = game.add.sprite(280, 250, 'win');
+    var btPlay = game.add.button(450, 450 + 100, 'play', start, this, 1, 0, 1);
     btPlay.anchor.set(0.5, 0.5);
 
     var spacebar_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);

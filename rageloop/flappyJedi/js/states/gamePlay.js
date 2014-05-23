@@ -300,10 +300,12 @@
             if (this.game.input.keyboard.isDown (Phaser.Keyboard.ENTER)) {
                 if(this.isStarted) {
 
-                    this.player_fire.revive();
-                    this.player_fire.animations.play('fire', 20, false, true);
+                    var isFiring = this.weapon.fire();
 
-                    this.weapon.fire();
+                    if (isFiring) {
+                        this.player_fire.revive();
+                        this.player_fire.animations.play('fire', 20, false, true);
+                    }
                 }
             } 
         },

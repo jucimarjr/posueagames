@@ -30,11 +30,11 @@
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="463"
-     inkscape:window-height="423"
-     inkscape:window-x="925"
-     inkscape:window-y="299"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     inkscape:window-x="1016"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -243,5 +243,75 @@
        sodipodi:ry="8.9285717"
        d="m -381.42857,189.86218 a 11.071428,8.9285717 0 1 1 -22.14286,0 11.071428,8.9285717 0 1 1 22.14286,0 z"
        transform="translate(-4.2857143,-2.8571428)" />
+    <g
+       id="g3034"
+       transform="translate(52.142857,43.571429)"
+       inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\cheese_40-40.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\asteroid_80-80.png"
+         transform="matrix(0.44444444,0,0,0.58947371,-519.76191,166.2329)"
+         d="m 274.28572,298.79074 c 0,37.47646 -40.29437,67.85714 -90,67.85714 -49.70563,0 -89.999999,-30.38068 -89.999999,-67.85714 0,-37.47646 40.294369,-67.85714 89.999999,-67.85714 49.70563,0 90,30.38068 90,67.85714 z"
+         sodipodi:ry="67.85714"
+         sodipodi:rx="90"
+         sodipodi:cy="298.79074"
+         sodipodi:cx="184.28572"
+         id="path3025-7"
+         style="fill:#000080"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.70612127,-0.70809093,0.70809093,0.70612127,-481.9646,-305.34348)"
+         d="m -427.14287,467.36218 c 0,5.12836 -5.11675,9.28572 -11.42857,9.28572 -6.31183,0 -11.42857,-4.15736 -11.42857,-9.28572 0,-5.12836 5.11674,-9.28571 11.42857,-9.28571 6.31182,0 11.42857,4.15735 11.42857,9.28571 z"
+         sodipodi:ry="9.2857141"
+         sodipodi:rx="11.428572"
+         sodipodi:cy="467.36218"
+         sodipodi:cx="-438.57144"
+         id="path3029-4"
+         style="fill:#ffd42a"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.70612127,-0.70809093,0.70809093,0.70612127,-445.17888,-319.27207)"
+         d="m -427.14287,467.36218 c 0,5.12836 -5.11675,9.28572 -11.42857,9.28572 -6.31183,0 -11.42857,-4.15736 -11.42857,-9.28572 0,-5.12836 5.11674,-9.28571 11.42857,-9.28571 6.31182,0 11.42857,4.15735 11.42857,9.28571 z"
+         sodipodi:ry="9.2857141"
+         sodipodi:rx="11.428572"
+         sodipodi:cy="467.36218"
+         sodipodi:cx="-438.57144"
+         id="path3029-7-0"
+         style="fill:#ffcc00"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.58499173,-0.56241335,0.58662351,0.56084892,-432.24784,-159.98723)"
+         d="m -427.14287,467.36218 c 0,5.12836 -5.11675,9.28572 -11.42857,9.28572 -6.31183,0 -11.42857,-4.15736 -11.42857,-9.28572 0,-5.12836 5.11674,-9.28571 11.42857,-9.28571 6.31182,0 11.42857,4.15735 11.42857,9.28571 z"
+         sodipodi:ry="9.2857141"
+         sodipodi:rx="11.428572"
+         sodipodi:cy="467.36218"
+         sodipodi:cx="-438.57144"
+         id="path3029-5-9"
+         style="fill:#aa8800"
+         sodipodi:type="arc" />
+      <path
+         transform="matrix(0.70612127,-0.70809093,0.70809093,0.70612127,-468.03602,-279.62921)"
+         d="m -427.14287,467.36218 c 0,5.12836 -5.11675,9.28572 -11.42857,9.28572 -6.31183,0 -11.42857,-4.15736 -11.42857,-9.28572 0,-5.12836 5.11674,-9.28571 11.42857,-9.28571 6.31182,0 11.42857,4.15735 11.42857,9.28571 z"
+         sodipodi:ry="9.2857141"
+         sodipodi:rx="11.428572"
+         sodipodi:cy="467.36218"
+         sodipodi:cx="-438.57144"
+         id="path3029-8-4"
+         style="fill:#806600"
+         sodipodi:type="arc" />
+    </g>
+    <rect
+       style="fill:#ff00ff"
+       id="rect3043"
+       width="40"
+       height="40"
+       x="-485"
+       y="250.93361"
+       inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\docs\rat_40-40.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>
