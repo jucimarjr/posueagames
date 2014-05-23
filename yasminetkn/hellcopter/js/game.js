@@ -8,7 +8,7 @@ var highscore = 0;
 var _VELOCIDADE_PULO = -250;
 var _TIMER_FUEL = 3000;
 
-var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(960, 600, Phaser.AUTO, 'hellcopter', { preload: preload, create: create, update: update });
 
 var timer;
 
@@ -75,7 +75,7 @@ function create () {
     this.ground2 = this.game.add.tileSprite(0, 0, 960, 600, 'ground');//(x,y,tamanho em x,?)
     this.ground2.autoScroll(-20, 0);
 
-    this.ground = this.game.add.tileSprite(0, 450, 960, 100, 'chao');//(x,y,tamanho em x,?)
+    this.ground = this.game.add.tileSprite(0, 500, 960, 100, 'chao');//(x,y,tamanho em x,?)
     this.ground.autoScroll(-400, 0);
 
     this.top = this.game.add.tileSprite(0,0,960,25,'top');
@@ -231,7 +231,7 @@ function createBlocos() {
 		ledge.y+=100;
 	}
 
-	ledge.body.velocity.x = -700;
+	ledge.body.velocity.x = -600;
 	ledge.body.immovable = true;
 	ledge.outOfBoundsKill = true;
 
