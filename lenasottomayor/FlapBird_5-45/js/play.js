@@ -2,12 +2,14 @@ var playGame = { create: create, update: update };
 
 function create() {
 	background = game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
-	background.autoScroll(-70, 0);
-	
+	background.autoScroll(-70, 0);	 
+	 
 	createObstacles();
 	createPlayer();
 	
 	this.timer = this.game.time.events.loop(2500, addObstacle, this);
+	this.music = game.add.audio('music',1,true);
+    this.music.play('',0,0.2,true);
 }
 
 function update() {
