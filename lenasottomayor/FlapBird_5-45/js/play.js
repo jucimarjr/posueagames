@@ -54,12 +54,12 @@ function addObstacle() {
 	var heigth = game.world.randomY;
 	
 	if((heigth+200) < 500) {
-		obstacle = platforms.create(800, heigth+300, 'obstacle');
+		obstacle = platforms.create(960, heigth+300, 'obstacle');
 		game.physics.enable(obstacle, Phaser.Physics.ARCADE);
-		obstacle.body.velocity.x = -100;
+		obstacle.body.velocity.x = -250;
 	} else {
-		obstacle = platforms.create(800, heigth-100, 'obstacle');
+		obstacle = platforms.create(960, heigth-100, 'obstacle');
 		game.physics.enable(obstacle, Phaser.Physics.ARCADE);
-		obstacle.body.velocity.x = -100;
+		obstacle.body.velocity.x = -250;
 	}
 }
