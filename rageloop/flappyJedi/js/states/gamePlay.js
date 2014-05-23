@@ -41,7 +41,7 @@
             this.player_tween = this.game.add.tween(this.player).to( { y: 200 }, 1000, Phaser.Easing.Linear.None, true, 0, 1000, true);
 
             this.enemies = this.game.add.group();
-            this.enemies.createMultiple(20, 'enemy');            
+            this.enemies.createMultiple(20, 'enemy');
 
             this.powerUps = new PowerUps(this.game);
             this.powerUps.init();
@@ -53,7 +53,7 @@
 
             this.timer = this.game.time.events.loop(700, this.addElement, this);
 
-            var style = { font: "40px Starjhol", fill: "#000000", align: "center" };
+            var style = { font: "36px Starjhol", fill: "#000000", align: "center" };
             this.score_text = this.game.add.text(this.game.world.centerX, 0, "Score: " + this.score, style);
             this.score_text.anchor.set(0.5, 0);
 
@@ -64,16 +64,19 @@
             this.startSound.play();
             this.startSound.loop = true; 
 
-            var progressBg = this.game.add.graphics(0, 0);
-            progressBg.lineStyle(2, 0x000000, 1);
-            progressBg.beginFill(0xF7931E, 1);
-            progressBg.drawRect(10, 10, 230, 30);
+            this.progressBg = this.game.add.graphics(0, 0);
+            this.progressBg.lineStyle(2, 0x000000, 1);
+            this.progressBg.beginFill(0xF7931E, 1);
+            this.progressBg.drawRect(10, 10, 230, 30);
 
             this.powerUpFill = this.game.add.graphics(0, 0);
 
             this.powerUpImage = this.game.add.sprite(250, 10, 'powerups');
             this.powerUpImage.scale.setTo(0.5, 0.5);
-            this.powerUpImage.visible = false;
+            
+            this.setPowerUpBarVisibility(false);
+
+
         },
 
         update: function() {
@@ -128,6 +131,14 @@
             this.startSound.stop();
         },
 
+        setPowerUpBarVisibility: function(value) {
+
+            this.progressBg.visible = value;
+            this.powerUpFill.visible = value;
+            this.powerUpImage.visible = value;
+
+        },
+
         addElement: function() {
 
             var x, y, value;
@@ -175,6 +186,8 @@
 
             var powerUpType = powerUp.type;
 
+            this.setPowerUpBarVisibility(true);
+
             if (powerUpType !== 'shield') {
                 this.weapon = this.weaponFactory.getWeapon(powerUpType);
                 this.startPowerUpTimer(powerUp);
@@ -200,7 +213,7 @@
             if (this.powerUpProgress == 0) {
                 this.game.time.events.remove(this.powerUpTimer);
                 this.weapon = this.weaponFactory.getWeapon('simpleBlaster');
-                this.powerUpImage.visible = false;
+                this.setPowerUpBarVisibility(false);
                 return;
             }
 
