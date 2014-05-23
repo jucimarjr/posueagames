@@ -64,12 +64,12 @@ function create() {
     this.label_score = this.game.add.text(20, 20, "0", style);
 
     //bloqueia novos obstaculos por 3 ataques do boss e depois o jogo volta ao normal IMPORTANTE P/ MINI BOSS!!!!!!!!!!!!!!!!!!!!11111
-    /*SEQUENCIA IMPORTANTE P/ MINI BOSS!!!!!!!!!!!!!!!!!!!!11111
+    /*SEQUENCIA IMPORTANTE P/ MINI BOSS!!!!!!!!!!!!!!!!!!!!11111 */
     game.time.events.remove(this.timer);
     countHeadButts = 0;
     bossFight();
     bossBackground = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('bossbg').height, 'bossbg');
-    game.physics.arcade.enable(bossBackground); */
+    game.physics.arcade.enable(bossBackground); 
 }
 
 // Start the actual game
