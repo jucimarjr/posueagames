@@ -15,6 +15,13 @@ function create() {
 
     loadExtras();
 
+  //score  metros
+    stop_score = false;
+    score = 0; 
+    var style = { font: "30px Arial", fill: "#000000" };
+    this.label_score = this.game.add.text(20, 50, "0m", style);
+    
+    
     playerSprite = game.add.sprite(172, 281.5, 'player');
     playerSprite.animations.add('walk', [0, 1, 2, 3], 8, true);
     game.physics.enable(playerSprite, Phaser.Physics.ARCADE);
@@ -58,11 +65,7 @@ function create() {
     background2.tilePosition.x -= 2 * speed;
     background3.tilePosition.x -= 3 * speed;
     background4.tilePosition.x -= 4 * speed;
-    //score  metros
-    score = 0;
-    var style = { font: "30px Arial", fill: "#ffffff" };
-    this.label_score = this.game.add.text(20, 20, "0", style);
-
+    
     //bloqueia novos obstaculos por 3 ataques do boss e depois o jogo volta ao normal IMPORTANTE P/ MINI BOSS!!!!!!!!!!!!!!!!!!!!11111
     /*SEQUENCIA IMPORTANTE P/ MINI BOSS!!!!!!!!!!!!!!!!!!!!11111 */
     game.time.events.remove(this.timer);
@@ -75,9 +78,11 @@ function create() {
 // Start the actual game
 function update() {
 
-    score += 0.05;
-    this.label_score.text = score.toFixed(0);  //sem casa decimal
-
+	if(!stop_score){
+    	score += 0.05;
+        this.label_score.text = score.toFixed(0) +"m";  //sem casa decimal
+	}
+	
     playerSprite.animations.play('walk');
 
     if ((bossSprite != null) && (bossSprite.exists === true)) {
@@ -113,9 +118,14 @@ function update() {
 
     game.physics.arcade.overlap(playerSprite, plataformas, playerDies, null, this)
 
-    //bate no chao
-    if ((Math.round(playerSprite.y) + playerSprite.height) >= game.world.height)
-        restart_game();
+    //bate no chao playerSprite
+    if ((Math.round(playerSprite.y) + playerSprite.height) >= game.world.height){
+    	playerDies();
+    	floor_death();//restart_game();
+	}
+    //bate no chao o deathSprite
+    if ((Math.round(deathSprite.y) + deathSprite.height) >= game.world.height)
+    	floor_death();
 
 }
 
@@ -166,7 +176,7 @@ function normalSizePlayer() {
 
 function restart_game() {
     game.time.events.remove(this.timer);
-    game.state.start('play');
+    game.state.start('score');
 }
 
 function playDeadAnimation() {
@@ -289,4 +299,10 @@ function bossFight() {
             this.timer = this.game.time.events.loop(2000, add_obstacle, this);
         }, 6000);
     }
+}
+
+function floor_death(){
+	deathSprite.body.velocity.y = 0;
+	deathSprite.body.gravity.y = 0;
+	deathSprite.animations.stop();
 }

@@ -3,6 +3,7 @@ var game = new Phaser.Game(960, 600, Phaser.AUTO, 'game_div');
 //variavel global
 var score = 0;
 var label_score;
+var stop_score;
 
 var playerSprite, deathSprite, bossSprite;
 var playersGroup; //for multiply Power up

@@ -25,5 +25,5 @@ var load_state = { preload: preload, create: create };
     }
 
     function create() {
-        game.state.start('menu');
+        game.state.start('play');
     }
