@@ -8,7 +8,7 @@ function create() {
 	createPlayer();
 	
 	this.timer = this.game.time.events.loop(2500, addObstacle, this);
-	this.music = game.add.audio('music',1,true);
+	this.music = game.add.audio('music');
     this.music.play('',0,0.2,true);
 }
 
@@ -39,6 +39,8 @@ function jump() {
 	playerSprite.body.velocity.y = -400;
 	playerSprite.body.velocity.x = 0;
 	playerSprite.animations.play('jump');
+	this.jumpSound = game.add.audio('jumpSound');
+    this.jumpSound.play();
 
 }
 
