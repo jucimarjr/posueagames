@@ -15,7 +15,7 @@ function create() {
 
     loadExtras();
 
-  //score  metros
+    //score  metros
     stop_score = false;
     score = 0; 
     var style = { font: "30px Arial", fill: "#000000" };
@@ -26,7 +26,7 @@ function create() {
     playerSprite.animations.add('walk', [0, 1, 2, 3], 8, true);
     game.physics.enable(playerSprite, Phaser.Physics.ARCADE);
     playerSprite.body.gravity.y = 1000;
-    playerSprite.body.collideWorldBounds = false; // para no limite inferior da tela
+    playerSprite.body.collideWorldBounds = true; // para no limite inferior da tela
     game.camera.follow(playerSprite.sprite);
 
     deathSprite = game.add.sprite(playerSprite.body.position.x, playerSprite.body.position.y, 'death');
@@ -120,8 +120,9 @@ function update() {
 
     //bate no chao playerSprite
     if ((Math.round(playerSprite.y) + playerSprite.height) >= game.world.height){
-    	playerDies();
-    	floor_death();//restart_game();
+    	restart_game();
+    	//    	playerDies();
+//    	floor_death();//restart_game();
 	}
     //bate no chao o deathSprite
     if ((Math.round(deathSprite.y) + deathSprite.height) >= game.world.height)

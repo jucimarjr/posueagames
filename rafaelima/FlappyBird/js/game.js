@@ -37,6 +37,8 @@ var obstacle;
 var cursors;
 var timerPowerUp;
 
+var img_sound;
+
 // Define all the states
 game.state.add('credits', credits_state);  
 game.state.add('load', load_state);  

@@ -22,8 +22,10 @@ var load_state = { preload: preload, create: create };
 		game.load.image('obstacle2', 'assets/obstacle_02.png');
 		game.load.image('obstacle3', 'assets/obstacle_03.png');
 		game.load.image('obstacle4', 'assets/obstacle_04.png');
+		game.load.image('sound', 'assets/sound.png');
+		game.load.image('nosound', 'assets/nosound.png');
     }
 
     function create() {
-        game.state.start('play');
+        game.state.start('menu');
     }
