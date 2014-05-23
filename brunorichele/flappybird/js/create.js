@@ -8,10 +8,10 @@ var create = {
 
     init : function(){
         //game defs
-        game.world.setBounds(0, 0, 960, 600);
+        game.world.setBounds(0, 0, 960, 800);
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        farBackground = game.add.tileSprite(0, 0, 960, 600,  'background');
+        farBackground = game.add.tileSprite(0, 0, 960, 800,  'background');
         farBackground.autoScroll(-200, 0);
 
         nearBackground = game.add.tileSprite(0, game.world.height - 100, 960, 100, 'river');
@@ -77,7 +77,7 @@ var create = {
 
     //criacao dos inimigos
     createAnzol : function(enemySpeedMultiplier){
-        var anzol = this.enemy_group.create(970, -100, 'anzol'); // criando do lado de fora
+        var anzol = this.enemy_group.create(970,    0, 'anzol'); // criando do lado de fora
         game.physics.arcade.enable(anzol);
         anzol.body.velocity.x = -300 * (1 + enemySpeedMultiplier / 10);
         anzol.outOfBoundsKill = true;
@@ -95,15 +95,15 @@ var create = {
             .start();
     },
     createArraia : function(enemySpeedMultiplier, easingIndex){
-        var arraia = this.enemy_group.create(1160, 570, 'arraia'); // criando do lado de fora
+        var arraia = this.enemy_group.create(1160, 670, 'arraia'); // criando do lado de fora
         game.physics.arcade.enable(arraia);
         arraia.body.velocity.x = -300* (1 + enemySpeedMultiplier / 10);
         arraia.outOfBoundsKill = true;
         arraia.anchor.setTo(0.5, 0.5);
         game.add.tween(arraia) // anima����o da arraia subindo
-            .to({y: 370, angle: 20}, 1000, this.easingFunctions[easingIndex], false, 500) // em 500ms, subir e apontar angulo para baixo, levando 1000ms
-            .to({y: 470, angle: -20}, 1000) // descer e apontar angulo para cima, em 1000ms
-            .to({y: 570, angle: 0}, 500) // voltar a altura normal, zerar angulo
+            .to({y: 470, angle: 20}, 1000, this.easingFunctions[easingIndex], false, 500) // em 500ms, subir e apontar angulo para baixo, levando 1000ms
+            .to({y: 570, angle: -20}, 1000) // descer e apontar angulo para cima, em 1000ms
+            .to({y: 670, angle: 0}, 500) // voltar a altura normal, zerar angulo
             .start();
     },
 
