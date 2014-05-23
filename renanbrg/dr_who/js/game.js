@@ -20,7 +20,7 @@ function create () {
 
     // Add a group of mateors
     meteors = game.add.group();
-    meteors.createMultiple(10, 'meteor');
+    meteors.createMultiple(10, 'meteoro');
     game.physics.enable(meteors, Phaser.Physics.ARCADE);
     timer = game.time.events.loop(2000, addMeteor, this);
 }
@@ -42,7 +42,7 @@ function addMeteor() {
     var meteor = meteors.getFirstExists(false);
     if (meteor != null) {
         meteor.reset(meteorX, meteorY);
-        meteor.body.velocity.x = -200 + Math.floor(Math.random() * 200);
+        meteor.body.velocity.x = -200 - Math.floor(Math.random() * 200);
         meteor.checkWorldBounds = true;
         meteor.outOfBoundsKill = true;
     } else {
@@ -50,7 +50,7 @@ function addMeteor() {
     }
 }
 
-function kill (tardis,meteoro)	{
+function kill (tardis, meteoro)	{
     tardis.kill();
     meteoro.kill();
 }
