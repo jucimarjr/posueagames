@@ -1,4 +1,4 @@
-BasicGame.GameManager = function(game) {
+BasicGame.GameManager = function (game) {
 
     //	When a State is added to Phaser it automatically has the following properties set on it, even if they already exist:
 
@@ -22,61 +22,72 @@ BasicGame.GameManager = function(game) {
     this.obstaclesGroup;
     this.obstaclesManager;
 
-    this.ground;
-    this.city;
-    this.trees;
     this.player;
+    this.missions;
+    this.backgroundManager;
 };
 
-BasicGame.GameManager.pixelsToUnit = 150;
+BasicGame.GameManager.debugDraw = false;
+BasicGame.GameManager.pixelsToUnit = 80;
+BasicGame.GameManager.thrusterForce = -20 * BasicGame.GameManager.pixelsToUnit;
+BasicGame.GameManager.gravity = 9.8 * BasicGame.GameManager.pixelsToUnit;
 
 BasicGame.GameManager.prototype = {
 
-    create: function() {
-        
-        this.city = this.add.tileSprite(0, this.camera.height - this.cache.getImage('city').height - this.cache.getImage('ground').height,
-            this.camera.width, this.cache.getImage('city').height, 'city');
-        this.trees = this.add.tileSprite(0, this.camera.height - this.cache.getImage('ground').height - this.cache.getImage('trees').height,
-            this.camera.width, this.cache.getImage('trees').height, 'trees');
+    create: function () {
+        this.game.physics.startSystem(Phaser.Physics.P2JS);
+        this.game.physics.p2.gravity.y = BasicGame.GameManager.gravity;
 
-        this.obstaclesGroup = this.game.add.group();
-        this.obstaclesGroup.enableBody = true;
-        
-        this.obstaclesManager = new BasicGame.ObstaclesManager(this, this.obstaclesGroup);
-        
-        this.obstaclesManager.create();
-        
-        this.ground = this.add.tileSprite(0, this.camera.height - this.cache.getImage('ground').height,
-                                          this.camera.width, this.cache.getImage('ground').height, 'ground');
-        this.physics.enable(this.ground, Phaser.Physics.ARCADE);
-        this.ground.body.immovable = true;
-                                          
+        // this.backgroundManager = new BasicGame.BackgroundManager(this);
+        // this.backgroundManager.create();
+
+        // this.obstaclesGroup = this.game.add.group();
+        // this.obstaclesGroup.enableBody = true;
+
+        // this.obstaclesManager = new BasicGame.ObstaclesManager(this, this.obstaclesGroup);
+        // this.obstaclesManager.create();
+
         this.player = new BasicGame.Player(this);
         this.player.create();
+
+        this.missions = new BasicGame.Missions();
+
+        for (var i = 0; i < 500; i++) {
+            this.missions.nextEventIndex();
+        };
     },
 
-    update: function() {
+    update: function () {
+        // this.backgroundManager.update();
+        // this.obstaclesManager.update();
 
-        this.ground.tilePosition.x += BasicGame.Obstacle.velocity;
-        this.trees.tilePosition.x += BasicGame.Obstacle.velocity / 4.0;
-        this.city.tilePosition.x += BasicGame.Obstacle.velocity / 8.0;
-        
-        this.obstaclesManager.update();
-        
+        this.player.update();
+
+        // this.handleCollision();
+    },
+
+    handleCollision: function () {
         if (this.physics.arcade.collide(this.player.sprite, this.ground) ||
             this.physics.arcade.overlap(this.player.sprite, this.obstaclesGroup)) {
+
+            this.player.onPlayerCollided();
             BasicGame.Obstacle.velocity = 0.0;
         }
-        
-        this.player.update();
     },
 
-    quitGame: function(pointer) {
+    render: function () {
+        // if (this.player.sprite.body.renderDebug) {
+        //     console.log('draw');
+        //     this.player.sprite.body.renderDebug(this.game.context, this.player.sprite.body, "red", true);
+        // }
+    },
+
+    quitGame: function (pointer) {
 
         //	Here you should destroy anything you no longer need.
         //	Stop music, delete sprites, purge caches, free resources, all that good stuff.
 
         //	Then let's go back to the main menu.
-        this.state.start('MainMenu');
+        this.state.start ('MainMenu');
     }
 };

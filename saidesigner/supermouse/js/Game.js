@@ -6,7 +6,8 @@ SuperMouse.Game = function(game) {
 	this.asteroids;
 	this.stars;
 	this.player;
-	this.sameColumn = false;	
+	this.sameColumn = false;
+	this.keyPressed = false;
 }; 
 
 
@@ -14,7 +15,7 @@ SuperMouse.Game.prototype.preload = function() {
 	
 	this.load.image('universe', 'assets/universe_900-600.png');
     this.load.image('asteroid', 'assets/asteroid_80-80.png');
-    this.load.image('player', 'assets/player_120-40.png');
+    this.load.image('player', 'assets/player_120-50.png');
     this.load.spritesheet('star', 'assets/star_4-4.png', 4, 4);
 
 };
@@ -43,13 +44,14 @@ SuperMouse.Game.prototype.create = function() {
 
 	// create player
 
-	this.player = this.add.sprite(300, 300, 'player');
+	this.player = this.add.sprite(150, 300, 'player');
 	this.physics.enable(this.player, Phaser.Physics.ARCADE);
 	this.player.collideWorldBounds = true; 
-	this.player.body.allowRotation = false;
-	this.player.body.angularVelocity = -100;
-	this.player.body.gravity.y = 200;
-	this.player.body.acceleration.y = 250;
+	this.player.body.allowRotation = true;
+	this.player.body.angularVelocity = 100;	
+	this.player.body.gravity.y = 50;
+	this.player.body.acceleration.y = 100;	
+	this.player.anchor.setTo(.5,.5);
 
 	// create asteroids
 
@@ -72,7 +74,7 @@ SuperMouse.Game.prototype.create = function() {
 
 	    asteroid = this.asteroids.create(lastPosX, lastPosY, 'asteroid');
 	    asteroid.body.immovable  = true;    
-	    asteroid.body.allowRotation = false;
+	    asteroid.body.allowRotation = true;
 	    asteroid.body.velocity.x = -250;	    
 	    asteroid.body.angularVelocity = Math.floor((Math.random() * 10) + 20) * -1;
 
@@ -85,25 +87,41 @@ SuperMouse.Game.prototype.update = function() {
 
 	// player
 
-	if (this.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-		this.player.body.velocity.y = -150;
-		if (this.player.body.allowRotation) {
-			if (this.player.rotation < -0.5) {				
-				this.player.body.allowRotation = false;					
-			}
-		} else if (this.player.rotation == 0){			
+	if (this.input.keyboard.isDown(Phaser.Keyboard.UP) || this.input.activePointer.isDown) {
+
+		if (!this.keyPressed) {
+
+			this.keyPressed = true;
+
+			this.player.body.velocity.y = -110;
+			this.player.rotation = 0;
+			this.player.body.angularVelocity = -50;
 			this.player.body.allowRotation = true;
 		}
+
 	} else {
-		this.player.rotation = 0;
-		this.player.body.allowRotation = false;
+		this.keyPressed = false;
+		this.player.body.angularVelocity = 50;
+	}
+
+	if (this.player.body.allowRotation) {
+		if (this.player.body.angularVelocity > 0) {			
+			if (this.player.rotation > 0.5) {
+				this.player.body.allowRotation = false;
+			}
+		} else {			
+
+			if (this.player.rotation < -0.5) {
+				this.player.body.angularVelocity = 50;				
+			}
+		}
 	}
 
 	// asteroids
 
 	var lastAsteroid = this.asteroids.getAt(5);
 
-	var lastPosX = lastAsteroid.body.x;
+	var lastPosX = lastAsteroid.body.x < 900 ? 900 : lastAsteroid.body.x;
 	var lastPosY = lastAsteroid.body.y;
 	
 	for (var i = 0; i < 6; i++) {
@@ -136,6 +154,8 @@ SuperMouse.Game.prototype.update = function() {
 			star.body.y = Math.floor((Math.random() * 600) + 1);
 		}
 	}
+};
 
-	//console.log(this.player.rotation);
+SuperMouse.Game.prototype.render = function() {	
+	
 };

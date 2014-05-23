@@ -15,7 +15,6 @@ var playState = function(game) {
 	this.update = function() {
 		player.update();
 		
-//		level.bgSky.tilePosition.x -= 1;
 	};
 	
 };

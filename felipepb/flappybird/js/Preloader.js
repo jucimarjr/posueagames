@@ -1,72 +1,72 @@
-
 BasicGame.Preloader = function (game) {
 
-	this.background = null;
-	this.preloadBar = null;
+    this.background = null;
+    this.preloadBar = null;
 
-	this.ready = false;
+    this.ready = false;
 
 };
 
 BasicGame.Preloader.prototype = {
 
-	preload: function () {
+    preload: function () {
 
-		//	These are the assets we loaded in Boot.js
-		//	A nice sparkly background and a loading progress bar
-		this.background = this.add.sprite(0, 0, 'preloaderBackground');
-		this.preloadBar = this.add.sprite(300, 400, 'preloaderBar');
+        //	These are the assets we loaded in Boot.js
+        //	A nice sparkly background and a loading progress bar
+        this.background = this.add.sprite(0, 0, 'preloaderBackground');
+        this.preloadBar = this.add.sprite(300, 400, 'preloaderBar');
 
-		//	This sets the preloadBar sprite as a loader sprite.
-		//	What that does is automatically crop the sprite from 0 to full-width
-		//	as the files below are loaded in.
-		this.load.setPreloadSprite(this.preloadBar);
+        //	This sets the preloadBar sprite as a loader sprite.
+        //	What that does is automatically crop the sprite from 0 to full-width
+        //	as the files below are loaded in.
+        this.load.setPreloadSprite(this.preloadBar);
 
-		//	Here we load the rest of the assets our game needs.
-		//	As this is just a Project Template I've not provided these assets, swap them for your own.
-		this.load.image('city', 'assets/city.png');
-		this.load.image('trees', 'assets/trees.png');
-		this.load.image('ground', 'assets/ground.png');
-		this.load.spritesheet('clumsy', 'assets/clumsy.png',
-		                      BasicGame.Player.frameWidth,
-		                      BasicGame.Player.frameHeight,
-		                      BasicGame.Player.frameCount);
-		this.load.image('pipe', 'assets/pipe.png');
-		//this.load.atlas('playButton', 'assets/play_button.png', 'assets/play_button.json');
-		//this.load.audio('titleMusic', ['audio/main_menu.mp3']);
-		//this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
-		//	+ lots of other required assets here
+        //	Here we load the rest of the assets our game needs.
+        //	As this is just a Project Template I've not provided these assets, swap them for your own.
+        this.load.image('ground', 'assets/ground.png');
+        this.load.image('pipe', 'assets/pipe.png');
+        this.load.atlas('shipAtlas', 'assets/shipatlas_512-512-20.png', 'assets/shipatlas_512-512-20.json');
+        this.load.image('backgroundColor', 'assets/backgroundcolor_960-600.png');
+        this.load.image('backgroundPhrases', 'assets/backgroundphrases_960-600.png');
+        this.load.image('backgroundStarsBig', 'assets/backgroundstarsbig_960-600.png');
+        this.load.image('backgroundStarsMedium', 'assets/backgroundstarsmedium_960-600.png');
+        this.load.image('backgroundStarsSmall', 'assets/backgroundstarssmall_960-600.png');
 
-		this.ready = true;
-	},
+        this.load.physics('physicsData', 'assets/ship_84-80.json');
+        //this.load.atlas('playButton', 'assets/play_button.png', 'assets/play_button.json');
+        //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
+        //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
+        //	+ lots of other required assets here
 
-	create: function () {
+        this.ready = true;
+    },
 
-		//	Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
-		this.preloadBar.cropEnabled = false;
+    create: function () {
 
-	},
+        //	Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
+        this.preloadBar.cropEnabled = false;
 
-	update: function () {
+    },
 
-		//	You don't actually need to do this, but I find it gives a much smoother game experience.
-		//	Basically it will wait for our audio file to be decoded before proceeding to the MainMenu.
-		//	You can jump right into the menu if you want and still play the music, but you'll have a few
-		//	seconds of delay while the mp3 decodes - so if you need your music to be in-sync with your menu
-		//	it's best to wait for it to decode here first, then carry on.
-		
-		//	If you don't have any music in your game then put the game.state.start line into the create function and delete
-		//	the update function completely.
-		
-		
-		//if (this.cache.isSoundDecoded('titleMusic') && this.ready == false)
-		//{
-			//this.ready = true;
-			//this.state.start('MainMenu');
-		//}
+    update: function () {
 
-		if (this.ready)
-			this.state.start('Game');
-	}
+        //	You don't actually need to do this, but I find it gives a much smoother game experience.
+        //	Basically it will wait for our audio file to be decoded before proceeding to the MainMenu.
+        //	You can jump right into the menu if you want and still play the music, but you'll have a few
+        //	seconds of delay while the mp3 decodes - so if you need your music to be in-sync with your menu
+        //	it's best to wait for it to decode here first, then carry on.
 
+        //	If you don't have any music in your game then put the game.state.start line into the create function and delete
+        //	the update function completely.
+
+
+        //if (this.cache.isSoundDecoded('titleMusic') && this.ready == false)
+        //{
+        //this.ready = true;
+        //this.state.start('MainMenu');
+        //}
+
+        if (this.ready)
+            this.state.start('Game');
+    }
 };
