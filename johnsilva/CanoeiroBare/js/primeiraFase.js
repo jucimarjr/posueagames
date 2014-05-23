@@ -11,6 +11,7 @@ var tileSpeedRiver = 1.5;
 var tileSpeedJungles = 0.3;
 var jungleWidth = 196;
 var angleVelocity = 2;
+var finalSound;
 
 function preload() {
     game.load.image('river', 'assets/bg/river_512-1200.jpeg');
@@ -65,6 +66,8 @@ function create() {
     this.labelScore.anchor.set(0.5, 0);
     game.time.events.loop(150, addEnemies, this);
     game.time.events.loop(3000, addScore, this);
+
+    finalSound = false;
 }
 
 function createJungles() {
@@ -240,9 +243,12 @@ function goLeft() {
 function overlapWithEnemies(_boat, _enemies) {    
     boat.play('dead');
     boat.body.velocity.x = 0;
-    var explode = game.add.audio("explodesound");
-    explode.volume = 0.3;
-    explode.play();
+    if(finalSound == false){
+        var explode = game.add.audio("explodesound");
+        explode.volume = 0.3;
+        explode.play();
+        finalSound = true;
+    }
     setTimeout(gameOv, 1300);
 }
 
