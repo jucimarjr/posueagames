@@ -60,7 +60,7 @@
             // sounds
             this.startSound = this.game.add.audio("startsound");
             this.bgSound = this.game.add.audio("bgsound");
-            this.bgSound.volume = 0.4;            
+            this.bgSound.volume = 0.4;
             this.startSound.play();
             this.startSound.loop = true; 
 
@@ -96,8 +96,8 @@
 
             this.handleKeyDown();
 
-            this.bg.tilePosition.x -= 15;
-            this.fg.tilePosition.x -= 20;
+            this.bg.tilePosition.x -= 10;
+            this.fg.tilePosition.x -= 15;
         },
 
         update_score: function() {
