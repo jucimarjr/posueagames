@@ -64,4 +64,4 @@ BasicGame.ObstaclesManager.prototype = {
             obstacles[length - 1] = firstObstacle;
         }
     }
-}
+};

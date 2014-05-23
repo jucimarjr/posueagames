@@ -26,6 +26,8 @@ BasicGame.GameManager = function (game) {
     this.city;
     this.trees;
     this.player;
+
+    this.missions;
 };
 
 BasicGame.GameManager.pixelsToUnit = 60;
@@ -61,6 +63,12 @@ BasicGame.GameManager.prototype = {
 
         this.player = new BasicGame.Player(this);
         this.player.create();
+
+        this.missions = new BasicGame.Missions();
+
+        for (var i = 0; i < 500; i++) {
+            this.missions.nextEventIndex();
+        };
     },
 
     update: function () {
