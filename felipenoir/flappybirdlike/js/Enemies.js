@@ -15,6 +15,7 @@ var TRIANGLE_ENEMY = 0;
 var SNAKE_ENEMY = 1;
 var STAIRS_ENEMY = 2;
 var SIMPLE_ENEMY = 3;
+var ESCAPE = 5;
 
 function geraEnemyFloor(){
 	return (game.world.height -90) -134;
@@ -68,16 +69,26 @@ Enemies.prototype = {
 	},
 	
 	generateEnemy : function(){
-		var randonType = Math.round(Math.random()*4);
+		var randonType = Math.round(Math.random()*5);
 		if(randonType === SNAKE_ENEMY){
 			this.geraEnemySnake();
 		}else if(randonType === TRIANGLE_ENEMY){
 			this.geraEnemyTriagle();
 		}else if(randonType === STAIRS_ENEMY){
 			this.geraStairsEnemy();
+		}else if(randonType === SIMPLE_ENEMY){
+			this.geraSimpleEnemy();
 		}
 		
 	},
+	geraSimpleEnemy : function(){
+		var initYEneMy = selecionaEnemy();
+		var initXenemY = game.world.width;
+		var enemy = this.generateBarrier(initXenemY,initYEneMy);
+		enemy.animations.add('run', [ 0, 1 ], 2, true);
+		enemy.animations.play('run');
+	}
+	,
 	geraStairsEnemy : function(){
 		var initYEneMy = selecionaEnemy();
 		var initXenemY = game.world.width;
