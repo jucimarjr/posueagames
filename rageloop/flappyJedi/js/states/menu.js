@@ -20,7 +20,7 @@
 
         update: function() {
 
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.P)) {
                 this.onPlayClick();
             }
 
