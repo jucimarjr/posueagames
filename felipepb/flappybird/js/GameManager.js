@@ -27,9 +27,9 @@ BasicGame.GameManager = function (game) {
     this.backgroundManager;
 };
 
-BasicGame.GameManager.debugDraw = true;
+BasicGame.GameManager.debugDraw = false;
 BasicGame.GameManager.pixelsToUnit = 80;
-BasicGame.GameManager.jumpForce = -5 * BasicGame.GameManager.pixelsToUnit;
+BasicGame.GameManager.thrusterForce = -20 * BasicGame.GameManager.pixelsToUnit;
 BasicGame.GameManager.gravity = 9.8 * BasicGame.GameManager.pixelsToUnit;
 
 BasicGame.GameManager.prototype = {
