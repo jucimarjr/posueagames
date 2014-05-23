@@ -13,11 +13,9 @@ var play_state = { create: create, update: update };
         background3  = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background3').height, 'background3');
         game.physics.arcade.enable(background3);
 
-        plataformas = game.add.group();
-        plataformas.enableBody = true;
-        plataformas.createMultiple(20, 'obstacle2');
+        loadExtras();
 
-        playerSprite = game.add.sprite(272, 281.5, 'player');
+        playerSprite = game.add.sprite(172, 281.5, 'player');
         playerSprite.animations.add('walk', [0, 1, 2, 3], 8, true);
         game.physics.enable(playerSprite, Phaser.Physics.ARCADE);
         playerSprite.body.gravity.y = 1000;
@@ -36,8 +34,6 @@ var play_state = { create: create, update: update };
 
         background5 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background5').height, 'background5');
         game.physics.arcade.enable(background5);
-
-        powerUp_multiply(); //comment to not multiply
         // Call the 'jump' function when the spacebar key is hit
         space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space_key.onDown.add(jump, this);
@@ -63,9 +59,15 @@ var play_state = { create: create, update: update };
         
         playerSprite.animations.play('walk');
 
-        if (playersGroup.exists) {
+        if (playersGroup != null) {
             playersGroup.callAll('animations.play', 'animations', 'walk');
             playersGroup.forEach(function (item) { game.physics.arcade.overlap(item, plataformas, function () { item.kill(); }, null, this); });
+        }
+
+        if (powerUps != null) {
+            powerUps.animations.play('glow');
+            powerUps.body.velocity.x = -2;
+            game.physics.arcade.overlap(powerUps, playerSprite, powerUp_multiply, null, this);
         }
 
         game.physics.arcade.overlap(playerSprite, plataformas, playerDies, null, this)
@@ -93,7 +95,7 @@ var play_state = { create: create, update: update };
 
     function jump() {
         playerSprite.body.velocity.y = -450;
-        if (playersGroup.exists === true) {
+        if (playersGroup != null && playersGroup.exists === true) {
             playersGroup.forEach(function (item) { item.body.velocity.y = -450; }, null, this);
         }
         jump_sound.play();
@@ -106,6 +108,7 @@ var play_state = { create: create, update: update };
 
     function playerDies() {
         playDeadAnimation();
+        setTimeout(restart_game, 5000);
     }
     
     function fast(){
@@ -124,8 +127,8 @@ var play_state = { create: create, update: update };
     }
     
     function restart_game() {
-        // Start the 'main' state, which restarts the game
-        setTimeout(restart_game, 1000);
+        game.time.events.remove(this.timer);
+        game.state.start('play');
     }
 
     function playDeadAnimation() {
@@ -139,32 +142,52 @@ var play_state = { create: create, update: update };
         
     }
 
-    function add_one_obstacle(x, y) {
-        // Get the first dead pipe of our group
-        var obstacle = plataformas.getFirstDead();
+    function add_obstacle() {
+        var type = Math.floor(Math.random() * 4);
 
-        // Set the new position of the pipe
-        obstacle.reset(x, y);
-
-        // Add velocity to the pipe to make it move left
-        obstacle.body.velocity.x = -300;
-
-        // Kill the pipe when it's no longer visible 
-        obstacle.outOfBoundsKill = true;
+        switch (type) {
+            case 0:
+                obstacle1 = plataformas.create(950, game.world.randomY, 'obstacle1');
+                game.physics.enable(obstacle1, Phaser.Physics.ARCADE);
+                obstacle1.body.velocity.x = -500;
+                addOutBoundEvent(obstacle1);
+                break;
+            case 1:
+                obstacle2 = plataformas.create(950, game.world.randomY, 'obstacle2');
+                game.physics.enable(obstacle2, Phaser.Physics.ARCADE);
+                obstacle2.body.velocity.x = -600;
+                addOutBoundEvent(obstacle2);
+                break;
+            case 2:
+                obstacle3 = plataformas.create(950, 195, 'obstacle3');
+                game.physics.enable(obstacle3, Phaser.Physics.ARCADE);
+                obstacle3.body.velocity.x = -100;
+                addOutBoundEvent(obstacle3);
+                break;
+            case 3:
+                obstacle4 = plataformas.create(950, 326, 'obstacle4');
+                game.physics.enable(obstacle4, Phaser.Physics.ARCADE);
+                obstacle4.body.velocity.x = -100;
+                addOutBoundEvent(obstacle4);
+                break;
+            default:
+                break;
+        }
     }
 
-    function add_obstacle() {
-        var hole = Math.floor(Math.random() * 4);
-
-        for (var i = 0; i < 5; i++)
-            if (i != hole)
-                add_one_obstacle(800, i * 154);
+    function addOutBoundEvent(obstacle) {
+        obstacle.exists = true;
+        obstacle.events.onOutOfBounds.add(
+			function () {
+			    obstacle.kill();
+			}, this);
     }
 
     function powerUp_multiply() {
+        powerUps.kill();
         playersGroup = game.add.group();
         playersGroup.enableBody = true;
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 3; i++) {
             player = playersGroup.create(game.world.randomX, game.world.randomY, 'player');
             player.animations.add('walk', [0, 1, 2, 3], 8, true);
             game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -177,5 +200,14 @@ var play_state = { create: create, update: update };
 
     function powerUp_multiply_Off() {
         playersGroup.forEach(function (item) { item.kill(); }, null, this);
-        playersGroup.kill();
-     }
+        //playersGroup.kill();
+    }
+
+    function loadExtras() {
+        plataformas = game.add.group();
+        plataformas.enableBody = true;
+
+        powerUps = game.add.sprite(390, 281.5, 'powerup2');
+        powerUps.animations.add('glow', [0, 1, 2, 3], 8, true);
+        game.physics.arcade.enable(powerUps);
+    }

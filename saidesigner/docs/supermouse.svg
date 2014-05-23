@@ -24,17 +24,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.919596"
-     inkscape:cx="-197.38984"
-     inkscape:cy="644.25573"
+     inkscape:zoom="1.4"
+     inkscape:cx="-27.461208"
+     inkscape:cy="736.03535"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1600"
-     inkscape:window-height="837"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="463"
+     inkscape:window-height="423"
+     inkscape:window-x="925"
+     inkscape:window-y="299"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -233,5 +233,15 @@
        inkscape:export-filename="C:\Users\sifilho\Documents\Projects\posueagames\saidesigner\supermouse\assets\star_2-2.png"
        inkscape:export-xdpi="175.77"
        inkscape:export-ydpi="175.77" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffffff"
+       id="path2995"
+       sodipodi:cx="-392.5"
+       sodipodi:cy="189.86218"
+       sodipodi:rx="11.071428"
+       sodipodi:ry="8.9285717"
+       d="m -381.42857,189.86218 a 11.071428,8.9285717 0 1 1 -22.14286,0 11.071428,8.9285717 0 1 1 22.14286,0 z"
+       transform="translate(-4.2857143,-2.8571428)" />
   </g>
 </svg>

@@ -13,6 +13,14 @@ var load_state = { preload: preload, create: create };
         game.load.image('background5', 'assets/background5.png');
 		game.load.audio('flap_song', 'assets/flap.wav');
 		game.load.image('logo', 'assets/logo_547_421.png');
+		game.load.spritesheet('powerup1', 'assets/powerup01_55_94_4.png', 55, 94);
+		game.load.spritesheet('powerup2', 'assets/powerup02_55_94_4.png', 55, 94);
+		game.load.spritesheet('powerup3', 'assets/powerup03_55_94_4.png', 55, 94);
+		game.load.spritesheet('powerup4', 'assets/powerup04_55_94_4.png', 55, 94);
+		game.load.image('obstacle1', 'assets/obstacle_01.png');
+		game.load.image('obstacle2', 'assets/obstacle_02.png');
+		game.load.image('obstacle3', 'assets/obstacle_03.png');
+		game.load.image('obstacle4', 'assets/obstacle_04.png');
     }
 
     function create() {

@@ -7,6 +7,7 @@ var label_score;
 var playerSprite, deathSprite;
 var playersGroup; //for multiply Power up
 var plataformas;
+var porwerUps;
 var space_key;
 var sound_flag = true;
 var jump_sound;
