@@ -16,7 +16,7 @@ var coins = {
 	},
 
 	coinGenerator : function() {
-		console.log('coins -> coinGenerator');
+	
 		var coin = game.add.sprite(game.world.width, game.world.height - 90
 				- game.cache.getImage('coin').height, 'coin');
 		game.physics.arcade.enableBody(coin);
