@@ -47,58 +47,61 @@ function preload() {
 
 function create() {
 
-	// firstScreen();
-	startGame();
+	firstScreen();
+	// startGame();
 	// gameOverScreen();
 
 }
 
 function update() {
+	if (startScreen) {
 
-	if (!gameOver) {
-		// COLISAO:
-		game.physics.arcade
-				.overlap(celulaSprite, cena, colisaoCena, null, this);
-
-		for (var i = 0; i < 4; i++) {
-			var tubo = tubos[i];
-
-			game.physics.arcade.overlap(celulaSprite, tubo, colisaoTubo, null,
+	} else {
+		if (!gameOver) {
+			// COLISAO:
+			game.physics.arcade.overlap(celulaSprite, cena, colisaoCena, null,
 					this);
 
-			if ((celulaSprite.body.x > tubo.getAt(0).body.x
-					+ tubo.getAt(0).body.width)
-					&& (!scored[i])) {
-				scored[i] = true;
-				points++;
-				score.setText("SCORE: " + points);
+			for (var i = 0; i < 4; i++) {
+				var tubo = tubos[i];
+
+				game.physics.arcade.overlap(celulaSprite, tubo, colisaoTubo,
+						null, this);
+
+				if ((celulaSprite.body.x > tubo.getAt(0).body.x
+						+ tubo.getAt(0).body.width)
+						&& (!scored[i])) {
+					scored[i] = true;
+					points++;
+					score.setText("SCORE: " + points);
+				}
+
+				tubo.setAll('body.velocity.x', -100);
+				if (tubo.getAt(0).body.x < -tubo.getAt(0).body.width) {
+					tubo.setAll('body.x', game.width);
+
+					// gera a posicao y do tubo superior de forma aleatoria
+					posYtuboSuperior = (Math.floor((Math.random() * 300) + 100) * (-1));
+					tubo.getAt(0).body.y = posYtuboSuperior;
+					// a posicao y do tubo inferior sempre sera 600 a mais do
+					// superior
+					tubo.getAt(1).body.y = posYtuboSuperior + 600;
+					scored[i] = false;
+				}
 			}
 
-			tubo.setAll('body.velocity.x', -100);
-			if (tubo.getAt(0).body.x < -tubo.getAt(0).body.width) {
-				tubo.setAll('body.x', game.width);
+			celulaSprite.animations.play('jump');
 
-				// gera a posicao y do tubo superior de forma aleatoria
-				posYtuboSuperior = (Math.floor((Math.random() * 300) + 100) * (-1));
-				tubo.getAt(0).body.y = posYtuboSuperior;
-				// a posicao y do tubo inferior sempre sera 600 a mais do
-				// superior
-				tubo.getAt(1).body.y = posYtuboSuperior + 600;
-				scored[i] = false;
+			// PEGA A ENTRADA (tecla pressionada):
+			if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+				// vai para cima
+				celulaSprite.body.velocity.y = -200;
 			}
+		} else {
+			backgroundSound = game.add.audio("collision_sound", 1, false);
+			// backgroundSound.play();
+			gameOverScreen();
 		}
-
-		celulaSprite.animations.play('jump');
-
-		// PEGA A ENTRADA (tecla pressionada):
-		if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-			// vai para cima
-			celulaSprite.body.velocity.y = -200;
-		}
-	} else {
-		backgroundSound = game.add.audio("collision_sound", 1, false);
-		backgroundSound.play();
-		alert("Game Over");
 	}
 }
 
@@ -130,9 +133,8 @@ function firstScreen() {
 }
 
 function startGame() {
-
 	backgroundSound = game.add.audio("background_sound", 1, true);
-	backgroundSound.play('', 0, 1, true);
+	// backgroundSound.play('', 0, 1, true);
 
 	tubos = new Array();
 	scored = new Array();
@@ -194,16 +196,21 @@ function startGame() {
 }
 
 function gameOverScreen() {
-
 	backgroundSound = game.add.audio("game_over_sound", 1, false);
-	backgroundSound.play();
+	// backgroundSound.play();
 
 	// background
 	background = game.add.image(0, 0, 'game_over');
 	restart = game.add.image(230, 404, 'bt_restart');
+	restart.inputEnabled = true;
+	restart.events.onInputDown.add(restartListener, this);
 }
 
 function btlistener() {
 	startScreen = false;
+	startGame();
+}
 
+function restartListener() {
+	startGame();
 }
