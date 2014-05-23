@@ -19,8 +19,8 @@ BasicGame.MainMenu.prototype = {
         var cameraHeight = this.game.camera.height;
         this.add.sprite(0, 0, 'splashWithName');
         
-        this.player = this.game.add.bitmapText(55, cameraHeight - 212, 'silkscreen', '', 40);
-        this.beloved = this.game.add.bitmapText(55, cameraHeight - 90, 'silkscreen', '', 40);
+        this.player = this.game.add.bitmapText(55, cameraHeight - 212, 'silkscreenblue', '', 40);
+        this.beloved = this.game.add.bitmapText(55, cameraHeight - 90, 'silkscreenblue', '', 40);
         this.currentBitmapText = this.player;
         
         this.player.text = new String('');

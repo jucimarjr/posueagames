@@ -36,7 +36,7 @@ BasicGame.Preloader.prototype = {
 
         this.load.physics('physicsData', 'assets/ship_84-80.json');
         
-        this.load.bitmapFont('silkscreen', 'assets/silkscreen.png', 'assets/silkscreen.fnt');
+        this.load.bitmapFont('silkscreenblue', 'assets/silkscreenblue.png', 'assets/silkscreenblue.fnt');
         //this.load.atlas('playButton', 'assets/play_button.png', 'assets/play_button.json');
         //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
         //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
