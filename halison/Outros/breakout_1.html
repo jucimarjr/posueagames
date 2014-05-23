@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Breakout</title>
+<style type="text/css">
+		body{
+			background-color:black;
+		}
+		canvas{
+			border:#333333 solid 30px;
+			background-color:#999999;
+			margin-top:20px;
+			margin-left:180px;	
+		}
+
+</style>
+</head>
+<body onload="int()">
+	<canvas id="canvas" width="600" height="480">
+    	Navegador não compatível com HTML5
+    </canvas>
+    
+    <script>
+		// criando as variaveis
+		var canvas, context, barraWidth, barraHeight, jogadorPosX, jogadorPosY; 
+		
+		//Inicio do jogo
+		function init()
+		{
+		canvas = document.getElementById("canvas"); // localize canvas
+			context=canvas.getContext("2d"); 
+		}
+		
+	</script>
+    
+	
+</body>
+</html>
