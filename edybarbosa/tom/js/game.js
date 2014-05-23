@@ -8,6 +8,7 @@ var metrosPercorridos = 0;
 var score;
 var gameOver;
 var obstacleTime = 0;
+var scoreTime = 0;
 var music;
 
 function preload() {
@@ -46,9 +47,6 @@ function create() {
     music.play();
 }
 
-function updateScore() {
-    metrosPercorridos++;
-}
 
 function createPlayer() {
 	// Gato
@@ -71,10 +69,16 @@ function createScore() {
 	
 	var style2 = { font: "26px Arial", fill: "#ffffff", align: "center" };
     // Conta metros 
-    timer = game.time.create(false);
-    timer.loop(300, updateScore, this);
-    timer.start();
+    //timer = game.time.create(false);
+    //timer.loop(300, updateScore, this);
+    //timer.start();
     score = game.add.text(750, 50, metrosPercorridos + "m", style2);
+    
+    var bestScore = getScore();
+    if (bestScore != "") {
+        game.add.text(750, 130, getScore() + "m", style2);    	
+    }
+    
 }
 
 function createObstacle() {
@@ -125,12 +129,50 @@ function update() {
 		    }
 		    // movimento cerca
 		    fence.tilePosition.x -= 6;
+		    updateScore();
 		    score.setText(metrosPercorridos + "m");
+		}
+}
+
+function updateScore() {
+	if (game.time.now > scoreTime) {
+		metrosPercorridos++;	
+		scoreTime = game.time.now + 300;
 	}
+    
 }
 
 function collisionHandler (obj1, obj2) {
 	gameOver = true;
     fence.tilePosition.x = 0;
     cat.animations.play('noise');    
+    salvaScore();
+}
+
+function salvaScore() {
+	var score = getCookie("score");
+	if (score == "" || score < metrosPercorridos) {
+		setCookie("score", metrosPercorridos, 100);
+	}
+}
+
+function getScore() {
+	return getCookie("score");
+}
+
+function getCookie(cname) {
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0; i<ca.length; i++)	{
+		var c = ca[i].trim();
+		if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+	}
+	return "";
+}
+
+function setCookie(cname,cvalue,exdays) {
+	var d = new Date();
+	d.setTime(d.getTime()+(exdays*24*60*60*1000));
+	var expires = "expires="+d.toGMTString();
+	document.cookie = cname + "=" + cvalue + "; " + expires;
 }
