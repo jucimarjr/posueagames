@@ -9,7 +9,7 @@ BasicGame.Player = function (gameManager) {
 
     this.currentAnim = 'none';
 
-    this._leftMargin = 50 + BasicGame.Player.frameWidth / 2.0;
+    this._leftMargin = 60 + BasicGame.Player.frameWidth / 2.0;
 };
 
 BasicGame.Player.frameWidth = 84;
@@ -46,7 +46,7 @@ BasicGame.Player.prototype = {
         this.gameManager.game.physics.p2.enableBody(ship, BasicGame.GameManager.debugDraw);
         
         ship.body.clearShapes();
-        ship.body.loadPolygon('physicsData', 'ship');
+        ship.body.loadPolygon('physicsData', 'ship');   
         ship.body.fixedRotation = true;
         ship.body.collideWorldBounds = true;
         // ship.body.static = true;
