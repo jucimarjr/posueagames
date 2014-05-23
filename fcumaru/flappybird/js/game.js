@@ -96,6 +96,8 @@ function update() {
 			celulaSprite.body.velocity.y = -200;
 		}
 	} else {
+		backgroundSound = game.add.audio("collision_sound", 1, false);
+		backgroundSound.play();
 		alert("Game Over");
 	}
 }
@@ -193,8 +195,8 @@ function startGame() {
 
 function gameOverScreen() {
 
-	backgroundSound = game.add.audio("game_over_sound", 1, true);
-	backgroundSound.play('', 0, 3, true);
+	backgroundSound = game.add.audio("game_over_sound", 1, false);
+	backgroundSound.play();
 
 	// background
 	background = game.add.image(0, 0, 'game_over');
