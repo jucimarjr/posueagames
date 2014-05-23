@@ -18,13 +18,13 @@ var coins = {
 		var randonType = Math.round(Math.random()*4);
 		
 		if(randonType === SNAKE_ENEMY){
-			this.geraEnemySnake();
+			this.geraSnakeCoin();
 		}else if(randonType === TRIANGLE_ENEMY){
-			this.geraEnemyTriagle();
+			this.geraTriagleCoin();
 		}else if(randonType === STAIRS_ENEMY){
-			this.geraStairsEnemy();
+			this.geraStairsCoin();
 		}else if(randonType === SIMPLE_ENEMY){
-			this.geraSimpleEnemy();
+			this.geraSimpleCoin();
 		}
 		
 	},
@@ -34,7 +34,7 @@ var coins = {
 		coin.body.velocity.x = -200;
 	}
 	,
-	geraStairsEnemy : function(){
+	geraStairsCoin : function(){
 		var initYEneMy = selecionaEnemy();
 		var initXenemY = game.world.width;
 		
@@ -43,7 +43,7 @@ var coins = {
 		}
 	}
 	,
-	geraEnemySnake : function(){
+	geraSnakeCoin : function(){
 		var initYEneMy = selecionaEnemy();
 		var initXenemY = game.world.width;
 		for(var i = 0; i < 6;i++){
@@ -51,7 +51,7 @@ var coins = {
 		}
 	}
 	,
-	geraEnemyTriagle : function(tipo){
+	geraTriagleCoin : function(tipo){
 		var initYEneMy = selecionaEnemy();
 		var initXenemY = game.world.width;
 		
@@ -66,7 +66,7 @@ var coins = {
 		}
 	
 	},
-	geraSimpleEnemy : function(){
+	geraSimpleCoin : function(){
 		var initYEneMy = selecionaEnemy();
 		var initXenemY = game.world.width;
 		this.createRandomCoin(initXenemY,initYEneMy);

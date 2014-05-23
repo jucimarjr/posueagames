@@ -97,9 +97,9 @@ function initEnemies() {
     enemies = game.add.group();
     addEnemie('trunk',     180, 2, true, "trunk");
     addEnemie('alligator', 100, 4, true, "alligatorsound"); 
-    addEnemie('sand',      20, 2, true, "sand");    
-    addEnemie('trunk',     -60 , 2, true, "trunk");    
-    addEnemie('boto',      -140, 6, true, "botosound");
+    addEnemie('sand',       20, 2, true, "sand");    
+    addEnemie('trunk',     -60, 2, true, "trunk");    
+    addEnemie('boto',     -140, 6, true, "botosound");
     //enemies.createMultiple(5, 'buraco', 0, false);
     //game.physics.arcade.enable(enemies);	
     game.physics.enable(enemies, Phaser.Physics.ARCADE);
@@ -146,8 +146,8 @@ function update() {
     /*boat.body.velocity.x = 0;
     boat.body.velocity.y = 0;*/
     //boat.body.angularVelocity = 0;
-    game.physics.arcade.overlap(boat, enemies, pegarObjetos, null, this);
-    game.physics.arcade.overlap(boat, jungles, pegarObjetos, null, this);
+    game.physics.arcade.overlap(boat, enemies, overlapWithEnemies, null, this);
+    game.physics.arcade.overlap(boat, jungles, overlapWithEnemies, null, this);
     /*game.physics.arcade.overlap(boat, plataforma, gameOver,null,this);*/
 
     if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) { // vai para esquerda
@@ -237,7 +237,7 @@ function goLeft() {
     //boat.animations.play('walk');
 }
 
-function pegarObjetos(_boat, _enemies) {
+function overlapWithEnemies(_boat, _enemies) {
     var explode = game.add.audio("explodesound");
     explode.volume = 0.3;
     explode.play();
