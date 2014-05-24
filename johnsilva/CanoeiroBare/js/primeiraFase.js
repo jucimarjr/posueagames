@@ -41,8 +41,6 @@ function preload() {
 }
 
 function create() {
-
-    //game.physics.arcade.gravity.y = 50;
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     createRivers();
@@ -97,7 +95,7 @@ function create() {
 
     finalSound = false;
     remosSound = game.add.audio("remosound",1,true);
-    //remo.volume = 0.4;
+    //remosSound.volume = 2;
     remosSound.play('',0,1,true);
 }
 
