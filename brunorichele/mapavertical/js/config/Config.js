@@ -105,3 +105,11 @@ Config.credits = {
 	x: 0,
 	y: 0
 };
+
+// Game
+Config.game = {
+	dir: {
+		tilemap: "assets/spritesheets/mapa.json",
+		tileset: "assets/spritesheets/texturebreakout.png"
+	}
+};
