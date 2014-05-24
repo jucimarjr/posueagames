@@ -1,4 +1,8 @@
-var coins = {
+Coin = function(game) {
+	this.coins;
+}
+
+Coin.prototype = {
 
 	preload : function() {
 		game.load.image('coin', 'assets/coin.png');
