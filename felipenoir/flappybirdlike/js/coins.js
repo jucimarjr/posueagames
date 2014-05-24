@@ -1,4 +1,4 @@
-Coin = function(game) {
+Coin = function() {
 	this.coins;
 }
 

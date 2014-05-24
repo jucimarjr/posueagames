@@ -2,7 +2,7 @@
 var playState = {
 
 	preload : function() {
-		player = new Player(game);
+		player = new Player();
 		level = new Level(game);
 		enemies = new Enemies(game);
 		coins = new Coin(game);

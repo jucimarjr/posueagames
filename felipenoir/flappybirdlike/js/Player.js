@@ -1,5 +1,4 @@
-Player = function(game) {
-	this.game = game;
+Player = function() {
 	this.sprite;
 	this.audioVoar;
 	this.audioMenu;
@@ -8,17 +7,17 @@ Player = function(game) {
 Player.prototype = {
 	preload : function() {
 		console.log('player -> preload');
-		this.game.load.spritesheet('player', 'assets/player_110-134-4.png',
-				110, 130);
+		game.load
+				.spritesheet('player', 'assets/player_110-134-4.png', 110, 130);
 		game.load.audio('audioVoar', 'assets/jump.mp3');
 	},
 
 	create : function(audioMenu) {
-		this.sprite = this.game.add.sprite(60, 100, 'player');
+		this.sprite = game.add.sprite(60, 100, 'player');
 		this.sprite.animations.add('walk', [ 0, 1 ], 2, true);
 		this.sprite.animations.add('jump', [ 2 ], 2, true);
 		// physics
-		this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+		game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 		this.sprite.body.acceleration.y = 3000;
 		this.sprite.body.gravity.y = 1000;
 		this.sprite.body.collideWorldBounds = true;
@@ -30,25 +29,25 @@ Player.prototype = {
 
 	update : function() {
 
-		this.game.physics.arcade.collide(this.sprite, level.ground);
-		this.game.physics.arcade.overlap(this.sprite, enemies.enemies, lost,
-				null, this);
-		this.game.physics.arcade.overlap(this.sprite, coins.coins, getCoin,
-				null, this);
+		game.physics.arcade.collide(this.sprite, level.ground);
+		game.physics.arcade.overlap(this.sprite, enemies.enemies, lost, null,
+				this);
+		game.physics.arcade.overlap(this.sprite, coins.coins, getCoin, null,
+				this);
 
-		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			this.sprite.body.velocity.y = -1000;
 			// this.sprite.body.velocity.x = 10;
 			this.audioVoar.play();
 		}
 
 		if (this.sprite.body.touching.down) {
-			this.game.add.tween(this.sprite).to({
+			game.add.tween(this.sprite).to({
 				angle : 0
 			}, 100).start();
 			this.sprite.animations.play('walk');
 		} else {
-			this.game.add.tween(this.sprite).to({
+			game.add.tween(this.sprite).to({
 				angle : -10
 			}, 100).start();
 			this.sprite.animations.play('jump');
@@ -60,7 +59,7 @@ Player.prototype = {
 function lost(enemy, player) {
 	this.audioMenu.stop();
 	console.log('lost');
-	this.game.state.start('gameover');
+	game.state.start('gameover');
 }
 
 function getCoin(player, coin) {
