@@ -3,11 +3,13 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Super Mouse</title>
+	<link href="css/styles.css" rel="stylesheet" media="screen" />			
 	<script src="phaser/phaser.min.js"></script>
 	<script src="js/Load.js"></script>	
 	<script src="js/Utils.js"></script>	
 	<script src="js/Menu.js"></script>
 	<script src="js/Game.js"></script>
+	<script src="js/Credits.js"></script>
 	<script src="js/GameOver.js"></script>
 </head>
 <body>
@@ -17,6 +19,7 @@
 			game.state.add('Load', SuperMouse.Load);			
 			game.state.add('Menu', SuperMouse.Menu);			
 			game.state.add('Game', SuperMouse.Game);
+			game.state.add('Credits', SuperMouse.Credits);
 			game.state.add('GameOver', SuperMouse.GameOver);
 			game.state.start('Load');
 		};

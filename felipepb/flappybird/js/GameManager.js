@@ -31,6 +31,10 @@ BasicGame.GameManager = function (game) {
     this.obstaclesCollisionGroup;
 
     this.distanceTravelled = 0;
+
+    this.triggerDefaultSFX;
+    this.triggerUniqueSFX;
+    this.gameMusic;
 };
 
 BasicGame.GameManager.debugDraw = false;
@@ -67,6 +71,11 @@ BasicGame.GameManager.prototype = {
         this.player.create();
 
         this.game.physics.p2.setPostBroadphaseCallback(this.handleCollision, this);
+
+        this.triggerDefaultSFX = this.game.add.audio('trigger_default');
+        this.triggerUniqueSFX = this.game.add.audio('trigger_unique');
+        this.gameMusic = this.game.add.audio('game_music', '1', true);
+        this.gameMusic.play('', 0, 1, true);
     },
 
     update: function () {
@@ -86,6 +95,9 @@ BasicGame.GameManager.prototype = {
     },
 
     handleCollision: function (body1, body2) {
+        
+        if (this.player.isDead)
+            return false;
 
         // console.log('handle collision');
 
@@ -94,13 +106,20 @@ BasicGame.GameManager.prototype = {
 
             BasicGame.Obstacle.velocity = 0;
             this.player.onPlayerCollided();
+            
+            var obstacle = body1.sprite.name === 'player' ? body2 : body1;
+            this.missions._lastEvent = obstacle.missionEvent;
+            
+            if (!obstacle.trigered)
+                this.missions.computeEvent(obstacle.missionEvent);
+            
             BasicGame.GameManager.lastRunStats.mission = this.missions;
             BasicGame.GameManager.lastRunStats.distanceTravelled = this.distanceTravelled;
 
         } else if ((body1.sprite.name === 'player' && this.stringContains(body2.sprite.name, 'trigger'))) {
             this.onPlayerCollidedWithTrigger(body2.sprite);
         } else if ((this.stringContains(body1.sprite.name, 'trigger') && body2.sprite.name === 'player')) {
-            this.onPlayerCollidedWithTrigger(body1.sprite)
+            this.onPlayerCollidedWithTrigger(body1.sprite);
         } else {
             return false;
         }
@@ -111,11 +130,17 @@ BasicGame.GameManager.prototype = {
     onPlayerCollidedWithTrigger: function (sprite) {
         this.hideSprite(sprite);
 
-        if (this.stringContains(sprite.name, 'unique_event'))
+        if (this.stringContains(sprite.name, 'unique_event')) {
             this.hud.setStatus(this.missions.currentPeriod().name);
+            this.triggerUniqueSFX.play();
+        } else {
+            this.triggerDefaultSFX.play();
+        }
 
-        if (!sprite.body.trigered)
+        if (!sprite.body.trigered) {
             this.missions.computeEvent(sprite.body.missionEvent);
+            this.backgroundManager.increaseGlitchFX();
+        }
 
         sprite.body.trigered = true;
     },

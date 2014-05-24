@@ -1,5 +1,6 @@
-'use strict';
-  function Preload() {
-    this.asset = null;
-    this.ready = false;
-  }
+var preloader = {
+		
+	create: function(){
+		game.state.start('menu');
+	}	
+};

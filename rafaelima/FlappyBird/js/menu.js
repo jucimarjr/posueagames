@@ -5,6 +5,7 @@ function preload() {
 	game.load.image('button_play', 'assets/menu_play.png');
 	game.load.image('button_credits', 'assets/menu_credits.png');
 	game.load.image('cloud_selector', 'assets/splash_selector.png');
+	game.load.audio('menuMusic', ['sound/menu_sound.wav', 'sound/menu_sound.mp3']);
 }
 
 //Tela de Menu
@@ -15,7 +16,9 @@ function create() {
 	this.cloud = game.add.sprite(161, 502, 'cloud_selector');
 	this.isPlay = true;
 	game.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.SPACEBAR ]);
-
+	
+	music = game.add.audio('menuMusic',1,true);
+    music.play('',0,1,true);
 }
 
 //Começa o jogo
@@ -44,17 +47,3 @@ function update(){
 		}
 	}
 }
-
-//function soung() {
-//if(sound_flag){
-//sound_flag = false;
-////text_sound.text ="[2] NO SOUND";
-//img_sound.exists = false;
-//img_nosound.exists = true;
-//}else {
-//sound_flag = true;
-////text_sound.text = "[2] SOUND";
-//img_sound.exists = true;
-//img_nosound.exists = false;
-//}
-//}

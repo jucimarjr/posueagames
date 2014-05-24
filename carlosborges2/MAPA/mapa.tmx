@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="48" height="15" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="textura" tilewidth="40" tileheight="40">
+  <tileoffset x="40" y="40"/>
+  <image source="Assets/textura.png" width="240" height="40"/>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="48" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzdlFsKACAIBA2q+x85+hUDn6Ut7GfjUCGALoPojXjNy+zv5SblvJor5XRU77nRmajVIvXP9i4Z/Ckml53h/1T3tyTSH+82as9ZWDtaf44PZlvu6cTQcjnnqvm3wv0hC6fqA3Y=
+  </data>
+ </layer>
+</map>

@@ -14,6 +14,11 @@ BasicGame.Player = function (gameManager) {
     this.deathX;
     this.deathY;
 
+    this.explosionSFX;
+    this.thrustersSFX;
+    this.thrustersVolumeIdle = 0.25;
+    this.thrustersVolumeFull = 1.0;
+
     this._leftMargin = 60 + BasicGame.Player.frameWidth / 2.0;
 };
 
@@ -27,6 +32,11 @@ BasicGame.Player.prototype = {
 
         this.ship.body.force.y = BasicGame.GameManager.thrusterForce;
         this.playThrustersOpenAnimation();
+
+        this.explosionSFX = this.gameManager.game.add.audio('ship_explosion');
+        this.thrustersSFX = this.gameManager.game.add.audio('ship_thrusters', 1, true);
+        this.thrustersSFX.play('', 0, 1, true);
+        this.thrustersSFX.volume = this.thrustersVolumeIdle;
     },
 
     update: function () {
@@ -131,6 +141,7 @@ BasicGame.Player.prototype = {
         var anim = this.ship.animations.add('explode', animationFrames, 10, false);
         anim.onComplete.add(this.onExplosionAnimationFinished, this);
         this.ship.animations.play('explode');
+        this.explosionSFX.play();
         this.gameManager.hideSprite(this.leftThrusters);
         this.gameManager.hideSprite(this.bottomThrusters);
     },
@@ -171,9 +182,10 @@ BasicGame.Player.prototype = {
         if (this.blockInput)
             return;
 
+        var mouseLeftButton = this.gameManager.game.input.activePointer;
         var keyboard = this.keyboard;
         var thrustersKey = BasicGame.Player.thrustersKey;
-        var hasInput = keyboard.isDown(thrustersKey);
+        var hasInput = keyboard.isDown(thrustersKey) || mouseLeftButton.isDown;
 
         if (hasInput) {
             this.ship.body.force.y = BasicGame.GameManager.thrusterForce;
@@ -182,10 +194,14 @@ BasicGame.Player.prototype = {
                 this.currentAnim != 'loopThrusters') {
                 
                 this.playThrustersOpenAnimation();
+
+                this.thrustersSFX.volume = this.thrustersVolumeFull;
             }
 
         } else {
             this.ship.body.force.y = 0.0;
+
+            this.thrustersSFX.volume = this.thrustersVolumeIdle;
 
             if (this.currentAnim != 'closeThrusters' && 
                 this.currentAnim != 'none') {
@@ -206,6 +222,7 @@ BasicGame.Player.prototype = {
         this.playThrustersCloseAnimation();
         this.playExplodeAnimation();
         this.isDead = true;
+        this.thrustersSFX.volume = 0.0;
     }, 
 
     clamp: function (x, min, max) {

@@ -4,6 +4,9 @@ var game = new Phaser.Game(960, 600, Phaser.AUTO, 'game_div');
 var score = 0;
 var label_score;
 var stop_score;
+var music;
+var musicGame;
+var explosionSprite;
 
 var playerSprite, deathSprite, bossSprite;
 var playersGroup; //for multiply Power up
@@ -33,6 +36,8 @@ var obstacle2;
 var obstacle3;
 var obstacle4;
 var obstacle;
+var playerCollisionGroup;
+var obstacleCollisionGroup;
 
 //power up
 var cursors;

@@ -4,6 +4,7 @@ game.state.add('menu', GameMenu);
 game.state.add('fase', primeiraFase);
 game.state.add('gameOver', gameOver);
 game.state.add('gameWin', gameWin);
+game.state.add('credits', credits);
 
 // Start with the 'load' state
 game.state.start('menu');

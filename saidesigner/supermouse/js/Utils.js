@@ -4,6 +4,8 @@ var nextAsteroid = 0;
 var nextCheese = 0;
 var nextRat = 0;
 
+var gameoverSnd;
+
 Utils.createMultiple = function(game, key, numberOfItems) {
 	
 	var group = game.add.group();
@@ -37,13 +39,13 @@ Utils.createStars = function(game, numberOfItems, animated) {
 	return stars;
 };
 
-Utils.resurrectAsteroid = function(game, asteroids, velocity, timePlus) {
+Utils.reviveAsteroid = function(game, asteroids, velocity, timePlus) {
 
 	if (game.time.now > nextAsteroid && asteroids.countDead() > 0) {		
 
 		var asteroid = asteroids.getFirstDead();
 
-        asteroid.reset(980, Math.floor((Math.random() * 500) + 1));
+        asteroid.reset(980, Math.floor((Math.random() * 500) + 60));
         asteroid.body.velocity.x = velocity;
         asteroid.anchor.setTo(.5, .5);
         asteroid.body.angularVelocity = Math.floor((Math.random() * 100) - 100);        
@@ -52,13 +54,13 @@ Utils.resurrectAsteroid = function(game, asteroids, velocity, timePlus) {
     } 
 };
 
-Utils.resurrectCheese = function(game, cheeses, velocity, timePlus) {
+Utils.reviveCheese = function(game, cheeses, velocity, timePlus) {
 
 	if (game.time.now > nextCheese && cheeses.countDead() > 0) {		
 
 		var cheese = cheeses.getFirstDead();
 
-        cheese.reset(980, Math.floor((Math.random() * 500) + 1));
+        cheese.reset(980, Math.floor((Math.random() * 500) + 60));
         cheese.body.velocity.x = velocity;
         cheese.body.angularVelocity = Math.floor((Math.random() * 100) - 100);
         cheese.anchor.setTo(.5, .5);
@@ -67,13 +69,13 @@ Utils.resurrectCheese = function(game, cheeses, velocity, timePlus) {
     }
 };
 
-Utils.resurrectRat = function(game, rats, velocity, timePlus) {
+Utils.reviveRat = function(game, rats, velocity, timePlus) {
 
 	if (game.time.now > nextRat && rats.countDead() > 0) {		
 
 		var rat = rats.getFirstDead();
 
-        rat.reset(980, Math.floor((Math.random() * 500) + 1));
+        rat.reset(980, Math.floor((Math.random() * 500) + 60));
         rat.body.velocity.x = velocity;
         rat.body.angularVelocity = Math.floor((Math.random() * 100) - 100);
         rat.anchor.setTo(.5, .5);
@@ -82,7 +84,7 @@ Utils.resurrectRat = function(game, rats, velocity, timePlus) {
     } 
 };
 
-Utils.resurrectStar = function(game, stars) {
+Utils.reviveStar = function(game, stars) {
 
 	if (stars.countDead() > 0) {		
 
@@ -93,4 +95,23 @@ Utils.resurrectStar = function(game, stars) {
 		star.animations.play('blink');
 		star.body.velocity.x = Math.floor((Math.random() * 150) + 200) * -1;
 	}	
+};
+
+Utils.createText = function(game, posX, posY, size, color, shadow) {
+	
+    var text = game.add.text(posX, posY);
+
+    text.font = 'Helvetica';
+    text.fontSize = size;
+    text.fontWeight = 'bold';
+    var grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
+
+    grd.addColorStop(0, color);       
+    text.fill = grd;    
+    text.align = 'left';
+    text.stroke = '#000000';
+    text.strokeThickness = 2;
+    text.setShadow(5, 5, shadow, 5);    
+
+    return text;
 };
