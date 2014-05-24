@@ -1,7 +1,7 @@
 var gameScore = { create: create, update:update };
 
 function create() {
-	musicMenu.stop();
+	musicGame.stop();
     scoreScren = game.add.sprite(0, 0, 'scorescreen');
     if (score<10){
     	text = game.add.bitmapText(545, 250, 'font', '0'+score, 90);  

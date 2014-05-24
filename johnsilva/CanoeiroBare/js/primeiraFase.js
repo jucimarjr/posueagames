@@ -150,7 +150,7 @@ function addScore() {
 
         if (score >= 90) {
             if (score == 90) {
-                estagio = game.add.text(450, 300, 'FINAL', styleBig);
+                estagio = game.add.text(450, 300, 'MAROLA FINAL', styleBig);
                 estagio.anchor.setTo(0.5, 0.5);
                 setTimeout(resetEstagio, 1300);
             }
@@ -159,7 +159,7 @@ function addScore() {
         }
         else if (score >= 80) {
             if (score == 80) {
-                estagio = game.add.text(450, 300, 'Stagio 8', styleBig);
+                estagio = game.add.text(450, 300, 'Marola 8', styleBig);
                 estagio.anchor.setTo(0.5, 0.5);
                 setTimeout(resetEstagio, 1300);
             }
@@ -168,7 +168,7 @@ function addScore() {
         }
         else if (score >= 70) {
             if (score == 70) {
-                estagio = game.add.text(450, 300, 'Stagio 7', styleBig);
+                estagio = game.add.text(450, 300, 'Marola 7', styleBig);
                 estagio.anchor.setTo(0.5, 0.5);
                 setTimeout(resetEstagio, 1300);
             }
@@ -177,7 +177,7 @@ function addScore() {
         }
         else if (score >= 60) {
             if (score == 60) {
-                estagio = game.add.text(450, 300, 'Stagio 6', styleBig);
+                estagio = game.add.text(450, 300, 'Marola 6', styleBig);
                 estagio.anchor.setTo(0.5, 0.5);
                 setTimeout(resetEstagio, 1300);
             }
@@ -186,7 +186,7 @@ function addScore() {
         }
         else if (score >= 50) {
             if (score == 50) {
-                estagio = game.add.text(450, 300, 'Stagio 5', styleBig);
+                estagio = game.add.text(450, 300, 'Marola 5', styleBig);
                 estagio.anchor.setTo(0.5, 0.5);
                 setTimeout(resetEstagio, 1300);
             }
@@ -195,7 +195,7 @@ function addScore() {
         }
         else if (score >= 40) {
             if (score == 40) {
-                estagio = game.add.text(450, 300, 'Stagio 4', styleBig);
+                estagio = game.add.text(450, 300, 'Marola 4', styleBig);
                 estagio.anchor.setTo(0.5, 0.5);
                 setTimeout(resetEstagio, 1300);
             }
@@ -204,7 +204,7 @@ function addScore() {
         }
         else if (score >= 30) {
             if (score == 30) {
-                estagio = game.add.text(450, 300, 'Stagio 3', styleBig);
+                estagio = game.add.text(450, 300, 'Marola 3', styleBig);
                 estagio.anchor.setTo(0.5, 0.5);
                 setTimeout(resetEstagio, 1300);
             }
@@ -213,7 +213,7 @@ function addScore() {
         }
         else if (score >= 20) {
             if (score == 20) {
-                estagio = game.add.text(450, 300, 'Stagio 2', styleBig);
+                estagio = game.add.text(450, 300, 'Marola 2', styleBig);
                 estagio.anchor.setTo(0.5, 0.5);
                 setTimeout(resetEstagio, 1300);
             }
@@ -222,7 +222,7 @@ function addScore() {
         }
         else if (score >= 10) {
             if (score == 10) {
-                estagio = game.add.text(450, 300, 'Stagio 1', styleBig);
+                estagio = game.add.text(450, 300, 'Marola 1', styleBig);
                 estagio.anchor.setTo(0.5, 0.5);
                 setTimeout(resetEstagio, 1300);
             }            

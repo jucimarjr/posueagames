@@ -1,4 +1,4 @@
-var game = new Phaser.Game(960, 600, Phaser.AUTO, '');
+var game = new Phaser.Game(960, 600, Phaser.AUTO, 'game_div');
 var userScore;
 var highScore = 0;
 
@@ -25,10 +25,12 @@ Menu.prototype = {
 		this.backgroundSound.play('', 0, 1, true);
 
 		// background
-		this.background = this.game.add.image(0, 0, 'background');
-
+		this.background = this.game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
+		this.background.autoScroll(-200, 0);
+		
 		// gorduras e veias
-		this.fatVein = this.game.add.image(0, 57, 'fat_vein');
+		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,game.cache.getImage('fat_vein').height, 'fat_vein');
+		this.fatVein.autoScroll(-200, 0);
 
 		// logo
 		this.logo = this.game.add.image(90, 180, 'logo');
@@ -89,15 +91,17 @@ Play.prototype = {
 		this.points = 0;
 
 		// background
-		this.background = this.game.add.image(0, 0, 'background');
-
+		this.background = this.game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
+		this.background.autoScroll(-200, 0);
+		
 		// gorduras e veias
-		this.fatVein = this.game.add.image(0, 57, 'fat_vein');
-
+		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,game.cache.getImage('fat_vein').height, 'fat_vein');
+		this.fatVein.autoScroll(-200, 0);
+		
 		// CREATE A tubos:
 		this.fats = this.game.add.group();
 		this.timer = this.game.time.events
-				.loop(2000, this.add_row_of_fat, this);
+				.loop(1200, this.add_row_of_fat, this);
 
 		// CREATE A cena:
 		this.cena = game.add.group();
@@ -108,10 +112,10 @@ Play.prototype = {
 		// CREATE A celula:
 		this.cellHSprite = game.add.sprite(455, 275, 'cell_head');
 		this.cellHSprite.animations.add('collision', [ 1, 2, 3, 4, 5, 6, 7, 8,
-				9, 10 ], 15, true);
+				9, 10 ], 15, false);
 		this.game.physics.enable(this.cellHSprite, Phaser.Physics.ARCADE);
 
-		this.cellHSprite.body.acceleration.y = 150;
+		this.cellHSprite.body.acceleration.y = 450;
 		this.cellHSprite.body.collideWorldBounds = true;
 		this.cellHSprite.body.drag.x = 100;
 		this.cellHSprite.anchor.setTo(.5, .5);
@@ -122,7 +126,7 @@ Play.prototype = {
 				[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 10, true);
 		this.game.physics.enable(this.cellTSprite, Phaser.Physics.ARCADE);
 
-		this.cellTSprite.body.acceleration.y = 150;
+		this.cellTSprite.body.acceleration.y = 450;
 		this.cellTSprite.body.collideWorldBounds = true;
 		this.cellTSprite.body.drag.x = 100;
 		this.cellTSprite.anchor.setTo(.5, .5);
@@ -144,7 +148,7 @@ Play.prototype = {
 		 this.game.physics.arcade.overlap(this.cellHSprite, this.fats,
 		 this.collision, null, this);
 
-		this.fats.setAll('body.velocity.x', -330);
+		this.fats.setAll('body.velocity.x', -430);
 		for (var i = 0; i < this.fats.total; i++) {
 			var fat = this.fats.getAt(i);
 
@@ -166,21 +170,23 @@ Play.prototype = {
 		}
 	},
 	collision : function(cell, bg) {
+		userScore = this.points;
+		if (userScore > highScore) {
+			highScore = userScore;
+		}
+		
+		this.game.time.events.remove(this.timer);
+		
 		this.backgroundSound.pause();
 
 		this.backgroundSound = game.add.audio("collision_sound", 1, true);
 		this.backgroundSound.play('', 0, 1, false);
 
+		this.cellHSprite.animations.loopCount = 1;
 		this.cellHSprite.animations.play('collision');
-
-		userScore = this.points;
-		if (userScore > highScore) {
-			highScore = userScore;
-		}
-
-		this.game.time.events.remove(this.timer);
-
-		this.game.state.start('game_over');
+		this.cellHSprite.events.onAnimationComplete.add(function(){
+			this.game.state.start('game_over');
+		}, this);		
 	},
 	add_row_of_fat : function() {
 		// var hole = Math.floor(Math.random() * 5) + 1;

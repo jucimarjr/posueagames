@@ -35,7 +35,9 @@ function create () {
     meteor.exists = false;
 
     game.physics.enable(meteors, Phaser.Physics.ARCADE);
-    timer = game.time.events.loop(2000, addMeteor, this);
+    timeNewMeteor = 2500;
+    timer = game.time.events.loop(timeNewMeteor, addMeteor, this);
+    timerLevel = game.time.events.loop(10000, changeLevel, this);
 
     //Playing sounds
     soundIn.stop();
@@ -67,6 +69,26 @@ function update () {
 
     if (tardisSprite.body.x + 91 < 0) {
         game.state.start('GameOver');
+    }
+}
+
+function changeLevel() {
+    if (score >= 5 && score < 10) {
+        game.time.events.remove(timer);
+        timeNewMeteor -= 500;
+        timer = game.time.events.loop(timeNewMeteor, addMeteor, this);
+    } else if (score >= 10 && score < 15) {
+        game.time.events.remove(timer);
+        timeNewMeteor -= 500;
+        timer = game.time.events.loop(timeNewMeteor, addMeteor, this);
+    } else if (score >= 15 && score < 20) {
+        game.time.events.remove(timer);
+        timeNewMeteor -= 500;
+        timer = game.time.events.loop(timeNewMeteor, addMeteor, this);
+    } else if (score >= 20 && score < 25) {
+        game.time.events.remove(timer);
+        timeNewMeteor -= 500;
+        timer = game.time.events.loop(timeNewMeteor, addMeteor, this);
     }
 }
 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HTML5 - CANVAS API</title>
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<style type="text/css">
+canvas {
+	border: 1px dashed #000000;
+}
+</style>
+
+<script type="text/javascript" src="breakout.js"></script>
+
+</head>
+
+<body onload="init()">
+	<div id="fb-root"></div>
+	<script>
+		(function(d, s, id) {
+
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id))
+				return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
+	<div class="fb-like"
+		data-href="http://computacao.uea.edu.br/ludus/posueagames/fcumaru/breakout/"
+		data-layout="button_count" data-action="like" data-show-faces="true"
+		data-share="false"></div>
+
+	<canvas id="canvas" width="700" height="500">
+        Navegador não compatível com HTML5 Canvas
+        </canvas>
+
+	<div class="fb-comments"
+		data-href="http://computacao.uea.edu.br/ludus/posueagames/fcumaru/breakout/"
+		data-width="960" data-numposts="10" data-colorscheme="light"></div>
+</body>
+</html>
