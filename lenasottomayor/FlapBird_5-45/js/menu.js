@@ -6,7 +6,7 @@ function create() {
 	mainMenu.animations.play('start');
 	
 	musicMenu = game.add.audio('noise');
-	musicMenu.play('',0,0.2,true);
+	musicMenu.play('',0,1,true);
 }
 
 function update(){
