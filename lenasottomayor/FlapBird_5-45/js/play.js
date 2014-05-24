@@ -48,7 +48,7 @@ function update() {
 }
 
 function createPlayer() {
-	playerSprite = game.add.sprite(200, 309, 'player');
+	playerSprite = game.add.sprite(300, 309, 'player');
 	playerSprite.animations.add('jump',[2],7,true);
 	playerSprite.animations.add('dead',[3,2,3,2],4,true)
 	playerSprite.frame = 1;
@@ -68,7 +68,7 @@ function jump() {
 		jumps++;
 		collide = false;
 		playerSprite.body.velocity.y = -500;
-		playerSprite.body.velocity.x = 400;
+		playerSprite.body.velocity.x = 500;
 		playerSprite.animations.play('jump');
 		this.jumpSound = game.add.audio('jumpSound');
 	    this.jumpSound.play();
