@@ -4,7 +4,7 @@ var nextAsteroid = 0;
 var nextCheese = 0;
 var nextRat = 0;
 
-var gameoverSnd;
+
 
 Utils.createMultiple = function(game, key, numberOfItems) {
 	
@@ -101,7 +101,7 @@ Utils.createText = function(game, posX, posY, size, color, shadow) {
 	
     var text = game.add.text(posX, posY);
 
-    text.font = 'Helvetica';
+    text.font = 'Verdana';
     text.fontSize = size;
     text.fontWeight = 'bold';
     var grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
