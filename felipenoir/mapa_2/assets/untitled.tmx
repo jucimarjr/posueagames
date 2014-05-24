@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="48" height="15" tilewidth="40" tileheight="40">
  <tileset firstgid="1" name="tile" tilewidth="40" tileheight="40">
-  <image source="tile.png" width="124" height="40"/>
+  <image source="../../tiledmap/assets/tile.png" width="124" height="40"/>
  </tileset>
  <layer name="Camada de Tiles 1" width="48" height="15">
   <data encoding="base64" compression="zlib">
    eJxjYBh5gGmgHTCCASMSZsBDD3Uw3PwxGj+DExCKH/SybiiWfUxoNC0BIxZMjl4YQHc7OX4gNu9hk6dWvqWGu3G5BVudQEgvNhpfvJHiflLtxqWfGD3Exgs+92PzO60xNewFAeYhjgG4+wEN
   </data>
  </layer>
+ <objectgroup name="Camada de Objetos 1" width="48" height="15">
+  <object gid="3" x="884" y="317"/>
+  <object gid="3" x="439" y="349"/>
+  <object gid="3" x="356" y="353"/>
+  <object gid="3" x="683" y="401"/>
+  <object gid="3" x="1118" y="411"/>
+  <object gid="3" x="1041" y="366"/>
+  <object gid="3" x="1285" y="249"/>
+  <object gid="3" x="1201" y="206"/>
+  <object gid="3" x="1121" y="162"/>
+  <object gid="3" x="1037" y="159"/>
+  <object gid="3" x="959" y="161"/>
+  <object gid="3" x="883" y="135"/>
+  <object gid="3" x="796" y="104"/>
+  <object gid="3" x="728" y="99"/>
+  <object gid="3" x="636" y="91"/>
+  <object gid="3" x="1360" y="253"/>
+  <object gid="3" x="1446" y="250"/>
+ </objectgroup>
 </map>

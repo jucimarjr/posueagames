@@ -12,7 +12,7 @@ function preload() {
 	game.load.spritesheet('robo', 'assets/robo_33-38-3.png', 33, 38, 3);
 }
 
-var map, layer, robo;
+var map, layer, robo, objetos;
 
 function create() {
 	game.physics.startSystem(Phaser.Game.ARCADE);
@@ -28,12 +28,20 @@ function create() {
 	layer.resizeWorld();
 	map.setCollisionBetween(0, 3, true, 'Camada de Tiles 1');
 
+	objetos = game.add.group();
+	objetos.enableBody = true;
+	map.createFromObjects('Camada de Objetos 1', 3, 'objeto', 0, true, false,
+			objetos);
+	objetos.forEach(function(objeto) {
+		objeto.body.allowGravity = false
+	}, this);
+
 	robo = game.add.sprite(50, 10, 'robo', 0);
 	robo.animations.add('walk', [ 1, 2 ], 6, true);
 	game.physics.enable(robo, Phaser.Physics.ARCADE);
 
 	robo.body.collideWorldBounds = true;
-	robo.body.drag.x = 100;
+	robo.body.drag.x = 200;
 	robo.anchor.setTo(.5, .5);
 	robo.body.gravity.y = 100;
 	game.camera.follow(robo);
@@ -50,10 +58,12 @@ function update() {
 		robo.body.velocity.x = -100;
 		robo.scale.x = -1;
 		robo.animations.play('walk');
-	} else if (game.input.keyboard.isDown(Phaser.Keyboard.UP) /*&& robo.body.touching.down*/) {
-		robo.body.velocity.y = -250;
 	} else {
 		robo.animations.stop();
 		robo.frame = 0;
+	}
+	
+	if (game.input.keyboard.isDown(Phaser.Keyboard.UP) && robo.body.onFloor()) {
+		robo.body.velocity.y = -350;
 	}
 }
