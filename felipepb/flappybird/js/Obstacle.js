@@ -5,6 +5,7 @@ BasicGame.Obstacle = function (gameManager, group) {
     this.bottomSprite;
     this.bottomLabel;
     this.group = group;
+    this.lightningSprite;
 
     this._spriteWidth = 165;
     this._spriteHeight = 486;
@@ -12,6 +13,7 @@ BasicGame.Obstacle = function (gameManager, group) {
 
 BasicGame.Obstacle.defaultVelocity = -3;
 BasicGame.Obstacle.velocity = BasicGame.Obstacle.defaultVelocity;
+
 BasicGame.Obstacle.Type = {
 	Default: 0,
 	Hard: 1
@@ -40,12 +42,6 @@ BasicGame.Obstacle.prototype = {
         // Physics code!
         this.gameManager.game.physics.p2.enableBody(this.topSprite, BasicGame.GameManager.debugDraw);
         this.gameManager.game.physics.p2.enableBody(this.bottomSprite, BasicGame.GameManager.debugDraw);
-        
-        // this.topSprite.body.mass = 0;
-		// this.topSprite.body.motionState = 2;
-
-		// this.bottomSprite.body.mass = 0;
-		// this.bottomSprite.body.motionState = 2;
 
 		this.topSprite.body.rotation = Math.PI;
         this.topSprite.body.kinematic = true;
@@ -54,23 +50,8 @@ BasicGame.Obstacle.prototype = {
         this.topSprite.body.collideWorldBounds = false;
         this.bottomSprite.body.collideWorldBounds = false;
 
-  //       this.topSprite.body.setCollisionGroup(this.gameManager.obstaclesCollisionGroup);
-  //       this.bottomSprite.body.setCollisionGroup(this.gameManager.obstaclesCollisionGroup);
-
-		// this.topSprite.body.collides(this.gameManager.playerCollisionGroup);
-  //       this.bottomSprite.body.collides(this.gameManager.playerCollisionGroup);
-        
-        // this.topSprite.body.gravity.y = 0;
-        // this.bottomSprite.body.gravity.y = 0;
-
         this.topSprite.name = 'obstacle';
         this.bottomSprite.name = 'obstacle';
-
-        // this.topSprite.body.onBeginContact.add(this.onBeginContact, this);
-        // this.bottomSprite.body.onBeginContact.add(this.onBeginContact, this);
-        
-        // this.topSprite.body.collidesWith.push(Phaser.Physics.P2.everythingCollisionGroup);
-        // this.bottomSprite.body.collidesWith.push(Phaser.Physics.P2.everythingCollisionGroup);
 
         // Create labels!
         var topLabelPosX = 0;
@@ -99,16 +80,57 @@ BasicGame.Obstacle.prototype = {
         this.bottomLabel.x = -this.bottomLabel.textWidth / 2.0 + 4;
 
         this.bottomLabel.parent = this.bottomSprite;
+
+        // Create lightning
+        this.lightningSprite = this.gameManager.add.sprite(0, 0, 'lightningAtlas');
+        this.lightningSprite.name = 'lightning';
+        // this.lightningSprite.anchor.setTo(0.5, 1.0);
+        this.gameManager.game.physics.p2.enableBody(this.lightningSprite, BasicGame.GameManager.debugDraw);
+        this.lightningSprite.body.kinematic = true;
+        this.lightningSprite.body.y = -this._spriteHeight / 2.0 - 100;
+        this.lightningSprite.parent = this.bottomSprite;
+
+        this.playLightningAnimation();
     },
 
-    setUp: function (x, y, gapHeight, labelText) {
+    playLightningAnimation: function () {
+        var animationFrames = [];
+
+        for (var i = 1; i <= 6; i++) {
+            animationFrames.push('lightning_0' + i + '.png');
+        }
+
+        var anim = this.lightningSprite.animations.add('idle', animationFrames, 30, true);
+        this.lightningSprite.animations.play('idle');
+    },
+
+    setUp: function (x, y, gapHeight, labelText, type) {
         this.topSprite.body.x = x;
         this.topSprite.body.y = y - gapHeight / 2.0 - this._spriteHeight / 2.0;
 
         this.bottomSprite.body.x = x;
         this.bottomSprite.body.y = y + gapHeight / 2.0 + this._spriteHeight / 2.0;
 
-        // this.topLabel
+        var frameName;
+
+    	if (type === BasicGame.Obstacle.Type.Hard) {
+    		frameName = 'columnHard_165-486.png';
+    		this.lightningSprite.tint = 0xff0011;
+    	} else {
+    		frameName = 'columnDefault_165-486.png';
+    		this.lightningSprite.tint = 0xffffff;
+    	}
+
+    	this.topSprite.frameName = frameName;
+        this.bottomSprite.frameName = frameName;
+
+        this.topLabel.text = labelText;
+        this.topLabel.updateText();
+        this.topLabel.x = this.topLabel.textWidth / 2.0 - 4;
+
+        this.bottomLabel.text = labelText;
+        this.bottomLabel.updateText();
+        this.bottomLabel.x = -this.bottomLabel.textWidth / 2.0 + 4;
     },
 
     update: function () {

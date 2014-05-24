@@ -28,12 +28,16 @@ BasicGame.ObstaclesManager.prototype = {
         for (var i = 0; i < count; i++) {
             var randomY = this.random(this._obstaclesMinY, this._obstaclesMaxY);
             // console.log("randomY: " + randomY);
+            var missionEvent = this.gameManager.missions.nextEventIndex();
+            var type = missionEvent.isUnique ? BasicGame.Obstacle.Type.Hard : BasicGame.Obstacle.Type.Default;
             var obstacle = new BasicGame.Obstacle(this.gameManager,
                 								  this.obstaclesGroup);
             obstacle.create();
             obstacle.setUp(cameraWidth + (obstacleWidth / 2.0) + i * this._obstaclesHorizontalMargin,
-                						   randomY,
-                						   this._obstaclesGap);
+                						  randomY,
+                						  this._obstaclesGap,
+                                          missionEvent.name,
+                                          type);
             this.obstacles.push(obstacle);
         }
     },
@@ -52,9 +56,13 @@ BasicGame.ObstaclesManager.prototype = {
 
         if (obstacleToMove) {
             var randomY = this.random(this._obstaclesMinY, this._obstaclesMaxY);
-            obstacleToMove.setGap(obstacles[length - 1].x() + this._obstaclesHorizontalMargin,
-                				  randomY,
-                				  this._obstaclesGap);
+            var missionEvent = this.gameManager.missions.nextEventIndex();
+            var type = missionEvent.isUnique ? BasicGame.Obstacle.Type.Hard : BasicGame.Obstacle.Type.Default;
+            obstacleToMove.setUp(obstacles[length - 1].x() + this._obstaclesHorizontalMargin,
+                				 randomY,
+                				 this._obstaclesGap,
+                                 missionEvent.name,
+                                 type);
 
             var firstObstacle = obstacles[0];
             for (var i = 0; i < length - 1; i++) {

@@ -29,8 +29,9 @@ BasicGame.Preloader.prototype = {
         this.load.image('mainMenu', 'assets/splash_960-600.png');
         this.load.image('endGame', 'assets/endgame_960-600.png');
         this.load.atlas('mainGameAtlas', 'assets/maingameatlas_512-1024.png', 'assets/maingameatlas_512-1024.json');
+        this.load.atlas('lightningAtlas', 'assets/lightningatlas_128x256.png', 'assets/lightningatlas_128x256.json');
         
-  	this.load.image('backgroundColor', 'assets/backgroundcolor_960-600.png');
+  		this.load.image('backgroundColor', 'assets/backgroundcolor_960-600.png');
         
         this.load.image('backgroundPhrases', 'assets/backgroundphrases_960-600.png');
         

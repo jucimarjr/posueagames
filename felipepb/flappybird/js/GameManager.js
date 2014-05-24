@@ -39,6 +39,8 @@ BasicGame.GameManager.gravity = 9.8 * BasicGame.GameManager.pixelsToUnit;
 BasicGame.GameManager.prototype = {
 
     create: function () {
+        this.missions = new BasicGame.Missions();
+
         this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.gravity.y = BasicGame.GameManager.gravity;
 
@@ -59,15 +61,12 @@ BasicGame.GameManager.prototype = {
         this.player = new BasicGame.Player(this);
         this.player.create();
 
-        this.missions = new BasicGame.Missions();
-
         this.game.physics.p2.setPostBroadphaseCallback(this.handleCollision, this);
     },
 
     update: function () {
         this.backgroundManager.update();
         this.obstaclesManager.update();
-
         this.player.update();
     },
 
