@@ -1,4 +1,4 @@
-var load_state = { preload: preload, create: create };
+var load_state = { preload: preload, create: create};
 
 //Carregar todos os assets
 function preload() {
@@ -15,11 +15,12 @@ function create() {
 	game.load.onFileComplete.add(fileComplete, this);
 	game.load.onLoadComplete.add(loadComplete, this);
 
+	music.pause();
 	start();
 }
 
 function start() {
-	
+	game.load.crossOrigin = "Anonymous";
 	game.load.spritesheet('player', 'assets/suu_208_89_4.png', 208, 89);
 	game.load.spritesheet('death', 'assets/falling_208_89_2.png', 208, 89);
 	game.load.spritesheet('boss', 'assets/badboss_258_371_2.png', 258, 371);
@@ -37,8 +38,9 @@ function start() {
 	game.load.image('obstacle2', 'assets/obstacle_02.png');
 	game.load.image('obstacle3', 'assets/obstacle_03.png');
 	game.load.image('obstacle4', 'assets/obstacle_04.png');
-	game.load.image('sound', 'assets/sound.png');
-	game.load.image('nosound', 'assets/nosound.png');
+	game.load.physics('physicsData', 'assets/polygon.json');
+	game.load.image('scorebg', 'assets/placeholder.png');
+	game.load.audio('gameMusic', ['sound/game_sound.wav', 'sound/game_sound.mp3']);
 
 	game.load.start();
 }
