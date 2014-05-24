@@ -15,9 +15,9 @@
         this.weapon = null;
         this.weaponFactory = null;
 
-        this.startSound = null;
         this.bgSound = null;
         this.hitSound = null;
+        this.blasterSound = null;
 
         //powerUpProgress
         this.powerUpTimer = null;
@@ -72,12 +72,13 @@
             this.score_text.anchor.set(0.5, 0);
 
             // sounds
-            this.startSound = this.game.add.audio("startsound");
-            this.bgSound = this.game.add.audio("bgsound");
-            this.hitSound = this.game.add.audio("crash");
-            //this.bgSound.volume = 0.3;
-            this.startSound.play();
-            this.startSound.loop = true; 
+            this.bgSound = this.game.add.audio('bgsound');
+            this.hitSound = this.game.add.audio('crash');
+            this.blasterSound = this.game.add.audio('blaster');
+
+            this.bgSound.volume = 0.8;
+            this.bgSound.loop = true;
+            this.bgSound.play();
 
             this.progressBg = this.game.add.graphics(0, 0);
             this.progressBg.lineStyle(2, 0x000000, 1);
@@ -139,13 +140,6 @@
 
             this.isStarted = true;
             this.player.body.gravity.y = 1000;
-            
-			this.bgSound.currentTime = 0;
-            this.startSound.currentTime = 0;
-            
-            this.bgSound.play(); 
-            this.bgSound.loop = true;
-            this.startSound.stop();
         },
 
         setPowerUpBarVisibility: function(value) {
@@ -218,6 +212,7 @@
 
             explosion.animations.play('explosion', 20, false, true);
 
+            this.hitSound.play();
         },
 
         killEnemy: function (bullet, enemy) {
@@ -296,13 +291,22 @@
             this.score = 0;
             
             this.hitSound.play();
-            this.startSound.stop();
             this.bgSound.stop();
 
             this.player_tween = null;
 
             // call game over view
             this.game.state.start('Gameover');
+        },
+
+        fire: function () {
+            var isFiring = this.weapon.fire();
+
+            if (isFiring) {
+                this.player_fire.revive();
+                this.player_fire.animations.play('fire', 20, false, true);
+                this.blasterSound.play();
+            }
         },
 
         handleKeyDown: function() {
@@ -321,13 +325,7 @@
 
             if (this.game.input.keyboard.isDown (Phaser.Keyboard.ENTER)) {
                 if(this.isStarted) {
-
-                    var isFiring = this.weapon.fire();
-
-                    if (isFiring) {
-                        this.player_fire.revive();
-                        this.player_fire.animations.play('fire', 20, false, true);
-                    }
+                    this.fire();
                 }
             } 
         },

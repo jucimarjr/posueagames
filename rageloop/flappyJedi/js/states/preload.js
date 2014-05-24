@@ -7,11 +7,11 @@
             //this.stage.backgroundColor = '#ccc';
             
            	/* game sounds */
-        	this.game.load.audio('startsound','assets/audio/startgame.mp3');
-        	this.game.load.audio('bgsound','assets/audio/playing.mp3');
-        	this.game.load.audio('falling','assets/audio/falling.mp3');
-        	this.game.load.audio('bomb','assets/audio/bomb.mp3');
-        	this.game.load.audio('crash','assets/audio/impact.mp3');
+            this.game.load.audio('bgsound','assets/audio/imperial.wav');
+            this.game.load.audio('falling','assets/audio/falling.mp3');
+            this.game.load.audio('bomb','assets/audio/bomb.mp3');
+            this.game.load.audio('crash','assets/audio/impact.mp3');
+            this.game.load.audio('blaster','assets/audio/blaster.wav');
 
             /*menu images*/
             this.game.load.image('menuTitle', 'assets/menu/titlemenu_346-193.png');
