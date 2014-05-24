@@ -24,7 +24,7 @@ var update = {
     },
     collisionEnemyGroup : function(player, enemy){
         if(player && player.alive){
-            var style = { font: "40px helvetica", fill: "#000000" };
+            var style = { font: "40px helvetica", fill: "#ffffff" };
             if(enemy.enemyType === 'ariranha'){
                 update.status = game.add.text(100, 400, "Pressione R para reiniciar", style);
                 player.destroy();
