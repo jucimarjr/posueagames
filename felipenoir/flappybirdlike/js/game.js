@@ -41,5 +41,5 @@ game.state.add('menu', menuState);
 game.state.add('play', playState);
 game.state.add('gameover', gameoverState);
 
-// game.state.start('warning');
-game.state.start('load');
+game.state.start('warning');
+// game.state.start('load');
