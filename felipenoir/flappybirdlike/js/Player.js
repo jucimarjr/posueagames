@@ -24,7 +24,7 @@ Player.prototype = {
 		// Audio
 		this.audioVoar = game.add.audio('audioVoar');
 	},
-
+	
 	update : function() {
 
 		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)

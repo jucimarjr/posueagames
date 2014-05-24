@@ -37,6 +37,11 @@ var playState = {
 		game.physics.arcade.overlap(player.sprite, enemies.enemies, lost, null, this);
 		game.physics.arcade.overlap(player.sprite, coins.coins, getCoin, null, this);
 
+
+		/*if(score.count > 2){
+			enemies.stop();
+			coins.stop();
+		}*/
 		player.update();
 		level.update();
 		coins.update();
