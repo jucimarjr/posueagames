@@ -1,8 +1,4 @@
 var audioMenu;
-var style = {
-	font : "30px Arial",
-	fill : "#ffffff"
-};
 
 var menuState = {
 
@@ -10,7 +6,6 @@ var menuState = {
 		game.load.image('menu', 'assets/menu.png');
 		game.load.image('enter_game', 'assets/enter_game.png');
 		game.load.audio('audioMenu', 'assets/song_menu_otimizada.mp3');
-
 	},
 
 	create : function() {
