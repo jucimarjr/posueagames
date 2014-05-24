@@ -29,7 +29,7 @@ Player.prototype = {
 	},
 
 	update : function() {
-		 
+
 		this.game.physics.arcade.collide(this.sprite, level.ground);
 		this.game.physics.arcade.overlap(this.sprite, enemies.enemies, lost,
 				null, this);
