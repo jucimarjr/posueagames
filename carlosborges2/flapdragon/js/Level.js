@@ -35,7 +35,7 @@ Level = function() {
 	this.create = function() {
 		
 		this.audioBg = game.add.audio(BG_SOUND, 1, true);
-		this.audioBg.play('', 0, 1, true);
+		this.audioBg.play('', 0, 0.5, true);
 		
 		// sky
 		this.bgSky = game.add.tileSprite(0, 0, 1500, 600, BG_SKY);
@@ -88,8 +88,9 @@ Level = function() {
 		txtScore.anchor.setTo(0.5, 0.5);
 		txtScore.text = 'Score: ' + score;
 		
-		this.txt.text = 'Pressione barra para reiniciar';
-		this.txt.y = 450;
+		var txtRestart = game.add.text(game.world.centerX, 450, '', {font: "30px Arial", fill: "black" , align: "center"});
+		txtRestart.anchor.setTo(0.5, 0.5);
+		txtRestart.text = 'Pressione barra para reiniciar';
 		
 	};
 
