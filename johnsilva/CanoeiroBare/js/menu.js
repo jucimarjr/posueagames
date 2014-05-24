@@ -4,7 +4,7 @@ function preload() {
     game.load.image('initBg', 'assets/bg/initBg_900-600.jpg');
 
     game.load.spritesheet('btIniciar', 'assets/botoes/iniciar_350-120.png', 350, 120, 2);
-    game.load.spritesheet('btCredits', 'assets/botoes/creditosAtiv_350-120.png', 350, 120);
+    game.load.spritesheet('btCredits', 'assets/botoes/creditos_350-120.png', 350, 120, 2);
 }
 
 //Tela de Menu
