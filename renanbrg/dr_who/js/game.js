@@ -16,7 +16,7 @@ function preload () {
     game.load.image('meteor6', 'assets/meteoro6_135-120.png');
     game.load.image('meteor7', 'assets/meteoro7_135-120.png');
     game.load.image('meteor8', 'assets/meteoro8_135-120.png');
-    game.load.image('tardis', 'assets/tardis1_75-110.png');
+    game.load.spritesheet('tardis', 'assets/tardis_455-110.png', 91, 110);
     snd_inicial = document.getElementById("inicial");
     snd_musica = document.getElementById("musica");
 }
@@ -30,6 +30,7 @@ function create () {
     tardisSprite = game.add.sprite(100, (game.world.height - 110) / 2, 'tardis');
     game.physics.enable(tardisSprite, Phaser.Physics.ARCADE);
     tardisSprite.body.collideWorldBounds = true;
+    tardisSprite.animations.add('spin', [0, 1, 2, 3, 4], 10, true);
 
     // Add a group of meteors
     meteors = game.add.group();
@@ -55,6 +56,7 @@ function create () {
 
     playerIsAlive = true;
     meteorCounter = 0;
+    meteorType = 0;
 
     // Add the score
     score = 0;
@@ -65,6 +67,8 @@ function create () {
 function update () {
 	starsBackground.tilePosition.x -= 0.1;
     game.physics.arcade.collide(tardisSprite, meteors, hitMeteor, null, this);
+
+    tardisSprite.animations.play('spin');
 
     snd_musica.loop = true;
 	snd_musica.play();
@@ -101,12 +105,8 @@ function addMeteor() {
 }
 
 function addMeteorInPosition(x, y) {
-    var meteorType = Math.floor(Math.random() * 8);
-    if (meteorType == 8) {
-        meteorType = 7;
-    }
-
 	var meteor = meteors.getAt(meteorType);
+	meteorType = (meteorType + 1) % 8;
 
     if (meteor != null) {
         meteor.reset(x, y);
