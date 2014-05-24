@@ -28,6 +28,7 @@ BasicGame.Preloader.prototype = {
         this.load.atlas('shipAtlas', 'assets/shipatlas_512-512-20.png', 'assets/shipatlas_512-512-20.json');
         this.load.atlas('playButton', 'assets/playbutton_512-256-3.png', 'assets/playbutton_512-256-3.json');
         this.load.atlas('tryAgain', 'assets/tryagain_512-256-3.png', 'assets/tryagain_512-256-3.json');
+        this.load.atlas('textField', 'assets/textfield_349-52-4.png', 'assets/textfield_349-52-4.json');
         this.load.image('mainMenu', 'assets/splash_960-600.png');
         this.load.image('endGame', 'assets/endgame_960-600.png');
         this.load.image('backgroundColor', 'assets/backgroundcolor_960-600.png');
@@ -39,6 +40,7 @@ BasicGame.Preloader.prototype = {
         this.load.physics('physicsData', 'assets/ship_84-80.json');
         
         this.load.bitmapFont('silkscreenblue', 'assets/silkscreenblue.png', 'assets/silkscreenblue.fnt');
+        this.load.bitmapFont('silkscreenred', 'assets/silkscreenred.png', 'assets/silkscreenred.fnt');
         //this.load.atlas('playButton', 'assets/play_button.png', 'assets/play_button.json');
         //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
         //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');

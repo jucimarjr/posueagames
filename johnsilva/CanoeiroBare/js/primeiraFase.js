@@ -14,6 +14,8 @@ var angleVelocity = 2;
 var finalSound;
 var remosSound;
 var timerBarra;
+var estagio;
+var showEstagio = true;
 
 function preload() {
     //Imagens
@@ -139,6 +141,7 @@ function initEnemies() {
 
 function addScore() {
     score++;
+    var styleBig = { font: "40px Arial Bold", fill: "#ffffff" };
     if (score >= 100) {
         remosSound.stop();
         game.state.start('gameWin');
@@ -146,41 +149,90 @@ function addScore() {
         this.labelScore.setText(score);
 
         if (score >= 90) {
+            if (score == 90) {
+                estagio = game.add.text(450, 300, 'FINAL', styleBig);
+                estagio.anchor.setTo(0.5, 0.5);
+                setTimeout(resetEstagio, 1300);
+            }
             tileSpeedRiver = 5.5;
             timerBarra.play('fase10')
         }
         else if (score >= 80) {
+            if (score == 80) {
+                estagio = game.add.text(450, 300, 'Stagio 8', styleBig);
+                estagio.anchor.setTo(0.5, 0.5);
+                setTimeout(resetEstagio, 1300);
+            }
             tileSpeedRiver = 5;
             timerBarra.play('fase9');
         }
         else if (score >= 70) {
+            if (score == 70) {
+                estagio = game.add.text(450, 300, 'Stagio 7', styleBig);
+                estagio.anchor.setTo(0.5, 0.5);
+                setTimeout(resetEstagio, 1300);
+            }
             tileSpeedRiver = 4.5;
             timerBarra.play('fase8');
         }
         else if (score >= 60) {
+            if (score == 60) {
+                estagio = game.add.text(450, 300, 'Stagio 6', styleBig);
+                estagio.anchor.setTo(0.5, 0.5);
+                setTimeout(resetEstagio, 1300);
+            }
             tileSpeedRiver = 4;
             timerBarra.play('fase7');
         }
         else if (score >= 50) {
+            if (score == 50) {
+                estagio = game.add.text(450, 300, 'Stagio 5', styleBig);
+                estagio.anchor.setTo(0.5, 0.5);
+                setTimeout(resetEstagio, 1300);
+            }
             tileSpeedRiver = 3.5;
             timerBarra.play('fase6');
         }
         else if (score >= 40) {
+            if (score == 40) {
+                estagio = game.add.text(450, 300, 'Stagio 4', styleBig);
+                estagio.anchor.setTo(0.5, 0.5);
+                setTimeout(resetEstagio, 1300);
+            }
             tileSpeedRiver = 3;
             timerBarra.play('fase5');
         }
         else if (score >= 30) {
+            if (score == 30) {
+                estagio = game.add.text(450, 300, 'Stagio 3', styleBig);
+                estagio.anchor.setTo(0.5, 0.5);
+                setTimeout(resetEstagio, 1300);
+            }
             tileSpeedRiver = 2.5;
             timerBarra.play('fase4');
         }
         else if (score >= 20) {
+            if (score == 20) {
+                estagio = game.add.text(450, 300, 'Stagio 2', styleBig);
+                estagio.anchor.setTo(0.5, 0.5);
+                setTimeout(resetEstagio, 1300);
+            }
             tileSpeedRiver = 2;
             timerBarra.play('fase3');
         }
         else if (score >= 10) {
+            if (score == 10) {
+                estagio = game.add.text(450, 300, 'Stagio 1', styleBig);
+                estagio.anchor.setTo(0.5, 0.5);
+                setTimeout(resetEstagio, 1300);
+            }            
             timerBarra.play('fase2');
         }
     }
+}
+
+function resetEstagio() {
+    game.world.remove(estagio);
 }
 
 function addEnemies() {
