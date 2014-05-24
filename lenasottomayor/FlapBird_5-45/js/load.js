@@ -5,7 +5,7 @@ function preload() {
 	game.load.image('creditscreen', 'assets/creditscreen_960-600.png');
 	game.load.image('scorescreen', 'assets/scorescreen_960-600.png');
 	game.load.image('obstacle', 'assets/Obstacle_129-509.png');
-	game.load.spritesheet('player', 'assets/manspritesshet_485-131-4.png', 120,131);
+	game.load.spritesheet('player', 'assets/manspritesshet_485-131-4.png', 104,131);
 	game.load.spritesheet('startMenuSprite', 'assets/startspritesheet_4800-600-5.png', 960,600);
 	game.load.image('background', 'assets/background_980-600.png');
 	game.load.image('plataform', 'assets/exitplatform_400-160.png');

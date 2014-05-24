@@ -37,6 +37,11 @@ function update() {
     keySpaceBar.onDown.add(jump, this);
     keySpaceBar.onUp.add(stop, this);
     
+    if (playerSprite.inWorld == false ) {
+    	game.state.start('gameScore');
+    	    	
+    }
+    
 	playerSprite.body.velocity.x = 0;
 }
 
@@ -53,12 +58,12 @@ function createPlayer() {
 	playerSprite.body.gravity.y = 200;
 	playerSprite.anchor.setTo(0.5,0.5);
 	playerSprite.body.acceleration.y = 500;
-	playerSprite.body.collideWorldBounds = true;
+//	playerSprite.body.collideWorldBounds = true;
 }
 
 function jump() {
 	playerSprite.body.velocity.y = -400;
-	playerSprite.body.velocity.x = 400;
+	playerSprite.body.velocity.x = 2000;
 	playerSprite.animations.play('jump');
 	this.jumpSound = game.add.audio('jumpSound');
     this.jumpSound.play();
@@ -101,15 +106,11 @@ function gameOver(){
 	
 	game.physics.arcade.collide(playerSprite, obstacles);
 	if((playerSprite.position.y > obstacle.position.y)){
-		playerSprite.animations.play('dead');
 		playerSprite.frame = 3;
-	    musicGameOver = game.add.audio('deadSound');
-	    musicGameOver.play('',0,0.2,false);
 		musicGame.stop();
+		deadSound = game.add.audio('deadSound');
+		deadSound.play('',0,0.2,false);
 		game.state.start('gameScore');
-
-
-					
 	}
 	
 	

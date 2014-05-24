@@ -87,7 +87,7 @@ function create () {
 
 function jump() {
 	jogadorSprite.body.velocity.y = -300;
-	jogadorSprite.body.velocity.x = 0;
+	jogadorSprite.body.velocity.x = 3000;
 	jogadorSprite.frame = 2;
 
 }
