@@ -3,10 +3,12 @@ var update = {
     enemyTimer: null,
     status: null,
     score: 0 ,
+    score_placa : null,
     botaoinicio: null,
     botaojogar: null,
+    
     update : function(){
-        // fazer o angulo apontar para baixo quando o jogador n������o esta pulando
+        // fazer o angulo apontar para baixo quando o jogador n������������������o esta pulando
         if(this.player.angle < 20){
             this.player.angle += 1;
         }
@@ -19,8 +21,7 @@ var update = {
         update.collisionFloor();
         if(this.player.y < 200) this.player.y = 200;
         
-        var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
-        this.score = game.add.text(20, 20, "Pontos:" + create.score, style);
+        create.score_label.setText (" " + create.score);
         
     },
     collisionEnemyGroup : function(player, enemy){
@@ -60,6 +61,11 @@ var update = {
     createGameOverButtons : function(){
         startY = game.camera.y - 80;
         this.pointWall = game.add.sprite(180, startY + 120, 'placapontos');
+        
+        var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
+      //  var score_placa = game.add.text(200, 200, " " + create.score, style);
+        
+        this.score_placa = game.add.text(200, 200, "Pontos:" + create.score, style);
 
         this.buttonJogar = game.add.sprite(320, startY + 520, 'botaojogar');
         this.buttonJogar.inputEnabled = true;
@@ -79,9 +85,11 @@ var update = {
         game.state.start('menu');
     },
     resetGame: function(){
+    	this.score_placa.kill();
         this.buttonJogar.kill();
         this.buttonInicio.kill();
         this.pointWall.kill();
+      //  this.score_placa.kill();
         create.reset();
     }
 };

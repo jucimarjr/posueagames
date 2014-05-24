@@ -15,7 +15,7 @@ var game = new Phaser.Game(
     960,
     600,
     Phaser.AUTO,
-    ''
+    'phaser-game'
 );
 
 game.state.add('menu', menu);
