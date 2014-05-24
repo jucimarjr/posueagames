@@ -103,7 +103,7 @@ BasicGame.EndGame.prototype = {
         var statistics = this.game.add.bitmapText(0, 0, 'silkscreenblue', 'because of ', fontSize / 2);
         statistics.align = 'center';
         if (eventCount) {
-            statistics.text += '#' + eventCount + ' ' + lastEvent.name + '\n';
+            statistics.text += lastEvent.name + ' #' + eventCount + '\n';
         }
         statistics.text += ' during ' + lastRunStats.mission.currentPeriod().name + '\n their love flew through '
                          + lastRunStats.distanceTravelled.toFixed(2) + 'M';

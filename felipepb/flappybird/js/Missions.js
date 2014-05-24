@@ -2,12 +2,12 @@ BasicGame.Missions = function () {
 	this.stats = [];
 
 	this._periods = [
-		{ type: BasicGame.Missions.Period.Single, name: 'single' },
-		{ type: BasicGame.Missions.Period.CasualDate, name: 'casual date' },
-		{ type: BasicGame.Missions.Period.FixedDate, name: 'fixed date' },
+		{ type: BasicGame.Missions.Period.Single, name: 'singleness' },
+		{ type: BasicGame.Missions.Period.CasualDate, name: 'casual dates' },
+		{ type: BasicGame.Missions.Period.FixedDate, name: 'fixed dates' },
 		{ type: BasicGame.Missions.Period.SeriousRelationship, name: 'serious relationship' },
-		{ type: BasicGame.Missions.Period.Engaged, name: 'engaged' },
-		{ type: BasicGame.Missions.Period.Married, name: 'married' },
+		{ type: BasicGame.Missions.Period.Engaged, name: 'engagement' },
+		{ type: BasicGame.Missions.Period.Married, name: 'marriage' },
 		{ type: BasicGame.Missions.Period.RenewedVows, name: 'renewed vows' },
 		{ type: BasicGame.Missions.Period.OldAge, name: 'old age' }
 	];
