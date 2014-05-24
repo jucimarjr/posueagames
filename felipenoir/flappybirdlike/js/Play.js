@@ -12,6 +12,7 @@ var playState = {
 		player.preload();
 		enemies.preload();
 		coins.preload();
+		score.preload();
 	},
 
 	create : function() {
