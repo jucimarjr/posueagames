@@ -6,6 +6,7 @@ var label_score;
 var stop_score;
 var music;
 var musicGame;
+var explosionSprite;
 
 var playerSprite, deathSprite, bossSprite;
 var playersGroup; //for multiply Power up

@@ -20,8 +20,8 @@ function create() {
     //score  metros
     stop_score = false;
     score = 0; 
-    var style = { font: "30px Arial", fill: "#000000" };
-    this.label_score = this.game.add.text(20, 50, "0m", style);
+    var style = { font: '30px "edosz"', fill: "#D56469" };
+    this.label_score = this.game.add.text(20, 50, "0 m", style);
     
     playerSprite = game.add.sprite(172, 281.5, 'player');
     playerSprite.animations.add('walk', [0, 1, 2, 3], 8, true);
@@ -41,6 +41,12 @@ function create() {
     background4.tileScale.setTo(1.6,1.6);
     game.physics.arcade.enable(background4);
 
+    explosionSprite = game.add.sprite(playerSprite.x, playerSprite.y, 'explosion');
+    game.physics.enable(explosionSprite, Phaser.Physics.ARCADE);
+    explosionSprite.body.collideWorldBounds = false;
+    explosionSprite.animations.add('explode', [0, 1, 2, 3, 4], 9, true);
+    explosionSprite.kill();
+    
     game.add.sprite(0, 0, 'background5');
     // Call the 'jump' function when the spacebar key is hit
     space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -66,7 +72,7 @@ function update() {
 
 	if(!stop_score){
     	score += 0.01;
-        this.label_score.text = score.toFixed(0) +"m";  //sem casa decimal
+        this.label_score.text = score.toFixed(0) +" m";  //sem casa decimal
 	}
 	
     playerSprite.animations.play('walk');
@@ -203,6 +209,11 @@ function playDeadAnimation() {
     deathSprite.exists = true;
     playerSprite.exists = false;
 
+    explosionSprite.reset(playerSprite.x+104, playerSprite.y, 'death');
+    explosionSprite.body.exists = true;
+    explosionSprite.animations.play('explode');
+    playerSprite.kill();
+    
     game.camera.follow(deathSprite.sprite);
     deathSprite.animations.play('fall');
 
