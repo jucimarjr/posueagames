@@ -63,7 +63,7 @@ BasicGame.Player.prototype = {
         // ship.body.setCollisionGroup(this.gameManager.playerCollisionGroup);
         // ship.body.collides(this.gameManager.obstaclesCollisionGroup);
 
-        ship.body.onBeginContact.add(this.onShipBeginContact, this);
+        // ship.body.onBeginContact.add(this.onShipBeginContact, this);
 
         ship.name = 'player';
 
@@ -116,7 +116,7 @@ BasicGame.Player.prototype = {
         anim.onComplete.add(this.onThrustersClosed, this);
 
         this.bottomThrusters.animations.add('loopThrusters', bottomThrustersLoopAnimationFrames, 10, true);
-        this.hideSprite(this.bottomThrusters);
+        this.gameManager.hideSprite(this.bottomThrusters);
     },
 
     playExplodeAnimation: function () {
@@ -129,13 +129,13 @@ BasicGame.Player.prototype = {
         var anim = this.ship.animations.add('explode', animationFrames, 10, false);
         anim.onComplete.add(this.onExplosionAnimationFinished, this);
         this.ship.animations.play('explode');
-        this.hideSprite(this.leftThrusters);
-        this.hideSprite(this.bottomThrusters);
+        this.gameManager.hideSprite(this.leftThrusters);
+        this.gameManager.hideSprite(this.bottomThrusters);
     },
 
     playThrustersOpenAnimation: function () {
         // console.log('open');
-        this.showSprite(this.bottomThrusters);
+        this.gameManager.showSprite(this.bottomThrusters);
         this.currentAnim = 'openThrusters';
         this.bottomThrusters.animations.play('openThrusters');
     },
@@ -153,7 +153,7 @@ BasicGame.Player.prototype = {
 
     onThrustersClosed: function () {
         this.currentAnim = 'none';
-        this.hideSprite(this.bottomThrusters);
+        this.gameManager.hideSprite(this.bottomThrusters);
     },
 
     onShipBeginContact: function () {
@@ -161,18 +161,8 @@ BasicGame.Player.prototype = {
     },
 
     onExplosionAnimationFinished: function () {
-        this.hideSprite(this.ship);
+        this.gameManager.hideSprite(this.ship);
         // TODO: call game over screen.
-    },
-
-    hideSprite: function (sprite) {
-        sprite.scale.x = 0.0;
-        sprite.scale.y = 0.0;
-    },
-
-    showSprite: function (sprite) {
-        sprite.scale.x = 1.0;
-        sprite.scale.y = 1.0;
     },
 
     handleInput: function () {
@@ -211,8 +201,6 @@ BasicGame.Player.prototype = {
         this.ship.body.velocity.x = 0;
         this.ship.body.velocity.y = 0;
         this.ship.body.gravity.y = 0;
-        ///this.ship.body.reset();
-        console.log('onPlayerCollided');
         this.playThrustersCloseAnimation();
         this.playExplodeAnimation();
     }, 

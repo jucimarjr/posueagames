@@ -31,7 +31,7 @@ BasicGame.HUD.prototype = {
         												   scoreLabelPosY, 	
         												   'hud_default');
         this.scoreLabel.fontSize = 28;
-        console.log(this.scoreLabel.textWidth);
+        // console.log(this.scoreLabel.textWidth);
 		this.setScore(1000);
 	},
 

@@ -83,12 +83,11 @@ BasicGame.Obstacle.prototype = {
 
         // Create lightning
         this.lightningSprite = this.gameManager.add.sprite(0, 0, 'lightningAtlas');
-        this.lightningSprite.name = 'lightning';
         // this.lightningSprite.anchor.setTo(0.5, 1.0);
         this.gameManager.game.physics.p2.enableBody(this.lightningSprite, BasicGame.GameManager.debugDraw);
         this.lightningSprite.body.kinematic = true;
         this.lightningSprite.body.y = -this._spriteHeight / 2.0 - 100;
-        this.lightningSprite.parent = this.bottomSprite;
+        // this.lightningSprite.parent = this.bottomSprite;
 
         this.playLightningAnimation();
     },
@@ -116,10 +115,14 @@ BasicGame.Obstacle.prototype = {
     	if (type === BasicGame.Obstacle.Type.Hard) {
     		frameName = 'columnHard_165-486.png';
     		this.lightningSprite.tint = 0xff0011;
+    		this.lightningSprite.name = 'trigger_unique_event';
     	} else {
     		frameName = 'columnDefault_165-486.png';
     		this.lightningSprite.tint = 0xffffff;
+    		this.lightningSprite.name = 'trigger_default_event';
     	}
+
+    	this.gameManager.showSprite(this.lightningSprite);
 
     	this.topSprite.frameName = frameName;
         this.bottomSprite.frameName = frameName;
@@ -131,16 +134,16 @@ BasicGame.Obstacle.prototype = {
         this.bottomLabel.text = labelText;
         this.bottomLabel.updateText();
         this.bottomLabel.x = -this.bottomLabel.textWidth / 2.0 + 4;
+
+        this.lightningSprite.body.x = x;
+        this.lightningSprite.body.y = y;
     },
 
     update: function () {
         var velocity = BasicGame.Obstacle.velocity;
         this.topSprite.body.x += velocity;
         this.bottomSprite.body.x += velocity;
-
-        // var velocity = BasicGame.Obstacle.velocity;
-        //this.topSprite.body.moveLeft(velocity);
-        // this.bottomSprite.body.velocity.x = -velocity;
+        this.lightningSprite.body.x += velocity;
     },
  
     x: function (value) {
@@ -159,11 +162,17 @@ BasicGame.Obstacle.prototype = {
         this.bottomSprite.y = value;
     },
 
-    spriteWidth: function () {
-        return this._spriteWidth;
+    hideSprite: function (sprite) {
+        sprite.scale.x = 0.0;
+        sprite.scale.y = 0.0;
     },
 
-    // onBeginContact: function () {
-    // 	console.log("block onBeginContact");
-    // }
+    showSprite: function (sprite) {
+        sprite.scale.x = 1.0;
+        sprite.scale.y = 1.0;
+    },
+
+    spriteWidth: function () {
+        return this._spriteWidth;
+    }
 };

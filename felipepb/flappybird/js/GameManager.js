@@ -57,6 +57,7 @@ BasicGame.GameManager.prototype = {
 
         this.hud = new BasicGame.HUD(this);
         this.hud.create();
+        this.hud.setStatus(this.missions.currentPeriod().name);
 
         this.player = new BasicGame.Player(this);
         this.player.create();
@@ -78,16 +79,44 @@ BasicGame.GameManager.prototype = {
             this.player.onPlayerCollided();
 
             return true;
+
+        } else if ((body1.sprite.name === 'player' && this.stringContains(body2.sprite.name, 'trigger'))) {
+            
+            this.hideSprite(body2.sprite);
+
+            if (this.stringContains(body2.sprite.name, 'unique_event'))
+                this.hud.setStatus(this.missions.currentPeriod().name);
+            
+            return true;
+
+        } else if ((this.stringContains(body1.sprite.name, 'trigger') && body2.sprite.name === 'player')) {
+            
+            this.hideSprite(body1.sprite);
+
+            if (this.stringContains(body1.sprite.name, 'unique_event'))
+                this.hud.setStatus(this.missions.currentPeriod().name);
+            
+            return true;
+
         } else {
+
             return false;
+
         }
     },
 
-    render: function () {
-        // if (this.player.sprite.body.renderDebug) {
-        //     console.log('draw');
-        //     this.player.sprite.body.renderDebug(this.game.context, this.player.sprite.body, "red", true);
-        // }
+    hideSprite: function (sprite) {
+        sprite.scale.x = 0.0;
+        sprite.scale.y = 0.0;
+    },
+
+    showSprite: function (sprite) {
+        sprite.scale.x = 1.0;
+        sprite.scale.y = 1.0;
+    },
+
+    stringContains: function (str, content) {
+        return str.indexOf(content) > -1;
     },
 
     quitGame: function (pointer) {
