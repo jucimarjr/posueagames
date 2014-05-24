@@ -48,7 +48,7 @@ var update = {
     },
     collisionFloor : function(){
         if (this.player.alive && this.player.y > game.world.bounds.height){
-            var style = { font: "40px helvetica", fill: "#000000" };
+            var style = { font: "40px helvetica", fill: "#ffffff" };
             this.status = game.add.text(100, 400, "Pressione R para reiniciar", style);
             this.player.alive = false;
             this.player.animations.stop();
