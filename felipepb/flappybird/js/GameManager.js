@@ -86,6 +86,9 @@ BasicGame.GameManager.prototype = {
     },
 
     handleCollision: function (body1, body2) {
+        
+        if (this.player.isDead)
+            return false;
 
         // console.log('handle collision');
 
@@ -94,13 +97,20 @@ BasicGame.GameManager.prototype = {
 
             BasicGame.Obstacle.velocity = 0;
             this.player.onPlayerCollided();
+            
+            var obstacle = body1.sprite.name === 'player' ? body2 : body1;
+            this.missions._lastEvent = obstacle.missionEvent;
+            
+            if (!obstacle.trigered)
+                this.missions.computeEvent(obstacle.missionEvent);
+            
             BasicGame.GameManager.lastRunStats.mission = this.missions;
             BasicGame.GameManager.lastRunStats.distanceTravelled = this.distanceTravelled;
 
         } else if ((body1.sprite.name === 'player' && this.stringContains(body2.sprite.name, 'trigger'))) {
             this.onPlayerCollidedWithTrigger(body2.sprite);
         } else if ((this.stringContains(body1.sprite.name, 'trigger') && body2.sprite.name === 'player')) {
-            this.onPlayerCollidedWithTrigger(body1.sprite)
+            this.onPlayerCollidedWithTrigger(body1.sprite);
         } else {
             return false;
         }

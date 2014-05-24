@@ -126,6 +126,9 @@ BasicGame.Obstacle.prototype = {
 
     	this.topSprite.frameName = frameName;
         this.bottomSprite.frameName = frameName;
+        
+        this.topSprite.body.trigered = false;
+        this.bottomSprite.body.trigered = false;
 
         this.topLabel.text = missionEvent.name;
         this.topLabel.updateText();
@@ -139,6 +142,9 @@ BasicGame.Obstacle.prototype = {
         this.lightningSprite.body.trigered = false;
         this.lightningSprite.body.x = x;
         this.lightningSprite.body.y = y;
+        
+        this.topSprite.body.missionEvent = missionEvent;
+        this.bottomSprite.body.missionEvent = missionEvent;
     },
 
     update: function () {
@@ -146,6 +152,8 @@ BasicGame.Obstacle.prototype = {
         this.topSprite.body.x += velocity;
         this.bottomSprite.body.x += velocity;
         this.lightningSprite.body.x += velocity;
+        this.topSprite.body.trigered = this.lightningSprite.body.trigered;
+        this.bottomSprite.body.trigered = this.lightningSprite.body.trigered;
     },
  
     x: function (value) {

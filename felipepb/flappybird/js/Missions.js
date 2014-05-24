@@ -24,7 +24,7 @@ BasicGame.Missions = function () {
 	this._lastIndex = -1;
 	// this._count = 0;
 	this._periodIndex = 0;
-
+    this._lastEvent;
 };
 
 BasicGame.Missions.Period = {

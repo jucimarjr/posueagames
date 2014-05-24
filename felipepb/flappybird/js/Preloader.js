@@ -77,6 +77,6 @@ BasicGame.Preloader.prototype = {
         //}
 
         if (this.ready)
-            this.state.start('GameManager');
+            this.state.start('MainMenu');
     }
 };
