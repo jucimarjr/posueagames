@@ -45,7 +45,7 @@ BasicGame.BackgroundManager.prototype = {
 
 	update: function () {
 		for (var i = 0; i < this.parallaxLayers.length; i ++) {
-			this.parallaxLayers[i].tilePosition.x += BasicGame.Obstacle.velocity / (i + 1);
+			this.parallaxLayers[i].tilePosition.x += BasicGame.Obstacle.velocity / (i + 2);
 		}
 
 		for (var i = 0; i < this.parallaxEffectLayers.length; i ++) {

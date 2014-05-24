@@ -26,6 +26,9 @@ BasicGame.GameManager = function (game) {
     this.missions;
     this.backgroundManager;
     this.hud;
+
+    this.playerCollisionGroup;
+    this.obstaclesCollisionGroup;
 };
 
 BasicGame.GameManager.debugDraw = false;
@@ -43,10 +46,12 @@ BasicGame.GameManager.prototype = {
         this.backgroundManager.create();
 
         // this.obstaclesGroup = this.game.add.group();
-        // this.obstaclesGroup.enableBody = true;
 
-        // this.obstaclesManager = new BasicGame.ObstaclesManager(this, this.obstaclesGroup);
-        // this.obstaclesManager.create();
+        this.obstaclesCollisionGroup = this.game.physics.p2.createCollisionGroup();
+        this.playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
+
+        this.obstaclesManager = new BasicGame.ObstaclesManager(this, this.obstaclesGroup);
+        this.obstaclesManager.create();
 
         this.hud = new BasicGame.HUD(this);
         this.hud.create();
@@ -56,26 +61,26 @@ BasicGame.GameManager.prototype = {
 
         this.missions = new BasicGame.Missions();
 
-        for (var i = 0; i < 500; i++) {
-            this.missions.nextEventIndex();
-        };
+        this.game.physics.p2.setPostBroadphaseCallback(this.handleCollision, this);
     },
 
     update: function () {
         this.backgroundManager.update();
-        // this.obstaclesManager.update();
+        this.obstaclesManager.update();
 
         this.player.update();
-
-        // this.handleCollision();
     },
 
-    handleCollision: function () {
-        if (this.physics.arcade.collide(this.player.sprite, this.ground) ||
-            this.physics.arcade.overlap(this.player.sprite, this.obstaclesGroup)) {
+    handleCollision: function (body1, body2) {
+        if ((body1.sprite.name === 'player' && body2.sprite.name === 'obstacle') ||
+            (body1.sprite.name === 'obstacle' && body2.sprite.name === 'player')) {
 
+            BasicGame.Obstacle.velocity = 0;
             this.player.onPlayerCollided();
-            BasicGame.Obstacle.velocity = 0.0;
+
+            return true;
+        } else {
+            return false;
         }
     },
 

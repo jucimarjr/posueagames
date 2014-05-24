@@ -8,6 +8,9 @@ BasicGame.Player = function (gameManager) {
     this.appliedJumpForce = false;
 
     this.currentAnim = 'none';
+    this.explode = false;
+    this.deathX;
+    this.deathY;
 
     this._leftMargin = 60 + BasicGame.Player.frameWidth / 2.0;
 };
@@ -30,6 +33,12 @@ BasicGame.Player.prototype = {
         this.ship.x = this._leftMargin;
         this.ship.body.x = this._leftMargin;
         this.ship.body.velocity.x = 0.0;
+
+        if (this.explode) {
+            this.ship.x = this.deathX;
+            this.ship.y = this.deathY;
+            this.gameManager.game.physics.p2.clear();
+        }
     },
 
     createShip: function () {
@@ -44,12 +53,19 @@ BasicGame.Player.prototype = {
 
         // Physics code!
         this.gameManager.game.physics.p2.enableBody(ship, BasicGame.GameManager.debugDraw);
-        
+
         ship.body.clearShapes();
-        ship.body.loadPolygon('physicsData', 'ship');   
+        ship.body.loadPolygon('physicsData', 'ship');
         ship.body.fixedRotation = true;
         ship.body.collideWorldBounds = true;
-        // ship.body.static = true;
+        // ship.body.collidesWith.push(Phaser.Physics.P2.everythingCollisionGroup);
+
+        // ship.body.setCollisionGroup(this.gameManager.playerCollisionGroup);
+        // ship.body.collides(this.gameManager.obstaclesCollisionGroup);
+
+        ship.body.onBeginContact.add(this.onShipBeginContact, this);
+
+        ship.name = 'player';
 
         this.ship = ship;
     },
@@ -89,23 +105,31 @@ BasicGame.Player.prototype = {
         this.bottomThrusters.x += 17;
         this.bottomThrusters.y += 8;
 
-        var openThrustersOnCompleteSignal = new Phaser.Signal();
-        openThrustersOnCompleteSignal.add(this.onThrustersOpenned, this);
-
-        var closeThrustersOnCompleteSignal = new Phaser.Signal();
-        closeThrustersOnCompleteSignal.add(this.onThrustersClosed, this);        
-
         var anim = this.bottomThrusters.animations.add(
             'openThrusters', bottomThrustersOpenAnimationFrames, 10, false
         );
-        anim.onComplete = openThrustersOnCompleteSignal;
+        anim.onComplete.add(this.onThrustersOpenned, this);
 
         anim = this.bottomThrusters.animations.add(
             'closeThrusters', bottomThrustersCloseAnimationFrames, 10, false
         );
-        anim.onComplete = closeThrustersOnCompleteSignal;
+        anim.onComplete.add(this.onThrustersClosed, this);
 
         this.bottomThrusters.animations.add('loopThrusters', bottomThrustersLoopAnimationFrames, 10, true);
+        this.hideSprite(this.bottomThrusters);
+    },
+
+    playExplodeAnimation: function () {
+        var animationFrames = [];
+
+        for (var i = 0; i <= 13; i++) {
+            animationFrames.push('explosion' + i + '_148-158.png');
+        }
+
+        var anim = this.ship.animations.add('explode', animationFrames, 10, false);
+        anim.onComplete.add(this.onExplosionAnimationFinished, this);
+        this.ship.animations.play('explode');
+        this.hideSprite(this.leftThrusters);
         this.hideSprite(this.bottomThrusters);
     },
 
@@ -130,6 +154,15 @@ BasicGame.Player.prototype = {
     onThrustersClosed: function () {
         this.currentAnim = 'none';
         this.hideSprite(this.bottomThrusters);
+    },
+
+    onShipBeginContact: function () {
+        console.log('begin contact');
+    },
+
+    onExplosionAnimationFinished: function () {
+        this.hideSprite(this.ship);
+        // TODO: call game over screen.
     },
 
     hideSprite: function (sprite) {
@@ -172,8 +205,16 @@ BasicGame.Player.prototype = {
 
     onPlayerCollided: function () {
         this.blockInput = true;
-        this.ship.body.allowGravity = false;
-        this.ship.body.velocity.y = 0.0;
+        this.explode = true;
+        this.deathX = this.ship.x;
+        this.deathY = this.ship.y;
+        this.ship.body.velocity.x = 0;
+        this.ship.body.velocity.y = 0;
+        this.ship.body.gravity.y = 0;
+        ///this.ship.body.reset();
+        console.log('onPlayerCollided');
+        this.playThrustersCloseAnimation();
+        this.playExplodeAnimation();
     }, 
 
     clamp: function (x, min, max) {

@@ -1,15 +1,15 @@
 BasicGame.ObstaclesManager = function (gameManager, obstaclesGroup) {
-    var groundHeight = gameManager.cache.getImage('ground').height;
+    var groundHeight = 40;
 
     this.gameManager = gameManager;
     this.obstaclesGroup = obstaclesGroup;
     this.obstacles = new Array();
   
-    this._obstacleWidth = gameManager.cache.getImage('pipe').width;
+    this._obstacleWidth = 165;
     this._obstaclesHorizontalMargin = this._obstacleWidth * 2;
-    this._obstaclesVerticalMargin = 40;
+    this._obstaclesVerticalMargin = 82;
     this._obstaclesGap = 200;
-    this._obstaclesMinY = this._obstaclesGap / 2.0 + this._obstaclesVerticalMargin;
+    this._obstaclesMinY = this._obstaclesGap / 2.0 + this._obstaclesVerticalMargin + 3;
     this._obstaclesMaxY = gameManager.camera.height - this._obstaclesMinY - groundHeight;
 };
 
@@ -19,7 +19,7 @@ BasicGame.ObstaclesManager.prototype = {
     },
 
     create: function () {
-        var count = Math.ceil(this.gameManager.camera.width / this._obstaclesHorizontalMargin);
+        var count = Math.ceil(this.gameManager.camera.width / this._obstaclesHorizontalMargin) + 1;
         var obstacleWidth = this._obstacleWidth;
         var cameraWidth = this.gameManager.camera.width;
         
@@ -31,12 +31,11 @@ BasicGame.ObstaclesManager.prototype = {
             var obstacle = new BasicGame.Obstacle(this.gameManager,
                 								  this.obstaclesGroup);
             obstacle.create();
-            obstacle.setGap(cameraWidth + (obstacleWidth / 2.0) + i * this._obstaclesHorizontalMargin,
+            obstacle.setUp(cameraWidth + (obstacleWidth / 2.0) + i * this._obstaclesHorizontalMargin,
                 						   randomY,
                 						   this._obstaclesGap);
             this.obstacles.push(obstacle);
         }
-
     },
 
     update: function () {
