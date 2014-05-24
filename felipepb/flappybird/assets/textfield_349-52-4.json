@@ -1,0 +1,44 @@
+{"frames": [
+
+{
+	"filename": "textBoxPlaceholderActive_349-52.png",
+	"frame": {"x":7,"y":7,"w":349,"h":52},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":349,"h":52},
+	"sourceSize": {"w":349,"h":52}
+},
+{
+	"filename": "textBoxPlaceholderNone_349-52.png",
+	"frame": {"x":7,"y":68,"w":349,"h":52},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":349,"h":52},
+	"sourceSize": {"w":349,"h":52}
+},
+{
+	"filename": "textBoxTextActive_349-52.png",
+	"frame": {"x":7,"y":129,"w":349,"h":52},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":349,"h":52},
+	"sourceSize": {"w":349,"h":52}
+},
+{
+	"filename": "textBoxTextNone_349-52.png",
+	"frame": {"x":7,"y":190,"w":349,"h":52},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":349,"h":52},
+	"sourceSize": {"w":349,"h":52}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "textfield_349-52-4.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":256},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:a063a20ec201c50b5e5770bcb9740fed:6494d74fe7064fe3e8c015093daa2479:20802c126ffb21f5a6cd8c4824411ed2$"
+}
+}

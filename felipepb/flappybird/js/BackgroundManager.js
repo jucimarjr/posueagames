@@ -1,37 +1,66 @@
 BasicGame.BackgroundManager = function (gameManager) {
 	this.gameManager = gameManager;
 
-	this.phrases;
-	this.stars;
-	// this.city;
-    // this.trees;
-    // this.ground;
+	this.background;
+	this.parallaxLayers = new Array();
+	this.parallaxEffectLayers = new Array();
+	this.glitchFXAmount;
+	this.glitchFXStep;
 };
 
 BasicGame.BackgroundManager.prototype = {
 	create: function () {
-		// var cameraWidth = this.camera.width;
-  //       var cameraHeight = this.camera.height;
+		this.glitchFXAmount = 0.0;
+		this.glitchFXStep = 0.1;
+
+		var cameraWidth = this.gameManager.camera.width;
+        var cameraHeight = this.gameManager.camera.height;
+
+        this.background = this.gameManager.add.sprite(0, 0, 'backgroundColor');
+
+        var phrases = this.gameManager.add.tileSprite(0, 0, cameraWidth, cameraHeight, 'backgroundPhrases');
+        var phrasesEffect = this.gameManager.add.tileSprite(0, 0, cameraWidth, cameraHeight, 'backgroundPhrases');
+
+        var starsBig = this.gameManager.add.tileSprite(0, 0, cameraWidth, cameraHeight, 'backgroundPlanets');
+        var starsBigEffect = this.gameManager.add.tileSprite(0, 0, cameraWidth, cameraHeight, 'backgroundPlanets');
         
-  //       var cityHeight = this.cache.getImage('city').height;
-  //       var treesHeight = this.cache.getImage('trees').height;
-  //       var groundHeight = this.cache.getImage('ground').height;
+        var starsMedium = this.gameManager.add.tileSprite(0, 0, cameraWidth, cameraHeight, 'backgroundStarsMedium');
+		var starsMediumEffect = this.gameManager.add.tileSprite(0, 0, cameraWidth, cameraHeight, 'backgroundStarsMedium');
 
-  //       var cityY = cameraHeight - cityHeight - groundHeight;
-  //       var treesY = cameraHeight - groundHeight - treesHeight;
-  //       var groundY = cameraHeight - groundHeight;
+		var starsSmall = this.gameManager.add.tileSprite(0, 0, cameraWidth, cameraHeight, 'backgroundStarsSmall');
+		var starsSmallEffect = this.gameManager.add.tileSprite(0, 0, cameraWidth, cameraHeight, 'backgroundStarsSmall');
 
-        // this.city = this.add.tileSprite(0, cityY, cameraWidth, cityHeight, 'city');
-        // this.trees = this.add.tileSprite(0, treesY, cameraWidth, treesHeight, 'trees');
+        this.parallaxLayers.push(phrases);
+        this.parallaxEffectLayers.push(phrasesEffect);
 
-        // this.ground = this.add.tileSprite(0, groundY, cameraWidth, groundHeight, 'ground');
-        // this.physics.enable(this.ground, Phaser.Physics.ARCADE);
-        // this.ground.body.immovable = true;
+        this.parallaxLayers.push(starsBig);
+        this.parallaxEffectLayers.push(starsBigEffect);
+
+        this.parallaxLayers.push(starsMedium);
+        this.parallaxEffectLayers.push(starsMediumEffect);
+
+        this.parallaxLayers.push(starsSmall);
+        this.parallaxEffectLayers.push(starsSmallEffect);
 	},
 
 	update: function () {
-		// this.ground.tilePosition.x += BasicGame.Obstacle.velocity;
-        // this.trees.tilePosition.x += BasicGame.Obstacle.velocity / 4.0;
-        // this.city.tilePosition.x += BasicGame.Obstacle.velocity / 8.0;	
-	}
+		for (var i = 0; i < this.parallaxLayers.length; i ++) {
+			this.parallaxLayers[i].tilePosition.x += BasicGame.Obstacle.velocity / (i + 2);
+		}
+
+		for (var i = 0; i < this.parallaxEffectLayers.length; i ++) {
+			var offsetX = this.random(-this.glitchFXAmount, this.glitchFXAmount);
+			var offsetY = this.random(-this.glitchFXAmount, this.glitchFXAmount);
+			this.parallaxEffectLayers[i].tilePosition.x = this.parallaxLayers[i].tilePosition.x + offsetX;
+			this.parallaxEffectLayers[i].tilePosition.y = this.parallaxLayers[i].tilePosition.y + offsetY;
+		}			
+	},
+
+	random: function (from, to) {
+        return Math.floor(Math.random() * (to - from + 1) + from);
+    },
+
+    increaseGlitchFX: function () {
+    	this.glitchFXAmount += this.glitchFXStep;
+    }
 };

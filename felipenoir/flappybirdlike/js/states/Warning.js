@@ -1,35 +1,26 @@
 var warningState = {
 
 	preload : function() {
-		this.style = {
-			font : "55px Arial",
-			fill : "#FFFFFF",
-			align : "center"
-		};
+		game.load.image('warning', 'assets/warning.png');
 	},
 
 	create : function() {
-		text = this.game.add.text(this.game.world.centerX,
-				this.game.world.centerY, "THE FOLLOWING GAME\n"
-						+ "MAKES NO APOLOGY TO\nDRUGS, CONTAINS COARSE\n"
-						+ "LANGUAGE AND DUE TO\nITS CONTENT IT SHOULD\n"
-						+ "NOT BE PLAYED BY ANYONE", this.style);
+		var warning = game.add.sprite(0, 0, 'warning');
 
-		text.anchor.set(0.5);
-		text.alpha = 0;
+		warning.alpha = 0;
 
-		t1 = this.game.add.tween(text);
+		t1 = this.game.add.tween(warning);
 		t1.to({
 			alpha : 1
 		}, 2000, Phaser.Easing.Linear.None, true);
-		t1.onComplete.add(secondTween, text, this);
+		t1.onComplete.add(secondTween, warning, this);
 
 	},
 
 };
 
-function secondTween(text) {
-	t2 = this.game.add.tween(text);
+function secondTween(warning) {
+	t2 = this.game.add.tween(warning);
 	t2.to({
 		alpha : 0
 	}, 2000, Phaser.Easing.Linear.None, true, 5000, 0);

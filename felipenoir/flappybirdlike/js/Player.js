@@ -17,8 +17,8 @@ Player.prototype = {
 		this.sprite.animations.add('jump', [ 2 ], 2, true);
 		// physics
 		game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-		this.sprite.body.acceleration.y = 3000;
-		this.sprite.body.gravity.y = 1000;
+		this.sprite.body.acceleration.y = 2000;
+		this.sprite.body.gravity.y = 400;
 		this.sprite.body.collideWorldBounds = true;
 
 		// Audio
@@ -27,9 +27,9 @@ Player.prototype = {
 
 	update : function() {
 
-		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)
+				&& (this.sprite.body.touching.down || this.sprite.body.velocity.y > 100)) {
 			this.sprite.body.velocity.y = -1000;
-			// this.sprite.body.velocity.x = 10;
 			this.audioVoar.play();
 		}
 

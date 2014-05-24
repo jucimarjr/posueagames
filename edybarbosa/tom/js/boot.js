@@ -18,9 +18,12 @@ var music;
 
 var loading;
 var iniciar;
+var restart;
+var iniciarBlink = true;
 var i;
 var a;
 var s;
+var r;
 
 WebFontConfig = {
 

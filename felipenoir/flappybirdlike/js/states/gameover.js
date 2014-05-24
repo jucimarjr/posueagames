@@ -1,17 +1,19 @@
 var gameoverState = {
 
 	preload : function() {
-		this.style = {
-			fill : '#ffffff'
-		};
+		game.load.image('gameover', 'assets/gameover.png');
+		game.load.image('blink', 'assets/gameover_blink.png');
 	},
 
 	create : function() {
-		text = game.add.text(game.world.centerX, game.world.centerY,
-				"vc perdeu!!!", this.style);
-		text.anchor.set(0.5);
+		game.add.sprite(0, 0, 'gameover');
+		var blink = game.add.sprite(0, 0, 'blink');
+		blink.alpha = 0;
+		game.add.tween(blink).to({
+			alpha : 1
+		}, 500, Phaser.Easing.Linear.None, true, 0, 2000, true);
 	},
-	
+
 	update : function() {
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			game.state.start('play');

@@ -5,6 +5,7 @@ var create = {
     arrows : null,
     nearBackground : null,
     farBackground : null,
+    score : 0,
 
     init : function(){
         //game defs
@@ -40,7 +41,7 @@ var create = {
             'peixes5'
         ];
 
-        // Timer NPCs: passando atrás do jogador
+        // Timer NPCs: passando atr��s do jogador
         this.npcTimer = game.time.events.loop(900, this.createNPC, this);
         this.npc_group = game.add.group();
 
@@ -69,7 +70,7 @@ var create = {
         this.player.animations.add('swim', [0, 1, 2, 3], 10, true);
         this.player.animations.add('shock', [5, 6], 30, true);
         this.player.animations.play('swim');
-        // anima����o de rota����o para cima, quando o jogador pula
+        // anima������������o de rota������������o para cima, quando o jogador pula
         this.player.rotateAnim = game.add.tween(this.player).to({angle: -15}, 300);
         // adicionando player a classe update
         update.player = this.player;
@@ -93,6 +94,8 @@ var create = {
             default:
                 this.createAriranha(enemySpeedMultiplier, enemyEasingFunction);
         }
+        
+        this.score += 1;
     },
 
     //criacao dos inimigos
@@ -115,7 +118,7 @@ var create = {
         ariranha.anchor.setTo(0.5, 0.5);
         ariranha.animations.add('swim', [0, 1], 5, true);
         ariranha.animations.play('swim');
-        game.add.tween(ariranha) //anima����o da ariranha descendo
+        game.add.tween(ariranha) //anima������������o da ariranha descendo
             .to({y: 390, angle: -20}, 1000, this.easingFunctions[easingIndex], false, 500) // em 500ms, descer e apontar angulo para cima, levando 1000ms
             .to({y: 290, angle: 20}, 1000) // subir e apontar angulo para baixo, em 1000ms
             .to({y: 190, angle: 0}, 500) // voltar a altura normal, zerar angulo
@@ -130,7 +133,7 @@ var create = {
         arraia.anchor.setTo(0.5, 0.5);
         arraia.animations.add('swim', [0, 1, 2, 3], 5, true);
         arraia.animations.play('swim');
-        game.add.tween(arraia) // anima����o da arraia subindo
+        game.add.tween(arraia) // anima������������o da arraia subindo
             .to({y: 470, angle: 20}, 1000, this.easingFunctions[easingIndex], false, 500) // em 500ms, subir e apontar angulo para baixo, levando 1000ms
             .to({y: 570, angle: -20}, 1000) // descer e apontar angulo para cima, em 1000ms
             .to({y: 670, angle: 0}, 500) // voltar a altura normal, zerar angulo
@@ -165,6 +168,7 @@ var create = {
 
         this.enemy_group = game.add.group();
         this.createPlayer();
+        this.score = 0;
     },
 
     // numero aleatorio entre [max, min]
