@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="24" height="48" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="textura" tilewidth="40" tileheight="40">
+  <tileoffset x="40" y="40"/>
+  <image source="Assets/textura.png" width="240" height="40"/>
+ </tileset>
+ <tileset firstgid="7" name="textura" tilewidth="40" tileheight="40">
+  <tileoffset x="40" y="40"/>
+  <image source="Assets/textura.png" width="240" height="40"/>
+ </tileset>
+ <tileset firstgid="13" name="coxa" tilewidth="20" tileheight="20">
+  <tileoffset x="20" y="20"/>
+  <image source="Assets/coxa.png" width="20" height="20"/>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="24" height="48">
+  <data encoding="base64" compression="zlib">
+   eJztVtsKhTAMU1D//5N9UVDpJWk7HcxAXs66pBfP6DTdsR6sxirQOv9hQ+qn12NUqzKv0RGdSSvvL2fTQw49YQGY0dwcRrQ9zYw+o33qzwKfkGJQIt8s+hZXvNfRN9271zI+Unurnkv3r7+9pS8h2h/Nj/XQYqz7jAejYdXE+qN6iDaqz9Sb1WFnxc4X0WBnpGmgHp6/V5N3XpkL8p/TckI90BgPmbuaFntWhcpaGKD7W2Tne+5gFti9TNrvkB01Q3bnG42tsQPm8gmM
+  </data>
+ </layer>
+ <objectgroup name="Camada de Objetos 1" width="24" height="48">
+  <object gid="13" x="526" y="52"/>
+  <object gid="13" x="551" y="49"/>
+  <object gid="13" x="481" y="40"/>
+ </objectgroup>
+</map>
