@@ -62,13 +62,13 @@ function create() {
     timerBarra.animations.add('fase1', [0], 1, true);
     timerBarra.animations.add('fase2', [1], 1, true);
     timerBarra.animations.add('fase3', [2], 1, true);
-    timerBarra.animations.add('fase4', [3], 1, false);
-    timerBarra.animations.add('fase5', [4], 1, false);
-    timerBarra.animations.add('fase6', [5], 7, false);
-    timerBarra.animations.add('fase7', [6], 7, false);
-    timerBarra.animations.add('fase8', [7], 7, false);
-    timerBarra.animations.add('fase9', [8], 7, false);
-    timerBarra.animations.add('fase10', [9], 7, false);
+    timerBarra.animations.add('fase4', [3], 1, true);
+    timerBarra.animations.add('fase5', [4], 1, true);
+    timerBarra.animations.add('fase6', [5], 7, true);
+    timerBarra.animations.add('fase7', [6], 7, true);
+    timerBarra.animations.add('fase8', [7], 7, true);
+    timerBarra.animations.add('fase9', [8], 7, true);
+    timerBarra.animations.add('fase10', [9], 7, true);
     timerBarra.animations.play('fase1');
 
     var style = { font: "20px Arial Bold", fill: "#ffffff" };
@@ -146,27 +146,35 @@ function addScore() {
         this.labelScore.setText(score);
 
         if (score >= 90) {
+            tileSpeedRiver = 5.5;
             timerBarra.play('fase10')
         }
         else if (score >= 80) {
+            tileSpeedRiver = 5;
             timerBarra.play('fase9');
         }
         else if (score >= 70) {
+            tileSpeedRiver = 4.5;
             timerBarra.play('fase8');
         }
         else if (score >= 60) {
+            tileSpeedRiver = 4;
             timerBarra.play('fase7');
         }
         else if (score >= 50) {
+            tileSpeedRiver = 3.5;
             timerBarra.play('fase6');
         }
         else if (score >= 40) {
+            tileSpeedRiver = 3;
             timerBarra.play('fase5');
         }
         else if (score >= 30) {
+            tileSpeedRiver = 2.5;
             timerBarra.play('fase4');
         }
         else if (score >= 20) {
+            tileSpeedRiver = 2;
             timerBarra.play('fase3');
         }
         else if (score >= 10) {
@@ -184,9 +192,9 @@ function addEnemies() {
         var max = game.world.width - jungleWidth - enemie.body.width;
         var min = jungleWidth;
         var positionX = Math.round(Math.random() * (max - min)) + min;
-        var positionY = -80;
+        positionY = -70;
 
-        enemie.reset(positionX, -80);
+        enemie.reset(positionX, positionY);
     }
 
 }
@@ -283,7 +291,7 @@ function sleep(milliseconds) {
 }
 
 function gameOv() {
-    
+    tileSpeedRiver = 1.5;
     boat.kill();
     game.state.start('gameOver');
 }
