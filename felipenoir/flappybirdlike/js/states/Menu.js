@@ -3,6 +3,7 @@ var audioMenu;
 var menuState = {
 
 	preload : function() {
+		game.load.image('title', 'assets/title.png')
 		game.load.image('menu', 'assets/menu.png');
 		game.load.image('enter_game', 'assets/enter_game.png');
 		game.load.audio('audioMenu', 'assets/song_menu_otimizada.mp3');
@@ -18,6 +19,8 @@ var menuState = {
 		spaceBar.onDown.add(this.start, this);
 
 		game.add.sprite(0, 0, 'menu');
+		var title = game.add.sprite(game.world.centerX, 70, 'title');
+		title.anchor.set(0.5);
 
 		var enterGame = game.add.sprite(0, 0, 'enter_game');
 		enterGame.alpha = 0;
