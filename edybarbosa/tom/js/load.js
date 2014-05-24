@@ -26,7 +26,7 @@ Game.Load.prototype = {
 	},
 	fileComplete: function (progress, cacheKey, success, totalLoaded, totalFiles) {
 
-		loading.setText("Carregando arquivos: " + progress + "% - " + totalLoaded + " out of " + totalFiles);
+		loading.setText("Carregando arquivos: " + progress + "% - " + totalLoaded + " de " + totalFiles);
 
 	},
 	loadComplete: function () {
