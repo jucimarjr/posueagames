@@ -123,19 +123,10 @@
             if (this.score_text) {
                 this.score_text.setText("Score: " + this.score);
             }
-
-            //FIXME: Choose a way to update weapons
-            /*if (this.score % 10 == 0) {
-                if (this.weaponFactory.hasWeapon()) {
-                    this.weapon = this.weaponFactory.nextWeapon();
-                }
-            }*/
         },
 
         start: function() {
 
-
-            // /this.player_tween.pause();
             this.player_tween.stop();
 
             this.isStarted = true;
