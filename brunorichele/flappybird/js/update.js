@@ -2,8 +2,10 @@ var update = {
     player : null,
     enemyTimer: null,
     status: null,
+    score: 0 ,
+    
     update : function(){
-        // fazer o angulo apontar para baixo quando o jogador n��o esta pulando
+        // fazer o angulo apontar para baixo quando o jogador n������o esta pulando
         if(this.player.angle < 20){
             this.player.angle += 1;
         }
@@ -15,6 +17,10 @@ var update = {
         game.physics.arcade.overlap(this.player, create.enemy_group, update.collisionEnemyGroup);
         update.collisionFloor();
         if(this.player.y < 200) this.player.y = 200;
+        
+        var style = { font: "40px helvetica", fill: "#ffffff" };
+        this.score = game.add.text(20, 20, "Pontos:" + create.score, style);
+        
     },
     collisionEnemyGroup : function(player, enemy){
         if(player && player.alive){
