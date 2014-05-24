@@ -265,11 +265,13 @@
                 return;
             }
 
+            this.powerUpProgress -= 2;
+
             this.powerUpFill.beginFill(0xF7931E, 1);
             this.powerUpFill.drawRect(13, 13, 226, 24);
 
             this.powerUpFill.beginFill(0x000000, 1);
-            this.powerUpFill.drawRect(13, 13, (--this.powerUpProgress*226)/100, 24);
+            this.powerUpFill.drawRect(13, 13, (this.powerUpProgress*226)/100, 24);
         },
 
         restart: function () {
