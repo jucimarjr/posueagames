@@ -58,7 +58,7 @@ var update = {
         }
     },
     createGameOverButtons : function(){
-        startY = game.camera.y - 140;
+        startY = game.camera.y - 80;
         this.pointWall = game.add.sprite(180, startY + 120, 'placapontos');
 
         this.buttonJogar = game.add.sprite(320, startY + 520, 'botaojogar');
@@ -75,6 +75,7 @@ var update = {
         this.buttonJogar.kill();
         this.buttonInicio.kill();
         this.pointWall.kill();
+        create.bgmusic.stop();
         game.state.start('menu');
     },
     resetGame: function(){

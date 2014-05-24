@@ -57,6 +57,8 @@ var create = {
             Phaser.Easing.Quartic.In,
             Phaser.Easing.Quintic.In,
         ]
+        this.bgmusic = game.add.audio('bgmusic');
+        this.bgmusic.play();
     },
     createPlayer : function(){
         this.player = game.add.sprite(350, 200, 'pirarucu');
@@ -70,7 +72,7 @@ var create = {
         this.player.animations.add('swim', [0, 1, 2, 3], 10, true);
         this.player.animations.add('shock', [5, 6], 30, true);
         this.player.animations.play('swim');
-        // anima������������o de rota������������o para cima, quando o jogador pula
+        // animacao de rotacao para cima, quando o jogador pula
         this.player.rotateAnim = game.add.tween(this.player).to({angle: -15}, 300);
         // adicionando player a classe update
         update.player = this.player;
