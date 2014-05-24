@@ -169,7 +169,7 @@
 
             value = Utils.randomIntFromInterval(0, 10);
 
-            if (value <= 8) {
+            if (value < 9) {
                 y = Math.round(Math.random() * (this.game.height - 94));
                 this.addEnemy(x, y);
             } else {
@@ -186,7 +186,7 @@
             this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
 
             enemy.reset(x, y);
-            enemy.body.velocity.x = -700;
+            enemy.body.velocity.x = -1000;
             enemy.checkWorldBounds = true;
             enemy.outOfBoundsKill = true;
         },
