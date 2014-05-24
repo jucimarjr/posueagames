@@ -9,6 +9,9 @@ BasicGame.MainMenu = function (game) {
     
     this.playerTextFieldBoundingBox;
     this.belovedTextFieldBoundingBox;
+
+    this.confirmSFX;
+    this.negateSFX;
 };
 
 BasicGame.MainMenu.backspaceKey = 8;
@@ -72,6 +75,9 @@ BasicGame.MainMenu.prototype = {
 
         this.belovedTextFieldBoundingBox = new Phaser.Rectangle(this.belovedTextField.x, this.belovedTextField.y,
                                                                 this.belovedTextField.width, this.belovedTextField.height);
+
+        this.confirmSFX = this.game.add.sound('blip_01');
+        this.negateSFX = this.game.add.sound('blip_02');
     },
     
     setCurrentTextField: function (bitmapText) {
@@ -93,6 +99,11 @@ BasicGame.MainMenu.prototype = {
             // console.log('none');
             this.textFieldCursor.visible = false;
         }
+
+        if (bitmapText !== null)
+            this.confirmSFX.play();
+        else
+            this.negateSFX.play();
         
         //this.updateTextFieldProperties(this.playerTextField, player);
         //this.updateTextFieldProperties(this.belovedTextField, beloved);
@@ -152,9 +163,11 @@ BasicGame.MainMenu.prototype = {
         
         if (this.currentBitmapText) {
             if (keyCode == BasicGame.MainMenu.backspaceKey) {
+                this.negateSFX.play();
                 this.currentBitmapText.text = this.currentBitmapText.text.substr(0, this.currentBitmapText.text.length - 1);
             } else if (keyCode >= BasicGame.MainMenu.letterAKey && keyCode <= BasicGame.MainMenu.letterZKey) {
                 this.currentBitmapText.text += letter.toLowerCase();
+                this.confirmSFX.play();
             }
             this.currentBitmapText.text = this.currentBitmapText.text.substr(0, maximumNameLength);
         }
@@ -166,13 +179,17 @@ BasicGame.MainMenu.prototype = {
         var playerName = this.player.text ? this.player.text.trim() : null;
         var belovedName = this.beloved.text ? this.beloved.text.trim() : null;
 
+
         if (!playerName || playerName.length == 0) {
             alert('Enter your name');
             this.currentBitmapText = this.player;
+            this.negateSFX.play();
         } else if (!belovedName || belovedName.length == 0) {
             alert('Enter your beloved name');
             this.currentBitmapText = this.beloved;
+            this.negateSFX.play();
         } else {
+            this.confirmSFX.play();
             BasicGame.MainMenu.playerName = playerName;
             BasicGame.MainMenu.belovedName = belovedName;
             this.state.start('GameManager');
