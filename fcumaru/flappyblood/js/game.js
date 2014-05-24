@@ -1,4 +1,4 @@
-var game = new Phaser.Game(960, 600, Phaser.AUTO, '');
+var game = new Phaser.Game(960, 600, Phaser.AUTO, 'game_div');
 var userScore;
 var highScore = 0;
 
