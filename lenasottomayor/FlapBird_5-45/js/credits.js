@@ -1,4 +1,4 @@
-var cred = { create: create, update: update };
+var creditsGame = { create: create, update: update };
 
 function create() {
 	credit = game.add.sprite(0, 0, 'creditscreen');
