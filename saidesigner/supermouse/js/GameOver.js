@@ -24,9 +24,9 @@ SuperMouse.GameOver.prototype.create = function() {
 	scoreText.text = score;
 	scoreText.anchor.setTo(.5,.5);
 	
-	var btShare = this.add.button(685, 25, 'bt_share', this.buttonShareOnClick, this);
-	btShare.inputEnabled = true;
-    btShare.input.useHandCursor = true;
+	//var btShare = this.add.button(685, 25, 'bt_share', this.buttonShareOnClick, this);
+	//btShare.inputEnabled = true;
+    //btShare.input.useHandCursor = true;
 
 	var btTryAgain = this.add.button(269, 520, 'bt_try_again', this.buttonTryAgainOnClick, this);
 	btTryAgain.inputEnabled = true;
@@ -36,7 +36,7 @@ SuperMouse.GameOver.prototype.create = function() {
 	Utils.reviveCheese(this, this.cheeses, -20, 0);
 	Utils.reviveRat(this, this.rats, -20, 0);
 	
-	this.time.events.add(Phaser.Timer.SECOND * 3, this.playMusicTheme, this);
+	this.time.events.add(Phaser.Timer.SECOND * 2, this.playMusicTheme, this);
 };
 
 SuperMouse.GameOver.prototype.update = function() {

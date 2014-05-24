@@ -21,7 +21,7 @@ SuperMouse.Credits.prototype.create = function() {
 	this.add.sprite(60, 30, 'supermouse2');
 	this.add.sprite(350, 35, 'logo');
 
-	var text = Utils.createText(this, 300, 300, 30, '#ffffff', '#aaaaaa');
+	var text = Utils.createText(this, 250, 320, 30, '#ffffff', '#aaaaaa');
 
 	text.text = 'ARTE GRÁFICA\nSaid Mendonça\nDESENVOLVIMENTO\nSirineo Filho\nCleocimar Silva';
 	text.align = 'center';

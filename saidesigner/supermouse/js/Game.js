@@ -57,12 +57,12 @@ SuperMouse.Game.prototype.create = function() {
 
 	this.flySnd = this.add.audio('fly_sound', 1, false);
 	this.flySnd.addMarker("fly", 0.1, 3.9, 1, false);
-	this.alertSnd = this.add.audio('alert', 0.2, true);
+	this.alertSnd = this.add.audio('alert', 0.1, true);
 	this.breakBoneSnd = this.add.audio('break_bone', 1, false);
 	gameoverSnd = this.add.audio('game_over', 1, false);
 	this.ratSnd = this.add.audio('rat', 1, false);
 	this.eatSnd = this.add.audio('eat', 1, false);
-	this.eatSnd.addMarker("eating", 1, 3, 1, false);
+	this.eatSnd.addMarker("eating", 1, 2, 1, false);
 
 	// Score
 	
@@ -149,7 +149,7 @@ SuperMouse.Game.prototype.collisionHandler = function(source, target) {
 
 	if (this.player.health <= 10) {
 		this.player.animations.play('fly5');
-	} else if (this.player.health <= 30) {
+	} else if (this.player.health <= 40) {
 		if (!this.alertSnd.isPlaying) {
 			this.alertSnd.play();
 		}

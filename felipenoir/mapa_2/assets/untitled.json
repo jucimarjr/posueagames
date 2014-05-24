@@ -10,6 +10,255 @@
          "width":48,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":15,
+         "name":"Camada de Objetos 1",
+         "objects":[
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":884,
+                 "y":317
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":439,
+                 "y":349
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":356,
+                 "y":353
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":683,
+                 "y":401
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1118,
+                 "y":411
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1041,
+                 "y":366
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1285,
+                 "y":249
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1201,
+                 "y":206
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1121,
+                 "y":162
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1037,
+                 "y":159
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":959,
+                 "y":161
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":883,
+                 "y":135
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":796,
+                 "y":104
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":728,
+                 "y":99
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":636,
+                 "y":91
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1360,
+                 "y":253
+                }, 
+                {
+                 "gid":3,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1446,
+                 "y":250
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":48,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":
@@ -20,7 +269,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"tile.png",
+         "image":"..\/..\/tiledmap\/assets\/tile.png",
          "imageheight":40,
          "imagewidth":124,
          "margin":0,
