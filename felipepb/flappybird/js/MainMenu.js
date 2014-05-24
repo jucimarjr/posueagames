@@ -39,7 +39,8 @@ BasicGame.MainMenu.prototype = {
                                                this,
                                                'buttonPlayHover_314-66.png',
                                                'buttonPlayNone_314-66.png',
-                                               'buttonPlayActive_314-66.png');
+                                               'buttonPlayActive_314-66.png',
+                                               'buttonPlayNone_314-66.png');
     },
     
     handleTextFieldsInput: function (args) {
@@ -71,7 +72,7 @@ BasicGame.MainMenu.prototype = {
     onPlayButtonClicked: function (button) {
         var playerName = this.player.text ? this.player.text.trim() : null;
         var belovedName = this.beloved.text ? this.beloved.text.trim() : null;
-
+        
         if (!playerName || playerName.length == 0) {
             alert('Enter your name');
             this.currentBitmapText = this.player;
