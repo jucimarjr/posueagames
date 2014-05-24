@@ -1,4 +1,4 @@
-﻿var GameMenu = { preload: preload, create: create, start: start, credits: credits};
+﻿var GameMenu = { preload: preload, create: create, start: start};
 
 function preload() {
     game.load.image('initBg', 'assets/bg/initBg_900-600.jpg');
@@ -21,12 +21,12 @@ function create() {
     spacebar_keyboar.onDown.add(start, this);*/
 }
 
-
 // Começa o jogo
 function start() {
     console.log("menu start");
     game.state.start('fase');
 }
+
 function credits() {
     console.log("credits");
     game.state.start('credits');
