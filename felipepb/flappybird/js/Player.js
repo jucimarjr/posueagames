@@ -182,9 +182,10 @@ BasicGame.Player.prototype = {
         if (this.blockInput)
             return;
 
+        var mouseLeftButton = this.gameManager.game.input.activePointer;
         var keyboard = this.keyboard;
         var thrustersKey = BasicGame.Player.thrustersKey;
-        var hasInput = keyboard.isDown(thrustersKey);
+        var hasInput = keyboard.isDown(thrustersKey) || mouseLeftButton.isDown;
 
         if (hasInput) {
             this.ship.body.force.y = BasicGame.GameManager.thrusterForce;
