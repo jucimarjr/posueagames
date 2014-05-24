@@ -6,8 +6,8 @@ Game.Menu.prototype = {
 
 	   	game.add.sprite(0, 0, 'abertura');
 
-	    curto = game.add.text(850, 50, '(a) Pulo curto ', { font: '15px Nunito', fill: '#FFFFFF' });
-	    longo = game.add.text(850, 70, '(s) Pulo longo', { font: '15px Nunito', fill: '#FFFFFF' });
+	    curto = game.add.text(850, 20, '(a) Pulo curto ', { font: '15px Nunito', fill: '#FFFFFF' });
+	    longo = game.add.text(850, 40, '(s) Pulo longo', { font: '15px Nunito', fill: '#FFFFFF' });
 
 		iniciar = game.add.sprite(30, h-200,'iniciar');
 		iniciar.animations.add('run');
