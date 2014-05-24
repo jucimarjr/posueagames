@@ -48,16 +48,16 @@ function create() {
 
     jump_sound = this.game.add.audio('flap_song');
 
-    this.timer = this.game.time.events.loop(2000, add_obstacle, this);
+    this.timer = this.game.time.events.loop(3000, add_obstacle, this);
     timerPowerUp = this.game.time.events.loop(15000, add_power_up, this);
     
     //bloqueia novos obstaculos por 3 ataques do boss e depois o jogo volta ao normal IMPORTANTE P/ MINI BOSS!!!!!!!!!!!!!!!!!!!!11111
     /*SEQUENCIA IMPORTANTE P/ MINI BOSS!!!!!!!!!!!!!!!!!!!!11111 */
-    game.time.events.remove(this.timer);
-    countHeadButts = 0;
-    bossFight();
-    bossBackground = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('bossbg').height, 'bossbg');
-    game.physics.arcade.enable(bossBackground); 
+//    game.time.events.remove(this.timer);
+//    countHeadButts = 0;
+//    bossFight();
+//    bossBackground = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('bossbg').height, 'bossbg');
+//    game.physics.arcade.enable(bossBackground); 
 }
 
 // Start the actual game
@@ -70,25 +70,25 @@ function update() {
 	
     playerSprite.animations.play('walk');
 
-    if ((bossSprite != null) && (bossSprite.exists === true)) {
-        game.physics.arcade.overlap(bossSprite, playerSprite, playerDies, null, this);
-        if (bossDirection >= 0.5) {
-            if (bossSprite.body.position.y < 230) { //começa p/ cima
-                bossSprite.body.velocity.y = 100;
-                bossSprite.frame = 0;
-            } else if (bossSprite.body.position.y >= 600 && countHeadButts < 3) {
-                bossFight();
-            }
-
-        } else {
-            if (bossSprite.body.position.y > 370) {
-                bossSprite.body.velocity.y = -100;
-                bossSprite.frame = 0;
-            } else if (bossSprite.body.position.y <= 0 && countHeadButts < 3) {
-                bossFight();
-            }
-        }
-    }
+//    if ((bossSprite != null) && (bossSprite.exists === true)) {
+//        game.physics.arcade.overlap(bossSprite, playerSprite, playerDies, null, this);
+//        if (bossDirection >= 0.5) {
+//            if (bossSprite.body.position.y < 230) { //começa p/ cima
+//                bossSprite.body.velocity.y = 100;
+//                bossSprite.frame = 0;
+//            } else if (bossSprite.body.position.y >= 600 && countHeadButts < 3) {
+//                bossFight();
+//            }
+//
+//        } else {
+//            if (bossSprite.body.position.y > 370) {
+//                bossSprite.body.velocity.y = -100;
+//                bossSprite.frame = 0;
+//            } else if (bossSprite.body.position.y <= 0 && countHeadButts < 3) {
+//                bossFight();
+//            }
+//        }
+//    }
 
     if (playersGroup != null) {
         playersGroup.callAll('animations.play', 'animations', 'walk');
@@ -215,27 +215,31 @@ function add_obstacle() {
             obstacle1 = plataformas.create(950, game.world.randomY, 'obstacle1');
             game.physics.enable(obstacle1, Phaser.Physics.ARCADE);
             obstacle1.body.velocity.x = -500;
-            addOutBoundEvent(obstacle1);
+            obstacle1.checkWorldBounds = true;
+            obstacle1.outOfBoundsKill = true;
             break;
         case 1:
             obstacle2 = plataformas.create(950, game.world.randomY, 'obstacle2');
             game.physics.enable(obstacle2, Phaser.Physics.ARCADE);
             obstacle2.body.velocity.x = -600;
-            addOutBoundEvent(obstacle2);
+            obstacle2.checkWorldBounds = true;
+            obstacle2.outOfBoundsKill = true;
             break;
         case 2:
             obstacle3 = plataformas.create(950, 250, 'obstacle3');
             game.physics.enable(obstacle3, Phaser.Physics.ARCADE);
             obstacle3.scale.setTo(1.2, 1.2);
             obstacle3.body.velocity.x = -100;
-            addOutBoundEvent(obstacle3);
+            obstacle3.checkWorldBounds = true;
+            obstacle3.outOfBoundsKill = true;
             break;
         case 3:
             obstacle4 = plataformas.create(950, 405, 'obstacle4');
             game.physics.enable(obstacle4, Phaser.Physics.ARCADE);
             obstacle4.body.velocity.x = -100;
             obstacle4.scale.setTo(1, 1);
-            addOutBoundEvent(obstacle4);
+            obstacle4.checkWorldBounds = true;
+            obstacle4.outOfBoundsKill = true;
             break;
         default:
             break;
