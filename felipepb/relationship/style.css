@@ -1,0 +1,87 @@
+/*  
+Theme Name: Breakup Game
+Theme URI: http://www.breakupgame.com
+Description: Breakup Game Page Theme
+Version: 1.0
+Author: Felipe Barcellos
+Author Contact: felipe.p.barcellos@gmail.com
+*/
+
+/* @font-face {
+  font-family: "Silkscreen";
+  src: url("./Silkscreen.ttf") format("truetype");
+} */
+
+/*
+basic structure of the page
+*/
+
+body {
+	background: #E3E3E3;
+	margin: 0;
+	padding:0;
+	font-family: Verdana, Geneva, sans-serif
+	/* "System", "VT-100", monospace;*/
+	color: #fff;
+	font-size: 100%;
+	font-weight: 400;
+}
+
+.container {
+	width: 100%;
+	margin:0;
+	padding:0;
+	float:left;
+	height:100%;
+}
+
+.site {
+	width: 990px;
+	margin: 0 auto;
+	padding:0;
+}
+
+.header {
+	width: 100%;
+	margin: 1% 0;
+	padding: 0;
+	float: left;
+	font-family: "Silkscreen";
+}
+
+.content {
+	width: 100%;
+	margin: 1% 0;
+	padding: 0;
+	float: left;
+}
+
+.footer {
+	width: 100%;
+	margin: 1% 0;
+	padding: 0;
+	float: left;
+}
+
+/* 
+content styles
+*/
+
+#game {
+	background-color: #fff;
+	width: 960px;
+	height: 600px;
+	color: #000;
+	float: left;
+	margin: 0 15px 0 15px;
+	box-shadow: 0px 0px 3px #888888;
+}
+
+#credits {
+	width: 960px;
+	color: #777;
+	margin: 0 15px 0 15px;
+	text-align: left;
+	float: left;
+	font-size: 14px;
+}
