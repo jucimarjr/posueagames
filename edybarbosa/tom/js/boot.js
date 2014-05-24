@@ -24,6 +24,7 @@ var i;
 var a;
 var s;
 var r;
+var fim;
 
 WebFontConfig = {
 
