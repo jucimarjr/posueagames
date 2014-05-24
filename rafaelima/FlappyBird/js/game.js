@@ -14,6 +14,7 @@ var sound_flag = true;
 var jump_sound;
 var countHeadButts = 0;
 var bossDirection;
+
 //text
 var text_sound;
 
@@ -43,6 +44,12 @@ var powerUp2;
 var powerUp3;
 var powerUp4;
 
+//menu
+var buttonPlay;
+var buttonCredits;
+var cloud;
+var isPlay;
+
 var img_sound;
 
 // Define all the states
@@ -53,4 +60,4 @@ game.state.add('play', play_state);
 game.state.add('score', score_state);  
 
 // Start with the 'load' state
-game.state.start('load');
+game.state.start('menu');

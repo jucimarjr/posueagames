@@ -14,7 +14,8 @@ BasicGame.Preloader.prototype = {
         //	These are the assets we loaded in Boot.js
         //	A nice sparkly background and a loading progress bar
         this.background = this.add.sprite(0, 0, 'preloaderBackground');
-        this.preloadBar = this.add.sprite(300, 400, 'preloaderBar');
+        this.preloadBar = this.add.sprite(this.game.camera.width / 2.0 - 148 / 2.0,
+                                          this.game.camera.height - 60 - 40, 'preloaderBar');
 
         //	This sets the preloadBar sprite as a loader sprite.
         //	What that does is automatically crop the sprite from 0 to full-width
@@ -23,20 +24,29 @@ BasicGame.Preloader.prototype = {
 
         //	Here we load the rest of the assets our game needs.
         //	As this is just a Project Template I've not provided these assets, swap them for your own.
-        this.load.image('ground', 'assets/ground.png');
-        this.load.image('pipe', 'assets/pipe.png');
-        this.load.atlas('shipAtlas', 'assets/shipatlas_512-512-20.png', 'assets/shipatlas_512-512-20.json');
-        this.load.image('backgroundColor', 'assets/backgroundcolor_960-600.png');
+        this.load.atlas('playButton', 'assets/playbutton_512-256-3.png', 'assets/playbutton_512-256-3.json');
+        this.load.atlas('tryAgain', 'assets/tryagain_512-256-3.png', 'assets/tryagain_512-256-3.json');
+        this.load.atlas('textField', 'assets/textfield_349-52-4.png', 'assets/textfield_349-52-4.json');
+        this.load.image('mainMenu', 'assets/splash_960-600.png');
+        this.load.image('endGame', 'assets/endgame_960-600.png');
+        this.load.atlas('mainGameAtlas', 'assets/maingameatlas_512-1024.png', 'assets/maingameatlas_512-1024.json');
+        this.load.atlas('lightningAtlas', 'assets/lightningatlas_128x256.png', 'assets/lightningatlas_128x256.json');
+        
+  		this.load.image('backgroundColor', 'assets/backgroundcolor_960-600.png');
+        
         this.load.image('backgroundPhrases', 'assets/backgroundphrases_960-600.png');
-        this.load.image('backgroundStarsBig', 'assets/backgroundstarsbig_960-600.png');
+        
+        this.load.image('backgroundPlanets', 'assets/backgroundplanets_960-600.png');
         this.load.image('backgroundStarsMedium', 'assets/backgroundstarsmedium_960-600.png');
         this.load.image('backgroundStarsSmall', 'assets/backgroundstarssmall_960-600.png');
 
         this.load.physics('physicsData', 'assets/ship_84-80.json');
+        
+        this.load.bitmapFont('silkscreenblue', 'assets/silkscreenblue.png', 'assets/silkscreenblue.fnt');
+        this.load.bitmapFont('silkscreenred', 'assets/silkscreenred.png', 'assets/silkscreenred.fnt');
         //this.load.atlas('playButton', 'assets/play_button.png', 'assets/play_button.json');
         //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
-        //this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
-        //	+ lots of other required assets here
+        this.load.bitmapFont('hud_default', 'fonts/hud_default.png', 'fonts/hud_default.fnt');
 
         this.ready = true;
     },
@@ -67,6 +77,6 @@ BasicGame.Preloader.prototype = {
         //}
 
         if (this.ready)
-            this.state.start('Game');
+            this.state.start('GameManager');
     }
 };

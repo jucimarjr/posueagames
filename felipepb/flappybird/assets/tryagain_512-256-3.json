@@ -1,0 +1,36 @@
+{"frames": [
+
+{
+	"filename": "buttonTryAgainActive_314-66.png",
+	"frame": {"x":8,"y":8,"w":314,"h":66},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":314,"h":66},
+	"sourceSize": {"w":314,"h":66}
+},
+{
+	"filename": "buttonTryAgainHover_314-66.png",
+	"frame": {"x":8,"y":86,"w":314,"h":66},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":314,"h":66},
+	"sourceSize": {"w":314,"h":66}
+},
+{
+	"filename": "buttonTryAgainNone_314-66.png",
+	"frame": {"x":8,"y":164,"w":314,"h":66},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":314,"h":66},
+	"sourceSize": {"w":314,"h":66}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "tryagain_512-256-3.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":256},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:a5d641549785ac875d9162d34aa4b613:d67bb1cf79c5d1dce5e65ed621b39b40:241f467cfc8e57a3fda34cbc1f980715$"
+}
+}

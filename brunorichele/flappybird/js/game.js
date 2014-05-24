@@ -15,6 +15,10 @@ var game = new Phaser.Game(
     960,
     600,
     Phaser.AUTO,
-    '',
-    PirarucuDreams
+    ''
 );
+
+game.state.add('menu', menu);
+game.state.add('game', PirarucuDreams);
+game.state.add('creditos', creditos);
+game.state.start('menu');

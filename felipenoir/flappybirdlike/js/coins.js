@@ -1,37 +1,76 @@
-var coins = {
+Coin = function() {
+	this.coins;
+	this.velocityX = -200;
+	this.secondCreate = 4;
+	this.rerender = true;
+}
+
+Coin.prototype = {
 
 	preload : function() {
 		game.load.image('coin', 'assets/coin.png');
 	},
 
 	create : function() {
+		this.coins = game.add.group();
 		game.time.events
-				.loop(Phaser.Timer.SECOND , this.coinGenerator, this).timer
+				.loop(Phaser.Timer.SECOND*this.secondCreate , this.coinGenerator, this).timer
 				.start();
 	},
 
 	update : function() {
 
 	},
-
+	stop : function(){
+		this.rerender = false;
+	},
+	resume : function(){
+		this.rerender = true;
+	},
 	coinGenerator : function() {
-		var randonType = Math.round(Math.random()*4);
-		
-		if(randonType === SNAKE_ENEMY){
-			this.geraSnakeCoin();
-		}else if(randonType === TRIANGLE_ENEMY){
-			this.geraTriagleCoin();
-		}else if(randonType === STAIRS_ENEMY){
-			this.geraStairsCoin();
-		}else if(randonType === SIMPLE_ENEMY){
-			this.geraSimpleCoin();
-		}
-		
+			var randonType = Math.round(Math.random()*5);
+			
+			if(randonType === SNAKE_ENEMY){
+				this.geraSnakeCoin();
+			}else if(randonType === TRIANGLE_ENEMY){
+				this.geraTriagleCoin();
+			}else if(randonType === STAIRS_ENEMY){
+				this.geraStairsCoin();
+			}else if(randonType === SIMPLE_ENEMY){
+				this.geraSimpleCoin();
+			}else {
+				this.createPowerUp();
+			}
+	},
+	createPowerUp : function(){
+		var initYEneMy = selecionaEnemy();
+		var initXenemY = game.world.width
+
+
+		var max = game.world.height  - 3*67;
+		var min = game.world.height  + 3*67;
+
+		for(var i = 0; i < 50;i++){
+			var XX = initXenemY + 69;
+			var YY = initYEneMy - 67;
+			if(YY >= max){
+				YY += 67;
+			}
+			if(YY <= min){
+				YY -= 67;
+			}
+			this.createRandomCoin(XX,YY);
+
+		}	
 	},
 	createRandomCoin : function(x,y){
-		var coin = game.add.sprite(x, y, 'coin');
+		var coin = this.coins.create(x, y, 'coin');
 		game.physics.arcade.enableBody(coin);
-		coin.body.velocity.x = -200;
+		if(!this.rerender)
+			this.velocityX = -800;
+		else
+			this.velocityX = -200;
+		coin.body.velocity.x = this.velocityX;
 	}
 	,
 	geraStairsCoin : function(){

@@ -1,15 +1,19 @@
 var gameScore = { create: create, update:update };
 
-
 function create() {
-    score= game.add.sprite(0, 0, 'score');   
-    var text = game.add.bitmapText(545, 345, 'Font', '00', 90);  	
+	musicMenu.stop();
+    scoreScren = game.add.sprite(0, 0, 'scorescreen');   
+    text = game.add.bitmapText(545, 345, 'font', '00', 90);  
+    
+    musicGameOver = game.add.audio('music');
+    musicGameOver.play('',0,0.05,true);
 }
     
 function update(){
 	var keySpacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-	keySpacebar.onDown.add(start, this);
+	keySpacebar.onDown.add(restart, this);
 }
-function start() {
+function restart() {
+	musicGameOver.stop();
 	game.state.start('playGame');
 }

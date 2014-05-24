@@ -4,7 +4,7 @@ var loadState = function(game) {
 	this.preload = function() { 
 		player = new Player(/*game*/);
 		level = new Level(/*game*/);
-		enemies = new Enemies(game);
+		enemies = new Enemies();
 
 		level.preload();
 		player.preload();

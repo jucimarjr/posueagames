@@ -8,6 +8,8 @@ Enemies = function(game) {
     this.maxSpeed = 75;
 	this.vx = Math.random()*(this.maxSpeed - this.minSpeed+1)-this.minSpeed;
     this.vy = Math.random()*(this.maxSpeed - this.minSpeed+1)-this.minSpeed;
+    this.timerLoop;
+    this.rerender = true;
 	
 }
 
@@ -23,8 +25,15 @@ Enemies.prototype = {
 
 	create : function() {
 		this.enemies = this.game.add.group();
-		this.game.time.events.loop(Phaser.Timer.SECOND ,
-				this.generateEnemy, this).timer.start();
+		this.timerLoop =  this.game.time.events.loop(Phaser.Timer.SECOND*2 ,
+				this.generateEnemy, this).timer;
+		this.timerLoop.start()
+	},
+	stop : function(){
+		this.rerender = false;
+	},
+	resume : function(){
+		this.rerender = true;
 	},
 	generateBarrier : function(x, y) {
 		var enemy = this.enemies.create(x,
@@ -34,6 +43,10 @@ Enemies.prototype = {
 		enemy.body.allowGravity = false;
 		enemy.body.immovable = true;
 		enemy.body.velocity.x = -400;
+		if(!this.rerender){
+			enemy.kill();	
+		}
+		
 		
 		return enemy;
 	},
@@ -44,6 +57,7 @@ Enemies.prototype = {
 			this.geraEnemySnake();
 		}else if(randonType === TRIANGLE_ENEMY){
 			this.geraEnemyTriagle();
+			//escape para darmais espaço
 		}else if(randonType === STAIRS_ENEMY){
 			this.geraStairsEnemy();
 		}else if(randonType === SIMPLE_ENEMY){
@@ -63,6 +77,10 @@ Enemies.prototype = {
 		var initYEneMy = selecionaEnemy();
 		var initXenemY = game.world.width;
 		
+		if(initYEneMy <= geraEnemyMiddle()){
+			initYEneMy += 134;
+		}
+
 		for(var i = 0; i < 3;i++){
 			var enemy = this.generateBarrier(initXenemY + i*121,initYEneMy - i*134);
 			enemy.animations.add('run', [ 0, 1 ], 2, true);

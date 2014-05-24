@@ -1,15 +1,12 @@
 var audioMenu;
-var style = {
-	font : "30px Arial",
-	fill : "#ffffff"
-};
 
 var menuState = {
 
 	preload : function() {
-		game.load.image('logoMenu', 'assets/tela_inicial.png');
+		game.load.image('title', 'assets/title.png')
+		game.load.image('menu', 'assets/menu.png');
+		game.load.image('enter_game', 'assets/enter_game.png');
 		game.load.audio('audioMenu', 'assets/song_menu_otimizada.mp3');
-
 	},
 
 	create : function() {
@@ -21,13 +18,15 @@ var menuState = {
 				.addKey(Phaser.Keyboard.SPACEBAR);
 		spaceBar.onDown.add(this.start, this);
 
-		var spriteLogoMenu = game.add.sprite(0, 0, 'logoMenu');
-		// Texto do menu
-		var text = this.game.add.text(game.world.width / 2 - 180, 0,
-				"Press Space To Start", style);
-		game.add.tween(text).to({
-			y : this.game.world.height / 2
-		}, 2400, Phaser.Easing.Bounce.Out, true);
+		game.add.sprite(0, 0, 'menu');
+		var title = game.add.sprite(game.world.centerX, 70, 'title');
+		title.anchor.set(0.5);
+
+		var enterGame = game.add.sprite(0, 0, 'enter_game');
+		enterGame.alpha = 0;
+		game.add.tween(enterGame).to({
+			alpha : 1
+		}, 500, Phaser.Easing.Linear.None, true, 0, 2000, true);
 	},
 
 	start : function() {

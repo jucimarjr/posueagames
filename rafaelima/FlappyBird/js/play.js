@@ -6,12 +6,13 @@ function create() {
 
     game.add.sprite(0, 0, 'background1');
 
-    background2 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background2').height, 'background2');
+    background2 = game.add.tileSprite(0, 0, game.cache.getImage('background2').width, game.cache.getImage('background2').height, 'background2');
+    background2.tileScale.setTo(1.15, 1.15);
     game.physics.arcade.enable(background2);
 
     background3 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background3').height, 'background3');
+    background3.tileScale.setTo(1.6,1.6);
     game.physics.arcade.enable(background3);
-
 
     loadExtras();
 
@@ -20,7 +21,6 @@ function create() {
     score = 0; 
     var style = { font: "30px Arial", fill: "#000000" };
     this.label_score = this.game.add.text(20, 50, "0m", style);
-    
     
     playerSprite = game.add.sprite(172, 281.5, 'player');
     playerSprite.animations.add('walk', [0, 1, 2, 3], 8, true);
@@ -36,7 +36,8 @@ function create() {
     deathSprite.body.gravity.y = 1500;
     deathSprite.body.collideWorldBounds = true; // parar no limite inferior da tela
 
-    background4 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background4').height, 'background4');
+    background4 = game.add.tileSprite(0, 0, game.cache.getImage('background4').width, game.cache.getImage('background4').height, 'background4');
+    background4.tileScale.setTo(1.6,1.6);
     game.physics.arcade.enable(background4);
 
     game.add.sprite(0, 0, 'background5');
@@ -47,7 +48,7 @@ function create() {
 
     jump_sound = this.game.add.audio('flap_song');
 
-//    this.timer = this.game.time.events.loop(2000, add_obstacle, this);
+    this.timer = this.game.time.events.loop(3000, add_obstacle, this);
     timerPowerUp = this.game.time.events.loop(15000, add_power_up, this);
     
     //bloqueia novos obstaculos por 3 ataques do boss e depois o jogo volta ao normal IMPORTANTE P/ MINI BOSS!!!!!!!!!!!!!!!!!!!!11111
@@ -137,6 +138,7 @@ function updatePowerUps(){
 }
 
 function jump() {
+//	playerSprite.animations.play('walk');
     playerSprite.body.velocity.y = -450;
     if (playersGroup != null && playersGroup.exists === true) {
         playersGroup.forEach(function (item) { item.body.velocity.y = -450; }, null, this);
@@ -213,25 +215,31 @@ function add_obstacle() {
             obstacle1 = plataformas.create(950, game.world.randomY, 'obstacle1');
             game.physics.enable(obstacle1, Phaser.Physics.ARCADE);
             obstacle1.body.velocity.x = -500;
-            addOutBoundEvent(obstacle1);
+            obstacle1.checkWorldBounds = true;
+            obstacle1.outOfBoundsKill = true;
             break;
         case 1:
             obstacle2 = plataformas.create(950, game.world.randomY, 'obstacle2');
             game.physics.enable(obstacle2, Phaser.Physics.ARCADE);
             obstacle2.body.velocity.x = -600;
-            addOutBoundEvent(obstacle2);
+            obstacle2.checkWorldBounds = true;
+            obstacle2.outOfBoundsKill = true;
             break;
         case 2:
-            obstacle3 = plataformas.create(950, 195, 'obstacle3');
+            obstacle3 = plataformas.create(950, 250, 'obstacle3');
             game.physics.enable(obstacle3, Phaser.Physics.ARCADE);
+            obstacle3.scale.setTo(1.2, 1.2);
             obstacle3.body.velocity.x = -100;
-            addOutBoundEvent(obstacle3);
+            obstacle3.checkWorldBounds = true;
+            obstacle3.outOfBoundsKill = true;
             break;
         case 3:
-            obstacle4 = plataformas.create(950, 381, 'obstacle4');
+            obstacle4 = plataformas.create(950, 405, 'obstacle4');
             game.physics.enable(obstacle4, Phaser.Physics.ARCADE);
             obstacle4.body.velocity.x = -100;
-            addOutBoundEvent(obstacle4);
+            obstacle4.scale.setTo(1, 1);
+            obstacle4.checkWorldBounds = true;
+            obstacle4.outOfBoundsKill = true;
             break;
         default:
             break;

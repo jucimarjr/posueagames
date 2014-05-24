@@ -7,6 +7,7 @@
         this.bg = null;
         this.fg = null;
         this.enemies = null;
+        this.droids = null;
         this.timer = null;
         this.player_tween = null;
 
@@ -14,9 +15,9 @@
         this.weapon = null;
         this.weaponFactory = null;
 
-        this.startSound = null;
         this.bgSound = null;
         this.hitSound = null;
+        this.blasterSound = null;
 
         //powerUpProgress
         this.powerUpTimer = null;
@@ -48,6 +49,10 @@
             this.enemies = this.game.add.group();
             this.enemies.createMultiple(20, 'enemy');
 
+            this.droids = this.game.add.group();
+            this.droids.createMultiple(10, 'probedroid');
+            this.droids.callAll('animations.add', 'animations', 'run', [0, 1], 2, true);
+
             this.enemy_explosions = this.game.add.group();
             this.enemy_explosions.createMultiple(5, 'enemy_explosion');
             this.enemy_explosions.callAll('animations.add', 'animations', 'explosion', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 5, true);
@@ -67,12 +72,13 @@
             this.score_text.anchor.set(0.5, 0);
 
             // sounds
-            this.startSound = this.game.add.audio("startsound");
-            this.bgSound = this.game.add.audio("bgsound");
-            this.hitSound = this.game.add.audio("crash");
-            //this.bgSound.volume = 0.3;
-            this.startSound.play();
-            this.startSound.loop = true; 
+            this.bgSound = this.game.add.audio('bgsound');
+            this.hitSound = this.game.add.audio('crash');
+            this.blasterSound = this.game.add.audio('blaster');
+
+            this.bgSound.volume = 0.8;
+            this.bgSound.loop = true;
+            this.bgSound.play();
 
             this.progressBg = this.game.add.graphics(0, 0);
             this.progressBg.lineStyle(2, 0x000000, 1);
@@ -86,6 +92,10 @@
             
             this.setPowerUpBarVisibility(false);
 
+            style = { font: "36px Starjedi", fill: "#f3b40b", align: "center" };
+            this.help_text = this.game.add.text(this.game.world.centerX, this.game.height - 100, "(SPACEBAR) - Jump\n(ENTER) - Shot", style);
+            this.help_text.anchor.set(0.5, 0.5);
+
 
         },
 
@@ -95,10 +105,12 @@
                 return;
             }
 
-
             this.game.physics.arcade.overlap(this.player, this.enemies, this.restart, null, this);
+            this.game.physics.arcade.overlap(this.player, this.droids, this.restart, null, this);
             this.game.physics.arcade.overlap(this.player, this.powerUps.group, this.getPowerUp, null, this);
+
             this.game.physics.arcade.overlap(this.weapon.group, this.enemies, this.killEnemy, null, this);
+            this.game.physics.arcade.overlap(this.weapon.group, this.droids, this.killEnemy, null, this);
 
             if (this.player.y == 0 || this.player.y == (this.game.height - this.player.height)) {
                 this.restart();
@@ -123,30 +135,16 @@
             if (this.score_text) {
                 this.score_text.setText("Score: " + this.score);
             }
-
-            //FIXME: Choose a way to update weapons
-            /*if (this.score % 10 == 0) {
-                if (this.weaponFactory.hasWeapon()) {
-                    this.weapon = this.weaponFactory.nextWeapon();
-                }
-            }*/
         },
 
         start: function() {
 
+            this.help_text.visible = false;
 
-            // /this.player_tween.pause();
             this.player_tween.stop();
 
             this.isStarted = true;
             this.player.body.gravity.y = 1000;
-            
-			this.bgSound.currentTime = 0;
-            this.startSound.currentTime = 0;
-            
-            this.bgSound.play(); 
-            this.bgSound.loop = true;
-            this.startSound.stop();
         },
 
         setPowerUpBarVisibility: function(value) {
@@ -169,12 +167,15 @@
 
             value = Utils.randomIntFromInterval(0, 10);
 
-            if (value <= 8) {
+            if (value == 0) {
+                y = Math.round(Math.random() * (this.game.height - 60));
+                this.powerUps.spawnNew(x, y);
+            } else if (value > 0 && value < 7) {
                 y = Math.round(Math.random() * (this.game.height - 94));
                 this.addEnemy(x, y);
             } else {
-                y = Math.round(Math.random() * (this.game.height - 60));
-                this.powerUps.spawnNew(x, y);
+                y = Math.round(Math.random() * (this.game.height - 250));
+                this.addDroid(x, y);
             }
 
         },
@@ -186,9 +187,24 @@
             this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
 
             enemy.reset(x, y);
-            enemy.body.velocity.x = -700;
+            enemy.body.velocity.x = -1000;
             enemy.checkWorldBounds = true;
             enemy.outOfBoundsKill = true;
+        },
+
+        addDroid: function (x, y) {
+            var droid = this.droids.getFirstDead();
+            var rdn = Utils.randomIntFromInterval(0, 1);
+
+            this.game.physics.enable(droid, Phaser.Physics.ARCADE);
+
+            droid.reset(x, y);
+            droid.body.velocity.x = -700;
+            droid.body.velocity.y = (rdn == 0) ? 50 : -50;
+            droid.checkWorldBounds = true;
+            droid.outOfBoundsKill = true;
+
+            droid.animations.play('run');
         },
 
         addEnemyExplosion: function(x, y) {
@@ -201,6 +217,7 @@
 
             explosion.animations.play('explosion', 20, false, true);
 
+            this.hitSound.play();
         },
 
         killEnemy: function (bullet, enemy) {
@@ -248,11 +265,13 @@
                 return;
             }
 
+            this.powerUpProgress -= 2;
+
             this.powerUpFill.beginFill(0xF7931E, 1);
             this.powerUpFill.drawRect(13, 13, 226, 24);
 
             this.powerUpFill.beginFill(0x000000, 1);
-            this.powerUpFill.drawRect(13, 13, (--this.powerUpProgress*226)/100, 24);
+            this.powerUpFill.drawRect(13, 13, (this.powerUpProgress*226)/100, 24);
         },
 
         restart: function () {
@@ -277,13 +296,22 @@
             this.score = 0;
             
             this.hitSound.play();
-            this.startSound.stop();
             this.bgSound.stop();
 
             this.player_tween = null;
 
             // call game over view
             this.game.state.start('Gameover');
+        },
+
+        fire: function () {
+            var isFiring = this.weapon.fire();
+
+            if (isFiring) {
+                this.player_fire.revive();
+                this.player_fire.animations.play('fire', 20, false, true);
+                this.blasterSound.play();
+            }
         },
 
         handleKeyDown: function() {
@@ -302,13 +330,7 @@
 
             if (this.game.input.keyboard.isDown (Phaser.Keyboard.ENTER)) {
                 if(this.isStarted) {
-
-                    var isFiring = this.weapon.fire();
-
-                    if (isFiring) {
-                        this.player_fire.revive();
-                        this.player_fire.animations.play('fire', 20, false, true);
-                    }
+                    this.fire();
                 }
             } 
         },
