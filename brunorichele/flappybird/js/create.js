@@ -164,7 +164,6 @@ var create = {
     reset: function(){
         this.enemy_group.destroy(true);
         this.player.destroy();
-        if(update.status) update.status.destroy();
 
         this.enemy_group = game.add.group();
         this.createPlayer();

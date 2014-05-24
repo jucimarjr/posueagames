@@ -1,7 +1,7 @@
 var menu = {
     preload: function(){
         game.load.image('telamenu', 'assets/menu_960-600.jpg');
-        game.load.image('botaojogar', 'assets/botaojogar_150-120.png ');
+        game.load.image('botaojogar', 'assets/botaojogar_150-120.png');
         game.load.image('botaocreditos', 'assets/botaocredito_150-120.png');
     },
     create: function(){
