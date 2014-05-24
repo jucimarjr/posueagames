@@ -15,7 +15,11 @@ var Config = {
 				}
 			}
 		}
-	}
+	},
+	
+	assets: 'assets/',
+	images: 'assets/images/',
+	spriteSheets: 'assets/spritesheet/'
 };
 
 //LudusSplash
@@ -104,4 +108,45 @@ Config.credits = {
 	dir: 'assets/images/Credits_960-600.png',
 	x: 0,
 	y: 0
+};
+
+
+Config.game = {
+	
+	bgKey: 'game_background',
+	dir: Config.images + 'fundovertical_960-1920.png',
+	x: 0,
+	y: 0,
+	
+	map: {
+		key: 'game_map',
+		dir: Config.assets + 'mapavertical.json',
+		tileSetKey: 'textura',
+		tileSetDir: Config.images + 'textura.png',
+		layerName: 'Camada de Tiles 1',
+	},
+	
+	player: {
+		key: 'player_sheet',
+		dir: Config.images + 'macaco_45-62-7.png',
+		x: 100,
+		y: 1688,
+		width: 45,
+		height: 62,
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		},
+		anim: {
+			walk: 'player_walk',
+			jump: 'player_jump'
+		}
+	}
+	
+};
+
+Config.states = {
+	
+	keyGame: 'Game'
+	
 };
