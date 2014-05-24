@@ -7,6 +7,7 @@
         this.bg = null;
         this.fg = null;
         this.enemies = null;
+        this.droids = null;
         this.timer = null;
         this.player_tween = null;
 
@@ -47,6 +48,10 @@
 
             this.enemies = this.game.add.group();
             this.enemies.createMultiple(20, 'enemy');
+
+            this.droids = this.game.add.group();
+            this.droids.createMultiple(10, 'probedroid');
+            this.droids.callAll('animations.add', 'animations', 'run', [0, 1], 2, true);
 
             this.enemy_explosions = this.game.add.group();
             this.enemy_explosions.createMultiple(5, 'enemy_explosion');
@@ -97,8 +102,11 @@
 
 
             this.game.physics.arcade.overlap(this.player, this.enemies, this.restart, null, this);
+            this.game.physics.arcade.overlap(this.player, this.droids, this.restart, null, this);
             this.game.physics.arcade.overlap(this.player, this.powerUps.group, this.getPowerUp, null, this);
+
             this.game.physics.arcade.overlap(this.weapon.group, this.enemies, this.killEnemy, null, this);
+            this.game.physics.arcade.overlap(this.weapon.group, this.droids, this.killEnemy, null, this);
 
             if (this.player.y == 0 || this.player.y == (this.game.height - this.player.height)) {
                 this.restart();
@@ -160,12 +168,15 @@
 
             value = Utils.randomIntFromInterval(0, 10);
 
-            if (value < 9) {
+            if (value == 0) {
+                y = Math.round(Math.random() * (this.game.height - 60));
+                this.powerUps.spawnNew(x, y);
+            } else if (value > 0 && value < 7) {
                 y = Math.round(Math.random() * (this.game.height - 94));
                 this.addEnemy(x, y);
             } else {
-                y = Math.round(Math.random() * (this.game.height - 60));
-                this.powerUps.spawnNew(x, y);
+                y = Math.round(Math.random() * (this.game.height - 250));
+                this.addDroid(x, y);
             }
 
         },
@@ -180,6 +191,21 @@
             enemy.body.velocity.x = -1000;
             enemy.checkWorldBounds = true;
             enemy.outOfBoundsKill = true;
+        },
+
+        addDroid: function (x, y) {
+            var droid = this.droids.getFirstDead();
+            var rdn = Utils.randomIntFromInterval(0, 1);
+
+            this.game.physics.enable(droid, Phaser.Physics.ARCADE);
+
+            droid.reset(x, y);
+            droid.body.velocity.x = -700;
+            droid.body.velocity.y = (rdn == 0) ? 50 : -50;
+            droid.checkWorldBounds = true;
+            droid.outOfBoundsKill = true;
+
+            droid.animations.play('run');
         },
 
         addEnemyExplosion: function(x, y) {
