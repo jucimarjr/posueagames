@@ -2,7 +2,7 @@ var mainMenu = { create: create, update: update, start: start };
 
 function create() {
 	mainMenu = game.add.sprite(0, 0, 'startMenuSprite');
-	mainMenu.animations.add('start',[0,1,2,3,4],2,true);
+	mainMenu.animations.add('start',[0,1,2,3,3,4,4,0],1.2,true);
 	mainMenu.animations.play('start');
 	
 	musicMenu = game.add.audio('noise');

@@ -1,11 +1,12 @@
 var gameScore = { create: create, update:update };
 
 function create() {
+	musicMenu.stop();
     scoreScren = game.add.sprite(0, 0, 'scorescreen');   
     text = game.add.bitmapText(545, 345, 'font', '00', 90);  
     
-    musicGameOver = game.add.audio('deadSound');
-    musicGameOver.play('',0,0.2,true);
+    musicGameOver = game.add.audio('music');
+    musicGameOver.play('',0,0.05,true);
 }
     
 function update(){

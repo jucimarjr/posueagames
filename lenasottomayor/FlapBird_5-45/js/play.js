@@ -3,11 +3,11 @@ var playGame = { create: create, update: update };
 function create() {
 	
 	background = game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
-	background.autoScroll(-70, 0);	 
+	background.autoScroll(-100, 0);	 
 	
 	computer = game.add.sprite(0, 264,'computer');
 	game.physics.enable(computer, Phaser.Physics.ARCADE);
-	computer.body.velocity.x = -70;
+	computer.body.velocity.x = -100;
 	
 	
 	plataforms = game.add.group();
@@ -15,7 +15,7 @@ function create() {
 	
 	plataform = plataforms.create(0, 440, 'plataform');
 	game.physics.enable(plataform, Phaser.Physics.ARCADE);
-	plataform.body.velocity.x = -70;
+	plataform.body.velocity.x = -100;
 	plataform.body.immovable = true;
 	
 	createObstacles();
@@ -43,13 +43,14 @@ function update() {
 function createPlayer() {
 	playerSprite = game.add.sprite(150, 309, 'player');
 	playerSprite.animations.add('jump',[2],7,true);
+	playerSprite.animations.add('dead',[3,2,3,2],4,true)
 	playerSprite.frame = 1;
     
 	game.camera.follow(playerSprite);
 	
 	game.physics.enable(playerSprite, Phaser.Physics.ARCADE);
 	
-	playerSprite.body.gravity.y = 100;
+	playerSprite.body.gravity.y = 200;
 	playerSprite.anchor.setTo(0.5,0.5);
 	playerSprite.body.acceleration.y = 500;
 	playerSprite.body.collideWorldBounds = true;
@@ -57,7 +58,7 @@ function createPlayer() {
 
 function jump() {
 	playerSprite.body.velocity.y = -400;
-	playerSprite.body.velocity.x = 0;
+	playerSprite.body.velocity.x = 400;
 	playerSprite.animations.play('jump');
 	this.jumpSound = game.add.audio('jumpSound');
     this.jumpSound.play();
@@ -72,7 +73,7 @@ function stop() {
 function createObstacles() {
 	obstacles = game.add.group();
 	obstacles.enableBody = true;
-    this.timer = this.game.time.events.loop(2500, addObstacle, this);
+    this.timer = this.game.time.events.loop(1700, addObstacle, this);
 }
 
 function addObstacle() {
@@ -99,10 +100,16 @@ function addObstacle() {
 function gameOver(){
 	
 	game.physics.arcade.collide(playerSprite, obstacles);
-	if((playerSprite.position.y >= obstacle.position.y)){
+	if((playerSprite.position.y > obstacle.position.y)){
+		playerSprite.animations.play('dead');
 		playerSprite.frame = 3;
+	    musicGameOver = game.add.audio('deadSound');
+	    musicGameOver.play('',0,0.2,false);
 		musicGame.stop();
 		game.state.start('gameScore');
+
+
+					
 	}
 	
 	
