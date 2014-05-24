@@ -29,6 +29,14 @@ BasicGame.Obstacle.prototype = {
             frameName = 'columnDefault_165-486.png';
         }
 
+        // Create lightning
+        this.lightningSprite = this.gameManager.add.sprite(0, 0, 'lightningAtlas');
+        this.gameManager.game.physics.p2.enableBody(this.lightningSprite, BasicGame.GameManager.debugDraw);
+        this.lightningSprite.body.kinematic = true;
+        this.lightningSprite.body.y = -this._spriteHeight / 2.0 - 100;
+
+        this.playLightningAnimation();
+
         // this.topSprite = this.group.create(0, 0, 'mainGameAtlas');
         this.topSprite = this.gameManager.add.sprite(0, 0, 'mainGameAtlas');
         this.topSprite.frameName = frameName;
@@ -80,16 +88,6 @@ BasicGame.Obstacle.prototype = {
         this.bottomLabel.x = -this.bottomLabel.textWidth / 2.0 + 4;
 
         this.bottomLabel.parent = this.bottomSprite;
-
-        // Create lightning
-        this.lightningSprite = this.gameManager.add.sprite(0, 0, 'lightningAtlas');
-        // this.lightningSprite.anchor.setTo(0.5, 1.0);
-        this.gameManager.game.physics.p2.enableBody(this.lightningSprite, BasicGame.GameManager.debugDraw);
-        this.lightningSprite.body.kinematic = true;
-        this.lightningSprite.body.y = -this._spriteHeight / 2.0 - 100;
-        // this.lightningSprite.parent = this.bottomSprite;
-
-        this.playLightningAnimation();
     },
 
     playLightningAnimation: function() {
@@ -142,6 +140,7 @@ BasicGame.Obstacle.prototype = {
         this.lightningSprite.body.trigered = false;
         this.lightningSprite.body.x = x;
         this.lightningSprite.body.y = y;
+        // this.lightningSprite.z = Math.min(this.topSprite.z, this.bottomSprite.z) - 1;
 
         this.topSprite.body.missionEvent = missionEvent;
         this.bottomSprite.body.missionEvent = missionEvent;
