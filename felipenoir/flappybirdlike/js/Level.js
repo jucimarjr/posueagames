@@ -9,16 +9,16 @@ Level.prototype = {
 	preload : function() {
 		this.game.load.image('ground', 'assets/ground.png');
 		this.game.load.image('mountains', 'assets/mountains.png');
-//		this.game.load.image('trees', 'assets/arvores.png');
+		this.game.load.image('houses', 'assets/casas.png');
 	},
 
 	create : function() {
 		// background
 		this.mountains = this.game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('mountains').height, 'mountains');
-//		this.trees = this.game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('trees').height, 'trees');
+		this.houses = this.game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('houses').height, 'houses');
 		
 		this.mountains.autoScroll(-10, 0);
-//		this.trees.autoScroll(-150, 0);
+		this.houses.autoScroll(-150, 0);
 
 		// ground
 		this.ground = this.game.add.tileSprite(0, this.game.world.height - 90, this.game.world.width, 90, 'ground');

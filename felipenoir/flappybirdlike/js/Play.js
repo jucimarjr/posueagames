@@ -6,6 +6,7 @@ var playState = {
 		level = new Level(game);
 		enemies = new Enemies(game);
 		coins = new Coin(game);
+		score = new Score();
 
 		level.preload();
 		player.preload();
@@ -23,6 +24,7 @@ var playState = {
 		player.create();
 		enemies.create();
 		coins.create();
+		score.create();
 		game.camera.follow(player.sprite);
 	},
 
@@ -32,6 +34,7 @@ var playState = {
 		player.update();
 		level.update();
 		coins.update();
+		score.update();
 	}
 
 };

@@ -9,6 +9,7 @@ Coin.prototype = {
 	},
 
 	create : function() {
+		this.coins = game.add.group();
 		game.time.events
 				.loop(Phaser.Timer.SECOND , this.coinGenerator, this).timer
 				.start();
@@ -33,7 +34,7 @@ Coin.prototype = {
 		
 	},
 	createRandomCoin : function(x,y){
-		var coin = game.add.sprite(x, y, 'coin');
+		var coin = this.coins.create(x, y, 'coin');
 		game.physics.arcade.enableBody(coin);
 		coin.body.velocity.x = -200;
 	}

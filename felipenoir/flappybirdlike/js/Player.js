@@ -28,8 +28,10 @@ Player.prototype = {
 
 	update : function() {
 		this.game.physics.arcade.collide(this.sprite, level.ground);
-		this.game.physics.arcade.overlap(this.sprite, enemies.enemies,
-				lost, null, this);
+		this.game.physics.arcade.overlap(this.sprite, enemies.enemies, lost,
+				null, this);
+		this.game.physics.arcade.overlap(this.sprite, coins.coins, getCoin,
+				null, this);
 
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			this.sprite.body.velocity.y = -1000;
@@ -55,4 +57,10 @@ Player.prototype = {
 function lost(enemy, player) {
 	console.log('lost');
 	this.game.state.start('gameover');
+}
+
+function getCoin(player, coin) {
+	console.log('getcoin');
+	score.count++;
+	coin.kill();
 }
