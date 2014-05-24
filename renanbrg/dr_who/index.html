@@ -1,30 +1,51 @@
 <!doctype html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:og="http://opengraphprotocol.org/schema/">
 	<head>
 
-		<meta charset="UTF-8"/>
-		<script src="../../phaser/phaser.min.js"></script>
-		<script type="text/javascript" src="js/game.js"></script> 
-		<style type="text/css">
-        	body {
-            	margin: 0;
-        	}
-    	</style>
-    	
-		<title>Phaser1</title>
+		<meta charset="UTF-8" />
+	<meta property="og:locale" content="pt_BR">
+	<meta property="og:url"
+		content="http://computacao.uea.edu.br/ludus/posueagames/renanbrg/dr_who/">
+	<meta property="og:title" content="Dr. Who">
+	<meta property="og:site_name"
+		content="Especializacao em Desenvolvimento de Jogos Eletrônicos da UEA">
+	<meta property="og:description" content="Jogo Dr. Who">
+	
+	<meta property="og:image"
+		content="http://computacao.uea.edu.br/ludus/posueagames/jucimarjr/dinossauro/assets/adgame_800-600.jpg">
+	<meta property="og:image:type" content="image/jpeg">
+	<meta property="og:image:width" content="960">
+	<meta property="og:image:height" content="700">
+	<meta property="og:type" content="website">
+	<title>Phaser1</title>
 
 	</head>
 
 	<body>
-	<audio id='inicio'>
-    <source src="sounds/DrWTheme.mp3" type="audio/mp3">
-    Seu browser não suporta o formato do audio.
-</audio>
-<audio id='musica'>
-    <source src="sounds/DWGame.mp3" type="audio/mp3">
-    Seu browser não suporta o formato do audio.
-</audio>
-	
+	<div id="game_div"></div>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 
+	<div class="fb-like"
+		data-href="http://computacao.uea.edu.br/ludus/posueagames/rafaelima/FlappyBird/"
+		data-layout="button_count" data-action="like" data-show-faces="true"
+		data-share="false"></div>
+	<div class="fb-comments"
+		data-href="http://computacao.uea.edu.br/ludus/posueagames/rafaelima/FlappyBird/"
+		data-width="960" data-numposts="10" data-colorscheme="light"></div>
+		
+		<script src="../../phaser/phaser.min.js"></script>
+		<script type="text/javascript" src="js/gameOver.js"></script>
+		<script type="text/javascript" src="js/game.js"></script> 
+		<script type="text/javascript" src="js/inicial.js"></script>
+		<script type="text/javascript" src="js/preload.js"></script>
+		<script type="text/javascript" src="js/principal.js"></script>
 	</body>
 </html>
