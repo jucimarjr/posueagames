@@ -2,6 +2,7 @@ Player = function(game) {
 	this.game = game;
 	this.sprite;
 	this.audioVoar;
+	this.audioMenu;
 }
 
 Player.prototype = {
@@ -12,7 +13,7 @@ Player.prototype = {
 		game.load.audio('audioVoar', 'assets/jump.mp3');
 	},
 
-	create : function() {
+	create : function(audioMenu) {
 		this.sprite = this.game.add.sprite(60, 100, 'player');
 		this.sprite.animations.add('walk', [ 0, 1 ], 2, true);
 		this.sprite.animations.add('jump', [ 2 ], 2, true);
@@ -24,9 +25,11 @@ Player.prototype = {
 
 		// Audio
 		this.audioVoar = game.add.audio('audioVoar');
+		this.audioMenu = audioMenu;
 	},
 
 	update : function() {
+		 
 		this.game.physics.arcade.collide(this.sprite, level.ground);
 		this.game.physics.arcade.overlap(this.sprite, enemies.enemies, lost,
 				null, this);
@@ -55,6 +58,7 @@ Player.prototype = {
 }
 
 function lost(enemy, player) {
+	this.audioMenu.stop();
 	console.log('lost');
 	this.game.state.start('gameover');
 }

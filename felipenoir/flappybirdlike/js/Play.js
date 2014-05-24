@@ -18,10 +18,13 @@ var playState = {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 
 		game.world.setBounds(0, 0, 600, game.cache.getImage('mountains').width);
+		// Toca audio do menu
+		var audioMenu = game.add.audio('audioMenu', 1, true);
+		audioMenu.play('', 0, 1, true);
 		// game.world.setBounds(0, 0, game.stage.bounds.width,
 		// game.cache.getImage('trees').height);
 		level.create();
-		player.create();
+		player.create(audioMenu);
 		enemies.create();
 		coins.create();
 		score.create();
