@@ -29,14 +29,11 @@ var create = {
         //input defs
         game.input.keyboard.addKeyCapture(
             [
-                Phaser.Keyboard.SPACEBAR,
-                Phaser.Keyboard.R
+                Phaser.Keyboard.SPACEBAR
             ]
         );
         this.space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.space_key.onDown.add(this.jump, this);
-        this.reset_key = game.input.keyboard.addKey(Phaser.Keyboard.R);
-        this.reset_key.onDown.add(this.reset, this);
 
         // NPC defs
         this.npc_list = [
