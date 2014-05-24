@@ -1,216 +1,231 @@
-var celulaSprite, fundo, cena;
-var style = {
-	font : "40px Arial",
-	fill : "#ff0044",
-	align : "center"
+var game = new Phaser.Game(960, 600, Phaser.AUTO, '');
+
+var Menu = function() {
 };
+Menu.prototype = {
+	preload : function() {
+		this.game.load.image('background', 'assets/background_960-600.png',
+				960, 600);
+		this.game.load.image('fat_vein', 'assets/backgroundmask_960-490.png',
+				800, 190);
+		this.game.load.image('logo', 'assets/logo_800-190.png', 800, 190);
+		this.game.load.image('bt_play', 'assets/btplay_280-100.png', 280, 100);
 
-var points;
-var scored;
-var tubos;
-var gameOver;
-var background;
-
-var startScreen = true;
-
-var game = new Phaser.Game(960, 600, Phaser.AUTO, '', {
-	preload : preload,
-	create : create,
-	update : update
-});
-
-function preload() {
-	// first screen
-	game.load.image('background', 'assets/fundo_960-600.png', 960, 600);
-	game.load.image('logo', 'assets/logo_800-190.png', 800, 190);
-	game.load.image('fat_vein', 'assets/assets-02.png', 800, 190);
-	game.load.image('bt_play', 'assets/btn_play_280-100.png', 280, 100);
-
-	// game.load.spritesheet('celula', 'assets/celula_50-50-2.png', 50, 50);
-	game.load.spritesheet('celula', 'assets/bird_275-50-5.png', 55, 50);
-	game.load.image('piso', 'assets/piso_960-50.png', 960, 50);
-	game.load.image('teto', 'assets/teto_960-50.png', 960, 50);
-	game.load.image('tuboinferior', 'assets/tuboinferior_80-480.png', 80, 480);
-	game.load.image('tubosuperior', 'assets/tubosuperior_80-480.png', 80, 480);
-
-	// Audio
-	game.load.audio('background_sound', 'audio/som_principal.mp3');
-	game.load.audio('collision_sound', 'audio/som_quando_houver_colisa_o.mp3');
-	game.load.audio('game_over_sound', 'audio/som_tela_de_game_over.mp3');
-
-	// game over screen
-	game.load.image('game_over', 'assets/game_over_screen_960_600.png', 960,
-			600);
-	game.load.image('bt_restart', 'assets/bt_restart_487_87.png', 487, 87);
-
-}
-
-function create() {
-
-	firstScreen();
-	// startGame();
-	// gameOverScreen();
-
-}
-
-function update() {
-	if (startScreen) {
-
-	} else {
-		if (!gameOver) {
-			// COLISAO:
-			game.physics.arcade.overlap(celulaSprite, cena, colisaoCena, null,
-					this);
-
-			for (var i = 0; i < 4; i++) {
-				var tubo = tubos[i];
-
-				game.physics.arcade.overlap(celulaSprite, tubo, colisaoTubo,
-						null, this);
-
-				if ((celulaSprite.body.x > tubo.getAt(0).body.x
-						+ tubo.getAt(0).body.width)
-						&& (!scored[i])) {
-					scored[i] = true;
-					points++;
-					score.setText("SCORE: " + points);
-				}
-
-				tubo.setAll('body.velocity.x', -100);
-				if (tubo.getAt(0).body.x < -tubo.getAt(0).body.width) {
-					tubo.setAll('body.x', game.width);
-
-					// gera a posicao y do tubo superior de forma aleatoria
-					posYtuboSuperior = (Math.floor((Math.random() * 300) + 100) * (-1));
-					tubo.getAt(0).body.y = posYtuboSuperior;
-					// a posicao y do tubo inferior sempre sera 600 a mais do
-					// superior
-					tubo.getAt(1).body.y = posYtuboSuperior + 600;
-					scored[i] = false;
-				}
-			}
-
-			celulaSprite.animations.play('jump');
-
-			// PEGA A ENTRADA (tecla pressionada):
-			if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-				// vai para cima
-				celulaSprite.body.velocity.y = -200;
-			}
-		} else {
-			backgroundSound = game.add.audio("collision_sound", 1, false);
-			// backgroundSound.play();
-			gameOverScreen();
+		// Audio
+		this.game.load.audio('background_sound', 'audio/som_principal.mp3');
+	},
+	create : function() {
+		if (this.backgroundSound != null) {
+			this.backgroundSound.pause();
 		}
+
+		this.backgroundSound = game.add.audio("background_sound", 1, true);
+		this.backgroundSound.play('', 0, 1, true);
+
+		// background
+		this.background = this.game.add.image(0, 0, 'background');
+
+		// gorduras e veias
+		this.fatVein = this.game.add.image(0, 57, 'fat_vein');
+
+		// logo
+		this.logo = this.game.add.image(90, 180, 'logo');
+
+		// play button
+		this.btPlay = game.add.image(350, 370, 'bt_play');
+		this.btPlay.inputEnabled = true;
+		this.btPlay.events.onInputDown.add(this.btPlayClick, this);
+	},
+	update : function() {
+		;
+	},
+	btPlayClick : function() {
+		this.backgroundSound.pause();
+
+		this.game.state.start('play');
 	}
 }
 
-function colisaoCena(celula, cena) {
-	celula.kill();
-	gameOver = true;
-}
+var Play = function() {
+};
+Play.prototype = {
+	preload : function() {
+		this.game.load.image('background', 'assets/background_960-600.png',
+				960, 600);
+		this.game.load.image('fat_vein', 'assets/backgroundmask_960-490.png',
+				800, 190);
 
-function colisaoTubo(celula, tubo) {
-	celula.kill();
-	gameOver = true;
-}
+		this.game.load.spritesheet('cell_head',
+				'assets/cellhead_500-50-10.png', 50, 50);
+		this.game.load.image('piso', 'assets/piso_960-50.png', 960, 50);
+		this.game.load.image('teto', 'assets/teto_960-50.png', 960, 50);
+		this.game.load.image('tubeinf1', 'assets/tubeinf_80-480.png', 80, 480);
+		this.game.load.image('tubesup1', 'assets/tubesup_80-480.png', 80, 480);
 
-function firstScreen() {
-	// background
-	background = game.add.image(0, 0, 'background');
+		// Audio
+		this.game.load.audio('background_sound', 'audio/som_principal.mp3');
+		this.game.load.audio('collision_sound',
+				'audio/som_quando_houver_colisa_o.mp3');
+	},
+	create : function() {
+		if (this.backgroundSound != null) {
+			this.backgroundSound.pause();
+		}
 
-	// gorduras e veias
-	fatVein = game.add.image(0, 57, 'fat_vein');
+		this.backgroundSound = game.add.audio("background_sound", 1, true);
+		this.backgroundSound.play('', 0, 1, true);
 
-	// logo
-	logo = game.add.image(90, 180, 'logo');
+		this.tubes = new Array();
+		this.scored = new Array();
 
-	// play button
-	btPlay = game.add.image(350, 370, 'bt_play');
-	btPlay.inputEnabled = true;
-	btPlay.events.onInputDown.add(btlistener, this);
+		this.points = 0;
 
-}
+		// background
+		this.background = this.game.add.image(0, 0, 'background');
 
-function startGame() {
-	backgroundSound = game.add.audio("background_sound", 1, true);
-	// backgroundSound.play('', 0, 1, true);
+		// gorduras e veias
+		this.fatVein = this.game.add.image(0, 57, 'fat_vein');
 
-	tubos = new Array();
-	scored = new Array();
+		// CREATE A tubos:
+		for (var i = 0; i < 4; i++) {
+			var tube = this.game.add.group();
 
-	points = 0;
-	gameOver = false;
+			var posYtuboSuperior = (Math.floor((Math.random() * 300) + 100) * (-1));
 
-	// CREATE A fundo:
-	// fundo = game.add.image(0, 0, 'fundo');
-	// game.physics.enable(fundo, Phaser.Physics.ARCADE);
+			tube.create(1000 + (i * 260), posYtuboSuperior, 'tubesup1');
+			tube.create(1000 + (i * 260), posYtuboSuperior + 600, 'tubeinf1');
 
-	// CREATE A tubos:
-	for (var i = 0; i < 4; i++) {
-		var tubo = game.add.group();
+			this.game.physics.enable(tube, Phaser.Physics.ARCADE);
 
-		posYtuboSuperior = (Math.floor((Math.random() * 300) + 100) * (-1));
+			this.tubes.push(tube);
+			this.scored.push(false);
+		}
 
-		tubo.create(1000 + (i * 260), posYtuboSuperior, 'tubosuperior');
-		tubo.create(1000 + (i * 260), posYtuboSuperior + 600, 'tuboinferior');
+		// CREATE A cena:
+		this.cena = game.add.group();
+		this.cena.create(0, 0, 'teto');
+		this.cena.create(0, 550, 'piso');
+		this.game.physics.enable(this.cena, Phaser.Physics.ARCADE);
 
-		game.physics.enable(tubo, Phaser.Physics.ARCADE);
+		// CREATE A celula:
+		this.cellSprite = game.add.sprite(455, 275, 'cell_head');
+		this.cellSprite.animations.add('jump', [ 1, 2, 3, 4, 5 ], 15, true);
+		this.game.physics.enable(this.cellSprite, Phaser.Physics.ARCADE);
 
-		tubos.push(tubo);
-		scored.push(false);
+		this.cellSprite.body.acceleration.y = 100;
+		this.cellSprite.body.collideWorldBounds = true;
+		this.cellSprite.body.drag.x = 100;
+		this.cellSprite.anchor.setTo(.5, .5);
+		this.cellSprite.body.gravity.y = 350;
+
+		// exibe titulo
+		var style = {
+			font : "40px Arial",
+			fill : "#ff0044",
+			align : "center"
+		};
+		this.title = game.add.text(game.world.centerX - 180, 10,
+				"FLAPPY BLOOD", style);
+
+		// exibe score
+		this.score = game.add.text(game.world.centerX + 220, 10, "SCORE: "
+				+ this.points, style);
+	},
+	update : function() {
+		// COLISAO:
+		this.game.physics.arcade.overlap(this.cellSprite, this.cena,
+				this.collision, null, this);
+
+		for (var i = 0; i < 4; i++) {
+			var tube = this.tubes[i];
+
+			 this.game.physics.arcade.overlap(this.cellSprite, tube,
+			 this.collision, null, this);
+			
+			if ((this.cellSprite.body.x > tube.getAt(0).body.x
+					+ tube.getAt(0).body.width)
+					&& (!this.scored[i])) {
+				this.scored[i] = true;
+				this.points++;
+				this.score.setText("SCORE: " + this.points);
+			}
+
+			tube.setAll('body.velocity.x', -100);
+			if (tube.getAt(0).body.x < -tube.getAt(0).body.width) {
+				tube.setAll('body.x', this.game.width);
+
+				// gera a posicao y do tube superior de forma aleatoria
+				var posYtuboSuperior = (Math
+						.floor((Math.random() * 300) + 100) * (-1));
+				tube.getAt(0).body.y = posYtuboSuperior;
+				// a posicao y do tubo inferior sempre sera 600 a mais do
+				// superior
+				tube.getAt(1).body.y = posYtuboSuperior + 600;
+				this.scored[i] = false;
+			}
+		}
+
+		this.cellSprite.animations.play('jump');
+
+		// PEGA A ENTRADA (tecla pressionada):
+		if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+			// vai para cima
+			this.cellSprite.body.velocity.y = -200;
+		}
+	},
+	collision : function(cell, bg) {
+		this.backgroundSound.pause();
+
+		this.backgroundSound = game.add.audio("collision_sound", 1, true);
+		this.backgroundSound.play('', 0, 1, false);
+
+		this.game.state.start('game_over');
 	}
-
-	// CREATE A cena:
-	cena = game.add.group();
-	cena.create(0, 0, 'teto');
-	cena.create(0, 550, 'piso');
-	game.physics.enable(cena, Phaser.Physics.ARCADE);
-
-	// CREATE A celula:
-	celulaSprite = game.add.sprite(455, 275, 'celula');
-	celulaSprite.animations.add('jump', [ 1, 2, 3, 4, 5 ], 15, true);
-	game.physics.enable(celulaSprite, Phaser.Physics.ARCADE); // permite que a
-	// sprite tenha
-	// um corpo
-	// fisico
-
-	celulaSprite.body.acceleration.y = 100;
-
-	celulaSprite.body.collideWorldBounds = true; // para no limite inferio da
-	// tela
-	celulaSprite.body.drag.x = 100; // desloca 100 e para, só desloca de novo
-	// se clicada alguma tecla e quanto maior
-	// for seu valor, menos desloca
-	celulaSprite.anchor.setTo(.5, .5); // diminui o espaço do deslocamento do
-	// espelhamento
-	celulaSprite.body.gravity.y = 350;
-
-	// exibe titulo
-	title = game.add.text(game.world.centerX - 150, 10, "FLAPPY BIRD", style);
-
-	// exibe score
-	score = game.add.text(game.world.centerX + 220, 10, "SCORE: " + points,
-			style);
-
 }
 
-function gameOverScreen() {
-	backgroundSound = game.add.audio("game_over_sound", 1, false);
-	// backgroundSound.play();
+var GameOver = function() {
+};
+GameOver.prototype = {
+	preload : function() {
+		game.load.image('game_over', 'assets/game_over_screen_960_600.png',
+				960, 600);
+		game.load.image('bt_restart', 'assets/btrestart_487_87.png', 487, 87);
 
-	// background
-	background = game.add.image(0, 0, 'game_over');
-	restart = game.add.image(230, 404, 'bt_restart');
-	restart.inputEnabled = true;
-	restart.events.onInputDown.add(restartListener, this);
+		// Audio
+		this.game.load.audio('game_over_sound',
+				'audio/som_tela_de_game_over.mp3');
+	},
+	create : function() {
+		if (this.backgroundSound != null) {
+			this.backgroundSound.pause();
+		}
+
+		this.backgroundSound = game.add.audio("game_over_sound", 1, false);
+		this.backgroundSound.play();
+
+		// background
+		this.background = game.add.image(0, 0, 'game_over');
+
+		// restart button
+		this.btRestart = game.add.image(230, 404, 'bt_restart');
+		this.btRestart.inputEnabled = true;
+		this.btRestart.events.onInputDown.add(this.btRestartClick, this);
+	},
+	update : function() {
+		;
+	},
+	btRestartClick : function() {
+		this.backgroundSound.pause();
+
+		this.game.state.start('play');
+	}
 }
 
-function btlistener() {
-	startScreen = false;
-	startGame();
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function restartListener() {
-	startGame();
-}
+game.state.add('menu', Menu);
+game.state.add('play', Play);
+game.state.add('game_over', GameOver);
+game.state.start('menu');
