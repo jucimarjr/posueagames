@@ -40,7 +40,7 @@ BasicGame.HUD.prototype = {
 			return;
 
 		var cameraWidth = this.gameManager.camera.width;
-		this.scoreLabel.text = new String(newScore) + 'm';
+		this.scoreLabel.text = new String(parseInt(newScore)) + 'm';
 		this.scoreLabel.updateText();
 		this.scoreLabel.x = cameraWidth - this.scoreLabel.textWidth - 20;
 	},

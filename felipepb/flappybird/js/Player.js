@@ -9,6 +9,7 @@ BasicGame.Player = function (gameManager) {
 
     this.currentAnim = 'none';
     this.explode = false;
+    this.isDead = false;
     this.deathX;
     this.deathY;
 
@@ -203,6 +204,7 @@ BasicGame.Player.prototype = {
         this.ship.body.gravity.y = 0;
         this.playThrustersCloseAnimation();
         this.playExplodeAnimation();
+        this.isDead = true;
     }, 
 
     clamp: function (x, min, max) {

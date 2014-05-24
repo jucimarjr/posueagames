@@ -29,6 +29,8 @@ BasicGame.GameManager = function (game) {
 
     this.playerCollisionGroup;
     this.obstaclesCollisionGroup;
+
+    this.distanceTravelled = 0;
 };
 
 BasicGame.GameManager.debugDraw = false;
@@ -69,6 +71,14 @@ BasicGame.GameManager.prototype = {
         this.backgroundManager.update();
         this.obstaclesManager.update();
         this.player.update();
+
+        if (!this.player.isDead) {
+            var velocity = -BasicGame.Obstacle.velocity;
+            var factor = BasicGame.GameManager.pixelsToUnit;
+            this.distanceTravelled += velocity / factor;
+        }
+
+        this.hud.setScore(this.distanceTravelled);
     },
 
     handleCollision: function (body1, body2) {
