@@ -19,18 +19,26 @@
 	<meta property="og:image:height" content="700">
 	<meta property="og:type" content="website">
 	<title>Suu</title>
-
+	<style type="text/css">
+        @font-face
+        {
+            font-family: "edosz";
+            src: url("font/edosz.ttf");
+        }
+    </style>
 </head>
 <body>
 	<div id="game_div"></div>
 	<div id="fb-root"></div>
-	<script>(function(d, s, id) {
+	<script>
+	(function(d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0];
           if (d.getElementById(id)) return;
           js = d.createElement(s); js.id = id;
           js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0";
           fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
+        }(document, 'script', 'facebook-jssdk'));
+	</script>
 
 	<div class="fb-like"
 		data-href="http://computacao.uea.edu.br/ludus/posueagames/rafaelima/FlappyBird/"

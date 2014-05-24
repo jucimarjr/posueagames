@@ -6,12 +6,14 @@ BasicGame.BackgroundManager = function (gameManager) {
 	this.parallaxEffectLayers = new Array();
 	this.glitchFXAmount;
 	this.glitchFXStep;
+	this.maxGlitchFX;
 };
 
 BasicGame.BackgroundManager.prototype = {
 	create: function () {
 		this.glitchFXAmount = 0.0;
 		this.glitchFXStep = 0.1;
+		this.maxGlitchFX = 10.0;
 
 		var cameraWidth = this.gameManager.camera.width;
         var cameraHeight = this.gameManager.camera.height;
@@ -61,6 +63,6 @@ BasicGame.BackgroundManager.prototype = {
     },
 
     increaseGlitchFX: function () {
-    	this.glitchFXAmount += this.glitchFXStep;
+    	this.glitchFXAmount = Math.min(this.glitchFXAmount + this.glitchFXStep, this.maxGlitchFX);
     }
 };

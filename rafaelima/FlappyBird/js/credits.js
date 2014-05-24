@@ -7,7 +7,7 @@ function preload() {
 
 function create() {
 	game.add.sprite(0, 0, 'splash_screen');
-	game.add.sprite(290, 466, 'credits');
+	game.add.sprite(275, 466, 'credits');
 }
 
 function update() {

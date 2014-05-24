@@ -31,12 +31,18 @@ BasicGame.GameManager = function (game) {
     this.obstaclesCollisionGroup;
 
     this.distanceTravelled = 0;
+
+    this.triggerDefaultSFX;
+    this.triggerUniqueSFX;
+    this.gameMusic;
 };
 
 BasicGame.GameManager.debugDraw = false;
 BasicGame.GameManager.pixelsToUnit = 80;
 BasicGame.GameManager.thrusterForce = -20 * BasicGame.GameManager.pixelsToUnit;
 BasicGame.GameManager.gravity = 9.8 * BasicGame.GameManager.pixelsToUnit;
+
+BasicGame.GameManager.lastRunStats = {  } // mission, distanceTravelled
 
 BasicGame.GameManager.prototype = {
 
@@ -65,6 +71,11 @@ BasicGame.GameManager.prototype = {
         this.player.create();
 
         this.game.physics.p2.setPostBroadphaseCallback(this.handleCollision, this);
+
+        this.triggerDefaultSFX = this.game.add.audio('trigger_default');
+        this.triggerUniqueSFX = this.game.add.audio('trigger_unique');
+        this.gameMusic = this.game.add.audio('game_music', '1', true);
+        this.gameMusic.play('', 0, 1, true);
     },
 
     update: function () {
@@ -76,43 +87,62 @@ BasicGame.GameManager.prototype = {
             var velocity = -BasicGame.Obstacle.velocity;
             var factor = BasicGame.GameManager.pixelsToUnit;
             this.distanceTravelled += velocity / factor;
+        } else if (this.player.deathAnimComplete) {
+            this.state.start('EndGame', false);
         }
 
         this.hud.setScore(this.distanceTravelled);
     },
 
     handleCollision: function (body1, body2) {
+        
+        if (this.player.isDead)
+            return false;
+
+        // console.log('handle collision');
+
         if ((body1.sprite.name === 'player' && body2.sprite.name === 'obstacle') ||
             (body1.sprite.name === 'obstacle' && body2.sprite.name === 'player')) {
 
             BasicGame.Obstacle.velocity = 0;
             this.player.onPlayerCollided();
-
-            return true;
+            
+            var obstacle = body1.sprite.name === 'player' ? body2 : body1;
+            this.missions._lastEvent = obstacle.missionEvent;
+            
+            if (!obstacle.trigered)
+                this.missions.computeEvent(obstacle.missionEvent);
+            
+            BasicGame.GameManager.lastRunStats.mission = this.missions;
+            BasicGame.GameManager.lastRunStats.distanceTravelled = this.distanceTravelled;
 
         } else if ((body1.sprite.name === 'player' && this.stringContains(body2.sprite.name, 'trigger'))) {
-            
-            this.hideSprite(body2.sprite);
-
-            if (this.stringContains(body2.sprite.name, 'unique_event'))
-                this.hud.setStatus(this.missions.currentPeriod().name);
-            
-            return true;
-
+            this.onPlayerCollidedWithTrigger(body2.sprite);
         } else if ((this.stringContains(body1.sprite.name, 'trigger') && body2.sprite.name === 'player')) {
-            
-            this.hideSprite(body1.sprite);
-
-            if (this.stringContains(body1.sprite.name, 'unique_event'))
-                this.hud.setStatus(this.missions.currentPeriod().name);
-            
-            return true;
-
+            this.onPlayerCollidedWithTrigger(body1.sprite);
         } else {
-
             return false;
-
         }
+
+        return true;
+    },
+
+    onPlayerCollidedWithTrigger: function (sprite) {
+        this.hideSprite(sprite);
+
+        if (this.stringContains(sprite.name, 'unique_event')) {
+            this.hud.setStatus(this.missions.currentPeriod().name);
+            this.triggerUniqueSFX.play();
+        } else {
+            this.triggerDefaultSFX.play();
+        }
+
+        if (!sprite.body.trigered) {
+            this.missions.computeEvent(sprite.body.missionEvent);
+            this.backgroundManager.increaseGlitchFX();
+        }
+
+        sprite.body.trigered = true;
     },
 
     hideSprite: function (sprite) {

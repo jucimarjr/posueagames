@@ -14,5 +14,15 @@ var preload = {
         game.load.spritesheet('peixes3', 'assets/peixes3_220-25-4.png', 55, 25);
         game.load.spritesheet('peixes4', 'assets/peixes4_240-60-4.png', 60, 60);
         game.load.spritesheet('peixes5', 'assets/peixes5_220-25-4.png', 55, 25);
+
+        // botoes para game over
+        game.load.image('botaoinicio', 'assets/botaoinicio_150-120.png ');
+        game.load.image('botaojogar', 'assets/botaojogar_150-120.png ');
+        game.load.image('placapontos', 'assets/pontos_600-600.png');
+		
+		game.load.image('cabeca', 'assets/cabeca_70-70.png');
+
+        // musica do jogo
+        game.load.audio('bgmusic', 'assets/In my own place.mp3');
     }
 };

@@ -1,16 +1,23 @@
 var score_state = { create: create, update:update };
 
     function create() {
-    	var style = { font: "20px Arial", fill: "#fff" };
-        var x = game.world.width/2, y = game.world.height/2;
-        
-		var text = game.add.text(x, y, "SCORE: "+ score.toFixed(0) +"m", style);
-        text.anchor.setTo(0.5, 0.5); 
-        
-        var x = game.world.width/2, y = game.world.height/2 -100;
-        var text = game.add.text(x, y, "Press [space] to start", style);
-        text.anchor.setTo(0.5, 0.5); 
+    	var bg1 = game.add.sprite(0, 0, 'background1');
+    	var bg2 = game.add.sprite(0, 0, 'background2');
+    	var bg3 = game.add.sprite(0, 0, 'background3');
+    	var bg4 = game.add.sprite(0, 0, 'background4');
+    	var bg5 = game.add.sprite(0, 0, 'background5');
+    	var bg6 = game.add.sprite(0, 0, 'scorebg');
     	
+    	
+    	var style = { font: '80pt "edosz"', fill: "#E95618" };
+        var x = 481, y = 316;
+        var number = score.toFixed(0);
+        if (number < 10){
+        	var text = game.add.text(x, y, "0" + number, style);
+        } else {
+        	var text = game.add.text(x, y, number, style);
+        }
+        text.anchor.setTo(0.5, 0.5); 
     }
     
     function update(){

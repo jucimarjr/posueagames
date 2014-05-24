@@ -31,24 +31,24 @@ BasicGame.Preloader.prototype = {
         this.load.image('endGame', 'assets/endgame_960-600.png');
         this.load.atlas('mainGameAtlas', 'assets/maingameatlas_512-1024.png', 'assets/maingameatlas_512-1024.json');
         this.load.atlas('lightningAtlas', 'assets/lightningatlas_128x256.png', 'assets/lightningatlas_128x256.json');
-        
   		this.load.image('backgroundColor', 'assets/backgroundcolor_960-600.png');
-        
         this.load.image('backgroundPhrases', 'assets/backgroundphrases_960-600.png');
-        
         this.load.image('backgroundPlanets', 'assets/backgroundplanets_960-600.png');
         this.load.image('backgroundStarsMedium', 'assets/backgroundstarsmedium_960-600.png');
         this.load.image('backgroundStarsSmall', 'assets/backgroundstarssmall_960-600.png');
-
         this.load.physics('physicsData', 'assets/ship_84-80.json');
-        
         this.load.bitmapFont('silkscreenblue', 'assets/silkscreenblue.png', 'assets/silkscreenblue.fnt');
         this.load.bitmapFont('silkscreenred', 'assets/silkscreenred.png', 'assets/silkscreenred.fnt');
-        //this.load.atlas('playButton', 'assets/play_button.png', 'assets/play_button.json');
-        //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
         this.load.bitmapFont('hud_default', 'fonts/hud_default.png', 'fonts/hud_default.fnt');
+        this.load.audio('blip_01', ['audio/wav/blip_01.wav', 'audio/mp3/blip_01.mp3']);
+        this.load.audio('blip_02', ['audio/wav/blip_02.wav', 'audio/mp3/blip_02.mp3']);
+        this.load.audio('ship_explosion', ['audio/wav/ship_explosion.wav', 'audio/mp3/ship_explosion.mp3']);
+        this.load.audio('ship_thrusters', ['audio/wav/ship_thrusters.wav', 'audio/mp3/ship_thrusters.mp3']);
+        this.load.audio('trigger_default', ['audio/wav/trigger_default.wav', 'audio/mp3/trigger_default.mp3']);
+        this.load.audio('trigger_unique', ['audio/wav/trigger_unique.wav', 'audio/mp3/trigger_unique.mp3']);
+        this.load.audio('game_music', ['audio/mp3/game_music.mp3']);
 
-        this.ready = true;
+        var self = this;
     },
 
     create: function () {
@@ -70,11 +70,11 @@ BasicGame.Preloader.prototype = {
         //	the update function completely.
 
 
-        //if (this.cache.isSoundDecoded('titleMusic') && this.ready == false)
-        //{
-        //this.ready = true;
-        //this.state.start('MainMenu');
-        //}
+        if (this.cache.isSoundDecoded('game_music') && this.ready == false)
+        {
+	        this.ready = true;
+        	this.state.start('MainMenu');
+        }
 
         if (this.ready)
             this.state.start('MainMenu');

@@ -1,27 +1,10 @@
-var plataformas;
-
-var game = new Phaser.Game(960, 600, Phaser.AUTO, '', {preload: preload,
-        create: create, update: update});
-
-var snd_inicio, snd_musica;
-
-function preload () {
-    game.load.image('background', 'assets/background_960-600.png');
-    game.load.image('stars', 'assets/estrelas_960-600.png');
-    game.load.image('meteor1', 'assets/meteoro1_135-120.png');
-    game.load.image('meteor2', 'assets/meteoro2_135-120.png');
-    game.load.image('meteor3', 'assets/meteoro3_135-120.png');
-    game.load.image('meteor4', 'assets/meteoro4_135-120.png');
-    game.load.image('meteor5', 'assets/meteoro5_135-120.png');
-    game.load.image('meteor6', 'assets/meteoro6_135-120.png');
-    game.load.image('meteor7', 'assets/meteoro7_135-120.png');
-    game.load.image('meteor8', 'assets/meteoro8_135-120.png');
-    game.load.spritesheet('tardis', 'assets/tardis_455-110.png', 91, 110);
-    snd_inicial = document.getElementById("inicial");
-    snd_musica = document.getElementById("musica");
-}
+var game_state = { create: create, update: update};
 
 function create () {
+
+	//Add sounds
+	soundMus = game.add.audio("musica");
+
 	// Add the background image
     background = game.add.image(0, 0, 'background');
     starsBackground = game.add.tileSprite(0, 0, game.world.width, game.world.height, 'stars');
@@ -54,6 +37,9 @@ function create () {
     game.physics.enable(meteors, Phaser.Physics.ARCADE);
     timer = game.time.events.loop(2000, addMeteor, this);
 
+    //Playing sounds
+    soundMus.play();
+    soundMus.loop = true;
     playerIsAlive = true;
     meteorCounter = 0;
     meteorType = 0;
@@ -69,9 +55,6 @@ function update () {
     game.physics.arcade.collide(tardisSprite, meteors, hitMeteor, null, this);
 
     tardisSprite.animations.play('spin');
-
-    snd_musica.loop = true;
-	snd_musica.play();
 
     if (playerIsAlive == true) {
         if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
@@ -125,5 +108,5 @@ function hitMeteor(tardis, meteor) {
     playerIsAlive = false;
 
     game.time.events.remove(timer);
-    snd_musica.pause();
+    soundMus.stop();
 }

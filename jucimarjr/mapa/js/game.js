@@ -1,5 +1,5 @@
 
-var dino, layer, group, map;
+var dino, layer, group, map, posicao;
 var game = new Phaser.Game(960, 600, Phaser.AUTO, 'phaser-game', { preload: preload, create: create, update: update });
 
 function preload () {
@@ -12,9 +12,6 @@ function preload () {
 }
 
 function create () {
-	//fundo
-	//game.add.sprite(0, 0, 'fundo');
-    
     game.physics.startSystem(Phaser.Game.ARCADE);
 	game.physics.arcade.gravity.y = 800;
     
@@ -27,7 +24,7 @@ function create () {
 	
 	layer = map.createLayer('Camada de Tiles 1');
 	layer.resizeWorld(); //seta o mundo com as alterações feitas
-	map.setCollisionBetween(0,10, true,'Camada de Tiles 1'); // basta por de 0 a 17 (até onde vai os nossos gids)
+	map.setCollisionBetween(0,3, true,'Camada de Tiles 1'); // 0 espaco vazio 1 em diante os tiles do tileset
 
 	// Adicionando objetos do mapa ao grupo
 	group = game.add.group();
@@ -35,12 +32,7 @@ function create () {
 	map.createFromObjects('Camada de Objetos 1',4, 'coxa', 0,true,false, group);
 	group.forEach(function (coxa){ coxa.body.allowGravity = false}, this); // faz com que as coxas nao caiam
 
-    dino = game.add.sprite(10,1000 ,'dino', 3);
-	dino.anchor.setTo(.5, 1);
-	game.physics.enable(dino);
-    
-    // CREATE A dino:
-	dino = game.add.sprite(200, 0, 'dino');
+    dino = game.add.sprite(10,500 ,'dino', 3);
 	dino.animations.add('walk',[1,2],6,true);
 	dino.animations.add('jump',[3,4,5],4,true);
 	game.physics.enable(dino, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
@@ -52,7 +44,10 @@ function create () {
     dino.anchor.setTo(.5,.5); // diminui o espaco do deslocamento do espelhamento 
     dino.body.gravity.y = 150;
     game.camera.follow(dino);
-
+    
+    var style = { font: "20px Courier", fill: "#000000" };
+    posicao = game.add.text(10, 550, Math.floor(dino.x) + " " + Math.floor(dino.y), style);
+    posicao.fixedToCamera = true;
 }
 
 
@@ -60,6 +55,7 @@ function update () {
     
     game.physics.arcade.collide(layer, dino);
     game.physics.arcade.overlap(group, dino, eatCoxa, null,this);
+    posicao.setText ( Math.floor(dino.x) + " " + Math.floor(dino.y) );
     
     // PEGA A ENTRADA (tecla pressionada):	
 	if ( game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
@@ -85,6 +81,9 @@ function update () {
 	
 }
 
+function printPosition() {
+	 posicao.content = Math.floor(dino.x) + " " + Math.floor(dino.y);
+}
 function eatCoxa (dino, coxa){
 	coxa.kill();
 }
