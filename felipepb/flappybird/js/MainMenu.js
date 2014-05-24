@@ -13,6 +13,8 @@ BasicGame.MainMenu = function (game) {
 
 BasicGame.MainMenu.backspaceKey = 8;
 BasicGame.MainMenu.tabKey = 9;
+BasicGame.MainMenu.letterAKey = 65;
+BasicGame.MainMenu.letterZKey = 90;
 BasicGame.MainMenu.maximumPlayerNameLength = 14;
 BasicGame.MainMenu.playerName = '';
 BasicGame.MainMenu.belovedName = '';
@@ -151,7 +153,7 @@ BasicGame.MainMenu.prototype = {
         if (this.currentBitmapText) {
             if (keyCode == BasicGame.MainMenu.backspaceKey) {
                 this.currentBitmapText.text = this.currentBitmapText.text.substr(0, this.currentBitmapText.text.length - 1);
-            } else  {
+            } else if (keyCode >= BasicGame.MainMenu.letterAKey && keyCode <= BasicGame.MainMenu.letterZKey) {
                 this.currentBitmapText.text += letter.toLowerCase();
             }
             this.currentBitmapText.text = this.currentBitmapText.text.substr(0, maximumNameLength);
