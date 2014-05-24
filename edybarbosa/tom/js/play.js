@@ -9,7 +9,7 @@ Game.Play.prototype = {
 		//Nuvens
 		cloud = game.add.tileSprite(0, 10, 600, 227,'nuvens');
 		game.physics.enable(cloud, Phaser.Physics.ARCADE);
-		cloud.body.velocity.x = -2;
+		cloud.body.velocity.x = -3;
 		// Fence
 		fence = game.add.tileSprite(0, 372, 960, 182,'cerca');
 		game.physics.enable(fence, Phaser.Physics.ARCADE);
@@ -121,8 +121,14 @@ Game.Play.prototype = {
 	    cat.animations.play('noise');    
 	    this.salvaScore();
 	    music.stop();
-	    this.game.state.start('Gameover');
+	    //this.game.state.start('Gameover');
+	    game.time.events.add(Phaser.Timer.SECOND * 1, this.gameOver, this);
 	},
+	
+	gameOver: function() {
+		this.game.state.start('Gameover');
+	},
+	
 	salvaScore: function() {
 		var score = this.getCookie("score");
 		if (score == "" || score < metrosPercorridos) {

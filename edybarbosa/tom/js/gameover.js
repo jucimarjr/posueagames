@@ -3,25 +3,16 @@ Game.Gameover = function (game) { };
 Game.Gameover.prototype = {
 
 	create: function () {
-	 
-		restart = game.add.text(w/2, 200, 'Fim de jogo');
-	    restart.anchor.set(0.5);
-	    restart.align = 'center';
-	    restart.font = 'Nunito';
-	    restart.fontSize = 80;
-	    restart.fontWeight = 'bold';	
-	    restart.stroke = '#FFFFFF';
-	    restart.strokeThickness = 4;
-	    restart.fill = '#000000';	
+		game.add.sprite(0, 0, 'gameover');
 
-		fim = game.add.text(w/2, 300, '(r) Reiniciar ');
+		fim = game.add.text(w/2, 400, '(r) Reiniciar ');
 	    fim.anchor.set(0.5);
 	    fim.align = 'center';
 	    fim.font = 'Nunito';
-	    fim.fontSize = 50;
+	    fim.fontSize = 40;
 	    fim.fontWeight = 'bold';	
 	    fim.stroke = '#FFFFFF';
-	    fim.strokeThickness = 4;
+	    fim.strokeThickness = 3;
 	    fim.fill = '#000000';		    
 	
 		r = game.input.keyboard.addKey(Phaser.Keyboard.R);
