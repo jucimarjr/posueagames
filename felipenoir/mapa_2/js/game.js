@@ -8,6 +8,7 @@ function preload() {
 	game.load.tilemap('map', 'assets/untitled.json', null,
 			Phaser.Tilemap.TILED_JSON);
 	game.load.image('tileset', 'assets/tile.png');
+	game.load.image('item', 'assets/item.png');
 	game.load.image('sky', 'assets/sky.jpg');
 	game.load.spritesheet('robo', 'assets/robo_33-38-3.png', 33, 38, 3);
 }
@@ -30,7 +31,7 @@ function create() {
 
 	objetos = game.add.group();
 	objetos.enableBody = true;
-	map.createFromObjects('Camada de Objetos 1', 3, 'objeto', 0, true, false,
+	map.createFromObjects('Camada de Objetos 1', 3, 'item', 0, true, false,
 			objetos);
 	objetos.forEach(function(objeto) {
 		objeto.body.allowGravity = false
@@ -49,6 +50,7 @@ function create() {
 
 function update() {
 	game.physics.arcade.collide(layer, robo);
+	game.physics.arcade.overlap(objetos, robo, pega, null, this);
 
 	if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
 		robo.body.velocity.x = 100;
@@ -62,8 +64,12 @@ function update() {
 		robo.animations.stop();
 		robo.frame = 0;
 	}
-	
+
 	if (game.input.keyboard.isDown(Phaser.Keyboard.UP) && robo.body.onFloor()) {
 		robo.body.velocity.y = -350;
 	}
+}
+
+function pega(robo, item) {
+	item.kill();
 }
