@@ -16,7 +16,7 @@ var create = {
         background = game.add.tileSprite(0, 0, 960, 800,  'background');
         background.autoScroll(-350, 0);
         
-        var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
+        var style = { font: "40px Helvetica", fill: "#ffffff" };
         
         this.score_label = game.add.text(20, 20, " " + this.score, style);
 
@@ -70,7 +70,7 @@ var create = {
         game.physics.enable(this.player, Phaser.Physics.ARCADE);
         game.camera.follow(this.player);
         this.player.body.gravity.y = 1000;
-        this.player.body.setSize(140, 30, 0, 15);
+        this.player.body.setSize(140, 30, 60, 15);
         this.player.jumpForce = -500;
         this.player.anchor.setTo(0.5, 0.5);
         this.player.alive = true;

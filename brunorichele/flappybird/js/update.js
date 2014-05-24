@@ -26,7 +26,7 @@ var update = {
     },
     collisionEnemyGroup : function(player, enemy){
         if(player && player.alive){
-            var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
+            var style = { font: "40px Helvetica", fill: "#ffffff" };
             if(enemy.enemyType === 'ariranha'){
                 player.destroy();
                 enemy.animations.stop();
@@ -50,7 +50,7 @@ var update = {
     },
     collisionFloor : function(){
         if (this.player.alive && this.player.y > game.world.bounds.height){
-            var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
+            var style = { font: "40px Helvetica", fill: "#ffffff" };
             this.player.alive = false;
             this.player.animations.stop();
             this.player.frame = 4;
@@ -62,10 +62,8 @@ var update = {
         startY = game.camera.y - 80;
         this.pointWall = game.add.sprite(180, startY + 120, 'placapontos');
         
-        var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
-      //  var score_placa = game.add.text(200, 200, " " + create.score, style);
-        
-      //  this.score_placa = game.add.text(200, 200, "Pontos:" + create.score, style);
+        var style = { font: "100px Helvetica", fill: "#ffffff" };
+        this.score_placa = game.add.text(game.width/2, startY + 350, create.score + "", style);
 
         this.buttonJogar = game.add.sprite(320, startY + 520, 'botaojogar');
         this.buttonJogar.inputEnabled = true;
@@ -88,7 +86,7 @@ var update = {
     	
         this.buttonJogar.kill();
         this.buttonInicio.kill();
-        // this.score_placa.kill();
+        this.score_placa.setText(" ");
         this.pointWall.kill();
         create.reset();
       
