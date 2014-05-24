@@ -40,15 +40,12 @@ var create = {
             'peixes5'
         ];
 
-        // Primeiro timer: NPCs passando atrás do jogador
+        // Timer NPCs: passando atrás do jogador
         this.npcTimer = game.time.events.loop(900, this.createNPC, this);
         this.npc_group = game.add.group();
 
         //player defs
         this.createPlayer();
-
-        // Segundo timer: NPCs passando na frente do jogador
-        this.npcTimer = game.time.events.loop(1000, this.createNPC, this);
 
         // Funcoes de interpolacao
         // Influenciam na movimentacao dos inimigos
