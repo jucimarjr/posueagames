@@ -1,4 +1,4 @@
-var game = new Phaser.Game(960, 600, Phaser.AUTO, 'game_div');
+var game = new Phaser.Game(960, 600, Phaser.AUTO, 'game');
 
 var inicioSprite;
 var soundIn;
@@ -12,10 +12,9 @@ var score;
 var labelScore;
 
 
-console.log('2');
-game.state.add('Inicial', inicial_state); 
-game.state.add('Preload', preload_state); 
-game.state.add('Game', game_state);  
+game.state.add('Inicial', inicial_state);
+game.state.add('Preload', preload_state);
+game.state.add('Game', game_state);
 game.state.add('GameOver', gameOver_state);
 
 game.state.start('Preload');
