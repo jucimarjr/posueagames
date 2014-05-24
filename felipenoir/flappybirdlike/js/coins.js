@@ -11,7 +11,7 @@ Coin.prototype = {
 	create : function() {
 		this.coins = game.add.group();
 		game.time.events
-				.loop(Phaser.Timer.SECOND , this.coinGenerator, this).timer
+				.loop(Phaser.Timer.SECOND*4 , this.coinGenerator, this).timer
 				.start();
 	},
 

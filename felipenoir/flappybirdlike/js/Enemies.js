@@ -64,6 +64,10 @@ Enemies.prototype = {
 		var initYEneMy = selecionaEnemy();
 		var initXenemY = game.world.width;
 		
+		if(initYEneMy <= geraEnemyMiddle()){
+			initYEneMy += 134;
+		}
+
 		for(var i = 0; i < 3;i++){
 			var enemy = this.generateBarrier(initXenemY + i*121,initYEneMy - i*134);
 			enemy.animations.add('run', [ 0, 1 ], 2, true);
