@@ -18,13 +18,13 @@ var update = {
         update.collisionFloor();
         if(this.player.y < 200) this.player.y = 200;
         
-        var style = { font: "40px helvetica", fill: "#ffffff" };
+        var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
         this.score = game.add.text(20, 20, "Pontos:" + create.score, style);
         
     },
     collisionEnemyGroup : function(player, enemy){
         if(player && player.alive){
-            var style = { font: "40px helvetica", fill: "#ffffff" };
+            var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
             if(enemy.enemyType === 'ariranha'){
                 update.status = game.add.text(100, 400, "Pressione R para reiniciar", style);
                 player.destroy();
@@ -48,7 +48,7 @@ var update = {
     },
     collisionFloor : function(){
         if (this.player.alive && this.player.y > game.world.bounds.height){
-            var style = { font: "40px helvetica", fill: "#ffffff" };
+            var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
             this.status = game.add.text(100, 400, "Pressione R para reiniciar", style);
             this.player.alive = false;
             this.player.animations.stop();
