@@ -48,6 +48,11 @@ Config.gameSplash = {
 	nextState: 4000
 };
 
+Config.play = {
+	x: 0,
+	y: 0,
+}
+
 //Menu
 Config.menu = {
 	dir: 'assets/images/MenuBackground_960-600.png',
