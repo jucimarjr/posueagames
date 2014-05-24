@@ -13,7 +13,7 @@ function create () {
     tardisSprite = game.add.sprite(100, (game.world.height - 110) / 2, 'tardis');
     game.physics.enable(tardisSprite, Phaser.Physics.ARCADE);
     tardisSprite.body.collideWorldBounds = true;
-    tardisSprite.animations.add('spin', [0, 1, 2, 3, 4], 10, true);
+    tardisSprite.animations.add('spin', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, true);
 
     // Add a group of meteors
     meteors = game.add.group();
@@ -38,6 +38,7 @@ function create () {
     timer = game.time.events.loop(2000, addMeteor, this);
 
     //Playing sounds
+    soundIn.stop();
     soundMus.play();
     soundMus.loop = true;
     playerIsAlive = true;
@@ -62,6 +63,10 @@ function update () {
         } else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
             tardisSprite.body.velocity.y = 250;
         }
+    }
+
+    if (tardisSprite.body.x + 91 < 0) {
+        game.state.start('GameOver');
     }
 }
 
@@ -108,5 +113,4 @@ function hitMeteor(tardis, meteor) {
     playerIsAlive = false;
 
     game.time.events.remove(timer);
-    soundMus.stop();
 }
