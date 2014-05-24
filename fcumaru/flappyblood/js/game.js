@@ -25,10 +25,12 @@ Menu.prototype = {
 		this.backgroundSound.play('', 0, 1, true);
 
 		// background
-		this.background = this.game.add.image(0, 0, 'background');
-
+		this.background = this.game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
+		this.background.autoScroll(-200, 0);
+		
 		// gorduras e veias
-		this.fatVein = this.game.add.image(0, 57, 'fat_vein');
+		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,game.cache.getImage('fat_vein').height, 'fat_vein');
+		this.fatVein.autoScroll(-200, 0);
 
 		// logo
 		this.logo = this.game.add.image(90, 180, 'logo');
@@ -89,11 +91,13 @@ Play.prototype = {
 		this.points = 0;
 
 		// background
-		this.background = this.game.add.image(0, 0, 'background');
-
+		this.background = this.game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
+		this.background.autoScroll(-200, 0);
+		
 		// gorduras e veias
-		this.fatVein = this.game.add.image(0, 57, 'fat_vein');
-
+		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,game.cache.getImage('fat_vein').height, 'fat_vein');
+		this.fatVein.autoScroll(-200, 0);
+		
 		// CREATE A tubos:
 		this.fats = this.game.add.group();
 		this.timer = this.game.time.events
