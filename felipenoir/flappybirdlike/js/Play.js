@@ -20,7 +20,7 @@ var playState = {
 
 		game.world.setBounds(0, 0, 600, game.cache.getImage('mountains').width);
 		// Toca audio do menu
-		var audioMenu = game.add.audio('audioMenu', 1, true);
+		audioMenu = game.add.audio('audioMenu', 1, true);
 		audioMenu.play('', 0, 1, true);
 		// game.world.setBounds(0, 0, game.stage.bounds.width,
 		// game.cache.getImage('trees').height);
@@ -33,8 +33,10 @@ var playState = {
 	},
 
 	update : function() {
-		game.physics.arcade.overlap(player.sprite, enemies.enemies,
-				player.lost, null, null);
+		game.physics.arcade.collide(player.sprite, level.ground);
+		game.physics.arcade.overlap(player.sprite, enemies.enemies, lost, null, this);
+		game.physics.arcade.overlap(player.sprite, coins.coins, getCoin, null, this);
+
 		player.update();
 		level.update();
 		coins.update();
@@ -42,3 +44,15 @@ var playState = {
 	}
 
 };
+
+function lost(enemy, player) {
+	audioMenu.stop();
+	console.log('lost');
+	game.state.start('gameover');
+}
+
+function getCoin(player, coin) {
+	console.log('getcoin');
+	score.count++;
+	coin.kill();
+}

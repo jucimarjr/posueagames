@@ -1,7 +1,6 @@
 Player = function() {
 	this.sprite;
 	this.audioVoar;
-	this.audioMenu;
 }
 
 Player.prototype = {
@@ -24,16 +23,9 @@ Player.prototype = {
 
 		// Audio
 		this.audioVoar = game.add.audio('audioVoar');
-		this.audioMenu = audioMenu;
 	},
 
 	update : function() {
-
-		game.physics.arcade.collide(this.sprite, level.ground);
-		game.physics.arcade.overlap(this.sprite, enemies.enemies, lost, null,
-				this);
-		game.physics.arcade.overlap(this.sprite, coins.coins, getCoin, null,
-				this);
 
 		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			this.sprite.body.velocity.y = -1000;
@@ -54,16 +46,4 @@ Player.prototype = {
 		}
 	}
 
-}
-
-function lost(enemy, player) {
-	this.audioMenu.stop();
-	console.log('lost');
-	game.state.start('gameover');
-}
-
-function getCoin(player, coin) {
-	console.log('getcoin');
-	score.count++;
-	coin.kill();
 }
