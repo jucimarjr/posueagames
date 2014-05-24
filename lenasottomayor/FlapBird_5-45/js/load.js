@@ -9,7 +9,10 @@ function preload() {
 	game.load.image('background', 'assets/background_980-600.png');
 	game.load.bitmapFont('font', 'assets/Font.png', 'assets/Font.fnt');
 	game.load.audio('music', 'assets/AirDucts.wav');
-	game.load.audio('jumpSound', 'assets/Blip.wav');
+	game.load.audio('jumpSound', 'assets/blip.wav');
+	game.load.audio('noise', 'assets/noise.wav');
+	game.load.audio('deadSound', 'assets/failure.wav')
+	
 
 }
 
