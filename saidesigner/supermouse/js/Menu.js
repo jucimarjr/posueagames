@@ -30,8 +30,8 @@ SuperMouse.Menu.prototype.create = function() {
 	Utils.resurrectCheese(this, this.cheeses, -20, 0);
 	Utils.resurrectRat(this, this.rats, -20, 0);
 
-	this.musicTheme =  this.add.audio('music_theme', 1, true);
-	this.musicTheme.play();
+	this.musicTheme = this.add.audio('music_theme', 1, true);
+	this.musicTheme.play();	
 };
 
 SuperMouse.Menu.prototype.update = function() {
@@ -48,5 +48,6 @@ SuperMouse.Menu.prototype.buttonPlayOnClick = function () {
 };
 
 SuperMouse.Menu.prototype.buttonCreditsOnClick = function () {
-
+	this.musicTheme.stop();
+	this.state.start('Credits');
 };

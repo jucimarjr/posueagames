@@ -94,3 +94,22 @@ Utils.resurrectStar = function(game, stars) {
 		star.body.velocity.x = Math.floor((Math.random() * 150) + 200) * -1;
 	}	
 };
+
+Utils.createText = function(game, posX, posY, size, color, shadow) {
+	
+    var text = game.add.text(posX, posY);
+
+    text.font = 'Helvetica';
+    text.fontSize = size;
+    text.fontWeight = 'bold';
+    var grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
+
+    grd.addColorStop(0, color);       
+    text.fill = grd;    
+    text.align = 'left';
+    text.stroke = '#000000';
+    text.strokeThickness = 2;
+    text.setShadow(5, 5, shadow, 5);    
+
+    return text;
+};

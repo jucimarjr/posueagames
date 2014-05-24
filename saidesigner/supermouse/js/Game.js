@@ -49,8 +49,8 @@ SuperMouse.Game.prototype.create = function() {
 
 	// Text
 
-	this.lifeLevelText = this.createText(10, 10);
-	this.scoreText = this.createText(800, 10);
+	this.lifeLevelText = Utils.createText(this, 10, 10, 60, '#ffffff', '#000000');
+	this.scoreText = Utils.createText(this, 800, 10, 60, '#ffffff', '#000000');
 };
 
 SuperMouse.Game.prototype.update = function() {
@@ -122,20 +122,4 @@ SuperMouse.Game.prototype.collisionCheck = function(source, target) {
 	console.log(this.physics.arcade.distanceBetween(target, source));
 
 	return this.physics.arcade.distanceBetween(target, source) < 100;
-};
-
-SuperMouse.Game.prototype.createText = function(posX, posY) {
-	
-    text = this.add.text(posX, posY);
-    text.font = 'Arial';
-    text.fontSize = 60;
-    grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
-    grd.addColorStop(0, '#FFFFFF');       
-    text.fill = grd;
-    text.align = 'left';
-    text.stroke = '#000000';
-    text.strokeThickness = 2;
-    text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-
-    return text;
 };
