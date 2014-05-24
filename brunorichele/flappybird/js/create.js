@@ -139,12 +139,11 @@ var create = {
 
     // criacao de NPCs
     createNPC : function(){
-        var index = this.random(1, 5);
+        var index = this.random(1, 4);
         var height = this.random(250, 750);
         var speedMultiplier = this.random(0, 5);
         var npc = this.npc_group.create(960, height, this.npc_list[index]);
         game.physics.arcade.enable(npc);
-        //npc.body.velocity.x = -300 * (1 + speedMultiplier / 5);
         npc.body.velocity.x = -400;
         npc.x = 960 + npc.width;
         npc.animations.add('swim', [0, 1, 2, 3], 10, true);

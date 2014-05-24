@@ -9,7 +9,7 @@ var preload = {
         //fundo
         game.load.image('background', 'assets/bg_4000-800.jpg');
         //peixes no fundo
-        game.load.spritesheet('peixes1', 'assets/peixes1_800-100-4.png', 200, 100);
+        //game.load.spritesheet('peixes1', 'assets/peixes1_800-100-4.png', 200, 100);
         game.load.spritesheet('peixes2', 'assets/peixes2_220-25-4.png', 55, 25);
         game.load.spritesheet('peixes3', 'assets/peixes3_220-25-4.png', 55, 25);
         game.load.spritesheet('peixes4', 'assets/peixes4_240-60-4.png', 60, 60);
