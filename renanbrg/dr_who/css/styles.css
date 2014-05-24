@@ -1,0 +1,10 @@
+body
+{
+margin: 0 auto;
+}
+
+@font-face
+{
+font-family: 'Doctor-Who';
+src: url('../font/doctor-who.ttf') format("truetype");
+}

@@ -40,7 +40,7 @@ function create () {
 
     // Add the score
     score = 0;
-    var style = { font: "30px Arial", fill: "#ffffff" };
+    var style = { font: "36px Doctor-Who", fill: "#ffffff" };
     labelScore = game.add.text(game.world.width / 2, 20, "0", style);
 }
 
