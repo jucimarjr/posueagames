@@ -26,8 +26,10 @@ BasicGame.Preloader.prototype = {
         this.load.image('ground', 'assets/ground.png');
         this.load.image('pipe', 'assets/pipe.png');
         this.load.atlas('shipAtlas', 'assets/shipatlas_512-512-20.png', 'assets/shipatlas_512-512-20.json');
-        this.load.atlas('playbutton', 'assets/playbutton_512-256-3.png', 'assets/playbutton_512-256-3.json');
-        this.load.image('splashWithName', 'assets/splash_960-600.png');
+        this.load.atlas('playButton', 'assets/playbutton_512-256-3.png', 'assets/playbutton_512-256-3.json');
+        this.load.atlas('tryAgain', 'assets/tryagain_512-256-3.png', 'assets/tryagain_512-256-3.json');
+        this.load.image('mainMenu', 'assets/splash_960-600.png');
+        this.load.image('endGame', 'assets/endgame_960-600.png');
         this.load.image('backgroundColor', 'assets/backgroundcolor_960-600.png');
         this.load.image('backgroundPhrases', 'assets/backgroundphrases_960-600.png');
         this.load.image('backgroundStarsBig', 'assets/backgroundstarsbig_960-600.png');

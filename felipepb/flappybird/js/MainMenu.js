@@ -10,6 +10,7 @@ BasicGame.MainMenu.tabKey = 9;
 BasicGame.MainMenu.maximumPlayerNameLength = 11;
 BasicGame.MainMenu.playerName = '';
 BasicGame.MainMenu.belovedName = '';
+BasicGame.MainMenu.fontSize = 40;
 
 BasicGame.MainMenu.prototype = {
 
@@ -17,10 +18,11 @@ BasicGame.MainMenu.prototype = {
         var self = this;
         var cameraWidth = this.game.camera.width;
         var cameraHeight = this.game.camera.height;
-        this.add.sprite(0, 0, 'splashWithName');
+        var fontSize = BasicGame.MainMenu.fontSize;
+        this.add.sprite(0, 0, 'mainMenu');
         
-        this.player = this.game.add.bitmapText(55, cameraHeight - 212, 'silkscreenblue', '', 40);
-        this.beloved = this.game.add.bitmapText(55, cameraHeight - 90, 'silkscreenblue', '', 40);
+        this.player = this.game.add.bitmapText(55, cameraHeight - 212, 'silkscreenblue', '', fontSize);
+        this.beloved = this.game.add.bitmapText(55, cameraHeight - 90, 'silkscreenblue', '', fontSize);
         this.currentBitmapText = this.player;
         
         this.player.text = new String('');
@@ -32,7 +34,7 @@ BasicGame.MainMenu.prototype = {
         };
         
         this.playButton = this.game.add.button(cameraWidth - 417, cameraHeight - 210,
-                                               'playbutton',
+                                               'playButton',
                                                this.onPlayButtonClicked,
                                                this,
                                                'buttonPlayHover_314-66.png',
