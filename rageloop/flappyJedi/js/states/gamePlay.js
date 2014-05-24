@@ -92,6 +92,10 @@
             
             this.setPowerUpBarVisibility(false);
 
+            style = { font: "36px Starjedi", fill: "#f3b40b", align: "center" };
+            this.help_text = this.game.add.text(this.game.world.centerX, this.game.height - 100, "(SPACEBAR) - Jump\n(ENTER) - Shot", style);
+            this.help_text.anchor.set(0.5, 0.5);
+
 
         },
 
@@ -100,7 +104,6 @@
             if (!this.player.exists) {
                 return;
             }
-
 
             this.game.physics.arcade.overlap(this.player, this.enemies, this.restart, null, this);
             this.game.physics.arcade.overlap(this.player, this.droids, this.restart, null, this);
@@ -135,6 +138,8 @@
         },
 
         start: function() {
+
+            this.help_text.visible = false;
 
             this.player_tween.stop();
 
