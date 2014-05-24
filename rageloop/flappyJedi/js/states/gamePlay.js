@@ -51,7 +51,7 @@
 
             this.droids = this.game.add.group();
             this.droids.createMultiple(10, 'probedroid');
-            this.droids.callAll('animations.add', 'animations', 'run', [0, 1], 2, true);
+            this.droids.callAll('animations.add', 'animations', 'run', [0, 1], 10, true);
 
             this.enemy_explosions = this.game.add.group();
             this.enemy_explosions.createMultiple(5, 'enemy_explosion');
