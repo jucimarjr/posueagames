@@ -35,9 +35,8 @@ function create () {
     game.physics.enable(meteors, Phaser.Physics.ARCADE);
     timer = game.time.events.loop(2000, addMeteor, this);
 
+    playerIsAlive = true;
     meteorCounter = 0;
-    
-    
 
     // Add the score
     score = 0;
@@ -47,15 +46,17 @@ function create () {
 
 function update () {
     background.tilePosition.x--;
-    game.physics.arcade.overlap(tardisSprite, meteors, kill, null, this);
-    
+    game.physics.arcade.collide(tardisSprite, meteors, hitMeteor, null, this);
+
     snd_musica.loop = true;
 	snd_musica.play();
-	
-    if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-        tardisSprite.body.velocity.y = -250;
-    } else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-        tardisSprite.body.velocity.y = 250;
+
+    if (playerIsAlive == true) {
+        if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+            tardisSprite.body.velocity.y = -250;
+        } else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
+            tardisSprite.body.velocity.y = 250;
+        }
     }
 }
 
@@ -94,11 +95,12 @@ function addMeteorInPosition(x, y) {
     }
 }
 
-function kill (tardis, meteoro)	{
-    tardis.kill();
-    meteoro.kill();
+function hitMeteor(tardis, meteoro) {
+    tardis.body.collideWorldBounds = false;
+    tardis.body.velocity.y = 0;
+    tardis.body.velocity.x = meteoro.body.velocity.x;
+    playerIsAlive = false;
+
+    game.time.events.remove(timer);
     snd_musica.pause();
-    
 }
-
-

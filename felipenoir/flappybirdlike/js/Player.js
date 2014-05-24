@@ -28,11 +28,12 @@ Player.prototype = {
 
 	update : function() {
 		this.game.physics.arcade.collide(this.sprite, level.ground);
-		this.game.physics.arcade.collide(this.sprite, enemies.enemies);
+		this.game.physics.arcade.overlap(this.sprite, enemies.enemies,
+				lost, null, this);
 
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-			this.sprite.body.velocity.y = -500;
-			//this.sprite.body.velocity.x = 10;
+			this.sprite.body.velocity.y = -1000;
+			// this.sprite.body.velocity.x = 10;
 			this.audioVoar.play();
 		}
 
@@ -48,4 +49,10 @@ Player.prototype = {
 			this.sprite.animations.play('jump');
 		}
 	}
+
+}
+
+function lost(enemy, player) {
+	console.log('lost');
+	this.game.state.start('gameover');
 }

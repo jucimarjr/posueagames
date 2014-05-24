@@ -20,7 +20,6 @@ function preload() {
     game.load.image('river', 'assets/bg/river_512-1200.jpeg');
     game.load.image('jungleLeft', 'assets/bg/jungleLeft_196-1200.jpg');
     game.load.image('jungleRight', 'assets/bg/jungleRight_196-1200.jpg');
-    game.load.image('buraco', 'assets/buraco_100-67.jpg');
     game.load.image('mainScore', 'assets/botoes/score_900-110.png');
     game.load.image('record', 'assets/botoes/score_250-100.png');
     game.load.image('logo', 'asets/bg/logo.png');
@@ -28,8 +27,8 @@ function preload() {
 
     //Sprites
     game.load.spritesheet('canoeman', 'assets/sprite/canoeman/canoeman_50-100-20.png', 50, 100, 20);
-    game.load.spritesheet('alligator', 'assets/sprite/enemies/jacare_64-43-10.png', 64, 43, 10);
-    game.load.spritesheet('boto', 'assets/sprite/enemies/boto_80-80-10.png', 80, 80, 10);
+    game.load.spritesheet('alligator', 'assets/sprite/enemies/alligator_64-43-10.png', 64, 43, 10);
+    game.load.spritesheet('boto', 'assets/sprite/enemies/boto_80-67-10.png', 80, 67, 10);
     game.load.spritesheet('sand', 'assets/sprite/enemies/sand_76-25-4.png', 76, 25, 4);
     game.load.spritesheet('trunk', 'assets/sprite/enemies/trunk_64-42-4.png', 64, 42, 4);
     game.load.spritesheet('timer', 'assets/botoes/timer-1500-369.png', 150,369,10);
@@ -42,8 +41,6 @@ function preload() {
 }
 
 function create() {
-
-    //game.physics.arcade.gravity.y = 50;
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     createRivers();
@@ -98,7 +95,7 @@ function create() {
 
     finalSound = false;
     remosSound = game.add.audio("remosound",1,true);
-    //remo.volume = 0.4;
+    //remosSound.volume = 2;
     remosSound.play('',0,1,true);
 }
 
