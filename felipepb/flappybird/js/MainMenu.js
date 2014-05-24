@@ -3,6 +3,7 @@ BasicGame.MainMenu = function (game) {
     this.beloved;
     this.currentBitmapText;
     this.playButton;
+    this.textFieldCursor;
 };
 
 BasicGame.MainMenu.backspaceKey = 8;
@@ -39,8 +40,17 @@ BasicGame.MainMenu.prototype = {
                                                this,
                                                'buttonPlayHover_314-66.png',
                                                'buttonPlayNone_314-66.png',
-                                               'buttonPlayActive_314-66.png',
-                                               'buttonPlayNone_314-66.png');
+                                               'buttonPlayActive_314-66.png');
+                                               
+        this.textFieldCursor = this.game.add.bitmapText(55, cameraHeight - 212, 'silkscreenblue', '|', fontSize);
+        var textFieldCursorTween = this.game.add.tween(this.textFieldCursor);
+        textFieldCursorTween.to({ alpha: 0 }, 500, Phaser.Easing.Linear.None, true, 0, Number.MAX_VALUE, true);
+    },
+    
+    update: function () {
+        var textField = this.textFieldCursor;
+        textField.x = this.currentBitmapText.x + this.currentBitmapText.textWidth;
+        textField.y = this.currentBitmapText.y;
     },
     
     handleTextFieldsInput: function (args) {
@@ -72,7 +82,7 @@ BasicGame.MainMenu.prototype = {
     onPlayButtonClicked: function (button) {
         var playerName = this.player.text ? this.player.text.trim() : null;
         var belovedName = this.beloved.text ? this.beloved.text.trim() : null;
-        
+
         if (!playerName || playerName.length == 0) {
             alert('Enter your name');
             this.currentBitmapText = this.player;
