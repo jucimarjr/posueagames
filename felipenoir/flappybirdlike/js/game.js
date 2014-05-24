@@ -4,6 +4,7 @@ var player = null;
 var level = null;
 var enemies = null;
 var coins = null;
+var score = null;
 
 var TRIANGLE_ENEMY = 0;
 var SNAKE_ENEMY = 1;

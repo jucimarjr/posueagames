@@ -25,6 +25,12 @@ var update = {
                 enemy.animations.stop();
                 enemy.frame = 2;
             }
+            else if(enemy.enemyType === 'barco') {
+                update.status = game.add.text(100, 400, "Pressione R para reiniciar", style);
+                player.destroy();
+                enemy.animations.stop();
+                enemy.frame = 2;
+            }
             else {
                 update.status = game.add.text(100, 400, "Pressione R para reiniciar", style);
                 player.alive = false;

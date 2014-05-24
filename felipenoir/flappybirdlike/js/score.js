@@ -1,19 +1,31 @@
-var score = {
+Score = function() {
+	this.count;
+	this.score;
+}
+
+Score.prototype = {
 
 	preload : function() {
-//		game.load.bitmapFont();
+		game.load.image('scoreBack', 'assets/score.png');
 	},
 
 	create : function() {
 		console.log('score -> create');
+		this.count = 0;
+
+		var scoreBack = game.add.sprite(0, 0, 'scoreBack');
+		scoreBack.fixedToCamera = true;
+
 		var style = {
-			fill : '#ffffff'
+			font : '30px Arial',
+			fill : '#000000'
 		};
-		var text = game.add.text(0, 0, "SCORE : ", style);
+		this.score = game.add.text(95, 45, this.count, style);
+		this.score.fixedToCamera = true;
 	},
 
 	update : function() {
-
+		this.score.setText(this.count);
 	}
 
 }

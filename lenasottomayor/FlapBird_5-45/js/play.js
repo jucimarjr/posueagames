@@ -13,6 +13,9 @@ function create() {
 }
 
 function update() {
+	//game.physics.arcade.collide(playerSprite, platforms);
+	game.physics.arcade.overlap(playerSprite, platforms, gameOver ,null,this);
+
 	keySpaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     keySpaceBar.onDown.add(jump, this);
     keySpaceBar.onUp.add(stop, this);
@@ -59,11 +62,22 @@ function addObstacle() {
 	
 	if((heigth+200) < 500) {
 		obstacle = platforms.create(960, heigth+300, 'obstacle');
+		obstacle.body.immovable = true; // deixa o bloco imovivel
 		game.physics.enable(obstacle, Phaser.Physics.ARCADE);
 		obstacle.body.velocity.x = -250;
 	} else {
 		obstacle = platforms.create(960, heigth-100, 'obstacle');
+		obstacle.body.immovable = true; // deixa o bloco imovivel
 		game.physics.enable(obstacle, Phaser.Physics.ARCADE);
 		obstacle.body.velocity.x = -250;
 	}
+}
+
+function gameOver(){
+game.physics.arcade.collide(playerSprite, platforms);
+if((playerSprite.position.y > obstacle.position.y)){
+	playerSprite.frame = 3;
+}
+game.state.start('score');
+//Music
 }

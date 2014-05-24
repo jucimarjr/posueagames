@@ -6,12 +6,13 @@ function create() {
 
     game.add.sprite(0, 0, 'background1');
 
-    background2 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background2').height, 'background2');
+    background2 = game.add.tileSprite(0, 0, game.cache.getImage('background2').width, game.cache.getImage('background2').height, 'background2');
+    background2.tileScale.setTo(1.15, 1.15);
     game.physics.arcade.enable(background2);
 
     background3 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background3').height, 'background3');
+    background3.tileScale.setTo(1.6,1.6);
     game.physics.arcade.enable(background3);
-
 
     loadExtras();
 
@@ -20,7 +21,6 @@ function create() {
     score = 0; 
     var style = { font: "30px Arial", fill: "#000000" };
     this.label_score = this.game.add.text(20, 50, "0m", style);
-    
     
     playerSprite = game.add.sprite(172, 281.5, 'player');
     playerSprite.animations.add('walk', [0, 1, 2, 3], 8, true);
@@ -36,7 +36,8 @@ function create() {
     deathSprite.body.gravity.y = 1500;
     deathSprite.body.collideWorldBounds = true; // parar no limite inferior da tela
 
-    background4 = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('background4').height, 'background4');
+    background4 = game.add.tileSprite(0, 0, game.cache.getImage('background4').width, game.cache.getImage('background4').height, 'background4');
+    background4.tileScale.setTo(1.6,1.6);
     game.physics.arcade.enable(background4);
 
     game.add.sprite(0, 0, 'background5');
@@ -137,6 +138,7 @@ function updatePowerUps(){
 }
 
 function jump() {
+//	playerSprite.animations.play('walk');
     playerSprite.body.velocity.y = -450;
     if (playersGroup != null && playersGroup.exists === true) {
         playersGroup.forEach(function (item) { item.body.velocity.y = -450; }, null, this);
@@ -222,15 +224,17 @@ function add_obstacle() {
             addOutBoundEvent(obstacle2);
             break;
         case 2:
-            obstacle3 = plataformas.create(950, 195, 'obstacle3');
+            obstacle3 = plataformas.create(950, 250, 'obstacle3');
             game.physics.enable(obstacle3, Phaser.Physics.ARCADE);
+            obstacle3.scale.setTo(1.2, 1.2);
             obstacle3.body.velocity.x = -100;
             addOutBoundEvent(obstacle3);
             break;
         case 3:
-            obstacle4 = plataformas.create(950, 381, 'obstacle4');
+            obstacle4 = plataformas.create(950, 405, 'obstacle4');
             game.physics.enable(obstacle4, Phaser.Physics.ARCADE);
             obstacle4.body.velocity.x = -100;
+            obstacle4.scale.setTo(1, 1);
             addOutBoundEvent(obstacle4);
             break;
         default:

@@ -23,7 +23,7 @@ Enemies.prototype = {
 
 	create : function() {
 		this.enemies = this.game.add.group();
-		this.game.time.events.loop(Phaser.Timer.SECOND ,
+		this.game.time.events.loop(Phaser.Timer.SECOND*2 ,
 				this.generateEnemy, this).timer.start();
 	},
 	generateBarrier : function(x, y) {
@@ -44,6 +44,7 @@ Enemies.prototype = {
 			this.geraEnemySnake();
 		}else if(randonType === TRIANGLE_ENEMY){
 			this.geraEnemyTriagle();
+			//escape para darmais espaço
 		}else if(randonType === STAIRS_ENEMY){
 			this.geraStairsEnemy();
 		}else if(randonType === SIMPLE_ENEMY){
@@ -63,6 +64,10 @@ Enemies.prototype = {
 		var initYEneMy = selecionaEnemy();
 		var initXenemY = game.world.width;
 		
+		if(initYEneMy <= geraEnemyMiddle()){
+			initYEneMy += 134;
+		}
+
 		for(var i = 0; i < 3;i++){
 			var enemy = this.generateBarrier(initXenemY + i*121,initYEneMy - i*134);
 			enemy.animations.add('run', [ 0, 1 ], 2, true);

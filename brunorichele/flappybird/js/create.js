@@ -12,24 +12,43 @@ var create = {
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         background = game.add.tileSprite(0, 0, 960, 800,  'background');
-        background.autoScroll(-400, 0);
+        background.autoScroll(-350, 0);
 
-        //player defs
-        this.createPlayer();
 
         //enemy defs
         this.enemy_group = game.add.group();
+        this.enemyTimer = game.time.events.loop(2000, this.createEnemy, this);
 
         //input defs
+        game.input.keyboard.addKeyCapture(
+            [
+                Phaser.Keyboard.SPACEBAR,
+                Phaser.Keyboard.R
+            ]
+        );
         this.space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.space_key.onDown.add(this.jump, this);
         this.reset_key = game.input.keyboard.addKey(Phaser.Keyboard.R);
         this.reset_key.onDown.add(this.reset, this);
 
-        // timer defs
-        this.enemyTimer = game.time.events.loop(2000, this.createEnemy, this);
+        // NPC defs
+        this.npc_list = [
+            'peixes1',
+            'peixes2',
+            'peixes3',
+            'peixes4',
+            'peixes5'
+        ];
 
-        // misc
+        // Timer NPCs: passando atrás do jogador
+        this.npcTimer = game.time.events.loop(900, this.createNPC, this);
+        this.npc_group = game.add.group();
+
+        //player defs
+        this.createPlayer();
+
+        // Funcoes de interpolacao
+        // Influenciam na movimentacao dos inimigos
         this.easingFunctions = [
             Phaser.Easing.Linear.In,
             Phaser.Easing.Quadratic.In,
@@ -43,6 +62,7 @@ var create = {
         game.physics.enable(this.player, Phaser.Physics.ARCADE);
         game.camera.follow(this.player);
         this.player.body.gravity.y = 1000;
+        this.player.body.setSize(140, 30, 0, 15);
         this.player.jumpForce = -500;
         this.player.anchor.setTo(0.5, 0.5);
         this.player.alive = true;
@@ -57,20 +77,19 @@ var create = {
 
     createEnemy : function() {
         if(!this.player.alive) return;
-        var enemyIndex = this.random(1, 2);
-        //var enemyIndex = this.random(1, 3);
+        var enemyIndex = this.random(1, 3);
         var enemySpeedMultiplier = this.random(1, 9);
         var enemyEasingFunction = this.random(1, 5);
         switch(enemyIndex){
             case 1:
                 this.createAriranha(enemySpeedMultiplier, enemyEasingFunction);
                 break;
-            case 2:
-                this.createArraia(enemySpeedMultiplier, enemyEasingFunction);
+                case 2:
+                    this.createArraia(enemySpeedMultiplier, enemyEasingFunction);
                 break;
-            /*case 3:
+            case 3:
                 this.createAnzol(enemySpeedMultiplier);
-                break;*/
+                break;
             default:
                 this.createAriranha(enemySpeedMultiplier, enemyEasingFunction);
         }
@@ -80,6 +99,10 @@ var create = {
     createAnzol : function(enemySpeedMultiplier){
         var anzol = this.enemy_group.create(970, 0, 'anzol'); // criando do lado de fora
         game.physics.arcade.enable(anzol);
+        anzol.enemyType = 'barco';
+        anzol.body.setSize(64, 64, 160, 350);
+        anzol.animations.add('swim', [0, 1], 5, true);
+        anzol.animations.play('swim');
         anzol.body.velocity.x = -300 * (1 + enemySpeedMultiplier / 10);
         anzol.outOfBoundsKill = true;
     },
@@ -112,6 +135,20 @@ var create = {
             .to({y: 570, angle: -20}, 1000) // descer e apontar angulo para cima, em 1000ms
             .to({y: 670, angle: 0}, 500) // voltar a altura normal, zerar angulo
             .start();
+    },
+
+    // criacao de NPCs
+    createNPC : function(){
+        var index = this.random(1, 4);
+        var height = this.random(250, 750);
+        var speedMultiplier = this.random(0, 5);
+        var npc = this.npc_group.create(960, height, this.npc_list[index]);
+        game.physics.arcade.enable(npc);
+        npc.body.velocity.x = -400;
+        npc.x = 960 + npc.width;
+        npc.animations.add('swim', [0, 1, 2, 3], 10, true);
+        npc.animations.play('swim');
+        npc.outOfBoundsKill = true;
     },
 
     jump: function() {
