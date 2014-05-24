@@ -36,7 +36,7 @@ BasicGame.ObstaclesManager.prototype = {
             obstacle.setUp(cameraWidth + (obstacleWidth / 2.0) + i * this._obstaclesHorizontalMargin,
                 						  randomY,
                 						  this._obstaclesGap,
-                                          missionEvent.name,
+                                          missionEvent,
                                           type);
             this.obstacles.push(obstacle);
         }
@@ -61,7 +61,7 @@ BasicGame.ObstaclesManager.prototype = {
             obstacleToMove.setUp(obstacles[length - 1].x() + this._obstaclesHorizontalMargin,
                 				 randomY,
                 				 this._obstaclesGap,
-                                 missionEvent.name,
+                                 missionEvent,
                                  type);
 
             var firstObstacle = obstacles[0];

@@ -103,7 +103,7 @@ BasicGame.Obstacle.prototype = {
         this.lightningSprite.animations.play('idle');
     },
 
-    setUp: function (x, y, gapHeight, labelText, type) {
+    setUp: function (x, y, gapHeight, missionEvent, type) {
         this.topSprite.body.x = x;
         this.topSprite.body.y = y - gapHeight / 2.0 - this._spriteHeight / 2.0;
 
@@ -127,14 +127,16 @@ BasicGame.Obstacle.prototype = {
     	this.topSprite.frameName = frameName;
         this.bottomSprite.frameName = frameName;
 
-        this.topLabel.text = labelText;
+        this.topLabel.text = missionEvent.name;
         this.topLabel.updateText();
         this.topLabel.x = this.topLabel.textWidth / 2.0 - 4;
 
-        this.bottomLabel.text = labelText;
+        this.bottomLabel.text = missionEvent.name;
         this.bottomLabel.updateText();
         this.bottomLabel.x = -this.bottomLabel.textWidth / 2.0 + 4;
 
+        this.lightningSprite.body.missionEvent = missionEvent;
+        this.lightningSprite.body.trigered = false;
         this.lightningSprite.body.x = x;
         this.lightningSprite.body.y = y;
     },

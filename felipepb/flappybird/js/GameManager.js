@@ -87,32 +87,29 @@ BasicGame.GameManager.prototype = {
 
             BasicGame.Obstacle.velocity = 0;
             this.player.onPlayerCollided();
-
-            return true;
+            this.missions.printStats();
 
         } else if ((body1.sprite.name === 'player' && this.stringContains(body2.sprite.name, 'trigger'))) {
-            
-            this.hideSprite(body2.sprite);
-
-            if (this.stringContains(body2.sprite.name, 'unique_event'))
-                this.hud.setStatus(this.missions.currentPeriod().name);
-            
-            return true;
-
+            this.onPlayerCollidedWithTrigger(body2.sprite);
         } else if ((this.stringContains(body1.sprite.name, 'trigger') && body2.sprite.name === 'player')) {
-            
-            this.hideSprite(body1.sprite);
-
-            if (this.stringContains(body1.sprite.name, 'unique_event'))
-                this.hud.setStatus(this.missions.currentPeriod().name);
-            
-            return true;
-
+            this.onPlayerCollidedWithTrigger(body1.sprite)
         } else {
-
             return false;
-
         }
+
+        return true;
+    },
+
+    onPlayerCollidedWithTrigger: function (sprite) {
+        this.hideSprite(sprite);
+
+        if (this.stringContains(sprite.name, 'unique_event'))
+            this.hud.setStatus(this.missions.currentPeriod().name);
+
+        if (!sprite.body.trigered)
+            this.missions.computeEvent(sprite.body.missionEvent);
+
+        sprite.body.trigered = true;
     },
 
     hideSprite: function (sprite) {

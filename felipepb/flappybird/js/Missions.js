@@ -1,4 +1,6 @@
 BasicGame.Missions = function () {
+	this.stats = [];
+
 	this._periods = [
 		{ type: BasicGame.Missions.Period.Single, name: 'single' },
 		{ type: BasicGame.Missions.Period.CasualDate, name: 'casual date' },
@@ -10,32 +12,12 @@ BasicGame.Missions = function () {
 		{ type: BasicGame.Missions.Period.OldAge, name: 'old age' }
 	];
 
-	this._events = [
-		{ type: BasicGame.Missions.Event.Sight, name: 'sight' },
-		{ type: BasicGame.Missions.Event.Talk, name: 'talk' },
-		{ type: BasicGame.Missions.Event.AskForDate, name: 'ask 4\ndate', isUnique: true },
-		{ type: BasicGame.Missions.Event.RegularDate, name: 'regular\ndate' },
-		{ type: BasicGame.Missions.Event.NiceDate, name: 'nice\ndate' },
-		{ type: BasicGame.Missions.Event.AskForKiss, name: 'ask 4\nkiss', isUnique: true },
-		{ type: BasicGame.Missions.Event.Kiss, name: 'kiss' },
-		{ type: BasicGame.Missions.Event.Argument, name: 'argument' },
-		{ type: BasicGame.Missions.Event.ChangedFacebookStatus, name: 'changeed\nFB status', isUnique: true },
-		{ type: BasicGame.Missions.Event.Fight, name: 'fight' },
-		{ type: BasicGame.Missions.Event.Sex, name: 'sex' },
-		{ type: BasicGame.Missions.Event.Proposed, name: 'proposal', isUnique: true },
-		{ type: BasicGame.Missions.Event.Vacation, name: 'vacation' },
-		{ type: BasicGame.Missions.Event.DineWithFamily, name: 'family\ndinner' },
-		{ type: BasicGame.Missions.Event.CantGetItUp, name: 'limp\nsex' },
-		{ type: BasicGame.Missions.Event.WeddingCeremony, name: 'wedding', isUnique: true },
-		{ type: BasicGame.Missions.Event.Cheat, name: 'cheating' },
-		{ type: BasicGame.Missions.Event.Child, name: 'child' },
-		{ type: BasicGame.Missions.Event.RenewVows, name: 'renew\nvows', isUnique: true },
-		{ type: BasicGame.Missions.Event.NoSex, name: '0 sex\nmonth' },
-		{ type: BasicGame.Missions.Event.GotOld, name: 'time\npasses...', isUnique: true },
-		{ type: BasicGame.Missions.Event.GrandChild, name: 'grandchild' },
-		{ type: BasicGame.Missions.Event.HealthProblem, name: 'disease' },
-		{ type: BasicGame.Missions.Event.Death, name: 'your time\nhas come', isGameOver: true }
-	];
+	this._events = this.getNewEvents();
+	this._constEvents = new Array();
+
+	for (var i = 0; i < this._events.length; i++) {
+		this._constEvents.push(this._events[i]);
+	};
 
 	this._restartArray = false;
 	this._maxIndexReturned = 0;
@@ -83,6 +65,35 @@ BasicGame.Missions.Event = {
 };
 
 BasicGame.Missions.prototype = {
+
+	getNewEvents: function () {
+		return [
+			{ type: BasicGame.Missions.Event.Sight, name: 'sight' },
+			{ type: BasicGame.Missions.Event.Talk, name: 'talk' },
+			{ type: BasicGame.Missions.Event.AskForDate, name: 'ask 4\ndate', isUnique: true },
+			{ type: BasicGame.Missions.Event.RegularDate, name: 'regular\ndate' },
+			{ type: BasicGame.Missions.Event.NiceDate, name: 'nice\ndate' },
+			{ type: BasicGame.Missions.Event.AskForKiss, name: 'ask 4\nkiss', isUnique: true },
+			{ type: BasicGame.Missions.Event.Kiss, name: 'kiss' },
+			{ type: BasicGame.Missions.Event.Argument, name: 'argument' },
+			{ type: BasicGame.Missions.Event.ChangedFacebookStatus, name: 'changeed\nFB status', isUnique: true },
+			{ type: BasicGame.Missions.Event.Fight, name: 'fight' },
+			{ type: BasicGame.Missions.Event.Sex, name: 'sex' },
+			{ type: BasicGame.Missions.Event.Proposed, name: 'proposal', isUnique: true },
+			{ type: BasicGame.Missions.Event.Vacation, name: 'vacation' },
+			{ type: BasicGame.Missions.Event.DineWithFamily, name: 'family\ndinner' },
+			{ type: BasicGame.Missions.Event.CantGetItUp, name: 'limp\nsex' },
+			{ type: BasicGame.Missions.Event.WeddingCeremony, name: 'wedding', isUnique: true },
+			{ type: BasicGame.Missions.Event.Cheat, name: 'cheating' },
+			{ type: BasicGame.Missions.Event.Child, name: 'child' },
+			{ type: BasicGame.Missions.Event.RenewVows, name: 'renew\nvows', isUnique: true },
+			{ type: BasicGame.Missions.Event.NoSex, name: '0 sex\nmonth' },
+			{ type: BasicGame.Missions.Event.GotOld, name: 'time\npasses...', isUnique: true },
+			{ type: BasicGame.Missions.Event.GrandChild, name: 'grandchild' },
+			{ type: BasicGame.Missions.Event.HealthProblem, name: 'disease' },
+			{ type: BasicGame.Missions.Event.Death, name: 'your time\nhas come', isGameOver: true }
+		];
+	},
 
 	nextEventIndex: function () {
 
@@ -154,5 +165,25 @@ BasicGame.Missions.prototype = {
 
 	currentPeriod: function () {
 		return this._periods[this._periodIndex];
+	},
+
+	computeEvent: function (event) {
+		var index = this._constEvents.indexOf(event);
+
+		if (!this.stats[index])
+			this.stats[index] = 1;
+		else
+			this.stats[index] += 1;
+	},
+
+	printStats: function () {
+		for (var key in this.stats) {
+			var name = this.replaceNewLines(this._constEvents[key].name);
+			console.log(name + ": " + this.stats[key]);
+		};
+	},
+
+	replaceNewLines: function (str)	{
+		return str.replace(/\n/g," ");
 	}
 };
