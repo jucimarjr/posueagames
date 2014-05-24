@@ -38,6 +38,8 @@ BasicGame.GameManager.pixelsToUnit = 80;
 BasicGame.GameManager.thrusterForce = -20 * BasicGame.GameManager.pixelsToUnit;
 BasicGame.GameManager.gravity = 9.8 * BasicGame.GameManager.pixelsToUnit;
 
+BasicGame.GameManager.lastRunStats = {  } // mission, distanceTravelled
+
 BasicGame.GameManager.prototype = {
 
     create: function () {
@@ -76,18 +78,24 @@ BasicGame.GameManager.prototype = {
             var velocity = -BasicGame.Obstacle.velocity;
             var factor = BasicGame.GameManager.pixelsToUnit;
             this.distanceTravelled += velocity / factor;
+        } else if (this.player.deathAnimComplete) {
+            this.state.start('EndGame', false);
         }
 
         this.hud.setScore(this.distanceTravelled);
     },
 
     handleCollision: function (body1, body2) {
+
+        // console.log('handle collision');
+
         if ((body1.sprite.name === 'player' && body2.sprite.name === 'obstacle') ||
             (body1.sprite.name === 'obstacle' && body2.sprite.name === 'player')) {
 
             BasicGame.Obstacle.velocity = 0;
             this.player.onPlayerCollided();
-            this.missions.printStats();
+            BasicGame.GameManager.lastRunStats.mission = this.missions;
+            BasicGame.GameManager.lastRunStats.distanceTravelled = this.distanceTravelled;
 
         } else if ((body1.sprite.name === 'player' && this.stringContains(body2.sprite.name, 'trigger'))) {
             this.onPlayerCollidedWithTrigger(body2.sprite);

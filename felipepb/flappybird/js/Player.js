@@ -10,6 +10,7 @@ BasicGame.Player = function (gameManager) {
     this.currentAnim = 'none';
     this.explode = false;
     this.isDead = false;
+    this.deathAnimComplete = false;
     this.deathX;
     this.deathY;
 
@@ -163,7 +164,7 @@ BasicGame.Player.prototype = {
 
     onExplosionAnimationFinished: function () {
         this.gameManager.hideSprite(this.ship);
-        // TODO: call game over screen.
+        this.deathAnimComplete = true;
     },
 
     handleInput: function () {

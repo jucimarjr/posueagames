@@ -25,7 +25,7 @@ BasicGame.EndGame.prototype = {
         
         // player
         this.player = this.game.add.bitmapText(0, 0,
-                                               'silkscreenblue',
+                                               'silkscreenblue', 
                                                BasicGame.MainMenu.playerName,
                                                fontSize);
         this.player.x = leftMargin + windowWidth / 2.0 - this.player.textWidth / 2.0;
