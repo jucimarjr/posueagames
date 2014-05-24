@@ -22,7 +22,7 @@ Game.Play.prototype = {
 		this.createScore();
 		
 	    a = game.input.keyboard.addKey(Phaser.Keyboard.A);
-	    s = game.input.keyboard.addKey(Phaser.Keyboard.S);
+	    s = game.input.keyboard.addKey(Phaser.Keyboard.S);	  
 
 	    music = game.add.audio('boden');
 	    music.play();
@@ -120,6 +120,8 @@ Game.Play.prototype = {
 	    fence.tilePosition.x = 0;
 	    cat.animations.play('noise');    
 	    this.salvaScore();
+	    music.stop();
+	    this.game.state.start('Gameover');
 	},
 	salvaScore: function() {
 		var score = this.getCookie("score");

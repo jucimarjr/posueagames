@@ -8,8 +8,12 @@ BasicGame.Player = function (gameManager) {
     this.appliedJumpForce = false;
 
     this.currentAnim = 'none';
+    this.explode = false;
+    this.isDead = false;
+    this.deathX;
+    this.deathY;
 
-    this._leftMargin = 50 + BasicGame.Player.frameWidth / 2.0;
+    this._leftMargin = 60 + BasicGame.Player.frameWidth / 2.0;
 };
 
 BasicGame.Player.frameWidth = 84;
@@ -26,13 +30,23 @@ BasicGame.Player.prototype = {
 
     update: function () {
         this.handleInput();
+
+        this.ship.x = this._leftMargin;
+        this.ship.body.x = this._leftMargin;
+        this.ship.body.velocity.x = 0.0;
+
+        if (this.explode) {
+            this.ship.x = this.deathX;
+            this.ship.y = this.deathY;
+            this.gameManager.game.physics.p2.clear();
+        }
     },
 
     createShip: function () {
         var cameraHeight = this.gameManager.camera.height;
         var ship = this.gameManager.add.sprite(this._leftMargin,
                                                cameraHeight / 2.0,
-                                               'shipAtlas');
+                                               'mainGameAtlas');
 
         ship.frameName = 'ship_64-80.png';
         ship.smoothed = false;
@@ -40,12 +54,19 @@ BasicGame.Player.prototype = {
 
         // Physics code!
         this.gameManager.game.physics.p2.enableBody(ship, BasicGame.GameManager.debugDraw);
-        
+
         ship.body.clearShapes();
         ship.body.loadPolygon('physicsData', 'ship');
         ship.body.fixedRotation = true;
         ship.body.collideWorldBounds = true;
-        // ship.body.static = true;
+        // ship.body.collidesWith.push(Phaser.Physics.P2.everythingCollisionGroup);
+
+        // ship.body.setCollisionGroup(this.gameManager.playerCollisionGroup);
+        // ship.body.collides(this.gameManager.obstaclesCollisionGroup);
+
+        // ship.body.onBeginContact.add(this.onShipBeginContact, this);
+
+        ship.name = 'player';
 
         this.ship = ship;
     },
@@ -57,7 +78,7 @@ BasicGame.Player.prototype = {
             'ship_left-thrusters_2.png'
         ];
 
-        this.leftThrusters = this.gameManager.add.sprite(0, 0, 'shipAtlas');
+        this.leftThrusters = this.gameManager.add.sprite(0, 0, 'mainGameAtlas');
         this.leftThrusters.parent = this.ship;
         this.leftThrusters.anchor.setTo(1.0, 0.5);
         this.leftThrusters.x -= 10;
@@ -79,35 +100,43 @@ BasicGame.Player.prototype = {
             'ship_bottom-thrusters_4.png'
         ];
 
-        this.bottomThrusters = this.gameManager.add.sprite(0, 0, 'shipAtlas');
+        this.bottomThrusters = this.gameManager.add.sprite(0, 0, 'mainGameAtlas');
         this.bottomThrusters.parent = this.ship;
         this.bottomThrusters.anchor.setTo(0.5, 0.0);
         this.bottomThrusters.x += 17;
         this.bottomThrusters.y += 8;
 
-        var openThrustersOnCompleteSignal = new Phaser.Signal();
-        openThrustersOnCompleteSignal.add(this.onThrustersOpenned, this);
-
-        var closeThrustersOnCompleteSignal = new Phaser.Signal();
-        closeThrustersOnCompleteSignal.add(this.onThrustersClosed, this);        
-
         var anim = this.bottomThrusters.animations.add(
             'openThrusters', bottomThrustersOpenAnimationFrames, 10, false
         );
-        anim.onComplete = openThrustersOnCompleteSignal;
+        anim.onComplete.add(this.onThrustersOpenned, this);
 
         anim = this.bottomThrusters.animations.add(
             'closeThrusters', bottomThrustersCloseAnimationFrames, 10, false
         );
-        anim.onComplete = closeThrustersOnCompleteSignal;
+        anim.onComplete.add(this.onThrustersClosed, this);
 
         this.bottomThrusters.animations.add('loopThrusters', bottomThrustersLoopAnimationFrames, 10, true);
-        this.hideSprite(this.bottomThrusters);
+        this.gameManager.hideSprite(this.bottomThrusters);
+    },
+
+    playExplodeAnimation: function () {
+        var animationFrames = [];
+
+        for (var i = 0; i <= 13; i++) {
+            animationFrames.push('explosion' + i + '_148-158.png');
+        }
+
+        var anim = this.ship.animations.add('explode', animationFrames, 10, false);
+        anim.onComplete.add(this.onExplosionAnimationFinished, this);
+        this.ship.animations.play('explode');
+        this.gameManager.hideSprite(this.leftThrusters);
+        this.gameManager.hideSprite(this.bottomThrusters);
     },
 
     playThrustersOpenAnimation: function () {
         // console.log('open');
-        this.showSprite(this.bottomThrusters);
+        this.gameManager.showSprite(this.bottomThrusters);
         this.currentAnim = 'openThrusters';
         this.bottomThrusters.animations.play('openThrusters');
     },
@@ -125,17 +154,16 @@ BasicGame.Player.prototype = {
 
     onThrustersClosed: function () {
         this.currentAnim = 'none';
-        this.hideSprite(this.bottomThrusters);
+        this.gameManager.hideSprite(this.bottomThrusters);
     },
 
-    hideSprite: function (sprite) {
-        sprite.scale.x = 0.0;
-        sprite.scale.y = 0.0;
+    onShipBeginContact: function () {
+        console.log('begin contact');
     },
 
-    showSprite: function (sprite) {
-        sprite.scale.x = 1.0;
-        sprite.scale.y = 1.0;
+    onExplosionAnimationFinished: function () {
+        this.gameManager.hideSprite(this.ship);
+        // TODO: call game over screen.
     },
 
     handleInput: function () {
@@ -168,8 +196,15 @@ BasicGame.Player.prototype = {
 
     onPlayerCollided: function () {
         this.blockInput = true;
-        this.ship.body.allowGravity = false;
-        this.ship.body.velocity.y = 0.0;
+        this.explode = true;
+        this.deathX = this.ship.x;
+        this.deathY = this.ship.y;
+        this.ship.body.velocity.x = 0;
+        this.ship.body.velocity.y = 0;
+        this.ship.body.gravity.y = 0;
+        this.playThrustersCloseAnimation();
+        this.playExplodeAnimation();
+        this.isDead = true;
     }, 
 
     clamp: function (x, min, max) {
