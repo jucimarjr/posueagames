@@ -14,9 +14,13 @@ var menuState = {
 		audioMenu = game.add.audio('audioMenu', 1, true);
 		audioMenu.play('', 0, 1, true);
 
-		var spaceBar = this.game.input.keyboard
+		var spaceBar = game.input.keyboard
 				.addKey(Phaser.Keyboard.SPACEBAR);
 		spaceBar.onDown.add(this.start, this);
+
+		var creditsButton = game.input.keyboard
+				.addKey(Phaser.Keyboard.C);
+		creditsButton.onDown.add(this.credits, this);
 
 		game.add.sprite(0, 0, 'menu');
 		var title = game.add.sprite(game.world.centerX, 70, 'title');
@@ -31,6 +35,12 @@ var menuState = {
 
 	start : function() {
 		audioMenu.stop();
-		this.game.state.start('play');
+		game.state.start('play');
+	},
+
+	credits : function() {
+		audioMenu.stop();
+		console.log('credits');
+		game.state.start('credits');
 	}
 };
