@@ -47,7 +47,7 @@ SuperMouse.Game.prototype.create = function() {
 	this.player.body.angularVelocity = 100;	
 	this.player.body.gravity.y = 100;
 	this.player.body.acceleration.y = 200;	
-	this.player.health = 110;
+	this.player.health = 11;
 	this.player.events.onKilled.add(this.gameOver, this);
 
 	// sounds
@@ -72,12 +72,12 @@ SuperMouse.Game.prototype.create = function() {
 	// health
 
 	this.health = this.add.sprite(252, 5, 'health');
-	this.health.frame = 10;
+	
 };
 
 SuperMouse.Game.prototype.update = function() {
 
-	if (this.player.health > 10) {
+	if (this.player.health > 1) {
 		this.physics.arcade.overlap(this.player, this.asteroids, this.collisionHandler, this.collisionCheck, this);
 		this.physics.arcade.overlap(this.player, this.cheeses, this.collisionHandler, this.collisionCheck, this);
 		this.physics.arcade.overlap(this.player, this.rats, this.collisionHandler, this.collisionCheck, this);		
@@ -89,6 +89,7 @@ SuperMouse.Game.prototype.update = function() {
 	Utils.reviveCheese(this, this.cheeses, -150, 0);
 	Utils.reviveRat(this, this.rats, -150, 0);		
 	this.scoreText.text = score;
+	this.health.frame = this.player.health - 1;	
 };
 
 SuperMouse.Game.prototype.movPlayer = function() {
@@ -97,7 +98,7 @@ SuperMouse.Game.prototype.movPlayer = function() {
 		this.input.keyboard.isDown(Phaser.Keyboard.UP) || 
 		this.input.activePointer.isDown) {
 
-		this.player.body.velocity.y = -220 + (10 - this.player.health / 10) * 20;
+		this.player.body.velocity.y = -220 + (10 - this.player.health - 1) * 20;
 
 		if (!this.keyPressed) {
 			this.keyPressed = true;
@@ -127,43 +128,74 @@ SuperMouse.Game.prototype.movPlayer = function() {
 }; 
 
 SuperMouse.Game.prototype.collisionHandler = function(source, target) {
-	if (this.asteroids.getIndex(target) >= 0) {
+	if (this.asteroids.getIndex(target) >= 0) 
+	{
 		if (!this.breakBoneSnd.isPlaying) {
 			this.breakBoneSnd.play();
-		}
-		this.player.damage(1);		
-		this.player.animations.play('fly2');		
+		}		
+
+		target.kill();
+		this.player.damage(1);
+
+		this.player.animations.play('fly5');	
+
+		this.time.events.add(150, function() {
+			this.changePlayerAnimation();
+		}, this);
+
+
 	} else if (this.cheeses.getIndex(target) >= 0) {
-		this.eatSnd.play('eating');
-		if (this.player.health < 110) {
-			this.player.damage(-10);
+
+		if (!this.eatSnd.isPlaying) {
+			this.eatSnd.play('eating');	
 		}
+		
+		if (this.player.health < 11) {
+			this.player.damage(-1);
+		}
+
 		this.physics.arcade.moveToXY(target, 450, 10, 200, 200, 2000);
+
+		this.changePlayerAnimation();
+
 	} else {		
+
 		if (!this.ratSnd.isPlaying) {
 			this.ratSnd.play();
 		}
+
 		this.physics.arcade.moveToXY(target, 800, 10, 200, 200, 2000);		 
+
 		score++;
 	}
+};
 
-	if (this.player.health <= 10) {
+SuperMouse.Game.prototype.changePlayerAnimation = function() {
+
+	if (this.player.health == 1) {
+
 		this.player.animations.play('fly5');
-	} else if (this.player.health <= 40) {
+
+	} else if (this.player.health <= 3) {
+
 		if (!this.alertSnd.isPlaying) {
 			this.alertSnd.play();
 		}
+
 		this.player.animations.play('fly4');
-	} else if (this.player.health <= 60) {
+
+	} else if (this.player.health <= 7) {
+
 		if (this.alertSnd.isPlaying) {
 			this.alertSnd.stop();
 		}
-		this.player.animations.play('fly3');
-	} else {
-		this.player.animations.play('fly');
-	}
 
-	this.health.frame = this.player.health / 10 - 1;
+		this.player.animations.play('fly3');
+
+	} else {
+
+		this.player.animations.play('fly');
+	}	
 };
 
 SuperMouse.Game.prototype.collisionCheck = function(source, target) {	
