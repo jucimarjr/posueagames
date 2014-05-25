@@ -8,7 +8,7 @@ BasicGame.EndGame = function () {
 };
 
 BasicGame.EndGame.fontSize = 40;
-BasicGame.EndGame.breakupGameUrl = 'http://computacao.uea.edu.br/ludus/posueagames/felipepb/breakout';
+BasicGame.EndGame.breakupGameUrl = 'http://computacao.uea.edu.br/ludus/posueagames/felipepb/breakup';
 
 BasicGame.EndGame.prototype = {
 
