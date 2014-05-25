@@ -1,7 +1,7 @@
 //Play
 State.Play = function(game){
 	this.game = game;
-	var map, layer, robo, objetos;
+	var map, layer, robo, objetos, jump = 1;
 }
 
 State.Play.prototype = {
@@ -64,8 +64,14 @@ State.Play.prototype = {
 			this.robo.animations.stop();
 			this.robo.frame = 0;
 		}
-		if (game.input.keyboard.isDown(Phaser.Keyboard.UP) && this.robo.body.onFloor()) {
-			this.robo.body.velocity.y = -350;
+		if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+				if(this.robo.body.onFloor() || (this.jump > 0 && this.robo.body.velocity.y > -100)){
+					this.robo.body.velocity.y = -350;
+					this.jump --;
+				}
+		}
+		if(this.robo.body.onFloor()){
+			this.jump = 1;
 		}
 	},
 	pega : function(robo, item) {

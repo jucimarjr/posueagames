@@ -25,6 +25,12 @@ State.GameSplash.prototype = {
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
 		
 		//Game
+		game.load.image(Config.game.map.tileSetKey, Config.game.map.tileSetDir);
+		this.game.load.image(Config.game.bgKey,  Config.game.dir);
+		this.game.load.tilemap(Config.game.map.key, Config.game.map.dir, null, Phaser.Tilemap.TILED_JSON);
+		
+		this.game.load.spritesheet(Config.game.player.key, Config.game.player.dir, Config.game.player.width, Config.game.player.height);
+		
 	},
 	create: function () {
 		"use strict";
