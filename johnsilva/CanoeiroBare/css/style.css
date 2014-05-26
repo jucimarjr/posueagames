@@ -1,5 +1,10 @@
 ﻿#game_div {
     width: 900px;
-    margin: auto;
+    height: 600px;
+    margin: 0 auto;
     margin-top: 0px;
+}
+
+body {
+    background: #000;
 }
