@@ -1,15 +1,19 @@
 var menu_state = { preload: preload, create: create, update: update};
 
 function preload() {
+	game.load.audio('menuMusic', ['sound/menu_sound.ogg', 'sound/menu_sound.mp3']);
 	game.load.image('splash_screen', 'assets/splash_screen.png');
 	game.load.image('button_play', 'assets/menu_play.png');
 	game.load.image('button_credits', 'assets/menu_credits.png');
 	game.load.image('cloud_selector', 'assets/splash_selector.png');
-	game.load.audio('menuMusic', ['sound/menu_sound.wav', 'sound/menu_sound.mp3']);
 }
 
 //Tela de Menu
 function create() {
+	music = game.add.audio('menuMusic');
+//	music.autoplay = true;
+	music.play();
+	
 	game.add.sprite(0, 0, 'splash_screen');
 	this.buttonPlay = game.add.button(285, 495, 'button_play', startGame, this);
 	this.buttonCredits = game.add.button(555, 495, 'button_credits', credits, this);
@@ -17,8 +21,6 @@ function create() {
 	this.isPlay = true;
 	game.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.SPACEBAR ]);
 	
-	music = game.add.audio('menuMusic',1,true);
-    music.play('',0,1,true);
 }
 
 //Começa o jogo
