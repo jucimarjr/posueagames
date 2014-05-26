@@ -7,6 +7,7 @@ var create = {
     farBackground : null,
     score : 0,
     score_label: null,
+    cabeca: null,
 
     init : function(){
         //game defs
@@ -16,7 +17,7 @@ var create = {
         background = game.add.tileSprite(0, 0, 960, 800,  'background');
         background.autoScroll(-350, 0);
 		
-		cabeca = game.add.sprite(20, 20, 'cabeca');
+		this.cabeca = game.add.sprite(20, 20, 'cabeca');
         
         var style = { font: "40px Helvetica", fill: "#ffffff" };
         this.score_label = game.add.text(80, 30, " " + this.score, style);

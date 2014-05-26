@@ -21,6 +21,8 @@ var update = {
         update.collisionFloor();
         if(this.player.y < 200) this.player.y = 200;
         
+        create.score_label.y = game.camera.y + 30;
+        create.cabeca.y = game.camera.y + 20;
         create.score_label.setText (" " + create.score);
         
     },
