@@ -81,6 +81,8 @@ var update = {
         this.buttonInicio.inputEnabled = true;
         this.buttonInicio.input.useHandCursor = true;
         this.buttonInicio.events.onInputDown.add(this.startMenu, this);
+		
+		this.player.destroy();
     },
     startMenu: function(){
         this.buttonJogar.kill();
