@@ -12,6 +12,7 @@ Menu.prototype = {
 				800, 190);
 		this.game.load.image('logo', 'assets/logo_800-190.png', 800, 190);
 		this.game.load.image('bt_play', 'assets/btplay_280-100.png', 280, 100);
+		this.game.load.image('bt_credits', 'assets/btcredits_280-100.png', 280, 100);
 
 		// Audio
 		this.game.load.audio('background_sound', 'audio/som_principal.mp3');
@@ -33,12 +34,17 @@ Menu.prototype = {
 		this.fatVein.autoScroll(-200, 0);
 
 		// logo
-		this.logo = this.game.add.image(90, 180, 'logo');
+		this.logo = this.game.add.image(this.game.world.centerX - 400, 180, 'logo');
 
 		// play button
-		this.btPlay = game.add.image(350, 370, 'bt_play');
+		this.btPlay = game.add.image(this.game.world.centerX - 140, 370, 'bt_play');
 		this.btPlay.inputEnabled = true;
 		this.btPlay.events.onInputDown.add(this.btPlayClick, this);
+
+		// credits button
+		this.btCredits = game.add.image(this.game.world.centerX - 140, 430, 'bt_credits');
+		this.btCredits.inputEnabled = true;
+		this.btCredits.events.onInputDown.add(this.btCreditsClick, this);
 	},
 	update : function() {
 		;
@@ -47,6 +53,59 @@ Menu.prototype = {
 		this.backgroundSound.pause();
 
 		this.game.state.start('play');
+	},
+	btCreditsClick : function() {
+		this.backgroundSound.pause();
+
+		this.game.state.start('credits');
+	}
+}
+
+var Credits = function() {
+};
+Credits.prototype = {
+	preload : function() {
+		this.game.load.image('background', 'assets/background_960-600.png',
+				960, 600);
+		this.game.load.image('fat_vein', 'assets/backgroundmask_960-490.png',
+				800, 190);
+		this.game.load.image('credits', 'assets/credits_508-206.png', 508, 206);
+		this.game.load.image('bt_back', 'assets/btback_280-100.png', 280, 100);
+
+		// Audio
+		this.game.load.audio('background_sound', 'audio/som_principal.mp3');
+	},
+	create : function() {
+		if (this.backgroundSound != null) {
+			this.backgroundSound.pause();
+		}
+
+		this.backgroundSound = game.add.audio("background_sound", 1, true);
+		this.backgroundSound.play('', 0, 1, true);
+
+		// background
+		this.background = this.game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
+		this.background.autoScroll(-200, 0);
+		
+		// gorduras e veias
+		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,game.cache.getImage('fat_vein').height, 'fat_vein');
+		this.fatVein.autoScroll(-200, 0);
+
+		// credits
+		this.credits = this.game.add.image(this.game.world.centerX - 259, 160, 'credits');
+
+		// play button
+		this.btBack = game.add.image(this.game.world.centerX - 140, 390, 'bt_back');
+		this.btBack.inputEnabled = true;
+		this.btBack.events.onInputDown.add(this.btBackClick, this);
+	},
+	update : function() {
+		;
+	},
+	btBackClick : function() {
+		this.backgroundSound.pause();
+
+		this.game.state.start('menu');
 	}
 }
 
@@ -122,7 +181,7 @@ Play.prototype = {
 		this.cellHSprite.body.gravity.y = 450;
 
 		this.cellTSprite = game.add.sprite(405, 275, 'cell_tail');
-		this.cellTSprite.animations.add('jump',
+		this.cellTSprite.animations.add('moving',
 				[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 10, true);
 		this.game.physics.enable(this.cellTSprite, Phaser.Physics.ARCADE);
 
@@ -140,6 +199,8 @@ Play.prototype = {
 		};
 		this.score = game.add.text(game.world.centerX + 220, 10, "SCORE: "
 				+ this.points, style);
+		
+		this.game.input.onDown.add(this.jump, this);
 	},
 	update : function() {
 		// COLISAO:
@@ -160,14 +221,17 @@ Play.prototype = {
 			}
 		}
 
-		this.cellTSprite.animations.play('jump');
+		this.cellTSprite.animations.play('moving');
 
 		// PEGA A ENTRADA (tecla pressionada):
-		if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-			// vai para cima
-			this.cellHSprite.body.velocity.y = -200;
-			this.cellTSprite.body.velocity.y = -200;
+		if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)
+				|| this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+			this.jump();
 		}
+	},
+	jump : function() {
+		this.cellHSprite.body.velocity.y = -200;
+		this.cellTSprite.body.velocity.y = -200;		
 	},
 	collision : function(cell, bg) {
 		userScore = this.points;
@@ -305,6 +369,7 @@ function getRandomInt(min, max) {
 }
 
 game.state.add('menu', Menu);
+game.state.add('credits', Credits);
 game.state.add('play', Play);
 game.state.add('game_over', GameOver);
 game.state.start('menu');
