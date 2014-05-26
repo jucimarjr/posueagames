@@ -1,6 +1,7 @@
 var playGame = { create: create, update: update };
 
 function create() {
+	musicMenu.stop();
 	
 	background = game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
 	background.autoScroll(-60, 0);	 
@@ -25,7 +26,7 @@ function create() {
 	jumps = 0;
 	collide = false;
 
-	musicMenu.stop();
+	
 	
 	musicGame = game.add.audio('music');
     musicGame.play('',0,0.2,true);
@@ -68,7 +69,7 @@ function jump() {
 		jumps++;
 		collide = false;
 		playerSprite.body.velocity.y = -500;
-		playerSprite.body.velocity.x = 500;
+		playerSprite.body.velocity.x = 700;
 		playerSprite.animations.play('jump');
 		this.jumpSound = game.add.audio('jumpSound');
 	    this.jumpSound.play();
@@ -84,7 +85,7 @@ function createObstacles() {
 	obstacles = game.add.group();
 	obstacles.createMultiple(20,'obstacle');
 	obstacles.enableBody = true;
-    this.timer = this.game.time.events.loop(1500, addObstacle, this);
+    this.timer = this.game.time.events.loop(1600, addObstacle, this);
 }
 
 function addObstacle() {
