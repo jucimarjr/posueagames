@@ -69,7 +69,7 @@ function jump() {
 		jumps++;
 		collide = false;
 		playerSprite.body.velocity.y = -500;
-		playerSprite.body.velocity.x = 500;
+		playerSprite.body.velocity.x = 700;
 		playerSprite.animations.play('jump');
 		this.jumpSound = game.add.audio('jumpSound');
 	    this.jumpSound.play();
