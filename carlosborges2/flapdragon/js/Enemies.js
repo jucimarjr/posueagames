@@ -154,7 +154,7 @@ Enemies.prototype = {
 			if(this.currentDate >= this.dateNewGenerate) {
 				this.generateBarrier();
 				
-				this.currentTimeGeneration -= this.incrementDificult * 10;
+				this.currentTimeGeneration -= this.incrementDificult * 5;
 				this.dateNewGenerate = this.currentDate + this.currentTimeGeneration;
 			}
 			
