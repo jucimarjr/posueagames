@@ -85,7 +85,7 @@ function createObstacles() {
 	obstacles = game.add.group();
 	obstacles.createMultiple(20,'obstacle');
 	obstacles.enableBody = true;
-    this.timer = this.game.time.events.loop(1500, addObstacle, this);
+    this.timer = this.game.time.events.loop(1600, addObstacle, this);
 }
 
 function addObstacle() {
