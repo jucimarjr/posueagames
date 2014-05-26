@@ -35,6 +35,7 @@ Level = function() {
 	this.create = function() {
 		
 		this.audioBg = game.add.audio(BG_SOUND, 1, true);
+		this.audioBg.loop = true;
 		this.audioBg.play('', 0, 0.5, true);
 		
 		// sky

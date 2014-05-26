@@ -21,11 +21,17 @@ Enemies = function() {
 	
 	this.enemyVel = -200;
 	this.enemyCurrentVel = this.enemyVel;
+	
+	this.incrementDificult = 3;
+	this.startTimeGeneration = 2000;
+	this.currentTimeGeneration = this.startTimeGeneration;
 };
 
 Enemies.prototype = {
 		
 	preload : function() {
+		
+		this.enemyVel = -200;
 		
 		game.load.spritesheet(IMAGE_BOO, IMAGE_BOO, 116, 139);
 		
@@ -41,6 +47,9 @@ Enemies.prototype = {
 
 	create : function() {
 		
+		this.enemyCurrentVel = this.enemyVel;
+		this.currentTimeGeneration = this.startTimeGeneration;
+		
 		for(var count = 0; count < this.maxEnemies; count++) {
 			this.arrayEnemies[count] = null;
 		}
@@ -49,11 +58,15 @@ Enemies.prototype = {
 		
 		this.soundEnemyKill = game.add.audio(SOUND_ENEMY_KILL);
 		
+		this.generateEnemies = false;
+		this.dateNewGenerate = new Date().getTime();
 	},
 	
 	initEnemies: function() {
-		this.loopEnemies = game.time.events.loop(Phaser.Timer.SECOND * 2, this.generateBarrier, this);
-		this.loopEnemies.timer.start();
+//		this.loopEnemies = game.time.events.loop(Phaser.Timer.SECOND * 2, this.generateBarrier, this);
+//		this.loopEnemies.timer.start();
+		
+		this.generateEnemies = true;
 	},
 	
 	stopEnemies: function() {
@@ -95,22 +108,10 @@ Enemies.prototype = {
 			var enemy = new EnemyBoo();
 			
 			enemy.boo = game.add.sprite(game.world.width, randomY, IMAGE_BOO);
-//			var enemy = this.enemies.create(game.world.width, randomY, IMAGE_BOO);
 			
 			enemy.headCollider = this.enemies.create(game.world.width + 31, randomY + 7, BOO_COLLIDER_HEAD);
 			enemy.armsCollider = this.enemies.create(game.world.width, randomY + 81, BOO_COLLIDER_ARMS);
 			enemy.tailCollider = this.enemies.create(game.world.width + 42, randomY + 101, BOO_COLLIDER_TAIL);
-			
-			
-//			game.physics.arcade.enableBody(enemy.boo);
-//			game.physics.arcade.enableBody(enemy.headCollider);
-//			
-//			
-//			enemy.headCollider.body.allowGravity = false;
-//			enemy.headCollider.body.immovable = true;
-//			enemy.headCollider.body.velocity.x = this.enemyCurrentVel;
-//			
-//			enemy.boo.body.velocity.x = this.enemyCurrentVel;
 			
 			this.setEnemyPhyshics(enemy.boo);
 			this.setEnemyPhyshics(enemy.headCollider);
@@ -139,13 +140,27 @@ Enemies.prototype = {
 					scoreCount++;
 					
 					this.soundEnemyKill.play('');
+					
+					this.enemyCurrentVel += -this.incrementDificult;
 				}
 				
 			}
 		}
 		
-		return scoreCount;
+		if(this.generateEnemies) {
+			
+			this.currentDate = new Date().getTime();
+			
+			if(this.currentDate >= this.dateNewGenerate) {
+				this.generateBarrier();
+				
+				this.currentTimeGeneration -= this.incrementDificult * 10;
+				this.dateNewGenerate = this.currentDate + this.currentTimeGeneration;
+			}
+			
+		}
 		
+		return scoreCount;
 	},
 	
 	setEnemyPhyshics: function(sprite) {
