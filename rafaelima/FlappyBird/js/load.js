@@ -8,9 +8,9 @@ function preload() {
 
 function create() {
 
-	game.load.audio('gameMusic', ['sound/game_sound.ogg', 'sound/game_sound.mp3']);
 	game.add.sprite(0, 0, 'splash_screen');
 	game.add.sprite(387, 490, 'loading');
+	game.load.audio('gameMusic', ['sound/game_sound.ogg', 'sound/game_sound.mp3']);
 	game.load.spritesheet('player', 'assets/suu_208_89_4.png', 208, 89);
 	game.load.spritesheet('death', 'assets/falling_208_89_2.png', 208, 89);
 	game.load.spritesheet('boss', 'assets/badboss_258_371_2.png', 258, 371);
