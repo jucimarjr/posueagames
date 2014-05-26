@@ -68,12 +68,9 @@ BasicGame.Player.prototype = {
 
         ship.body.clearShapes();
         ship.body.loadPolygon('physicsData', 'ship');
+        // ship.body.addCircle(BasicGame.Player.frameWidth / 2.0 - 10, -10, 0);
         ship.body.fixedRotation = true;
         ship.body.collideWorldBounds = true;
-        // ship.body.collidesWith.push(Phaser.Physics.P2.everythingCollisionGroup);
-
-        // ship.body.setCollisionGroup(this.gameManager.playerCollisionGroup);
-        // ship.body.collides(this.gameManager.obstaclesCollisionGroup);
 
         // ship.body.onBeginContact.add(this.onShipBeginContact, this);
 
