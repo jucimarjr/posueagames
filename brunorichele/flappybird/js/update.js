@@ -55,7 +55,7 @@ var update = {
 	},
     collisionFloor : function(){
         if (this.player.alive && this.player.y > game.world.bounds.height){
-			update.waitGameOver(3000);
+			update.waitGameOver(2000);
             var style = { font: "40px Helvetica", fill: "#ffffff" };
             this.player.alive = false;
             this.player.animations.stop();
