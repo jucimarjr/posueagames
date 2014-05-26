@@ -1,5 +1,16 @@
 <!DOCTYPE html>
 <html>
+		<meta charset="UTF-8"/>
+        <meta property="og:locale" content="pt_BR">
+        <meta property="og:url" content="//computacao.uea.edu.br/ludus/posueagames/halison/Resgate Espacial/">
+        <meta property="og:title" content="Resgate Espacial">
+        <meta property="og:site_name" content="Especializacao em Desenvolvimento de Jogos Eletrônicos da UEA">
+        <meta property="og:description" content="Jogo Exemplo">
+        <meta property="og:image" content="http://computacao.uea.edu.br/ludus/posueagames/halison/Resgate Espacial/assets/tela.png">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="800">
+        <meta property="og:image:height" content="600">
+        <meta property="og:type" content="website">
 	<head>
 		<meta charset="utf-8" />
         <title>Resgate Espacial</title>
@@ -36,7 +47,33 @@ body{
 </style>
 </head>
 <body>
+
 <div id="tela">
+<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+        </script>
+
+		<div 
+             class="fb-like" 
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/halison/Resgate Espacial/" 
+             data-layout="button_count" data-action="like" data-show-faces="true" 
+             data-share="false">
+        </div>
+
+        
+        
+		<div id ="phaser-game"></div>
+	
+		<div class="fb-comments" 
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/halison/Resgate Espacial/" 
+             data-width="960" data-numposts="10" data-colorscheme="light">
+        </div>
     	<div id="menu">
         	<a href="abertura.html"><img src="assets/abertura_197-45.png" border="0"></a>
             <a href="jogo.html"><img src="assets/iniciar_197-45.png" border="0"></a>
@@ -44,5 +81,6 @@ body{
             <a href="creditos.html"><img src="assets/creditos_197-45.png" border="0"></a>
         </div>
    </div>
+   		
 </body>
 </html>

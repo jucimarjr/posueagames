@@ -1,6 +1,5 @@
 var play_state = { create: create, update: update };
 
-var speed = 1;
 //Sem function preload() pq já existe no load.js
 function create() {
     //som
@@ -69,6 +68,7 @@ function create() {
     timerPowerUp = this.game.time.events.loop(15000, add_power_up, this);
     timerBoss = this.game.time.events.loop(30000, startBossFight, this);
     //startBossFight();
+    speed = 1;
 }
 
 // Start the actual game

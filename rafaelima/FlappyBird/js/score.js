@@ -1,6 +1,7 @@
-var score_state = { create: create, update:update };
+var score_state = { create: create, update:update, start: start };
 
     function create() {
+    	musicGame.pause();
     	var bg1 = game.add.sprite(0, 0, 'background1');
     	var bg2 = game.add.sprite(0, 0, 'background2');
     	var bg3 = game.add.sprite(0, 0, 'background3');
@@ -22,8 +23,8 @@ var score_state = { create: create, update:update };
     
     function update(){
     	var spacebar_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        spacebar_key.onDown.add(start, this);
+        spacebar_key.onDown.add(this.start, this);
     }
     function start() {
-    	game.state.start('play');
+    	game.state.start('tutorial');
     }
