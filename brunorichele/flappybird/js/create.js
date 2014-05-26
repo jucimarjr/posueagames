@@ -62,7 +62,7 @@ var create = {
             Phaser.Easing.Quintic.In,
         ]
         this.bgmusic = game.add.audio('bgmusic');
-        this.bgmusic.play();
+        this.bgmusic.play('', 0, 1, true);
     },
     createPlayer : function(){
         this.player = game.add.sprite(350, 200, 'pirarucu');
