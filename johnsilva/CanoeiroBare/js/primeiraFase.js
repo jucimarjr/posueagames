@@ -1,21 +1,23 @@
-﻿var primeiraFase = { preload: preload, create: create, update: update };
+﻿var primeiraFase = { preload: preload, create: create, update: update, render: render };
 
 var boat;
 var enemies;
 var score = 0;
 var highscore = 0;
 var jungles;
-var rivers;
-var jungles;
 var tileSpeedRiver = 1.5;
 var tileSpeedJungles = 0.3;
 var jungleWidth = 196;
+var riverWidth = 512;
 var angleVelocity = 2;
 var finalSound;
 var remosSound;
 var timerBarra;
 var estagio;
 var showEstagio = true;
+var tileRiver;
+var tileLeftJungle;
+var tileRightJungle;
 
 function preload() {
     //Imagens
@@ -45,7 +47,10 @@ function preload() {
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    createRivers();
+    tileRiver = game.add.tileSprite(jungleWidth, 0, 512, 1200, 'river');
+    tileLeftJungle = game.add.tileSprite(0, 0, 196, 1200, 'jungleLeft');    
+    tileRightJungle = game.add.tileSprite(jungleWidth+riverWidth, 0, 196, 1200, 'jungleRight');
+
     createJungles();
     initEnemies();
 
@@ -103,17 +108,9 @@ function create() {
 
 function createJungles() {
     jungles = game.add.group();
-    jungles.create(0, -600, 'jungleLeft');
-    jungles.create(0, -1800, 'jungleLeft');
-    jungles.create(jungleWidth + 512, -600, 'jungleRight');
-    jungles.create(jungleWidth + 512, -1800, 'jungleRight');
+    jungles.add(tileLeftJungle);
+    jungles.add(tileRightJungle);
     game.physics.enable(jungles, Phaser.Physics.ARCADE);
-}
-
-function createRivers() {
-    rivers = game.add.group();
-    rivers.create(jungleWidth, -600, 'river');
-    rivers.create(jungleWidth, -1800, 'river');
 }
 
 function addEnemie(_sprite, y, speed, loop, name){
@@ -134,8 +131,6 @@ function initEnemies() {
     addEnemie('sand',       20, 2, true, "sand");    
     addEnemie('trunk',     -60, 2, true, "trunk");    
     addEnemie('boto',     -140, 6, true, "botosound");
-    //enemies.createMultiple(5, 'buraco', 0, false);
-    //game.physics.arcade.enable(enemies);	
     game.physics.enable(enemies, Phaser.Physics.ARCADE);
 }
 
@@ -265,42 +260,20 @@ function update() {
     }else {
         boat.body.velocity.x = 2*boat.angle;//velocity;
     }
-    /*else{
-	    	boat.animations.stop();
-			boat.frame = 0;
-		}	*/
-    checkBounds();    
+
+    enemies.forEachAlive(checkEnemiesBounds, this);
+
+    tileRiver.tilePosition.y+=tileSpeedRiver;
+    tileLeftJungle.tilePosition.y+=tileSpeedJungles;
+    tileRightJungle.tilePosition.y+=tileSpeedJungles;
 }
+
 function changeAngle(angle){
     var toChange = boat.angle + angle;
     if ( toChange > -90 && toChange < 90) {
         boat.angle += angle;
     }
      
-}
-
-function checkBounds(){
-    enemies.forEachAlive(checkEnemiesBounds, this);
-    rivers.forEachAlive(checkRiversBounds, this);
-    jungles.forEachAlive(checkJunglesBounds, this);
-}
-
-function checkRiversBounds(obj) {
-    obj.y += tileSpeedRiver;
-
-    if (obj.y >= 600) {
-        obj.y = -1800;
-    }
-
-}
-
-function checkJunglesBounds(obj) {
-    obj.y += tileSpeedJungles;
-
-    if (obj.y >= 600) {
-        obj.y = -1800;
-    }
-
 }
 
 function checkEnemiesBounds(obj) {
@@ -346,4 +319,10 @@ function gameOv() {
     tileSpeedRiver = 1.5;
     boat.kill();
     game.state.start('gameOver');
+}
+
+function render() {
+
+    //game.debug.body(boat);
+
 }
