@@ -10,17 +10,6 @@ function create() {
 
 	game.add.sprite(0, 0, 'splash_screen');
 	game.add.sprite(387, 490, 'loading');
-
-	game.load.onLoadStart.add(loadStart, this);
-	game.load.onFileComplete.add(fileComplete, this);
-	game.load.onLoadComplete.add(loadComplete, this);
-
-	music.pause();
-	start();
-}
-
-function start() {
-	game.load.crossOrigin = "Anonymous";
 	game.load.spritesheet('player', 'assets/suu_208_89_4.png', 208, 89);
 	game.load.spritesheet('death', 'assets/falling_208_89_2.png', 208, 89);
 	game.load.spritesheet('boss', 'assets/badboss_258_371_2.png', 258, 371);
@@ -41,20 +30,15 @@ function start() {
 	game.load.image('obstacle4', 'assets/obstacle_04.png');
 	game.load.physics('physicsData', 'assets/polygon.json');
 	game.load.image('scorebg', 'assets/placeholder.png');
+	game.load.image('tutorial', 'assets/tutorial_screen.png');
 	game.load.audio('gameMusic', ['sound/game_sound.wav', 'sound/game_sound.mp3']);
 
+	game.load.onLoadComplete.add(loadComplete, this);
+
+	music.pause();
 	game.load.start();
 }
 
-function loadStart() {
-//	text.setText("Loading ...");
-}
-
-//This callback is sent the following parameters:
-function fileComplete(progress, cacheKey, success, totalLoaded, totalFiles) {
-//	game.state.start('menu');
-}
-
 function loadComplete() {
-	game.state.start('play');
+	game.state.start('tutorial');
 }

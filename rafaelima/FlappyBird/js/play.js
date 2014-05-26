@@ -1,10 +1,9 @@
 var play_state = { create: create, update: update };
 
-var speed = 1;
 //Sem function preload() pq já existe no load.js
 function create() {
-	musicGame = game.add.audio('gameMusic',1,true);
-    musicGame.play('',0,1,true);
+	musicGame = game.add.audio('gameMusic');
+    musicGame.play();
     game.add.sprite(0, 0, 'background1');
 
     background2 = game.add.tileSprite(0, 0, game.cache.getImage('background2').width, game.cache.getImage('background2').height, 'background2');
@@ -65,6 +64,7 @@ function create() {
 //    bossFight();
 //    bossBackground = game.add.tileSprite(0, 0, game.stage.bounds.width, game.cache.getImage('bossbg').height, 'bossbg');
 //    game.physics.arcade.enable(bossBackground); 
+    speed = 1;
 }
 
 // Start the actual game
