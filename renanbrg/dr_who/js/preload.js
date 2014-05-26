@@ -19,6 +19,7 @@ function preload() {
     game.load.image('telaInicio5', 'assets/tela_incial5_960-600.png');
     game.load.image('startButton', 'assets/startbutton_345-264.png');
     game.load.image('telaFim', 'assets/game_over_960-600.png');
+    game.load.image('powerup', 'assets/powerup_50-50.png');
     game.load.audio('inicio','sounds/DrWTheme.mp3');
     game.load.audio('musica','sounds/DWGame.mp3');
 }

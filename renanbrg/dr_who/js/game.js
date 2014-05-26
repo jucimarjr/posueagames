@@ -39,6 +39,12 @@ function create () {
     timer = game.time.events.loop(timeNewMeteor, addMeteor, this);
     timerLevel = game.time.events.loop(10000, changeLevel, this);
 
+    life = game.add.sprite(game.world.width, game.world.height, 'powerup');
+    game.physics.enable(life, Phaser.Physics.ARCADE);
+    var timeAppearLife = (Math.random() * 5000) + 10000;
+    powerUpTimer = game.time.events.loop(timeAppearLife, addLifeInGame, this);
+    lifeCounter = 1;
+
     //Playing sounds
     soundIn.stop();
     soundMus.play();
@@ -53,11 +59,13 @@ function create () {
     score = 0;
     var style = { font: "36px Doctor-Who", fill: "#ffffff" };
     labelScore = game.add.text(game.world.width / 2, 20, "0", style);
+    lifeLabel = game.add.text(game.world.width - 150, 20, "Life: 1", style);
 }
 
 function update () {
 	starsBackground.tilePosition.x -= 0.1;
     game.physics.arcade.collide(tardisSprite, meteors, hitMeteor, null, this);
+    game.physics.arcade.overlap(tardisSprite, life, oneUp, null, this);
 
     tardisSprite.animations.play('spin');
 
@@ -70,7 +78,13 @@ function update () {
     }
 
     if (tardisSprite.body.x + 91 < 0) {
-        game.state.start('GameOver');
+        if (lifeCounter == 1) {
+            game.state.start('GameOver');
+        } else {
+            lifeCounter--;
+            lifeLabel.setText("Life: " + lifeCounter);
+            newChance();
+        }
     }
 }
 
@@ -96,6 +110,34 @@ function changeLevel() {
         angleThreshold = 0.7;
         timer = game.time.events.loop(timeNewMeteor, addMeteor, this);
     }
+}
+
+function addLifeInGame() {
+    var lifeX = game.world.width;
+    var lifeY = Math.floor(Math.random() * (game.world.height - 50));
+
+    life.reset(lifeX, lifeY);
+    life.body.velocity.x = -500;
+    life.checkWorldBounds = true;
+    life.outOfBoundsKill = true;
+}
+
+function oneUp() {
+    lifeCounter++;
+    life.kill();
+    lifeLabel.setText("Life: " + lifeCounter);
+}
+
+function newChance() {
+    meteors.forEach(killAllMeteors, this);
+    tardisSprite.reset(100, (game.world.height - 110) / 2);
+    tardisSprite.body.collideWorldBounds = true;
+    playerIsAlive = true;
+    timer = game.time.events.loop(timeNewMeteor, addMeteor, this);
+}
+
+function killAllMeteors(meteor) {
+    meteor.reset(game.world.width, 0);
 }
 
 function addMeteor() {

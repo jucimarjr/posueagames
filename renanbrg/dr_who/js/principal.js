@@ -10,6 +10,7 @@ var timer;
 var meteorCounter;
 var score;
 var labelScore;
+var lifeCounter;
 
 
 game.state.add('Inicial', inicial_state);
