@@ -47,6 +47,8 @@ function create () {
     meteorCounter = 0;
     meteorType = 0;
 
+    angleThreshold = 0;
+
     // Add the score
     score = 0;
     var style = { font: "36px Doctor-Who", fill: "#ffffff" };
@@ -76,18 +78,22 @@ function changeLevel() {
     if (score >= 5 && score < 10) {
         game.time.events.remove(timer);
         timeNewMeteor -= 500;
+        angleThreshold = 0.2;
         timer = game.time.events.loop(timeNewMeteor, addMeteor, this);
     } else if (score >= 10 && score < 15) {
         game.time.events.remove(timer);
         timeNewMeteor -= 500;
+        angleThreshold = 0.4;
         timer = game.time.events.loop(timeNewMeteor, addMeteor, this);
     } else if (score >= 15 && score < 20) {
         game.time.events.remove(timer);
         timeNewMeteor -= 500;
+        angleThreshold = 0.5;
         timer = game.time.events.loop(timeNewMeteor, addMeteor, this);
     } else if (score >= 20 && score < 25) {
         game.time.events.remove(timer);
         timeNewMeteor -= 500;
+        angleThreshold = 0.7;
         timer = game.time.events.loop(timeNewMeteor, addMeteor, this);
     }
 }
@@ -121,6 +127,11 @@ function addMeteorInPosition(x, y) {
     if (meteor != null) {
         meteor.reset(x, y);
         meteor.body.velocity.x = -300 - Math.floor(Math.random() * 200);
+        // Randomly add a meteor with a different angle
+        if (Math.random() < angleThreshold) {
+            var direction = (Math.random() < 0.5) ? 1 : -1;
+            meteor.body.velocity.y = direction * ((Math.random() * 50) + 50);
+        }
         meteor.checkWorldBounds = true;
         meteor.outOfBoundsKill = true;
     } else {
