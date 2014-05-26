@@ -1,0 +1,17 @@
+	{ 
+		
+		"canoeman_50-100-20": [
+			
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   23, 87  ,  16, 58  ,  16, 32  ,  19, 16  ,  35, 16  ,  38, 32  ,  38, 58  ,  31, 87  ]
+				}  ,
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   19, 16  ,  25, 3  ,  29, 3  ,  35, 16  ]
+				}  
+		]
+		
+	}
