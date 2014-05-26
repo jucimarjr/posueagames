@@ -1,6 +1,9 @@
 var tutorial_state = { create: create, update:update, start: start };
 
     function create() {
+    	if (musicGame != null) {
+			musicGame.pause();
+		}
     	var bg1 = game.add.sprite(0, 0, 'background1');
     	var bg2 = game.add.sprite(0, 0, 'background2');
     	var bg3 = game.add.sprite(0, 0, 'background3');

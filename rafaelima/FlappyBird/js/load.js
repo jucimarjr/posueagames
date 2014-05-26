@@ -34,8 +34,9 @@ function create() {
 	game.load.image('tutorial', 'assets/tutorial_screen.png');
 
 	game.load.onLoadComplete.add(loadComplete, this);
-
-	music.pause();
+	if (music != null) {
+		music.pause();
+	}
 	game.load.start();
 }
 

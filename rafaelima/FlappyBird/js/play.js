@@ -2,9 +2,9 @@ var play_state = { create: create, update: update };
 
 //Sem function preload() pq já existe no load.js
 function create() {
-	musicGame = game.add.audio('gameMusic',1,true);
-	musicGame.play('',0,1,true);
-//    musicGame.play();
+	musicGame = game.add.audio('gameMusic', 1, true);
+	musicGame.play('', 0, 1, true);
+	
     game.add.sprite(0, 0, 'background1');
 
     background2 = game.add.tileSprite(0, 0, game.cache.getImage('background2').width, game.cache.getImage('background2').height, 'background2');
