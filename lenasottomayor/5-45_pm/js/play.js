@@ -26,7 +26,7 @@ function create() {
 	jumps = 0;
 	collide = false;
 
-	scorePartial = game.add.bitmapText(20, 20, 'font', 'score: '+score, 36);
+	scorePartial = game.add.bitmapText(750, 20, 'font', 'score: '+score, 36);
 	
 	musicGame = game.add.audio('music');
     musicGame.play('',0,0.2,true);
@@ -55,7 +55,7 @@ function update() {
 
 function createPlayer() {
 	playerSprite = game.add.sprite(330, 309, 'player');
-	playerSprite.animations.add('jump',[0,2],4,true);
+	playerSprite.animations.add('jump',[2],1,true);
 	playerSprite.animations.add('dead',[3,2,3,2],4,true);
 	playerSprite.frame = 1;
     
@@ -65,7 +65,7 @@ function createPlayer() {
 	
 	playerSprite.body.gravity.y = 150;
 	playerSprite.anchor.setTo(0.5,0.5);
-	playerSprite.body.acceleration.y = 300;
+	playerSprite.body.acceleration.y = 200;
 }
 
 function jump() {
@@ -73,7 +73,7 @@ function jump() {
 		jumps++;
 		collide = false;
 		playerSprite.body.velocity.y = -350;
-		playerSprite.body.velocity.x = 200;
+		playerSprite.body.velocity.x = 400;
 		playerSprite.animations.play('jump');
 		jumpSound.play();
 	}
@@ -86,7 +86,7 @@ function stop() {
 
 function createObstacles() {
 	obstacles = game.add.group();
-	obstacles.createMultiple(20,'obstacle');
+	obstacles.createMultiple(200,'obstacle');
 	obstacles.enableBody = true;
     this.timer = this.game.time.events.loop(1500, addObstacle, this);
 }
@@ -94,37 +94,25 @@ function createObstacles() {
 function addObstacle() {
 	var heigth = game.world.randomY;
 
+	obstacle = obstacles.getFirstDead();
+	
 	if(heigth > 250 && heigth < 400) {
-		obstacle = obstacles.getFirstDead();
 		obstacle.reset(960, heigth+100);
 		obstacleTop = game.add.sprite(960, heigth+73, 'obstacleTop');
-		game.physics.enable(obstacleTop, Phaser.Physics.ARCADE);
-		obstacleTop.body.velocity.x = -250;
-		game.physics.enable(obstacle, Phaser.Physics.ARCADE);
-		obstacle.body.velocity.x = -250;
-		obstacle.body.immovable = true;
-		obstacle.outOfBoundsKill = true;
 	} else if (heigth <= 250) {
-		obstacle = obstacles.getFirstDead();
 		obstacle.reset(960, heigth+250);
 		obstacleTop = game.add.sprite(960, heigth+223, 'obstacleTop');
-		game.physics.enable(obstacleTop, Phaser.Physics.ARCADE);
-		obstacleTop.body.velocity.x = -250;
-		game.physics.enable(obstacle, Phaser.Physics.ARCADE);
-		obstacle.body.velocity.x = -250;
-		obstacle.body.immovable = true;
-		obstacle.outOfBoundsKill = true;
 	} else {
-		obstacle = obstacles.getFirstDead();
 		obstacle.reset(960, heigth-150);
 		obstacleTop = game.add.sprite(960, heigth-177, 'obstacleTop');
-		game.physics.enable(obstacleTop, Phaser.Physics.ARCADE);
-		obstacleTop.body.velocity.x = -250;
-		game.physics.enable(obstacle, Phaser.Physics.ARCADE);
-		obstacle.body.velocity.x = -250;
-		obstacle.body.immovable = true;
-		obstacle.outOfBoundsKill = true;
 	}
+	
+	game.physics.enable(obstacleTop, Phaser.Physics.ARCADE);
+	obstacleTop.body.velocity.x = -250;
+	game.physics.enable(obstacle, Phaser.Physics.ARCADE);
+	obstacle.body.velocity.x = -250;
+	obstacle.body.immovable = true;
+	obstacle.outOfBoundsKill = true;
 }
 
 function gameOver(playerSprite,obstacle){
