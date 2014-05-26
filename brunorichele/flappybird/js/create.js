@@ -35,6 +35,7 @@ var create = {
         );
         this.space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.space_key.onDown.add(this.jump, this);
+		game.input.onDown.add(this.jump, this);
 
         // NPC defs
         this.npc_list = [
