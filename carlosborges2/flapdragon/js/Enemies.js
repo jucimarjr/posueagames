@@ -3,8 +3,6 @@ var IMAGE_BOO = PATH_ASSETS + 'boo_116-139-2.png';
 
 var ANIME_ENEMY_FLY = 'ANIME_ENEMY_FLY';
 
-var COLLIDE_ENEMY = PATH_ASSETS + 'boo_collider.json';
-
 var SOUND_ENEMY_KILL = PATH_SOUND + 'select.wav';
 
 Enemies = function() {
@@ -29,16 +27,14 @@ Enemies.prototype = {
 		//this.game.load.spritesheet(this.sprites[1], 'assets/char2_110-134.png',	 110, 134);
 		//this.game.load.spritesheet(this.sprites[2], 'assets/char3_111-134.png',	 111, 134);
 		
-		game.load.physics(COLLIDE_ENEMY, COLLIDE_ENEMY);
-		
-		for(var count = 0; count < this.maxEnemies; count++) {
-			this.arrayEnemies[count] = null;
-		}
-		
 		game.load.audio(SOUND_ENEMY_KILL, SOUND_ENEMY_KILL);
 	},
 
 	create : function() {
+		
+		for(var count = 0; count < this.maxEnemies; count++) {
+			this.arrayEnemies[count] = null;
+		}
 		
 		this.enemies = game.add.group();
 		
