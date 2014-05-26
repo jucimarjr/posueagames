@@ -9,6 +9,7 @@ var sprite;
 var atmosfera;
 var cursors;
 var score;
+var textScore;
 var lifeNumber = 5; 
 var life = [];
 var asteroidCollisionGroup;
@@ -39,7 +40,7 @@ function preload ()
 	game.load.image('coin_red_3', 'assets/coin_red_3_50_50.png');
 	game.load.image('coin_yellow_1', 'assets/coin_yellow_1_50_50.png');
 	game.load.image('coin_yellow_2', 'assets/coin_yellow_2_50_50.png');
-	game.load.image('score', 'assets/placar_282_69.png');
+	game.load.image('score', 'assets/score_asteroid_266-88.png');
 }
 
 var yellowCoins = [];
@@ -62,15 +63,12 @@ function create ()
 	isJogo = true;
 	isGameOver = false;
 	
+	score = 0;
 	this.ASTEROID_NUMBER = 13;
 	this.ASTEROID_SPEED = 100; 
 	this.YELLOW_COIN_NUMBER = 1;
     space1 = game.add.image(0,0,'space');
     space2 = game.add.image(960,0,'space');
-    
-    gameover = game.add.image(1200,1260,'gameover');
-	game.add.image(0,0,'score');
-
     
     yellowCoins[0] = game.add.image(960,0,'coin_yellow_1');
     yellowCoins[1] = game.add.image(960,0,'coin_yellow_2');
@@ -91,8 +89,6 @@ function create ()
     game.physics.p2.gravity.y = 5;
     game.physics.p2.setImpactEvents(true);
     game.physics.p2.restitution = 2.8;
-    
-    drawLives();
     
 	nave = game.add.sprite(340, 300, 'nave');
 	game.physics.p2.enable(nave,true);
@@ -129,8 +125,6 @@ function create ()
 	nave.body.setCollisionGroup(naveCollisionGroup);
 	nave.body.collides(asteroidCollisionGroup, hitAsteroid, this);
 	
-	
-	
 //	CRIAR GRUPO MOEDAS AMARELAS E COLISAO COM NAVE
 	yellowCoinsCollisionGroup = game.physics.p2.createCollisionGroup();
 	yCoinsGroup = game.add.group();
@@ -151,7 +145,18 @@ function create ()
 	    }
 	
 	nave.body.collides(yellowCoinsCollisionGroup, hitYellowCoins, this);
+	
+	game.add.image(0,0,'score');
+	textScore = game.add.text(140,50, "000000", {
+        font: "32px Arial",
+        fill: "#ffffff",
+        align: "right"
+    });
+	textScore.anchor.setTo(0.5, 0.5);
 
+    gameover = game.add.image(1200,1260,'gameover');
+  
+    drawLives();
 	
 	cursors = game.input.keyboard.createCursorKeys();
 }
@@ -212,39 +217,12 @@ function update()
 		    }
 		}
 		
-//		if( isYellowOn )
-//			yellow.x = yellow.x -2; 
-//		yellow.body.moveLeft(this.ASTEROID_SPEED);
-//		if (yellow.x < -yellow.width)
-//		{
-//			yellow.x = game.world.width+yellow.width;
-//			yellow.y = game.rnd.integerInRange(-100, 620);
-//	    }
-		
-//		if (nave.body.x + nave.width > yellow.x){
-//			
-//		}
-		
-//		for (var i = 0; i < 2 ; i++)
-//		{
-//			var sprite;
-//			sprite = yCoinsGroup.getAt(i);
-//			sprite.body.setZeroVelocity(i);
-//			sprite.body.moveLeft( game.rnd.integerInRange(100,200) );
-//	
-//			if (sprite.body.x < -sprite.width)
-//			{
-//				sprite.body.x = game.world.width+sprite.width;
-//				sprite.body.y = game.rnd.integerInRange(-100, 600);
-//		    }
-//		}
-		
 	} 
 	
 	else if (isGameOver)
 	{
-		gameover.x = 200;
-		gameover.y = 200;
+		gameover.x = game.world.width/2-gameover.width/2;
+		gameover.y = game.world.height/2-gameover.height/2;
 		
 	}	
 };
@@ -261,6 +239,7 @@ function hitAsteroid(body1, body2)
 function hitYellowCoins(body1, body2) 
 {
 	score++;
+	updateTextScore();
     if (body2.sprite.alive)
     {
     	body2.sprite.kill();
@@ -270,11 +249,29 @@ function hitYellowCoins(body1, body2)
 function hitRedCoins(body1, body2) 
 {
 	score--;
+	updateTextScore();
 };
 
 function hitGreenCoins(body1, body2) {
+
 	score+=2;
+	updateTextScore();
 };
+
+function updateTextScore(){
+	var zeros = "0000000";
+	if (score < 10 )
+		zeros = "00000";
+	else if (score < 100)
+		zeros = "0000";
+	else if (score < 1000)
+		zeros = "000";
+	else if (score < 10000)
+		zeros = "00";
+	else if (score < 10000)
+		zeros = "0";
+	textScore.setText(""+zeros + score);
+}
 
 function drawLives()
 {
