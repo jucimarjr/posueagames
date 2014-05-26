@@ -16,7 +16,8 @@ BasicGame.Obstacle.velocity = BasicGame.Obstacle.defaultVelocity;
 
 BasicGame.Obstacle.Type = {
     Default: 0,
-    Hard: 1
+    Hard: 1,
+    GameOver: 2
 }
 
 BasicGame.Obstacle.prototype = {
@@ -37,10 +38,10 @@ BasicGame.Obstacle.prototype = {
 
         this.playLightningAnimation();
 
-        // this.topSprite = this.group.create(0, 0, 'mainGameAtlas');
+        // Create top and bottom bars
         this.topSprite = this.gameManager.add.sprite(0, 0, 'mainGameAtlas');
         this.topSprite.frameName = frameName;
-        // this.bottomSprite = this.group.create(0, 0, 'mainGameAtlas');
+
         this.bottomSprite = this.gameManager.add.sprite(0, 0, 'mainGameAtlas');
         this.bottomSprite.frameName = frameName;
 
@@ -111,16 +112,25 @@ BasicGame.Obstacle.prototype = {
         var frameName;
 
         if (type === BasicGame.Obstacle.Type.Hard) {
+            
             frameName = 'columnHard_165-486.png';
             this.lightningSprite.tint = 0xff0011;
             this.lightningSprite.name = 'trigger_unique_event';
+            this.gameManager.showSprite(this.lightningSprite);
+
+        } else if (type === BasicGame.Obstacle.Type.GameOver) {
+
+            frameName = 'columnHard_165-486.png';
+            this.gameManager.hideSprite(this.lightningSprite);
+
         } else {
+
             frameName = 'columnDefault_165-486.png';
             this.lightningSprite.tint = 0xffffff;
             this.lightningSprite.name = 'trigger_default_event';
-        }
+            this.gameManager.showSprite(this.lightningSprite);
 
-        this.gameManager.showSprite(this.lightningSprite);
+        }
 
         this.topSprite.frameName = frameName;
         this.bottomSprite.frameName = frameName;

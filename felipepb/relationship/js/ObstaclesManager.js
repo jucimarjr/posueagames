@@ -29,8 +29,20 @@ BasicGame.ObstaclesManager.prototype = {
             var randomY = this.random(this._obstaclesMinY, this._obstaclesMaxY);
             // console.log("randomY: " + randomY);
             var missionEvent = this.gameManager.missions.nextEventIndex();
-            var type = missionEvent.isUnique ? BasicGame.Obstacle.Type.Hard : BasicGame.Obstacle.Type.Default;
-            var gapHeight = missionEvent.isUnique ? this._obstaclesGap / 1.5 : this._obstaclesGap;
+
+            var type, gapHeight;
+
+            if (missionEvent.isUnique) {
+                type = BasicGame.Obstacle.Type.Hard;
+                gapHeight = this._obstaclesGap / 1.25;
+            } else if (missionEvent.isGameOver) {
+                type = BasicGame.Obstacle.Type.Hard;
+                gapHeight = 0.0;
+            } else {
+                type = BasicGame.Obstacle.Type.Default;
+                gapHeight = this._obstaclesGap;
+            }
+
             var obstacle = new BasicGame.Obstacle(this.gameManager,
                 								  this.obstaclesGroup);
             obstacle.create();
