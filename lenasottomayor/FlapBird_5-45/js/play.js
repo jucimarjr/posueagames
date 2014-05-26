@@ -1,6 +1,7 @@
 var playGame = { create: create, update: update };
 
 function create() {
+	musicMenu.stop();
 	
 	background = game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
 	background.autoScroll(-60, 0);	 
@@ -25,7 +26,7 @@ function create() {
 	jumps = 0;
 	collide = false;
 
-	musicMenu.stop();
+	
 	
 	musicGame = game.add.audio('music');
     musicGame.play('',0,0.2,true);

@@ -13,8 +13,8 @@ function create() {
 }
     
 function update(){
-	var keySpacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-	keySpacebar.onDown.add(restart, this);
+	var keyENTER = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+	keyENTER.onDown.add(restart, this);
 }
 function restart() {
 	musicGameOver.stop();
