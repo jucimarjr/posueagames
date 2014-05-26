@@ -30,19 +30,19 @@ var update = {
         if(player && player.alive){
             var style = { font: "40px Helvetica", fill: "#ffffff" };
             if(enemy.enemyType === 'ariranha'){
+				update.waitGameOver();
                 player.destroy();
                 enemy.animations.stop();
                 enemy.frame = 2;
-                update.createGameOverButtons();
             }
             else if(enemy.enemyType === 'barco') {
+				update.waitGameOver();
                 player.destroy();
                 enemy.animations.stop();
                 enemy.frame = 2;
-                update.createGameOverButtons();
             }
             else {
-                update.createGameOverButtons();
+			  	update.waitGameOver();
                 player.alive = false;
                 player.animations.play('shock');
                 player.body.gravity.y = 500;
@@ -50,6 +50,9 @@ var update = {
             }
         }
     },
+	waitGameOver : function(){	
+		 game.time.events.add(1000, function(){update.createGameOverButtons()});
+	},
     collisionFloor : function(){
         if (this.player.alive && this.player.y > game.world.bounds.height){
             var style = { font: "40px Helvetica", fill: "#ffffff" };
