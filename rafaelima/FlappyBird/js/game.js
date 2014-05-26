@@ -10,7 +10,7 @@ var explosionSprite;
 
 var playerSprite, deathSprite, bossSprite;
 var playersGroup; //for multiply Power up
-var plataformas;
+var platforms;
 var porwerUps;
 var space_key;
 var sound_flag = true;
@@ -25,11 +25,10 @@ var text_sound;
 var background2;
 var background3;
 var background4;
-var bossBackground;
 var speed;
 
 //obstacle
-var timer;
+var timer, timerBoss;
 var deathSprite;
 var obstacle1;
 var obstacle2;
