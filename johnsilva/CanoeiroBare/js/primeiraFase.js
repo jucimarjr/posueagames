@@ -88,7 +88,8 @@ function create() {
     var text = game.add.text(830, 580, localStorage.getItem("highscore"), styleBig);
     text.anchor.setTo(0.5, 0.5);
 
-    //Main Score
+    //Main 
+    score = 20;
     var imgScore = game.add.sprite(0, 0, 'mainScore');
     var style = { font: "40px Arial Bold", fill: "#ffffff" };
     this.labelScore = game.add.text(this.game.world.centerX, 50, score + "m", style);
@@ -224,6 +225,7 @@ function addScore() {
             timerBarra.play('fase2');
         }
     }
+    tileSpeedJungles = tileSpeedRiver/5;
 }
 
 function resetEstagio() {
