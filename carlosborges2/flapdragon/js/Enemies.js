@@ -1,6 +1,11 @@
 
 var IMAGE_BOO = PATH_ASSETS + 'boo_116-139-2.png';
 
+var BOO_COLLIDER_HEAD = PATH_ASSETS + 'boo_head_collider_31-7-57-63.png';
+var BOO_COLLIDER_ARMS = PATH_ASSETS + 'boo_arms_collider_0-81-97-17.png';
+var BOO_COLLIDER_TAIL = PATH_ASSETS + 'boo_tail_collider_42-101-72-34.png';
+
+
 var ANIME_ENEMY_FLY = 'ANIME_ENEMY_FLY';
 
 var SOUND_ENEMY_KILL = PATH_SOUND + 'select.wav';
@@ -23,6 +28,10 @@ Enemies.prototype = {
 	preload : function() {
 		
 		game.load.spritesheet(IMAGE_BOO, IMAGE_BOO, 116, 139);
+		
+		game.load.image(BOO_COLLIDER_HEAD, BOO_COLLIDER_HEAD, 57, 63);
+		game.load.image(BOO_COLLIDER_ARMS, BOO_COLLIDER_ARMS, 97, 17);
+		game.load.image(BOO_COLLIDER_TAIL, BOO_COLLIDER_TAIL, 72, 34);
 		
 		//this.game.load.spritesheet(this.sprites[1], 'assets/char2_110-134.png',	 110, 134);
 		//this.game.load.spritesheet(this.sprites[2], 'assets/char3_111-134.png',	 111, 134);
@@ -55,8 +64,13 @@ Enemies.prototype = {
 		for(var count = 0; count < this.maxEnemies; count++) {
 			
 			if(this.arrayEnemies[count] != null) {
-				this.arrayEnemies[count].body.velocity.x = 0;
-				this.arrayEnemies[count].animations.stop(ANIME_ENEMY_FLY);
+				
+				this.arrayEnemies[count].boo.body.velocity.x = 0;
+				this.arrayEnemies[count].headCollider.body.velocity.x = 0;
+				this.arrayEnemies[count].armsCollider.body.velocity.x = 0;
+				this.arrayEnemies[count].tailCollider.body.velocity.x = 0;
+				
+				this.arrayEnemies[count].boo.animations.stop(ANIME_ENEMY_FLY);
 			}
 		}
 		
@@ -78,19 +92,33 @@ Enemies.prototype = {
 		if(index > -1) {
 			var randomY = game.rnd.integerInRange(0, game.world.height - 90 - 139); // minus ground minus boo
 			
-			var enemy = this.enemies.create(game.world.width, randomY, IMAGE_BOO);
+			var enemy = new EnemyBoo();
 			
-			game.physics.arcade.enableBody(enemy);
+			enemy.boo = game.add.sprite(game.world.width, randomY, IMAGE_BOO);
+//			var enemy = this.enemies.create(game.world.width, randomY, IMAGE_BOO);
 			
-//			console.log('game.cache.getPhysicsData(key, object): '+game.cache.getPhysicsData(COLLIDE_ENEMY, 'boo_116-139-2'));
-//			enemy.body.loadPolygon(COLLIDE_ENEMY, 'boo_116-139-2');
+			enemy.headCollider = this.enemies.create(game.world.width + 31, randomY + 7, BOO_COLLIDER_HEAD);
+			enemy.armsCollider = this.enemies.create(game.world.width, randomY + 81, BOO_COLLIDER_ARMS);
+			enemy.tailCollider = this.enemies.create(game.world.width + 42, randomY + 101, BOO_COLLIDER_TAIL);
 			
-			enemy.body.allowGravity = false;
-			enemy.body.immovable = true;
-			enemy.body.velocity.x = this.enemyCurrentVel;
 			
-			enemy.animations.add(ANIME_ENEMY_FLY, [0, 1], 10, true);
-			enemy.animations.play(ANIME_ENEMY_FLY);
+//			game.physics.arcade.enableBody(enemy.boo);
+//			game.physics.arcade.enableBody(enemy.headCollider);
+//			
+//			
+//			enemy.headCollider.body.allowGravity = false;
+//			enemy.headCollider.body.immovable = true;
+//			enemy.headCollider.body.velocity.x = this.enemyCurrentVel;
+//			
+//			enemy.boo.body.velocity.x = this.enemyCurrentVel;
+			
+			this.setEnemyPhyshics(enemy.boo);
+			this.setEnemyPhyshics(enemy.headCollider);
+			this.setEnemyPhyshics(enemy.armsCollider);
+			this.setEnemyPhyshics(enemy.tailCollider);
+			
+			enemy.boo.animations.add(ANIME_ENEMY_FLY, [0, 1], 10, true);
+			enemy.boo.animations.play(ANIME_ENEMY_FLY);
 			
 			this.arrayEnemies[index] = enemy;
 		}
@@ -104,8 +132,8 @@ Enemies.prototype = {
 			
 			if(this.arrayEnemies[count] != null) {
 				
-				if(this.arrayEnemies[count].body.x < -116) { // kill boo when pass screen
-					this.arrayEnemies[count].kill();
+				if(this.arrayEnemies[count].boo.x < -116) { // kill boo when pass screen
+					this.arrayEnemies[count].boo.kill();
 					this.arrayEnemies[count] = null;
 					
 					scoreCount++;
@@ -118,6 +146,23 @@ Enemies.prototype = {
 		
 		return scoreCount;
 		
+	},
+	
+	setEnemyPhyshics: function(sprite) {
+		
+		game.physics.arcade.enableBody(sprite);
+		
+		sprite.body.allowGravity = false;
+		sprite.body.immovable = true;
+		sprite.body.velocity.x = this.enemyCurrentVel;
+		
 	}
 	
+};
+
+function EnemyBoo() {
+	boo: null;
+	headCollider: null;
+	armsCollider: null;
+	tailCollider: null;
 };
