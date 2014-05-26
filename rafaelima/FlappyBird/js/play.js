@@ -32,26 +32,26 @@ function create() {
     playerSprite.animations.add('walk', [0, 1, 2, 3], 8, true);
     game.physics.enable(playerSprite, Phaser.Physics.ARCADE);
     playerSprite.body.gravity.y = 1000;
-    playerSprite.body.collideWorldBounds = true;
+    playerSprite.body.collideWorldBounds = false;
     game.camera.follow(playerSprite.sprite);
 
     deathSprite = game.add.sprite(playerSprite.body.position.x, playerSprite.body.position.y, 'death');
     deathSprite.animations.add('fall', [0, 1], 5, true);
     game.physics.enable(deathSprite, Phaser.Physics.ARCADE);
     deathSprite.body.gravity.y = 1500;
-    deathSprite.body.collideWorldBounds = true; // parar no limite inferior da tela
+    deathSprite.body.collideWorldBounds = false; // parar no limite inferior da tela
     deathSprite.kill();
 
     explosionSprite = game.add.sprite(0, 0, 'explosion');
     explosionSprite.animations.add('explode', [0, 1, 2, 3, 4], 9, true);
     game.physics.enable(explosionSprite, Phaser.Physics.ARCADE);
-    explosionSprite.body.collideWorldBounds = true;
+    explosionSprite.body.collideWorldBounds = false;
     explosionSprite.kill();
 
     background4 = game.add.tileSprite(0, 0, game.cache.getImage('background4').width, game.cache.getImage('background4').height, 'background4');
     background4.tileScale.setTo(1.6, 1.6);
     game.physics.arcade.enable(background4);
-
+ 
     game.add.sprite(0, 0, 'background5');
     // Call the 'jump' function when the spacebar key is hit
     space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -64,9 +64,9 @@ function create() {
     var style = { font: '30px "edosz"', fill: "#D56469" };
     this.label_score = this.game.add.text(20, 50, "0 m", style);
 
-    this.timer = this.game.time.events.loop(3000, add_obstacle, this);
+    this.timer = this.game.time.events.loop(1000, add_obstacle, this);
     timerPowerUp = this.game.time.events.loop(15000, add_power_up, this);
-    timerBoss = this.game.time.events.loop(30000, startBossFight, this);
+    timerBoss = this.game.time.events.loop(20000, startBossFight, this);
     //startBossFight();
     speed = 1;
 }
@@ -243,14 +243,14 @@ function add_obstacle() {
             obstacle3 = platforms.create(950, 250, 'obstacle3');
             game.physics.enable(obstacle3, Phaser.Physics.ARCADE);
             obstacle3.scale.setTo(1.3, 1.3);
-            obstacle3.body.velocity.x = -200;
+            obstacle3.body.velocity.x = -310;
             obstacle3.checkWorldBounds = true;
             obstacle3.outOfBoundsKill = true;
             break;
         case 3:
             obstacle4 = platforms.create(950, 405, 'obstacle4');
             game.physics.enable(obstacle4, Phaser.Physics.ARCADE);
-            obstacle4.body.velocity.x = -200;
+            obstacle4.body.velocity.x = -300;
             obstacle4.checkWorldBounds = true;
             obstacle4.outOfBoundsKill = true;
             break;
@@ -349,7 +349,7 @@ function bossFight() {
 
     bossDirection = 0.5;//Math.random();
     bossSprite.reset(X, 580);
-    bossSprite.body.velocity.y = -300;
+    bossSprite.body.velocity.y = -400;
     /*if (bossDirection >= 0.5) { //começa p/ cima
         bossSprite.reset(X, 580);
         bossSprite.body.velocity.y = -300;
