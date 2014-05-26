@@ -75,6 +75,7 @@ var create = {
         this.player.alive = true;
         this.player.animations.add('swim', [0, 1, 2, 3], 10, true);
         this.player.animations.add('shock', [5, 6], 30, true);
+		this.player.animations.add('death',[4],30, true);
         this.player.animations.play('swim');
         // animacao de rotacao para cima, quando o jogador pula
         this.player.rotateAnim = game.add.tween(this.player).to({angle: -15}, 300);
