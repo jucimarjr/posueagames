@@ -51,6 +51,7 @@ function create () {
     soundMus.play();
     soundMus.loop = true;
     playerIsAlive = true;
+    playerWin = false;
     meteorCounter = 0;
     meteorType = 0;
 
@@ -76,6 +77,11 @@ function update () {
         } else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
             tardisSprite.body.velocity.y = 250;
         }
+
+        if (score >= 150 && playerWin == false) {
+            game.time.events.remove(timer);
+            victoryTimer = game.time.events.loop(4000, playerBeatGame, this);
+        }
     }
 
     if (tardisSprite.body.x + 91 < 0) {
@@ -87,6 +93,15 @@ function update () {
             newChance();
         }
     }
+
+    if (playerWin == true) {
+        tardisSprite.body.velocity.y = 0;
+        tardisSprite.body.velocity.x = 250;
+        if (tardisSprite.body.x >= game.world.width) {
+            game.state.start('Victory');
+        }
+    }
+
 }
 
 function changeLevel() {
@@ -189,4 +204,19 @@ function hitMeteor(tardis, meteor) {
     playerIsAlive = false;
 
     game.time.events.remove(timer);
+}
+
+function playerBeatGame() {
+	tardisSprite.body.collideWorldBounds = false;
+	if (tardisSprite.body.y < (game.world.height - 110) / 2) {
+		tardisSprite.body.velocity.y = 250;
+	} else if (tardisSprite.body.y > (game.world.height - 110) / 2) {
+		tardisSprite.body.velocity.y = -250;
+    } else {
+        tardisSprite.body.velocity.y = 0;
+    }
+	playerWin = true;
+    game.time.events.remove(victoryTimer);
+    game.time.events.remove(powerUpTimer);
+    game.time.events.remove(timerLevel);
 }

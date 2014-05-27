@@ -24,4 +24,5 @@ game.state.add('Game', game_state);
 game.state.add('GameOver', gameOver_state);
 game.state.add('Animacao', animacao_state);
 game.state.add('Creditos', creditos_state);
+game.state.add('Victory', victory_state);
 game.state.start('Preload');

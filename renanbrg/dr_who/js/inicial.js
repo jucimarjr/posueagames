@@ -4,10 +4,9 @@ var inicial_state = { create: create, update: update, mouseClick: mouseClick};
 
 function create () {
 
-	
 	inicioSprite = game.add.sprite(0, 0, 'telaInicial1');
 	inicioSprite.animations.add('run',[0,1,2],6,true);
-	
+
 	//Add sounds
 	soundIn = game.add.audio("inicio");
 

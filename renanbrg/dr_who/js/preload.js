@@ -22,6 +22,7 @@ function preload() {
     game.load.image('startButton', 'assets/startbutton_345-264.png');
     game.load.image('imagemExibicao', 'assets/ImagemDeExibicao_600-480.png');
     game.load.image('telaFim', 'assets/game_over_960-600.png');
+    game.load.image('victoryImage', 'assets/win_960-600.png');
     game.load.image('powerup', 'assets/powerup_50-50.png');
     game.load.image('credits', 'assets/credit_960-600.png');
     game.load.audio('inicio','sounds/DrWTheme.mp3');
