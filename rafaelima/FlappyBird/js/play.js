@@ -352,20 +352,20 @@ function bossFight() {
     else if (X > 702)
         X = 702;
 
-    bossDirection = 0.4;/*Math.random();
+    bossDirection = Math.random();
     if (bossDirection >= 0.5) { //começa p/ cima
         bossSprite.kill();
         bossSprite.reset(X, 580);
         bossSprite.body.velocity.y = -400;
         bossSprite.body.velocity.x = -300;
         bossSprite.frame = 1;
-    } else { */
+    } else {
         bossInvSprite.kill();
         bossInvSprite.reset(X, -287);
         bossInvSprite.body.velocity.y = 400;
         bossInvSprite.body.velocity.x = -300;
         bossInvSprite.frame = 1;
-    //}
+    }
     
     countHeadButts++;
 }
