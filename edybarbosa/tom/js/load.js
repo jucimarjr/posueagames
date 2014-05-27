@@ -5,6 +5,8 @@ Game.Load.prototype = {
 		game.load.image('abertura', 'assets/tomas_960-600.png');
 		game.load.spritesheet('iniciar', 'assets/iniciar_916-42-2.png', 458, 42, 2);
 
+		game.load.image('creditos','assets/creditos_611-361.png');
+
 		game.load.image('nuvens', 'assets/nuvens_879-227.png');
 		game.load.image('gameover', 'assets/over_960-600.png');
 		game.load.image('fundo', 'assets/cenario_960-600.png');

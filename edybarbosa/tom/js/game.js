@@ -6,4 +6,5 @@ game.state.add('Menu', Game.Menu);
 game.state.add('Tutorial', Game.Tutorial);
 game.state.add('Play', Game.Play);
 game.state.add('Gameover', Game.Gameover);
+game.state.add('Creditos', Game.Creditos);
 game.state.start('Boot');
