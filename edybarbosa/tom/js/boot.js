@@ -30,6 +30,9 @@ var c;
 var voltar;
 var v;
 
+var buttonIniciar;
+var buttonCreditos;
+
 WebFontConfig = {
 
     //  The Google Fonts we want to load (specify as many as you like in the array)
