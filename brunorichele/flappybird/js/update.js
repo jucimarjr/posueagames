@@ -60,9 +60,10 @@ var update = {
             this.player.alive = false;
             this.player.animations.stop();
             this.player.frame = 4;
-            this.player.body.velocity.y = 0;
 			this.player.scale.y *= -1;
-			this.player.body.gravity.y = -300;
+			this.player.body.gravity.y = 0;
+			this.player.body.velocity.y = -100;
+			this.player.body.velocity.x = -100;
         }
     },
     createGameOverButtons : function(){
