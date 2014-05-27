@@ -76,7 +76,7 @@ function create() {
     this.timer = this.game.time.events.loop(1000, add_obstacle, this);
     timerPowerUp = this.game.time.events.loop(15000, add_power_up, this);
     timerBoss = this.game.time.events.loop(20000, startBossFight, this);
-    startBossFight();
+    //startBossFight();
     speed = 1;
     jump();
 }
@@ -352,20 +352,20 @@ function bossFight() {
     else if (X > 702)
         X = 702;
 
-    bossDirection = 0.4;/*Math.random();
+    bossDirection = Math.random();
     if (bossDirection >= 0.5) { //começa p/ cima
         bossSprite.kill();
         bossSprite.reset(X, 580);
         bossSprite.body.velocity.y = -400;
         bossSprite.body.velocity.x = -300;
         bossSprite.frame = 1;
-    } else { */
+    } else {
         bossInvSprite.kill();
         bossInvSprite.reset(X, -287);
         bossInvSprite.body.velocity.y = 400;
         bossInvSprite.body.velocity.x = -300;
         bossInvSprite.frame = 1;
-    //}
+    }
     
     countHeadButts++;
 }
