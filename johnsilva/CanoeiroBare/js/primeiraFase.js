@@ -84,12 +84,30 @@ function create() {
     var loguinho = game.add.sprite(90, 570, 'logoBarra');
     loguinho.anchor.setTo(0.5, 0.5);
 
+    //Mute button
+    var bt_sound = game.add.button(800, 0, 'sound', pause, this, 1, 0, 1);
+
     finalSound = false;
     remosSound = game.add.audio("remosound",1,true);
     remosSound.play('',0,1,true);
 
     cursors = game.input.keyboard.createCursorKeys();
     game.input.onDown.add(touch, this);
+}
+
+function gofull() {
+    game.scale.startFullScreen();
+}
+
+function pause() {
+    if (toggle) {
+        music.resume();
+        toggle = false;
+    }
+    else {
+        music.pause();
+        toggle = true;
+    }
 }
 
 function createJungles() {
