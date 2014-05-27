@@ -23,8 +23,6 @@ var dead;
 var timer;
 
 function preload() {
-    game.load.physics('physicsData', 'assets/sprite/canoeman/canoeman.json');
-
     score = 0;
     highscore = 0;
     tileSpeedRiver = 1.5;
@@ -293,13 +291,11 @@ function sleep(milliseconds) {
 }
 
 function gameOv() {
+    canoeman.kill();
     tileSpeedRiver = 1.5;
-    //canoeman.kill();
     game.state.start('gameOver');
 }
 
 function render() {
-
     //game.debug.text(tileSpeedRiver,32,32);
-
 }
