@@ -25,7 +25,7 @@ var timer;
 function preload() {
     game.load.physics('physicsData', 'assets/sprite/canoeman/canoeman.json');
 
-    score = 9;
+    score = 0;
     highscore = 0;
     tileSpeedRiver = 1.5;
     gameOver = false;
