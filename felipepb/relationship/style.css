@@ -165,7 +165,9 @@ content styles
 }
 
 .facebookLike {
-	float: right;
+	float: left;
+	margin: 0 0 0 400px;
+	padding: 0;
 }
 
 #logotype {
