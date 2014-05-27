@@ -12,7 +12,8 @@ Menu.prototype = {
 				800, 190);
 		this.game.load.image('logo', 'assets/logo_800-190.png', 800, 190);
 		this.game.load.image('bt_play', 'assets/btplay_280-100.png', 280, 100);
-		this.game.load.image('bt_credits', 'assets/btcredits_280-100.png', 280, 100);
+		this.game.load.image('bt_credits', 'assets/btcredits_280-100.png', 280,
+				100);
 
 		// Audio
 		this.game.load.audio('background_sound', 'audio/som_principal.mp3');
@@ -26,23 +27,29 @@ Menu.prototype = {
 		this.backgroundSound.play('', 0, 1, true);
 
 		// background
-		this.background = this.game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
+		this.background = this.game.add.tileSprite(0, 0,
+				game.stage.bounds.width,
+				game.cache.getImage('background').height, 'background');
 		this.background.autoScroll(-200, 0);
-		
+
 		// gorduras e veias
-		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,game.cache.getImage('fat_vein').height, 'fat_vein');
+		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,
+				game.cache.getImage('fat_vein').height, 'fat_vein');
 		this.fatVein.autoScroll(-30, 0);
 
 		// logo
-		this.logo = this.game.add.image(this.game.world.centerX - 400, 180, 'logo');
+		this.logo = this.game.add.image(this.game.world.centerX - 400, 180,
+				'logo');
 
 		// play button
-		this.btPlay = game.add.image(this.game.world.centerX - 140, 370, 'bt_play');
+		this.btPlay = game.add.image(this.game.world.centerX - 140, 370,
+				'bt_play');
 		this.btPlay.inputEnabled = true;
 		this.btPlay.events.onInputDown.add(this.btPlayClick, this);
 
 		// credits button
-		this.btCredits = game.add.image(this.game.world.centerX - 140, 430, 'bt_credits');
+		this.btCredits = game.add.image(this.game.world.centerX - 140, 430,
+				'bt_credits');
 		this.btCredits.inputEnabled = true;
 		this.btCredits.events.onInputDown.add(this.btCreditsClick, this);
 	},
@@ -84,18 +91,23 @@ Credits.prototype = {
 		this.backgroundSound.play('', 0, 1, true);
 
 		// background
-		this.background = this.game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
+		this.background = this.game.add.tileSprite(0, 0,
+				game.stage.bounds.width,
+				game.cache.getImage('background').height, 'background');
 		this.background.autoScroll(-200, 0);
-		
+
 		// gorduras e veias
-		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,game.cache.getImage('fat_vein').height, 'fat_vein');
+		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,
+				game.cache.getImage('fat_vein').height, 'fat_vein');
 		this.fatVein.autoScroll(-30, 0);
 
 		// credits
-		this.credits = this.game.add.image(this.game.world.centerX - 259, 160, 'credits');
+		this.credits = this.game.add.image(this.game.world.centerX - 259, 160,
+				'credits');
 
 		// play button
-		this.btBack = game.add.image(this.game.world.centerX - 140, 390, 'bt_back');
+		this.btBack = game.add.image(this.game.world.centerX - 140, 390,
+				'bt_back');
 		this.btBack.inputEnabled = true;
 		this.btBack.events.onInputDown.add(this.btBackClick, this);
 	},
@@ -124,6 +136,7 @@ Play.prototype = {
 				'assets/celltail_500-50-10.png', 50, 50);
 		this.game.load.image('piso', 'assets/piso_960-50.png', 960, 50);
 		this.game.load.image('teto', 'assets/teto_960-50.png', 960, 50);
+		this.game.load.image('score', 'assets/score_63-37.png', 63, 37);
 		this.game.load.image('fat1a', 'assets/fat1a_223-302.png', 223, 302);
 		this.game.load.image('fat1b', 'assets/fat1b_223-302.png', 223, 302);
 		this.game.load.image('fat2a', 'assets/fat2a_162-78.png', 162, 78);
@@ -150,13 +163,16 @@ Play.prototype = {
 		this.points = 0;
 
 		// background
-		this.background = this.game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
+		this.background = this.game.add.tileSprite(0, 0,
+				game.stage.bounds.width,
+				game.cache.getImage('background').height, 'background');
 		this.background.autoScroll(-200, 0);
-		
+
 		// gorduras e veias
-		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,game.cache.getImage('fat_vein').height, 'fat_vein');
+		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,
+				game.cache.getImage('fat_vein').height, 'fat_vein');
 		this.fatVein.autoScroll(-200, 0);
-		
+
 		// CREATE A tubos:
 		this.fats = this.game.add.group();
 		this.timer = this.game.time.events
@@ -181,8 +197,8 @@ Play.prototype = {
 		this.cellHSprite.body.gravity.y = 450;
 
 		this.cellTSprite = game.add.sprite(405, 275, 'cell_tail');
-		this.cellTSprite.animations.add('moving',
-				[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ], 10, true);
+		this.cellTSprite.animations.add('moving', [ 1, 2, 3, 4, 5, 6, 7, 8, 9,
+				10 ], 10, true);
 		this.game.physics.enable(this.cellTSprite, Phaser.Physics.ARCADE);
 
 		this.cellTSprite.body.acceleration.y = 450;
@@ -192,22 +208,22 @@ Play.prototype = {
 		this.cellTSprite.body.gravity.y = 450;
 
 		// exibe score
+		this.game.add.image(this.game.width - 100, 80, 'score');
 		var style = {
-			font : "40px Arial",
-			fill : "#ff0044",
+			font : "20px Arial",
+			fill : "#ffdd44",
 			align : "center"
 		};
-		this.score = game.add.text(game.world.centerX + 220, 10, "SCORE: "
-				+ this.points, style);
-		
+		this.score = game.add.text(this.game.width - 66, 89, "00", style);
+
 		this.game.input.onDown.add(this.jump, this);
 	},
 	update : function() {
 		// COLISAO:
 		this.game.physics.arcade.overlap(this.cellHSprite, this.cena,
 				this.collision, null, this);
-		 this.game.physics.arcade.overlap(this.cellHSprite, this.fats,
-		 this.collision, null, this);
+		this.game.physics.arcade.overlap(this.cellHSprite, this.fats,
+				this.collision, null, this);
 
 		this.fats.setAll('body.velocity.x', -430);
 		for (var i = 0; i < this.fats.total; i++) {
@@ -217,7 +233,11 @@ Play.prototype = {
 					&& (!this.scored[i])) {
 				this.scored[i] = true;
 				this.points++;
-				this.score.setText("SCORE: " + this.points);
+				if (this.points < 10) {
+					this.score.setText("0" + this.points);
+				} else {
+					this.score.setText(this.points);
+				}
 			}
 		}
 
@@ -231,16 +251,16 @@ Play.prototype = {
 	},
 	jump : function() {
 		this.cellHSprite.body.velocity.y = -200;
-		this.cellTSprite.body.velocity.y = -200;		
+		this.cellTSprite.body.velocity.y = -200;
 	},
 	collision : function(cell, bg) {
 		userScore = this.points;
 		if (userScore > highScore) {
 			highScore = userScore;
 		}
-		
+
 		this.game.time.events.remove(this.timer);
-		
+
 		this.backgroundSound.pause();
 
 		this.backgroundSound = game.add.audio("collision_sound", 1, true);
@@ -248,9 +268,9 @@ Play.prototype = {
 
 		this.cellHSprite.animations.loopCount = 1;
 		this.cellHSprite.animations.play('collision');
-		this.cellHSprite.events.onAnimationComplete.add(function(){
+		this.cellHSprite.events.onAnimationComplete.add(function() {
 			this.game.state.start('game_over');
-		}, this);		
+		}, this);
 	},
 	add_row_of_fat : function() {
 		// var hole = Math.floor(Math.random() * 5) + 1;
