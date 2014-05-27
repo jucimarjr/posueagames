@@ -1,6 +1,11 @@
 var tutorial_state = { create: create, update:update, start: start };
 
     function create() {
+    	
+    	if (music != null) {
+    		music.pause();
+    	}
+    	
     	if (musicGame != null) {
 			musicGame.pause();
 		}

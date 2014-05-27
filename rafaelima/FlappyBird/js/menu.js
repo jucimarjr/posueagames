@@ -1,13 +1,4 @@
-var menu_state = { preload: preload, create: create, update: update};
-
-function preload() {
-	game.load.image('splash_screen', 'assets/splash_screen.png');
-	game.load.image('button_play', 'assets/menu_play.png');
-	game.load.image('button_credits', 'assets/menu_credits.png');
-	game.load.image('splash_screen_space', 'assets/splash_screen_space.png');
-	game.load.image('cloud_selector', 'assets/splash_selector.png');
-	game.load.audio('menuMusic', ['sound/menu_sound.ogg']);
-}
+var menu_state = { create: create, update: update};
 
 //Tela de Menu
 function create() {
@@ -24,9 +15,9 @@ function create() {
 	
 }
 
-//Começa o jogo
+//Comeï¿½a o jogo
 function startGame() {
-	game.state.start('load');
+	game.state.start('tutorial');
 }
 function credits() {
 	game.state.start('credits');
