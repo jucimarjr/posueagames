@@ -12,13 +12,43 @@ body {
     background: #000;
 }
 
+.game {
+    position: relative;
+    width: 960px;
+    height: 600px;
+}
+
+#game_loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 960px;
+    height: 600px;
+    background: url('../assets/menu/bgmenu_1600-600.png') no-repeat;
+
+    -webkit-animation: space-bg 30s infinite linear;
+    -moz-animation: space-bg 30s infinite linear;
+}
+
+#game_loading > p {
+    font-family: 'Starjedi';
+    color: #f3b40b;
+    text-align: center;
+    margin: 250px 0 0 0;
+    font-size: 30px;
+}
+
+@-webkit-keyframes space-bg {from { background-position: 0; } to { background-position: -640px; }}
+@-moz-keyframes space-bg {from { background-position: 0; } to { background-position: -640px; }}
+
 .fb-like {
     display: block;
     margin-top: 10px;
 }
 
 .container {
-    margin: 0 auto;
+    margin: 20px auto;
     width: 960px;
 }
 
@@ -28,8 +58,9 @@ body {
 }
 
 #game_container {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 960px;
     height: 600px;
-    margin: 0 auto;
-    margin-top: 20px;
 }
