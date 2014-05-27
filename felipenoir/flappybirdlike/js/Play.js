@@ -22,14 +22,15 @@ var playState = {
 		// Toca audio do menu
 		audioMenu = game.add.audio('audioMenu', 1, true);
 		audioMenu.play('', 0, 1, true);
-		// game.world.setBounds(0, 0, game.stage.bounds.width,
-		// game.cache.getImage('trees').height);
+		
+		
 		level.create();
 		player.create(audioMenu);
 		enemies.create();
 		coins.create();
 		score.create();
 		game.camera.follow(player.sprite);
+		game.input.onDown.add(player.jump, this);
 	},
 
 	update : function() {
@@ -37,11 +38,6 @@ var playState = {
 		game.physics.arcade.overlap(player.sprite, enemies.enemies, lost, null, this);
 		game.physics.arcade.overlap(player.sprite, coins.coins, getCoin, null, this);
 
-
-		/*if(score.count > 2){
-			enemies.stop();
-			coins.stop();
-		}*/
 		player.update();
 		level.update();
 		coins.update();

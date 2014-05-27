@@ -24,7 +24,7 @@ Player.prototype = {
 		// Audio
 		this.audioVoar = game.add.audio('audioVoar');
 	},
-	
+
 	update : function() {
 
 		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)
@@ -44,6 +44,14 @@ Player.prototype = {
 			}, 100).start();
 			this.sprite.animations.play('jump');
 		}
+	},
+
+	jump : function() {
+		console.log('click');
+//		game.add.tween(this.sprite).to({
+//			angle : -10
+//		}, 100).start();
+//		this.sprite.animations.play('jump');
 	}
 
 }
