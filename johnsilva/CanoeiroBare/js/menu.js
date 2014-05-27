@@ -1,6 +1,16 @@
-﻿var GameMenu = { preload: preload, create: create};
+﻿var GameMenu = { preload: preload, create: create };
+
+var music;
+var toggle = false;
 
 function preload() {
+    // Sons
+    game.load.audio('remosound', 'songs/remada.mp3');
+    game.load.audio('explodesound', 'songs/explode.mp3');
+    game.load.audio('botosound', 'songs/boto.mp3');
+    game.load.audio('alligatorsound', 'songs/alligator.wav');
+    game.load.audio('fundosound', 'songs/canoeman.mp3');
+
     //Imagens - Menu
     game.load.image('initBg', 'assets/bg/initBg_900-600.jpg');
 
@@ -36,18 +46,19 @@ function preload() {
     game.load.spritesheet('play', 'assets/botoes/play_100-70.png', 100, 70, 2);
     game.load.spritesheet('canoemandead', 'assets/sprite/gameover/canoeiro_138-146-13.png', 138, 146, 13);
 
-    // Sons
-    game.load.audio('remosound', 'songs/remada.mp3');
-    game.load.audio('explodesound', 'songs/explode.mp3');
-    game.load.audio('botosound', 'songs/boto.mp3');
-    game.load.audio('alligatorsound', 'songs/alligator.wav');
-
     //json
     game.load.physics('physicsData', 'assets/sprite/canoeman/canoeman.json');
 }
 
 //Tela de Menu
 function create() {
+    //game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    //game.input.onDown.add(gofull, this);
+
+    music = game.add.audio('fundosound', 1, true);
+
+    music.play('', 0, 1, true);
+
     var initBg = game.add.sprite(0, 0, 'initBg');
 
     var bt_iniciar = game.add.button(450, 365, 'btIniciar', history, this, 1, 0, 1);
@@ -56,8 +67,22 @@ function create() {
     var bt_tutorial = game.add.button(450, 500, 'btCredits', credits, this, 1, 0, 1);
     bt_tutorial.anchor.set(0.5, 0.5);
 
-    //var bt_sound = game.add.button(800, 0, 'sound', credits, this, 1, 0, 1);
-    //bt_tutorial.anchor.set(0.5, 0.5);
+    var bt_sound = game.add.button(800, 0, 'sound', pause, this, 1, 0, 1);
+}
+
+function gofull() {
+    game.scale.startFullScreen();
+}
+
+function pause() {
+    if (toggle) {
+        music.resume();
+        toggle = false;
+    }
+    else {
+        music.pause();
+        toggle = true;
+    }
 }
 
 // Começa o jogo
