@@ -3,9 +3,9 @@ Game.Creditos = function (game) { };
 Game.Creditos.prototype = {
 
 	create: function () {
-		game.add.sprite(0, 0, 'abertura');
+		game.add.sprite(0, 0, 'fundocreditos');
 
-		//game.add.sprite(300, 300, 'creditos');
+		game.add.sprite(300, 250, 'creditos');
 
 		voltar = game.add.text(880, 30, '(v) Voltar ');
 	    voltar.anchor.set(0.5);
