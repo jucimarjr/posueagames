@@ -16,6 +16,7 @@ BasicGame.MainMenu = function (game) {
 
 BasicGame.MainMenu.backspaceKey = 8;
 BasicGame.MainMenu.tabKey = 9;
+BasicGame.MainMenu.enterKey = 13;
 BasicGame.MainMenu.letterAKey = 65;
 BasicGame.MainMenu.letterZKey = 90;
 BasicGame.MainMenu.maximumPlayerNameLength = 14;
@@ -153,6 +154,10 @@ BasicGame.MainMenu.prototype = {
         var letter = String.fromCharCode(keyCode);
         var maximumNameLength = BasicGame.MainMenu.maximumPlayerNameLength;
         //console.log('key: ' + keyCode);
+        
+        if (keyCode == BasicGame.MainMenu.enterKey) {
+        	this.onPlayButtonClicked(this.playButton);
+        }
         
         if (keyCode == BasicGame.MainMenu.tabKey) {
             if (!this.currentBitmapText)
