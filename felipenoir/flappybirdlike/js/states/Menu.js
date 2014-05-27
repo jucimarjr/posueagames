@@ -1,4 +1,4 @@
-var audioMenu;
+var audioMenu, options, optionsBar, start, credits;
 
 var menuState = {
 
@@ -6,6 +6,8 @@ var menuState = {
 		game.load.image('title', 'assets/menu_title.png')
 		game.load.image('bg', 'assets/menu_bg.png');
 		game.load.image('options', 'assets/menu_options.png');
+		game.load.image('credits', 'assets/menu_options_credits.png');
+		game.load.image('start', 'assets/menu_options_play.png');
 		game.load.audio('audioMenu', 'assets/song_menu_otimizada.mp3');
 	},
 
@@ -24,7 +26,18 @@ var menuState = {
 		var title = game.add.sprite(game.world.centerX, -250, 'title');
 		title.anchor.set(.5, 0);
 
-		options = game.add.sprite(0, game.world.height + 82, 'options');
+		// menu group
+		options = game.add.group();
+		optionsBar = options.create(0, game.world.height, 'options');
+		start = options.create(0, game.world.height, 'start');
+		credits = options.create(game.world.centerX, game.world.height,
+				'credits');
+
+		start.inputEnabled = true;
+		credits.inputEnabled = true;
+
+		start.events.onInputDown.add(this.start, this);
+		credits.events.onInputDown.add(this.credits, this);
 
 		titleEffect = game.add.tween(title);
 		titleEffect.to({
@@ -35,11 +48,9 @@ var menuState = {
 	},
 
 	showOptions : function() {
-		optionsEffect = game.add.tween(options);
-		optionsEffect.to({
-			y : game.world.height - 82
-		}, 1000, Phaser.Easing.Bounce.Out);
-		optionsEffect.start();
+		game.add.tween(options).to({
+			y : -82
+		}, 1000, Phaser.Easing.Bounce.Out, true);
 	},
 
 	start : function() {
