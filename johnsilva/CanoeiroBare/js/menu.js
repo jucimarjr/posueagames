@@ -23,7 +23,8 @@ function preload() {
     game.load.spritesheet('boto', 'assets/sprite/enemies/boto_80-67-10.png', 80, 67, 10);
     game.load.spritesheet('sand', 'assets/sprite/enemies/sand_76-25-4.png', 76, 25, 4);
     game.load.spritesheet('trunk', 'assets/sprite/enemies/trunk_64-42-4.png', 64, 42, 4);
-    game.load.spritesheet('timer', 'assets/botoes/timer-1500-369.png', 150,369,10);    
+    game.load.spritesheet('timer', 'assets/botoes/timer-1500-369.png', 150, 369, 10);
+    game.load.spritesheet('sound', 'assets/botoes/sound_100-70.png', 100, 70, 2);
 
     //Imagens -- GameOver
     game.load.image('splashscreen', 'assets/bg/gameover_900-600.jpg');
@@ -54,6 +55,9 @@ function create() {
 
     var bt_tutorial = game.add.button(450, 500, 'btCredits', credits, this, 1, 0, 1);
     bt_tutorial.anchor.set(0.5, 0.5);
+
+    //var bt_sound = game.add.button(800, 0, 'sound', credits, this, 1, 0, 1);
+    //bt_tutorial.anchor.set(0.5, 0.5);
 }
 
 // Começa o jogo

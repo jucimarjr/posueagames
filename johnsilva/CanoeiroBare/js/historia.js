@@ -24,7 +24,7 @@ function create() {
 
 function curupira() {
     var inicioHistoria = game.add.sprite(0, 0, 'meio');
-    var text = game.add.text(450, 520, 'Curupira surge da floresta e leva o filho de Zé', styleBig);
+    var text = game.add.text(450, 520, 'Mapinguari surge da floresta, leva o filho de Zé', styleBig);
     text.anchor.setTo(0.5, 0.5);
     var text = game.add.text(450, 570, 'rio acima até o topo da árvore Mãe.', styleBig);
     text.anchor.setTo(0.5, 0.5);
@@ -36,7 +36,7 @@ function final() {
     var inicioHistoria = game.add.sprite(0, 0, 'fim');
     var text = game.add.text(450, 520, 'Zé afoito inicia sua corrida ', styleBig);
     text.anchor.setTo(0.5, 0.5);
-    var text = game.add.text(450, 570, 'rio acima para salvar seu filho do curupira', styleBig);
+    var text = game.add.text(450, 570, 'rio acima para salvar seu filho do Mapinguari', styleBig);
     text.anchor.setTo(0.5, 0.5);
 
     setTimeout(start, 5000);
