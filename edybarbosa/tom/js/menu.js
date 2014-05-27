@@ -15,12 +15,29 @@ Game.Menu.prototype = {
 
  		game.time.events.repeat(Phaser.Timer.SECOND/5, 100, this.iniciarBlink, this);
 
+		creditos = game.add.text(880, 30, '(c) Créditos');
+
+	    //	creditos align
+	    creditos.anchor.set(0.5);
+	    creditos.align = 'center';
+
+	    //	Font style
+	    creditos.font = 'Nunito';
+	    creditos.fontSize = 22;
+	    creditos.fontWeight = 'bold'; 		
+		creditos.stroke = '#FFFFFF';
+	    creditos.strokeThickness = 3;
+	    creditos.fill = '#000000';	    
+
 		i = game.input.keyboard.addKey(Phaser.Keyboard.I);
+		c = game.input.keyboard.addKey(Phaser.Keyboard.C);
 	},
 	update: function () {
 		
 		if (i.isDown) {
 			game.state.start('Tutorial');
+	    }else if(c.isDown){
+	    	game.state.start('Creditos');
 	    }
 			
 	},	
