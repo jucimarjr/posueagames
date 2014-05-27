@@ -1,16 +1,23 @@
-﻿var GameMenu = { preload: preload, create: create };
+﻿var load = { preload: preload, create: create };
 
 var music;
-var toggle = false;
-var bt_sound;
 
+//Carregar todos os assets
 function preload() {
+    game.load.image('loading', 'assets/bg/loading_900-600.jpg');
+}
+
+function create() {
+    game.add.sprite(0, 0, 'loading');
+
     // Sons
     game.load.audio('remosound', 'songs/remada.mp3');
     game.load.audio('explodesound', 'songs/explode.mp3');
     game.load.audio('botosound', 'songs/boto.mp3');
     game.load.audio('alligatorsound', 'songs/alligator.wav');
     game.load.audio('fundosound', 'songs/canoeman.mp3');
+    music = game.add.audio('fundosound', 1, true);
+    music.play('', 0, 1, true);
 
     //Imagens - Menu
     game.load.image('initBg', 'assets/bg/initBg_900-600.jpg');
@@ -42,7 +49,7 @@ function preload() {
     game.load.image('splashscreen', 'assets/bg/gameover_900-600.jpg');
     game.load.image('btGameOver', 'assets/botoes/gameover_350-280.png');
     game.load.image('btRanking', 'assets/botoes/rank_100-70.png');
-    game.load.image('logoMain', 'assets/bg/logo.png');   
+    game.load.image('logoMain', 'assets/bg/logo.png');
 
     //Sprites - GameOver
     game.load.spritesheet('play', 'assets/botoes/play_100-70.png', 100, 70, 2);
@@ -50,62 +57,11 @@ function preload() {
 
     //json
     game.load.physics('physicsData', 'assets/sprite/canoeman/canoeman.json');
+
+    game.load.onLoadComplete.add(loadComplete, this);
+    game.load.start();
 }
 
-//Tela de Menu
-function create() {
-    //game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-    //game.input.onDown.add(gofull, this);
-    if (startSound == true) {
-        initSound();
-    }
-
-    var initBg = game.add.sprite(0, 0, 'initBg');
-
-    var bt_iniciar = game.add.button(450, 365, 'btIniciar', history, this, 1, 0, 1);
-    bt_iniciar.anchor.set(0.5, 0.5);
-
-    var bt_tutorial = game.add.button(450, 500, 'btCredits', credits, this, 1, 0, 1);
-    bt_tutorial.anchor.set(0.5, 0.5);
-
-    bt_sound = game.add.button(850, 0, 'sound', pause, this, 1, 0, 1);
+function loadComplete() {
+    game.state.start('menu');
 }
-
-function initSound() {
-    music = game.add.audio('fundosound', 1, true);
-    music.play('', 0, 1, true);
-    startSound = false;
-}
-
-function gofull() {
-    game.scale.startFullScreen();
-}
-
-function pause() {
-    if (toggle) {
-        music.resume();
-        toggle = false;
-        bt_sound = game.add.button(850, 0, 'sound', pause, this, 1, 0, 1);
-    }
-    else {
-        music.pause();
-        toggle = true;
-        bt_sound = game.add.button(850, 0, 'mute', pause, this, 1, 0, 1);
-    }
-}
-
-// Começa o jogo
-function start() {
-    console.log("menu start");
-    //game.state.start('historia');
-}
-
-function history() {
-    game.state.start('historia');
-}
-
-function credits() {
-    console.log("credits");
-    game.state.start('credits');
-}
-
