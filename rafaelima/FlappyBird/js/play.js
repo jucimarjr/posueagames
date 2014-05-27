@@ -28,8 +28,17 @@ function create() {
     bossSprite.body.collideWorldBounds = false;
     bossSprite.kill();
 
+    bossInvSprite = game.add.sprite(0, 0, 'bossinv');
+    game.physics.enable(bossInvSprite, Phaser.Physics.ARCADE);
+    bossInvSprite.animations.add('blink', [0, 1], 30, true);
+    bossInvSprite.frame = 1;
+    bossInvSprite.body.collideWorldBounds = false;
+    bossInvSprite.kill();
+
     playerSprite = game.add.sprite(172, 281.5, 'player');
     playerSprite.animations.add('walk', [0, 1, 2, 3], 8, true);
+    playerSprite.checkWorldBounds = true;
+    playerSprite.outOfBoundsKill = true;
     game.physics.enable(playerSprite, Phaser.Physics.ARCADE);
     playerSprite.body.gravity.y = 1000;
     playerSprite.body.collideWorldBounds = false;
@@ -67,7 +76,7 @@ function create() {
     this.timer = this.game.time.events.loop(1000, add_obstacle, this);
     timerPowerUp = this.game.time.events.loop(15000, add_power_up, this);
     timerBoss = this.game.time.events.loop(20000, startBossFight, this);
-    //startBossFight();
+    startBossFight();
     speed = 1;
     jump();
 }
@@ -77,14 +86,14 @@ function update() {
 
     if (!stop_score) {
         score += 0.01;
-        this.label_score.text = score.toFixed(0) + " m";  //sem casa decimal
+        this.label_score.text = score.toFixed(0) + " km";  //sem casa decimal
     }
 
     playerSprite.animations.play('walk');
 
-    if (countHeadButts <= 3 && bossSprite.exists===true) {
-        game.physics.arcade.overlap(bossSprite, playerSprite, playerDies, null, this);
+    if (countHeadButts <= 3 && (bossSprite.exists === true || bossInvSprite.exists === true)) {
         if (bossDirection >= 0.5) {
+            game.physics.arcade.overlap(bossSprite, playerSprite, playerDies, null, this);
             if (bossSprite.body.position.y < 230) { //começa p/ cima
                 bossSprite.body.velocity.y = 300;
                 bossSprite.frame = 0;
@@ -92,10 +101,11 @@ function update() {
                 bossFight();
             }
         } else {
-            if (bossSprite.body.position.y > 0) {
-                bossSprite.body.velocity.y = -300;
-                bossSprite.frame = 0;
-            } else if (bossSprite.body.position.y <= 0 && countHeadButts < 3) {
+            game.physics.arcade.overlap(bossInvSprite, playerSprite, playerDies, null, this);
+            if (bossInvSprite.body.position.y > 0) {
+                bossInvSprite.body.velocity.y = -300;
+                bossInvSprite.frame = 0;
+            } else if (bossInvSprite.body.position.y <= -287 && countHeadButts < 3) {
                 bossFight();
             }
         }
@@ -110,16 +120,12 @@ function update() {
     if (deathSprite.exists === true && playerSprite.exists === false) {
         deathSprite.animations.play('fall');
         explosionSprite.animations.play('explode');
-    }
+    } else if (playerSprite.exists === false)
+            playerDies();
 
     updatePowerUps();
 
     game.physics.arcade.overlap(playerSprite, platforms, playerDies, null, this)
-
-    //bate no chao playerSprite
-    if ((Math.round(playerSprite.y) + playerSprite.height) >= game.world.height) {
-        restart_game();
-    }
 
     playerSprite.body.velocity.x = 0;
     background2.tilePosition.x -= 2 * speed;
@@ -338,8 +344,6 @@ function powerUp_multiply_Off() {
 }
 
 function bossFight() {
-    bossSprite.kill();
-
     platforms.forEach(function (item) { item.kill(); }, null, this);
 
     var X = game.world.randomX;
@@ -348,22 +352,20 @@ function bossFight() {
     else if (X > 702)
         X = 702;
 
-    bossDirection = 0.5;//Math.random();
-    bossSprite.reset(X, 580);
-    bossSprite.body.velocity.y = -400;
-    /*if (bossDirection >= 0.5) { //começa p/ cima
+    bossDirection = 0.4;/*Math.random();
+    if (bossDirection >= 0.5) { //começa p/ cima
+        bossSprite.kill();
         bossSprite.reset(X, 580);
-        bossSprite.body.velocity.y = -300;
-    /*} else {
-        bossSprite.reset(X, -360);
-        bossSprite.anchor.setTo(.5, 1); //so it flips around its middle
-        bossSprite.scale.x = -1; //facing default direction
-        bossSprite.scale.y = -1; //flipped
-        bossSprite.anchor.setTo(0, 0); //so it flips around its middle
-        bossSprite.body.velocity.y = 300;
-
-    } */
-    bossSprite.body.velocity.x = -300;
-    bossSprite.frame = 1;
+        bossSprite.body.velocity.y = -400;
+        bossSprite.body.velocity.x = -300;
+        bossSprite.frame = 1;
+    } else { */
+        bossInvSprite.kill();
+        bossInvSprite.reset(X, -287);
+        bossInvSprite.body.velocity.y = 400;
+        bossInvSprite.body.velocity.x = -300;
+        bossInvSprite.frame = 1;
+    //}
+    
     countHeadButts++;
 }

@@ -11,7 +11,7 @@ var score_state = { create: create, update:update, start: start };
     	
     	var style = { font: '80pt "edosz"', fill: "#E95618" };
         var x = 481, y = 307;
-        var number = score.toFixed(0);
+        var number = score.toFixed(0)*1000;
         if (number < 10){
         	var text = game.add.text(x, y, "0" + number, style);
         } else {

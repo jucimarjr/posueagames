@@ -14,12 +14,13 @@ function create() {
 	game.load.spritesheet('player', 'assets/suu_208_89_4.png', 208, 89);
 	game.load.spritesheet('death', 'assets/falling_208_89_2.png', 208, 89);
 	game.load.spritesheet('boss', 'assets/badboss_258_371_2.png', 258, 371);
+	game.load.spritesheet('bossinv', 'assets/badboss_inverted_258_307_2.png', 258, 307);
 	game.load.image('background1', 'assets/background1.png');
 	game.load.image('background2', 'assets/background2.png');
 	game.load.image('background3', 'assets/background3.png');
 	game.load.image('background4', 'assets/background4.png');
 	game.load.image('background5', 'assets/background5.png');
-	game.load.audio('flap_song', 'assets/flap.wav');
+	game.load.audio('flap_song', ['sound/wind.wav', 'sound/wind.mp3']);
 	game.load.spritesheet('explosion', 'assets/explosion_103_103_5.png', 103, 103);
 	game.load.spritesheet('powerup1', 'assets/powerup01_55_94_4.png', 55, 94);
 	game.load.spritesheet('powerup2', 'assets/powerup02_55_94_4.png', 55, 94);

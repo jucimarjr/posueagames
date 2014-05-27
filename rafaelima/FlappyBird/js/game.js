@@ -8,7 +8,7 @@ var music;
 var musicGame;
 var explosionSprite;
 
-var playerSprite, deathSprite, bossSprite;
+var playerSprite, deathSprite, bossSprite, bossInvSprite;
 var playersGroup; //for multiply Power up
 var platforms;
 var porwerUps;
