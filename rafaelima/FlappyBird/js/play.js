@@ -76,7 +76,7 @@ function create() {
     this.timer = this.game.time.events.loop(1000, add_obstacle, this);
     timerPowerUp = this.game.time.events.loop(15000, add_power_up, this);
     timerBoss = this.game.time.events.loop(20000, startBossFight, this);
-    startBossFight();
+    //startBossFight();
     speed = 1;
     jump();
 }
