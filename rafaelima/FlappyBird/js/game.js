@@ -17,6 +17,7 @@ var sound_flag = true;
 var jump_sound;
 var countHeadButts = 0;
 var bossDirection;
+var isDead;
 
 //text
 var text_sound;

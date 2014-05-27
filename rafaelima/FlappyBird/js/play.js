@@ -18,6 +18,8 @@ function create() {
     background3.tileScale.setTo(1.6, 1.6);
     game.physics.arcade.enable(background3);
 
+    isDead = false;
+    
     platforms = game.add.group();
     platforms.enableBody = true;
 
@@ -160,11 +162,13 @@ function startBossFight() {
 }
 
 function jump() {
-    playerSprite.body.velocity.y = -450;
-    if (playersGroup != null && playersGroup.exists === true) {
-        playersGroup.forEach(function (item) { item.body.velocity.y = -450; }, null, this);
-    }
-    jump_sound.play();
+	if (!isDead){
+	    playerSprite.body.velocity.y = -450;
+	    if (playersGroup != null && playersGroup.exists === true) {
+	        playersGroup.forEach(function (item) { item.body.velocity.y = -450; }, null, this);
+	    }
+	    jump_sound.play();
+	}
 }
 
 function notJump() {
@@ -181,7 +185,7 @@ function playerDies() {
     explosionSprite.reset(playerSprite.x + 104, playerSprite.y, 'death');
     explosionSprite.body.exists = true;
     explosionSprite.body.gravity.y = deathSprite.body.gravity.y;
-
+    isDead = true;
     deathSprite.animations.play('fall');
     explosionSprite.animations.play('explode');
 
