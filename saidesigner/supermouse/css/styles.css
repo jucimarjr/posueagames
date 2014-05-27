@@ -1,17 +1,21 @@
 
 
-body {	
-	background-color: white;	
-}
-
 @font-face {
     font-family: "Press Start";
     src: url(../font/PressStart2P.ttf) format("truetype");
 }
 
-#game_div {
+body {
+	background: #E3E3E3;
+	margin: 5;
+	padding:0;
+	font-family: "Press Start";
+	color: #000;
+	font-size: 100%;
+	font-weight: 400;
+}
+
+.site {
     width: 900px;
-    height: 600px;
     margin: 0 auto;
-    margin-top: 0px;    
 }

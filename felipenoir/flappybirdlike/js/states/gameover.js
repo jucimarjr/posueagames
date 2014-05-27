@@ -13,17 +13,24 @@ var gameoverState = {
 			alpha : 1
 		}, 500, Phaser.Easing.Linear.None, true, 0, 2000, true);
 
+		blink.inputEnabled = true;
+		blink.events.onInputDown.add(this.play, this);
+
 		var style = {
 			font : '36px Arial',
 			fill : '#000000'
 		};
-		var points = game.add.text(635, 313, score.count, style);
+		var points = game.add.text(635, 313, score.count || '0', style);
 		points.anchor.setTo(.5, .5);
 	},
 
 	update : function() {
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			game.state.start('play');
+			this.play();
 		}
+	},
+
+	play : function() {
+		game.state.start('play');
 	}
 }
