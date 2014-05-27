@@ -34,7 +34,7 @@ function start() {
 
 function addHighscore(number){
 	
-	styleRecord = { font: '30px "edosz"', fill: "#D56469" };
+	styleRecord = { font: '30px "edosz"', fill: "#FFFFFF" };
 
 	highscore = localStorage.getItem("highscore");
 

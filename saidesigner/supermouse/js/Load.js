@@ -28,10 +28,10 @@ SuperMouse.Load.prototype.start = function() {
     this.load.spritesheet('health', 'assets/health_396-54.png', 396, 54);
 
     this.load.audio('fly_sound', 'assets/fly_sound.mp3');
-    this.load.audio('ambience', 'assets/ambience.wav');
+    this.load.audio('ambience', 'assets/ambience.mp3');
     this.load.audio('music_theme', 'assets/music_theme.mp3'); 
-    this.load.audio('game_over', 'assets/game_over.wav'); 
-    this.load.audio('rat', 'assets/mouse.wav'); 
+    this.load.audio('game_over', 'assets/game_over.mp3'); 
+    this.load.audio('rat', 'assets/mouse.mp3'); 
     this.load.audio('eat', 'assets/eat.mp3');
 
     this.load.start();
@@ -43,7 +43,8 @@ SuperMouse.Load.prototype.create = function() {
     this.load.onFileComplete.add(this.fileComplete, this);
     this.load.onLoadComplete.add(this.loadComplete, this);
 
-    this.loadingText = Utils.createText(this, 210, 180, 60, '#ffffff', '#aaaaaa');
+    this.loadingText = Utils.createText(this, 195, 180, 60, '#ffffff', '#aaaaaa');
+    this.loadingText.font = 'Arial';
     this.loadingText.align = 'center';
     this.loadingText.text = 'Por favor, aguarde.\nCarregando\no Super Mouse...'    
 
