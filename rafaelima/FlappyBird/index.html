@@ -13,21 +13,38 @@
 	<meta property="og:description" content="Jogo Suu">
 	
 	<meta property="og:image"
-		content="http://computacao.uea.edu.br/ludus/posueagames/jucimarjr/dinossauro/assets/adgame_800-600.jpg">
+		content="http://computacao.uea.edu.br/ludus/posueagames/rafaelima/FlappyBird/assets/Suu_game_01.png">
 	<meta property="og:image:type" content="image/jpeg">
 	<meta property="og:image:width" content="960">
 	<meta property="og:image:height" content="700">
 	<meta property="og:type" content="website">
+	
 	<title>Suu</title>
+	
 	<style type="text/css">
-        @font-face
-        {
-            font-family: "edosz";
-            src: url("font/edosz.ttf");
-        }
-    </style>
+		canvas {
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 30px;
+		}
+		
+		@font-face {
+			font-family: "edosz";
+			src: url("font/edosz.ttf");
+		}
+		
+		.bg {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: -5000;
+		}
+	</style>
 </head>
 <body>
+	<img src="assets/webbrowser_bg.jpg" class="bg">
 	<div id="game_div"></div>
 	<div class="fb-like"
 		data-href="http://computacao.uea.edu.br/ludus/posueagames/rafaelima/FlappyBird/"

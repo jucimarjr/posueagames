@@ -3,9 +3,9 @@ var audioMenu;
 var menuState = {
 
 	preload : function() {
-		game.load.image('title', 'assets/title.png')
-		game.load.image('menu', 'assets/menu.png');
-		game.load.image('enter_game', 'assets/enter_game.png');
+		game.load.image('title', 'assets/menu_title.png')
+		game.load.image('bg', 'assets/menu_bg.png');
+		game.load.image('options', 'assets/menu_options.png');
 		game.load.audio('audioMenu', 'assets/song_menu_otimizada.mp3');
 	},
 
@@ -14,23 +14,32 @@ var menuState = {
 		audioMenu = game.add.audio('audioMenu', 1, true);
 		audioMenu.play('', 0, 1, true);
 
-		var spaceBar = game.input.keyboard
-				.addKey(Phaser.Keyboard.SPACEBAR);
+		var spaceBar = game.input.keyboard.addKey(Phaser.Keyboard.S);
 		spaceBar.onDown.add(this.start, this);
 
-		var creditsButton = game.input.keyboard
-				.addKey(Phaser.Keyboard.C);
+		var creditsButton = game.input.keyboard.addKey(Phaser.Keyboard.C);
 		creditsButton.onDown.add(this.credits, this);
 
-		game.add.sprite(0, 0, 'menu');
-		var title = game.add.sprite(game.world.centerX, 70, 'title');
-		title.anchor.set(0.5);
+		game.add.sprite(0, 0, 'bg');
+		var title = game.add.sprite(game.world.centerX, -250, 'title');
+		title.anchor.set(.5, 0);
 
-		var enterGame = game.add.sprite(0, 0, 'enter_game');
-		enterGame.alpha = 0;
-		game.add.tween(enterGame).to({
-			alpha : 1
-		}, 500, Phaser.Easing.Linear.None, true, 0, 2000, true);
+		options = game.add.sprite(0, game.world.height + 82, 'options');
+
+		titleEffect = game.add.tween(title);
+		titleEffect.to({
+			y : 0
+		}, 1000, Phaser.Easing.Bounce.Out);
+		titleEffect.onComplete.add(this.showOptions, this);
+		titleEffect.start();
+	},
+
+	showOptions : function() {
+		optionsEffect = game.add.tween(options);
+		optionsEffect.to({
+			y : game.world.height - 82
+		}, 1000, Phaser.Easing.Bounce.Out);
+		optionsEffect.start();
 	},
 
 	start : function() {

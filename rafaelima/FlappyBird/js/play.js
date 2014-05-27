@@ -69,6 +69,7 @@ function create() {
     timerBoss = this.game.time.events.loop(20000, startBossFight, this);
     //startBossFight();
     speed = 1;
+    jump();
 }
 
 // Start the actual game
