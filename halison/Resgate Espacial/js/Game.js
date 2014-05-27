@@ -66,7 +66,9 @@ function create ()
 	score = 0;
 	this.ASTEROID_NUMBER = 13;
 	this.ASTEROID_SPEED = 100; 
-	this.YELLOW_COIN_NUMBER = 1;
+	this.YELLOW_COIN_NUMBER = 10;
+	this.RED_COIN_NUMBER = 10;
+	this.GREEN_COIN_NUMBER = 10;
     space1 = game.add.image(0,0,'space');
     space2 = game.add.image(960,0,'space');
     
@@ -91,7 +93,8 @@ function create ()
     game.physics.p2.restitution = 2.8;
     
 	nave = game.add.sprite(340, 300, 'nave');
-	game.physics.p2.enable(nave,true);
+	game.physics.p2.enable(nave,false);
+	nave.body.setRectangle(90);
 	
     nave.body.fixedRotation = true;
     nave.body.data.gravityScale = 0.5;
@@ -109,16 +112,13 @@ function create ()
     {
 
     	sprite = asteroidGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'asteroid');
-
-    	sprite.body.setCircle(31);	
-
+    	sprite.body.setCircle(40);	
     	sprite.body.setCollisionGroup(asteroidCollisionGroup); //add   
-
     	sprite.body.collides([asteroidCollisionGroup, naveCollisionGroup]);
     	game.physics.p2.enable(sprite, true);
     	time = game.rnd.integerInRange(1400,2000);
     	scale = time/1200;
-    	game.add.tween(sprite.scale).to( { x: scale, y: scale }, time, Phaser.Easing.Linear.None, true, 0, 1000, true);
+//    	game.add.tween(sprite.scale).to( { x: scale, y: scale }, time, Phaser.Easing.Linear.None, true, 0, 1000, true);
     	sprite.body.allowGravity = false;
     }
 	
@@ -133,18 +133,65 @@ function create ()
 
 	for (var i = 0; i < this.YELLOW_COIN_NUMBER; i++)
 	    {
-	    	sprite = yCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_yellow_1');
+			if (Math.random() > 0.5 ){
+				sprite = yCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_yellow_1');
+			} else {
+				sprite = yCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_yellow_2');
+			}
 	    	sprite.body.setCircle(31);	
 	    	sprite.body.setCollisionGroup(yellowCoinsCollisionGroup); //add   
 	    	sprite.body.collides([yellowCoinsCollisionGroup, naveCollisionGroup]);
-	    	game.physics.p2.enable(sprite, true);
-	    	time = 100;
-	    	scale = 1.1;
-	    	game.add.tween(sprite.scale).to( { x: scale, y: scale }, time, Phaser.Easing.Linear.None, true, 0, 1000, true);
+	    	game.physics.p2.enable(sprite, false);
 	    	sprite.body.allowGravity = false;
 	    }
 	
 	nave.body.collides(yellowCoinsCollisionGroup, hitYellowCoins, this);
+
+	
+//	CRIAR GRUPO MOEDAS VERMELHAS E COLISAO COM NAVE
+	redCoinsCollisionGroup = game.physics.p2.createCollisionGroup();
+	rCoinsGroup = game.add.group();
+	rCoinsGroup.enableBody = true;
+	rCoinsGroup.physicsBodyType = Phaser.Physics.P2JS;
+
+	for (var i = 0; i < this.RED_COIN_NUMBER; i++)
+	    {
+			if (Math.random() > 0.5 ){
+				sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_1');
+			} else {
+				sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_2');
+			}
+	    	sprite.body.setCircle(31);	
+	    	sprite.body.setCollisionGroup(redCoinsCollisionGroup); //add   
+	    	sprite.body.collides([redCoinsCollisionGroup, naveCollisionGroup]);
+	    	game.physics.p2.enable(sprite, false);
+	    	sprite.body.allowGravity = false;
+	    }
+	
+	nave.body.collides(redCoinsCollisionGroup, hitRedCoins, this);
+	
+	
+//	CRIAR GRUPO MOEDAS VERDES E COLISAO COM NAVE
+	greenCoinsCollisionGroup = game.physics.p2.createCollisionGroup();
+	gCoinsGroup = game.add.group();
+	gCoinsGroup.enableBody = true;
+	gCoinsGroup.physicsBodyType = Phaser.Physics.P2JS;
+
+	for (var i = 0; i < this.GREEN_COIN_NUMBER; i++)
+	    {
+			if (Math.random() > 0.5 ){
+				sprite = gCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_green_1');
+			} else {
+				sprite = gCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_green_2');
+			}
+	    	sprite.body.setCircle(31);	
+	    	sprite.body.setCollisionGroup(greenCoinsCollisionGroup); //add   
+	    	sprite.body.collides([greenCoinsCollisionGroup, naveCollisionGroup]);
+	    	game.physics.p2.enable(sprite, false);
+	    	sprite.body.allowGravity = false;
+	    }
+	
+	nave.body.collides(greenCoinsCollisionGroup, hitGreenCoins, this);
 	
 	game.add.image(0,0,'score');
 	textScore = game.add.text(140,50, "000000", {
@@ -203,60 +250,101 @@ function update()
 				sprite.body.y = game.rnd.integerInRange(-100, 620);
 		    }
 		}
-		
 		for (var i = 0; i < this.YELLOW_COIN_NUMBER ; i++)
 		{
 			sprite = yCoinsGroup.getAt(i);
-			sprite.body.setZeroVelocity();
-			sprite.body.moveLeft(this.ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
-	
-			if (sprite.body.x < -sprite.width)
-			{
-				sprite.body.x = game.world.width+sprite.width;
-				sprite.body.y = game.rnd.integerInRange(-100, 620);
-		    }
-		}
+			if (sprite.alive){
+				sprite.body.setZeroVelocity();
+				sprite.body.moveLeft(this.ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
 		
+				if (sprite.body.x < -sprite.width)
+				{
+					sprite.body.x = game.world.width+sprite.width;
+					sprite.body.y = game.rnd.integerInRange(-100, 620);
+			    }
+			}
+		}
+		for (var i = 0; i < this.RED_COIN_NUMBER ; i++)
+		{
+			sprite = rCoinsGroup.getAt(i);
+			if (sprite.alive){
+				sprite.body.setZeroVelocity();
+				sprite.body.moveLeft(this.ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
+		
+				if (sprite.body.x < -sprite.width)
+				{
+					sprite.body.x = game.world.width+sprite.width;
+					sprite.body.y = game.rnd.integerInRange(-100, 620);
+			    }
+			}
+		}
+		for (var i = 0; i < this.GREEN_COIN_NUMBER ; i++)
+		{
+			sprite = gCoinsGroup.getAt(i);
+			if (sprite.alive){
+				sprite.body.setZeroVelocity();
+				sprite.body.moveLeft(this.ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
+		
+				if (sprite.body.x < -sprite.width)
+				{
+					sprite.body.x = game.world.width+sprite.width;
+					sprite.body.y = game.rnd.integerInRange(-100, 620);
+			    }
+			}
+		}
+	
+				
 	} 
 	
 	else if (isGameOver)
 	{
 		gameover.x = game.world.width/2-gameover.width/2;
 		gameover.y = game.world.height/2-gameover.height/2;
-		
-	}	
+	}
+	
 };
 
 function hitAsteroid(body1, body2) 
 {
-	//  body1 is the space ship (as it's the body that owns the callback)
-    //  body2 is the body it impacted with, in this case our panda
-    //  As body2 is a Phaser.Physics.P2.Body object, you access its own (the sprite) via the sprite property:
 	decreaseLifeNumber();
-//	body2.bounce	
 };
 
 function hitYellowCoins(body1, body2) 
 {
-	score++;
+	score+=3;
 	updateTextScore();
-    if (body2.sprite.alive)
-    {
-    	body2.sprite.kill();
-    }
+	body2.sprite.kill();
 };
 
 function hitRedCoins(body1, body2) 
 {
 	score--;
 	updateTextScore();
+	body2.sprite.kill();
 };
 
-function hitGreenCoins(body1, body2) {
-
-	score+=2;
+function hitGreenCoins(body1, body2) 
+{
+	score+=6;
 	updateTextScore();
+	body2.sprite.kill();
 };
+
+//
+//function restartYellowCoins(){
+//	for (var i = 0; i < this.YELLOW_COIN_NUMBER ; i++)
+//	{
+//		sprite = yCoinsGroup.getAt(i);
+//		if (!sprite.alive){
+//			alert("aqui");
+//			sprite.reset(game.world.width+sprite.width,game.rnd.integerInRange(-100, 620));
+//			sprite.body.setZeroVelocity();
+//			sprite.body.moveLeft(this.ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
+//		}
+//
+//	}
+//}
+
 
 function updateTextScore(){
 	var zeros = "0000000";

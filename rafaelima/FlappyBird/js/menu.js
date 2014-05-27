@@ -4,6 +4,7 @@ function preload() {
 	game.load.image('splash_screen', 'assets/splash_screen.png');
 	game.load.image('button_play', 'assets/menu_play.png');
 	game.load.image('button_credits', 'assets/menu_credits.png');
+	game.load.image('splash_screen_space', 'assets/splash_screen_space.png');
 	game.load.image('cloud_selector', 'assets/splash_selector.png');
 	game.load.audio('menuMusic', ['sound/menu_sound.ogg']);
 }
@@ -17,6 +18,7 @@ function create() {
 	this.buttonPlay = game.add.button(285, 495, 'button_play', startGame, this);
 	this.buttonCredits = game.add.button(555, 495, 'button_credits', credits, this);
 	this.cloud = game.add.sprite(161, 502, 'cloud_selector');
+	game.add.sprite(417, 562, 'splash_screen_space');
 	this.isPlay = true;
 	game.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.SPACEBAR ]);
 	

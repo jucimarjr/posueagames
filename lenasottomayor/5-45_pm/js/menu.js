@@ -15,6 +15,13 @@ function update(){
     
     var keyC = game.input.keyboard.addKey(Phaser.Keyboard.C);
     keyC.onDown.add(credits, this);
+	
+	var mouseClick = game.input.activePointer.isDown;
+	
+	if(mouseClick){
+		startInstructions();
+	}
+	
 }
 
 function startInstructions() {
