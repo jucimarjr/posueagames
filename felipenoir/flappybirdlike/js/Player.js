@@ -39,19 +39,15 @@ Player.prototype = {
 			}, 100).start();
 			this.sprite.animations.play('walk');
 		} else {
-			game.add.tween(this.sprite).to({
-				angle : -10
-			}, 100).start();
-			this.sprite.animations.play('jump');
+			this.jump();
 		}
 	},
 
 	jump : function() {
-		console.log('click');
-//		game.add.tween(this.sprite).to({
-//			angle : -10
-//		}, 100).start();
-//		this.sprite.animations.play('jump');
+		game.add.tween(this.sprite).to({
+			angle : -10
+		}, 100).start();
+		this.sprite.animations.play('jump');
 	}
 
 }

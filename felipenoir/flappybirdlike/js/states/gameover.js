@@ -20,7 +20,7 @@ var gameoverState = {
 			font : '36px Arial',
 			fill : '#000000'
 		};
-		var points = game.add.text(635, 313, score.count, style);
+		var points = game.add.text(635, 313, score.count || '0', style);
 		points.anchor.setTo(.5, .5);
 	},
 

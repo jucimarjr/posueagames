@@ -23,14 +23,13 @@ var playState = {
 		audioMenu = game.add.audio('audioMenu', 1, true);
 		audioMenu.play('', 0, 1, true);
 		
-		
 		level.create();
 		player.create(audioMenu);
 		enemies.create();
 		coins.create();
 		score.create();
 		game.camera.follow(player.sprite);
-		game.input.onDown.add(player.jump, this);
+//		game.input.onDown.add(player.jump, this);
 	},
 
 	update : function() {
