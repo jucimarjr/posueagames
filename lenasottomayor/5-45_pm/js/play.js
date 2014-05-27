@@ -7,7 +7,7 @@ function create() {
 	background = game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('background').height, 'background');
 	background.autoScroll(-60, 0);	 
 	
-	computer = game.add.sprite(0, 264,'computer');
+	computer = game.add.sprite(30, 264,'computer');
 	game.physics.enable(computer, Phaser.Physics.ARCADE);
 	computer.body.velocity.x = -60;
 	
@@ -36,7 +36,7 @@ function create() {
 function update() {
 	game.physics.arcade.collide(playerSprite, plataforms);
 	game.physics.arcade.overlap(playerSprite, obstacles, gameOver, null, this);
-
+		
 	keySpaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     keySpaceBar.onDown.add(jump, this);
 	
@@ -61,7 +61,7 @@ function update() {
 }
 
 function createPlayer() {
-	playerSprite = game.add.sprite(330, 309, 'player');
+	playerSprite = game.add.sprite(400, 309, 'player');
 	playerSprite.animations.add('jump',[2],1,true);
 	playerSprite.animations.add('dead',[3,2,3,2],4,true);
 	playerSprite.frame = 1;
@@ -70,7 +70,7 @@ function createPlayer() {
 	
 	game.physics.enable(playerSprite, Phaser.Physics.ARCADE);
 	
-	playerSprite.body.gravity.y = 150;
+	playerSprite.body.gravity.y = 200;
 	playerSprite.anchor.setTo(0.5,0.5);
 	playerSprite.body.acceleration.y = 200;
 }
@@ -79,8 +79,8 @@ function jump() {
 	if(jumps<2) {
 		jumps++;
 		collide = false;
-		playerSprite.body.velocity.y = -350;
-		playerSprite.body.velocity.x = 400;
+		playerSprite.body.velocity.y = -375;
+		playerSprite.body.velocity.x = 1000;
 		playerSprite.animations.play('jump');
 		jumpSound.play();
 	}
@@ -95,7 +95,7 @@ function createObstacles() {
 	obstacles = game.add.group();
 	obstacles.createMultiple(200,'obstacle');
 	obstacles.enableBody = true;
-    this.timer = this.game.time.events.loop(1500, addObstacle, this);
+    this.timer = this.game.time.events.loop(1300, addObstacle, this);
 }
 
 function addObstacle() {

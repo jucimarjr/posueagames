@@ -7,9 +7,9 @@ function preload() {
 	game.load.image('startscreen', 'assets/startscreen_960-600.png');
 	game.load.image('obstacle', 'assets/Obstacle_129-482.png');
 	game.load.image('obstacleTop', 'assets/obstacletop_129-27.png');
-	game.load.image('instructions', 'assets/instructions_724-192.png');
+	game.load.image('instructions', 'assets/instructions_960-600.png');
 	game.load.image('background', 'assets/background_980-600.png');
-	game.load.image('plataform', 'assets/exitplatform_400-160.png');
+	game.load.image('plataform', 'assets/exitplatform_500-160.png');
 	game.load.image('computer', 'assets/computer_400-176.png');
 	game.load.image('scorescreen', 'assets/scorescreen_960-600.png');
 	game.load.bitmapFont('font', 'assets/Font.png', 'assets/Font.fnt');
