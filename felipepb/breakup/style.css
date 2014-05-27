@@ -7,21 +7,21 @@ Author: Felipe Barcellos
 Author Contact: felipe.p.barcellos@gmail.com
 */
 
-/* @font-face {
+@font-face {
   font-family: "Silkscreen";
-  src: url("./Silkscreen.ttf") format("truetype");
-} */
+  src: url("./font/Silkscreen.ttf") format("truetype");
+}
 
 /*
 basic structure of the page
 */
 
 body {
-	background: #3d3d3d; 
+	background: #E3E3E3;
 	margin: 0;
 	padding:0;
-	font-family: "System", "VT-100", monospace;
-	color: #fff;
+	font-family: "Silkscreen", "System", "VT-100", monospace;
+	color: #000;
 	font-size: 100%;
 	font-weight: 400;
 }
@@ -35,7 +35,7 @@ body {
 }
 
 .site {
-	width: 990px;
+	width: 960px;
 	margin: 0 auto;
 	padding:0;
 }
@@ -55,31 +55,126 @@ body {
 	float: left;
 }
 
-.footer {
-	width: 100%;
-	margin: 1% 0;
-	padding: 0;
-	float: left;
+a {
+text-decoration: none;
+color: #24878d;
+}
+
+a:active {
+color: #8d2b25;
+}
+
+a:hover {
+color: #8d2b25;
 }
 
 /* 
 content styles
 */
+
+.header ul {
+	padding:0;
+	margin:0;
+	list-style:none;
+	display:inline;
+	width: 600px;
+}
+	
+.header ul li {
+	padding: 0 12px 0 0;
+	margin: 0;
+	list-style:none;
+	display:inline;
+	float:left;
+}
+
+#gameContainer {
+	background-color: #fff;
+	width: 960px;
+	height: 600px;
+	color: #000;
+	float: left;
+	margin: 0;
+	box-shadow: 0px 0px 3px #888888;
+}
+
+.profile {
+	width: 300px;
+	padding: 0 20px 0 0;
+	float: left;
+	margin: 0;
+}
+
+.profileName {
+	width: 320px;
+	font-size: 24px;
+	float: left;
+	margin: 0;
+}
+
+.profileNick {
+	width: 320px;
+	font-size: 18px;
+	float: left;
+	margin: 0;
+}
+
+.profileImageFelipe {
+	width: 200px;
+	height: 300px;
+	margin: 10px 0 10px 0;
+	float: left;
+	border: 8px solid #000;
+	background-image: url(./images/avatarFelipe_200-300.png)
+}
+
+.profileImageHeitor {
+	width: 200px;
+	height: 300px;
+	margin: 10px 0 10px 0;
+	float: left;
+	border: 8px solid #000;
+	background-image: url(./images/avatarHeitor_200-300.png)
+}
+
+.profileImagePaulo {
+	width: 200px;
+	height: 300px;
+	margin: 10px 0 10px 0;
+	float: left;
+	border: 8px solid #000;
+	background-image: url(./images/avatarPaulo_200-300.png)
+}
+
+.profileContact {
+	width: 280px;
+	padding: 14px 0 0 0;
+	float: left;
+	font-size: 20px;
+	margin: 0;
+}
+
+.creditsInfo {
+	width: 960px;
+	float: left;
+	padding: 0;
+	margin: 30px 0 0 0;
+	text-align: left;
+	color: #666;
+	font-size: 16px;
+}
+
+.facebookLike {
+	float: right;
+}
+
 #logotype {
 	color: #cd6464;
 	font-size: 200%;
-	text-align: center;
+	text-align: left;
 	width: 100%;
 	float: left;
-	text-shadow: 0 0 20px #000;
-}
-
-#decoder {
-	color: #fff;
-	font-size: 100%;
-	text-align: center;
-	width: 100%;
-	float: left;
+	margin: 0 0 20px 171px;
 }
 
 #game {
@@ -88,16 +183,6 @@ content styles
 	height: 480px;
 	color: #000;
 	float: left;
-	margin: 0 195px 0 195px;
+	margin: 0 180px 0 180px;
 	outline: 5px inset #cd6464;
 }
-
-#credits {
-	width: 600px;
-	color: #777;
-	margin: 0 195px 0 195px;
-	text-align: center;
-	float: left;
-	font-size: 10px;
-}
-
