@@ -47,6 +47,7 @@ function create () {
 
     //Playing sounds
     soundIn.stop();
+    tardisSound.stop();
     soundMus.play();
     soundMus.loop = true;
     playerIsAlive = true;

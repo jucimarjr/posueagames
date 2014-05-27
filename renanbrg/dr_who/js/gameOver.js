@@ -8,6 +8,7 @@ function create () {
     //Playing sounds
     soundMus.stop();
     
+    
     var style = { font: "44px Doctor-Who", fill: "#ffffff" };
     labelScore1 = game.add.text((game.world.width - 100) / 2, game.world.height/2, "Score: " + score, style);
 }
