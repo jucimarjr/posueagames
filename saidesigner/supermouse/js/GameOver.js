@@ -36,6 +36,9 @@ SuperMouse.GameOver.prototype.create = function() {
 	Utils.reviveCheese(this, this.cheeses, -20, 0);
 	Utils.reviveRat(this, this.rats, -20, 0);
 	
+	var gameoverSnd = this.add.audio('game_over', 1, false);
+	gameoverSnd.play();
+
 	this.time.events.add(Phaser.Timer.SECOND * 2, this.playMusicTheme, this);
 };
 

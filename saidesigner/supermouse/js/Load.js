@@ -30,8 +30,6 @@ SuperMouse.Load.prototype.start = function() {
     this.load.audio('fly_sound', 'assets/fly_sound.mp3');
     this.load.audio('ambience', 'assets/ambience.wav');
     this.load.audio('music_theme', 'assets/music_theme.mp3'); 
-    this.load.audio('alert', 'assets/alert.wav'); 
-    this.load.audio('break_bone', 'assets/break_bone.wav'); 
     this.load.audio('game_over', 'assets/game_over.wav'); 
     this.load.audio('rat', 'assets/mouse.wav'); 
     this.load.audio('eat', 'assets/eat.mp3');
@@ -45,7 +43,7 @@ SuperMouse.Load.prototype.create = function() {
     this.load.onFileComplete.add(this.fileComplete, this);
     this.load.onLoadComplete.add(this.loadComplete, this);
 
-    this.loadingText = Utils.createText(this, 115, 180, 60, '#ffffff', '#aaaaaa');
+    this.loadingText = Utils.createText(this, 210, 180, 60, '#ffffff', '#aaaaaa');
     this.loadingText.align = 'center';
     this.loadingText.text = 'Por favor, aguarde.\nCarregando\no Super Mouse...'    
 
@@ -62,7 +60,7 @@ SuperMouse.Load.prototype.fileComplete = function(progress, cacheKey, success, t
 
     if (cacheKey == 'universe')  {
         this.add.sprite(0, 0, 'universe');
-        this.loadingText = Utils.createText(this, 590, 550, 30, '#ffffff', '#aaaaaa');
+        this.loadingText = Utils.createText(this, 500, 550, 25, '#ffffff', '#aaaaaa');
         this.loadingText.align = 'center';        
     }  else if (cacheKey == 'supermouse') {
         this.add.sprite(30, 30, 'supermouse');    
@@ -70,7 +68,7 @@ SuperMouse.Load.prototype.fileComplete = function(progress, cacheKey, success, t
         this.add.sprite(380, 30, 'logo');    
     }
     
-    this.loadingText.text = 'Carregando ' + progress + '%';   
+    this.loadingText.text = 'Carregando ' + progress + '%';
 };
 
 SuperMouse.Load.prototype.loadComplete = function() {

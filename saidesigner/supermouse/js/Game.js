@@ -7,9 +7,6 @@ SuperMouse.Game = function(game) {
 	this.rats;
 	this.player;
 	this.flySnd;
-	this.alertSnd;
-	this.breakBoneSnd;
-	this.gameoverSnd;
 	this.ratSnd;
 	this.eatSnd;
 	this.ambience;
@@ -52,14 +49,11 @@ SuperMouse.Game.prototype.create = function() {
 
 	// sounds
 
-	this.ambience = this.add.audio('ambience', 0.3, true);
+	this.ambience = this.add.audio('ambience', 0.1, true);
 	this.ambience.play();
 
 	this.flySnd = this.add.audio('fly_sound', 1, false);
-	this.flySnd.addMarker("fly", 0.1, 3.9, 1, false);
-	this.alertSnd = this.add.audio('alert', 0.1, true);
-	this.breakBoneSnd = this.add.audio('break_bone', 1, false);
-	gameoverSnd = this.add.audio('game_over', 1, false);
+	this.flySnd.addMarker("fly", 0.1, 3.9, 1, false);		
 	this.ratSnd = this.add.audio('rat', 1, false);
 	this.eatSnd = this.add.audio('eat', 1, false);
 	this.eatSnd.addMarker("eating", 1, 2, 1, false);
@@ -67,12 +61,21 @@ SuperMouse.Game.prototype.create = function() {
 	// Score
 	
 	score = 0;
-	this.scoreText = Utils.createText(this, 800, 10, 50, '#ffffff', '#aaaaaa');
+	this.scoreText = Utils.createText(this, 720, 10, 50, '#ffffff', '#aaaaaa');
 
 	// health
 
 	this.health = this.add.sprite(252, 5, 'health');
-	
+
+	// howToPlay
+
+	howToPlay = Utils.createText(this, 200, 280, 30, '#ffffff', '#aaaaaa');
+	howToPlay.text = "Click com o mouse\npara voar";
+	howToPlay.align = "center";
+
+ 	s = this.game.add.tween(howToPlay)
+	s.to({ alpha: 0 }, 3000, null)
+	.start();
 };
 
 SuperMouse.Game.prototype.update = function() {
@@ -88,7 +91,7 @@ SuperMouse.Game.prototype.update = function() {
 	Utils.reviveAsteroid(this, this.asteroids, -350, 0);
 	Utils.reviveCheese(this, this.cheeses, -150, 0);
 	Utils.reviveRat(this, this.rats, -150, 0);		
-	this.scoreText.text = score;
+	this.scoreText.text = Utils.pad(score, 3);
 	this.health.frame = this.player.health - 1;	
 };
 
@@ -128,21 +131,16 @@ SuperMouse.Game.prototype.movPlayer = function() {
 }; 
 
 SuperMouse.Game.prototype.collisionHandler = function(source, target) {
-	if (this.asteroids.getIndex(target) >= 0) 
-	{
-		if (!this.breakBoneSnd.isPlaying) {
-			this.breakBoneSnd.play();
-		}		
+	if (this.asteroids.getIndex(target) >= 0) {
 
 		target.kill();
 		this.player.damage(1);
 
-		this.player.animations.play('fly5');	
+		this.player.animations.play('fly3');	
 
 		this.time.events.add(150, function() {
 			this.changePlayerAnimation();
 		}, this);
-
 
 	} else if (this.cheeses.getIndex(target) >= 0) {
 
@@ -178,17 +176,9 @@ SuperMouse.Game.prototype.changePlayerAnimation = function() {
 
 	} else if (this.player.health <= 3) {
 
-		if (!this.alertSnd.isPlaying) {
-			this.alertSnd.play();
-		}
-
 		this.player.animations.play('fly4');
 
 	} else if (this.player.health <= 7) {
-
-		if (this.alertSnd.isPlaying) {
-			this.alertSnd.stop();
-		}
 
 		this.player.animations.play('fly3');
 
@@ -205,14 +195,10 @@ SuperMouse.Game.prototype.collisionCheck = function(source, target) {
 
 SuperMouse.Game.prototype.gameOver = function(source) {	
 
-	this.ambience.stop();
-	this.alertSnd.stop();
-	this.breakBoneSnd.stop();	
+	this.ambience.stop();	
 	this.ratSnd.stop();
 	this.eatSnd.stop();
-	this.eatSnd.stop();
-
-	gameoverSnd.play();
+	this.eatSnd.stop();	
 
 	this.state.start('GameOver');
 };

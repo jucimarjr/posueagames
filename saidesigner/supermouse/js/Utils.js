@@ -101,9 +101,9 @@ Utils.createText = function(game, posX, posY, size, color, shadow) {
 	
     var text = game.add.text(posX, posY);
 
-    text.font = 'Verdana';
+    text.font = 'Press Start';
     text.fontSize = size;
-    text.fontWeight = 'bold';
+    //text.fontWeight = 'bold';
     var grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
 
     grd.addColorStop(0, color);       
@@ -115,3 +115,11 @@ Utils.createText = function(game, posX, posY, size, color, shadow) {
 
     return text;
 };
+
+
+
+Utils.pad = function(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
