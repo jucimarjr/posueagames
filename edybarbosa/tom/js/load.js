@@ -11,7 +11,7 @@ Game.Load.prototype = {
 		game.load.image('gameover', 'assets/over_960-600.png');
 		game.load.image('fundo', 'assets/cenario_960-600.png');
 		game.load.image('caixa', 'assets/caixas_142-174.png');
-		game.load.image('lata', 'assets/lixeira_89-174.png');
+		game.load.image('lata', 'assets/latas_117-174.png');
 		game.load.image('cerca', 'assets/cerca_690-182.png');
 		game.load.spritesheet('gato', 'assets/sequencias_150-80-18.png', 150, 80, 18);
 
