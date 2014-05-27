@@ -15,6 +15,12 @@ function create() {
 function update(){
 	var keyENTER = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 	keyENTER.onDown.add(restart, this);
+	
+	var mouseClick = game.input.activePointer.isDown;
+	
+	if(mouseClick){
+		restart();
+	}
 }
 function restart() {
 	musicGameOver.stop();
