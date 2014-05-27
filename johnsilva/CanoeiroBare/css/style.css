@@ -6,15 +6,24 @@
 }
 
 body {
-    background: #000;
+    background: #8B7E66;
+}
+
+p{
+	margin: 5px 0;
+}
+
+.fb-like {
+    display: block;
+    margin-top: 10px;
 }
 
 .container {
     margin: 0 auto;
-    width: 960px;
+    width: 900px;
 }
 
 .credits {
     font-family: Verdana, sans-serif;
-    color: #f3b40b;
+    color: #EEE9E9;
 }
