@@ -89,6 +89,7 @@ function create() {
     remosSound.play('',0,1,true);
 
     cursors = game.input.keyboard.createCursorKeys();
+    game.input.onDown.add(touch, this);
 }
 
 function createJungles() {
@@ -234,6 +235,19 @@ function update() {
     }else{
         canoemanEnd();
     }
+}
+
+function touch(pointer) {
+
+    if (pointer.x < 450)
+    {
+        changeAngle(angleVelocity);
+    }
+    else
+    {
+        changeAngle(-1 * angleVelocity);
+    }
+
 }
 
 function changeAngle(angle){
