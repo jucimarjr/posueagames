@@ -39,6 +39,13 @@ function update() {
 
 	keySpaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     keySpaceBar.onDown.add(jump, this);
+	
+	mouseClick = game.input.activePointer.isDown;
+	
+	if(mouseClick){
+		jump();
+		setTimeout(update, 1000);
+	}
     
     if (playerSprite.inWorld == false ) {
     	game.state.start('gameScore');
