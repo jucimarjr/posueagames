@@ -1,5 +1,5 @@
 
-var game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game;
 
 var asteroid;
 var space1;
@@ -55,10 +55,14 @@ var yellowCoinsCollisionGroup;
 var redCoinsCollisionGroup;
 var greenCollisionGroup;
 
+var velocityScore;
+
 function create () 
 {
 	var time;
 	var scale;
+	
+	velocityScore = 0;
 	
 	isJogo = true;
 	isGameOver = false;
@@ -66,9 +70,9 @@ function create ()
 	score = 0;
 	this.ASTEROID_NUMBER = 13;
 	this.ASTEROID_SPEED = 100; 
-	this.YELLOW_COIN_NUMBER = 10;
-	this.RED_COIN_NUMBER = 10;
-	this.GREEN_COIN_NUMBER = 10;
+	this.YELLOW_COIN_NUMBER = 50;
+	this.RED_COIN_NUMBER = 50;
+	this.GREEN_COIN_NUMBER = 50;
     space1 = game.add.image(0,0,'space');
     space2 = game.add.image(960,0,'space');
     
@@ -147,7 +151,7 @@ function create ()
 	
 	nave.body.collides(yellowCoinsCollisionGroup, hitYellowCoins, this);
 
-	
+
 //	CRIAR GRUPO MOEDAS VERMELHAS E COLISAO COM NAVE
 	redCoinsCollisionGroup = game.physics.p2.createCollisionGroup();
 	rCoinsGroup = game.add.group();
@@ -156,10 +160,13 @@ function create ()
 
 	for (var i = 0; i < this.RED_COIN_NUMBER; i++)
 	    {
-			if (Math.random() > 0.5 ){
+			var number = Math.random();
+			if (number <= 0.3 ){
 				sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_1');
-			} else {
+			} else if (number > 0.3 && number <= 0.7 ){
 				sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_2');
+			} else if (number > 0.7){
+					sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_3');
 			}
 	    	sprite.body.setCircle(31);	
 	    	sprite.body.setCollisionGroup(redCoinsCollisionGroup); //add   
@@ -179,10 +186,23 @@ function create ()
 
 	for (var i = 0; i < this.GREEN_COIN_NUMBER; i++)
 	    {
-			if (Math.random() > 0.5 ){
+			var number = Math.random();
+			if (number <= 0.1 ){
 				sprite = gCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_green_1');
-			} else {
+			} else if (number > 0.1 && number <= 0.2 ){
 				sprite = gCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_green_2');
+			} else if (number > 0.2 && number <= 0.3 ){
+				sprite = gCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_green_3');
+			} else if (number > 0.3 && number <= 0.4 ){
+				sprite = gCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_green_4');
+			} else if (number > 0.4 && number <= 0.5 ){
+				sprite = gCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_green_5');
+			} else if (number > 0.5 && number <= 0.7 ){
+				sprite = gCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_green_6');
+			} else if (number > 0.7 && number <= 0.8 ){
+				sprite = gCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_green_7');
+			} else if (number > 0.8){
+				sprite = gCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_green_8');
 			}
 	    	sprite.body.setCircle(31);	
 	    	sprite.body.setCollisionGroup(greenCoinsCollisionGroup); //add   
@@ -230,19 +250,19 @@ function update()
 		
 	    if (cursors.up.isDown)
 	    {
-	    	nave.body.moveDown(180);
+	    	nave.body.moveDown(180+velocityScore);
 	    }
 	    
 	    else if (cursors.down.isDown)
 	    {
-	    	nave.body.moveUp(180);
+	    	nave.body.moveUp(180+velocityScore);
 	    }  
 		
 		for (var i = 0; i < this.ASTEROID_NUMBER ; i++)
 		{
 			sprite = asteroidGroup.getAt(i);
 			sprite.body.setZeroVelocity();
-			sprite.body.moveLeft(this.ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
+			sprite.body.moveLeft(this.ASTEROID_SPEED+velocityScore ); //game.rnd.integerInRange(100,200) );
 	
 			if (sprite.body.x < -sprite.width)
 			{
@@ -359,6 +379,8 @@ function updateTextScore(){
 	else if (score < 10000)
 		zeros = "0";
 	textScore.setText(""+zeros + score);
+	if (score > 0)
+		velocityScore = score/100; 
 }
 
 function drawLives()
