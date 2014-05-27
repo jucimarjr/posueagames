@@ -211,7 +211,7 @@ Play.prototype = {
 		this.game.add.image(this.game.width - 100, 80, 'score');
 		var style = {
 			font : "20px Arial",
-			fill : "#ffdd44",
+			fill : "#ffcc99",
 			align : "center"
 		};
 		this.score = game.add.text(this.game.width - 66, 89, "00", style);
@@ -354,7 +354,7 @@ GameOver.prototype = {
 		// exibe score
 		var style = {
 			font : "32px Arial",
-			fill : "#ffdd44",
+			fill : "#ffcc99",
 			align : "left"
 		};
 		if (userScore > 0) {
