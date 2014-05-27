@@ -14,19 +14,19 @@ function create() {
 	if (score > localStorage.getItem("highScore")) {
         localStorage.setItem("highScore", score);
 		if (score<10){
-			text2 = game.add.bitmapText(427, 130, 'font', 'new record 00' + localStorage.getItem("highScore"), 42);
+			text2 = game.add.bitmapText(400, 55, 'font', 'new high score 00' + localStorage.getItem("highScore"), 42);
 		} else if (score<100){
-			text2 = game.add.bitmapText(427, 130, 'font', 'new record 0' + localStorage.getItem("highScore"), 42);
+			text2 = game.add.bitmapText(400, 55, 'font', 'new high score 0' + localStorage.getItem("highScore"), 42);
 		} else {
-			text2 = game.add.bitmapText(427, 130, 'font', 'new record ' + localStorage.getItem("highScore"), 42);
+			text2 = game.add.bitmapText(400, 55, 'font', 'new high score ' + localStorage.getItem("highScore"), 42);
 		}
     } else {
 		if (localStorage.getItem("highScore")<10){
-			text2 = game.add.bitmapText(475, 130, 'font', 'record 00' + localStorage.getItem("highScore"), 42);
+			text2 = game.add.bitmapText(447, 55, 'font', 'high score 00' + localStorage.getItem("highScore"), 42);
 		} else if (localStorage.getItem("highScore")<100){
-			text2 = game.add.bitmapText(475, 130, 'font', 'record 0' + localStorage.getItem("highScore"), 42);
+			text2 = game.add.bitmapText(447, 55, 'font', 'high score 0' + localStorage.getItem("highScore"), 42);
 		} else {
-			text2 = game.add.bitmapText(475, 130, 'font', 'record ' + localStorage.getItem("highScore"), 42);
+			text2 = game.add.bitmapText(447, 55, 'font', 'high score ' + localStorage.getItem("highScore"), 42);
 		}
     }
 	
