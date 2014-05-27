@@ -8,3 +8,13 @@
 body {
     background: #000;
 }
+
+.container {
+    margin: 0 auto;
+    width: 960px;
+}
+
+.credits {
+    font-family: Verdana, sans-serif;
+    color: #f3b40b;
+}
