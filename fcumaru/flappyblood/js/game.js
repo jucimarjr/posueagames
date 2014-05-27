@@ -31,7 +31,7 @@ Menu.prototype = {
 		
 		// gorduras e veias
 		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,game.cache.getImage('fat_vein').height, 'fat_vein');
-		this.fatVein.autoScroll(-200, 0);
+		this.fatVein.autoScroll(-30, 0);
 
 		// logo
 		this.logo = this.game.add.image(this.game.world.centerX - 400, 180, 'logo');
@@ -89,7 +89,7 @@ Credits.prototype = {
 		
 		// gorduras e veias
 		this.fatVein = this.game.add.tileSprite(0, 57, game.stage.bounds.width,game.cache.getImage('fat_vein').height, 'fat_vein');
-		this.fatVein.autoScroll(-200, 0);
+		this.fatVein.autoScroll(-30, 0);
 
 		// credits
 		this.credits = this.game.add.image(this.game.world.centerX - 259, 160, 'credits');
