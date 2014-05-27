@@ -6,7 +6,8 @@
 }
 
 body {
-    background: #edf7f7;
+    /*background: #edf7f7;*/
+    background: #8B7E66;
 }
 
 p{
@@ -25,5 +26,6 @@ p{
 
 .credits {
     font-family: Verdana, sans-serif;
-    color: #6a6a6a;
+    /*color: #6a6a6a;*/
+    color: #EEE9E9;
 }
