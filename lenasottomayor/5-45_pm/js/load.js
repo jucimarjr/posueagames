@@ -1,7 +1,7 @@
 var loadGame = { preload: preload, create: create };
 
 function preload() {
-	game.load.spritesheet('startMenuSprite', 'assets/startspritesheet_4800-600-5.png', 960,600);
+	game.load.spritesheet('startMenuSprite', 'assets/startscreen_960-600.png', 960,600);
 	game.load.spritesheet('player', 'assets/manspritesshet_416-131-4.png', 104,131);
 	game.load.image('creditscreen', 'assets/creditscreen_960-600.png');
 	game.load.image('startscreen', 'assets/startscreen_960-600.png');
