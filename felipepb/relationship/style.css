@@ -97,3 +97,100 @@ content styles
 	margin: 0;
 	box-shadow: 0px 0px 3px #888888;
 }
+
+.profile {
+	width: 300px;
+	padding: 0 20px 0 0;
+	float: left;
+	margin: 0;
+}
+
+.profileName {
+	width: 320px;
+	font-size: 24px;
+	float: left;
+	margin: 0;
+}
+
+.profileNick {
+	width: 320px;
+	font-size: 18px;
+	float: left;
+	margin: 0;
+}
+
+.profileImageFelipe {
+	width: 200px;
+	height: 300px;
+	margin: 10px 0 10px 0;
+	float: left;
+	border: 8px solid #000;
+	background-image: url(./assets/avatarFelipe_200-300.png)
+}
+
+.profileImageHeitor {
+	width: 200px;
+	height: 300px;
+	margin: 10px 0 10px 0;
+	float: left;
+	border: 8px solid #000;
+	background-image: url(./assets/avatarHeitor_200-300.png)
+}
+
+.profileImagePaulo {
+	width: 200px;
+	height: 300px;
+	margin: 10px 0 10px 0;
+	float: left;
+	border: 8px solid #000;
+	background-image: url(./assets/avatarPaulo_200-300.png)
+}
+
+.profileContact {
+	width: 280px;
+	padding: 14px 0 0 0;
+	float: left;
+	font-size: 20px;
+	margin: 0;
+}
+
+.creditsInfo {
+	width: 960px;
+	float: left;
+	padding: 0;
+	margin: 30px 0 0 0;
+	text-align: left;
+	color: #666;
+	font-size: 14px;
+}
+
+.facebookLike {
+	float: right;
+}
+
+#logotype {
+	color: #cd6464;
+	font-size: 200%;
+	text-align: center;
+	width: 100%;
+	float: left;
+	text-shadow: 0 0 20px #000;
+}
+
+#decoder {
+	color: #fff;
+	font-size: 100%;
+	text-align: center;
+	width: 100%;
+	float: left;
+}
+
+#game {
+	background-color: #fff;
+	width: 600px;
+	height: 480px;
+	color: #000;
+	float: left;
+	margin: 0 180px 0 180px;
+	outline: 5px inset #cd6464;
+}
