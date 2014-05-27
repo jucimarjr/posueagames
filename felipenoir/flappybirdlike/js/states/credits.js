@@ -1,7 +1,7 @@
 var creditsState = {
 
 	preload : function() {
-		game.load.image('credits', 'assets/credits.jpg');
+		game.load.image('credits', 'assets/credits.png');
 	},
 
 	create : function() {
