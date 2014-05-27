@@ -155,79 +155,57 @@ function addScore() {
             tileSpeedRiver = 5;
             timerBarra.play('fase9');
         }
-        else if (score >= 70) {
-            if (score == 70) {
-                Stage = game.add.text(450, 300, 'Marola 7', styleBig);
-                Stage.anchor.setTo(0.5, 0.5);
-                setTimeout(resetStage, 1300);
-            }
+        else if (score == 70) {
+            Stage = game.add.text(450, 300, 'Marola 7', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
             tileSpeedRiver = 4.5;
             timerBarra.play('fase8');
         }
-        else if (score >= 60) {
-            if (score == 60) {
-                Stage = game.add.text(450, 300, 'Marola 6', styleBig);
-                Stage.anchor.setTo(0.5, 0.5);
-                setTimeout(resetStage, 1300);
-            }
+        else if (score == 60) {
+            Stage = game.add.text(450, 300, 'Marola 6', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
             tileSpeedRiver = 4;
             timerBarra.play('fase7');
         }
-        else if (score >= 50) {
-            if (score == 50) {
-                Stage = game.add.text(450, 300, 'Marola 5', styleBig);
-                Stage.anchor.setTo(0.5, 0.5);
-                setTimeout(resetStage, 1300);
-            }
+        else if (score == 50) {
+            Stage = game.add.text(450, 300, 'Marola 5', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);            
             tileSpeedRiver = 3.5;
             timerBarra.play('fase6');
         }
-        else if (score >= 40) {
-            if (score == 40) {
-                Stage = game.add.text(450, 300, 'Marola 4', styleBig);
-                Stage.anchor.setTo(0.5, 0.5);
-                setTimeout(resetStage, 1300);
-            }
+        else if (score == 40) {
+            Stage = game.add.text(450, 300, 'Marola 4', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);            
             tileSpeedRiver = 3;
             timerBarra.play('fase5');
         }
-        else if (score >= 30) {
-            if (score == 30) {
-                Stage = game.add.text(450, 300, 'Marola 3', styleBig);
-                Stage.anchor.setTo(0.5, 0.5);
-                setTimeout(resetStage, 1300);
-            }
+        else if (score == 30) {
+            Stage = game.add.text(450, 300, 'Marola 3', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
             tileSpeedRiver = 2.5;
             timerBarra.play('fase4');
         }
-        else if (score >= 20) {
-            if (score == 20) {
-                Stage = game.add.text(450, 300, 'Marola 2', styleBig);
-                Stage.anchor.setTo(0.5, 0.5);
-                setTimeout(resetStage, 1300);
-            }
+        else if (score == 20) {
+            Stage = game.add.text(450, 300, 'Marola 2', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
             tileSpeedRiver = 2;
             timerBarra.play('fase3');
-        }
-        else if (score >= 10) {
-            if (score == 10) {
-                //addMarola('Marola 1');
-                Stage = game.add.text(450, 300, 'Marola 1', styleBig);
-                Stage.anchor.setTo(0.5, 0.5);
-                game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
-                timerBarra.play('fase2');
-            }
             
+        }
+        else if (score == 10) {
+            Stage = game.add.text(450, 300, 'Marola 1', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
+            timerBarra.play('fase2');
         }
     }
     tileSpeedJungles = tileSpeedRiver/5;
-}
-
-function addMarola(textMarola){
-    Stage = game.add.text(450, 300, textMarola, styleBig);
-    Stage.anchor.setTo(0.5, 0.5);
-    game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this); 
-    //setTimeout(resetStage, 1300);
 }
 
 function resetStage() {
