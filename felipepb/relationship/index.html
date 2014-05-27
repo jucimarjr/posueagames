@@ -1,47 +1,109 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8" />
-	<title>Phaser Basic Project Template</title>
-	<script src="phaser/phaser.min.js"></script>
-	<script src="js/Boot.js"></script>
-	<script src="js/Preloader.js"></script>
-	<script src="js/MainMenu.js"></script>
-	<script src="js/EndGame.js"></script>
-	<script src="js/GameManager.js"></script>
-	<script src="js/Obstacle.js"></script>
-	<script src="js/ObstaclesManager.js"></script>
-	<script src="js/Player.js"></script>
-	<script src="js/Missions.js"></script>
-	<script src="js/BackgroundManager.js"></script>
-	<script src="js/HUD.js"></script>
+    <title>RelationShip - How far can you love</title>
+    <link rel="stylesheet" href="./style.css" type="text/css" media="screen" />
+    <meta charset="utf-8">
+    <!-- Phaser Game Framework -->
+    <script src="phaser/phaser.min.js"></script>
+    <script src="js/Boot.js"></script>
+    <script src="js/Preloader.js"></script>
+    <script src="js/MainMenu.js"></script>
+    <script src="js/EndGame.js"></script>
+    <script src="js/GameManager.js"></script>
+    <script src="js/Obstacle.js"></script>
+    <script src="js/ObstaclesManager.js"></script>
+    <script src="js/Player.js"></script>
+    <script src="js/Missions.js"></script>
+    <script src="js/BackgroundManager.js"></script>
+    <script src="js/HUD.js"></script>
+    <!-- Facebook -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:url" content="http://computacao.uea.edu.br/ludus/posueagames/felipepb/relationship/">
+    <meta property="og:title" content="RelationShip">
+    <meta property="og:site_name" content="Especializacao em Desenvolvimento de Jogos Eletrônicos da UEA">
+    <meta property="og:description" content="RelationShip, a Flappy Bird variation.">
+    <meta property="og:type" content="website">
 </head>
+
 <body>
+    <div class="container">
+    
+        <div class="site">
+        
+            <div class="header">
+                <ul>
+                    <li><a href="http://computacao.uea.edu.br/ludus/posueagames/felipepb/breakup">Break Up</a></li>
+                    <li><a href="http://computacao.uea.edu.br/ludus/posueagames/felipepb/relationship">>>>RelationShip</a></li>
+                    <li><a href="./credits.html">Credits</a></li>
+                </ul>
+                
+                <div id="fb-root"></div>
+				<script>
+					window.fbAsyncInit = function() {
+				        FB.init({
+				            appId      : '503900196378609',
+				            xfbml      : true,
+				            version    : 'v2.0'
+				        });
+				    };
 
-<div id="gameContainer"></div>
+				
+					(function(d, s, id) {
+					  var js, fjs = d.getElementsByTagName(s)[0];
+					  if (d.getElementById(id)) return;
+					  js = d.createElement(s); js.id = id;
+					  js.src = "http://connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=503900196378609&version=v2.0";
+					  fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));
+				</script>
 
-<script type="text/javascript">
+                <div
+				    class="fb-like"
+					data-href="http://computacao.uea.edu.br/ludus/posueagames/felipepb/relationship/"
+					data-layout="button_count"
+					data-action="like"
+					data-show-faces="true"
+					data-share="true">
+			    </div>
+                
+            </div>
+            
+            <div class="content">
+                <div id="gameContainer"></div>
+                
+                <div class="fb-comments"
+                    data-href="http://computacao.uea.edu.br/ludus/posueagames/felipepb/relationship/"
+                    data-width="960" data-numposts="10" data-colorscheme="light">
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
 
-window.onload = function() {
+    <script type="text/javascript">
 
-	//	Create your Phaser game and inject it into the gameContainer div.
-	//	We did it in a window.onload event, but you can do it anywhere (requireJS load, anonymous function, jQuery dom ready, - whatever floats your boat)
-	var game = new Phaser.Game(960, 600, Phaser.AUTO, 'gameContainer');
+        window.onload = function() {
 
-	//	Add the States your game has.
-	//	You don't have to do this in the html, it could be done in your Boot state too, but for simplicity I'll keep it here.
-	game.state.add('Boot', BasicGame.Boot);
-	game.state.add('Preloader', BasicGame.Preloader);
-	game.state.add('MainMenu', BasicGame.MainMenu);
-	game.state.add('GameManager', BasicGame.GameManager);
-	game.state.add('EndGame', BasicGame.EndGame);
+            //  Create your Phaser game and inject it into the gameContainer div.
+            //  We did it in a window.onload event, but you can do it anywhere (requireJS load, anonymous function, jQuery dom ready, - whatever floats your boat)
+            var game = new Phaser.Game(960, 600, Phaser.AUTO, 'gameContainer');
 
-	//	Now start the Boot state.
-	game.state.start('Boot');
+            //  Add the States your game has.
+            //  You don't have to do this in the html, it could be done in your Boot state too, but for simplicity I'll keep it here.
+            game.state.add('Boot', BasicGame.Boot);
+            game.state.add('Preloader', BasicGame.Preloader);
+            game.state.add('MainMenu', BasicGame.MainMenu);
+            game.state.add('GameManager', BasicGame.GameManager);
+            game.state.add('EndGame', BasicGame.EndGame);
 
-};
+            //  Now start the Boot state.
+            game.state.start('Boot');
 
-</script>
+        };
+
+    </script>
 
 </body>
 </html>
