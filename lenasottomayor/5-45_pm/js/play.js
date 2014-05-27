@@ -113,7 +113,8 @@ function stop() {
 
 function createObstacles() {
 	obstacles = game.add.group();
-	obstacles.createMultiple(200,'obstacle');
+//	obstacles.createMultiple(200,'obstacle');
+	obstacles.createMultiple(200,'obstacle2');
 	obstacles.enableBody = true;
     this.timer = this.game.time.events.loop(1300, addObstacle, this);
 }
@@ -125,18 +126,18 @@ function addObstacle() {
 	
 	if(heigth > 250 && heigth < 400) {
 		obstacle.reset(960, heigth+100);
-		obstacleTop = game.add.sprite(960, heigth+73, 'obstacleTop');
+//		obstacleTop = game.add.sprite(960, heigth+73, 'obstacleTop');
 	} else if (heigth <= 250) {
 		obstacle.reset(960, heigth+250);
-		obstacleTop = game.add.sprite(960, heigth+223, 'obstacleTop');
+//		obstacleTop = game.add.sprite(960, heigth+223, 'obstacleTop');
 	} else {
 		obstacle.reset(960, heigth-150);
-		obstacleTop = game.add.sprite(960, heigth-177, 'obstacleTop');
+//		obstacleTop = game.add.sprite(960, heigth-177, 'obstacleTop');
 	}
 	
 	game.physics.enable(obstacle, Phaser.Physics.ARCADE);
-	game.physics.enable(obstacleTop, Phaser.Physics.ARCADE);
-	obstacleTop.body.velocity.x = -250;
+//	game.physics.enable(obstacleTop, Phaser.Physics.ARCADE);
+//	obstacleTop.body.velocity.x = -250;
 	obstacle.body.velocity.x = -250;
 	obstacle.body.immovable = true;
 	obstacle.outOfBoundsKill = true;

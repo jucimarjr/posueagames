@@ -1,9 +1,10 @@
 var mainMenu = { create: create, update: update };
 
 function create() {
-	mainMenu = game.add.sprite(0, 0, 'startMenuSprite');
-	mainMenu.animations.add('start',[0,1,2,3,4],1.2,true);
-	mainMenu.animations.play('start');
+//	mainMenu = game.add.sprite(0, 0, 'startMenuSprite');
+	mainMenu = game.add.sprite(0, 0, 'startscreen');
+//	mainMenu.animations.add('start',[0,1,2,3,4],1.2,true);
+//	mainMenu.animations.play('start');
 	
 	musicMenu = game.add.audio('noise');
 	musicMenu.play('',0,0.3,true);
