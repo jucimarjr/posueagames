@@ -137,21 +137,17 @@ function addScore() {
     } else {
         this.labelScore.setText(score);
 
-        if (score >= 90) {
-            if (score == 90) {
-                Stage = game.add.text(450, 300, 'MAROLA FINAL', styleBig);
-                Stage.anchor.setTo(0.5, 0.5);
-                setTimeout(resetStage, 1300);
-            }
+        if (score == 90) {
+            Stage = game.add.text(450, 300, 'MAROLA FINAL', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
             tileSpeedRiver = 5.5;
             timerBarra.play('fase10')
         }
-        else if (score >= 80) {
-            if (score == 80) {
-                Stage = game.add.text(450, 300, 'Marola 8', styleBig);
-                Stage.anchor.setTo(0.5, 0.5);
-                setTimeout(resetStage, 1300);
-            }
+        else if (score == 80) {
+            Stage = game.add.text(450, 300, 'Marola 8', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);            
             tileSpeedRiver = 5;
             timerBarra.play('fase9');
         }
@@ -256,6 +252,8 @@ function checkEnemiesBounds(obj) {
     if (obj.body.y > 600) {
         obj.body.y = -200;
         obj.body.x = getRandomX();
+        var audio = game.add.audio(obj.name);
+        audio.play();
     }
 
 }
@@ -267,7 +265,6 @@ function getRandomX(){
 }
 
 function canoemanEnd() { 
-    
     if(canoeman.body.x <= jungleWidth){
         canoeman.body.x = jungleWidth;
     }else if(canoeman.body.x >= 900 - jungleWidth){
