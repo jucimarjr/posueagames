@@ -1,5 +1,11 @@
 var preload = {
     init : function(){
+        // tela splash
+        game.add.sprite(0, 0, 'telamenu');
+        var style = { font: "40px Helvetica", fill: "#ffffff" };
+        game.add.text(360, 450, 'Carregando...', style);
+        var progressBar = game.add.sprite(0, 500, 'progressbar');
+        game.load.setPreloadSprite(progressBar);
         // jogador
         game.load.spritesheet('pirarucu', 'assets/pirarucu_1400-60-7.png', 200, 60);
         // inimigos
