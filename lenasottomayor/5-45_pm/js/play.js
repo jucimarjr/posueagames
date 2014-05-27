@@ -26,7 +26,15 @@ function create() {
 	jumps = 0;
 	collide = false;
 
-	scorePartial = game.add.bitmapText(750, 20, 'font', 'score: '+score, 36);
+	scorePartial = game.add.bitmapText(750, 20, 'font', 'score '+score, 36);
+	
+	if (localStorage.getItem("highScore")<10){
+		highScoreScreen = game.add.bitmapText(20, 20, 'font', 'high score 00'+localStorage.getItem("highScore"), 36);
+	} else if (localStorage.getItem("highScore")<100){
+		highScoreScreen = game.add.bitmapText(20, 20, 'font', 'high score 0'+localStorage.getItem("highScore"), 36);
+	} else {
+		highScoreScreen = game.add.bitmapText(20, 20, 'font', 'high score '+localStorage.getItem("highScore"), 36);
+	}
 	
 	musicGame = game.add.audio('music');
     musicGame.play('',0,0.2,true);
@@ -35,7 +43,7 @@ function create() {
 
 function update() {
 	game.physics.arcade.collide(playerSprite, plataforms);
-	game.physics.arcade.overlap(playerSprite, obstacles, gameOver, null, this);
+	game.physics.arcade.collide(playerSprite, obstacles, gameOver, null, this);
 		
 	keySpaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     keySpaceBar.onDown.add(jump, this);
@@ -52,10 +60,22 @@ function update() {
     }
     
 	if (score<10){
+		scorePartial.setText('score 00' + score);
+	} else if (score<100){
 		scorePartial.setText('score 0' + score);
 	} else {
     	scorePartial.setText('score ' + score);
     }
+	
+	if (score > localStorage.getItem("highScore")) {
+		if (score<10){
+			highScoreScreen.setText('high score 00' + score);
+		} else if (score<100){
+			highScoreScreen.setText('high score 0' + score);
+		} else {
+			highScoreScreen.setText('high score ' + score);
+		}
+	}
 	
 	playerSprite.body.velocity.x = 0;
 }
@@ -114,17 +134,16 @@ function addObstacle() {
 		obstacleTop = game.add.sprite(960, heigth-177, 'obstacleTop');
 	}
 	
+	game.physics.enable(obstacle, Phaser.Physics.ARCADE);
 	game.physics.enable(obstacleTop, Phaser.Physics.ARCADE);
 	obstacleTop.body.velocity.x = -250;
-	game.physics.enable(obstacle, Phaser.Physics.ARCADE);
 	obstacle.body.velocity.x = -250;
 	obstacle.body.immovable = true;
 	obstacle.outOfBoundsKill = true;
 }
 
 function gameOver(playerSprite,obstacle){
-	if((playerSprite.position.y < obstacle.position.y)){
-		game.physics.arcade.collide(playerSprite, obstacles);
+	if((playerSprite.position.y <= obstacle.position.y)){
 		jumps=0;
 		if(collide == false){
 			stop();

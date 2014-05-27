@@ -17,6 +17,8 @@ function preload() {
 	game.load.audio('jumpSound', 'assets/blip.wav');
 	game.load.audio('noise', 'assets/noise.wav');
 	game.load.audio('deadSound', 'assets/failure.wav');
+	
+	highScore = 0;
 }
 
 function create() {
