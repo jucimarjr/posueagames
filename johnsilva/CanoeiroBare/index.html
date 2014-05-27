@@ -23,33 +23,29 @@
     <body>
         <div class="container">
             <div id="fb-root"></div>
-                <script>
-                    (function(d, s, id) {
-                        var js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id)) return;
-                        js = d.createElement(s); js.id = id;
-                        js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0";
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }(document, 'script', 'facebook-jssdk'));
-                </script>
-                <div class="fb-like"
-                    data-href="http://computacao.uea.edu.br/ludus/posueagames/johnsilva/CanoeiroBare/"
-                    data-layout="button_count" data-action="like" data-show-faces="true"
-                    data-share="false">
+
+            <div id="game_div"></div>
+
+            <div class="fb-like"
+                data-href="http://computacao.uea.edu.br/ludus/posueagames/johnsilva/CanoeiroBare/"
+                data-layout="button_count" data-action="like" data-show-faces="true"
+                data-share="false">
+            </div>
+                
+            <audio autoplay loop="loop" id="bgsound">
+                <source src="songs/canoeman.mp3" type="audio/mp3">
+                    Seu browser não suporta o formato do audio.
+            </audio>
+            
+            <div class="text-container">
+                <div class="credits">
+                    <p>Time: Jos&eacute; Maria DVD, Bruno OiPapai, John Silva</p>
+                    <p>Professor Dr.: Jucimar Junior</p>
+                    <p>P&oacute;s-gradua&ccedil;&atilde;o em Desenvolvimento de Jogos Eletr&ocirc;nicos</p>
+                    <p>UEA - Universidade do Estado do Amazonas</p>
                 </div>
-                <div id="game_div"></div>
-                <audio autoplay loop="loop" id="bgsound">
-                    <source src="songs/canoeman.mp3" type="audio/mp3">
-                        Seu browser não suporta o formato do audio.
-                </audio>
-                <div class="text-container">
-                    <div class="credits">
-                        <p>Time: Jos&eacute; Maria DVD, Bruno OiPapai, John Silva</p>
-                        <p>Professor Dr.: Jucimar Junior</p>
-                        <p>P&oacute;s-gradua&ccedil;&atilde;o em Desenvolvimento de Jogos Eletr&ocirc;nicos</p>
-                        <p>UEA - Universidade do Estado do Amazonas</p>
-                    </div>
-                </div>
+            </div>
+
             <div class="fb-comments"
                 data-href="http://computacao.uea.edu.br/ludus/posueagames/johnsilva/CanoeiroBare/"
                 data-width="960" data-numposts="10" data-colorscheme="light">
@@ -62,6 +58,15 @@
         <script type="text/javascript" src="js/gameOver.js"></script>
         <script type="text/javascript" src="js/gameWin.js"></script>
         <script type="text/javascript" src="js/game.js"></script>
+        <script>
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
     </body>
     
 </html>
