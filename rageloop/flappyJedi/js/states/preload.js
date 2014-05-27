@@ -40,6 +40,7 @@
         },
         create: function () {},
         update: function() {            
+            document.getElementById('game_loading').style.display = 'none';
             this.game.state.start('Menu');
         }
     };
