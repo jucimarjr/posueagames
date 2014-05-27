@@ -11,12 +11,12 @@ function preload() {
     //sprites
     game.load.spritesheet('play', 'assets/botoes/play_100-70.png', 100, 70, 2);
     game.load.spritesheet('canoemandead', 'assets/sprite/gameover/canoeiro_138-146-13.png', 138, 146, 13);
-    console.log("menu preload");
+    console.log("game over preload");
 }
 
 //Tela de Menu
 function create() {
-    console.log("menu create");
+    console.log("game over create");
     var splashscreen = game.add.sprite(0, 0, 'splashscreen');
     //var mainLogo = game.add.sprite(250, 10, 'logoMain');
     var btGO = game.add.sprite(280, 200, 'btGameOver');
