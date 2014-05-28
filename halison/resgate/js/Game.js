@@ -3,7 +3,9 @@ var game;
 
 var asteroid;
 var space1;
-var space1;
+var space2;
+var spaceForeground1;
+var spaceForeground2;
 var nave;
 var sprite;
 var atmosfera;
@@ -24,6 +26,7 @@ function preload ()
 {
 	game.load.image('nave', 'assets/nave_100-40.png');
 	game.load.image('space', 'assets/universo.png');
+	game.load.image('spaceForeground', 'assets/images/game_foreground_960-600.png');
 	game.load.image('atmosphere', 'assets/atmosfera_960-600.png');
 	game.load.image('asteroid', 'assets/asteroid_80-80.png');
 	game.load.image('gameover', 'assets/gameover_436-82.png');
@@ -75,6 +78,8 @@ function create ()
 	this.GREEN_COIN_NUMBER = 50;
     space1 = game.add.image(0,0,'space');
     space2 = game.add.image(960,0,'space');
+    spaceForeground1 = game.add.image(0,0,'spaceForeground');
+    spaceForeground2 = game.add.image(960,0,'spaceForeground');
     
     yellowCoins[0] = game.add.image(960,0,'coin_yellow_1');
     yellowCoins[1] = game.add.image(960,0,'coin_yellow_2');
@@ -233,9 +238,8 @@ function update()
 	
 	if ( isJogo )
 	{
-	    space1.x -= 3;
-	    space2.x -= 3;
-	    
+	    space1.x -= 4.8;
+	    space2.x -= 4.8;
 	    if (space1.x + space1.width < 0)
 	    {
 	    	space1.x = 960;
@@ -244,6 +248,20 @@ function update()
 	    if (space2.x + space2.width < 0)
 	    {
 	    	space2.x = 960;
+  	    }
+
+	    spaceForeground1.x -= 3;
+	    spaceForeground2.x -= 3;
+	    
+	    if (spaceForeground1.x + spaceForeground1.width < 0)
+	    {
+	    	spaceForeground1.x = 960;
+	    }
+	    
+	    if (spaceForeground2.x + spaceForeground2.width < 0)
+	    {
+	    	space2.x = 960;
+	    	spaceForeground2.x = 960;
   	    }
 	    
 		nave.body.setZeroVelocity();
@@ -332,6 +350,7 @@ function hitAsteroid(body1, body2)
 function hitYellowCoins(body1, body2) 
 {
 	score+=3;
+	if (score > 100000) score = 999999;
 	updateTextScore();
 	body2.sprite.kill();
 };
@@ -339,6 +358,7 @@ function hitYellowCoins(body1, body2)
 function hitRedCoins(body1, body2) 
 {
 	score--;
+	if (score < 0) score = 0;
 	updateTextScore();
 	body2.sprite.kill();
 };
@@ -346,24 +366,10 @@ function hitRedCoins(body1, body2)
 function hitGreenCoins(body1, body2) 
 {
 	score+=6;
+	if (score > 100000) score = 999999;
 	updateTextScore();
 	body2.sprite.kill();
 };
-
-//
-//function restartYellowCoins(){
-//	for (var i = 0; i < this.YELLOW_COIN_NUMBER ; i++)
-//	{
-//		sprite = yCoinsGroup.getAt(i);
-//		if (!sprite.alive){
-//			alert("aqui");
-//			sprite.reset(game.world.width+sprite.width,game.rnd.integerInRange(-100, 620));
-//			sprite.body.setZeroVelocity();
-//			sprite.body.moveLeft(this.ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
-//		}
-//
-//	}
-//}
 
 
 function updateTextScore(){

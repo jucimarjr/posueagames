@@ -10,7 +10,7 @@ body {
     background: #8B7E66;
 }
 
-p{
+p{  
 	margin: 5px 0;
 }
 
@@ -28,4 +28,8 @@ p{
     font-family: Verdana, sans-serif;
     /*color: #6a6a6a;*/
     color: #EEE9E9;
+}
+
+.links{
+    font-size:50%;
 }
