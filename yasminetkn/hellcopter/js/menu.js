@@ -14,7 +14,7 @@ var gameMenuHell = {
 		
 		create: function(){
 			audio = game.add.audio('audio');
-			audio.addMarker ('audioM',0,30,2,true);
+			audio.addMarker ('audioM',0,30,0,true);
 			audio.play('audioM', 0, 1, true);
 			var initBg = game.add.tileSprite(25, 0, 910, 600, 'initBg');
 		    text5 = game.add.text(200, game.world.centerY, "Press Space Key To Start", styleText2);
@@ -39,7 +39,7 @@ var gameMenuHell = {
 		
 		start: function(){
 			 console.log("menu start");
-			 audio.stop('audioM');
+			 audio.stop();
 			 game.state.start('fase');
 		}
 		
