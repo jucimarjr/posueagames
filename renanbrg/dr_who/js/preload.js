@@ -3,7 +3,7 @@ var preload_state = { create: create, preload: preload };
 function preload() {
     game.load.image('background', 'assets/background_960-600.png');
     game.load.image('stars', 'assets/estrelas_960-600.png');
-    game.load.image('meteor1', 'assets/meteoro1_135-120.png');
+    game.load.image('meteor1', 'assets/asset_135-120.png');
     game.load.image('meteor2', 'assets/meteoro2_135-120.png');
     game.load.image('meteor3', 'assets/meteoro3_135-120.png');
     game.load.image('meteor4', 'assets/meteoro4_135-120.png');
