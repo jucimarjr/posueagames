@@ -1,5 +1,7 @@
 var game = new Phaser.Game(960, 600, Phaser.AUTO, 'game');
 
+var enterClick;
+var backKey;
 var inicioSprite;
 var creditsSprite;
 var soundIn;
