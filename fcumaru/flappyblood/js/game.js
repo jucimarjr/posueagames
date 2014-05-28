@@ -341,7 +341,7 @@ GameOver.prototype = {
 		}
 
 		this.backgroundSound = this.game.add.audio("game_over_sound", 1, false);
-		this.backgroundSound.play();
+		//this.backgroundSound.play();
 
 		// background
 		this.background = this.game.add.image(0, 0, 'game_over');
