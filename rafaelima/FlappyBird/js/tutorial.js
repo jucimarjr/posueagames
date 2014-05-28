@@ -16,7 +16,7 @@ var tutorial_state = { create: create, update:update, start: start };
     	var bg5 = game.add.sprite(0, 0, 'background5');
     	playerSprite = game.add.sprite(172, 281.5, 'player');
     	var style = { font: '30px "edosz"', fill: "#D56469" };
-    	this.label_score = this.game.add.text(20, 50, "0 m", style);
+    	this.label_score = this.game.add.text(20, 50, "0 km", style);
     	
     	var bg6 = game.add.sprite(0, 0, 'tutorial');
     }

@@ -72,7 +72,7 @@ function create() {
     //score  metros
     score = 0;
     var style = { font: '30px "edosz"', fill: "#D56469" };
-    this.label_score = this.game.add.text(20, 50, "0 m", style);
+    this.label_score = this.game.add.text(20, 50, "0 km", style);
 
     this.timer = this.game.time.events.loop(1000, add_obstacle, this);
     timerPowerUp = this.game.time.events.loop(15000, add_power_up, this);

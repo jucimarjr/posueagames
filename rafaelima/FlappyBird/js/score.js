@@ -12,7 +12,7 @@ function create() {
 	var bg6 = game.add.sprite(0, 0, 'scorebg');
 
 	x = 481, y = 307;
-	var number = score.toFixed(0)*1000;
+	var number = score.toFixed(0);
 	var text;
 	if (number < 10){
 		text = game.add.text(x, y, "0" + number, style);
@@ -50,7 +50,7 @@ function addHighscore(number){
 			textHighscore = highscore;
 		}
 
-		game.add.text(20, 50, 'Novo Record: ' + textHighscore + ' M', styleRecord);
+		game.add.text(20, 50, 'Novo Record: ' + textHighscore + ' KM', styleRecord);
 	}
 	else {
 		if (highscore < 10){
@@ -59,6 +59,6 @@ function addHighscore(number){
 			textHighscore = highscore;
 		}
 
-		game.add.text(20, 50, 'Record: ' + textHighscore + ' M', styleRecord);
+		game.add.text(20, 50, 'Record: ' + textHighscore + ' KM', styleRecord);
 	}
 }
