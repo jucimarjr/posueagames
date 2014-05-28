@@ -54,15 +54,16 @@ var update = {
 		 game.time.events.add(second, function(){update.createGameOverButtons()});
 	},
     collisionFloor : function(){
-        if (this.player.alive && this.player.y > game.world.bounds.height){
+        if (this.player.alive && this.player.y > game.world.bounds.height - this.player.height){
 			update.waitGameOver(2000);
             var style = { font: "40px Helvetica", fill: "#ffffff" };
             this.player.alive = false;
             this.player.animations.stop();
             this.player.frame = 4;
-            this.player.body.velocity.y = 0;
 			this.player.scale.y *= -1;
-			this.player.body.gravity.y = -300;
+			this.player.body.gravity.y = 0;
+			this.player.body.velocity.y = -100;
+			this.player.body.velocity.x = -100;
         }
     },
     createGameOverButtons : function(){

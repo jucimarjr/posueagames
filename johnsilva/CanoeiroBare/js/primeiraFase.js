@@ -23,8 +23,6 @@ var dead;
 var timer;
 
 function preload() {
-    game.load.physics('physicsData', 'assets/sprite/canoeman/canoeman.json');
-
     score = 0;
     highscore = 0;
     tileSpeedRiver = 1.5;
@@ -32,7 +30,8 @@ function preload() {
 }
 
 function create() {
-
+    game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    game.input.onDown.add(gofull, this);
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
     game.world.setBounds(0, -500, 1600, 1200 );
@@ -86,11 +85,32 @@ function create() {
     var loguinho = game.add.sprite(90, 570, 'logoBarra');
     loguinho.anchor.setTo(0.5, 0.5);
 
+    //Mute button
+    var bt_sound = game.add.button(850, 0, 'sound', pause, this, 1, 0, 1);
+
     finalSound = false;
     remosSound = game.add.audio("remosound",1,true);
     remosSound.play('',0,1,true);
 
     cursors = game.input.keyboard.createCursorKeys();
+    game.input.onDown.add(touch, this);
+}
+
+function gofull() {
+    game.scale.startFullScreen();
+}
+
+function pause() {
+    if (toggle) {
+        music.resume();
+        toggle = false;
+        bt_sound = game.add.button(850, 0, 'sound', pause, this, 1, 0, 1);
+    }
+    else {
+        music.pause();
+        toggle = true;
+        bt_sound = game.add.button(850, 0, 'mute', pause, this, 1, 0, 1);
+    }
 }
 
 function createJungles() {
@@ -238,6 +258,19 @@ function update() {
     }
 }
 
+function touch(pointer) {
+
+    if (pointer.x < 450)
+    {
+        changeAngle(angleVelocity);
+    }
+    else
+    {
+        changeAngle(-1 * angleVelocity);
+    }
+
+}
+
 function changeAngle(angle){
     var toChange = canoeman.body.angle + angle;
     if ( toChange > -90 && toChange < 90) {
@@ -293,13 +326,11 @@ function sleep(milliseconds) {
 }
 
 function gameOv() {
+    canoeman.kill();
     tileSpeedRiver = 1.5;
-    //canoeman.kill();
     game.state.start('gameOver');
 }
 
 function render() {
-
     //game.debug.text(tileSpeedRiver,32,32);
-
 }

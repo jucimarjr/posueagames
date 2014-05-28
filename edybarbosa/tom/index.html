@@ -10,6 +10,7 @@
 		<script type="text/javascript" src="js/tutorial.js"></script> 
 		<script type="text/javascript" src="js/play.js"></script> 	
 		<script type="text/javascript" src="js/gameover.js"></script> 	
+    <script type="text/javascript" src="js/creditos.js"></script> 
 		<script type="text/javascript" src="js/game.js"></script> 
 		<style type="text/css">
         	body {
@@ -24,8 +25,29 @@
 	</head>
 
 	<body>
+        <div id="fb-root"></div>
+		<script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        		
+		<div 
+             class="fb-like" 
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/edybarbosa/tom/" 
+             data-layout="button_count" data-action="like" data-show-faces="true" 
+             data-share="false">
+        </div>
+
+        <div id="game">	</div>
+        
+		<div class="fb-comments" 
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/edybarbosa/tom/" 
+             data-width="960" data-numposts="10" data-colorscheme="light">
+        </div>
 		
-		<div id="gameContainer" style="width:960"> </div>
 
 	</body>
 </html>

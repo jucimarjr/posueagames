@@ -1,10 +1,5 @@
-var credits_state = { preload: preload, create: create, update: update };
+var credits_state = { create: create, update: update };
 	
-function preload() {
-	 game.load.image('splash_screen', 'assets/splash_screen.png');
-	 game.load.image('credits', 'assets/splash_screen_credits.png');
-}
-
 function create() {
 	game.add.sprite(0, 0, 'splash_screen');
 	game.add.sprite(275, 466, 'credits');

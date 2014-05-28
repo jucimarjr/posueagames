@@ -6,5 +6,26 @@
 }
 
 body {
-    background: #000;
+    /*background: #edf7f7;*/
+    background: #8B7E66;
+}
+
+p{
+	margin: 5px 0;
+}
+
+.fb-like {
+    display: block;
+    margin-top: 10px;
+}
+
+.container {
+    margin: 0 auto;
+    width: 900px;
+}
+
+.credits {
+    font-family: Verdana, sans-serif;
+    /*color: #6a6a6a;*/
+    color: #EEE9E9;
 }

@@ -4,10 +4,32 @@ function create() {
 	musicGame.stop();
     scoreScren = game.add.sprite(0, 0, 'scorescreen');
     if (score<10){
-    	text = game.add.bitmapText(550, 250, 'font', '0'+score, 90);  
-    } else {
-    	text = game.add.bitmapText(550, 250, 'font', ''+score, 90);
+    	text1 = game.add.bitmapText(525, 250, 'font', '00'+score, 90);  
+    } else if (score<100){
+		text1 = game.add.bitmapText(525, 250, 'font', '0'+score, 90);  
+	} else {
+    	text1 = game.add.bitmapText(525, 250, 'font', ''+score, 90);
     }
+	
+	if (score > localStorage.getItem("highScore")) {
+        localStorage.setItem("highScore", score);
+		if (score<10){
+			text2 = game.add.bitmapText(400, 55, 'font', 'new high score 00' + localStorage.getItem("highScore"), 42);
+		} else if (score<100){
+			text2 = game.add.bitmapText(400, 55, 'font', 'new high score 0' + localStorage.getItem("highScore"), 42);
+		} else {
+			text2 = game.add.bitmapText(400, 55, 'font', 'new high score ' + localStorage.getItem("highScore"), 42);
+		}
+    } else {
+		if (localStorage.getItem("highScore")<10){
+			text2 = game.add.bitmapText(447, 55, 'font', 'high score 00' + localStorage.getItem("highScore"), 42);
+		} else if (localStorage.getItem("highScore")<100){
+			text2 = game.add.bitmapText(447, 55, 'font', 'high score 0' + localStorage.getItem("highScore"), 42);
+		} else {
+			text2 = game.add.bitmapText(447, 55, 'font', 'high score ' + localStorage.getItem("highScore"), 42);
+		}
+    }
+	
     musicGameOver = game.add.audio('music');
     musicGameOver.play('',0,0.05,true);
 }

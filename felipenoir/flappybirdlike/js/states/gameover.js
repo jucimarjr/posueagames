@@ -7,8 +7,10 @@ var gameoverState = {
 
 	create : function() {
 		game.add.sprite(0, 0, 'gameover');
-		var blink = game.add.sprite(0, 0, 'blink');
+		var blink = game.add.sprite(game.world.centerX,
+				game.world.centerY + 28, 'blink');
 		blink.alpha = 0;
+		blink.anchor.set(.5, .5);
 		game.add.tween(blink).to({
 			alpha : 1
 		}, 500, Phaser.Easing.Linear.None, true, 0, 2000, true);

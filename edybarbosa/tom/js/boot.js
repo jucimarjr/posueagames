@@ -25,6 +25,13 @@ var a;
 var s;
 var r;
 var fim;
+var creditos;
+var c;
+var voltar;
+var v;
+
+var buttonIniciar;
+var buttonCreditos;
 
 WebFontConfig = {
 

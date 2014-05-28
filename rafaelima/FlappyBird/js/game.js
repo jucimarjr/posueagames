@@ -65,4 +65,4 @@ game.state.add('play', play_state);
 game.state.add('score', score_state);  
 
 // Start with the 'load' state
-game.state.start('menu');
+game.state.start('load');

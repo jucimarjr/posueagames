@@ -34,7 +34,7 @@ function start() {
 
 function addHighscore(number){
 	
-	styleRecord = { font: '30px "edosz"', fill: "#ffffff" };
+	styleRecord = { font: '30px "edosz"', fill: "#FFFFFF" };
 
 	highscore = localStorage.getItem("highscore");
 
@@ -56,6 +56,6 @@ function addHighscore(number){
 			textHighscore = highscore;
 		}
 
-		game.add.text(20, 50, 'Record: ' + textHighscore + ' KM', styleRecord);
+		game.add.text(20, 50, 'Record: ' + textHighscore + ' M', styleRecord);
 	}
 }

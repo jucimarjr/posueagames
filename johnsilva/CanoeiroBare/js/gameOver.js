@@ -1,16 +1,8 @@
 ﻿var gameOver = { preload: preload, create: create, start: start };
 
 function preload() {
-    game.load.image('splashscreen', 'assets/bg/gameover_900-600.jpg');
-    game.load.image('btGameOver', 'assets/botoes/gameover_350-280.png');
-    game.load.image('btRanking', 'assets/botoes/rank_100-70.png');
-    //game.load.image('play', 'assets/botoes/play_100-70.png');
-    game.load.image('logoMain', 'assets/bg/logo.png');
-    game.load.image('logoBarra', 'assets/bg/logo_barra-160-64.png');
-
-    //sprites
-    game.load.spritesheet('play', 'assets/botoes/play_100-70.png', 100, 70, 2);
-    game.load.spritesheet('canoemandead', 'assets/sprite/gameover/canoeiro_138-146-13.png', 138, 146, 13);
+    //game.load.image('play', 'assets/botoes/play_100-70.png');    
+    //game.load.image('logoBarra', 'assets/bg/logo_barra-160-64.png');
     console.log("game over preload");
 }
 
