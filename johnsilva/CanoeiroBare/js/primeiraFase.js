@@ -30,8 +30,8 @@ function preload() {
 }
 
 function create() {
-    game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-    game.input.onDown.add(gofull, this);
+    /*game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    game.input.onDown.add(gofull, this);*/
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
     game.world.setBounds(0, -500, 1600, 1200 );
@@ -262,11 +262,11 @@ function touch(pointer) {
 
     if (pointer.x < 450)
     {
-        changeAngle(angleVelocity);
+        changeAngle(2*angleVelocity);
     }
     else
     {
-        changeAngle(-1 * angleVelocity);
+        changeAngle(-1 * 2*angleVelocity);
     }
 
 }
