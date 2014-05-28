@@ -9,9 +9,9 @@ Game.Play.prototype = {
 		//Nuvens
 		cloud = game.add.tileSprite(0, 10, 600, 227,'nuvens');
 		game.physics.enable(cloud, Phaser.Physics.ARCADE);
-		cloud.body.velocity.x = -3;
+		cloud.body.velocity.x = -4;
 		// Fence
-		fence = game.add.tileSprite(0, 372, 960, 182,'cerca');
+		fence = game.add.tileSprite(0, 418, 960, 182,'cerca');
 		game.physics.enable(fence, Phaser.Physics.ARCADE);
 		fence.body.immovable = true;
 
@@ -61,8 +61,9 @@ Game.Play.prototype = {
 		 if (game.time.now > obstacleTime) {
 			var posicaoXObstaculo = 1000+(Math.random()*500);
 			//var posicaoXObstaculo  = game.world.randomX + 960;
-			var posicaoYObstaculo = 320;
-			var velocidade = -400;
+			var posicaoYObstaculo = 366;
+			// quanto mais percorre mais dificil
+			var velocidade = -400 - metrosPercorridos;
 			if(Math.random() < 0.6) {
 				var trash = game.add.sprite(posicaoXObstaculo, posicaoYObstaculo,'lata');
 				game.physics.enable(trash, Phaser.Physics.ARCADE);
@@ -78,7 +79,7 @@ Game.Play.prototype = {
 				box.body.checkCollision.up = false;
 				obstacles.add(box);
 			}
-			obstacleTime = game.time.now + 2200;
+			obstacleTime = game.time.now + (2000-(metrosPercorridos*3));
 		 }
 	},
 	update: function() {
@@ -103,7 +104,7 @@ Game.Play.prototype = {
 				       cat.angle = 0;	
 			    }
 			    // movimento cerca
-			    fence.tilePosition.x -= 6;
+			    fence.tilePosition.x -= 8;
 			    this.updateScore();
 			    score.setText(metrosPercorridos + "m");
 			}
