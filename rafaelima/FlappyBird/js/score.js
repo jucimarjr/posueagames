@@ -27,6 +27,9 @@ function create() {
 function update(){
 	var spacebar_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	spacebar_key.onDown.add(this.start, this);
+	if (game.input.mousePointer.isDown){
+		this.start();
+	}
 }
 function start() {
 	game.state.start('tutorial');

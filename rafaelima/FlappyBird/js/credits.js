@@ -8,6 +8,10 @@ function create() {
 function update() {
 	var backspace_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	backspace_key.onDown.add(menu, this);
+	
+	if (game.input.mousePointer.isDown){
+		menu();
+	}
 }
 
 function menu() {
