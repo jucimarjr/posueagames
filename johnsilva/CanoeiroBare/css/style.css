@@ -29,16 +29,7 @@ p{
     /*color: #6a6a6a;*/
     color: #EEE9E9;
 }
-a:link, a:visited {
-    text-decoration: none;
-    font-size:9pt;
-}
-a:hover {
-    text-decoration: underline; 
-    color: #f00;
-    font-size:9pt;
-}
-a:active {
-    text-decoration: none;
-     font-size:9pt;
+
+.links{
+    font-size:20%;
 }
