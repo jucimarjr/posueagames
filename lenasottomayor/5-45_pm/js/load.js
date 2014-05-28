@@ -20,6 +20,10 @@ function preload() {
 	game.load.audio('deadSound', 'assets/failure.wav');
 	
 	highScore = 0;
+	
+	if (localStorage.getItem("highScore") == null) {
+		localStorage.setItem("highScore",highScore);
+	}
 }
 
 function create() {
