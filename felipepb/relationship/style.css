@@ -90,6 +90,7 @@ content styles
 
 #gameContainer {
 	background-color: #fff;
+	background-image: url("./assets/promo_960-600.png");
 	width: 960px;
 	height: 600px;
 	color: #000;
