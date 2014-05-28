@@ -14,9 +14,9 @@ function preload() {
 //Tela de Menu
 function create() {
     var inicioHistoria = game.add.sprite(0, 0, 'inicio');
-    var text = game.add.text(450, 520, 'Em um dia normal na Amazônia, Zé e seu filho', styleBig);
+    var text = game.add.text(450, 520, '', styleBig);
     text.anchor.setTo(0.5, 0.5);
-    var text = game.add.text(450, 570, 'estavam pescando bodó, quando ...', styleBig);
+    var text = game.add.text(450, 570, '', styleBig);
     text.anchor.setTo(0.5, 0.5);
 
     setTimeout(curupira, 4000);
@@ -24,9 +24,9 @@ function create() {
 
 function curupira() {
     var inicioHistoria = game.add.sprite(0, 0, 'meio');
-    var text = game.add.text(450, 520, 'Mapinguari surge da floresta, leva o filho de Zé', styleBig);
+    var text = game.add.text(450, 520, '', styleBig);
     text.anchor.setTo(0.5, 0.5);
-    var text = game.add.text(450, 570, 'rio acima até o topo da árvore Mãe.', styleBig);
+    var text = game.add.text(450, 570, '', styleBig);
     text.anchor.setTo(0.5, 0.5);
 
     setTimeout(final, 5000);
@@ -34,9 +34,9 @@ function curupira() {
 
 function final() {
     var inicioHistoria = game.add.sprite(0, 0, 'fim');
-    var text = game.add.text(450, 520, 'Zé afoito inicia sua corrida ', styleBig);
+    var text = game.add.text(450, 520, '', styleBig);
     text.anchor.setTo(0.5, 0.5);
-    var text = game.add.text(450, 570, 'rio acima para salvar seu filho do Mapinguari', styleBig);
+    var text = game.add.text(450, 570, '', styleBig);
     text.anchor.setTo(0.5, 0.5);
 
     setTimeout(start, 5000);
