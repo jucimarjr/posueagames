@@ -28,26 +28,26 @@ var isJogo;
 
 function preload () 
 {
-	game.load.image('nave', 'assets/nave_100-40.png');
-	game.load.image('space', 'assets/universo.png');
-	game.load.image('spaceForeground', 'assets/images/game_foreground_960-600.png');
-	game.load.image('atmosphere', 'assets/atmosfera_960-600.png');
-	game.load.image('asteroid', 'assets/asteroid_80-80.png');
-	game.load.image('gameover', 'assets/gameover_436-82.png');
-	game.load.image('coin_green_1', 'assets/coin_green_1_50_51.png');
-	game.load.image('coin_green_2', 'assets/coin_green_2_50_50.png');
-	game.load.image('coin_green_3', 'assets/coin_green_3_50_50.png');
-	game.load.image('coin_green_4', 'assets/coin_green_4_50_50.png');
-	game.load.image('coin_green_5', 'assets/coin_green_5_50_51.png');
-	game.load.image('coin_green_6', 'assets/coin_green_6_50_51.png');
-	game.load.image('coin_green_7', 'assets/coin_green_7_50_50.png');
-	game.load.image('coin_green_8', 'assets/coin_green_8_50_50.png');
-	game.load.image('coin_red_1', 'assets/coin_red_1_50_49.png');
-	game.load.image('coin_red_2', 'assets/coin_red_2_50_50.png');
-	game.load.image('coin_red_3', 'assets/coin_red_3_50_50.png');
-	game.load.image('coin_yellow_1', 'assets/coin_yellow_1_50_50.png');
-	game.load.image('coin_yellow_2', 'assets/coin_yellow_2_50_50.png');
-	game.load.image('score', 'assets/score_asteroid_266-88.png');
+	game.load.image('nave', Config.game.nave.dir);
+	game.load.image('space', Config.game.background.dir);
+	game.load.image('spaceForeground', Config.game.foreground.dir);
+	game.load.image('asteroid', Config.game.asteroid.dir);
+	game.load.image('gameover', Config.game.gameover.dir);
+	game.load.image('score', Config.game.score.dir);
+	game.load.image('coin_green_1', Config.game.coins.green.dir1);
+	game.load.image('coin_green_2', Config.game.coins.green.dir2);
+	game.load.image('coin_green_3', Config.game.coins.green.dir3);
+	game.load.image('coin_green_4', Config.game.coins.green.dir4);
+	game.load.image('coin_green_5', Config.game.coins.green.dir5);
+	game.load.image('coin_green_6', Config.game.coins.green.dir6);
+	game.load.image('coin_green_7', Config.game.coins.green.dir7);
+	game.load.image('coin_green_8', Config.game.coins.green.dir8);
+	game.load.image('coin_red_1', Config.game.coins.red.dir1);
+	game.load.image('coin_red_2', Config.game.coins.red.dir2);
+	game.load.image('coin_red_3', Config.game.coins.red.dir3);
+	game.load.image('coin_red_4', Config.game.coins.red.dir4);
+	game.load.image('coin_yellow_1', Config.game.coins.yellow.dir1);
+	game.load.image('coin_yellow_2', Config.game.coins.yellow.dir2);
 }
 
 var yellowCoins = [];
@@ -75,11 +75,13 @@ function create ()
 	isGameOver = false;
 	
 	score = 0;
+	
 	this.ASTEROID_NUMBER = 13;
 	this.ASTEROID_SPEED = 100; 
-	this.YELLOW_COIN_NUMBER = 50;
-	this.RED_COIN_NUMBER = 50;
-	this.GREEN_COIN_NUMBER = 50;
+	this.YELLOW_COIN_NUMBER = 30;
+	this.RED_COIN_NUMBER = 30;
+	this.GREEN_COIN_NUMBER = 30;
+	
     space1 = game.add.image(0,0,'space');
     space2 = game.add.image(960,0,'space');
     spaceForeground1 = game.add.image(0,0,'spaceForeground');
@@ -123,7 +125,6 @@ function create ()
 
 	for (var i = 0; i < this.ASTEROID_NUMBER; i++)
     {
-
     	sprite = asteroidGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'asteroid');
     	sprite.body.setCircle(40);	
     	sprite.body.setCollisionGroup(asteroidCollisionGroup); //add   
@@ -170,12 +171,15 @@ function create ()
 	for (var i = 0; i < this.RED_COIN_NUMBER; i++)
 	    {
 			var number = Math.random();
-			if (number <= 0.3 ){
+			
+			if (number <= 0.25 ){
 				sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_1');
-			} else if (number > 0.3 && number <= 0.7 ){
+			} else if (number > 0.25 && number <= 0.5 ){
 				sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_2');
-			} else if (number > 0.7){
+			} else if (number > 0.5  && number <= 0.75){
 					sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_3');
+			} else if (number > 0.75){
+					sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_4');
 			}
 	    	sprite.body.setCircle(31);	
 	    	sprite.body.setCollisionGroup(redCoinsCollisionGroup); //add   
@@ -185,7 +189,6 @@ function create ()
 	    }
 	
 	nave.body.collides(redCoinsCollisionGroup, hitRedCoins, this);
-	
 	
 //	CRIAR GRUPO MOEDAS VERDES E COLISAO COM NAVE
 	greenCoinsCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -230,7 +233,7 @@ function create ()
     });
 	textScore.anchor.setTo(0.5, 0.5);
 
-    gameover = game.add.image(1200,1260,'gameover');
+    gameover = game.add.image(980,0,'gameover');
   
     drawLives();
 	
@@ -264,7 +267,6 @@ function update()
 	    
 	    if (spaceForeground2.x + spaceForeground2.width < 0)
 	    {
-	    	space2.x = 960;
 	    	spaceForeground2.x = 960;
   	    }
 	    
@@ -288,8 +290,9 @@ function update()
 	
 			if (sprite.body.x < -sprite.width)
 			{
-				sprite.body.x = game.world.width+sprite.width;
-				sprite.body.y = game.rnd.integerInRange(-100, 620);
+				sprite.reset(game.world.width+sprite.width,game.rnd.integerInRange(-100, 620));
+//				sprite.body.x = game.world.width+sprite.width;
+//				sprite.body.y = game.rnd.integerInRange(-100, 620);
 		    }
 		}
 		for (var i = 0; i < this.YELLOW_COIN_NUMBER ; i++)
@@ -334,14 +337,12 @@ function update()
 			    }
 			}
 		}
-	
-				
 	} 
 	
 	else if (isGameOver)
 	{
-		gameover.x = game.world.width/2-gameover.width/2;
-		gameover.y = game.world.height/2-gameover.height/2;
+		gameover.x = Config.game.gameover.x;
+		gameover.y = Config.game.gameover.y;
 	}
 	
 };
@@ -417,3 +418,4 @@ function decreaseLifeNumber()
 		isGameOver = true;
 	}
 }
+ 

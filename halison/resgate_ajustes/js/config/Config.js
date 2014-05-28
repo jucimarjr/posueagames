@@ -21,16 +21,17 @@ var Config = {
 //LudusSplash
 Config.ludusSplash = {
 	dir: 'assets/images/LudusSplash_960-600.png',
+	backgroundDir: 'assets/images/game_background_960-600.png',
 	x: 0,
 	y: 0,
-	millis: 2000,
+	millis: 1000,
 	nextState: 4000
 };
 
 //GameSplash
 Config.gameSplash = {
 	dir: {
-		background: 'assets/images/background_960-600.png',
+		background: 'assets/images/game_background_960-600.png',
 		bar: 'assets/images/ProgressBar_960-30.png'
 	},
 	x: 0,
@@ -121,6 +122,11 @@ Config.game = {
 			x: Config.global.screen.width/2 - 436/2,
 			y: Config.global.screen.height/2 - 82/2
 		},
+		asteroid: {
+			dir: 'assets/images/asteroid1_80-80.png',
+			x: Config.global.screen.width/2 - 436/2,
+			y: Config.global.screen.height/2 - 82/2
+		},
 		background: {
 			dir: 'assets/images/game_background_960-600.png',
 			x: 0,
@@ -130,5 +136,30 @@ Config.game = {
 			dir: 'assets/images/game_foreground_960-600.png',
 			x: 0,
 			y: 0
+		},
+		coins: {
+			green: {
+				dir1: 'assets/images/coins/coin_green_1_50_51.png',
+				dir2: 'assets/images/coins/coin_green_2_50_50.png',
+				dir3: 'assets/images/coins/coin_green_3_50_50.png',
+				dir4: 'assets/images/coins/coin_green_4_50_50.png',
+				dir5: 'assets/images/coins/coin_green_5_50_51.png',
+				dir6: 'assets/images/coins/coin_green_6_50_51.png',
+				dir7: 'assets/images/coins/coin_green_7_50_50.png',
+				dir8: 'assets/images/coins/coin_green_8_50_50.png'
+			},
+			yellow: {
+				dir1: 'assets/images/coins/coin_yellow_1_50_50.png',
+				dir2: 'assets/images/coins/coin_yellow_2_50_50.png'
+			},
+			red: {
+				dir1: 'assets/images/coins/coin_red_1_50_49.png',
+				dir2: 'assets/images/coins/coin_red_2_50_50.png',
+				dir3: 'assets/images/coins/coin_red_3_50_50.png',
+				dir4: 'assets/images/coins/coin_red_4_50_50.png'
+			}
+		},
+		score: {
+			dir: 'assets/images/score_asteroid_266-88.png'
 		}
 };
