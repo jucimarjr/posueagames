@@ -12,7 +12,7 @@ function create() {
 	game.add.sprite(387, 490, 'loading');
 
 	game.load.audio('flap_song', ['sound/wind.wav', 'sound/wind.mp3']);
-	game.load.audio('menuMusic', ['sound/menu_sound.ogg']);
+	game.load.audio('menuMusic', ['sound/menu_sound.ogg', 'sound/menu_sound.mp3']);
 	game.load.audio('gameMusic', ['sound/game_sound.ogg', 'sound/game_sound.mp3']);
 	game.load.image('splash_screen', 'assets/splash_screen.png');
 	game.load.image('button_play', 'assets/menu_play.png');
