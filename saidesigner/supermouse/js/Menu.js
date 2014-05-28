@@ -30,6 +30,9 @@ SuperMouse.Menu.prototype.create = function() {
 	btCredits.inputEnabled = true;
 	btCredits.input.useHandCursor = true;
 
+	var title = Utils.createText(this, 500, 300, 20, '#ffffff', '#000000');
+	title.text = "Missão de Resgate";	
+
 	Utils.reviveAsteroid(this, this.asteroids, -30, 0);
 	Utils.reviveCheese(this, this.cheeses, -20, 0);
 	Utils.reviveRat(this, this.rats, -20, 0);

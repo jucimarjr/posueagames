@@ -102,8 +102,7 @@ Utils.createText = function(game, posX, posY, size, color, shadow) {
     var text = game.add.text(posX, posY);
 
     text.font = 'Press Start';
-    text.fontSize = size;
-    //text.fontWeight = 'bold';
+    text.fontSize = size;    
     var grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
 
     grd.addColorStop(0, color);       

@@ -10,9 +10,9 @@ SuperMouse.Game = function(game) {
 	this.ratSnd;
 	this.eatSnd;
 	this.ambience;
-	this.health;	
-	this.keyPressed = false;	
+	this.health;			
 	this.scoreText;
+	this.keyPressed = false;	
 }; 
 
 SuperMouse.Game.prototype.preload = function() {	
@@ -38,12 +38,9 @@ SuperMouse.Game.prototype.create = function() {
 	this.player.animations.add('fly4', [16, 17, 18], 30, true);
 	this.player.animations.add('fly5', [19], 30, true);
 	this.player.animations.play('fly');
+	this.player.body.gravity.y = 0;
 	this.player.checkWorldBounds = true;
 	this.player.outOfBoundsKill = true;	
-	this.player.body.allowRotation = true;	
-	this.player.body.angularVelocity = 100;	
-	this.player.body.gravity.y = 100;
-	this.player.body.acceleration.y = 200;	
 	this.player.health = 11;
 	this.player.events.onKilled.add(this.gameOver, this);
 
@@ -69,30 +66,44 @@ SuperMouse.Game.prototype.create = function() {
 
 	// howToPlay
 
-	howToPlay = Utils.createText(this, 200, 280, 30, '#ffffff', '#aaaaaa');
-	howToPlay.text = "Click com o mouse\npara voar";
+	var howToPlay = Utils.createText(this, 205, 280, 20, '#ffffff', '#aaaaaa');
+	howToPlay.text = "Click e segure para voar\n\nDesvie dos asteroides\ne\nresgate os ratinhos";
 	howToPlay.align = "center";
 
- 	s = this.game.add.tween(howToPlay)
-	s.to({ alpha: 0 }, 3000, null)
-	.start();
+	var s = this.add.tween(howToPlay);
+
+ 	s.onComplete.add(function() {
+	 	this.player.body.allowRotation = true;		 	
+		this.player.body.gravity.y = 100;
+		this.player.body.acceleration.y = 200;
+		this.player.body.angularVelocity = 30;
+ 	}, this);
+
+	s.to({ alpha: 0 }, 5000, null).start();
 };
 
 SuperMouse.Game.prototype.update = function() {
 
+	Utils.reviveStar(this, this.stars);
+	this.scoreText.text = Utils.pad(score, 3);
+	this.health.frame = this.player.health - 1;		
+
+	if (this.player.body.gravity.y <= 0) {
+		return;
+	}
+
 	if (this.player.health > 1) {
+
 		this.physics.arcade.overlap(this.player, this.asteroids, this.collisionHandler, this.collisionCheck, this);
 		this.physics.arcade.overlap(this.player, this.cheeses, this.collisionHandler, this.collisionCheck, this);
 		this.physics.arcade.overlap(this.player, this.rats, this.collisionHandler, this.collisionCheck, this);		
-		this.movPlayer();
+		
+		this.movPlayer();		
 	}
-
-	Utils.reviveStar(this, this.stars);
+	
 	Utils.reviveAsteroid(this, this.asteroids, -350, 0);
 	Utils.reviveCheese(this, this.cheeses, -150, 0);
-	Utils.reviveRat(this, this.rats, -150, 0);		
-	this.scoreText.text = Utils.pad(score, 3);
-	this.health.frame = this.player.health - 1;	
+	Utils.reviveRat(this, this.rats, -150, 0);
 };
 
 SuperMouse.Game.prototype.movPlayer = function() {
