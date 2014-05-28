@@ -250,8 +250,8 @@ Play.prototype = {
 		}
 	},
 	jump : function() {
-		this.cellHSprite.body.velocity.y = -200;
-		this.cellTSprite.body.velocity.y = -200;
+		this.cellHSprite.body.velocity.y = -400;
+		this.cellTSprite.body.velocity.y = -400;
 	},
 	collision : function(cell, bg) {
 		userScore = this.points;
