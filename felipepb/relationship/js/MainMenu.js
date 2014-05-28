@@ -28,6 +28,34 @@ BasicGame.MainMenu.textFieldPlaceHolderActive = 'textBoxPlaceholderActive_349-52
 BasicGame.MainMenu.textFieldPlaceHolderNone = 'textBoxPlaceholderNone_349-52.png';
 BasicGame.MainMenu.textFieldActive = 'textBoxTextActive_349-52.png';
 BasicGame.MainMenu.textFieldNone = 'textBoxTextNone_349-52.png';
+BasicGame.MainMenu.playerNameKey = 'relationship-player';
+BasicGame.MainMenu.belovedNameKey = 'relationship-beloved';
+
+BasicGame.MainMenu.createCookie = function(name, value, days) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        var expires = '; expires=' + date.toGMTString();
+    } else {
+        var expires = '';
+    }
+    document.cookie = name + '=' + value + expires + '; path=/';
+};
+    
+BasicGame.MainMenu.readCookie = function(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+};
+    
+BasicGame.MainMenu.eraseCookie = function(name) {
+    BasicGame.MainMenu.createCookie(name, '', -1);
+};
 
 BasicGame.MainMenu.prototype = {
 
@@ -49,15 +77,19 @@ BasicGame.MainMenu.prototype = {
         
         this.beloved = this.game.add.bitmapText(54, cameraHeight - 87, 'silkscreenred', '', fontSize);
 
-        this.currentBitmapText = null;        
-        this.player.text = new String('');
-        this.beloved.text = new String('');
-        
+        this.currentBitmapText = null;
+		
+		var playerText = BasicGame.MainMenu.readCookie(BasicGame.MainMenu.playerNameKey);
+        var belovedText = BasicGame.MainMenu.readCookie(BasicGame.MainMenu.belovedNameKey);
+		
+        this.player.text = playerText ? ' ' + playerText : new String('');
+        this.beloved.text = belovedText ? ' ' + belovedText : new String('');
+
         var keyboard = this.game.input.keyboard;
         keyboard.onDownCallback = function (args) {
             self.handleTextFieldsInput(args);
         };
-        
+
         this.playButton = this.game.add.button(cameraWidth - 417, cameraHeight - 210,
                                                'playButton',
                                                this.onPlayButtonClicked,
@@ -195,8 +227,16 @@ BasicGame.MainMenu.prototype = {
             this.negateSFX.play();
         } else {
             this.confirmSFX.play();
+
             BasicGame.MainMenu.playerName = playerName;
             BasicGame.MainMenu.belovedName = belovedName;
+			
+			BasicGame.MainMenu.eraseCookie(BasicGame.MainMenu.playerNameKey);
+			BasicGame.MainMenu.createCookie(BasicGame.MainMenu.playerNameKey, playerName, 60);
+			
+			BasicGame.MainMenu.eraseCookie(BasicGame.MainMenu.belovedNameKey);
+            BasicGame.MainMenu.createCookie(BasicGame.MainMenu.belovedNameKey, belovedName, 60);
+			
             this.state.start('GameManager');
         }
     }
