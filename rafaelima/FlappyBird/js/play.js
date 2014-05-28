@@ -1,6 +1,6 @@
 var play_state = { create: create, update: update };
 
-//Sem function preload() pq j� existe no load.js
+//Sem function preload() pq ja existe no load.js
 function create() {
     //som
     jump_sound = game.add.audio('flap_song');
@@ -99,7 +99,7 @@ function update() {
     if (countHeadButts <= 3 && (bossSprite.exists === true || bossInvSprite.exists === true)) {
         if (bossDirection >= 0.5) {
             game.physics.arcade.overlap(bossSprite, playerSprite, playerDies, null, this);
-            if (bossSprite.body.position.y < 230) { //come�a p/ cima
+            if (bossSprite.body.position.y < 230) { //comeca p/ cima
                 bossSprite.body.velocity.y = 300;
                 bossSprite.frame = 0;
             } else if (bossSprite.body.position.y >= 600 && countHeadButts < 3) {
@@ -360,7 +360,7 @@ function bossFight() {
         X = 702;
 
     bossDirection = Math.random();
-    if (bossDirection >= 0.5) { //come�a p/ cima
+    if (bossDirection >= 0.5) { //comeca p/ cima
         bossSprite.kill();
         bossSprite.reset(X, 580);
         bossSprite.body.velocity.y = -400;

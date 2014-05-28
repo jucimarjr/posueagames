@@ -17,7 +17,7 @@ function create() {
 	
 }
 
-//Come�a o jogo
+//Comeca o jogo
 function startGame() {
 	music.pause();
 	game.state.start('tutorial');
