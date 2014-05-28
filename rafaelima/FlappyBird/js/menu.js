@@ -11,8 +11,10 @@ function preload() {
 
 //Tela de Menu
 function create() {
-	music = game.add.audio('menuMusic',1,true);
-	music.play('',0,1,true);
+	if(music == null){
+		music = game.add.audio('menuMusic',1,true);
+		music.play('',0,1,true);
+	}
 	
 	game.add.sprite(0, 0, 'splash_screen');
 	this.buttonPlay = game.add.button(285, 495, 'button_play', startGame, this);
@@ -26,6 +28,7 @@ function create() {
 
 //Começa o jogo
 function startGame() {
+	music.pause();
 	game.state.start('load');
 }
 function credits() {

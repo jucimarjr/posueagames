@@ -3,7 +3,7 @@ var play_state = { create: create, update: update };
 //Sem function preload() pq já existe no load.js
 function create() {
     //som
-    jump_sound = this.game.add.audio('flap_song');
+    jump_sound = game.add.audio('flap_song');
     musicGame = game.add.audio('gameMusic', 1, true);
     musicGame.play('', 0, 1, true);
 
@@ -18,7 +18,7 @@ function create() {
     background3.tileScale.setTo(1.6, 1.6);
     game.physics.arcade.enable(background3);
 
-    isDead = false;
+    isDead = false; //nao esta morto
     
     platforms = game.add.group();
     platforms.enableBody = true;
@@ -70,7 +70,6 @@ function create() {
     space_key.onUp.add(notJump, this);
 
     //score  metros
-    stop_score = false;
     score = 0;
     var style = { font: '30px "edosz"', fill: "#D56469" };
     this.label_score = this.game.add.text(20, 50, "0 m", style);
@@ -86,7 +85,7 @@ function create() {
 // Start the actual game
 function update() {
 
-    if (!stop_score) {
+    if (!isDead) { //stop score when the char is dead
         score += 0.01;
         this.label_score.text = score.toFixed(0) + " km";  //sem casa decimal
     }
