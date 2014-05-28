@@ -21,12 +21,16 @@ var tileRightJungle;
 var gameOver;
 var dead;
 var timer;
+var pressLeft;
+var pressRight;
 
 function preload() {
     score = 0;
     highscore = 0;
     tileSpeedRiver = 1.5;
     gameOver = false;
+    pressRight = false;
+    pressLeft = false;
 }
 
 function create() {
@@ -94,6 +98,7 @@ function create() {
 
     cursors = game.input.keyboard.createCursorKeys();
     game.input.onDown.add(touch, this);
+    game.input.onUp.add(noTouch, this);
 }
 
 function gofull() {
@@ -232,11 +237,11 @@ function resetStage() {
 function update() {
 
     if(!gameOver){
-        if (cursors.left.isDown)
+        if (cursors.left.isDown || pressLeft)
         { 
             changeAngle(angleVelocity);
         }
-        else if (cursors.right.isDown)
+        else if (cursors.right.isDown || pressRight)
         { 
             changeAngle(-1 * angleVelocity);    
         }else{
@@ -262,13 +267,19 @@ function touch(pointer) {
 
     if (pointer.x < 450)
     {
-        changeAngle(2*angleVelocity);
+        //changeAngle(2*angleVelocity);
+        pressLeft = true;
     }
     else
     {
-        changeAngle(-1 * 2*angleVelocity);
+        pressRight = true;
+        //changeAngle(-1 * 2*angleVelocity);
     }
+}
 
+function noTouch(pointer) {
+    pressLeft = false;
+    pressRight = false;
 }
 
 function changeAngle(angle){
@@ -313,7 +324,6 @@ function canoemanEnd() {
         explode.play();
         finalSound = true;
     }
-    //setTimeout(gameOv, 500);
 }
 
 function sleep(milliseconds) {
