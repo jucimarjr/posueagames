@@ -2,8 +2,8 @@ var game_state = { create: create, update: update};
 
 function create () {
 
-	//Add sounds
-	soundMus = game.add.audio("musica");
+    //Add sounds
+    soundMus = game.add.audio("musica");
 
 	// Add the background image
     background = game.add.image(0, 0, 'background');
