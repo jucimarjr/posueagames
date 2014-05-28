@@ -38,7 +38,6 @@ function create() {
 	game.load.image('obstacle2', 'assets/obstacle_02.png');
 	game.load.image('obstacle3', 'assets/obstacle_03.png');
 	game.load.image('obstacle4', 'assets/obstacle_04.png');
-	game.load.physics('physicsData', 'assets/polygon.json');
 	game.load.image('scorebg', 'assets/placeholder.png');
 	game.load.image('tutorial', 'assets/tutorial_screen.png');
 
