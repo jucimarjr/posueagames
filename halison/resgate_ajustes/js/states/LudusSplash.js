@@ -21,8 +21,7 @@ State.LudusSplash.prototype = {
 		sprite.alpha = 0;
 		
 		setTimeout(function () {
-			game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
-			game.add.tween(sprite).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 3000, 2000, true);
+			game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 6000, true);
 		}, Config.ludusSplash.millis);
 		setTimeout(function () {
 			this.game.state.start('GameSplash');
@@ -31,5 +30,9 @@ State.LudusSplash.prototype = {
 	update: function () {
 		"use strict";
 		Config.global.screen.resize(this.game);
+		this.game.scale.pageAlignHorizontally = true;
+		this.game.scale.pageAlignVeritcally = true;
+		this.game.scale.refresh();
+		
 	}
 };

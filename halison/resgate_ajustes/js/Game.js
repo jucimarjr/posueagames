@@ -242,7 +242,6 @@ function create ()
 
 function update() 
 {
-	
 	if ( isJogo )
 	{
 	    space1.x -= 4.8;
