@@ -45,6 +45,7 @@ function create() {
     game.load.spritesheet('timer', 'assets/botoes/timer-1500-369.png', 150, 369, 10);
     game.load.spritesheet('sound', 'assets/botoes/sound_50-35.png', 50, 35, 2);
     game.load.spritesheet('mute', 'assets/botoes/mute_50-35.png', 50, 35, 2);
+    game.load.spritesheet('full', 'assets/botoes/fullscreen_50-35.png', 50, 35, 2);
 
     //Imagens -- GameOver
     game.load.image('splashscreen', 'assets/bg/gameover_900-600.jpg');
