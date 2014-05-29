@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="60" height="10" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="90" height="20" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="tile_base" tilewidth="32" tileheight="32">
   <image source="tile_base.png" width="160" height="32"/>
  </tileset>
- <layer name="Camada de Tiles 1" width="60" height="10">
+ <layer name="Camada de Tiles 1" width="90" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRMApGwSigLWAZYRgAe8AA8Q==
+   eJzt0VEKhDAMRdFIs/81i1BBQpU2koDmHng/g0a4IwIAAN7QPsSicw4651Dxtea/WUPnGLarDn6bvTP7rYqyOnvv/kVGZ3uzYms656BznNZ38Ha+3jjfu1OxczPzdLY35OHZ0c2vd94YY2xxOyeAAts=
   </data>
  </layer>
 </map>
