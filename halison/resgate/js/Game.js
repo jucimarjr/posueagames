@@ -62,14 +62,10 @@ var yellowCoinsCollisionGroup;
 var redCoinsCollisionGroup;
 var greenCollisionGroup;
 
-var velocityScore;
-
 function create () 
 {
 	var time;
 	var scale;
-	
-	velocityScore = 0;
 	
 	isJogo = true;
 	isGameOver = false;
@@ -242,8 +238,8 @@ function update()
 	
 	if ( isJogo )
 	{
-	    space1.x -= 4.8;
-	    space2.x -= 4.8;
+	    space1.x -= 2.8;
+	    space2.x -= 2.8;
 	    if (space1.x + space1.width < 0)
 	    {
 	    	space1.x = 960;
@@ -264,7 +260,6 @@ function update()
 	    
 	    if (spaceForeground2.x + spaceForeground2.width < 0)
 	    {
-	    	space2.x = 960;
 	    	spaceForeground2.x = 960;
   	    }
 	    
@@ -272,19 +267,19 @@ function update()
 		
 	    if (cursors.up.isDown)
 	    {
-	    	nave.body.moveDown(180+velocityScore);
+	    	nave.body.moveDown(180);
 	    }
 	    
 	    else if (cursors.down.isDown)
 	    {
-	    	nave.body.moveUp(180+velocityScore);
+	    	nave.body.moveUp(180);
 	    }  
 		
 		for (var i = 0; i < this.ASTEROID_NUMBER ; i++)
 		{
 			sprite = asteroidGroup.getAt(i);
 			sprite.body.setZeroVelocity();
-			sprite.body.moveLeft(this.ASTEROID_SPEED+velocityScore ); //game.rnd.integerInRange(100,200) );
+			sprite.body.moveLeft(this.ASTEROID_SPEED ); //game.rnd.integerInRange(100,200) );
 	
 			if (sprite.body.x < -sprite.width)
 			{
@@ -389,8 +384,6 @@ function updateTextScore(){
 	else if (score < 10000)
 		zeros = "0";
 	textScore.setText(""+zeros + score);
-	if (score > 0)
-		velocityScore = score/100; 
 }
 
 function drawLives()
