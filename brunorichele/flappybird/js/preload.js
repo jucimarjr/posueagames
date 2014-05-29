@@ -1,5 +1,13 @@
 var preload = {
     init : function(){
+		game.scale.minWidth = 320;
+		game.scale.minHeight = 240;
+		game.scale.maxWidth = 960;
+		game.scale.maxHeight = 600;
+		
+		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    	game.scale.setScreenSize();
+				
         // tela splash
         game.add.sprite(0, 0, 'telamenu');
         var style = { font: "40px Helvetica", fill: "#ffffff" };

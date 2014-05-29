@@ -73,16 +73,12 @@ var update = {
         var style = { font: "100px Helvetica", fill: "#ffffff" };
         this.score_placa = game.add.text((game.width - 50)/2, startY + 350, create.score + "", style);
 
-        this.buttonJogar = game.add.sprite(320, startY + 520, 'botaojogar');
-        this.buttonJogar.inputEnabled = true;
-        this.buttonJogar.input.useHandCursor = true;
-        this.buttonJogar.events.onInputDown.add(this.resetGame, this);
-
-        this.buttonInicio = game.add.sprite(510, startY + 520, 'botaoinicio');
-        this.buttonInicio.inputEnabled = true;
-        this.buttonInicio.input.useHandCursor = true;
-        this.buttonInicio.events.onInputDown.add(this.startMenu, this);
+		var buttonJogar = game.add.button(320, startY + 520, 'botaojogar', this.resetGame, 0, 0, 0);
+		buttonJogar.input.useHandCursor = true;
 		
+		var buttonInicio = game.add.button(510, startY + 520, 'botaoinicio', this.startMenu, 0, 0, 0);
+		buttonInicio.input.useHandCursor = true;
+				 			
 		this.player.destroy();
     },
     startMenu: function(){
@@ -100,5 +96,5 @@ var update = {
         this.pointWall.kill();
         create.reset();
       
-    }
+    }	
 };
