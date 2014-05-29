@@ -49,7 +49,7 @@ Config.gameSplash = {
 };
 
 //Menu
-Config.menu = {
+Config.Menu = {
 	dir: 'assets/images/MenuBackground_960-600.png',
 	x: 0,
 	y: 0,
@@ -92,6 +92,13 @@ Config.menu = {
 	}
 };
 
+//GamePlay
+Config.gamePlay = {
+	dir: 'assets/images/GamePlayBg_600-960.png', //'assets/images/MenuBackground_960-600.png',
+	x: 0,
+	y: 0
+};
+
 //HowToPlay
 Config.howToPlay = {
 	dir: 'assets/images/HowToPlay_960-600.png',
@@ -106,8 +113,8 @@ Config.credits = {
 	y: 0
 };
 
-Config.gamePlay = {
+/*Config.gamePlay = {
 	dir: 'assets/images/GamePlayBg_600-960.png',
 	x: 0,
 	y: 0,
-};
+};*/

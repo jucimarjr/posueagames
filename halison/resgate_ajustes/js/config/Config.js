@@ -46,7 +46,7 @@ Config.menu = {
 	x: 0,
 	y: 0,
 	buttonOpening: {
-		dir: 'assets/spritesheets/button_openning_186-17.png',
+		dir: 'assets/sprites/button_openning_186-17.png',
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.4,
 		width: 186,
