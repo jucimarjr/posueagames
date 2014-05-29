@@ -111,5 +111,10 @@ Config.game = {
 	dir: {
 		tilemap: "assets/spritesheets/mapa.json",
 		tileset: "assets/spritesheets/texturebreakout.png"
+	},
+	jogador: {
+		dir: 'assets/images/jogador_40-40.png',
+		width: 40,
+		height: 40
 	}
 };

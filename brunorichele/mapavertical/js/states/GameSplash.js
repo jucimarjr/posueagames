@@ -11,7 +11,7 @@ State.GameSplash.prototype = {
 		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
 		this.game.load.setPreloadSprite(progressBar);
 		this.game.load.onLoadComplete.add(function () {this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); setTimeout(function () {this.game.state.start('Menu');}, Config.gameSplash.millis);}, this);
-		
+
 		//Menu
 		this.game.load.image('menu-background',  Config.menu.dir);
 		this.game.load.spritesheet('button-play', Config.menu.buttonPlay.dir, Config.menu.buttonPlay.width, Config.menu.buttonPlay.height);
@@ -20,13 +20,14 @@ State.GameSplash.prototype = {
 
 		//Credits
 		this.game.load.image('credits', Config.credits.dir);
-		
+
 		//HowToPlay
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
-		
+
 		//Game
 		this.game.load.tilemap('tilemap', Config.game.dir.tilemap, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tileset', Config.game.dir.tileset);
+		this.game.load.image('jogador', Config.game.jogador.dir);
 	},
 	create: function () {
 		"use strict";
