@@ -11,7 +11,7 @@ State.GamePlay.prototype = {
 		"use strict";
 		this.game.load.image('gameplay-bg',  Config.gamePlay.dir);
 		this.game.load.tilemap('map', 'assets/mapaVertical.json', null, Phaser.Tilemap.TILED_JSON);
-	    this.game.load.image('tileset','assets/images/tileset2.png');
+	    this.game.load.image('tileset','assets/images/tilesetIce.png');
 	},
 	create: function () {
 		"use strict";
