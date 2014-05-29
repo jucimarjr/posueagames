@@ -235,6 +235,9 @@ function create ()
 
 function update() 
 {
+	this.game.scale.pageAlignHorizontally = true;
+	this.game.scale.pageAlignVeritcally = true;
+	this.game.scale.refresh();
 	
 	if ( isJogo )
 	{
