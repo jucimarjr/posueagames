@@ -11,8 +11,8 @@ State.LudusSplash.prototype = {
 		"use strict";
 		this.game.load.image('ludus-splash', Config.ludusSplash.dir);
 		//GameSplash
-		this.game.load.image('game-splash', Config.gameSplash.dir.background);
-		this.game.load.image('progress-bar', Config.gameSplash.dir.bar);
+		//this.game.load.image('game-splash', Config.gameSplash.dir.background);
+		//this.game.load.image('progress-bar', Config.gameSplash.dir.bar);
 	},
 	create: function () {
 		"use strict";
@@ -21,7 +21,7 @@ State.LudusSplash.prototype = {
 			this.game.add.tween(sprite).to({alpha : 0}, Config.ludusSplash.millis, Phaser.Easing.Linear.None).start();
 		}, Config.ludusSplash.millis);
 		setTimeout(function () {
-			this.game.state.start('SponsorSplash');
+			this.game.state.start('GamePlay');
 		}, Config.ludusSplash.nextState);
 	},
 	update: function () {
