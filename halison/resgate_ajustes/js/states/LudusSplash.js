@@ -20,12 +20,12 @@ State.LudusSplash.prototype = {
 		var sprite   = this.game.add.sprite(Config.ludusSplash.x, Config.ludusSplash.y, 'ludus-splash');
 		sprite.alpha = 0;
 		
-		setTimeout(function () {
-			game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 6000, true);
-		}, Config.ludusSplash.millis);
-		setTimeout(function () {
+//		setTimeout(function () {
+//			game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 6000, true);
+//		}, Config.ludusSplash.millis);
+//		setTimeout(function () {
 			this.game.state.start('GameSplash');
-		}, Config.gameSplash.nextState);
+//		}, Config.gameSplash.nextState);
 	},
 	update: function () {
 		"use strict";
