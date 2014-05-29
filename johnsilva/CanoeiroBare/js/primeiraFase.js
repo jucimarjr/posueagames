@@ -34,8 +34,8 @@ function preload() {
 }
 
 function create() {
-    /*game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-    game.input.onDown.add(gofull, this);*/
+    game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.physics.p2.setImpactEvents(true);
     game.world.setBounds(0, -500, 1600, 1200 );
@@ -91,6 +91,8 @@ function create() {
 
     //Mute button
     var bt_sound = game.add.button(850, 0, 'sound', pause, this, 1, 0, 1);
+    var bt_full = game.add.button(800, 0, 'full', gofull, this, 1, 0, 1);
+    //bt_full.input.onDown.add(gofull, this);
 
     finalSound = false;
     remosSound = game.add.audio("remosound",1,true);

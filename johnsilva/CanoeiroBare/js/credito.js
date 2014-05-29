@@ -1,9 +1,5 @@
-var credito = { preload: preload, create: create};
+var credito = { create: create};
 
-function preload() {
-    game.load.image('initCredits', 'assets/bg/creditos_900_600.jpg');
-    game.load.spritesheet('backBtn', 'assets/botoes/back_350-120.png', 350, 120);
-}
 
 //Tela de Menu
 function create() {

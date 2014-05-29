@@ -36,6 +36,14 @@
 		data-href="http://computacao.uea.edu.br/ludus/posueagames/renanbrg/dr_who/"
 		data-width="960" data-numposts="10" data-colorscheme="light"></div>
 		
+        <script>
+        // Disable scrolling in the browser
+        window.addEventListener("keydown", function(e) {
+            if([38, 40].indexOf(e.keyCode) > -1) {
+                e.preventDefault();
+            }
+        }, false);
+        </script>
 		<script src="../../phaser/phaser.min.js"></script>
 		<script type="text/javascript" src="js/victory.js"></script>
 		<script type="text/javascript" src="js/gameOver.js"></script>

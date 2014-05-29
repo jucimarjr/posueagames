@@ -1,9 +1,5 @@
 
-var game;
-
-window.onload = function() {
-	game = new Phaser.Game(960, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-};
+var game = new Phaser.Game(960, 600, Phaser.AUTO, 'pg-game', { preload: preload, create: create, update: update });
 
 var asteroid;
 var space1;

@@ -16,8 +16,9 @@ function create() {
     game.load.audio('botosound', 'songs/boto.mp3');
     game.load.audio('alligatorsound', 'songs/alligator.wav');
     game.load.audio('fundosound', 'songs/canoeman.mp3');
-    music = game.add.audio('fundosound', 1, true);
-    music.play('', 0, 1, true);
+    if (startSound == true) {
+        initSound();
+    }
 
     //Imagens - Menu
     game.load.image('initBg', 'assets/bg/initBg_900-600.jpg');
@@ -44,6 +45,7 @@ function create() {
     game.load.spritesheet('timer', 'assets/botoes/timer-1500-369.png', 150, 369, 10);
     game.load.spritesheet('sound', 'assets/botoes/sound_50-35.png', 50, 35, 2);
     game.load.spritesheet('mute', 'assets/botoes/mute_50-35.png', 50, 35, 2);
+    game.load.spritesheet('full', 'assets/botoes/fullscreen_50-35.png', 50, 35, 2);
 
     //Imagens -- GameOver
     game.load.image('splashscreen', 'assets/bg/gameover_900-600.jpg');
@@ -55,6 +57,9 @@ function create() {
     game.load.spritesheet('play', 'assets/botoes/play_100-70.png', 100, 70, 2);
     game.load.spritesheet('canoemandead', 'assets/sprite/gameover/canoeiro_138-146-13.png', 138, 146, 13);
 
+    game.load.image('initCredits', 'assets/bg/creditos_900_600.jpg');
+    game.load.spritesheet('backBtn', 'assets/botoes/back_350-120.png', 350, 120);
+
     //json
     game.load.physics('physicsData', 'assets/sprite/canoeman/canoeman.json');
 
@@ -64,4 +69,10 @@ function create() {
 
 function loadComplete() {
     game.state.start('menu');
+}
+
+function initSound() {
+    music = game.add.audio('fundosound', 1, true);
+    music.play('', 0, 1, true);
+    startSound = false;
 }
