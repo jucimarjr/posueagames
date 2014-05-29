@@ -37,13 +37,11 @@ var greenCollisionGroup;
 var velocityScore;
 
 State.Play = function (game) {
-	"use strict";
 	this.game = game;
 };
 
 State.Play.prototype = {
 	preload: function () {
-		"use strict";
 		game.load.image('nave', Config.game.nave.dir);
 		game.load.image('space', Config.game.background.dir);
 		game.load.image('spaceForeground', Config.game.foreground.dir);
@@ -68,7 +66,6 @@ State.Play.prototype = {
 	
 	create: function () {
 		"use strict";
-		
 		var time;
 		var scale;
 		
@@ -104,7 +101,6 @@ State.Play.prototype = {
 		greenCoins[5] = game.add.image(960,0,'coin_green_6');
 		greenCoins[6] = game.add.image(960,0,'coin_green_7');
 		greenCoins[7] = game.add.image(960,0,'coin_green_8');
-	    
 		game.physics.startSystem(Phaser.Physics.P2JS);
 	    game.physics.p2.gravity.y = 5;
 	    game.physics.p2.setImpactEvents(true);
@@ -125,7 +121,6 @@ State.Play.prototype = {
 	    asteroidGroup = game.add.group();
 	    asteroidGroup.enableBody = true;
 	    asteroidGroup.physicsBodyType = Phaser.Physics.P2JS;
-	
 		for (var i = 0; i < this.ASTEROID_NUMBER; i++)
 	    {
 	    	sprite = asteroidGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'asteroid');
@@ -139,7 +134,7 @@ State.Play.prototype = {
 	    }
 		
 		nave.body.setCollisionGroup(naveCollisionGroup);
-		nave.body.collides(asteroidCollisionGroup, hitAsteroid, this);
+		nave.body.collides(asteroidCollisionGroup, this.hitAsteroid, this);
 		
 	//	CRIAR GRUPO MOEDAS AMARELAS E COLISAO COM NAVE
 		yellowCoinsCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -161,7 +156,7 @@ State.Play.prototype = {
 		    	sprite.body.allowGravity = false;
 		    }
 		
-		nave.body.collides(yellowCoinsCollisionGroup, hitYellowCoins, this);
+		nave.body.collides(yellowCoinsCollisionGroup, this.hitYellowCoins, this);
 	
 	
 	//	CRIAR GRUPO MOEDAS VERMELHAS E COLISAO COM NAVE
@@ -190,7 +185,7 @@ State.Play.prototype = {
 		    	sprite.body.allowGravity = false;
 		    }
 		
-		nave.body.collides(redCoinsCollisionGroup, hitRedCoins, this);
+		nave.body.collides(redCoinsCollisionGroup, this.hitRedCoins, this);
 		
 	//	CRIAR GRUPO MOEDAS VERDES E COLISAO COM NAVE
 		greenCoinsCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -240,10 +235,16 @@ State.Play.prototype = {
 	    drawLives();
 		
 		cursors = game.input.keyboard.createCursorKeys();
+		
+		
+//		setTimeout(function () {
+//			this.game.state.start('HowToPlay').start();
+//			game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 6000, true).start();
+//		}, 2000);
+
 	},
 
 	update : function(){
-		"use strict";
 		if ( isJogo )
 		{
 		    space1.x -= 4.8;
@@ -273,12 +274,12 @@ State.Play.prototype = {
 		    
 			nave.body.setZeroVelocity();
 			
-		    if (cursors.up.isDown)
+		    if (game.cursors.up.isDown)
 		    {
 		    	nave.body.moveDown(180+velocityScore);
 		    }
 		    
-		    else if (cursors.down.isDown)
+		    else if (game.cursors.down.isDown)
 		    {
 		    	nave.body.moveUp(180+velocityScore);
 		    }  
@@ -348,8 +349,7 @@ State.Play.prototype = {
 	
 	},
 	
-	
-	hitAsteroid: function (body1, body2) 
+	hitAsteroid: function (body1, body2)
 	{
 		decreaseLifeNumber();
 	},

@@ -21,7 +21,7 @@ var Config = {
 //LudusSplash
 Config.ludusSplash = {
 	dir: 'assets/images/LudusSplash_960-600.png',
-	bgdir: 'assets/images/game_background_960-600.png',
+//	bgdir: 'assets/images/game_background_960-600.png',
 	x: 0,
 	y: 0,
 	millis: 1000,
@@ -31,7 +31,7 @@ Config.ludusSplash = {
 //GameSplash
 Config.gameSplash = {
 	dir: {
-		background: 'assets/images/game_background_960-600.png',
+//		background: 'assets/images/game_background_960-600.png',
 		bar: 'assets/images/ProgressBar_960-30.png'
 	},
 	x: 0,
@@ -45,10 +45,21 @@ Config.menu = {
 	dir: 'assets/images/main_960-600.png',
 	x: 0,
 	y: 0,
+	buttonOpening: {
+		dir: 'assets/sprites/button_opening_206-17.png',
+		x: Config.global.screen.width * 0.5,
+		y: Config.global.screen.height * 0.62,
+		width: 103,
+		height: 17,
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		}
+	},
 	buttonPlay: {
 		dir: 'assets/sprites/button_start_140-16.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.65,
+		y: Config.global.screen.height * 0.68,
 		width: 70,
 		height: 16,
 		anchor: {
@@ -59,7 +70,7 @@ Config.menu = {
 	buttonHowToPlay: {
 		dir: 'assets/sprites/button_instruction_247-16.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.75,
+		y: Config.global.screen.height * 0.74,
 		width: 123,
 		height: 16,
 		anchor: {
@@ -70,7 +81,7 @@ Config.menu = {
 	buttonCredits: {
 		dir: 'assets/sprites/button_credits_192-16.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.85,
+		y: Config.global.screen.height * 0.8,
 		width: 96,
 		height: 16,
 		anchor: {
@@ -148,6 +159,6 @@ Config.game = {
 			}
 		},
 		score: {
-			dir: 'assets/images/score_asteroid_266-88.png'
+			dir: 'assets/images/score_asteroid_266-93.png'
 		}
 };
