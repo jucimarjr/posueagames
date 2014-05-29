@@ -6,6 +6,7 @@ var update = {
     score_placa : null,
     buttonInicio: null,
     buttonJogar: null,
+	pointWall : null,
     
     update : function(){
         // fazer o angulo apontar para baixo quando o jogador n������������������o esta pulando
@@ -73,27 +74,27 @@ var update = {
         var style = { font: "100px Helvetica", fill: "#ffffff" };
         this.score_placa = game.add.text((game.width - 50)/2, startY + 350, create.score + "", style);
 
-		this.buttonJogar = game.add.button(320, startY + 520, 'botaojogar', this.resetGame, this, 0, 0);
-		this.buttonJogar.input.useHandCursor = true;
+		update.buttonJogar = game.add.button(320, startY + 520, 'botaojogar', this.resetGame, 0, 0, 0);
+		update.buttonJogar.input.useHandCursor = true;
 		
-		this.buttonInicio = game.add.button(510, startY + 520, 'botaoinicio', this.startMenu, this, 0, 0);
-		this.buttonInicio.input.useHandCursor = true;
+		update.buttonInicio = game.add.button(510, startY + 520, 'botaoinicio', this.startMenu, 0, 0, 0);
+		update.buttonInicio.input.useHandCursor = true;
 				 			
 		this.player.destroy();
     },
     startMenu: function(){
-        this.buttonJogar.kill();
-        this.buttonInicio.kill();
-        this.score_placa.setText(" ");
-        this.pointWall.kill();
+        update.buttonJogar.kill();
+        update.buttonInicio.kill();
+        update.score_placa.setText(" ");
+        update.pointWall.kill();
         create.bgmusic.stop();
         game.state.start('menu');
     },
     resetGame: function(){
-        this.buttonJogar.kill();
-        this.buttonInicio.kill();
-        this.score_placa.setText(" ");
-        this.pointWall.kill();
+        update.buttonJogar.kill();
+        update.buttonInicio.kill();
+        update.score_placa.setText(" ");
+        update.pointWall.kill();
         create.reset();
     }	
 };
