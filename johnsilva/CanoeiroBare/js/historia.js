@@ -1,15 +1,7 @@
-﻿var historia = { preload: preload, create: create, start: start };
+﻿var historia = { create: create, start: start };
 
 var style = { font: "28px Arial Bold", fill: "#ffffff" };
 var styleBig = { font: "40px Arial Bold", fill: "#ffffff", stroke: "#000000", strokeThickness: 6 };
-
-function preload() {
-    //Imagens - Historia
-    game.load.image('inicio', 'assets/bg/history/1.jpg');
-    game.load.image('meio', 'assets/bg/history/2.jpg');
-    game.load.image('fim', 'assets/bg/history/3.jpg');
-
-}
 
 //Tela de Menu
 function create() {

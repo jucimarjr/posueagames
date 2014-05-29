@@ -57,6 +57,15 @@ function create() {
     game.load.spritesheet('play', 'assets/botoes/play_100-70.png', 100, 70, 2);
     game.load.spritesheet('canoemandead', 'assets/sprite/gameover/canoeiro_138-146-13.png', 138, 146, 13);
 
+    //Imagens - Historia
+    game.load.image('inicio', 'assets/bg/history/1.jpg');
+    game.load.image('meio', 'assets/bg/history/2.jpg');
+    game.load.image('fim', 'assets/bg/history/3.jpg');
+
+    //Imagesn Game Win
+    game.load.image('bgGameWin', 'assets/bg/history/4.jpg');
+    game.load.spritesheet('mapinguari', 'assets/sprite/mapinguari/mapinguari_71-77-6.png', 71, 77, 6);
+
     game.load.image('initCredits', 'assets/bg/creditos_900_600.jpg');
     game.load.spritesheet('backBtn', 'assets/botoes/back_350-120.png', 350, 120);
 

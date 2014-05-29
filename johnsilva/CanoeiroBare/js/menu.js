@@ -1,4 +1,4 @@
-﻿var GameMenu = {create: create };
+﻿var GameMenu = { create: create };
 
 var music;
 var toggle = false;
@@ -9,13 +9,10 @@ var bt_sound;
 function create() {
     //game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
     //game.input.onDown.add(gofull, this);
-    //if (startSound == true) {
-    //    initSound();
-    //}
 
     var initBg = game.add.sprite(0, 0, 'initBg');
 
-    var bt_iniciar = game.add.button(450, 365, 'btIniciar', start, this, 1, 0, 1);
+    var bt_iniciar = game.add.button(450, 365, 'btIniciar', history, this, 1, 0, 1);
     bt_iniciar.anchor.set(0.5, 0.5);
 
     var bt_tutorial = game.add.button(450, 500, 'btCredits', credits, this, 1, 0, 1);
@@ -50,7 +47,11 @@ function pause() {
 // Começa o jogo
 function start() {
     console.log("menu start");
-    game.state.start('fase');
+    //game.state.start('historia');
+}
+
+function history() {
+    game.state.start('historia');
 }
 
 function credits() {

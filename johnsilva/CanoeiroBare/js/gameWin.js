@@ -1,13 +1,5 @@
-﻿var gameWin = { preload: preload, create: create, start: start };
+﻿var gameWin = { create: create, start: start };
 
-function preload() {
-    game.load.image('bgGameWin', 'assets/bg/history/4.jpg');
-    game.load.spritesheet('mapinguari', 'assets/sprite/mapinguari/mapinguari_71-77-6.png', 71, 77, 6);
-    //game.load.image('win', 'assets/botoes/win_350-200.png');
-    //game.load.image('play', 'assets/botoes/play_100-70.png');
-    //game.load.image('logoMain', 'assets/bg/logo.png');
-    console.log("menu preload");
-}
 
 //Tela de Menu
 function create() {
