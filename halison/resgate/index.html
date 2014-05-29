@@ -44,12 +44,22 @@ body{
 		background-color:#F00;
 
 }
+
+#coments{
+	left: 50%;
+	margin-left:-375px;  /* largura é 750*/ 
+	background-color:#cccccc;
+/* 	background-color:#454545; */
+}
+
+
+#like{
+	left: 50%;
+	margin-left:-375px;  /* largura é 750*/ 
+}
 </style>
 </head>
 <body>
-
-<div id="tela">
-    
     <div id="fb-root"></div>
     
 		<script>(function(d, s, id) {
@@ -61,12 +71,15 @@ body{
         }(document, 'script', 'facebook-jssdk'));
         </script>
 
-		<div 
+		<div id="like"
              class="fb-like" 
              data-href="http://computacao.uea.edu.br/ludus/posueagames/halison/resgate/" 
              data-layout="button_count" data-action="like" data-show-faces="true" 
-             data-share="false">
+             data-share="true">
         </div>
+
+<div id="tela">
+    
         
 			<div id="menu">
 		        	<a href="abertura.html"><img src="assets/abertura_197-45.png" border="0"></a>
@@ -79,13 +92,13 @@ body{
 		
 		</div>
 	
-		<div class="fb-comments" 
-             data-href="http://computacao.uea.edu.br/ludus/posueagames/halison/resgate/" 
-             data-width="960" data-numposts="10" data-colorscheme="light">
-        </div>
-        
+      
 </div>
-
+		<div id="coments" class="fb-comments" 
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/halison/resgate/" 
+             data-width="750" data-numposts="10" data-colorscheme="light">
+        </div>
+      
     
    		
 </body>
