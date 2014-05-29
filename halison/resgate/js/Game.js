@@ -25,10 +25,18 @@ var asteroidGroup;
 var gameover;
 var isGameOver;
 var isJogo;
+var naveSprite;
 
 function preload () 
 {
 	game.load.image('nave', 'assets/nave_100-40.png');
+//	game.load.atlasJSONHash('naveHash', 'assets/naveSprites_120-50.png', 'assets/nave_100-40.json');
+	game.load.atlasJSONHash('naveHash', 'assets/nave_100-40.png', 'assets/nave_100-40.json');
+//	naveSprite = game.load.spritesheet('nave2', 	'assets/naveSprites_120-50.png',120,50,18);
+//	naveSprite.anchor.setTo(0.5, 0.5);
+//	naveSprite.animations.add('fly');
+//	naveSprite.animations.play('fly', 20, true);
+
 	game.load.image('space', 'assets/universo.png');
 	game.load.image('spaceForeground', 'assets/images/game_foreground_960-600.png');
 	game.load.image('atmosphere', 'assets/atmosfera_960-600.png');
@@ -102,8 +110,14 @@ function create ()
     game.physics.p2.restitution = 2.8;
     
 	nave = game.add.sprite(340, 300, 'nave');
+//	nave = game.add.sprite(340, 300, 'naveHash');
+//	nave.animations.add('fly');
+//	nave.animations.play('fly', 10, true);
+
+
 	game.physics.p2.enable(nave,false);
 	nave.body.setRectangle(90);
+	
 	
     nave.body.fixedRotation = true;
     nave.body.data.gravityScale = 0.5;
@@ -224,13 +238,17 @@ function create ()
         fill: "#ffffff",
         align: "right"
     });
+	
 	textScore.anchor.setTo(0.5, 0.5);
-
+	
+	
     gameover = game.add.image(1200,1260,'gameover');
   
     drawLives();
-	
+    
 	cursors = game.input.keyboard.createCursorKeys();
+	
+
 }
 
 function update() 
