@@ -1,46 +1,12 @@
 
-//var game = new Phaser.Game(960, 600, Phaser.AUTO, 'pg-game', { preload: preload, create: create, update: update });
-
-var asteroid;
-var space1;
-var space2;
-var spaceForeground1;
-var spaceForeground2;
-var nave;
-var sprite;
-var atmosfera;
-var cursors;
-var score;
-var textScore;
-var lifeNumber = 5; 
-var life = [];
-var asteroidCollisionGroup;
-var naveCollisionGroup;
-
-var asteroidGroup;
-var gameover;
-var isGameOver;
-var isJogo;
-
-var yellowCoins = [];
-var redCoins = [];
-var greenCoins = [];
-
-var yCoinsGroup;
-var rCoinsGroup;
-var gCoinsGroup;
-
-var yellowCoinsCollisionGroup;
-var redCoinsCollisionGroup;
-var greenCollisionGroup;
-
-var velocityScore;
-
 State.Play = function (game) {
 	this.game = game;
+	this.cursors;
 };
 
+
 State.Play.prototype = {
+
 	preload: function () {
 		game.load.image('nave', Config.game.nave.dir);
 		game.load.image('space', Config.game.background.dir);
@@ -65,34 +31,38 @@ State.Play.prototype = {
 	},
 	
 	create: function () {
-		"use strict";
 		var time;
 		var scale;
 		
 		velocityScore = 0;
-		
+		this.lifeNumber = 6;
 		isJogo = true;
 		isGameOver = false;
 		
 		score = 0;
 		
-		this.ASTEROID_NUMBER = 13;
-		this.ASTEROID_SPEED = 100; 
-		this.YELLOW_COIN_NUMBER = 30;
-		this.RED_COIN_NUMBER = 30;
-		this.GREEN_COIN_NUMBER = 30;
+		ASTEROID_NUMBER = 13;
+		ASTEROID_SPEED = 100; 
+		YELLOW_COIN_NUMBER = 30;
+		RED_COIN_NUMBER = 30;
+		GREEN_COIN_NUMBER = 30;
 		
-	    space1 = game.add.image(0,0,'space');
-	    space2 = game.add.image(960,0,'space');
-	    spaceForeground1 = game.add.image(0,0,'spaceForeground');
-	    spaceForeground2 = game.add.image(960,0,'spaceForeground');
-	    
-	    yellowCoins[0] = game.add.image(960,0,'coin_yellow_1');
-	    yellowCoins[1] = game.add.image(960,0,'coin_yellow_2');
-	    redCoins[0] = game.add.image(960,0,'coin_red_1');
-	    redCoins[1] = game.add.image(960,0,'coin_red_2');
-	    redCoins[2] = game.add.image(960,0,'coin_red_3');
-	    redCoins[3] = game.add.image(960,0,'coin_red_4');
+		space1 = game.add.image(0,0,'space');
+		space2 = game.add.image(960,0,'space');
+		spaceForeground1 = game.add.image(0,0,'spaceForeground');
+		spaceForeground2 = game.add.image(960,0,'spaceForeground');
+
+		this.life = [];
+		yellowCoins = [];
+		redCoins = [];
+		greenCoins = [];
+
+		yellowCoins[0] = game.add.image(960,0,'coin_yellow_1');
+		yellowCoins[1] = game.add.image(960,0,'coin_yellow_2');
+		redCoins[0] = game.add.image(960,0,'coin_red_1');
+		redCoins[1] = game.add.image(960,0,'coin_red_2');
+		redCoins[2] = game.add.image(960,0,'coin_red_3');
+		redCoins[3] = game.add.image(960,0,'coin_red_4');
 		greenCoins[0] = game.add.image(960,0,'coin_green_1');
 		greenCoins[1] = game.add.image(960,0,'coin_green_2');
 		greenCoins[2] = game.add.image(960,0,'coin_green_3');
@@ -102,34 +72,36 @@ State.Play.prototype = {
 		greenCoins[6] = game.add.image(960,0,'coin_green_7');
 		greenCoins[7] = game.add.image(960,0,'coin_green_8');
 		game.physics.startSystem(Phaser.Physics.P2JS);
-	    game.physics.p2.gravity.y = 5;
-	    game.physics.p2.setImpactEvents(true);
-	    game.physics.p2.restitution = 2.8;
+		game.physics.p2.gravity.y = 5;
+		game.physics.p2.setImpactEvents(true);
+		game.physics.p2.restitution = 2.8;
 	    
 		nave = game.add.sprite(340, 300, 'nave');
 		game.physics.p2.enable(nave,false);
 		nave.body.setRectangle(90);
 		
-	    nave.body.fixedRotation = true;
-	    nave.body.data.gravityScale = 0.5;
+		nave.body.fixedRotation = true;
+		nave.body.data.gravityScale = 0.5;
 	
-	    naveCollisionGroup = game.physics.p2.createCollisionGroup();
-	    asteroidCollisionGroup = game.physics.p2.createCollisionGroup();
+		naveCollisionGroup = game.physics.p2.createCollisionGroup();
+		asteroidCollisionGroup = game.physics.p2.createCollisionGroup();
 	    
-	    nave.body.setCollisionGroup(naveCollisionGroup);
+		nave.body.setCollisionGroup(naveCollisionGroup);
 	
-	    asteroidGroup = game.add.group();
-	    asteroidGroup.enableBody = true;
-	    asteroidGroup.physicsBodyType = Phaser.Physics.P2JS;
-		for (var i = 0; i < this.ASTEROID_NUMBER; i++)
+		asteroidGroup = game.add.group();
+		asteroidGroup.enableBody = true;
+		asteroidGroup.physicsBodyType = Phaser.Physics.P2JS;
+	    
+		for (var i = 0; i < ASTEROID_NUMBER; i++)
 	    {
+			var sprite;
 	    	sprite = asteroidGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'asteroid');
 	    	sprite.body.setCircle(40);	
 	    	sprite.body.setCollisionGroup(asteroidCollisionGroup); //add   
 	    	sprite.body.collides([asteroidCollisionGroup, naveCollisionGroup]);
 	    	game.physics.p2.enable(sprite, true);
-	    	time = game.rnd.integerInRange(1400,2000);
-	    	scale = time/1200;
+//	    	time = game.rnd.integerInRange(1400,2000);
+//	    	scale = time/1200; aqui mesmo oh
 	    	sprite.body.allowGravity = false;
 	    }
 		
@@ -142,8 +114,9 @@ State.Play.prototype = {
 		yCoinsGroup.enableBody = true;
 		yCoinsGroup.physicsBodyType = Phaser.Physics.P2JS;
 	
-		for (var i = 0; i < this.YELLOW_COIN_NUMBER; i++)
+		for (var i = 0; i < YELLOW_COIN_NUMBER; i++)
 		    {
+				var sprite;
 				if (Math.random() > 0.5 ){
 					sprite = yCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_yellow_1');
 				} else {
@@ -165,18 +138,18 @@ State.Play.prototype = {
 		rCoinsGroup.enableBody = true;
 		rCoinsGroup.physicsBodyType = Phaser.Physics.P2JS;
 	
-		for (var i = 0; i < this.RED_COIN_NUMBER; i++)
+		for (var i = 0; i < RED_COIN_NUMBER; i++)
 		    {
 				var number = Math.random();
-				
+				var sprite = null;
 				if (number <= 0.25 ){
 					sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_1');
 				} else if (number > 0.25 && number <= 0.5 ){
 					sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_2');
 				} else if (number > 0.5  && number <= 0.75){
-						sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_3');
+					sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_3');
 				} else if (number > 0.75){
-						sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_4');
+					sprite = rCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_red_4');
 				}
 		    	sprite.body.setCircle(31);	
 		    	sprite.body.setCollisionGroup(redCoinsCollisionGroup); //add   
@@ -193,9 +166,10 @@ State.Play.prototype = {
 		gCoinsGroup.enableBody = true;
 		gCoinsGroup.physicsBodyType = Phaser.Physics.P2JS;
 	
-		for (var i = 0; i < this.GREEN_COIN_NUMBER; i++)
+		for (var i = 0; i < GREEN_COIN_NUMBER; i++)
 		    {
 				var number = Math.random();
+				var sprite = null;
 				if (number <= 0.1 ){
 					sprite = gCoinsGroup.create(500+(200 *i), game.rnd.integerInRange(-100, 600), 'coin_green_1');
 				} else if (number > 0.1 && number <= 0.2 ){
@@ -220,35 +194,36 @@ State.Play.prototype = {
 		    	sprite.body.allowGravity = false;
 		    }
 		
-		nave.body.collides(greenCoinsCollisionGroup, hitGreenCoins, this);
+		nave.body.collides(greenCoinsCollisionGroup, this.hitGreenCoins, this);
 		
-		game.add.image(0,0,'score');
-		textScore = game.add.text(140,50, "000000", {
+		game.add.image(Config.game.score.x,Config.game.score.y,'score');
+		textScore = game.add.text(Config.game.score.textX,Config.game.score.textY, "000000", {
 	        font: "32px Arial",
 	        fill: "#ffffff",
 	        align: "right"
 	    });
+		
 		textScore.anchor.setTo(0.5, 0.5);
 	
 	    gameover = game.add.image(980,0,'gameover');
 	  
-	    drawLives();
+	    this.drawLives();
 		
-		cursors = game.input.keyboard.createCursorKeys();
+	    this.cursors = game.input.keyboard.createCursorKeys();
 		
 		
 //		setTimeout(function () {
-//			this.game.state.start('HowToPlay').start();
+//			game.state.start('HowToPlay').start();
 //			game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 6000, true).start();
 //		}, 2000);
 
 	},
 
-	update : function(){
+	update: function(){
 		if ( isJogo )
 		{
-		    space1.x -= 4.8;
-		    space2.x -= 4.8;
+			space1.x -= 4.8;
+			space2.x -= 4.8;
 		    if (space1.x + space1.width < 0)
 		    {
 		    	space1.x = 960;
@@ -272,23 +247,23 @@ State.Play.prototype = {
 		    	spaceForeground2.x = 960;
 	  	    }
 		    
-			nave.body.setZeroVelocity();
+		    nave.body.setZeroVelocity();
 			
-		    if (game.cursors.up.isDown)
+		    if (this.cursors.up.isDown)
 		    {
 		    	nave.body.moveDown(180+velocityScore);
 		    }
 		    
-		    else if (game.cursors.down.isDown)
+		    else if (this.cursors.down.isDown)
 		    {
 		    	nave.body.moveUp(180+velocityScore);
 		    }  
 			
-			for (var i = 0; i < this.ASTEROID_NUMBER ; i++)
+			for (var i = 0; i < ASTEROID_NUMBER ; i++)
 			{
 				sprite = asteroidGroup.getAt(i);
 				sprite.body.setZeroVelocity();
-				sprite.body.moveLeft(this.ASTEROID_SPEED+velocityScore ); //game.rnd.integerInRange(100,200) );
+				sprite.body.moveLeft(ASTEROID_SPEED+velocityScore ); //game.rnd.integerInRange(100,200) );
 		
 				if (sprite.body.x < -sprite.width)
 				{
@@ -297,12 +272,13 @@ State.Play.prototype = {
 	//				sprite.body.y = game.rnd.integerInRange(-100, 620);
 			    }
 			}
-			for (var i = 0; i < this.YELLOW_COIN_NUMBER ; i++)
+			for (var i = 0; i < YELLOW_COIN_NUMBER ; i++)
 			{
+				var sprite = null;
 				sprite = yCoinsGroup.getAt(i);
 				if (sprite.alive){
 					sprite.body.setZeroVelocity();
-					sprite.body.moveLeft(this.ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
+					sprite.body.moveLeft(ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
 			
 					if (sprite.body.x < -sprite.width)
 					{
@@ -311,12 +287,13 @@ State.Play.prototype = {
 				    }
 				}
 			}
-			for (var i = 0; i < this.RED_COIN_NUMBER ; i++)
+			for (var i = 0; i < RED_COIN_NUMBER ; i++)
 			{
+				var sprite = null;
 				sprite = rCoinsGroup.getAt(i);
 				if (sprite.alive){
 					sprite.body.setZeroVelocity();
-					sprite.body.moveLeft(this.ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
+					sprite.body.moveLeft(ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
 			
 					if (sprite.body.x < -sprite.width)
 					{
@@ -325,12 +302,12 @@ State.Play.prototype = {
 				    }
 				}
 			}
-			for (var i = 0; i < this.GREEN_COIN_NUMBER ; i++)
+			for (var i = 0; i < GREEN_COIN_NUMBER ; i++)
 			{
 				sprite = gCoinsGroup.getAt(i);
 				if (sprite.alive){
 					sprite.body.setZeroVelocity();
-					sprite.body.moveLeft(this.ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
+					sprite.body.moveLeft(ASTEROID_SPEED); //game.rnd.integerInRange(100,200) );
 			
 					if (sprite.body.x < -sprite.width)
 					{
@@ -351,31 +328,36 @@ State.Play.prototype = {
 	
 	hitAsteroid: function (body1, body2)
 	{
-		decreaseLifeNumber();
+		this.decreaseLifeNumber();
 	},
 
 	hitYellowCoins: function (body1, body2) 
 	{
+		if (isGameOver) return;
 		score+=3;
 		if (score > 100000) 
 			score = 999999;
-		updateTextScore();
+		this.updateTextScore();
 		body2.sprite.kill();
 	},
 
 	hitRedCoins: function (body1, body2) 
 	{
+		if (isGameOver) return;
 		score--;
-		if (score < 0) score = 0;
-		updateTextScore();
+		if (score < 0) 
+			score = 0;
+		this.updateTextScore();
 		body2.sprite.kill();
 	},
 
 	hitGreenCoins: function (body1, body2) 
 	{
+		if (isGameOver) return;	
 		score+=6;
-		if (score > 100000) score = 999999;
-		updateTextScore();
+		if (score > 100000) 
+			score = 999999;
+		this.updateTextScore();
 		body2.sprite.kill();
 	},
 
@@ -398,26 +380,26 @@ State.Play.prototype = {
 
 	drawLives: function ()
 	{
-		for ( var i = 0; i < lifeNumber; i++)
+		for ( var i = 0; i < this.lifeNumber; i++)
 		{
-			life[i] = game.add.sprite(650+(i*50), 20, 'nave');
-			life[i].scale.x = 0.4;
-			life[i].scale.y = 0.7;
+			this.life[i] = game.add.sprite(Config.game.score.lifeX+(i*50), Config.game.score.lifeY, 'nave');
+			this.life[i].scale.x = 0.4;
+			this.life[i].scale.y = 0.7;
 		}
 	},
 
 	decreaseLifeNumber: function ()
 	{
-		if (lifeNumber > 0)
+
+		if (this.lifeNumber > 0)
 		{
-			lifeNumber--;
-			life[lifeNumber].kill();
+			this.lifeNumber--;
+			this.life[this.lifeNumber].kill();
 		}
-		
 		else 
 		{
-			isJogo = false;
-			isGameOver = true;
+			this.isJogo = false;
+			this.isGameOver = true;
 		}
 	}
 };

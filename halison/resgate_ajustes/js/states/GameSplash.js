@@ -29,7 +29,7 @@ State.GameSplash.prototype = {
 	},
 	create: function () {
 		"use strict";
-		var txt = "Pos Graduacao - UEA\n\nDesenvolvimento de Jogos\n\nIntroducao a Programacao de Jogos Eletronicos";
+		var txt = "Universidade do Estado do Amazonas\nEscola Superior de Tecnologia\nEspecializacao em Desenvolvimento de Jogos Eletronicos\nIntroducao a Programacao de Jogos Eletronicos\n";
 		var text;
 		text = game.add.text(game.world.centerX, game.world.centerY, txt, {
 	        font: "35px Arial",

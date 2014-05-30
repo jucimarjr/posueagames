@@ -34,8 +34,8 @@ Config.gameSplash = {
 	},
 	x: 0,
 	y: 0,
-	millis: 3000,
-	nextState: 4000
+	millis: 6000,
+	nextState: 7000
 };
 
 //Menu
@@ -157,6 +157,12 @@ Config.game = {
 			}
 		},
 		score: {
-			dir: 'assets/images/score_asteroid_263-85.png'
+			dir: 'assets/images/score_asteroid_263-85.png',
+			x: 10,
+			y: 10,
+			textX: 107,
+			textY: 42,
+			lifeX: 650,
+			lifeY: 20
 		}
 };
