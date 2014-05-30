@@ -4,12 +4,24 @@
 var Config = {
 	global: {
 		animationVelocity: 6,
+		device: {
+			 resize : function(game){
+				"use strict";
+				game.scale.minWidth = 320;
+				game.scale.minHeight = 240;
+				game.scale.maxWidth = 1920;
+				game.scale.maxHeight = 1080;
+				
+				game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+				game.scale.setScreenSize();		
+			 }
+		},
 		screen: {
-			width: 960,
-			height: 600,
+			width: 1920,
+			height: 1080,
 			resize: function (game) {
 				"use strict";
-				if (window.innerHeight < 600 || window.innerWidth < 960) {
+				if (window.innerHeight < 1080 || window.innerWidth < 1920) {
 					game.scale.setExactFit();
 					game.scale.refresh();
 				}
@@ -109,6 +121,7 @@ Config.credits = {
 // Game
 Config.game = {
 	dir: {
+		imageTemp : "assets/TexturaMontanhas.png",
 		tilemap: "assets/spritesheets/mapa.json",
 		tileset: "assets/spritesheets/texturebreakout.png",
 		worldAudio: "assets/audio/In my own place.mp3"

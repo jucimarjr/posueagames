@@ -7,21 +7,25 @@ State.Game = function (game){
 
 State.Game.prototype = {
     preload: function () {
-        "use strict"; 
+        "use strict";
     },
     create: function() {
         "use strict";
         // game defs
+		game.world.setBounds(0, 0, 2500, 2500);
         this.game.physics.startSystem(Phaser.Game.ARCADE);
 
-        // map defs
+     /*   // map defs
         var map = this.game.add.tilemap('tilemap');
         // ordem correta: nome do tileset no Tiled, nome do asset no Phaser
         // nesse caso o nome do tileset é texturebreakout, e o nome do assed é tileset
         map.addTilesetImage('texturebreakout', 'tileset');
         this.layer = map.createLayer('Camada de Tiles 1');
         this.layer.resizeWorld();
-        map.setCollisionByExclusion([9], true, 'Camada de Tiles 1');
+        map.setCollisionByExclusion([9], true, 'Camada de Tiles 1');*/
+		
+		this.background = this.game.add.tileSprite(0, -400, 2500, 2500,  'imageTemp');
+
         // player defs
         this.createPlayer();
         this.game.camera.follow(this.player);
