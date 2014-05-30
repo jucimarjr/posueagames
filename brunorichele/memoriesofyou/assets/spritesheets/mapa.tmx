@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="24" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="texturebreakout" tilewidth="40" tileheight="40">
+  <image source="texturebreakout.png" width="240" height="120"/>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="30" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzFlrEOgDAIRJt26tKh//+xxkQTQiw5rmCHGzTCo3CovZTSQQ2h+7o9QuO1JpmnGbI4qzxZXB0bkWdVO5LT88wu1+uFN66Ss6pGrKePjEc0F+mJvPflT6aPSMzuzp7mWjOO2KtVvSzXWxOyXxmzZLgjgYvUdIob4d3d2aP+ifZcBhfRdNYeqWwu855AuPo/7S+uZDPfYo/0+azzZnIvU80Uyw==
+  </data>
+ </layer>
+</map>
