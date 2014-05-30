@@ -3,10 +3,12 @@
 State.Menu = function (game) {
 	"use strict";
 	this.game = game;
+	this.isFirstLoad = true;
 };
 State.Menu.prototype = {
 	preload: function () {
 		"use strict";
+
 	},
 	create: function () {
 		"use strict";
@@ -20,6 +22,10 @@ State.Menu.prototype = {
 		buttonHowToPlay.anchor.setTo(Config.menu.buttonHowToPlay.anchor.x, Config.menu.buttonHowToPlay.anchor.y);
 		buttonCredits = this.game.add.button(Config.menu.buttonCredits.x, Config.menu.buttonCredits.y, 'button-credits', this.clickCredits, this, 1, 0, 1);
 		buttonCredits.anchor.setTo(Config.menu.buttonCredits.anchor.x, Config.menu.buttonCredits.anchor.y);
+		if (this.isFirstLoad){
+			this.isFirstLoad = false;
+			window.open("abertura.html","_blank");
+		}
 	},
 	update: function () {
 		"use strict";
@@ -27,7 +33,7 @@ State.Menu.prototype = {
 	},
 	clickOpening: function () {
 		"use strict";
-		window.open("http://localhost/workspace/posueagames/halison/resgate_ajustes/abertura.html","_blank");
+		window.open("abertura.html","_blank");
 	},
 	clickPlay: function () {
 		"use strict";

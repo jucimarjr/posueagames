@@ -21,22 +21,20 @@ var Config = {
 //LudusSplash
 Config.ludusSplash = {
 	dir: 'assets/images/LudusSplash_960-600.png',
-//	bgdir: 'assets/images/game_background_960-600.png',
 	x: 0,
 	y: 0,
-	millis: 1000,
+	millis: 3500,
 	nextState: 4000
 };
 
 //GameSplash
 Config.gameSplash = {
 	dir: {
-//		background: 'assets/images/game_background_960-600.png',
 		bar: 'assets/images/ProgressBar_960-30.png'
 	},
 	x: 0,
 	y: 0,
-	millis: 2000,
+	millis: 3000,
 	nextState: 4000
 };
 
@@ -159,6 +157,6 @@ Config.game = {
 			}
 		},
 		score: {
-			dir: 'assets/images/score_asteroid_266-93.png'
+			dir: 'assets/images/score_asteroid_263-85.png'
 		}
 };

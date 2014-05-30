@@ -9,18 +9,14 @@ State.GameSplash.prototype = {
 		
 	preload: function () {
 		"use strict";
-//		var spriteBg = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
 		var progressBar = this.game.add.sprite(0, 500, 'progress-bar');
-//		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
 		this.game.load.setPreloadSprite(progressBar);
-		//Menu
 		this.game.load.image('menu-background',  Config.menu.dir);
 		this.game.load.spritesheet('button-opening', Config.menu.buttonOpening.dir, Config.menu.buttonOpening.width, Config.menu.buttonOpening.height);
 		this.game.load.spritesheet('button-play', Config.menu.buttonPlay.dir, Config.menu.buttonPlay.width, Config.menu.buttonPlay.height);
 		this.game.load.spritesheet('button-credits', Config.menu.buttonCredits.dir, Config.menu.buttonCredits.width, Config.menu.buttonCredits.height);
 		this.game.load.spritesheet('button-how-to-play', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
 		this.game.load.onLoadComplete.add(function () {
-//			this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start();
 			setTimeout(function () {this.game.state.start('Menu');
 		}, Config.gameSplash.millis);}, this);
 		
@@ -33,6 +29,15 @@ State.GameSplash.prototype = {
 	},
 	create: function () {
 		"use strict";
+		var txt = "Pos Graduacao - UEA\n\nDesenvolvimento de Jogos\n\nIntroducao a Programacao de Jogos Eletronicos";
+		var text;
+		text = game.add.text(game.world.centerX, game.world.centerY, txt, {
+	        font: "35px Arial",
+	        fill: "#ffff00",
+	        align: "center",
+	        strokeThickness: 3 
+	    });
+	    text.anchor.setTo(0.5, 0.5);
 	},
 	update: function () {
 		"use strict";
