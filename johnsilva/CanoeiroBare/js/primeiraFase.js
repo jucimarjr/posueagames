@@ -305,7 +305,7 @@ function checkEnemiesBounds(obj) {
 }
 
 function getRandomX(){
-    var max = 900 - jungleWidth - 55;
+    var max = 900 - jungleWidth - 30;
     var min = jungleWidth+20;
     return Math.round(Math.random() * (max - min)) + min;
 }
