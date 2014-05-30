@@ -1,17 +1,12 @@
-BasicGame.GameState = function () {
+Game.GameState = function () {
 
     this.map;
     this.layer;
 
     this.player;
-
 };
 
-BasicGame.GameState.debugDraw = true;
-BasicGame.GameState.pixelsToUnit = 80;
-BasicGame.GameState.gravity = 9.8 * BasicGame.GameState.pixelsToUnit;
-
-BasicGame.GameState.prototype = {
+Game.GameState.prototype = {
 
     create: function () {
         this.game.stage.backgroundColor = '#2d2d2d';
@@ -22,8 +17,8 @@ BasicGame.GameState.prototype = {
     },
 
     setupPhysicsSystem: function () {
-        this.game.physics.startSystem(Phaser.Physics.P2JS);
-        this.game.physics.p2.gravity.y = BasicGame.GameState.gravity;
+        this.game.physics.startSystem(Phaser.Physics.ARCADE);
+        this.game.physics.arcade.gravity.y = PhysicsConsts.gravity;
     },
 
     createTileMap: function () {
@@ -36,28 +31,21 @@ BasicGame.GameState.prototype = {
         this.layer = this.map.createLayer('Tile Layer 1');
         this.layer.resizeWorld();
 
-        this.map.setCollisionBetween(1, 25);
-
-        var bodies = this.game.physics.p2.convertTilemap(this.map, this.layer);
-
-        for (var i = 0; i < bodies.length; i++) {
-            bodies[i].debug = BasicGame.GameState.debugDraw;
-        };
-
-        this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
+        this.map.setCollisionBetween(0, 25);
     },
 
     createPlayer: function () {
-        this.player = new BasicGame.PlayerController(this);
+        this.player = new Game.PlayerController(this);
         this.player.create();
     },
 
     update: function () {
-
+        this.game.physics.arcade.collide(this.layer, this.player.sprite);
+        this.player.update();
     },
 
     registerBody: function (sprite) {
-        this.game.physics.p2.enableBody(sprite, BasicGame.GameState.debugDraw);
+        this.game.physics.arcade.enableBody(sprite, PhysicsConsts.debugDraw);
     },
 
     hideSprite: function (sprite) {

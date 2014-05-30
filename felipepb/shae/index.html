@@ -5,14 +5,15 @@
     <link rel="stylesheet" href="./style.css" type="text/css" media="screen" />
     <meta charset="utf-8">
     <!-- Phaser Game Framework -->
-    <script src="phaser/phaser.min.js"></script>
+    <script src="js/phaser/phaser.min.js"></script>
     <!-- Game Classes -->
     <script src="js/game/states/BootState.js"></script>
     <script src="js/game/states/PreloaderState.js"></script>
     <script src="js/game/states/GameState.js"></script>
     <script src="js/game/controllers/PlayerController.js"></script>
+    <script src="js/game/model/Globals.js"></script>
     <!-- Facebook -->
-    <meta property="og:locale" content="pt_BR">
+    <!-- <meta property="og:locale" content="pt_BR">
     <meta property="og:url" content="http://computacao.uea.edu.br/ludus/posueagames/felipepb/relationship/">
     <meta property="og:title" content="RelationShip">
     <meta property="og:site_name" content="Especializacao em Desenvolvimento de Jogos Eletrônicos da UEA">
@@ -21,11 +22,11 @@
 	<meta property="og:image" content="http://computacao.uea.edu.br/ludus/posueagames/felipepb/relationship/assets/promo_960-600.png">
 	<meta property="og:image:type" content="image/png">
 	<meta property="og:image:width" content="960">
-	<meta property="og:image:height" content="600">
+	<meta property="og:image:height" content="600"> -->
 </head>
 
 <body>
-    <div class="container">
+    <<!-- div class="container">
     
         <div class="site">
         
@@ -80,7 +81,9 @@
             
         </div>
         
-    </div>
+    </div> -->
+
+    <div id="gameContainer"></div>
 
     <script type="text/javascript">
 
@@ -92,11 +95,11 @@
 
             //  Add the States your game has.
             //  You don't have to do this in the html, it could be done in your Boot state too, but for simplicity I'll keep it here.
-            game.state.add('BootState', BasicGame.BootState);
-            game.state.add('PreloaderState', BasicGame.PreloaderState);
-            // game.state.add('MainMenu', BasicGame.MainMenu);
-            game.state.add('GameState', BasicGame.GameState);
-            // game.state.add('EndGame', BasicGame.EndGame);
+            game.state.add('BootState', Game.BootState);
+            game.state.add('PreloaderState', Game.PreloaderState);
+            // game.state.add('MainMenu', Game.MainMenu);
+            game.state.add('GameState', Game.GameState);
+            // game.state.add('EndGame', Game.EndGame);
 
             //  Now start the Boot state.
             game.state.start('BootState');

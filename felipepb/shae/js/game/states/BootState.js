@@ -1,8 +1,8 @@
-var BasicGame = {};
+var Game = {};
 
-BasicGame.BootState = function () {};
+Game.BootState = function () {};
 
-BasicGame.BootState.prototype = {
+Game.BootState.prototype = {
 
     preload: function () {
 

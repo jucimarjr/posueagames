@@ -1,4 +1,4 @@
-BasicGame.PreloaderState = function () {
+Game.PreloaderState = function () {
 
     // this.background = null;
     // this.preloadBar = null;
@@ -7,7 +7,7 @@ BasicGame.PreloaderState = function () {
 
 };
 
-BasicGame.PreloaderState.prototype = {
+Game.PreloaderState.prototype = {
 
     preload: function () {
 
