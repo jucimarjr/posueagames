@@ -42,8 +42,8 @@ StarWars = (function() {
     this.audio = this.el.find('audio').get(0);
     
     // Start the animation
-    this.start = this.el.find('.start');
-    
+//    this.start = this.el.find('.start');
+    this.audio.play();
     // The animation wrapper
     this.animation = this.el.find('.animation');
     
@@ -51,24 +51,29 @@ StarWars = (function() {
     this.reset();
 
     // Start the animation on click
-    this.start.bind('click', $.proxy(function() {
-      this.start.hide();
-      this.audio.play();
-      this.el.append(this.animation);
-    }, this));
+//    this.start.bind('click', $.proxy(function() {
+//      this.start.hide();
+//      this.audio.play();
+//      this.el.append(this.animation);
+//      window.close();
+//    }, this));
     
     // Reset the animation and shows the start screen
     $(this.audio).bind('ended', $.proxy(function() {
       this.audio.currentTime = 0;
       this.reset();
+      window.close();
     }, this));
+    
+
   }
   
   /*
    * Resets the animation and shows the start screen.
    */
   StarWars.prototype.reset = function() {
-    this.start.show();
+//    this.start.show();
+    this.start();
     this.cloned = this.animation.clone(true);
     this.animation.remove();
     this.animation = this.cloned;

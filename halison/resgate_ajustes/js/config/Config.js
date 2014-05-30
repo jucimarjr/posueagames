@@ -21,23 +21,21 @@ var Config = {
 //LudusSplash
 Config.ludusSplash = {
 	dir: 'assets/images/LudusSplash_960-600.png',
-	backgroundDir: 'assets/images/game_background_960-600.png',
 	x: 0,
 	y: 0,
-	millis: 1000,
+	millis: 3500,
 	nextState: 4000
 };
 
 //GameSplash
 Config.gameSplash = {
 	dir: {
-		background: 'assets/images/game_background_960-600.png',
 		bar: 'assets/images/ProgressBar_960-30.png'
 	},
 	x: 0,
 	y: 0,
-	millis: 2000,
-	nextState: 4000
+	millis: 6000,
+	nextState: 7000
 };
 
 //Menu
@@ -46,10 +44,10 @@ Config.menu = {
 	x: 0,
 	y: 0,
 	buttonOpening: {
-		dir: 'assets/sprites/button_openning_186-17.png',
+		dir: 'assets/sprites/button_opening_206-17.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.4,
-		width: 186,
+		y: Config.global.screen.height * 0.62,
+		width: 103,
 		height: 17,
 		anchor: {
 			x: 0.5,
@@ -57,11 +55,10 @@ Config.menu = {
 		}
 	},
 	buttonPlay: {
-		dir: 'assets/spritesheets/buttom_start_140-16.png',
-//		dir: 'assets/spritesheets/button_play_180-33.png',
+		dir: 'assets/sprites/button_start_140-16.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.4,
-		width: 140,
+		y: Config.global.screen.height * 0.68,
+		width: 70,
 		height: 16,
 		anchor: {
 			x: 0.5,
@@ -69,10 +66,10 @@ Config.menu = {
 		}
 	},
 	buttonHowToPlay: {
-		dir: 'assets/spritesheets/button_instruction_247-16.png',
+		dir: 'assets/sprites/button_instruction_247-16.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.6,
-		width: 247,
+		y: Config.global.screen.height * 0.74,
+		width: 123,
 		height: 16,
 		anchor: {
 			x: 0.5,
@@ -80,10 +77,10 @@ Config.menu = {
 		}
 	},
 	buttonCredits: {
-		dir: 'assets/spritesheets/button_credits_192-16.png',
+		dir: 'assets/sprites/button_credits_192-16.png',
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.8,
-		width: 192,
+		width: 96,
 		height: 16,
 		anchor: {
 			x: 0.5,
@@ -160,6 +157,12 @@ Config.game = {
 			}
 		},
 		score: {
-			dir: 'assets/images/score_asteroid_266-88.png'
+			dir: 'assets/images/score_asteroid_263-85.png',
+			x: 10,
+			y: 10,
+			textX: 107,
+			textY: 42,
+			lifeX: 650,
+			lifeY: 20
 		}
 };
