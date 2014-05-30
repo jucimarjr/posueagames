@@ -4,8 +4,10 @@
 var Config = {
 	global: {
 		animationVelocity: 6,
-		device: {
-			 resize : function(game){
+		screen: {
+			width: 1920,
+			height: 1080,
+			resize: function (game) {
 				"use strict";
 				game.scale.minWidth = 320;
 				game.scale.minHeight = 240;
@@ -13,18 +15,7 @@ var Config = {
 				game.scale.maxHeight = 1080;
 				
 				game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-				game.scale.setScreenSize();		
-			 }
-		},
-		screen: {
-			width: 1920,
-			height: 1080,
-			resize: function (game) {
-				"use strict";
-				if (window.innerHeight < 1080 || window.innerWidth < 1920) {
-					game.scale.setExactFit();
-					game.scale.refresh();
-				}
+				game.scale.setScreenSize();	
 			}
 		}
 	}
