@@ -17,12 +17,13 @@ State.LudusSplash.prototype = {
 	create: function () {
 		"use strict";
 		var sprite = this.game.add.sprite(Config.ludusSplash.x, Config.ludusSplash.y, 'ludus-splash');
-		setTimeout(function () {
+		// descomentar se quiser ver a tela de splash
+		/*setTimeout(function () {
 			this.game.add.tween(sprite).to({alpha : 0}, Config.ludusSplash.millis, Phaser.Easing.Linear.None).start();
-		}, Config.ludusSplash.millis);
-		setTimeout(function () {
+		}, Config.ludusSplash.millis);*/
+		//setTimeout(function () {
 			this.game.state.start('GamePlay');
-		}, Config.ludusSplash.nextState);
+		//}, Config.ludusSplash.nextState);
 	},
 	update: function () {
 		"use strict";
