@@ -7,7 +7,7 @@ State.GameSplash = function (game) {
 State.GameSplash.prototype = {
 	preload: function () {
 		"use strict";
-		var progressBar = this.game.add.sprite(0, 500, 'progress-bar');
+		var progressBar = this.game.add.sprite(0, 800, 'progress-bar');
 		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
 		this.game.load.setPreloadSprite(progressBar);
 		this.game.load.onLoadComplete.add(function () {

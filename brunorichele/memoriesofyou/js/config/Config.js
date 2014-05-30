@@ -23,7 +23,7 @@ var Config = {
 
 //LudusSplash
 Config.ludusSplash = {
-	dir: 'assets/images/LudusSplash_960-600.png',
+	dir: 'assets/images/LudusSplash_1920-1080.png',
 	x: 0,
 	y: 0,
 	millis: 2000,
@@ -32,7 +32,7 @@ Config.ludusSplash = {
 
 //SponsorSplash
 Config.sponsorSplash = {
-	dir: 'assets/images/SponsorSplash_960-600.png',
+	dir: 'assets/images/SponsorSplash_1920-1080.png',
 	x: 0,
 	y: 0,
 	millis: 2000,
@@ -42,8 +42,8 @@ Config.sponsorSplash = {
 //GameSplash
 Config.gameSplash = {
 	dir: {
-		background: 'assets/images/GameSplash_960-600.png',
-		bar: 'assets/images/ProgressBar_960-30.png'
+		background: 'assets/images/GameSplash_1920-1080.png',
+		bar: 'assets/images/ProgressBar_1920-30.png'
 	},
 	x: 0,
 	y: 0,
@@ -53,7 +53,7 @@ Config.gameSplash = {
 
 //Menu
 Config.menu = {
-	dir: 'assets/images/MenuBackground_960-600.png',
+	dir: 'assets/images/MenuBackground_1920-1080.png',
 	x: 0,
 	y: 0,
 	buttonPlay: {
@@ -97,14 +97,14 @@ Config.menu = {
 
 //HowToPlay
 Config.howToPlay = {
-	dir: 'assets/images/HowToPlay_960-600.png',
+	dir: 'assets/images/HowToPlay_1920-1080.png',
 	x: 0,
 	y: 0
 };
 
 //Credits
 Config.credits = {
-	dir: 'assets/images/Credits_960-600.png',
+	dir: 'assets/images/Credits_1920-1080.png',
 	x: 0,
 	y: 0
 };
