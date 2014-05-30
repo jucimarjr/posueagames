@@ -110,7 +110,8 @@ Config.credits = {
 Config.game = {
 	dir: {
 		tilemap: "assets/spritesheets/mapa.json",
-		tileset: "assets/spritesheets/texturebreakout.png"
+		tileset: "assets/spritesheets/texturebreakout.png",
+		worldAudio: "assets/audio/In my own place.mp3"
 	},
 	jogador: {
 		dir: 'assets/images/jogador_40-40.png',

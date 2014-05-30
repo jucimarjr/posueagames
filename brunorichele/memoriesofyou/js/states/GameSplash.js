@@ -28,6 +28,7 @@ State.GameSplash.prototype = {
 		this.game.load.tilemap('tilemap', Config.game.dir.tilemap, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tileset', Config.game.dir.tileset);
 		this.game.load.image('jogador', Config.game.jogador.dir);
+		this.game.load.audio('bgmusic', Config.game.dir.worldAudio);
 	},
 	create: function () {
 		"use strict";

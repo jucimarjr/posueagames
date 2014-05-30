@@ -28,6 +28,9 @@ State.Game.prototype = {
 
         //misc defs
         this.cursors = this.game.input.keyboard.createCursorKeys();
+		
+		this.bgmusic = this.game.add.audio('bgmusic');
+        this.bgmusic.play('', 0, 1, true);
 
     },
     update: function(){
