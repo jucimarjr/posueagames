@@ -6,6 +6,7 @@ Game.PlayerController = function (gameState) {
     this.cursorKeys;
     this.runButton;
     this.jumpButton;
+	this.joystick;
 
     this.isGrounded;
     this.canJump;
@@ -41,6 +42,7 @@ Game.PlayerController.prototype = {
         this.cursorKeys = this.gameState.game.input.keyboard.createCursorKeys();
         this.runButton = this.gameState.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
         this.jumpButton = this.gameState.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		this.joystick = new Joystick();
     },
 
     update: function () {
@@ -61,28 +63,38 @@ Game.PlayerController.prototype = {
     },
 
     handleMovement: function () {
+		var joystick = this.joystick;
+		var joystickX = joystick.getX();
+		var joystickY = joystick.getY();
+		var runButtonIsDown = this.runButton.isDown || joystick.getA();
+		
         this.direction = Game.PlayerController.Direction.None;
 
-        if (this.cursorKeys.left.isDown)
+        if (this.cursorKeys.left.isDown || joystickX < JoystickConsts.leftOffset)
             this.direction = Game.PlayerController.Direction.Left;
-        else if (this.cursorKeys.right.isDown)
+        else if (this.cursorKeys.right.isDown || joystickX > JoystickConsts.rightOffset)
             this.direction = Game.PlayerController.Direction.Right;
 
-        if (this.direction != Game.PlayerController.Direction.None && this.runButton.isDown) {
+        if (this.direction != Game.PlayerController.Direction.None && runButtonIsDown) {
             this._actualRunModifier += PlayerConsts.runModifierDamping;
             this._actualRunModifier = Math.min(this._actualRunModifier, 
                                                PlayerConsts.runModifier);
-            this.direction += this.direction == Game.PlayerController.Direction.Right ? this._actualRunModifier : -this._actualRunModifier;
+            this.direction += this.direction == Game.PlayerController.Direction.Right
+			                                     ? this._actualRunModifier
+												 : -this._actualRunModifier;
         } else if (this.runButton.isUp) {
             this._actualRunModifier = 0.0;
         }
     }, 
 
     handleJump: function () {
-        if (this.canJump && this.isGrounded && this.jumpButton.isDown) {
+		var joystick = this.joystick;
+		var jumpButtonIsDown = this.jumpButton.isDown || joystick.getB();
+		
+        if (this.canJump && this.isGrounded && jumpButtonIsDown) {
             this.doJump = true;
             this.canJump = false;
-        } else if (this.isGrounded && !this.jumpButton.isDown) {
+        } else if (this.isGrounded && !jumpButtonIsDown) {
             this.canJump = true;
         }
     },

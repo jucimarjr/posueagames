@@ -10,3 +10,8 @@ var PlayerConsts = {
 	runModifier: 2.0,
 	runModifierDamping: 0.025
 };
+
+var JoystickConsts = {
+    leftOffset: 28672,
+    rightOffset: 36864
+};
