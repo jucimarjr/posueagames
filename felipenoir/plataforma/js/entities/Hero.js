@@ -7,6 +7,7 @@ var Hero = {
     gravityY:100,
     velocityX:100,
     jump:-350,
+    up:-150,
     animations:{
         run:{
             name:'run',

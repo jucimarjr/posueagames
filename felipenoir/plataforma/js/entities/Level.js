@@ -6,8 +6,10 @@ var Level = {
         tilePath:'assets/maps/tile_base.png',
         layer:'Camada de Tiles 1',
         layerFase2 : 'Tile Layer 1',
+        objectFase2 : 'Object Layer 1',
         collisionStart:0,
-        collisionEnd:2
+        collisionEnd:2,
+        stair : 'assets/images/escada.png'
     },
 
     bg:{

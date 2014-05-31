@@ -5,7 +5,16 @@
  </tileset>
  <layer name="Tile Layer 1" width="90" height="20">
   <data encoding="base64" compression="zlib">
-   eJztmEsOgCAMBQvc/84u3BiCIq+vUD6TsFNKByhiEpF0mnnrRR5r5Fis8ZhPHD2ATdB6fu6HKLx97m3+PeUTif0x519TQ1h1dXfPvc7N3T33oodnZt1G1l9Q5MSixXOrr/w9K2pnTfgYo8e6gfqy9vyMU2LW9YzEOJ7bnj2eMUZ7ZtZJlmfmPQTJz8rzGyM8o3Ndio2et0zP6B2iFqfEX8+aPeXVM0Itb8SzZc2a1bNU+mnxzP5+Rj2v1qzx9n9xVY7nmwvSGgTv
+   eJztl9EOgCAIRWn5/9/ca3MVcb0gJWfjpS3Bo+LcRWSvcI8o+lwza/Em43za7AIWYdTz+Tw04Z3zbOufaT6NOB5z/Ud6CKuvru456t5c3XMUEZ6ZfRvZfxl6vaUGq6/+Py+0uwZZZzaIZyRHxNl98jyb8hxDeY5htmdmn2R43sC4A5mfl+enGq15LN+vsDjUQO9bpmf0DaHlsXzvse5VjQyeETTXiGekF7zlq55FGcfieaTnvsX7bZYxiuJPHIqNBRs=
   </data>
  </layer>
+ <objectgroup name="Object Layer 1" width="90" height="20">
+  <object gid="4" x="769" y="640"/>
+  <object gid="4" x="769" y="609"/>
+  <object gid="4" x="768" y="576"/>
+  <object gid="4" x="767" y="545"/>
+  <object gid="4" x="767" y="512"/>
+  <object gid="4" x="767" y="479"/>
+  <object gid="4" x="768" y="447"/>
+ </objectgroup>
 </map>
