@@ -2,8 +2,10 @@ var Level = {
 
     tilemap:{
         jsonPath:'assets/maps/level1.json',
+        jsonPathLevel2 : 'assets/maps/level2.json',
         tilePath:'assets/maps/tile_base.png',
         layer:'Camada de Tiles 1',
+        layerFase2 : 'Tile Layer 1',
         collisionStart:0,
         collisionEnd:2
     },
