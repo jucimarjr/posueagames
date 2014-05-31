@@ -26,10 +26,8 @@ Character = function(game, characterId, assetPath, assetDimensions) {
     this.width = null;
     this.height = null;
     if (typeof assetDimensions === 'undefined') {
-    	console.log('undefined');
         this.isAnimated = false;
     } else if (assetDimensions.length == 2) {
-    	console.log('defined');
         this.isAnimated = true;
     	this.width = assetDimensions[0];
     	this.height = assetDimensions[1];
@@ -71,28 +69,25 @@ Character.prototype = {
         "use strict";
 
         this.character = this.game.add.sprite(positionX, positionY , this.id);
-        this.setCharacterConfiguration();
     },
 
     /**
-     * Set initial values for the sprite
+     * Configure the character sprite. The changes performed in this function
+     * must be defined in the callback function passed as parameter.
      *
-     * @method Character#setCharacterConfiguration
+     * @method Character#configureCharacter
      * @memberof Character
-     *
+     * @param {function} callback - function called to apply the changes in
+     * the character sprite.
      */
-    setCharacterConfiguration: function() {
-        this.game.physics.enable(this.character, Phaser.Physics.ARCADE);
-        this.character.body.bounce.y = 0.2;
-        this.character.body.gravity.y = 800;
-        this.character.scale.set(1.5, 1.5);
-        this.character.body.collideWorldBounds = true;
-        if (this.isAnimated) {
-            this.character.animations.add('left', [0, 1, 2, 3], 10, true);
-            this.character.animations.add('right', [5, 6, 7, 8], 10, true);
+    configureCharacter: function(callback) {
+        "use strict";
+
+        if (callback && typeof(callback) === "function") {
+            callback(this.character);
+        } else {
+            throw 'Bad paramater: callback must be a function';
         }
-        this.game.camera.follow(this.character);
-        this.game.camera.y += 600;
     },
 
     /**

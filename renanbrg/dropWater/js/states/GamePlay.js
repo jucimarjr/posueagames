@@ -37,7 +37,24 @@ State.GamePlay.prototype = {
 
 		// Creating player
         this.drop.create(50, game.world.height - 400);
-	},
+
+        // Remember that you first have to define the physics of the sprite
+        // to be able to set values in the body property.
+        var dropSprite = this.drop.getSpriteObject();
+        this.game.physics.enable(dropSprite, Phaser.Physics.ARCADE);
+        this.drop.configureCharacter(this.setCharacterInicialValues);
+
+        this.game.camera.follow(dropSprite);
+        this.game.camera.y += 600;
+    },
+    setCharacterInicialValues: function(character) {
+        character.body.bounce.y = 0.2;
+        character.body.gravity.y = 800;
+        character.scale.set(1.5, 1.5);
+        character.body.collideWorldBounds = true;
+        character.animations.add('left', [0, 1, 2, 3], 10, true);
+        character.animations.add('right', [5, 6, 7, 8], 10, true);
+    },
 	update: function () {
 		"use strict";
 		//Config.global.screen.resize(this.game); //dont resize game
@@ -48,7 +65,6 @@ State.GamePlay.prototype = {
 	handleKeyDown: function () {
 		"use strict";
 
-		//this.player.body.velocity.x = 0;
 		this.drop.setVelocityX(0);
 
 		if ( this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
