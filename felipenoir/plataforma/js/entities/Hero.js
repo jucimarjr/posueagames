@@ -14,9 +14,3 @@ var Hero = {
         }
     }
 };
-
-var Weapon = {
-    shot_delay:1000,
-    bullet_speed:500,
-    number_of_bullets:20
-}
