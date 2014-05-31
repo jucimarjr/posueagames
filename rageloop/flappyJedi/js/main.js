@@ -1,6 +1,12 @@
 (function (app_container) {
 
 	var init = function() {
+		//show credits
+		document.getElementById('link-credits').onclick = function (event) {
+			event.preventDefault();
+			document.getElementById('credits').style.display = 'block';
+		};
+
 		// Initialize Phaser, and creates a game
 		app_container.game = new Phaser.Game(960, 600, Phaser.AUTO, 'game_container');
 		

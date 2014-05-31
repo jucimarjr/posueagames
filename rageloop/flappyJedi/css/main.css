@@ -9,7 +9,17 @@
 }
 
 body {
-    background: #000;
+    background: #eee;
+}
+
+h1 {
+    font-family: 'Starjedi';
+    font-size: 30px;
+    line-height: 40px;
+    color: #f3b40b;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .game {
@@ -42,19 +52,21 @@ body {
 @-webkit-keyframes space-bg {from { background-position: 0; } to { background-position: -640px; }}
 @-moz-keyframes space-bg {from { background-position: 0; } to { background-position: -640px; }}
 
-.fb-like {
-    display: block;
-    margin-top: 10px;
-}
-
 .container {
-    margin: 20px auto;
+    margin: 0 auto;
     width: 960px;
 }
 
-.credits {
+#credits {
+    display: none;
+    clear: both;
     font-family: Verdana, sans-serif;
-    color: #f3b40b;
+    margin-bottom: 20px;
+}
+
+#credits > p {
+    margin-top: 0;
+    margin-bottom: 5px;
 }
 
 #game_container {
@@ -63,4 +75,23 @@ body {
     left: 0;
     width: 960px;
     height: 600px;
+}
+
+.share {
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+#link-credits {
+    font-family: 'Starjedi';
+    color: #f3b40b;
+    float: right;
+    line-height: 40px;
+    text-decoration: none;
+}
+
+.fb-like {
+    float: left;
+    display: block;
+    margin-top: 10px;
 }
