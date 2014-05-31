@@ -68,11 +68,11 @@ Game.PlayerController.prototype = {
         else if (this.cursorKeys.right.isDown)
             this.direction = Game.PlayerController.Direction.Right;
 
-        if (this.runButton.isDown) {
+        if (this.direction != Game.PlayerController.Direction.None && this.runButton.isDown) {
             this._actualRunModifier += PlayerConsts.runModifierDamping;
             this._actualRunModifier = Math.min(this._actualRunModifier, 
                                                PlayerConsts.runModifier);
-            this.direction += this.direction > 0 ? this._actualRunModifier : -this._actualRunModifier;
+            this.direction += this.direction == Game.PlayerController.Direction.Right ? this._actualRunModifier : -this._actualRunModifier;
         } else if (this.runButton.isUp) {
             this._actualRunModifier = 0.0;
         }
