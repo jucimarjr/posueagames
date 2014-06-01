@@ -130,7 +130,7 @@ Config.game = {
 			dir: 'assets/images/tileset.png',
 		},
 		background: {
-			dir: 'assets/images/bg2_600-1920.png',
+			dir: 'assets/bg3_600-1920.png',
 		},
 		floor: {
 			dir: 'assets/images/chao.jpg',
