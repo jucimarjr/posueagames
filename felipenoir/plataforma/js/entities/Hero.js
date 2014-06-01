@@ -7,7 +7,7 @@ var HeroPropeties = {
     gravityY:100,
     velocityX:100,
     jump:-350,
-    up:-150,
+    climb:150,
     animations:{
         run:{
             name:'run',
@@ -56,6 +56,14 @@ Hero.prototype = {
             if(this.hero.body.onFloor()) {
                this.hero.body.velocity.y = HeroPropeties.jump;
             }
+        }
+    },
+
+    climb : function() {
+        if(cursors.up.isDown) {
+            this.hero.body.velocity.y = -HeroPropeties.climb;
+        } else if (cursors.down.isDown){
+            this.hero.body.velocity.y = HeroPropeties.climb;
         }
     }
 }

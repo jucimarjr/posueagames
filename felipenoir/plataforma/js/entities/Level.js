@@ -74,12 +74,24 @@ Level.prototype = {
     },
 
     update : function(hero) {
-        this.game.physics.arcade.overlap(this.escadas, hero.hero, this.upStair, null, this);
+        this.upStair(hero, this.escadas, this.checkOverlap(this.escadas, hero.hero));
+//        this.game.physics.arcade.overlap(this.escadas, hero.hero, this.upStair, null, this);
     },
 
-    upStair : function(hero, stair){
-        if(cursors.up.isDown) {
-            hero.body.velocity.y = HeroPropeties.up;
+    checkOverlap : function(group, hero) {
+        return Phaser.Rectangle.intersects(group.getBounds(), hero.getBounds());
+    },
+
+    upStair : function(hero, stair, bool){
+        if(bool){
+            hero.hero.body.allowGravity = false;
+            if(cursors.up.isDown || cursors.down.isDown) {
+                hero.climb();
+            } else if (cursors.up.isUp || cursors.down.isUp) {
+                hero.hero.body.velocity.y = 0;
+            }
+        } else {
+            hero.hero.body.allowGravity = true;
         }
     }
 }
