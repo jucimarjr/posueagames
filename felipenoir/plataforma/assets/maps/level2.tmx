@@ -3,12 +3,12 @@
  <tileset firstgid="1" name="tile_base" tilewidth="32" tileheight="32">
   <image source="tile_base.png" width="160" height="32"/>
  </tileset>
- <layer name="Tile Layer 1" width="90" height="20">
+ <layer name="layer" width="90" height="20">
   <data encoding="base64" compression="zlib">
    eJztl9EOgCAIRWn5/9/ca3MVcb0gJWfjpS3Bo+LcRWSvcI8o+lwza/Em43za7AIWYdTz+Tw04Z3zbOufaT6NOB5z/Ud6CKuvru456t5c3XMUEZ6ZfRvZfxl6vaUGq6/+Py+0uwZZZzaIZyRHxNl98jyb8hxDeY5htmdmn2R43sC4A5mfl+enGq15LN+vsDjUQO9bpmf0DaHlsXzvse5VjQyeETTXiGekF7zlq55FGcfieaTnvsX7bZYxiuJPHIqNBRs=
   </data>
  </layer>
- <objectgroup name="Object Layer 1" width="90" height="20">
+ <objectgroup name="objects" width="90" height="20">
   <object gid="4" x="769" y="640"/>
   <object gid="4" x="769" y="609"/>
   <object gid="4" x="768" y="576"/>

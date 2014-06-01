@@ -1,14 +1,14 @@
 State.Play = function() {
-    this.level = new Level(game),
-    this.weapon = new Weapon(game),
-    this.hero = new Hero(game);
-};
+    this.level = new Level(game, Level2),
+    this.hero = new Hero(game),
+    this.weapon = new Weapon(game);
+}
 
 State.Play.prototype = {
     preload:function() {
         this.level.preload();
-        this.weapon.preload();
         this.hero.preload();
+        this.weapon.preload();
     },
 
     create:function(){
