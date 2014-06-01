@@ -39,21 +39,22 @@
 
         handleKeyDown: function () {
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
-                this.player.x += 10;
+                this.player.body.velocity.x = 400;
                 this.player.animations.play('walk');
             } else if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-                this.player.x -= 10;
+                this.player.body.velocity.x = -400;
                 this.player.animations.play('walk');
             } else {
                 this.player.animations.stop();
                 this.player.frame = 0;
+                this.player.body.velocity.x = 0;
             }
 
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
                 if (this.player.body.onFloor()) {
                     this.player.animations.stop();
                     this.player.frame = 0;
-                    this.player.body.velocity.y = -600;
+                    this.player.body.velocity.y = -700;
                 }
             }
         }
