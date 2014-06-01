@@ -31,7 +31,7 @@ function create () {
 
 
 
-    tracajet = game.add.sprite(200, 1800, 'tracajet');
+    tracajet = game.add.sprite(100, 100, 'tracajet');
     tracajet.animations.add('walk',[0,1,2,1],6,false);
     tracajet.animations.add('swim',[5,6,7],6,false);
     tracajet.animations.add('startSwim',[3,4],4,true);
@@ -39,11 +39,11 @@ function create () {
 
 
 
-    tracajet.body.acceleration.y = 200;
+    tracajet.body.acceleration.y = 20;
     tracajet.body.collideWorldBounds = true;
-    tracajet.body.drag.x = 700;
+    //tracajet.body.drag.x = 700;
     tracajet.anchor.setTo(.5,.5);
-    //tracajet.body.gravity.y = -1500;
+    //tracajet.body.gravity.y = 150;
     game.camera.follow(tracajet);
 
 
@@ -80,6 +80,11 @@ function update () {
     else if ( game.input.keyboard.isDown (Phaser.Keyboard.UP) ) { // vai para cima
 
         tracajet.body.velocity.y = -100;
+//		tracajet.animations.play('jump');
+        }
+    else if ( game.input.keyboard.isDown (Phaser.Keyboard.DOWN) ) { // vai para cima
+
+        tracajet.body.velocity.y = 100;
 //		tracajet.animations.play('jump');
     }
     else{
