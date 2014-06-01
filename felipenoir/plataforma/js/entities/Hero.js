@@ -18,8 +18,7 @@ var HeroPropeties = {
 
 function Hero(game) {
     this.game = game,
-    this.hero,
-    this.cursors;
+    this.hero;
 }
 
 Hero.prototype = {
@@ -37,16 +36,14 @@ Hero.prototype = {
         this.hero.body.drag.x = HeroPropeties.dragX;
         this.hero.body.gravity.y = HeroPropeties.gravityY;
         this.game.camera.follow(this.hero);
-
-        this.cursors = this.game.input.keyboard.createCursorKeys();
     },
 
     update : function() {
-        if (this.cursors.right.isDown) {
+        if (cursors.right.isDown) {
             this.hero.body.velocity.x = HeroPropeties.velocityX;
             this.hero.scale.x = +1;
             this.hero.animations.play(HeroPropeties.animations.run.name);
-        } else if (this.cursors.left.isDown) {
+        } else if (cursors.left.isDown) {
             this.hero.body.velocity.x = -HeroPropeties.velocityX;
             this.hero.scale.x = -1;
             this.hero.animations.play(HeroPropeties.animations.run.name);
@@ -55,7 +52,7 @@ Hero.prototype = {
             this.hero.frame = 0;
         }
 
-        if(this.cursors.up.isDown) {
+        if(cursors.up.isDown) {
             if(this.hero.body.onFloor()) {
                this.hero.body.velocity.y = HeroPropeties.jump;
             }

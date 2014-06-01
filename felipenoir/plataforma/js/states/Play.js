@@ -1,8 +1,10 @@
 State.Play = function() {
-    this.level = new Level(game, Level2),
+    this.level = new Level(game, Level1),
     this.hero = new Hero(game),
     this.weapon = new Weapon(game);
 }
+
+var cursors;
 
 State.Play.prototype = {
     preload:function() {
@@ -23,10 +25,13 @@ State.Play.prototype = {
 
         // arma
         this.weapon.create();
+
+        cursors = this.game.input.keyboard.createCursorKeys();
     },
 
     update:function(){
         game.physics.arcade.collide(this.level.layer, this.hero.hero);
+        this.level.update(this.hero);
         this.hero.update();
         this.weapon.update(this.hero.hero.x, this.hero.hero.y);
     },
