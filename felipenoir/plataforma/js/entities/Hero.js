@@ -59,11 +59,20 @@ Hero.prototype = {
         }
     },
 
-    climb : function() {
-        if(cursors.up.isDown) {
-            this.hero.body.velocity.y = -HeroPropeties.climb;
-        } else if (cursors.down.isDown){
-            this.hero.body.velocity.y = HeroPropeties.climb;
+    climb : function(bool) {
+        if(bool){
+            this.hero.body.allowGravity = false;
+            if(cursors.up.isDown || cursors.down.isDown) {
+                if(cursors.up.isDown) {
+                    this.hero.body.velocity.y = -HeroPropeties.climb;
+                } else if (cursors.down.isDown){
+                    this.hero.body.velocity.y = HeroPropeties.climb;
+                }
+            } else if (cursors.up.isUp || cursors.down.isUp) {
+                this.hero.body.velocity.y = 0;
+            }
+        } else {
+            this.hero.body.allowGravity = true;
         }
     }
 }
