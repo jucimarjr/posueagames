@@ -4,7 +4,7 @@ var Pistol = {
 
 function Weapon(game) {
     this.game = game,
-    this.shotDelay = 1000,
+    this.shotDelay = 2000,
     this.bulletSpeed = 500,
     this.numberOfBullets = 3,
     this.bulletGroup;

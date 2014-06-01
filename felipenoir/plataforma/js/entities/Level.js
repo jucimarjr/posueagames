@@ -1,4 +1,4 @@
-var Level = {
+var Level1 = {
 
     tilemap:{
         jsonPath:'assets/maps/level1.json',
@@ -19,3 +19,31 @@ var Level = {
     }
 
 };
+
+function Level(game) {
+    this.game = game,
+    this.layer,
+    this.map;
+}
+
+Level.prototype = {
+    preload : function() {
+        this.game.load.tilemap('map', Level1.tilemap.jsonPath, null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.image('tileset', Level1.tilemap.tilePath);
+        this.game.load.image('bg', Level1.bg.path);
+    },
+
+    create : function() {
+        // background
+        bg = this.game.add.sprite(Level1.bg.x, Level1.bg.y, 'bg');
+        bg.fixedToCamera = true;
+
+        // mapa
+        this.map = this.game.add.tilemap('map');
+        this.map.addTilesetImage('tileset','tileset');
+
+        this.layer = this.map.createLayer(Level1.tilemap.layer);
+        this.layer.resizeWorld();
+        this.map.setCollisionBetween(Level1.tilemap.collisionStart, Level1.tilemap.collisionEnd, true, Level1.tilemap.layer);
+    }
+}
