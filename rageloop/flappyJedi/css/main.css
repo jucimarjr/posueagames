@@ -1,11 +1,3 @@
-
-#game_container {
-    width: 960px;
-    height: 600px;
-    margin: 0 auto;
-    margin-top: 20px;
-}
-
 @font-face {
     font-family: 'Starjhol';
     src: url('../assets/font/Starjhol.ttf') format("truetype");
@@ -14,4 +6,92 @@
 @font-face {
     font-family: 'Starjedi';
     src: url('../assets/font/Starjedi.ttf') format("truetype");
+}
+
+body {
+    background: #eee;
+}
+
+h1 {
+    font-family: 'Starjedi';
+    font-size: 30px;
+    line-height: 40px;
+    color: #f3b40b;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.game {
+    position: relative;
+    width: 960px;
+    height: 600px;
+}
+
+#game_loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 960px;
+    height: 600px;
+    background: url('../assets/menu/bgmenu_1600-600.png') no-repeat;
+
+    -webkit-animation: space-bg 30s infinite linear;
+    -moz-animation: space-bg 30s infinite linear;
+}
+
+#game_loading > p {
+    font-family: 'Starjedi';
+    color: #f3b40b;
+    text-align: center;
+    margin: 250px 0 0 0;
+    font-size: 30px;
+}
+
+@-webkit-keyframes space-bg {from { background-position: 0; } to { background-position: -640px; }}
+@-moz-keyframes space-bg {from { background-position: 0; } to { background-position: -640px; }}
+
+.container {
+    margin: 0 auto;
+    width: 960px;
+}
+
+#credits {
+    display: none;
+    clear: both;
+    font-family: Verdana, sans-serif;
+    margin-bottom: 20px;
+}
+
+#credits > p {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+#game_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 960px;
+    height: 600px;
+}
+
+.share {
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+#link-credits {
+    font-family: 'Starjedi';
+    color: #f3b40b;
+    float: right;
+    line-height: 40px;
+    text-decoration: none;
+}
+
+.fb-like {
+    float: left;
+    display: block;
+    margin-top: 10px;
 }

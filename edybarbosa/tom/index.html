@@ -3,14 +3,17 @@
 	<head>
 
 		<meta charset="UTF-8"/>
-		<script src="../../phaser/phaser.min.js"></script>
-		<script type="text/javascript" src="js/boot.js"></script> 
-		<script type="text/javascript" src="js/load.js"></script> 
-		<script type="text/javascript" src="js/menu.js"></script> 
-		<script type="text/javascript" src="js/tutorial.js"></script> 
-		<script type="text/javascript" src="js/play.js"></script> 	
-		<script type="text/javascript" src="js/gameover.js"></script> 	
-		<script type="text/javascript" src="js/game.js"></script> 
+        <meta property="og:locale" content="pt_BR">
+        <meta property="og:url" content="http://computacao.uea.edu.br/ludus/posueagames/edybarbosa/tom/">
+        <meta property="og:title" content="Tom">
+        <meta property="og:site_name" content="Especializacao em Desenvolvimento de Jogos Eletrônicos da UEA">
+        <meta property="og:description" content="Ajude o gatinho Tom a voltar para casa e desviar dos obstáculos!">
+        <meta property="og:image" content="http://computacao.uea.edu.br/ludus/posueagames/edybarbosa/tom/assets/public_640-480.png">
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="640">
+        <meta property="og:image:height" content="480">
+        <meta property="og:type" content="website">
+        
 		<style type="text/css">
         	body {
             	margin: 0;
@@ -24,8 +27,37 @@
 	</head>
 
 	<body>
+        <div id="fb-root"></div>
+		<script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 		
-		<div id="gameContainer" style="width:960"> </div>
+		<div 
+             class="fb-like" 
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/edybarbosa/tom/" 
+             data-layout="button_count" data-action="like" data-show-faces="true" 
+             data-share="false">
+        </div>
 
+        <div id="game">	</div>        
+        
+		<div class="fb-comments" 
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/edybarbosa/tom/" 
+             data-width="960" data-numposts="10" data-colorscheme="light">
+        </div>
+        
+		<script src="../../phaser/phaser.min.js"></script>
+		<script type="text/javascript" src="js/boot.js"></script> 
+		<script type="text/javascript" src="js/load.js"></script> 
+		<script type="text/javascript" src="js/menu.js"></script> 
+		<script type="text/javascript" src="js/tutorial.js"></script> 
+		<script type="text/javascript" src="js/play.js"></script> 	
+		<script type="text/javascript" src="js/gameover.js"></script> 	
+	    <script type="text/javascript" src="js/creditos.js"></script> 
+		<script type="text/javascript" src="js/game.js"></script>
 	</body>
 </html>

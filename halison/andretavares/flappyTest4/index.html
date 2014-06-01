@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+    <script src="../../../phaser/phaser.min.js"></script>
+
+
+</head>
+<body>
+    <script type="text/javascript">
+
+
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+
+function preload() {
+	game.load.image('nave', 'nave_100-40.png');
+	game.load.image('asteroid', 'asteroid_80-80.png');
+	game.load.physics('navePD', 'p/nave_100-40.json');
+	game.load.physics('asteroidPD', 'p/asteroid_80-80.json');
+}
+
+var contra;
+var start = false;
+
+function create() {
+
+	//	Enable p2 physics
+	game.physics.startSystem(Phaser.Physics.P2JS);
+
+	contra = game.add.sprite(400, 300, 'nave');
+
+	//	Enable the physics body on this sprite and turn on the visual debugger
+	game.physics.p2.enable(contra, true);
+	
+	//	Clear the shapes and load the 'nave' polygon from the navePD JSON file in the cache
+	contra.body.clearShapes();
+	alert("ok");
+	
+	contra.body.loadPolygon('navePD', 'nave');
+	
+	//	Just starts it rotating
+	game.input.onDown.add(function() { start = true; }, this);
+	
+}
+
+function update() {
+	if (start)
+	{
+		contra.body.rotateLeft(5);
+	}
+
+}
+
+function render() {
+}
+
+</script> 
+
+
+</body>
+</html>

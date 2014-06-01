@@ -7,6 +7,7 @@ var create = {
     farBackground : null,
     score : 0,
     score_label: null,
+    cabeca: null,
 
     init : function(){
         //game defs
@@ -15,10 +16,11 @@ var create = {
 
         background = game.add.tileSprite(0, 0, 960, 800,  'background');
         background.autoScroll(-350, 0);
+		
+		this.cabeca = game.add.sprite(20, 20, 'cabeca');
         
-        var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
-        
-        this.score_label = game.add.text(20, 20, " " + this.score, style);
+        var style = { font: "40px Helvetica", fill: "#ffffff" };
+        this.score_label = game.add.text(80, 30, " " + this.score, style);
 
 
         //enemy defs
@@ -28,14 +30,12 @@ var create = {
         //input defs
         game.input.keyboard.addKeyCapture(
             [
-                Phaser.Keyboard.SPACEBAR,
-                Phaser.Keyboard.R
+                Phaser.Keyboard.SPACEBAR
             ]
         );
         this.space_key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.space_key.onDown.add(this.jump, this);
-        this.reset_key = game.input.keyboard.addKey(Phaser.Keyboard.R);
-        this.reset_key.onDown.add(this.reset, this);
+		game.input.onDown.add(this.jump, this);
 
         // NPC defs
         this.npc_list = [
@@ -63,19 +63,20 @@ var create = {
             Phaser.Easing.Quintic.In,
         ]
         this.bgmusic = game.add.audio('bgmusic');
-        this.bgmusic.play();
+        this.bgmusic.play('', 0, 1, true);
     },
     createPlayer : function(){
         this.player = game.add.sprite(350, 200, 'pirarucu');
         game.physics.enable(this.player, Phaser.Physics.ARCADE);
         game.camera.follow(this.player);
         this.player.body.gravity.y = 1000;
-        this.player.body.setSize(140, 30, 0, 15);
+        this.player.body.setSize(140, 30, 60, 15);
         this.player.jumpForce = -500;
         this.player.anchor.setTo(0.5, 0.5);
         this.player.alive = true;
         this.player.animations.add('swim', [0, 1, 2, 3], 10, true);
         this.player.animations.add('shock', [5, 6], 30, true);
+		this.player.animations.add('death',[4],30, true);
         this.player.animations.play('swim');
         // animacao de rotacao para cima, quando o jogador pula
         this.player.rotateAnim = game.add.tween(this.player).to({angle: -15}, 300);

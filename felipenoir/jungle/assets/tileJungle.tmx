@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="24" height="30" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="tiles" tilewidth="40" tileheight="40" spacing="1" margin="1">
+  <tileoffset x="1" y="1"/>
+  <image source="images/tiles.png" width="124" height="42"/>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="24" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztVkEOwCAIA///aE/GxRSBBXZZm3AgSttQD4p8i9E8+1d+LeRXox/g7I2HdXfV6Q1pRD3c8PSmkvMQ0czuH+lbYL4+mO/mQj3zjfNnPXhgvj6Y7+ZCfWS3Xflm+b1Za6/V/6vzHVXXBF0AAOM=
+  </data>
+ </layer>
+ <objectgroup name="Camada de Objetos 1" width="24" height="30">
+  <object gid="3" x="882" y="995"/>
+  <object gid="3" x="813" y="956"/>
+  <object gid="3" x="819" y="768"/>
+  <object gid="3" x="901" y="820"/>
+  <object gid="3" x="927" y="594"/>
+  <object gid="3" x="809" y="561"/>
+  <object gid="3" x="839" y="370"/>
+  <object gid="3" x="829" y="165"/>
+  <object gid="3" x="888" y="226"/>
+  <object gid="3" x="647" y="183"/>
+  <object gid="3" x="591" y="392"/>
+  <object gid="3" x="671" y="355"/>
+  <object gid="3" x="716" y="243"/>
+  <object gid="3" x="729" y="637"/>
+  <object gid="3" x="670" y="750"/>
+  <object gid="3" x="518" y="962"/>
+  <object gid="3" x="691" y="917"/>
+  <object gid="3" x="305" y="875"/>
+  <object gid="3" x="192" y="821"/>
+  <object gid="3" x="48" y="833"/>
+  <object gid="3" x="22" y="1087"/>
+  <object gid="3" x="828" y="1147"/>
+  <object gid="3" x="33" y="641"/>
+  <object gid="3" x="141" y="547"/>
+  <object gid="3" x="-10" y="458"/>
+  <object gid="3" x="44" y="423"/>
+  <object gid="3" x="97" y="361"/>
+  <object gid="3" x="8" y="258"/>
+  <object gid="3" x="73" y="221"/>
+  <object gid="3" x="50" y="110"/>
+  <object gid="3" x="209" y="177"/>
+  <object gid="3" x="232" y="287"/>
+  <object gid="3" x="404" y="189"/>
+  <object gid="3" x="342" y="288"/>
+  <object gid="3" x="304" y="458"/>
+  <object gid="3" x="212" y="656"/>
+  <object gid="3" x="275" y="681"/>
+  <object gid="3" x="405" y="863"/>
+  <object gid="3" x="569" y="548"/>
+  <object gid="3" x="684" y="531"/>
+  <object gid="3" x="534" y="736"/>
+  <object gid="3" x="603" y="1034"/>
+ </objectgroup>
+</map>

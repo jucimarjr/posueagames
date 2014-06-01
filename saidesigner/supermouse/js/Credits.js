@@ -21,9 +21,9 @@ SuperMouse.Credits.prototype.create = function() {
 	this.add.sprite(60, 30, 'supermouse2');
 	this.add.sprite(350, 35, 'logo');
 
-	var text = Utils.createText(this, 300, 300, 30, '#ffffff', '#aaaaaa');
+	var text = Utils.createText(this, 220, 320, 25, '#ffffff', '#aaaaaa');
 
-	text.text = 'ARTE GRÁFICA\nSaid Mendonça\nDESENVOLVIMENTO\nSirineo Filho\nCleocimar Silva';
+	text.text = 'Arte Gráfica\nSaid Mendonça\nDesenvolvimento\nSirineo Filho\nCleocimar Silva';
 	text.align = 'center';
 
 	var btBack = this.add.button(600, 510, 'bt_back', this.buttonBackOnClick, this);

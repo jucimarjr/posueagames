@@ -1,21 +1,27 @@
 ﻿var gameOver = { preload: preload, create: create, start: start };
 
 function preload() {
-    game.load.image('splashscreen', 'assets/bg/gameover_900-600.jpg');
-    game.load.image('btGameOver', 'assets/botoes/gameover_350-280.png');
-    game.load.image('btRanking', 'assets/botoes/rank_100-70.png');
-    game.load.image('play', 'assets/botoes/play_100-70.png');
-    game.load.image('logoMain', 'assets/bg/logo.png');
-    console.log("menu preload");
+    //game.load.image('play', 'assets/botoes/play_100-70.png');    
+    //game.load.image('logoBarra', 'assets/bg/logo_barra-160-64.png');
+    console.log("game over preload");
 }
 
 //Tela de Menu
 function create() {
-    console.log("menu create");
+    console.log("game over create");
     var splashscreen = game.add.sprite(0, 0, 'splashscreen');
-    var mainLogo = game.add.sprite(250, 10, 'logoMain');
+    //var mainLogo = game.add.sprite(250, 10, 'logoMain');
     var btGO = game.add.sprite(280, 200, 'btGameOver');
-    var btRank = game.add.sprite(340, 410, 'btRanking');
+    //var btRank = game.add.sprite(340, 410, 'btRanking');
+
+    var dead = game.add.sprite(450, 100, 'canoemandead'); //515,350
+    dead.anchor.setTo(0.5, 0.5);
+    dead.animations.add('dead');
+    dead.animations.play('dead', 10, true);
+
+    //Logo na Barra Lateral
+    var loguinho = game.add.sprite(90, 570, 'logoBarra');
+    loguinho.anchor.setTo(0.5, 0.5);
 
     var style = { font: "28px Arial Bold", fill: "#ffffff" };
     var styleBig = { font: "40px Arial Bold", fill: "#ffffff" };
@@ -34,7 +40,7 @@ function create() {
         text.anchor.setTo(0.5, 0.5);
     }
 
-    var btPlay = game.add.button(450, 550, 'play', start, this, 1, 0, 1);
+    var btPlay = game.add.button(460, 480, 'play', start, this, 1, 0, 1);
     btPlay.anchor.set(0.5, 0.5);
 
     var spacebar_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);

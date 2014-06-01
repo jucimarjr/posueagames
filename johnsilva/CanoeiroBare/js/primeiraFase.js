@@ -1,64 +1,59 @@
-﻿var primeiraFase = { preload: preload, create: create, update: update };
+﻿var primeiraFase = { preload: preload, create: create, update: update, render: render };
 
-var boat;
+var canoeman;
 var enemies;
-var score = 0;
-var highscore = 0;
+var score;
+var highscore;
 var jungles;
-var rivers;
-var jungles;
-var tileSpeedRiver = 1.5;
+var tileSpeedRiver;
 var tileSpeedJungles = 0.3;
 var jungleWidth = 196;
+var riverWidth = 512;
 var angleVelocity = 2;
 var finalSound;
 var remosSound;
 var timerBarra;
-var estagio;
-var showEstagio = true;
+var Stage;
+var showStage = true;
+var tileRiver;
+var tileLeftJungle;
+var tileRightJungle;
+var gameOver;
+var dead;
+var timer;
+var pressLeft;
+var pressRight;
 
 function preload() {
-    //Imagens
-    game.load.image('river', 'assets/bg/river_512-1200.jpeg');
-    game.load.image('jungleLeft', 'assets/bg/jungleLeft_196-1200.jpg');
-    game.load.image('jungleRight', 'assets/bg/jungleRight_196-1200.jpg');
-    game.load.image('mainScore', 'assets/botoes/score_900-110.png');
-    game.load.image('record', 'assets/botoes/score_250-100.png');
-    game.load.image('logo', 'asets/bg/logo.png');
-    game.load.image('logoBarra', 'assets/bg/logo_barra-160-64.png');
-
-    //Sprites
-    game.load.spritesheet('canoeman', 'assets/sprite/canoeman/canoeman_50-100-20.png', 50, 100, 20);
-    game.load.spritesheet('alligator', 'assets/sprite/enemies/alligator_64-43-10.png', 64, 43, 10);
-    game.load.spritesheet('boto', 'assets/sprite/enemies/boto_80-67-10.png', 80, 67, 10);
-    game.load.spritesheet('sand', 'assets/sprite/enemies/sand_76-25-4.png', 76, 25, 4);
-    game.load.spritesheet('trunk', 'assets/sprite/enemies/trunk_64-42-4.png', 64, 42, 4);
-    game.load.spritesheet('timer', 'assets/botoes/timer-1500-369.png', 150,369,10);
-
-    // Sons
-    game.load.audio('remosound', 'songs/remada.mp3');
-    game.load.audio('explodesound', 'songs/explode.mp3');
-    game.load.audio('botosound', 'songs/boto.mp3');
-    game.load.audio('alligatorsound', 'songs/alligator.wav');
+    score = 0;
+    highscore = 0;
+    tileSpeedRiver = 1.5;
+    gameOver = false;
+    pressRight = false;
+    pressLeft = false;
 }
 
 function create() {
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    
+    game.physics.startSystem(Phaser.Physics.P2JS);
+    game.physics.p2.setImpactEvents(true);
+    game.world.setBounds(0, -500, 1600, 1200 );
 
-    createRivers();
+    tileRiver = game.add.tileSprite(jungleWidth, 0, 512, 1200, 'river');
+    tileLeftJungle = game.add.tileSprite(0, 0, 196, 1200, 'jungleLeft');    
+    tileRightJungle = game.add.tileSprite(jungleWidth+riverWidth, 0, 196, 1200, 'jungleRight');    
+
     createJungles();
-    initEnemies();
-
-    boat = game.add.sprite(game.world.centerX, 600 - 50, 'canoeman');
-    boat.animations.add('run', [0,1,2,3,4,5,6,7,8,9], 7, true);
-    boat.animations.add('dead', [10,11,12,13,14,15,16,17,18,19], 7, false);
-    boat.animations.play('run');
-    game.physics.enable(boat, Phaser.Physics.ARCADE);
-    boat.body.collideWorldBounds = true;
-    boat.body.drag.x = 30;
-    boat.anchor.setTo(0.5, 0.5);
-    boat.body.allowGravity = 0;
-    boat.body.immovable = true
+    canoeman = game.add.sprite(450, 600 - 50, 'canoeman');
+    canoeman.animations.add('run', [0,1,2,3,4,5,6,7,8,9], 7, true);
+    dead = canoeman.animations.add('dead', [10,11,12,13,14,15,16,17,18,19], 7, false);
+    dead.onComplete.add(gameOv, this);
+    canoeman.animations.play('run');
+    game.physics.p2.enable(canoeman, false);
+    canoeman.body.clearShapes();
+    canoeman.body.loadPolygon('physicsData', 'canoeman_50-100-20');
+    initEnemies();    
 
     timerBarra = game.add.sprite(0, 150, 'timer');
     timerBarra.animations.add('fase1', [0], 1, true);
@@ -83,60 +78,81 @@ function create() {
     var text = game.add.text(830, 580, localStorage.getItem("highscore"), styleBig);
     text.anchor.setTo(0.5, 0.5);
 
-    //Main Score
+    //Main
     var imgScore = game.add.sprite(0, 0, 'mainScore');
     var style = { font: "40px Arial Bold", fill: "#ffffff" };
-    this.labelScore = game.add.text(this.game.world.centerX, 50, score + "m", style);
+    this.labelScore = game.add.text(450, 50, score + "m", style);
     this.labelScore.anchor.set(0.5, 0);
-    game.time.events.loop(150, addEnemies, this);
+    /*game.time.events.loop(150, addEnemies, this);*/
     game.time.events.loop(3000, addScore, this);
-
     //Logo na Barra Lateral
     var loguinho = game.add.sprite(90, 570, 'logoBarra');
     loguinho.anchor.setTo(0.5, 0.5);
 
+    //Mute button
+    var bt_sound = game.add.button(850, 0, 'sound', pause, this, 1, 0, 1);
+    var bt_full = game.add.button(800, 0, 'full', gofull, this, 1, 0, 1);
+    //bt_full.input.onDown.add(gofull, this);
+
     finalSound = false;
     remosSound = game.add.audio("remosound",1,true);
-    //remosSound.volume = 2;
     remosSound.play('',0,1,true);
+
+    cursors = game.input.keyboard.createCursorKeys();
+    game.input.onDown.add(touch, this);
+    game.input.onUp.add(noTouch, this);
+}
+
+function gofull() {
+    game.scale.startFullScreen();
+}
+
+function pause() {
+    if (toggle) {
+        music.resume();
+        toggle = false;
+        bt_sound = game.add.button(850, 0, 'sound', pause, this, 1, 0, 1);
+    }
+    else {
+        music.pause();
+        toggle = true;
+        bt_sound = game.add.button(850, 0, 'mute', pause, this, 1, 0, 1);
+    }
 }
 
 function createJungles() {
     jungles = game.add.group();
-    jungles.create(0, -600, 'jungleLeft');
-    jungles.create(0, -1800, 'jungleLeft');
-    jungles.create(jungleWidth + 512, -600, 'jungleRight');
-    jungles.create(jungleWidth + 512, -1800, 'jungleRight');
-    game.physics.enable(jungles, Phaser.Physics.ARCADE);
+    jungles.add(tileLeftJungle);
+    jungles.add(tileRightJungle);
+    //game.physics.enable(jungles, Phaser.Physics.ARCADE);
 }
 
-function createRivers() {
-    rivers = game.add.group();
-    rivers.create(jungleWidth, -600, 'river');
-    rivers.create(jungleWidth, -1800, 'river');
-}
-
-function addEnemie(_sprite, y, speed, loop, name){
-    var max = game.world.width - jungleWidth - 80;
-    var min = jungleWidth;
-    var positionX = Math.round(Math.random() * (max - min)) + min;
+function addEnemie(_sprite, y, speed, loop, name, rectW,rectH,rectX,rectY){
+    var positionX = getRandomX();
     var enemie = game.add.sprite(positionX, y, _sprite);
     enemie.name = name;
     enemie.animations.add('run');
-    enemie.animations.play('run',speed, loop);
+    enemie.animations.play('run',speed, loop);      
+    game.physics.p2.enable(enemie, false);
+    enemie.body.setRectangle(rectW,rectH,rectX,rectY);        
+    canoeman.body.createBodyCallback(enemie, hitEnemie, this);
     enemies.add(enemie);  
 }
 
 function initEnemies() {
     enemies = game.add.group();
-    addEnemie('trunk',     180, 2, true, "trunk");
-    addEnemie('alligator', 100, 4, true, "alligatorsound"); 
-    addEnemie('sand',       20, 2, true, "sand");    
-    addEnemie('trunk',     -60, 2, true, "trunk");    
-    addEnemie('boto',     -140, 6, true, "botosound");
-    //enemies.createMultiple(5, 'buraco', 0, false);
-    //game.physics.arcade.enable(enemies);	
-    game.physics.enable(enemies, Phaser.Physics.ARCADE);
+    enemies.physicsBodyType = Phaser.Physics.P2JS;
+    addEnemie('trunk',     180, 2, true, "trunk",50, 20, 0, 0);
+    addEnemie('alligator', 100, 4, true, "alligatorsound",50, 30, 8, 0); 
+    addEnemie('sand',       20, 2, true, "sand",76, 25, 0, 0);    
+    addEnemie('trunk',     -60, 2, true, "trunk",50, 20, 0, 0);  
+    addEnemie('boto',     -140, 6, true, "botosound",60, 40, 0, 10);
+}
+
+function hitEnemie(body1, body2) {
+    body2.sprite.alpha = 0;
+    gameOver = true;
+    canoeman.body.setZeroVelocity();
 }
 
 function addScore() {
@@ -148,189 +164,168 @@ function addScore() {
     } else {
         this.labelScore.setText(score);
 
-        if (score >= 90) {
-            if (score == 90) {
-                estagio = game.add.text(450, 300, 'FINAL', styleBig);
-                estagio.anchor.setTo(0.5, 0.5);
-                setTimeout(resetEstagio, 1300);
-            }
+        if (score == 90) {
+            Stage = game.add.text(450, 300, 'BANZEIRO FINAL', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
             tileSpeedRiver = 5.5;
             timerBarra.play('fase10')
         }
-        else if (score >= 80) {
-            if (score == 80) {
-                estagio = game.add.text(450, 300, 'Stagio 8', styleBig);
-                estagio.anchor.setTo(0.5, 0.5);
-                setTimeout(resetEstagio, 1300);
-            }
+        else if (score == 80) {
+            Stage = game.add.text(450, 300, 'Banzeiro 8', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);            
             tileSpeedRiver = 5;
             timerBarra.play('fase9');
         }
-        else if (score >= 70) {
-            if (score == 70) {
-                estagio = game.add.text(450, 300, 'Stagio 7', styleBig);
-                estagio.anchor.setTo(0.5, 0.5);
-                setTimeout(resetEstagio, 1300);
-            }
+        else if (score == 70) {
+            Stage = game.add.text(450, 300, 'Banzeiro 7', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
             tileSpeedRiver = 4.5;
             timerBarra.play('fase8');
         }
-        else if (score >= 60) {
-            if (score == 60) {
-                estagio = game.add.text(450, 300, 'Stagio 6', styleBig);
-                estagio.anchor.setTo(0.5, 0.5);
-                setTimeout(resetEstagio, 1300);
-            }
+        else if (score == 60) {
+            Stage = game.add.text(450, 300, 'Banzeiro 6', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
             tileSpeedRiver = 4;
             timerBarra.play('fase7');
         }
-        else if (score >= 50) {
-            if (score == 50) {
-                estagio = game.add.text(450, 300, 'Stagio 5', styleBig);
-                estagio.anchor.setTo(0.5, 0.5);
-                setTimeout(resetEstagio, 1300);
-            }
+        else if (score == 50) {
+            Stage = game.add.text(450, 300, 'Banzeiro 5', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);            
             tileSpeedRiver = 3.5;
             timerBarra.play('fase6');
         }
-        else if (score >= 40) {
-            if (score == 40) {
-                estagio = game.add.text(450, 300, 'Stagio 4', styleBig);
-                estagio.anchor.setTo(0.5, 0.5);
-                setTimeout(resetEstagio, 1300);
-            }
+        else if (score == 40) {
+            Stage = game.add.text(450, 300, 'Banzeiro 4', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);            
             tileSpeedRiver = 3;
             timerBarra.play('fase5');
         }
-        else if (score >= 30) {
-            if (score == 30) {
-                estagio = game.add.text(450, 300, 'Stagio 3', styleBig);
-                estagio.anchor.setTo(0.5, 0.5);
-                setTimeout(resetEstagio, 1300);
-            }
+        else if (score == 30) {
+            Stage = game.add.text(450, 300, 'Banzeiro 3', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
             tileSpeedRiver = 2.5;
             timerBarra.play('fase4');
         }
-        else if (score >= 20) {
-            if (score == 20) {
-                estagio = game.add.text(450, 300, 'Stagio 2', styleBig);
-                estagio.anchor.setTo(0.5, 0.5);
-                setTimeout(resetEstagio, 1300);
-            }
+        else if (score == 20) {
+            Stage = game.add.text(450, 300, 'Banzeiro 2', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
             tileSpeedRiver = 2;
             timerBarra.play('fase3');
+            
         }
-        else if (score >= 10) {
-            if (score == 10) {
-                estagio = game.add.text(450, 300, 'Stagio 1', styleBig);
-                estagio.anchor.setTo(0.5, 0.5);
-                setTimeout(resetEstagio, 1300);
-            }            
+        else if (score == 10) {
+            Stage = game.add.text(450, 300, 'Banzeiro 1', styleBig);
+            Stage.anchor.setTo(0.5, 0.5);
+            game.time.events.add(Phaser.Timer.SECOND * 2, resetStage, this);
             timerBarra.play('fase2');
         }
     }
+    tileSpeedJungles = tileSpeedRiver/5;
 }
 
-function resetEstagio() {
-    game.world.remove(estagio);
-}
-
-function addEnemies() {
-    var enemie = enemies.getFirstDead();
-    
-    if (enemie) {
-        var b = game.add.audio(enemie.name);
-        b.play();
-        var max = game.world.width - jungleWidth - enemie.body.width;
-        var min = jungleWidth;
-        var positionX = Math.round(Math.random() * (max - min)) + min;
-        positionY = -70;
-
-        enemie.reset(positionX, positionY);
-    }
-
+function resetStage() {
+    //game.world.remove(Stage);
+    game.add.tween(Stage).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
 }
 
 function update() {
 
-    game.physics.arcade.overlap(boat, enemies, overlapWithEnemies, null, this);
-    game.physics.arcade.overlap(boat, jungles, overlapWithEnemies, null, this);
+    if(!gameOver){
+        if (cursors.left.isDown || pressLeft)
+        { 
+            changeAngle(angleVelocity);
+        }
+        else if (cursors.right.isDown || pressRight)
+        { 
+            changeAngle(-1 * angleVelocity);    
+        }else{
+            canoeman.body.velocity.x = 2*canoeman.angle;
+        }
 
-    if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) { // vai para esquerda
-        changeAngle(angleVelocity);
+        enemies.forEachAlive(checkEnemiesBounds, this);
+
+        tileRiver.tilePosition.y+=tileSpeedRiver;
+        tileLeftJungle.tilePosition.y+=tileSpeedJungles;
+        tileRightJungle.tilePosition.y+=tileSpeedJungles;
+
+        if(canoeman.body.x <= jungleWidth || canoeman.body.x >= 900 - jungleWidth){
+            gameOver = true;
+        }
+
+    }else{
+        canoemanEnd();
     }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) { // vai para direita
-        changeAngle(-1 * angleVelocity);
-        
-    }else {
-        boat.body.velocity.x = 2*boat.angle;//velocity;
-    }
-    /*else{
-	    	boat.animations.stop();
-			boat.frame = 0;
-		}	*/
-    checkBounds();    
 }
+
+function touch(pointer) {
+
+    if (pointer.x < 450)
+    {
+        //changeAngle(2*angleVelocity);
+        pressLeft = true;
+    }
+    else
+    {
+        pressRight = true;
+        //changeAngle(-1 * 2*angleVelocity);
+    }
+}
+
+function noTouch(pointer) {
+    pressLeft = false;
+    pressRight = false;
+}
+
 function changeAngle(angle){
-    var toChange = boat.angle + angle;
+    var toChange = canoeman.body.angle + angle;
     if ( toChange > -90 && toChange < 90) {
-        boat.angle += angle;
+        canoeman.body.angle += angle;
     }
      
 }
 
-function checkBounds(){
-    enemies.forEachAlive(checkEnemiesBounds, this);
-    rivers.forEachAlive(checkRiversBounds, this);
-    jungles.forEachAlive(checkJunglesBounds, this);
-}
-
-function checkRiversBounds(obj) {
-    obj.y += tileSpeedRiver;
-
-    if (obj.y >= 600) {
-        obj.y = -1800;
-    }
-
-}
-
-function checkJunglesBounds(obj) {
-    obj.y += tileSpeedJungles;
-
-    if (obj.y >= 600) {
-        obj.y = -1800;
-    }
-
-}
-
 function checkEnemiesBounds(obj) {
-    obj.y += tileSpeedRiver;
+    obj.body.y += tileSpeedRiver;
 
-    if (obj.y > 600) {
-        obj.kill();
+    if (obj.body.y > 600) {
+        obj.body.y = -200;
+        obj.body.x = getRandomX();
+        var audio = game.add.audio(obj.name);
+        audio.play();
     }
 
 }
 
-function overlapWithEnemies(_boat, _enemies) { 
-    if(_boat.x <= jungleWidth){
-        _boat.x = jungleWidth;
-    }else if(_boat.x >= game.world.width - jungleWidth){
-        _boat.x = game.world.width - jungleWidth;
+function getRandomX(){
+    var max = 900 - jungleWidth - 30;
+    var min = jungleWidth+20;
+    return Math.round(Math.random() * (max - min)) + min;
+}
+
+function canoemanEnd() { 
+    if(canoeman.body.x <= jungleWidth){
+        canoeman.body.x = jungleWidth;
+    }else if(canoeman.body.x >= 900 - jungleWidth){
+        canoeman.body.x = 900 - jungleWidth;
     }
+
     remosSound.stop();
-    boat.play('dead');
-    boat.body.velocity.x = 0;
+    canoeman.play('dead');
+
     if(finalSound == false){
         var explode = game.add.audio("explodesound");
         explode.volume = 0.3;
         explode.play();
         finalSound = true;
     }
-    if(_enemies.name){
-        _enemies.kill();
-    }
-    setTimeout(gameOv, 1300);
 }
 
 function sleep(milliseconds) {
@@ -343,7 +338,11 @@ function sleep(milliseconds) {
 }
 
 function gameOv() {
+    canoeman.kill();
     tileSpeedRiver = 1.5;
-    boat.kill();
     game.state.start('gameOver');
+}
+
+function render() {
+    //game.debug.text(tileSpeedRiver,32,32);
 }

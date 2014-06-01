@@ -1,0 +1,22 @@
+	{ 
+		
+		"asteroid_80-80": [
+			
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   68.5, 66  ,  47, 78.5  ,  2.5, 23  ,  16, 6.5  ,  33, -0.5  ,  50, 0.5  ,  68.5, 12  ,  79.5, 39  ]
+				}  ,
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   2.5, 23  ,  47, 78.5  ,  23, 76.5  ,  0.5, 51  ]
+				}  ,
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   33, -0.5  ,  34, -0.5  ,  50, 0.5  ]
+				}  
+		]
+		
+	}

@@ -8,7 +8,7 @@
  </tileset>
  <layer name="Camada de Tiles 1" width="48" height="15">
   <data encoding="base64" compression="zlib">
-   eJzdUlsKwDAIq+3979yvQRFNnQ+2NpCPUTVZSGs6BnhDGAvfzHJ6dG+Flk8kr1NR8a8Z/ZPuWLWy9G/FidlU+aSCm55cuQ9Lh0nYQ/sZGWr3kBcJxJiNyn5X+kaa6C3iJ7rfnfd5B3YetHlvl/pC/v1Qui/NIVp9f6XzF06nlgFw
+   eJzdUlsKgDAM2+v+Z/ZLGKGNsw82DQSRtkmsLUVHJzWGPvFNL9LiyzCAWDsZ2n48+zoRY3pq/yTjWyPuT9JZ9Yry/yu+uJusnDVB07JXzLFyw1WYY/MRO9T0WBYJFRiNzPvOzM08Wc2TxzvfjPp4A08ZtH7rLbWJ+H5T0pf6GFdz7/I5hRfdVQGQ
   </data>
  </layer>
  <objectgroup name="Camada de Objetos 1" width="48" height="15">

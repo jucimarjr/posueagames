@@ -1,11 +1,13 @@
-var audioMenu;
+var audioMenu, options, optionsBar, start, credits;
 
 var menuState = {
 
 	preload : function() {
-		game.load.image('title', 'assets/title.png')
-		game.load.image('menu', 'assets/menu.png');
-		game.load.image('enter_game', 'assets/enter_game.png');
+		game.load.image('title', 'assets/menu_title.png')
+		game.load.image('bg', 'assets/menu_bg.png');
+		game.load.image('options', 'assets/menu_options.png');
+		game.load.image('credits', 'assets/menu_options_credits.png');
+		game.load.image('start', 'assets/menu_options_play.png');
 		game.load.audio('audioMenu', 'assets/song_menu_otimizada.mp3');
 	},
 
@@ -14,23 +16,51 @@ var menuState = {
 		audioMenu = game.add.audio('audioMenu', 1, true);
 		audioMenu.play('', 0, 1, true);
 
-		var spaceBar = this.game.input.keyboard
-				.addKey(Phaser.Keyboard.SPACEBAR);
+		var spaceBar = game.input.keyboard.addKey(Phaser.Keyboard.S);
 		spaceBar.onDown.add(this.start, this);
 
-		game.add.sprite(0, 0, 'menu');
-		var title = game.add.sprite(game.world.centerX, 70, 'title');
-		title.anchor.set(0.5);
+		var creditsButton = game.input.keyboard.addKey(Phaser.Keyboard.C);
+		creditsButton.onDown.add(this.credits, this);
 
-		var enterGame = game.add.sprite(0, 0, 'enter_game');
-		enterGame.alpha = 0;
-		game.add.tween(enterGame).to({
-			alpha : 1
-		}, 500, Phaser.Easing.Linear.None, true, 0, 2000, true);
+		game.add.sprite(0, 0, 'bg');
+		var title = game.add.sprite(game.world.centerX, -250, 'title');
+		title.anchor.set(.5, 0);
+
+		// menu group
+		options = game.add.group();
+		optionsBar = options.create(0, game.world.height, 'options');
+		start = options.create(0, game.world.height, 'start');
+		credits = options.create(game.world.centerX, game.world.height,
+				'credits');
+
+		start.inputEnabled = true;
+		credits.inputEnabled = true;
+
+		start.events.onInputDown.add(this.start, this);
+		credits.events.onInputDown.add(this.credits, this);
+
+		titleEffect = game.add.tween(title);
+		titleEffect.to({
+			y : 0
+		}, 1000, Phaser.Easing.Bounce.Out);
+		titleEffect.onComplete.add(this.showOptions, this);
+		titleEffect.start();
+	},
+
+	showOptions : function() {
+		game.add.tween(options).to({
+			y : -82
+		}, 1000, Phaser.Easing.Bounce.Out, true);
 	},
 
 	start : function() {
 		audioMenu.stop();
-		this.game.state.start('play');
+		game.state.start('play');
+	},
+
+	credits : function() {
+		audioMenu.stop();
+		console.log('credits');
+		game.state.start('credits');
 	}
 };

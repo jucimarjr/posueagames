@@ -1,6 +1,11 @@
 (function (app_container) {
 
 	var init = function() {
+		//show credits
+		document.getElementById('link-credits').onclick = function (event) {
+			event.preventDefault();
+			document.getElementById('credits').style.display = 'block';
+		};
 
 		// Initialize Phaser, and creates a game
 		app_container.game = new Phaser.Game(960, 600, Phaser.AUTO, 'game_container');
@@ -18,5 +23,11 @@
 	window.onload = function() {
 		init();
 	};
+
+	window.addEventListener('keydown', function (event) {
+		if (event.keyCode == 32) {
+			event.preventDefault(); //scrollbar will not scroll page down
+		}
+	}, false);
 
 }(window.app_container = window.app_container || {}));

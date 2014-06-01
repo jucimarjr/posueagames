@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="24" height="30" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="tile-01" tilewidth="40" tileheight="40">
+  <image source="tile-01.png" width="40" height="40"/>
+ </tileset>
+ <tileset firstgid="2" name="tile-02" tilewidth="40" tileheight="40">
+  <image source="tile-02.png" width="40" height="40"/>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="24" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzllEsKwDAIRBPvf+hug4yfsQqhFVwl8zJRUdZaMpxT8VX+LrCQBvH3kQwbaSy+FPhI8xc+ekufM3zdqww/21+P581Wdj4743Z+pNV8fT/S655Y/bXOK3sI8Rl/zJud/UU+OvmIg+of1YDxU/HfXX9vP2X+mpnxanj7jZlHy+Ob+Tl1lh+WX/nXzfszy5/MBz4xAUU=
+  </data>
+ </layer>
+</map>

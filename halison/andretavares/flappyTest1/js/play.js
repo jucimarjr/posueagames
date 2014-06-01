@@ -1,6 +1,6 @@
 
 
-create: function() {  
+create function() {  
     /* previous setup code */
 
     // keep the spacebar from propogating up to the browser

@@ -9,7 +9,7 @@ Game.Tutorial.prototype = {
 	    curto.anchor.set(0.5);
 	    //curto.align = 'center';
 	    curto.font = 'Nunito';
-	    curto.fontSize = 75;
+	    curto.fontSize = 60;
 	    //curto.fontWeight = 'bold';	
 	    curto.stroke = '#FFFFFF';
 	    curto.strokeThickness = 4;
@@ -20,7 +20,7 @@ Game.Tutorial.prototype = {
 	    curto.anchor.set(0.5);
 	    //curto.align = 'center';
 	    curto.font = 'Nunito';
-	    curto.fontSize = 75;
+	    curto.fontSize = 60;
 	    //curto.fontWeight = 'bold';	
 	    curto.stroke = '#FFFFFF';
 	    curto.strokeThickness = 4;

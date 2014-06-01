@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta property="og:locale" content="pt_BR">
+        <meta property="og:url" content="http://computacao.uea.edu.br/ludus/posueagames/halison/resgate">
+        <meta property="og:title" content="Resgate Espacial">
+        <meta property="og:site_name" content="Especialização em Desenvolvimento de Jogos Eletrônicos da UEA">
+        <meta property="og:description" content="Após a grande crise ecológica no planeta, os sobreviventes da terra sofrem com asteróides violentos ao fugir para o espaço. As pessoas vagando em capsulas, sem rumo, devem ser salvas!">
+        <meta property="og:image" content="http://computacao.uea.edu.br/ludus/posueagames/halison/resgate/assets/images/ad_800-600.png">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="640">
+        <meta property="og:image:height" content="480">
+        <meta property="og:type" content="website">
+        <meta name="viewport" content="user-scalable=no,width=device-width"/>
+	<title>Resgate Espacial</title>
+	<style type="text/css">
+body{
+	background-image:url('assets/images/game_background_960-600.png');
+	background-color:#cccccc;
+}
+.fb-like{
+	left: 50%;
+	margin-left:-464px;  /* largura é 960*/
+	margin-bottom:2px;  /* largura é 960*/
+}
+.fb-comments{
+	left: 50%;
+ 	margin-left:-464px;  /* largura é 960*/
+ 	margin-top:2px;  /* largura é 960*/ 
+}
+	</style>
+
+</head>
+<body>
+    	<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0]; 
+         if (d.getElementById(id)) return; 
+         js = d.createElement(s); js.id = id; 
+         js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0"; 
+         fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk')); 
+        </script>
+        
+        <div class="fb-like" 
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/halison/resgate/" 
+             data-layout="button_count" data-action="like" data-show-faces="true" 
+             data-share="true">
+        </div>
+         
+        
+        <div id ="ph-game"></div>
+
+		
+    	<div class="fb-comments" 
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/halison/resgate/" 
+             data-width="960" data-numposts="10" data-colorscheme="dark">
+        </div>
+        
+        <script type="text/javascript" src="./phaser/phaser.min.js"></script>
+		<script type="text/javascript" src="./js/config/Config.js"></script>
+		<script type="text/javascript" src="./js/states/LudusSplash.js"></script>
+		<script type="text/javascript" src="./js/states/GameSplash.js"></script>
+		<script type="text/javascript" src="./js/states/Menu.js"></script>
+		<script type="text/javascript" src="./js/states/Play.js"></script>
+		<script type="text/javascript" src="./js/states/HowToPlay.js"></script>
+		<script type="text/javascript" src="./js/states/Credits.js"></script>
+		<script type="text/javascript" src="./js/Main.js"></script>
+
+</body>
+</html>

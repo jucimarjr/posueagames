@@ -1,32 +1,59 @@
-﻿var GameMenu = { preload: preload, create: create, start: start, credits: credits};
+﻿var GameMenu = { create: create };
 
-function preload() {
-    game.load.image('initBg', 'assets/bg/initBg_900-600.jpg');
+var music;
+var toggle = false;
+var bt_sound;
 
-    game.load.spritesheet('btIniciar', 'assets/botoes/iniciar_350-120.png', 350, 120, 2);
-    game.load.spritesheet('btCredits', 'assets/botoes/creditosAtiv_350-120.png', 350, 120);
-}
 
 //Tela de Menu
 function create() {
+    //game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    //game.input.onDown.add(gofull, this);
+
     var initBg = game.add.sprite(0, 0, 'initBg');
 
-    var bt_iniciar = game.add.button(450, 365, 'btIniciar', start, this, 1, 0, 1);
+    var bt_iniciar = game.add.button(450, 365, 'btIniciar', history, this, 1, 0, 1);
     bt_iniciar.anchor.set(0.5, 0.5);
 
     var bt_tutorial = game.add.button(450, 500, 'btCredits', credits, this, 1, 0, 1);
     bt_tutorial.anchor.set(0.5, 0.5);
 
-    /*var spacebar_keyboar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    spacebar_keyboar.onDown.add(start, this);*/
+    bt_sound = game.add.button(850, 0, 'sound', pause, this, 1, 0, 1);
 }
 
+function initSound() {
+    music = game.add.audio('fundosound', 1, true);
+    music.play('', 0, 1, true);
+    startSound = false;
+}
+
+function gofull() {
+    game.scale.startFullScreen();
+}
+
+function pause() {
+    if (toggle) {
+        music.resume();
+        toggle = false;
+        bt_sound = game.add.button(850, 0, 'sound', pause, this, 1, 0, 1);
+    }
+    else {
+        music.pause();
+        toggle = true;
+        bt_sound = game.add.button(850, 0, 'mute', pause, this, 1, 0, 1);
+    }
+}
 
 // Começa o jogo
 function start() {
     console.log("menu start");
-    game.state.start('fase');
+    //game.state.start('historia');
 }
+
+function history() {
+    game.state.start('historia');
+}
+
 function credits() {
     console.log("credits");
     game.state.start('credits');

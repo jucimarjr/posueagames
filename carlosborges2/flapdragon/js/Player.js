@@ -39,7 +39,7 @@ Player.prototype = {
 		
 		// physics
 		game.physics.enable(this.player, Phaser.Physics.ARCADE);
-		this.player.body.collideWorldBounds = true;
+		this.player.body.collideWorldBounds = false;
 		
 		this.player.animations.add(ANIME_PLAYER_FLY, [0, 1], 8, true);
 		this.player.animations.play(ANIME_PLAYER_FLY);
@@ -49,19 +49,15 @@ Player.prototype = {
 		this.soundCloud = game.add.audio(SOUND_CLOUD);
 		
 		
-	//	this.highscore = game.add.text(790, 25,'Best: '+localStorage["score"],{
-	//		font: "24px Arial", fill: "#ffffff" , align: "center"
-	//	});
-		
-		
 	},
 
 	
 	updatePlayStation: function() {
+		
 		game.physics.arcade.collide(this.player, level.groundCoolide, this.explode, null, this);
 		game.physics.arcade.overlap(this.player, enemies.enemies, this.explode, null, this);
 
-		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.spaceIsUped) {
+		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.spaceIsUped && this.player.body.y > 0) {
 			this.spaceIsUped = false;
 			this.player.body.velocity.y = this.playerYJump;
 			this.soundCloud.play();

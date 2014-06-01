@@ -24,13 +24,12 @@ Player.prototype = {
 		// Audio
 		this.audioVoar = game.add.audio('audioVoar');
 	},
-	
+
 	update : function() {
 
 		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)
 				&& (this.sprite.body.touching.down || this.sprite.body.velocity.y > 100)) {
-			this.sprite.body.velocity.y = -1000;
-			this.audioVoar.play();
+			this.jump();
 		}
 
 		if (this.sprite.body.touching.down) {
@@ -44,6 +43,11 @@ Player.prototype = {
 			}, 100).start();
 			this.sprite.animations.play('jump');
 		}
+	},
+
+	jump : function() {
+		this.sprite.body.velocity.y = -1000;
+		this.audioVoar.play();
 	}
 
 }

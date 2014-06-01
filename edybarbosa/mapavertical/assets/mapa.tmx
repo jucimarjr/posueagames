@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="24" height="30" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="blocos" tilewidth="40" tileheight="40">
+  <image source="../../../../../../Desktop/blocos.png" trans="ff00ff" width="80" height="80"/>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="24" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzdVlsKwDAI6x73P/PYRyGI2liVwYT8dUnrI26Mb+ICdPNX6WicjMbpIHufl+NwkOG+CUTfhLli+DX8KbrnYKWJ2l6f7vSsfJdWS6tnq3IS6R9WM1qzah+SvJ5edzBaTP9k/JCpb8Q7dnrd4pe5kX7t6SP3PM/kMer/rM9a/t8Z3X6PO6yLv2pvaXM068zwszOCZ6L88izedeX/7P5BrL71/o0q8ABnxwKE
+  </data>
+ </layer>
+</map>

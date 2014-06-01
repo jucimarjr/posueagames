@@ -35,6 +35,7 @@ Level = function() {
 	this.create = function() {
 		
 		this.audioBg = game.add.audio(BG_SOUND, 1, true);
+		this.audioBg.loop = true;
 		this.audioBg.play('', 0, 0.5, true);
 		
 		// sky
@@ -90,7 +91,7 @@ Level = function() {
 		
 		var txtRestart = game.add.text(game.world.centerX, 450, '', {font: "30px Arial", fill: "black" , align: "center"});
 		txtRestart.anchor.setTo(0.5, 0.5);
-		txtRestart.text = 'Pressione barra para reiniciar';
+		txtRestart.text = 'Pressione \'R\' para reiniciar';
 		
 	};
 

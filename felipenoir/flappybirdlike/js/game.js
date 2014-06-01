@@ -38,8 +38,8 @@ function selecionaEnemy() {
 game.state.add('warning', warningState);
 game.state.add('load', loadState);
 game.state.add('menu', menuState);
+game.state.add('credits', creditsState);
 game.state.add('play', playState);
 game.state.add('gameover', gameoverState);
 
 game.state.start('warning');
-//game.state.start('load');

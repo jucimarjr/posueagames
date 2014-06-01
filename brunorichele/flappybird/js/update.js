@@ -4,8 +4,9 @@ var update = {
     status: null,
     score: 0 ,
     score_placa : null,
-    botaoinicio: null,
-    botaojogar: null,
+    buttonInicio: null,
+    buttonJogar: null,
+	pointWall : null,
     
     update : function(){
         // fazer o angulo apontar para baixo quando o jogador n������������������o esta pulando
@@ -21,26 +22,28 @@ var update = {
         update.collisionFloor();
         if(this.player.y < 200) this.player.y = 200;
         
+        create.score_label.y = game.camera.y + 30;
+        create.cabeca.y = game.camera.y + 20;
         create.score_label.setText (" " + create.score);
         
     },
     collisionEnemyGroup : function(player, enemy){
         if(player && player.alive){
-            var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
+            var style = { font: "40px Helvetica", fill: "#ffffff" };
             if(enemy.enemyType === 'ariranha'){
+				update.waitGameOver(1000);
                 player.destroy();
                 enemy.animations.stop();
                 enemy.frame = 2;
-                update.createGameOverButtons();
             }
             else if(enemy.enemyType === 'barco') {
+				update.waitGameOver(1000);
                 player.destroy();
                 enemy.animations.stop();
                 enemy.frame = 2;
-                update.createGameOverButtons();
             }
             else {
-                update.createGameOverButtons();
+			  	update.waitGameOver(1000);
                 player.alive = false;
                 player.animations.play('shock');
                 player.body.gravity.y = 500;
@@ -48,49 +51,50 @@ var update = {
             }
         }
     },
+	waitGameOver : function(second){	
+		 game.time.events.add(second, function(){update.createGameOverButtons()});
+	},
     collisionFloor : function(){
-        if (this.player.alive && this.player.y > game.world.bounds.height){
-            var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
+        if (this.player.alive && this.player.y > game.world.bounds.height - this.player.height){
+			update.waitGameOver(2000);
+            var style = { font: "40px Helvetica", fill: "#ffffff" };
             this.player.alive = false;
             this.player.animations.stop();
             this.player.frame = 4;
-            this.player.body.velocity.y = 0;
-            this.createGameOverButtons();
+			this.player.scale.y *= -1;
+			this.player.body.gravity.y = 0;
+			this.player.body.velocity.y = -100;
+			this.player.body.velocity.x = -100;
         }
     },
     createGameOverButtons : function(){
         startY = game.camera.y - 80;
         this.pointWall = game.add.sprite(180, startY + 120, 'placapontos');
         
-        var style = { font: "40px Brannboll_Ny_PersonalUseOnly", fill: "#ffffff" };
-      //  var score_placa = game.add.text(200, 200, " " + create.score, style);
-        
-      //  this.score_placa = game.add.text(200, 200, "Pontos:" + create.score, style);
+        var style = { font: "100px Helvetica", fill: "#ffffff" };
+        this.score_placa = game.add.text((game.width - 50)/2, startY + 350, create.score + "", style);
 
-        this.buttonJogar = game.add.sprite(320, startY + 520, 'botaojogar');
-        this.buttonJogar.inputEnabled = true;
-        this.buttonJogar.input.useHandCursor = true;
-        this.buttonJogar.events.onInputDown.add(this.resetGame, this);
-
-        this.buttonInicio = game.add.sprite(510, startY + 520, 'botaoinicio');
-        this.buttonInicio.inputEnabled = true;
-        this.buttonInicio.input.useHandCursor = true;
-        this.buttonInicio.events.onInputDown.add(this.startMenu, this);
+		update.buttonJogar = game.add.button(320, startY + 520, 'botaojogar', this.resetGame, 0, 0, 0);
+		update.buttonJogar.input.useHandCursor = true;
+		
+		update.buttonInicio = game.add.button(510, startY + 520, 'botaoinicio', this.startMenu, 0, 0, 0);
+		update.buttonInicio.input.useHandCursor = true;
+				 			
+		this.player.destroy();
     },
     startMenu: function(){
-        this.buttonJogar.kill();
-        this.buttonInicio.kill();
-        this.pointWall.kill();
+        update.buttonJogar.kill();
+        update.buttonInicio.kill();
+        update.score_placa.setText(" ");
+        update.pointWall.kill();
         create.bgmusic.stop();
         game.state.start('menu');
     },
     resetGame: function(){
-    	
-        this.buttonJogar.kill();
-        this.buttonInicio.kill();
-        // this.score_placa.kill();
-        this.pointWall.kill();
+        update.buttonJogar.kill();
+        update.buttonInicio.kill();
+        update.score_placa.setText(" ");
+        update.pointWall.kill();
         create.reset();
-      
-    }
+    }	
 };

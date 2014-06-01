@@ -69,7 +69,7 @@ var playState = function(game) {
 	
 	this.updateGameOverState = function() {
 		
-		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+		if (game.input.keyboard.isDown(Phaser.Keyboard.R)) {
 			gamePlayState = GAME_INIT_STATE;
 			game.state.start(STATE_PLAY);
 		}
