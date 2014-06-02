@@ -33,7 +33,7 @@ State.Play.prototype = {
         game.physics.arcade.collide(this.level.layer, this.hero.hero);
         this.level.update(this.hero);
         this.hero.update();
-        this.weapon.update(this.hero.hero.x, this.hero.hero.y);
+        this.weapon.update(this.hero.hero);
     },
 
 }

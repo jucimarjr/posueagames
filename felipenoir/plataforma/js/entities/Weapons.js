@@ -4,9 +4,9 @@ var Pistol = {
 
 function Weapon(game) {
     this.game = game,
-    this.shotDelay = 2000,
+    this.shotDelay = 100,
     this.bulletSpeed = 500,
-    this.numberOfBullets = 3,
+    this.numberOfBullets = 20,
     this.bulletGroup;
 }
 
@@ -25,14 +25,15 @@ Weapon.prototype = {
             this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
             bullet.kill();
         }
+        this.game.time.advancedTiming = true;
     },
 
-    update : function(x, y) {
+    update : function(hero) {
         var bullet;
         if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
-            console.log('shot!');
             if(this.lastBulletShotAt === undefined) this.lastBulletShotAt = 0;
             if(this.game.time.now - this.lastBulletShotAt < this.shotDelay) return;
+            this.lastBulletShotAt = this.game.time.now;
 
             bullet = this.bulletGroup.getFirstDead();
 
@@ -43,7 +44,7 @@ Weapon.prototype = {
             bullet.checkWorldBounds = true;
             bullet.outOfBoundsKill = true;
 
-            bullet.reset(x, y);
+            bullet.reset(hero.x, hero.y);
 
             bullet.body.velocity.x = this.bulletSpeed;
             bullet.body.velocity.y = 0;

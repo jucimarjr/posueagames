@@ -8,9 +8,18 @@ var HeroProperties = {
     jump:-350,
     climb:150,
     animations:{
-        idle:[0, 1],
-        run:[2, 3, 4, 5, 6],
-        attack:[7, 8, 9]
+        idle:{
+            frames:[0, 1],
+            framerate:2
+        },
+        run:{
+            frames:[2, 3, 4, 5, 6],
+            framerate:6
+        },
+        attack:{
+            frames:[7, 8, 9],
+            framerate:3
+        }
     }
 }
 
@@ -27,10 +36,11 @@ Hero.prototype = {
     },
 
     create : function() {
+        var heroAnim = HeroProperties.animations;
         this.hero = game.add.sprite(10,game.world.height - 200,'hero', 0);
-        this.hero.animations.add('idle', HeroProperties.animations.idle, 2);
-        this.hero.animations.add('run', HeroProperties.animations.run, 6);
-        this.hero.animations.add('attack', HeroProperties.animations.attack, 3);
+        this.hero.animations.add('idle', heroAnim.idle.frames, heroAnim.idle.framerate);
+        this.hero.animations.add('run', heroAnim.run.frames, heroAnim.run.framerate);
+        this.attack = this.hero.animations.add('attack', heroAnim.attack.frames, heroAnim.attack.framerate, false);
 
         this.hero.anchor.setTo(.5,.5);
         this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
