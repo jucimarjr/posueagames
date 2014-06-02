@@ -14,7 +14,7 @@ State.SecondPhase.prototype = {
 		game.load.image('star', 'assets/star.png');*/
 		//this.game.load.image('background', 'assets/LudusSplash_960-600.png');
 		//this.game.load.image('background', 'assets/bg.png');
-		//this.game.load.spritesheet('player', 'assets/mario.png', 180,54,5);
+		//this.game.load.spritesheet('player', 'assets/mario.png', 180,54);
 	},
 	create: function () {
 		"use strict";
