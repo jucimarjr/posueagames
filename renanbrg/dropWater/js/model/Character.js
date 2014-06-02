@@ -144,7 +144,7 @@ Character.prototype = {
      * It must be a value bigger than 0.
      */
     jump: function(jumpHeight) {
-        if (this.character.body.onFloor()) {
+        if (this.character.body.onFloor() || this.character.body.touching.down) {
             this.character.body.velocity.y = -jumpHeight;
         }
     },
