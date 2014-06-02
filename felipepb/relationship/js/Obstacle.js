@@ -34,6 +34,7 @@ BasicGame.Obstacle.prototype = {
         this.lightningSprite = this.gameManager.add.sprite(0, 0, 'lightningAtlas');
         this.gameManager.game.physics.p2.enableBody(this.lightningSprite, BasicGame.GameManager.debugDraw);
         this.lightningSprite.body.kinematic = true;
+        this.lightningSprite.body.data.shapes[0].sensor = true;
         this.lightningSprite.body.y = -this._spriteHeight / 2.0 - 100;
 
         this.playLightningAnimation();
