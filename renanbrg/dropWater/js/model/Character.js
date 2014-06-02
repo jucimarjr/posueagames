@@ -111,13 +111,14 @@ Character.prototype = {
      * @method Character#moveLeft
      * @memberof Character
      *
-     * @param {integer} speed - how fast the sprite will move to the right.
+     * @param {integer} speed - how fast the sprite will move to the left.
      */
     moveLeft: function(speed) {
         this.character.x -= speed;
         if (this.isAnimated) {
         	this.character.animations.play('left');
         }
+ 
     },
 
     /**
@@ -143,8 +144,7 @@ Character.prototype = {
      * It must be a value bigger than 0.
      */
     jump: function(jumpHeight) {
-        if (this.character.body.onFloor() ||
-                this.character.body.touching.down) {
+        if (this.character.body.onFloor()) {
             this.character.body.velocity.y = -jumpHeight;
         }
     },
