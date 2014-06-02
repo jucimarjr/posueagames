@@ -1,5 +1,5 @@
 State.Play = function() {
-    this.level = new Level(game, Level2),
+    this.level = new Level(game, Level1),
     this.hero = new Hero(game),
     this.weapon = new Weapon(game);
 }
