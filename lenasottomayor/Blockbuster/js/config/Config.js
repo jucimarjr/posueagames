@@ -92,6 +92,18 @@ Config.menu = {
 	}
 };
 
+//GamePlay
+Config.game = {
+	gravity: 800,
+	camera: {
+		y: 1000
+	},
+	mapLevel1:	{
+		dir: 'assets/maps/Themetest.json',
+		tileset: 'assets/maps/Tileset-01-01.png' 
+	}
+};
+
 //HowToPlay
 Config.howToPlay = {
 	dir: 'assets/images/HowToPlay_960-600.png',
