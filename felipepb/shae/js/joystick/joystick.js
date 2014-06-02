@@ -6,12 +6,30 @@
  */
 function Joystick() {
 	this.ctl = Joystick.createPlugin();
+
+	if (navigator.getGamepads) {
+		console.log('pads: ' + navigator.getGamepads().length);
+		var gamepads = navigator.getGamepads();
+		if (gamepads && gamepads.length > 0) {
+            for (var i = 0; i < gamepads.length; i++) {
+				console.log(i + ' | gamepad: ' + gamepads[i]);
+				if (gamepads[i] && gamepads[i].buttons) {
+					console.log('buttons: ' + gamepads[i].buttons.length);
+					this.gamepadIndex = i;
+					break;
+				}
+			}
+		}
+	}
 }
 
 /**
  * Constant for a stick's axis center.
  */
 Joystick.CENTER = 32768;
+Joystick.MAXIMUM = 65535;
+Joystick.GamepadA = 3;  // 2
+Joystick.GamepadB = 1;
 
 /**
  * Reads the controller's main stick x-axis.
@@ -19,7 +37,13 @@ Joystick.CENTER = 32768;
  * @return a value between 0 and 65535 (with 0 being extreme left and 65535 extreme right)
  */
 Joystick.prototype.getX = function() {
-	return (this.ctl) ? this.ctl.x : Joystick.CENTER;
+	if (this.ctl) {
+		return this.ctl.x;
+	} else if (this.gamepadIndex != undefined) {
+		var axes = navigator.getGamepads()[this.gamepadIndex].axes;
+		return axes[0] * Joystick.CENTER + Joystick.CENTER;
+	}
+	return Joystick.CENTER;
 };
 
 /**
@@ -27,8 +51,14 @@ Joystick.prototype.getX = function() {
  * 
  * @return a value between 0 and 65535 (with 0 being extreme top and 65535 extreme bottom)
  */
-Joystick.prototype.getY = function() {
-	return (this.ctl) ? this.ctl.y : Joystick.CENTER;
+Joystick.prototype.getY = function(){
+	if (this.ctl) {
+		return this.ctl.y;
+	} else if (this.gamepadIndex != undefined) {
+		var axes = navigator.getGamepads()[this.gamepadIndex].axes;
+		return axes[1] * Joystick.CENTER + Joystick.CENTER;
+    }		
+	return Joystick.CENTER;
 };
 
 /**
@@ -37,7 +67,11 @@ Joystick.prototype.getY = function() {
  * @return {@code true} if the button is pressed
  */
 Joystick.prototype.getA = function() {
-	return (this.ctl) ? this.ctl.a : false;
+	if (this.ctl)
+	   return this.ctl.a;
+	else if (this.gamepadIndex != undefined)
+	   return navigator.getGamepads()[this.gamepadIndex].buttons[Joystick.GamepadA].value;
+	return false;
 };
 
 /**
@@ -46,7 +80,11 @@ Joystick.prototype.getA = function() {
  * @return {@code true} if the button is pressed
  */
 Joystick.prototype.getB = function() {
-	return (this.ctl) ? this.ctl.b : false;
+	if (this.ctl)
+	   return this.ctl.b;
+	else if (this.gamepadIndex != undefined)
+	   return navigator.getGamepads()[this.gamepadIndex].buttons[Joystick.GamepadB].value;
+	return false;
 };
 
 /**
@@ -55,7 +93,11 @@ Joystick.prototype.getB = function() {
  * @return the buttons represented as bits in an integer
  */
 Joystick.prototype.getButtons = function() {
-	return (this.ctl) ? this.ctl.buttons : 0;
+	if (this.ctl)
+	   return this.ctl.buttons;
+	else if (this.gamepad)
+	   return this.gamepad.buttons;
+    return 0;
 };
 
 /**

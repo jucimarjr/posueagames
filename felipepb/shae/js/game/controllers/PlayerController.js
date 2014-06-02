@@ -66,6 +66,9 @@ Game.PlayerController.prototype = {
 		var joystick = this.joystick;
 		var joystickX = joystick.getX();
 		var joystickY = joystick.getY();
+		
+		console.log('x: ' + joystickX + ' |y:  ' + joystickY);
+		
 		var runButtonIsDown = this.runButton.isDown || joystick.getA();
 		
         this.direction = Game.PlayerController.Direction.None;
