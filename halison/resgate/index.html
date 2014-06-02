@@ -13,42 +13,21 @@
         <meta property="og:image:height" content="480">
         <meta property="og:type" content="website">
         <meta name="viewport" content="user-scalable=no,width=device-width"/>
+        <link rel="stylesheet" href="css/styleIndex.css" type="text/css">
 	<title>Resgate Espacial</title>
-	<style type="text/css">
-body{
-	background-image:url('assets/images/game_background_960-600.png');
-	background-color:#cccccc;
-}
-.fb-like{
-	left: 50%;
-	margin-left:-464px;  /* largura é 960*/
-	margin-bottom:2px;  /* largura é 960*/
-}
-.fb-comments{
-	left: 50%;
- 	margin-left:-464px;  /* largura é 960*/
- 	margin-top:2px;  /* largura é 960*/ 
-}
-	</style>
 
 </head>
 <body>
-    	<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0]; 
-         if (d.getElementById(id)) return; 
-         js = d.createElement(s); js.id = id; 
-         js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0"; 
-         fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk')); 
-        </script>
-        
-        <div class="fb-like" 
-             data-href="http://computacao.uea.edu.br/ludus/posueagames/halison/resgate/" 
-             data-layout="button_count" data-action="like" data-show-faces="true" 
-             data-share="true">
-        </div>
-         
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="fb-like" data-href="http://computacao.uea.edu.br/ludus/posueagames/halison/resgate/" data-width="960" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>         
         
         <div id ="ph-game"></div>
 
@@ -69,4 +48,4 @@ body{
 		<script type="text/javascript" src="./js/Main.js"></script>
 
 </body>
-</html>
+	</html>
