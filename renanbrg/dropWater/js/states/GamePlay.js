@@ -110,6 +110,7 @@ State.GamePlay.prototype = {
 		// Jump
 		if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) {
             this.drop.jump(450);
+            if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR)&& (this.drop.getSpriteObject().body.onFloor())) 
             this.jumpSound.play();
 		}
 	},
