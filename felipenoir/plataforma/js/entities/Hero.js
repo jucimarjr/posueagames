@@ -1,5 +1,5 @@
 var HeroProperties = {
-    path:'assets/images/hero/hero_50-50-10.png',
+    path:'assets/images/hero/hero_50-50-12.png',
     width:50,
     height:50,
     dragX:200,
@@ -19,28 +19,35 @@ var HeroProperties = {
         attack:{
             frames:[7, 8, 9],
             framerate:3
+        },
+        shot:{
+            frames:[10, 11],
+            framerate:4
         }
-    }
+    },
+    animationsQtd:12
 }
 
 function Hero(game) {
     this.game = game,
     this.hero,
     this.attack,
+    this.shot,
     this.attacking = false;
 }
 
 Hero.prototype = {
     preload : function() {
-        this.game.load.spritesheet('hero', HeroProperties.path, 50, 50, 10);
+        this.game.load.spritesheet('hero', HeroProperties.path, HeroProperties.width, HeroProperties.height, HeroProperties.animationsQtd);
     },
 
     create : function() {
         var heroAnim = HeroProperties.animations;
-        this.hero = game.add.sprite(10,game.world.height - 200,'hero', 0);
+        this.hero = game.add.sprite(10, game.world.height - 200,'hero', 0);
         this.hero.animations.add('idle', heroAnim.idle.frames, heroAnim.idle.framerate);
         this.hero.animations.add('run', heroAnim.run.frames, heroAnim.run.framerate);
-        this.attack = this.hero.animations.add('attack', heroAnim.attack.frames, heroAnim.attack.framerate, false);
+        this.hero.animations.add('attack', heroAnim.attack.frames, heroAnim.attack.framerate, false);
+        this.hero.animations.add('shot', heroAnim.shot.frames, heroAnim.shot.framerate, false);
 
         this.hero.anchor.setTo(.5,.5);
         this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
@@ -70,6 +77,8 @@ Hero.prototype = {
 
         if(this.game.input.keyboard.isDown(Phaser.Keyboard.X)) {
             this.hero.animations.play('attack');
+        } else if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
+            this.hero.animations.play('shot');
         }
     },
 
