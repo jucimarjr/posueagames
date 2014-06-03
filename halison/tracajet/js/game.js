@@ -1,7 +1,6 @@
 
 var tracajet, star, plataform, map,layer;
 
-var game = new Phaser.Game(600, 1920, Phaser.AUTO, 'phaser-game', { preload: preload, create: create, update: update });
 
 function preload () {
 
