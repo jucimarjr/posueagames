@@ -52,11 +52,6 @@ State.Play.prototype = {
 
 		this.nave.body.setRectangle(90); // ajusta caixa de colisão da nave
 	    this.nave.body.fixedRotation = true;
-//	    this.nave.body.gravity = 200;
-//	    alert(this.nave.body.kinematic);
-//	    alert(this.nave.body.dynamic);
-//	    this.nave.body.dynamic = true;
-//		this.nave.body.setZeroDamping();   // tira o amortecimento
 		
 		this.lifeNumber = 3;
 		this.life = []; // store life imgs
@@ -159,7 +154,6 @@ State.Play.prototype = {
 		    	sprite.body.setCircle(31);	
 		    	sprite.body.setCollisionGroup(this.coinsCollisionGroup); //add   
 		    	sprite.body.collides([this.coinsCollisionGroup, this.naveCollisionGroup]);
-//		    	game.physics.p2.enable(sprite, false);
 		    	sprite.body.allowGravity = false;
 		    }
 		
@@ -199,17 +193,12 @@ State.Play.prototype = {
 	    if (this.cursors.up.isDown)
 	    {
 	    	this.nave.body.moveDown(400);
-//	    	this.nave.body.velocity = -200;
-//	    	this.nave.body.force.y = 60;
-//	    	this.nave.body.reverse(400);
-	    } else  if (this.cursors.down.isDown){
+	    	
+	    } else  if (this.cursors.down.isDown)
+	    {
 	    	this.nave.body.moveUp(400);
-//	    	this.nave.body.moveUp((nave.body.velocity.y * 16) * game.time.physicsElapsed);
-//	    	this.nave.body.velocity = 200;
-//	    	this.nave.body.force.y = 60;
-//	    	(nave.body.velocity.y * 16) * game.time.physicsElapsed;
-//	    	this.nave.body.thrust(400);
 	    }
+	    
 	    if (this.nave.body.y < 0 || this.nave.body.y > Config.global.screen.height ||
 		     this.nave.body.x < 0 || this.nave.body.x > Config.global.screen.width){
 			this.gameover.x = Config.game.gameover.x;
