@@ -5,6 +5,9 @@ var LevelBase = {
         objects : 'objects',
         collisionStart:0,
         collisionEnd:2,
+        weapon1:4,
+        weapon2:5,
+        weapon3:6,
         stair : 'assets/images/escada.png'
     },
     bg : {
@@ -38,6 +41,7 @@ function Level(game, level) {
     this.game = game,
     this.level = level,
     this.layer,
+    this.weapons,
     this.map,
     this.escadas;
 }
@@ -48,6 +52,9 @@ Level.prototype = {
         this.game.load.image('tileset', this.level.tilemap.tilePath);
         this.game.load.image('bg', this.level.bg.path);
         this.game.load.image('escada', LevelBase.tilemap.stair);
+        this.game.load.image('weapon1', Weapon1.weaponImg);
+        this.game.load.image('weapon2', Weapon2.weaponImg);
+        this.game.load.image('weapon3', Weapon3.weaponImg);
     },
 
     create : function() {
@@ -63,6 +70,14 @@ Level.prototype = {
         this.layer.resizeWorld();
         this.map.setCollisionBetween(LevelBase.tilemap.collisionStart, LevelBase.tilemap.collisionEnd, true, LevelBase.tilemap.layer);
 
+        // criar armas
+        this.weapons = this.game.add.group();
+        this.weapons.enableBody = true;
+        this.map.createFromObjects('objects', 5, 'weapon1', 0, true, false, this.weapons);
+        this.map.createFromObjects('objects', 6, 'weapon2', 0, true, false, this.weapons);
+        this.map.createFromObjects('objects', 7, 'weapon3', 0, true, false, this.weapons);
+        this.weapons.forEach(function(weapon) {weapon.body.allowGravity = false}, this);
+
         //cria escadas
         this.escadas = game.add.group();
         this.escadas.enableBody = true;
@@ -75,6 +90,7 @@ Level.prototype = {
 
     update : function(hero) {
         this.upStair(hero, this.checkOverlap(this.escadas, hero.hero));
+        this.game.physics.arcade.overlap(this.weapons, hero.hero, this.grabsGun, null, this);
 //        this.game.physics.arcade.overlap(this.escadas, hero.hero, this.upStair, null, this);
     },
 
@@ -84,5 +100,10 @@ Level.prototype = {
 
     upStair : function(hero, bool){
         hero.climb(bool);
+    },
+
+    grabsGun : function(hero, weapon) {
+        console.log('grabsGUn');
+        weapon.kill();
     }
 }

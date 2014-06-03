@@ -1,5 +1,6 @@
 State.Play = function() {
     this.level = new Level(game, Level1),
+    this.panel = new Panel(game),
     this.hero = new Hero(game),
     this.weapon = new Weapon(game);
 }
@@ -9,6 +10,7 @@ var cursors;
 State.Play.prototype = {
     preload:function() {
         this.level.preload();
+        this.panel.preload();
         this.hero.preload();
         this.weapon.preload();
     },
@@ -19,6 +21,9 @@ State.Play.prototype = {
 
         // level
         this.level.create();
+
+        // panel
+        this.panel.create();
 
         // heroi
         this.hero.create();
