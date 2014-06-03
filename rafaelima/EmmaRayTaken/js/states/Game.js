@@ -32,7 +32,7 @@ State.Game.prototype = {
 		    this.game.physics.p2.restitution = 0.5;
 		    this.game.physics.p2.gravity.y = 800;
 
-		    player = this.game.add.sprite(32, 150, 'dude');
+		    player = this.game.add.sprite(60, 3300, 'dude');
 		    player.animations.add('left', [0, 1, 2, 3], 10, true);
 		    player.animations.add('turn', [4], 20, true);
 		    player.animations.add('right', [5, 6, 7, 8], 10, true);
