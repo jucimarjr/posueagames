@@ -28,6 +28,7 @@ State.SecondPhase.prototype = {
 		//player.body.checkCollision.right = false;
 		//player.animations.add('walk',[1,2,1,3],12,true);
 		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13],15,true);
+		this.player.animations.add('stoped',[0,1],2,true);
 		this.player.animations.add('down',[3,4],12,true);
 		this.player.animations.add('jump',[1],1,false);
 		this.game.physics.enable(this.player);
@@ -35,7 +36,7 @@ State.SecondPhase.prototype = {
 		this.player.body.collideWorldBounds = true;
 		//this.game.camera.follow(player);
 
-		this.loadLevel(2);
+		this.loadLevel(3);
 	
 		
 		//this.game.camera.y = 1000;
@@ -61,12 +62,13 @@ State.SecondPhase.prototype = {
 		else if(this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
 			this.player.scale.x = -1; 
 			this.player.scale.x = 1;
-			this.player.animations.play('walk');		
+			this.player.animations.play('walk');
 			this.player.body.velocity.x = 150;
 		}
 		else if(this.player.body.blocked.down){
-			this.player.animations.stop();
-			this.player.frame = 0;
+			//this.player.animations.stop();
+			//this.player.frame = 0;
+			this.player.animations.play('stoped');
 		}
 		if(this.player.body.velocity.y !== 0){
 			this.player.animations.play('jump');
@@ -88,7 +90,7 @@ State.SecondPhase.prototype = {
 		this.map = game.add.tilemap('level'+level);
 		this.map.addTilesetImage('tileset','tileset');
 		//this.map.setCollisionBetween(0,30, true,'Camada de Tiles 1');
-		this.map.setCollisionBetween(0,30);
+		this.map.setCollisionBetween(0,3);
 	
 		this.layer = this.map.createLayer('Camada de Tiles 1');
 		this.layer.resizeWorld();		
@@ -97,10 +99,10 @@ State.SecondPhase.prototype = {
 		this.group.enableBody = true;
 		this.group.physicsBodyType = Phaser.Physics.ARCADE;
 
-		this.map.createFromObjects('Camada de Objetos 1',17, 'star', 0,true,false,this.group);
-		this.group.forEach(function (star){ 
-			star.body.allowGravity = false;
-			star.body.immovable = true;
+		this.map.createFromObjects('Camada de Objetos 1',7, 'bees', 0,true,false,this.group);
+		this.group.forEach(function (enemie){ 
+			enemie.body.allowGravity = false;
+			enemie.body.immovable = true;
 		}, this);
 
 		//this.game.physics.enable([this.player, this.layer]);
