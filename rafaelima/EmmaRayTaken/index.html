@@ -1,94 +1,64 @@
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:og="http://opengraphprotocol.org/schema/">
-<head>
+<!DOCTYPE html>
+<html >
+	<head>
+		<meta charset="UTF-8"/>
+        <meta property="og:locale" content="pt_BR">
+        <meta property="og:url" content="http://computacao.uea.edu.br/ludus/posueagames/jucimarjr/mapa/">
+        <meta property="og:title" content="Mapas">
+        <meta property="og:site_name" content="Especializacao em Desenvolvimento de Jogos Eletrônicos da UEA">
+        <meta property="og:description" content="Jogo Exemplo">
+        <meta property="og:image" content="http://computacao.uea.edu.br/ludus/posueagames/jucimarjr/dinossauro/assets/adgame_800-600.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="800">
+        <meta property="og:image:height" content="600">
+        <meta property="og:type" content="website">
+        
+		<meta name="viewport" content="user-scalable=no,width=device-width"/>
+		
+		<title>Titulo</title>
+		<style type="text/css">
+	        body {
+				margin: auto;
+				display: table;
+			}
+			#footer {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body >
+        <div id="fb-root"></div>
+		<script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 
-<meta charset="UTF-8" />
-<meta property="og:locale" content="pt_BR">
-<meta property="og:url" content="http://computacao.uea.edu.br/ludus/posueagames/rafaelima/EmmaRayTaken/">
-<meta property="og:title" content="Emma: Ray Taken">
-<meta property="og:site_name" content="Especializacao em Desenvolvimento de Jogos Eletronicos da UEA">
-<meta property="og:description" content="Emma est&aacute; em busca de seu irm&atilde;o Ray que se perdeu na floresta. O problema &eacute;
-										que durante a a floresta desperta e tudo se torna incerto. Ajude Emma a desvendar
-										os mist&eacute;rios do local e encontrar seu irm&atilde;o nessa aventura de ação repleta de enigmas.">
-<meta property="og:image" content="http://computacao.uea.edu.br/ludus/posueagames/rafaelima/FlappyBird/assets/Suu_game_01.png">
-<meta property="og:image:type" content="image/png">
-<meta property="og:image:width" content="640">
-<meta property="og:image:height" content="480">
-<meta property="og:type" content="website">
+		<div 
+             class="fb-like" 
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/jucimarjr/dinossauro/" 
+             data-layout="button_count" data-action="like" data-show-faces="true" 
+             data-share="false">
+        </div>
 
-<title>Emma: Ray Taken</title>
-
-<style type="text/css">
-canvas {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 30px;
-}
-
-#bg {
-	background: url('assets/webbrowser_bg.jpg');
-	background-size: 100% 100%;
-	width: 100%;
-	height: 100%;
-}
-
-#content {
-	text-align: center;
-}
-
-@font-face {
-	font-family: "edosz";
-	src: url("font/edosz.ttf");
-}
-
-.fb-comments {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-.fb-like {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-</style>
-</head>
-<body id="bg">
-	<div id="fb-root"></div>
-	<script type="text/javascript">
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id))
-				return;
-			js = d.createElement(s);
-			js.id = id;
-			js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.0";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>
-    <div id="game_div"></div>
-	<div id="content">
-		<div class="fb-like"
-			data-href="http://computacao.uea.edu.br/ludus/posueagames/rafaelima/EmmaRayTaken/"
-			data-layout="standard" data-action="like" data-show-faces="true"
-			data-share="true"></div>
-		<div class="fb-comments"
-			data-href="http://computacao.uea.edu.br/ludus/posueagames/rafaelima/EmmaRayTaken/"
-			data-numposts="10" data-colorscheme="light"></div>
-	</div>
-	<script src="../../phaser/phaser.min.js"></script>
-	<script type="text/javascript" src="js/score.js"></script>
-	<script type="text/javascript" src="js/play.js"></script>
-	<script type="text/javascript" src="js/menu.js"></script>
-	<script type="text/javascript" src="js/tutorial.js"></script>
-	<script type="text/javascript" src="js/load.js"></script>
-	<script type="text/javascript" src="js/credits.js"></script>
-	<script type="text/javascript" src="js/game.js"></script>
-</body>
+        <div id="game">	</div>
+        
+		<div class="fb-comments" 
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/jucimarjr/dinossauro/" 
+             data-width="960" data-numposts="10" data-colorscheme="light">
+        </div>
+        
+        <script type="text/javascript" src="./../../phaser/phaser.min.js"></script>
+		<script type="text/javascript" src="./js/config/Config.js"></script>
+		<script type="text/javascript" src="./js/states/LudusSplash.js"></script>
+		<script type="text/javascript" src="./js/states/GameSplash.js"></script>
+		<script type="text/javascript" src="./js/states/SponsorSplash.js"></script>
+		<script type="text/javascript" src="./js/states/Menu.js"></script>
+		<script type="text/javascript" src="./js/states/HowToPlay.js"></script>
+		<script type="text/javascript" src="./js/states/Credits.js"></script>
+		<script type="text/javascript" src="./js/states/Game.js"></script>
+		<script type="text/javascript" src="./js/Main.js"></script>
+	</body>
 </html>
