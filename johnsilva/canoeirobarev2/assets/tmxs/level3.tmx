@@ -8,15 +8,16 @@
  </tileset>
  <layer name="Camada de Tiles 1" width="30" height="20">
   <data encoding="base64" compression="zlib">
-   eJzVldEKwCAIRU3//5/3knARNYe12AWplfNoqyZENC6YzJZmn2DulJB/g6tCrji+nOSj82iZb2V8JHPZeLRu2Xev5FDlejEG9LO4Xa5XyzB+q/irNfJ8vXHPJ6u7wly9G+Wm+5FfxKwwI/5Xsuc0U+de/As32gNd9htuR9GdrGJar9EOIZfN8ym+jSvA1ZYd351My0W2/S/vNgHTOm0eu1gPUeMBPQ==
+   eJzVlVkKwDAIRE28/537U6mIjmZpQwekIbE+zcpE1A4Y31+626TG3pLmn+CKNJcd3w7ykXFtyLfS38AY6o/mDa17JYcq14vRVBvFXeV6tTTjl8XP5sjz9fo9H1R3hZn9G+Um+7EPxKwwI/5XsucUaeVe/At39NxX2TPcGUV3sqhTPkc7pLmdnndx5YxmsnFZ5SH83fV79QhX3jE235X9jIwBO1uDUbsAWmsBTQ==
   </data>
  </layer>
  <objectgroup name="Camada de Objetos 1" width="30" height="20">
-  <object gid="4" x="708" y="439"/>
-  <object gid="4" x="799" y="440"/>
-  <object gid="4" x="882" y="439"/>
+  <object gid="4" x="562" y="280"/>
+  <object gid="4" x="640" y="279"/>
+  <object gid="4" x="867" y="441"/>
   <object gid="4" x="360" y="640"/>
   <object gid="4" x="439" y="681"/>
   <object gid="4" x="520" y="720"/>
+  <object gid="4" x="768" y="440"/>
  </objectgroup>
 </map>

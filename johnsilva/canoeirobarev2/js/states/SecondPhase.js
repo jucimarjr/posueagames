@@ -18,7 +18,7 @@ State.SecondPhase.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;
-		//this.game.world.setBounds(0, -500, 1600, 1200 );
+		//this.game.world.setBounds(0, -600, 1600, 1200);
 
 		this.player = game.add.sprite(10,1000 ,'playerS');
 		this.player.anchor.setTo(.5, 1);
