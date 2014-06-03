@@ -1,5 +1,15 @@
-var Pistol = {
-    bulletImg:'assets/images/hero/bullet.png'
+var Weapon1 = {
+    weaponImg:'assets/images/weapon/weapon1.png'
+}
+
+var Weapon2 = {
+    weaponImg:'assets/images/weapon/weapon2.png',
+    bulletImg:'assets/images/weapon/bullet1.png'
+}
+
+var Weapon3 = {
+    weaponImg:'assets/images/weapon/weapon3.png',
+    bulletImg:'assets/images/weapon/bullet2.png'
 }
 
 function Weapon(game) {
@@ -12,7 +22,7 @@ function Weapon(game) {
 
 Weapon.prototype = {
     preload : function() {
-        this.game.load.image('bullet', Pistol.bulletImg);
+        this.game.load.image('bullet', Weapon2.bulletImg);
     },
 
     create : function() {
@@ -46,7 +56,7 @@ Weapon.prototype = {
 
             bullet.reset(hero.x, hero.y);
 
-            bullet.body.velocity.x = this.bulletSpeed;
+            bullet.body.velocity.x = hero.scale.x < 0 ? -this.bulletSpeed : this.bulletSpeed;
             bullet.body.velocity.y = 0;
             bullet.body.allowGravity = false;
         }

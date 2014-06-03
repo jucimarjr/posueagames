@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="90" height="20" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="tile_base" tilewidth="32" tileheight="32">
-  <image source="tile_base.png" width="160" height="32"/>
+  <image source="tile_base.png" width="224" height="32"/>
  </tileset>
  <layer name="layer" width="90" height="20">
   <data encoding="base64" compression="zlib">
    eJztlOEKgCAMhI18/2fuj0EM5zZnOusOjrLwdn5EKUEQBEHQnsqrCxTlFKfLU6M6RTlbRM6ZXD05Uc4XpcctytjTLSJna5c3unOMe2eBM583kvVKznR2rjzT5mhnWTO/8D3P4uzN3f3/PIMzzfSy7pV1tqezNDsiZylfu986/4+cPeLma/51rbWks5h2qHXSZEgdVnLmzkbfcXtb65ZO4h7ONEPqEIVzqtz3cD5gGIaNvgCnwQQ7
   </data>
  </layer>
+ <objectgroup name="objects" width="90" height="20">
+  <object gid="6" x="576" y="544"/>
+  <object gid="7" x="864" y="480"/>
+ </objectgroup>
 </map>

@@ -10,6 +10,45 @@
          "width":90,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":20,
+         "name":"objects",
+         "objects":[
+                {
+                 "gid":6,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":576,
+                 "y":544
+                }, 
+                {
+                 "gid":7,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":864,
+                 "y":480
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":90,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":
@@ -22,7 +61,7 @@
          "firstgid":1,
          "image":"tile_base.png",
          "imageheight":32,
-         "imagewidth":160,
+         "imagewidth":224,
          "margin":0,
          "name":"tile_base",
          "properties":
