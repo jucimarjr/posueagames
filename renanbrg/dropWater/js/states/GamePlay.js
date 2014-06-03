@@ -21,6 +21,7 @@ State.GamePlay.prototype = {
 		this.game.load.tilemap('map', 'assets/mapLevel1_960-600.json', null, Phaser.Tilemap.TILED_JSON);
 	    this.game.load.image('tileset','assets/images/tileset.png');
 	    this.game.load.image('crab','assets/images/crab_80-80.png');
+	    this.game.load.audio('jump','assets/waterDrop.mp3');
 
 		// Player
         this.drop.preload();
@@ -36,6 +37,9 @@ State.GamePlay.prototype = {
 		this.layer = this.map.createLayer('Camada de Tile 1');
         this.layer.resizeWorld();
         this.map.setCollisionBetween(1, 3, true,'Camada de Tile 1');
+        
+        //Sounds
+        this.jumpSound = this.game.add.audio("jump");
 
 		// Creating player
         this.drop.create(300, game.world.height-200);
@@ -105,7 +109,8 @@ State.GamePlay.prototype = {
 		}
 		// Jump
 		if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) {
-            this.drop.jump(450);            
+            this.drop.jump(450);
+            this.jumpSound.play();
 		}
 	},
 	moveCrab: function () {
