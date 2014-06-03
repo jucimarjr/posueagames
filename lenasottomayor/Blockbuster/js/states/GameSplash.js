@@ -39,6 +39,8 @@ State.GameSplash.prototype = {
 		this.load.tilemap('tilemap', Config.tilemap.dir, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tiles', Config.tiles.dir);
 		
+		this.game.load.image('coin', Config.coins.dir);
+		
 		//Background
 		//this.game.load.image('game-background', 'assets/images/GameBackground_1920-600.png');
 	}
