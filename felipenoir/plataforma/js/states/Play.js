@@ -3,6 +3,7 @@ State.Play = function() {
     this.panel = new Panel(game),
     this.hero = new Hero(game),
     this.weapon = new Weapon(game);
+    this.pause  = new Pause(game);
 }
 
 var cursors;
@@ -13,6 +14,7 @@ State.Play.prototype = {
         this.panel.preload();
         this.hero.preload();
         this.weapon.preload();
+        this.pause.preload();
     },
 
     create:function(){
@@ -31,6 +33,9 @@ State.Play.prototype = {
         // arma
         this.weapon.create();
 
+        //pause menu
+        this.pause.create()
+
         cursors = this.game.input.keyboard.createCursorKeys();
     },
 
@@ -39,6 +44,7 @@ State.Play.prototype = {
         this.level.update(this.hero);
         this.hero.update();
         this.weapon.update(this.hero.hero);
+        this.pause.update();
     },
 
 }
