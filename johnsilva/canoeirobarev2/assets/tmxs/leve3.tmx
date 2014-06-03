@@ -6,6 +6,9 @@
  <tileset firstgid="4" name="bee" tilewidth="40" tileheight="40">
   <image source="../enemies/bee.png" width="80" height="40"/>
  </tileset>
+ <tileset firstgid="6" name="bee2" tilewidth="40" tileheight="40">
+  <image source="../enemies/bee2.png" width="40" height="40"/>
+ </tileset>
  <layer name="Camada de Tiles 1" width="30" height="20">
   <data encoding="base64" compression="zlib">
    eJzVldEKwCAIRU3//5/3knARNYe12AWplfNoqyZENC6YzJZmn2DulJB/g6tCrji+nOSj82iZb2V8JHPZeLRu2Xev5FDlejEG9LO4Xa5XyzB+q/irNfJ8vXHPJ6u7wly9G+Wm+5FfxKwwI/5Xsuc0U+de/As32gNd9htuR9GdrGJar9EOIZfN8ym+jSvA1ZYd351My0W2/S/vNgHTOm0eu1gPUeMBPQ==
@@ -18,5 +21,12 @@
   <object gid="4" x="516" y="718"/>
   <object gid="4" x="759" y="439"/>
   <object gid="4" x="879" y="439"/>
+ </objectgroup>
+ <objectgroup name="Camada de Objetos 2" width="30" height="20">
+  <object gid="6" x="116" y="638"/>
+  <object gid="6" x="282" y="366"/>
+  <object gid="6" x="321" y="201"/>
+  <object gid="6" x="361" y="162"/>
+  <object gid="6" x="401" y="122"/>
  </objectgroup>
 </map>

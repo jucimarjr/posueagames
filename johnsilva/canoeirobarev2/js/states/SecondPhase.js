@@ -121,11 +121,11 @@ State.SecondPhase.prototype = {
 		this.bees.enableBody = true;
 		this.bees.physicsBodyType = Phaser.Physics.ARCADE;
 
-		this.map.createFromObjects('Camada de Objetos 1',7, 'bee', 0,true,false,this.bees);
+		this.map.createFromObjects('Camada de Objetos 2',5,'bee2', 0,true,false,this.bees);
 
 		this.bees.forEach(function (bee){ 
 			bee.body.allowGravity = false;
-			bee.body.immovable = true;
+			//bee.body.immovable = true;
 		}, this);
 
 		this.game.physics.enable([this.player, this.layer]);
@@ -148,5 +148,10 @@ State.SecondPhase.prototype = {
 	t.onComplete.add(function() {
 	    this.loadLevel(this.level);
 	}, this);
+    },
+
+    render: function (){
+    	game.debug.body(this.player);
+    	game.debug.body(this.bees);
     },
 };
