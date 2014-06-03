@@ -28,10 +28,10 @@ State.SecondPhase.prototype = {
 		//player.body.checkCollision.left = false;
 		//player.body.checkCollision.right = false;
 		//player.animations.add('walk',[1,2,1,3],12,true);
-		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13],15,true);
+		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13,14],15,true);
 		this.player.animations.add('stoped',[0,1],2,true);
 		this.player.animations.add('down',[3,4],12,true);
-		this.player.animations.add('jump',[1],1,false);
+		this.player.animations.add('jump',[15,16,17,18,19],6,false);
 		this.game.physics.enable(this.player);
 		//player.animations.play('walk');
 		this.player.body.collideWorldBounds = true;

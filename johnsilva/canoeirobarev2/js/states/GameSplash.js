@@ -39,7 +39,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('star', 'assets/star.png');
 		this.game.load.spritesheet('bee', 'assets/enemies/bee.png',40,40,2);
 		//this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_81-125-15.png', 81,125,15);
-		this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_81-125-15.png', 40,60,15);
+		this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_39-60-27.png', 39,60,27);
 	},
 	create: function () {
 		"use strict";
