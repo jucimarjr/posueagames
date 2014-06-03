@@ -14,6 +14,9 @@ Game.PlayerController = function (gameState) {
     this.doJump;
     this.groundBodies = new Array();
 
+    this.currentAnim;
+    this.animState;
+
     this._actualRunModifier;
 };
 
@@ -23,17 +26,51 @@ Game.PlayerController.Direction = {
     None: 0
 }
 
+Game.PlayerController.AnimState = {
+    Idle: 0,
+    Walk: 1,
+    Run: 2,
+    JumpStart: 3,
+    JumpAscend: 4,
+    JumpApex: 5,
+    JumpDescend: 6,
+    JumpTouchDown: 7
+}
+
 Game.PlayerController.prototype = {
     create: function () {
-        this.sprite = this.gameState.game.add.sprite(0, 0, 'player');
-        this.sprite.anchor.setTo(0.5, 1.0);
+        // Setup sprites
+        this.sprite = this.gameState.game.add.sprite(0, 0, 'player_atlas');
+        this.sprite.frameName = 'shae_idle_1_100-80.png';
+        this.sprite.anchor.setTo(0.73, 0.5);
         this.sprite.x = 140;
         this.sprite.y = 70;
-        this.sprite.scale.x = 0.1;
-        this.sprite.scale.y = 0.1;
+        
+        // Create animations
+        var idleAnimFrames = new Array();
+        for (var i = 1; i <= 5; i++) {
+            idleAnimFrames.push('shae_idle_' + i + '_100-80.png');
+        };
 
+        var walkAnimFrames = new Array();
+        for (var i = 1; i <= 4; i++) {
+            walkAnimFrames.push('shae_walk_' + i + '_100-80.png');
+        };
+
+        var runAnimFrames = new Array();
+        for (var i = 1; i <= 4; i++) {
+            runAnimFrames.push('shae_run_' + i + '_100-80.png');
+        };
+
+        this.sprite.animations.add('idle', idleAnimFrames, 10, true);
+        this.sprite.animations.add('walk', walkAnimFrames, 10, true);
+        this.sprite.animations.add('run', runAnimFrames, 10, true);
+
+        // Create body
         this.gameState.registerBody(this.sprite);
+        this.sprite.body.setSize(26, 64, 0, 0);
 
+        // Setup input
         this.blockInput = false;
         this.doLongJump = false;
 
@@ -48,6 +85,12 @@ Game.PlayerController.prototype = {
     update: function () {
         this.isGrounded = this.sprite.body.onFloor();
         this.handleInput();
+        this.handleAnimation();
+    },
+
+    render: function (game) {
+        if (PhysicsConsts.debugDraw)
+            game.debug.body(this.sprite);
     },
 
     handleInput: function () {
@@ -72,11 +115,15 @@ Game.PlayerController.prototype = {
 		var runButtonIsDown = this.runButton.isDown || joystick.getA();
 		
         this.direction = Game.PlayerController.Direction.None;
+        this.animState = Game.PlayerController.AnimState.Idle;
 
         if (this.cursorKeys.left.isDown || joystickX < JoystickConsts.leftOffset)
             this.direction = Game.PlayerController.Direction.Left;
         else if (this.cursorKeys.right.isDown || joystickX > JoystickConsts.rightOffset)
             this.direction = Game.PlayerController.Direction.Right;
+
+        if (this.direction != Game.PlayerController.Direction.None)
+            this.animState = Game.PlayerController.AnimState.Walk;
 
         if (this.direction != Game.PlayerController.Direction.None && runButtonIsDown) {
             this._actualRunModifier += PlayerConsts.runModifierDamping;
@@ -85,10 +132,12 @@ Game.PlayerController.prototype = {
             this.direction += this.direction == Game.PlayerController.Direction.Right
 			                                     ? this._actualRunModifier
 												 : -this._actualRunModifier;
+
+            this.animState = Game.PlayerController.AnimState.Run;
         } else if (this.runButton.isUp) {
             this._actualRunModifier = 0.0;
         }
-    }, 
+    },
 
     handleJump: function () {
 		var joystick = this.joystick;
@@ -99,6 +148,28 @@ Game.PlayerController.prototype = {
             this.canJump = false;
         } else if (this.isGrounded && !jumpButtonIsDown) {
             this.canJump = true;
+        }
+    },
+
+    handleAnimation: function () {
+        if (this.direction <= Game.PlayerController.Direction.Left && this.sprite.scale.x != -1) {
+            this.sprite.scale.x = -1;
+            this.sprite.anchor.setTo(0.65, 0.5);
+        } else if (this.direction >= Game.PlayerController.Direction.None && this.sprite.scale.x != 1) {
+            this.sprite.scale.x = 1;
+            this.sprite.anchor.setTo(0.73, 0.5);
+        }
+
+        if (this.animState == Game.PlayerController.AnimState.Idle && this.currentAnim != 'idle') {
+            this.sprite.animations.play('idle');
+            this.currentAnim = 'idle';
+
+        } else if (this.animState == Game.PlayerController.AnimState.Walk && this.currentAnim != 'walk') {
+            this.sprite.animations.play('walk');
+            this.currentAnim = 'walk';
+        } else if (this.animState == Game.PlayerController.AnimState.Run && this.currentAnim != 'run') {
+            this.sprite.animations.play('run');
+            this.currentAnim = 'run';
         }
     },
 

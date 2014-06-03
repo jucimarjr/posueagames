@@ -19,6 +19,7 @@ Game.GameState.prototype = {
     setupPhysicsSystem: function () {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.physics.arcade.gravity.y = PhysicsConsts.gravity;
+        this.game.physics.arcade.TILE_BIAS = PhysicsConsts.tileBias;
     },
 
     createTileMap: function () {
@@ -44,8 +45,12 @@ Game.GameState.prototype = {
         this.player.update();
     },
 
+    render: function () {
+        this.player.render(this.game);
+    },
+
     registerBody: function (sprite) {
-        this.game.physics.arcade.enableBody(sprite, PhysicsConsts.debugDraw);
+        this.game.physics.arcade.enableBody(sprite);
     },
 
     hideSprite: function (sprite) {
