@@ -3,7 +3,7 @@
  <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
   <image source="../tileset.png" width="120" height="40"/>
  </tileset>
- <tileset firstgid="4" name="bees" tilewidth="40" tileheight="40">
+ <tileset firstgid="4" name="bee" tilewidth="40" tileheight="40">
   <image source="../enemies/bee.png" width="80" height="40"/>
  </tileset>
  <layer name="Camada de Tiles 1" width="30" height="20">
