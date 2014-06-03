@@ -42,6 +42,10 @@ Config.gameSplash = {
 		background: 'assets/images/GameSplash_960-600.png',
 		bar: 'assets/images/ProgressBar_960-30.png'
 	},
+	progressBar: {
+		x: 0,
+		y: 500
+	},
 	x: 0,
 	y: 0,
 	millis: 2000,
@@ -97,11 +101,39 @@ Config.game = {
 	gravity: 800,
 	camera: {
 		y: 1000
-	},
-	mapLevel1:	{
-		dir: 'assets/maps/Themetest.json',
-		tileset: 'assets/maps/Tileset-01-01.png' 
 	}
+};
+
+//TileMap
+Config.tilemap = {
+	dir: 'assets/maps/Themetest.json'
+};
+
+//Tiles
+Config.tiles = {
+	dir: 'assets/maps/Tileset-01-01.png'
+};
+
+//Level
+Config.level1 = {
+//	dir: 'assets/images/GameBackground.png',
+	x: 0,
+	y: 0,
+	worldBounds: {
+		xi: 0,
+		yi: 0,
+		xf: 1920,
+		yf: 600
+	}
+};
+
+//Layer
+Config.layer = {
+	dir: 'assets/maps/Tileset-01-01.png',
+	name: 'Layer1',
+	tileset: 'Tileset-01-01',
+	height: 190,
+	width: 198
 };
 
 //HowToPlay
