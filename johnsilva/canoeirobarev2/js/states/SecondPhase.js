@@ -18,6 +18,7 @@ State.SecondPhase.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;
+		//this.game.world.setBounds(0, -500, 1600, 1200 );
 
 		this.player = game.add.sprite(10,1000 ,'playerS');
 		this.player.anchor.setTo(.5, 1);
@@ -66,7 +67,7 @@ State.SecondPhase.prototype = {
 		//player.animations.play('walk');
 
 		game.physics.arcade.collide(this.layer, this.player);
-		game.physics.arcade.overlap(this.bees, this.player, this.die, null,this);
+		game.physics.arcade.overlap(this.player, this.bees, this.die, null,this);
 		
 		this.player.body.velocity.x = 0;
 
@@ -77,6 +78,7 @@ State.SecondPhase.prototype = {
 			this.player.animations.play('walk');		
 			this.player.body.velocity.x = -150;
 			this.crouched = false;
+			//this.bg.tilePosition.x+=1;
 		}
 		else if(this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
 		//else if(this.run){
@@ -85,6 +87,8 @@ State.SecondPhase.prototype = {
 			this.player.animations.play('walk');
 			this.player.body.velocity.x = 150;
 			this.crouched = false;
+
+			//this.bg.tilePosition.x-=1;
 		}
 		else if(this.player.body.blocked.down){
 			//this.player.animations.stop();
@@ -104,14 +108,14 @@ State.SecondPhase.prototype = {
 	},
 
 	loadLevel: function (level) {
-		var bg = this.game.add.tileSprite(0,-600,2000,1200,'bg'+level);
-		bg.fixedToCamera = true;
+		this.bg = this.game.add.tileSprite(0,-600,2000,2400,'bg'+level);
+		this.bg.fixedToCamera = true;
 
 		this.player.bringToTop();
 
 		this.map = game.add.tilemap('level'+level);
 		this.map.addTilesetImage('tileset','tileset');
-		this.map.setCollisionBetween(0,3, true,'Camada de Tiles 1');
+		this.map.setCollisionBetween(0,5, true,'Camada de Tiles 1');
 		//this.map.setCollisionBetween(0,3);
 	
 		this.layer = this.map.createLayer('Camada de Tiles 1');
@@ -121,11 +125,12 @@ State.SecondPhase.prototype = {
 		this.bees.enableBody = true;
 		this.bees.physicsBodyType = Phaser.Physics.ARCADE;
 
-		this.map.createFromObjects('Camada de Objetos 2',5,'bee2', 0,true,false,this.bees);
-
+		this.map.createFromObjects('Camada de Objetos 1',4,'bee', 0,true,false,this.bees);
+		this.bees.callAll('animations.add', 'animations', 'spin', [0, 1], 3, true);
+    	this.bees.callAll('animations.play', 'animations', 'spin');
 		this.bees.forEach(function (bee){ 
 			bee.body.allowGravity = false;
-			//bee.body.immovable = true;
+			bee.body.immovable = true;
 		}, this);
 
 		this.game.physics.enable([this.player, this.layer]);
@@ -139,9 +144,9 @@ State.SecondPhase.prototype = {
 		this.level = level;
 	},
 
-	die : function() {
+	die : function(player, bee) {
 	this.player.anchor.setTo(0.5, 0.5);
-	var t = this.game.add.tween(this.character).to({angle:360}, 300).start();
+	var t = this.game.add.tween(this.player).to({angle:360}, 300).start();
 	this.player.body.gravity.y = 0;
 	this.player.body.velocity.x = 0;
 	this.player.body.velocity.y = 0;
