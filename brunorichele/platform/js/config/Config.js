@@ -112,7 +112,7 @@ Config.credits = {
 // Game
 Config.game = {
 	dir: {
-		imageTemp : "assets/TexturaMontanhas.png",
+		imageTemp : "assets/cenariogame-01.jpg",
 		tilemap: "assets/spritesheets/mapa.json",
 		tileset: "assets/spritesheets/texturebreakout.png",
 		worldAudio: "assets/audio/In my own place.mp3"

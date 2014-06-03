@@ -12,7 +12,7 @@ State.Game.prototype = {
     create: function() {
         "use strict";
         // game defs
-		game.world.setBounds(0, 0, 2500, 2500);
+		game.world.setBounds(0, 0, 6250, 4166);
         this.game.physics.startSystem(Phaser.Game.ARCADE);
 
      /*   // map defs
@@ -24,7 +24,7 @@ State.Game.prototype = {
         this.layer.resizeWorld();
         map.setCollisionByExclusion([9], true, 'Camada de Tiles 1');*/
 		
-		this.background = this.game.add.tileSprite(0, -400, 2500, 2500,  'imageTemp');
+		this.background = this.game.add.tileSprite(0, -3000,  6250, 4166,  'imageTemp');
 
         // player defs
         this.createPlayer();
@@ -59,7 +59,7 @@ State.Game.prototype = {
     },
     createPlayer : function (){
         "use strict";
-        this.player = this.game.add.sprite(0, 0, 'jogador');
+        this.player = this.game.add.sprite(0, 300, 'jogador');
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.collideWorldBounds = true;
     },
