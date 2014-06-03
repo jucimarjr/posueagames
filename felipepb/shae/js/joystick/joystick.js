@@ -37,7 +37,7 @@ Joystick.GamepadB = 1;
  * @return a value between 0 and 65535 (with 0 being extreme left and 65535 extreme right)
  */
 Joystick.prototype.getX = function() {
-	if (this.ctl) {
+	if (this.ctl && this.gamepadIndex != undefined) {
 		return this.ctl.x;
 	} else if (this.gamepadIndex != undefined) {
 		var axes = navigator.getGamepads()[this.gamepadIndex].axes;
@@ -52,7 +52,7 @@ Joystick.prototype.getX = function() {
  * @return a value between 0 and 65535 (with 0 being extreme top and 65535 extreme bottom)
  */
 Joystick.prototype.getY = function(){
-	if (this.ctl) {
+	if (this.ctl && this.gamepadIndex != undefined) {
 		return this.ctl.y;
 	} else if (this.gamepadIndex != undefined) {
 		var axes = navigator.getGamepads()[this.gamepadIndex].axes;
@@ -67,7 +67,7 @@ Joystick.prototype.getY = function(){
  * @return {@code true} if the button is pressed
  */
 Joystick.prototype.getA = function() {
-	if (this.ctl)
+	if (this.ctl && this.gamepadIndex != undefined)
 	   return this.ctl.a;
 	else if (this.gamepadIndex != undefined)
 	   return navigator.getGamepads()[this.gamepadIndex].buttons[Joystick.GamepadA].value;
@@ -80,7 +80,7 @@ Joystick.prototype.getA = function() {
  * @return {@code true} if the button is pressed
  */
 Joystick.prototype.getB = function() {
-	if (this.ctl)
+	if (this.ctl && this.gamepadIndex != undefined)
 	   return this.ctl.b;
 	else if (this.gamepadIndex != undefined)
 	   return navigator.getGamepads()[this.gamepadIndex].buttons[Joystick.GamepadB].value;
