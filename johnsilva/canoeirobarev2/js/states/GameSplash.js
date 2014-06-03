@@ -25,8 +25,6 @@ State.GameSplash.prototype = {
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
 		
 		//Game
-		this.game.load.spritesheet('player', 'assets/mario.png', 180,54,5);
-		this.game.load.image('background', 'assets/bg.png');
 	},
 	create: function () {
 		"use strict";
