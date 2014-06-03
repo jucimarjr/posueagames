@@ -16,8 +16,8 @@ State.SecondPhase.prototype = {
 		this.game.load.image('tileset', 'assets/tileset.png');
 		this.game.load.image('star', 'assets/star.png');
 		this.game.load.image('background', 'assets/bg.png');
-
-		this.game.load.spritesheet('playerSheet', 'assets/player.png', 40,80,5);
+		//canoeiro_81-125-15.png
+		this.game.load.spritesheet('playerSheet', 'assets/spritesheets/canoeiro_81-125-15.png', 81,125,15);
 	},
 	create: function () {
 
@@ -47,10 +47,9 @@ State.SecondPhase.prototype = {
 		//player.body.checkCollision.left = false;
 		//player.body.checkCollision.right = false;
 		//player.animations.add('walk',[1,2,1,3],12,true);
-		player.animations.add('walk',[1,2],12,true);
+		player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13],15,true);
 		player.animations.add('down',[3,4],12,true);
 		player.animations.add('jump',[1],1,false);
-		player.animations.add('stop',[0],1,false);
 		//player.animations.play('walk');
 		player.body.collideWorldBounds = true;
 		this.game.camera.follow(this.sprite);
@@ -65,13 +64,13 @@ State.SecondPhase.prototype = {
 		//game.physics.arcade.overlap(group, this.sprite, collision, null,this);
 		
 		player.body.velocity.x = 0;
-		if(cursors.left.isDown){
+        if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ) {
 			player.scale.x = 1; 
 			player.scale.x = -1;
 			player.animations.play('walk');		
 			player.body.velocity.x = -150;
 		}
-		else if(cursors.right.isDown){
+		else if(this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
 			player.scale.x = -1; 
 			player.scale.x = 1;
 			player.animations.play('walk');		
@@ -84,7 +83,10 @@ State.SecondPhase.prototype = {
 		if(player.body.velocity.y !== 0){
 			player.animations.play('jump');
 		}
-		if (this.jumpButton.isDown && player.body.onFloor()){
+		if ( (this.game.input.keyboard.isDown(Phaser.Keyboard.UP) || 
+			this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) ) && 
+			player.body.onFloor()){
+			player.animations.play('jump');
 			player.body.velocity.y = -450;
 		}
 	}
