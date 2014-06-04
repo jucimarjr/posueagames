@@ -65,12 +65,13 @@ State.GamePlay.prototype = {
 		this.crab.body.setRectangle(60, 60, 0, 0);
 		this.crab.body.fixedRotation = true;
         //this.crab.body.collideWorldBounds = false;
+        this.crab.body.moveLeft(500);
         this.crab.name = 'crab';
 		
-		dropSprite.body.createBodyCallback(this.crab, this.checkOverlap, this); // check collision between drop and crab
+		dropSprite.body.createBodyCallback(this.crab, this.checkOverlapCrabDrop, this); // check collision between drop and crab
 		this.game.physics.p2.setImpactEvents(true);
 		//this.game.physics.p2.setPostBroadphaseCallback(this.checkOverlap, this);   //this is used to start the check		
-				
+		
         // Sounds
         this.jumpSound = this.game.add.audio("jump");                
     },
@@ -83,15 +84,8 @@ State.GamePlay.prototype = {
     },
 	update: function () {
 		"use strict";
-		this.handleKeyDown();
-				
-		this.crab.body.velocity.x = -100;		
-		
-		if (this.touchingLeft(this.crab.body)) {
-			this.crab.body.velocity.x = 100;
-		} else if (this.touchingRight(this.crab.body)) {
-			this.crab.body.velocity.x = -100;
-		}					
+		this.handleKeyDown();					
+		this.moveCrab();		
 	},	
 	handleKeyDown: function () {
 		"use strict";
@@ -165,7 +159,7 @@ State.GamePlay.prototype = {
 			}
 		} return result;
 	},	
-	checkOverlap: function (body1, body2) {
+	checkOverlapCrabDrop: function (body1, body2) {
 		// body1 is the drop, body2 is the crab.
 		if (!this.touchingUp(body2)) { 
 			console.log('Matou o Player!!!!');
@@ -174,6 +168,16 @@ State.GamePlay.prototype = {
 		}
 		return false;
 	},	
+	moveCrab: function () {
+		if (this.touchingLeft(this.crab.body)) {
+			//this.crab.body.velocity.x = 100;
+			this.crab.body.moveRight(500);
+		} else if (this.touchingRight(this.crab.body)) {
+			this.crab.body.moveLeft(500);
+		} else {
+			//this.crab.body.velocity.x = -100;
+		}					
+	},
 	crabKillDrop: function () {
 		this.drop.getSpriteObject().kill();		
 	},
