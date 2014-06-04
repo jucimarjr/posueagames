@@ -36,6 +36,8 @@ State.GamePlay.prototype = {
 		//player.animations.play('walk');
 		this.player.body.collideWorldBounds = true;
 		//this.game.camera.follow(player);
+		this.game.physics.enable(this.player);
+		this.player.body.setSize(20, 60, 0, 0);
 
 		this.loadLevel(3);
 	
@@ -91,7 +93,7 @@ State.GamePlay.prototype = {
 			//this.bg.tilePosition.x-=1;
 		}
 		else if(this.player.body.blocked.down){
-			//this.player.animations.stop();
+			this.player.animations.stop();
 			//this.player.frame = 0;
 			this.player.animations.play('stoped');
 		}
@@ -108,6 +110,11 @@ State.GamePlay.prototype = {
 	},
 
 	loadLevel: function (level) {
+		if (this.layer) this.layer.destroy();
+		//if (this.flag) this.flag.destroy();
+		if (this.bees) this.bees.destroy();
+		if (this.tubes) this.bees.destroy();
+
 		this.bg = this.game.add.tileSprite(0,-600,2000,2400,'bg'+level);
 		this.bg.fixedToCamera = true;
 
@@ -133,7 +140,17 @@ State.GamePlay.prototype = {
 			bee.body.immovable = true;
 		}, this);
 
-		this.game.physics.enable([this.player, this.layer]);
+		this.tubes = game.add.group();
+		this.tubes.enableBody = true;
+		this.tubes.physicsBodyType = Phaser.Physics.ARCADE;
+
+		this.map.createFromObjects('tubes',6,'tube', 0,true,false,this.tubes);
+		this.tubes.forEach(function (tube){ 
+			tube.body.allowGravity = false;
+			tube.body.immovable = true;
+		}, this);
+
+		this.game.physics.enable(this.layer);
 
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
