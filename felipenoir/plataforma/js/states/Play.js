@@ -46,6 +46,7 @@ State.Play.prototype = {
 
     update:function(){
         game.physics.arcade.collide(this.level.layer, this.hero.hero);
+		game.physics.arcade.collide(this.level.layer,this.enemy.enemies);
         this.level.update(this.hero);
         this.hero.update();
         this.weapon.update(this.hero.hero);

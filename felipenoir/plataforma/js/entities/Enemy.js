@@ -31,7 +31,7 @@ Enemy.prototype = {
 	},
 	setupEnemies : function(enemy){
 	    if (enemy.key == 'enemy'){
-	    	this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
+	    	this.game.physics.enable(enemy, Phaser.Physics.P2);
 	    	enemy.body.collideWorldBounds = true;
 	        enemy.scale.setTo(0.5,0.5);
 	        enemy.animations.add('walk', [0,1,2,3,4,3,2,1], 10, true);
