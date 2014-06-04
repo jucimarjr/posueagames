@@ -25,7 +25,23 @@ State.Phase1.prototype = {
 		
 		this.background = this.game.add.tileSprite(0, 0,  3000, 2000,  'bgphase1');
 		this.backgroundAlpha = game.add.sprite(0, 0, 'bgphase1-alpha');
-		//this.backgroundAlpha = this.game.add.tileSprite(0, 0,  3000, 2000,  'bgphase1_alpha');
+		
+		
+		game.add.sprite(0, 0, 'itemRock9075');
+		game.add.sprite(0, 0, 'itemRock92230');
+		game.add.sprite(0, 0, 'itemRock10035');
+		game.add.sprite(0, 0, 'itemRock12575');
+		game.add.sprite(0, 0, 'itemRock22085');
+		game.add.sprite(0, 0, 'itemRock37085');
+		game.add.sprite(0, 0, 'itemRock371108');
+		game.add.sprite(0, 0, 'itemRock412190');
+		game.add.sprite(0, 0, 'itemRock500100');
+		game.add.sprite(0, 0, 'itemRock515130');
+		game.add.sprite(0, 0, 'itemRock540190');
+		game.add.sprite(0, 0, 'itemRock550165');
+		game.add.sprite(0, 0, 'itemRock655230');
+		game.add.sprite(0, 0, 'itemRock825100');
+		game.add.sprite(478, 587, 'itemRock925220');
 
         // player defs
         this.createPlayer();
