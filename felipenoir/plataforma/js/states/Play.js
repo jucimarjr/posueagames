@@ -2,7 +2,7 @@ State.Play = function() {
     this.level = new Level(game, Level1),
     this.panel = new Panel(game),
     this.hero = new Hero(game),
-    this.weapon = new Weapon(game);
+    this.weapon = new Weapon(game, Weapon3);
     this.pause  = new Pause(game);
     this.enemy = new Enemy(game);
 }
