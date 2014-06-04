@@ -41,7 +41,10 @@ State.GameSplash.prototype = {
 		
 		this.game.load.image('coin', Config.coins.dir);
 		
+		//Player
+		this.game.load.spritesheet('oscar', 'assets/images/player_95-55.png', 55, 95);
+		
 		//Background
-		//this.game.load.image('game-background', 'assets/images/GameBackground_1920-600.png');
+		this.game.load.image('game-background', 'assets/images/background_960-576.png');
 	}
 };
