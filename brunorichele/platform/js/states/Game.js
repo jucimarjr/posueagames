@@ -12,7 +12,7 @@ State.Game.prototype = {
     create: function() {
         "use strict";
         // game defs
-		game.world.setBounds(0, 0, 6250, 4166);
+		game.world.setBounds(0, 0, 3000, 2000);
         this.game.physics.startSystem(Phaser.Game.ARCADE);
 
      /*   // map defs
@@ -24,7 +24,7 @@ State.Game.prototype = {
         this.layer.resizeWorld();
         map.setCollisionByExclusion([9], true, 'Camada de Tiles 1');*/
 		
-		this.background = this.game.add.tileSprite(0, -3000,  6250, 4166,  'imageTemp');
+		this.background = this.game.add.tileSprite(0, 0,  3000, 2000,  'imageTemp');
 
         // player defs
         this.createPlayer();

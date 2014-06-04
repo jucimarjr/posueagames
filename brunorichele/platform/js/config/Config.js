@@ -112,10 +112,10 @@ Config.credits = {
 // Game
 Config.game = {
 	dir: {
-		imageTemp : "assets/cenariogame-01.jpg",
+		imageTemp : "assets/phase1/images/bg1_3000-2000.jpg",
 		tilemap: "assets/spritesheets/mapa.json",
 		tileset: "assets/spritesheets/texturebreakout.png",
-		worldAudio: "assets/audio/In my own place.mp3"
+		worldAudio: "assets/phase1/audio/In_my_own_place.mp3"
 	},
 	jogador: {
 		dir: 'assets/images/jogador_40-40.png',

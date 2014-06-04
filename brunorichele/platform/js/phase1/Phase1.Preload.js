@@ -1,5 +1,3 @@
-State.Phase1.prototype = {
-	preload : function(){
+State.Phase1.prototype.preload = function(){
 	
-	}
 };

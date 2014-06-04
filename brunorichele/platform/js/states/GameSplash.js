@@ -28,7 +28,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
 
 		//Game
-		this.game.load.image('imageTemp', Config.game.dir.imageTemp);
+		this.loadWorld();
 		this.game.load.tilemap('tilemap', Config.game.dir.tilemap, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tileset', Config.game.dir.tileset);
 		this.game.load.image('jogador', Config.game.jogador.dir);
@@ -40,5 +40,10 @@ State.GameSplash.prototype = {
 	update: function () {
 		"use strict";
 		Config.global.screen.resize(this.game);
+	},
+		/* Adicionar depois a classe Phase1.World*/
+	loadWorld : function(){
+		this.game.load.image('bgphase1', Phase1.World.bgImage);
+		this.game.load.image('bgphase1-alpha', Phase1.World.bgImageAlpha);	
 	}
 };
