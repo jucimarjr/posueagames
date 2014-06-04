@@ -6,9 +6,12 @@
  <tileset firstgid="4" name="bee" tilewidth="40" tileheight="40">
   <image source="../enemies/bee.png" width="80" height="40"/>
  </tileset>
+ <tileset firstgid="6" name="tube" tilewidth="40" tileheight="29">
+  <image source="../enemies/tube_40-29.png" width="40" height="29"/>
+ </tileset>
  <layer name="Camada de Tiles 1" width="30" height="20">
   <data encoding="base64" compression="zlib">
-   eJzVlVkKwDAIRE28/537U6mIjmZpQwekIbE+zcpE1A4Y31+626TG3pLmn+CKNJcd3w7ykXFtyLfS38AY6o/mDa17JYcq14vRVBvFXeV6tTTjl8XP5sjz9fo9H1R3hZn9G+Um+7EPxKwwI/5XsucUaeVe/At39NxX2TPcGUV3sqhTPkc7pLmdnndx5YxmsnFZ5SH83fV79QhX3jE235X9jIwBO1uDUbsAWmsBTQ==
+   eJzVldEOgCAIRVH+/597kcUYXkArFxvTKXFAIZmI2gHlMdKYk9p7SzT/BFdEc9mx7SAe2deKbDPrDeyh9dm5oXvPxJDlej6amiO/u1wvl2bsIv/RGXm23rpng/LOMKNvZ7FJPfaCzwxzxv9KbJ8i2fkv/oVb7XukulZWuCti/Viu1PFKj1REczvd7+JOj0Zi/bLiyvh0/l4+wpV3jM24U89IGbCjO6jqBV8TAU8=
   </data>
  </layer>
  <objectgroup name="Camada de Objetos 1" width="30" height="20">
@@ -19,5 +22,13 @@
   <object gid="4" x="439" y="681"/>
   <object gid="4" x="520" y="720"/>
   <object gid="4" x="768" y="440"/>
+ </objectgroup>
+ <objectgroup name="tubes" width="30" height="20">
+  <object gid="6" x="120" y="429"/>
+  <object gid="6" x="681" y="565"/>
+  <object gid="6" x="719" y="566"/>
+  <object gid="6" x="760" y="566"/>
+  <object gid="6" x="1079" y="588"/>
+  <object gid="6" x="1233" y="638"/>
  </objectgroup>
 </map>
