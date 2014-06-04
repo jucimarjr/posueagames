@@ -113,6 +113,7 @@ State.GamePlay.prototype = {
 		if (this.layer) this.layer.destroy();
 		//if (this.flag) this.flag.destroy();
 		if (this.bees) this.bees.destroy();
+		if (this.waters) this.waters.destroy();
 		if (this.tubes) this.bees.destroy();
 
 		this.bg = this.game.add.tileSprite(0,-600,2000,2400,'bg'+level);
@@ -124,7 +125,19 @@ State.GamePlay.prototype = {
 		this.map.addTilesetImage('tileset','tileset');
 		this.map.setCollisionBetween(0,5, true,'Camada de Tiles 1');
 		//this.map.setCollisionBetween(0,3);
-	
+
+		this.waters = game.add.group();
+		this.waters.enableBody = true;
+		this.waters.physicsBodyType = Phaser.Physics.ARCADE;
+
+		this.map.createFromObjects('waters',7,'acidicWater', 0,true,false,this.waters);
+		this.waters.forEach(function (water){ 
+			water.body.allowGravity = false;
+			water.body.immovable = true;
+			water.anchor.setTo(.5, 1);
+			this.addEmmiter(water.body.x, water.body.y);
+		}, this);
+
 		this.layer = this.map.createLayer('Camada de Tiles 1');
 		this.layer.resizeWorld();		
 
@@ -140,6 +153,8 @@ State.GamePlay.prototype = {
 			bee.body.immovable = true;
 		}, this);
 
+
+
 		this.tubes = game.add.group();
 		this.tubes.enableBody = true;
 		this.tubes.physicsBodyType = Phaser.Physics.ARCADE;
@@ -150,6 +165,8 @@ State.GamePlay.prototype = {
 			tube.body.immovable = true;
 		}, this);
 
+		
+
 		this.game.physics.enable(this.layer);
 
 		this.player.body.velocity.x = 0;
@@ -159,6 +176,32 @@ State.GamePlay.prototype = {
 
 		this.game.camera.follow(this.player);
 		this.level = level;
+		//this.addEmmiter(500,500);
+	},
+
+	addEmmiter: function(x,y){
+		var emitter = game.add.emitter(x,y,1);
+		//var emitter = game.add.emitter(game.world.centerX, game.world.centerY);
+
+		//emitter.width = game.world.width;
+		// emitter.angle = 30; // uncomment to set an angle for the rain.
+
+		emitter.makeParticles('acidicWater');
+
+		/*emitter.minParticleScale = 0.1;
+		emitter.maxParticleScale = 0.5;*/
+		emitter.setYSpeed(80);
+		emitter.setXSpeed(0);
+		//emitter.setYSpeed(300, 500);
+		//emitter.setXSpeed(-5, 5);
+
+		/*emitter.minParticleSpeed.setTo(-300, -300);
+    	emitter.maxParticleSpeed.setTo(300, 300);*/
+
+		emitter.minRotation = 0;
+		emitter.maxRotation = 0;
+
+		emitter.start(false, 1800, 1,0);
 	},
 
 	die : function(player, bee) {

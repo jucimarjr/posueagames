@@ -9,9 +9,12 @@
  <tileset firstgid="6" name="tube" tilewidth="40" tileheight="29">
   <image source="../enemies/tube_40-29.png" width="40" height="29"/>
  </tileset>
+ <tileset firstgid="7" name="water" tilewidth="14" tileheight="17">
+  <image source="../enemies/acidicWater_14-17.png" width="14" height="17"/>
+ </tileset>
  <layer name="Camada de Tiles 1" width="30" height="20">
   <data encoding="base64" compression="zlib">
-   eJzVldEOgCAIRVH+/597kcUYXkArFxvTKXFAIZmI2gHlMdKYk9p7SzT/BFdEc9mx7SAe2deKbDPrDeyh9dm5oXvPxJDlej6amiO/u1wvl2bsIv/RGXm23rpng/LOMKNvZ7FJPfaCzwxzxv9KbJ8i2fkv/oVb7XukulZWuCti/Viu1PFKj1REczvd7+JOj0Zi/bLiyvh0/l4+wpV3jM24U89IGbCjO6jqBV8TAU8=
+   eJzVldEOgCAIRVH+/597kcUYXkArFxvTKXFAIZmI2gHlMdKYk9p7SzT/BFdEc9mx7SAe2deKbDPrDeyh9dm5oXvPxJDlej6amiO/u1wvl2bsIv/RGXm23rpng/LOMKNvZ7FJPfaCzwxzxv9KbJ8i2fkv/oVb7fsse4W7IrZGLVfqeKVHKqK5ne53cadHI7F+WXFlfDp/Lx/hyjvGZtypZ6QM2NEdVPUCXiMBTw==
   </data>
  </layer>
  <objectgroup name="Camada de Objetos 1" width="30" height="20">
@@ -28,7 +31,13 @@
   <object gid="6" x="681" y="565"/>
   <object gid="6" x="719" y="566"/>
   <object gid="6" x="760" y="566"/>
-  <object gid="6" x="1079" y="588"/>
-  <object gid="6" x="1233" y="638"/>
+  <object gid="6" x="1080" y="607"/>
+ </objectgroup>
+ <objectgroup name="waters" width="30" height="20">
+  <object gid="7" x="133" y="429"/>
+  <object gid="7" x="695" y="564"/>
+  <object gid="7" x="733" y="554"/>
+  <object gid="7" x="775" y="543"/>
+  <object gid="7" x="1095" y="606"/>
  </objectgroup>
 </map>
