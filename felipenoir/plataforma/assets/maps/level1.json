@@ -24,7 +24,6 @@
 
                     },
                  "type":"",
-                 "visible":true,
                  "width":0,
                  "x":576,
                  "y":544
@@ -38,10 +37,85 @@
 
                     },
                  "type":"",
-                 "visible":true,
                  "width":0,
                  "x":864,
                  "y":480
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":90,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "height":20,
+         "name":"inimigos",
+         "objects":[
+                {
+                 "gid":6,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "width":0,
+                 "x":839,
+                 "y":597
+                }, 
+                {
+                 "gid":6,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "width":0,
+                 "x":273,
+                 "y":625
+                }, 
+                {
+                 "gid":6,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "width":0,
+                 "x":302,
+                 "y":481
+                }, 
+                {
+                 "gid":6,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "width":0,
+                 "x":408,
+                 "y":320
+                }, 
+                {
+                 "gid":6,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "width":0,
+                 "x":533,
+                 "y":162
                 }],
          "opacity":1,
          "type":"objectgroup",
