@@ -24,14 +24,15 @@ State.Game.prototype = {
 			this.game.physics.p2.setImpactEvents(true);
 		    this.game.stage.backgroundColor = '#2d2d2d';
 		    
-			map = this.game.add.tilemap('stage');
+		    this.game.physics.p2.updateBoundsCollisionGroup();
+
+		    map = this.game.add.tilemap('stage');
 			map.addTilesetImage('tileset_arcane_forest', 'tileset');
 			
 			layer = map.createLayer('Camada de Tiles 1');
 			map.setCollisionBetween(1, 12);
 			this.game.physics.p2.enable(layer);
 			var tileObjects = this.game.physics.p2.convertTilemap(map, layer);
-//			var tileObjects = this.game.physics.p2.convertCollisionObjects(map, layer, false);
 
 			this.game.physics.p2.restitution = 0.8;
 		    this.game.physics.p2.gravity.y = 800;
@@ -46,11 +47,6 @@ State.Game.prototype = {
 		    	tileObjects[i].setCollisionGroup(tileCollisionGroup);
 		    	tileObjects[i].collides(playerCollisionGroup);
 		    }
-//		    for (var i = 0; i < tileObjects.length; i++) {
-//		        var tileBody = tileObjects[i];
-//		        tileBody.setCollisionGroup(tilesCollisionGroup);
-//		        tileBody.collides(playerCollisionGroup);
-//		    }
 
 		    
 		    player = this.game.add.sprite(60, 3300, 'dude');
@@ -60,8 +56,8 @@ State.Game.prototype = {
 
 		    
 		    this.game.physics.p2.enable(player, true);
-		    player.body.clearShapes();
-		    player.body.loadPolygon('physicsData', 'dude');
+//		    player.body.clearShapes();
+//		    player.body.loadPolygon('physicsData', 'dude');
 		    
 		    player.body.fixedRotation = true;
 		    this.game.camera.follow(player);
@@ -70,7 +66,6 @@ State.Game.prototype = {
 		    
 			layer.resizeWorld();
 		    
-//		    this.game.physics.p2.updateBoundsCollisionGroup();
 //		    this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
 		    cursors = this.game.input.keyboard.createCursorKeys();
 			jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -86,12 +81,12 @@ State.Game.prototype = {
 				player.body.moveRight(200);
 				player.animations.play('right');
 			} else if(cursors.up.isDown){
-				layer.rotation -=0.05;
+//				layer.rotation -=0.05;
 				layer.resizeWorld();
 				map.setCollisionBetween(1, 12);
 				this.game.physics.p2.enable(layer);
 			}else if(cursors.down.isDown){
-				layer.rotation +=0.05;
+//				layer.rotation +=0.05;
 				layer.resizeWorld();
 			}else{
 				player.body.velocity.x = 0;
