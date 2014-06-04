@@ -1,6 +1,6 @@
 /*global State, Config*/
 
-State.SecondPhase = function (game) {
+State.GamePlay = function (game) {
 	"use strict";
 	this.game = game;
 	/*var player;
@@ -9,7 +9,7 @@ State.SecondPhase = function (game) {
 	var bees;
 	var layer;*/
 };
-State.SecondPhase.prototype = {
+State.GamePlay.prototype = {
 	preload: function () {
 		
 	},
