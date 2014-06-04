@@ -103,7 +103,6 @@ Level.prototype = {
     },
 
     grabsGun : function(hero, weapon) {
-        console.log('grabsGUn');
         weapon.kill();
     }
 }

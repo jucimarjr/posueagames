@@ -34,9 +34,9 @@ State.GamePlay.prototype = {
 	create: function () {
 		"use strict";
 		var background;
-		background = this.game.add.tileSprite(Config.gamePlay.x, Config.gamePlay.y, game.world.width, game.world.height, 'gameplay-bg');
+		background = this.game.add.tileSprite(Config.gamePlay.x, Config.gamePlay.y, this.game.world.width, this.game.world.height, 'gameplay-bg');
 		background.fixedToCamera = true;
-
+		
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.gravity.y = 800;
 		
@@ -49,21 +49,22 @@ State.GamePlay.prototype = {
         //  Do this BEFORE generating the p2 bodies below.
         this.map.setCollisionBetween(1, 3);                
         this.game.physics.p2.convertTilemap(this.map, this.layer);
+        this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
                 
         // create player
         this.drop.create(300, this.game.world.height-200);
         var dropSprite = this.drop.getSpriteObject();   
-        this.game.physics.p2.enable(dropSprite);
+        this.game.physics.p2.enableBody(dropSprite, false);
+        
         this.game.camera.follow(dropSprite);
         this.drop.configureCharacter(this.setCharacterInicialValues);
-        
+
         // Sounds
         this.jumpSound = this.game.add.audio("jump");
                 
     },
     setCharacterInicialValues: function(character) {    	
     	character.smoothed = false;
-        character.body.collideWorldBounds = true;    
         character.body.fixedRotation = true;
         character.animations.add('left', [0, 1, 2, 3], 10, true);
         character.animations.add('right', [5, 6, 7, 8], 10, true);
@@ -72,6 +73,26 @@ State.GamePlay.prototype = {
 		"use strict";
 		this.handleKeyDown();
 	},
+	// Funcao Magica!!! Deve existir outro jeito!
+	checkIfCanJump: function () {
+
+	    var yAxis = p2.vec2.fromValues(0, 1);
+	    var result = false;
+
+	    for (var i = 0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++)
+	    {
+	        var c = game.physics.p2.world.narrowphase.contactEquations[i];
+
+	        if (c.bodyA === this.drop.getSpriteObject().body.data || c.bodyB === this.drop.getSpriteObject().body.data)
+	        {
+	            var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis
+	            if (c.bodyA === this.drop.getSpriteObject().body.data) d *= -1;
+	            if (d > 0.5) result = true;
+	        }
+	    }	    
+	    return result;
+	},
+	
 	handleKeyDown: function () {
 		"use strict";
 		//this.drop.getSpriteObject().body.setZeroVelocity();
@@ -89,9 +110,10 @@ State.GamePlay.prototype = {
 		}
 		// Jump
 		if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) {
-            this.drop.jump(450);  
-            //if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR)&& (this.drop.getSpriteObject().body.onFloor())) 
-				this.jumpSound.play();          
+			if (this.checkIfCanJump()) { 
+				this.drop.jump(450);  
+				this.jumpSound.play();
+			}
 		}
 	},
 	moveCrab: function () {

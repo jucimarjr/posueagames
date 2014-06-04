@@ -12,4 +12,11 @@
   <object gid="6" x="576" y="544"/>
   <object gid="7" x="864" y="480"/>
  </objectgroup>
+ <objectgroup name="inimigos" width="90" height="20">
+  <object gid="6" x="839" y="597"/>
+  <object gid="6" x="273" y="625"/>
+  <object gid="6" x="302" y="481"/>
+  <object gid="6" x="408" y="320"/>
+  <object gid="6" x="533" y="162"/>
+ </objectgroup>
 </map>

@@ -26,7 +26,6 @@ Pause.prototype = {
 		this.menu.anchor.setTo(0.5, 0.5);
 	},
 	resumeGame : function (event){
-		console.log(event.game);
 		if(this.game.paused){
 			this.menu.destroy();
 			this.game.paused = false;
