@@ -106,12 +106,12 @@ Config.game = {
 
 //TileMap
 Config.tilemap = {
-	dir: 'assets/maps/Themetest.json'
+	dir: 'assets/maps/teste.json'
 };
 
 //Tiles
 Config.tiles = {
-	dir: 'assets/maps/Tileset-01-01.png'
+	dir: 'assets/maps/Tileset-01-02.png'
 };
 
 //Level
@@ -136,11 +136,29 @@ Config.layer = {
 	width: 198
 };
 
+//Player
+Config.player = {
+	dir: 'assets/images/player_95-55.png',
+	gravity: 800,
+	jump: 600,
+	speed: 250,
+	height: 95,
+	width: 55,
+	archor: {
+		x: 0.5,
+		y: 0.5
+	},
+	position: {
+		x: 100,
+		y: 400
+	}
+};
+
 //Coins
 Config.coins = {
-	dir: 'assets/images/coin_32-32.png',
+	dir: 'assets/images/coin_36-36.png',
 	name: 'Coins',
-	gid: 31,
+	gid: 26,
 	frame: 0
 };
 
