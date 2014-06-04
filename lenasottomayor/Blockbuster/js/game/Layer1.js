@@ -11,6 +11,8 @@ Layer1.prototype = {
 		"use strict";
 		this.tilemap.map.addTilesetImage(Config.layer.tileset, 'tiles');
 		this.mainLayer = this.tilemap.map.createLayer(Config.layer.name);
-		this.tilemap.map.setCollisionByExclusion([0], Config.layer.name);
+		this.tilemap.map.setCollision([13,22],true, Config.layer.name);
+		//this.tilemap.map.setCollisionBetween(25,30, true, Config.layer.name);
+		//this.mainLayer.resizeWorld();
 	}
 };

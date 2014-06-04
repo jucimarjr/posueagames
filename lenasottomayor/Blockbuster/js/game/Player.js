@@ -12,14 +12,15 @@ Player = function(game, coins, layer1) {
 
 Player.prototype = {
 	create: function () {
-		this.sprite = game.add.sprite(400, game.world.height - 200, 'oscar');
-
-	    //  Player physics properties. Give the little guy a slight bounce.
-		this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-	    this.sprite.body.bounce.y = 0.2;
-	    this.sprite.body.gravity.y = 200;
+		this.sprite = game.add.sprite(Config.player.position.x, Config.player.position.y, 'oscar');
+	    this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+		this.sprite.anchor.setTo(Config.player.archor.x, Config.player.archor.y);
 	    this.sprite.body.collideWorldBounds = true;
-
+		//this.sprite.body.checkCollision.up = false;
+		//this.sprite.body.checkCollision.left = false;
+		//this.sprite.body.checkCollision.right = false;
+		this.sprite.body.gravity.y = Config.player.gravity;
+	    
 	    //  Our two animations, walking left and right.
 	    this.sprite.animations.add('left', [0], 10, true);
 	    this.sprite.animations.add('right', [0], 10, true);
@@ -27,12 +28,12 @@ Player.prototype = {
 	    this.game.camera.follow(this.sprite);
 
 	    this.cursors = this.game.input.keyboard.createCursorKeys();
+		this.jump = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	},
 
 	update: function() {
 
-		//  Collide the player and the stars with the platforms
-    	this.game.physics.arcade.collide(this.sprite, this.layer1.mainLayer);
+		this.game.physics.arcade.collide(this.sprite, this.layer1.mainLayer);
 
     	this.game.physics.arcade.overlap(this.sprite, this.coins.group, this.collectStar, null, this);
 
@@ -40,13 +41,13 @@ Player.prototype = {
 
 	    if(this.cursors.left.isDown)
 	    {
-	    	this.sprite.body.velocity.x = -250;
+	    	this.sprite.body.velocity.x = -Config.player.speed;
 
 	    	this.sprite.animations.play('left');
 	    }
 	    else if(this.cursors.right.isDown)
 	    {
-	    	this.sprite.body.velocity.x = 250;
+	    	this.sprite.body.velocity.x = Config.player.speed;
 
 	    	this.sprite.animations.play('right');
 	    }
@@ -57,9 +58,9 @@ Player.prototype = {
 	    }
 
 	    //  Allow the player to jump if they are touching the ground.
-	    if (this.cursors.up.isDown && this.sprite.body.touching.down)
+	    if (this.jump.isDown && this.sprite.body.onFloor())
 	    {
-	        this.sprite.body.velocity.y = -65;
+	        this.sprite.body.velocity.y = -Config.player.jump;
 	    }
 	},
 	
