@@ -3,9 +3,9 @@ var Enemy = function(game){
 	this.game = game;
 	this.tipo;
 	this.path = ['assets/images/hero/hero.png'];
-	this.LITTLE_TYPE = 1;
-	this.MIDLE_TYPE = 2;
-	this.BIG_TYPE = 3;
+	this.LITTLE_TYPE = 0 // inimigo grande;
+	this.MIDLE_TYPE = 1 //inimigo pequeno;
+	this.BIG_TYPE = 2 //inimigo que voa;
 	this.enemies;
 	this.map;
 	this.inimigos = 'inimigos';
@@ -28,6 +28,13 @@ Enemy.prototype = {
 		this.enemies.forEach(this.setupEnemies,this);
 	},
 	update : function(){
+		//Faz inimigo 3 ficar voando
+		this.enemies.forEach(function(enemy){
+			if (enemy.body.onFloor() && enemy.TYPE == this.BIG_TYPE) {
+				enemy.body.velocity.y = -150 + Math.random() * - 100;
+			}
+		},this);
+		
 	},
 	setupEnemies : function(enemy){
 	    if (enemy.key == 'enemy'){
@@ -35,8 +42,10 @@ Enemy.prototype = {
 	    	enemy.body.collideWorldBounds = true;
 	        enemy.scale.setTo(0.5,0.5);
 	        enemy.animations.add('walk', [0,1,2,3,4,3,2,1], 10, true);
-	        enemy.animations.play('walk');
+	        enemy.animations.add('attack',[0,1],2,true);
+			enemy.animations.play('walk');
 	        enemy.health = 100;
+			enemy.TYPE = Math.round(Math.random()*2);
 	    }
 	}
 };
