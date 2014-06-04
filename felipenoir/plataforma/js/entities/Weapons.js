@@ -54,7 +54,7 @@ Weapon.prototype = {
             bullet.checkWorldBounds = true;
             bullet.outOfBoundsKill = true;
 
-            bullet.reset(hero.x + HeroProperties.width / 2, hero.y - 14);
+            bullet.reset(hero.x + (HeroProperties.width * (hero.scale.x < 0 ? -1 : 1)) / 2, hero.y - 14);
 
             bullet.body.velocity.x = hero.scale.x < 0 ? -this.bulletSpeed : this.bulletSpeed;
             bullet.body.velocity.y = 0;
