@@ -34,9 +34,9 @@ State.GamePlay.prototype = {
 	create: function () {
 		"use strict";
 		var background;
-		background = this.game.add.tileSprite(Config.gamePlay.x, Config.gamePlay.y, game.world.width, game.world.height, 'gameplay-bg');
+		background = this.game.add.tileSprite(Config.gamePlay.x, Config.gamePlay.y, this.game.world.width, this.game.world.height, 'gameplay-bg');
 		background.fixedToCamera = true;
-
+		
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.gravity.y = 800;
 		
@@ -49,23 +49,22 @@ State.GamePlay.prototype = {
         //  Do this BEFORE generating the p2 bodies below.
         this.map.setCollisionBetween(1, 3);                
         this.game.physics.p2.convertTilemap(this.map, this.layer);
+        this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
                 
         // create player
         this.drop.create(300, this.game.world.height-200);
         var dropSprite = this.drop.getSpriteObject();   
-        this.game.physics.p2.enable(dropSprite, false);
-        dropSprite.body.collideWorldBounds = true; 
+        this.game.physics.p2.enableBody(dropSprite, false);
         
         this.game.camera.follow(dropSprite);
         this.drop.configureCharacter(this.setCharacterInicialValues);
-        
+
         // Sounds
         this.jumpSound = this.game.add.audio("jump");
                 
     },
     setCharacterInicialValues: function(character) {    	
-    	//character.smoothed = false;
-        character.body.collideWorldBounds = true;    
+    	character.smoothed = false;
         character.body.fixedRotation = true;
         character.animations.add('left', [0, 1, 2, 3], 10, true);
         character.animations.add('right', [5, 6, 7, 8], 10, true);
