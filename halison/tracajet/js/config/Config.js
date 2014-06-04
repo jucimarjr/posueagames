@@ -86,8 +86,8 @@ Config.menu = {
 // How To Play
 Config.howToPlay = {
 	dir: 'assets/images/howToPlay_600-960.png',
-	x: Config.global.screen.width/2,
-	y: Config.global.screen.height/2
+	x: 0,
+	y: 0
 };
 
 // Credits
