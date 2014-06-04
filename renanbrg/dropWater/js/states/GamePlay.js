@@ -53,7 +53,9 @@ State.GamePlay.prototype = {
         // create player
         this.drop.create(300, this.game.world.height-200);
         var dropSprite = this.drop.getSpriteObject();   
-        this.game.physics.p2.enable(dropSprite);
+        this.game.physics.p2.enable(dropSprite, false);
+        dropSprite.body.collideWorldBounds = true; 
+        
         this.game.camera.follow(dropSprite);
         this.drop.configureCharacter(this.setCharacterInicialValues);
         
@@ -62,7 +64,7 @@ State.GamePlay.prototype = {
                 
     },
     setCharacterInicialValues: function(character) {    	
-    	character.smoothed = false;
+    	//character.smoothed = false;
         character.body.collideWorldBounds = true;    
         character.body.fixedRotation = true;
         character.animations.add('left', [0, 1, 2, 3], 10, true);
@@ -72,6 +74,26 @@ State.GamePlay.prototype = {
 		"use strict";
 		this.handleKeyDown();
 	},
+	// Funcao Magica!!! Deve existir outro jeito!
+	checkIfCanJump: function () {
+
+	    var yAxis = p2.vec2.fromValues(0, 1);
+	    var result = false;
+
+	    for (var i = 0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++)
+	    {
+	        var c = game.physics.p2.world.narrowphase.contactEquations[i];
+
+	        if (c.bodyA === this.drop.getSpriteObject().body.data || c.bodyB === this.drop.getSpriteObject().body.data)
+	        {
+	            var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis
+	            if (c.bodyA === this.drop.getSpriteObject().body.data) d *= -1;
+	            if (d > 0.5) result = true;
+	        }
+	    }	    
+	    return result;
+	},
+	
 	handleKeyDown: function () {
 		"use strict";
 		//this.drop.getSpriteObject().body.setZeroVelocity();
@@ -89,9 +111,10 @@ State.GamePlay.prototype = {
 		}
 		// Jump
 		if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) {
-            this.drop.jump(450);  
-            //if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR)&& (this.drop.getSpriteObject().body.onFloor())) 
-				this.jumpSound.play();          
+			if (this.checkIfCanJump()) { 
+				this.drop.jump(450);  
+				this.jumpSound.play();
+			}
 		}
 	},
 	moveCrab: function () {
