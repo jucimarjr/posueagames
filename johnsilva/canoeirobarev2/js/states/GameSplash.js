@@ -38,8 +38,8 @@ State.GameSplash.prototype = {
 		this.game.load.image('tileset', 'assets/tileset.png');
 		this.game.load.image('star', 'assets/star.png');
 		this.game.load.image('bees', 'assets/enemies/bee.png');
-		//this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_81-125-15.png', 81,125,15);
-		this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_81-125-15.png', 40,60,15);
+		this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_81-125-15.png', 81,125,15);
+		//this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_81-125-15.png', 81,60,15);
 	},
 	create: function () {
 		"use strict";
