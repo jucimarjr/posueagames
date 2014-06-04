@@ -35,12 +35,12 @@ State.Phase1.prototype = {
 		game.add.sprite(0, 0, 'itemRock37085');
 		game.add.sprite(0, 0, 'itemRock371108');
 		game.add.sprite(0, 0, 'itemRock412190');
-		game.add.sprite(0, 0, 'itemRock500100');
+		game.add.sprite(1996, 1256, 'itemRock500100');
 		game.add.sprite(0, 0, 'itemRock515130');
-		game.add.sprite(0, 0, 'itemRock540190');
+		game.add.sprite(738, 1170, 'itemRock540190');
 		game.add.sprite(0, 0, 'itemRock550165');
 		game.add.sprite(0, 0, 'itemRock655230');
-		game.add.sprite(0, 0, 'itemRock825100');
+		game.add.sprite(1552, 704, 'itemRock825100');
 		game.add.sprite(478, 587, 'itemRock925220');
 
         // player defs
