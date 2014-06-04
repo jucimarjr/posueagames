@@ -136,6 +136,14 @@ Config.layer = {
 	width: 198
 };
 
+//Coins
+Config.coins = {
+	dir: 'assets/images/coin_32-32.png',
+	name: 'Coins',
+	gid: 31,
+	frame: 0
+};
+
 //HowToPlay
 Config.howToPlay = {
 	dir: 'assets/images/HowToPlay_960-600.png',

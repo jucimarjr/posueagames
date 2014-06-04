@@ -4,6 +4,7 @@ State.Play = function() {
     this.hero = new Hero(game),
     this.weapon = new Weapon(game);
     this.pause  = new Pause(game);
+    this.enemy = new Enemy(game);
 }
 
 var cursors;
@@ -15,6 +16,7 @@ State.Play.prototype = {
         this.hero.preload();
         this.weapon.preload();
         this.pause.preload();
+        this.enemy.preload();
     },
 
     create:function(){
@@ -36,15 +38,22 @@ State.Play.prototype = {
         //pause menu
         this.pause.create()
 
+        //inimigos
+        this.enemy.create(this.level.map);
+		
         cursors = this.game.input.keyboard.createCursorKeys();
     },
 
     update:function(){
         game.physics.arcade.collide(this.level.layer, this.hero.hero);
+		game.physics.arcade.collide(this.level.layer,this.enemy.enemies);
+		
         this.level.update(this.hero);
         this.hero.update();
         this.weapon.update(this.hero.hero);
         this.pause.update();
+        this.enemy.update();
+		this.level.updateEnemyAttack(this.enemy,this.hero);
     },
 
 }

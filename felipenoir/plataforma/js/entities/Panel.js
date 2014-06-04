@@ -10,9 +10,13 @@ Panel.prototype = {
     },
 
     create : function() {
-        arma1 = game.add.sprite(10, 50, 'weapon1');
-        arma2 = game.add.sprite(70, 50, 'weapon2');
-        arma3 = game.add.sprite(130, 50, 'weapon3');
+        arma1 = game.add.sprite(10, 10, 'weapon1');
+        arma2 = game.add.sprite(70, 10, 'weapon2');
+        arma3 = game.add.sprite(130, 10, 'weapon3');
+
+        arma1.fixedToCamera = true;
+        arma2.fixedToCamera = true;
+        arma3.fixedToCamera = true;
     },
 
     update : function() {

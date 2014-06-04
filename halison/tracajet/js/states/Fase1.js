@@ -1,7 +1,7 @@
 
-// Foi realizada mudança para utilizar o conceito de estados do phaser
-// Todos os estados são declarados no Main.js
-// Utilize sempre 'this.' para declarar as variáveis globais do estado
+// Foi realizada mudanï¿½a para utilizar o conceito de estados do phaser
+// Todos os estados sï¿½o declarados no Main.js
+// Utilize sempre 'this.' para declarar as variï¿½veis globais do estado
 // Utilize sempre 'this.' para executar os metodos do estado
 
 State.Fase1= function (game) {
@@ -18,28 +18,37 @@ State.Fase1= function (game) {
 State.Fase1.prototype = {
 
 	preload: function () {
-		game.load.tilemap('mapa','assets/mapaFase1.json',null,Phaser.Tilemap.TILED_JSON);
+		game.load.tilemap('mapa','assets/1aFase/mapaFase1a.json',null,Phaser.Tilemap.TILED_JSON);
 		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height); // 200x160 eh o tamanho do frame da sprite
 		//game.load.image('star',  Config.game.star.dir);
 		//game.load.image('block', Config.game.tileset.dir);
-		game.load.image('bg',"assets/bg2_600-1920.png");
-		game.load.image('tilesetRocha1','assets/rocha_120-40.png');
+		game.load.image('bg',"assets/1aFase/bg2_600-1920.png");
+		game.load.image('tilesetPlataforma','assets/1aFase/assets_1.png');
+
 	},
 
 	create: function () {
 		
 		var bg = game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('bg').height, 'bg');
-		//bg.fixedToCamera = true;
+
 		
 		game.physics.startSystem(Phaser.Game.ARCADE);
 		
 		this.map = game.add.tilemap('mapa'); //adicionando o map
-		this.map.addTilesetImage('rocha_120-40.png','tilesetRocha1' );// primeiro vem nome do arquivo, depois o apelido
+		this.map.addTilesetImage('assets_1','tilesetPlataforma' );// primeiro vem nome do arquivo, depois o apelido
+
 		
 		this.layer = this.map.createLayer('Camada de Tiles 1');
 		this.layer.resizeWorld(); //seta o mundo com as alteraÃ§Ãµes feitas
 		this.map.setCollisionBetween(1,12, true,'Camada de Tiles 1'); // 0 espaco vazio 1 em diante os tiles do tileset
-		
+
+        //funcao que cria os objetos
+//        group = game.add.group();
+//        group.enableBody = true;
+//        map.createFromObjects('Camada de Objetos 1',4, 'tilesetPlataforma', 0,true,false, group);
+//        group.forEach(function (coxa){ coxa.body.allowGravity = false}, this); // faz com que as coxas nao caiam
+
+
 		this.tracajet = game.add.sprite(100, 100, 'tracajet');
 		this.tracajet.animations.add('walk',[0,1,2,1],6,false);
 		this.tracajet.animations.add('swim',[5,6,7],6,false);

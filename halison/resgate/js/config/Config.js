@@ -10,8 +10,10 @@ var Config = {
 			resize: function (game) {
 				"use strict";
 				if (window.innerHeight < 600 || window.innerWidth < 960) {
-					game.scale.setExactFit();
-					game.scale.refresh();
+//					game.scale.setExactFit();
+//					game.scale.refresh();
+					game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+				    game.scale.setScreenSize();
 				}
 			}
 		}

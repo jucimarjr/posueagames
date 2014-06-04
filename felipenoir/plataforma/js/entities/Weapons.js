@@ -14,7 +14,7 @@ var Weapon3 = {
 
 function Weapon(game) {
     this.game = game,
-    this.shotDelay = 100,
+    this.shotDelay = 500,
     this.bulletSpeed = 500,
     this.numberOfBullets = 20,
     this.bulletGroup;
@@ -54,7 +54,7 @@ Weapon.prototype = {
             bullet.checkWorldBounds = true;
             bullet.outOfBoundsKill = true;
 
-            bullet.reset(hero.x, hero.y);
+            bullet.reset(hero.x + HeroProperties.width / 2, hero.y - 14);
 
             bullet.body.velocity.x = hero.scale.x < 0 ? -this.bulletSpeed : this.bulletSpeed;
             bullet.body.velocity.y = 0;
