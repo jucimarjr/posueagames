@@ -16,13 +16,13 @@ State.Game.prototype = {
 	},
 	create : function() {
 		"use strict";
-		game.physics.startSystem(Phaser.Game.ARCADE);
-		game.physics.arcade.gravity.y = 800;
+		this.game.physics.startSystem(Phaser.Game.ARCADE);
+		this.game.physics.arcade.gravity.y = 800;
 
-		var bg = game.add.tileSprite(0, 0, 1920, 600, 'fundo');
+		var bg = this.game.add.tileSprite(0, 0, 1920, 600, 'fundo');
 		bg.fixedToCamera = true;
 
-		map = game.add.tilemap('mapa');
+		map = this.game.add.tilemap('mapa');
 		map.addTilesetImage('tileset', 'tileset');
 
 		layer = map.createLayer('Camada de Tiles 1');
@@ -30,19 +30,19 @@ State.Game.prototype = {
 		map.setCollisionBetween(0, 1, true, 'Camada de Tiles 1'); // 0 espaco
 
 		this.heroes.create();
-//		game.camera.follow(this.heroes.getCurrent());
+		this.game.camera.follow(this.heroes.getCurrent());
 
 		var style = {
 			font : "20px Courier",
 			fill : "#000000"
 		};
-		posicao = game.add.text(10, 550, Math.floor(dino.x) + " "
+		posicao = this.game.add.text(10, 550, Math.floor(dino.x) + " "
 				+ Math.floor(dino.y), style);
 		posicao.fixedToCamera = true;
 	},
 	update : function() {
 		"use strict";
-		game.physics.arcade.collide(layer, dino);
+		this.game.physics.arcade.collide(layer, dino);
 
 		this.heroes.update(layer);
 	}

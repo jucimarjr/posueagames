@@ -70,8 +70,6 @@ Hero.prototype = {
 		this.hero.body.gravity.y = 150;
 
 		this.hero.health = this.life;
-		
-		this.game.camera.follow(this.hero);
 	},
 	update : function(layer) {
 		"use strict";
@@ -114,20 +112,20 @@ Heroes = function(game) {
 	"use strict";
 	this.index = 0;
 	this.heroes = new Array();
-	
+
 	var hero1 = new Hero(game, HERO_TYPE_1);
 	this.heroes.push(hero1);
-	
-//	var hero2 = new Hero(game, HERO_TYPE_2);
-//	this.heroes.push(hero2);
-	
-//	var hero3 = new Hero(game, HERO_TYPE_3);
-//	this.heroes.push(hero3);
+
+	var hero2 = new Hero(game, HERO_TYPE_2);
+	this.heroes.push(hero2);
+
+	var hero3 = new Hero(game, HERO_TYPE_3);
+	this.heroes.push(hero3);
 };
 
 Heroes.prototype = {
 	getCurrent : function() {
-		return this.heroes[this.index];
+		return this.heroes[this.index].hero;
 	},
 	setCurrentIndex : function(index) {
 		this.index = index;
@@ -141,6 +139,9 @@ Heroes.prototype = {
 		"use strict";
 		for (var i = 0; i < this.heroes.length; i++) {
 			this.heroes[i].create();
+			if (i != this.index) {
+				this.heroes[i].hero.kill();
+			}
 		}
 	},
 	update : function(layer) {
