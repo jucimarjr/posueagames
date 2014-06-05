@@ -1,6 +1,7 @@
 var Phase1 = {};
 Phase1.World = {
 	bgImage : "assets/phase1/images/bg1_3000-2000.jpg",
+	//bgImage : "assets/phase1/images/cenariogameguia.jpg",
 	bgImageAlpha : "assets/phase1/images/bg2_3000-2000.png",
 	bgAudio : "assets/phase1/audio/In_my_own_place.mp3",
 	itemRock9075 : "assets/phase1/images/rock_90-75.png",
