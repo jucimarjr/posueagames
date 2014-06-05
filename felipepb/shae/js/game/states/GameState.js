@@ -26,8 +26,8 @@ Game.GameState.prototype = {
         this.map = this.game.add.tilemap('map');
         
         this.map.addTilesetImage('ground_1x1');
-        this.map.addTilesetImage('walls_1x2');
-        this.map.addTilesetImage('tiles2');
+        // this.map.addTilesetImage('walls_1x2');
+        // this.map.addTilesetImage('tiles2');
 
         this.layer = this.map.createLayer('Tile Layer 1');
         this.layer.resizeWorld();
@@ -51,23 +51,5 @@ Game.GameState.prototype = {
 
     registerBody: function (sprite) {
         this.game.physics.arcade.enableBody(sprite);
-    },
-
-    hideSprite: function (sprite) {
-        sprite.scale.x = 0.0;
-        sprite.scale.y = 0.0;
-    },
-
-    showSprite: function (sprite) {
-        sprite.scale.x = 1.0;
-        sprite.scale.y = 1.0;
-    },
-
-    stringContains: function (str, content) {
-        return str.indexOf(content) > -1;
-    },
-
-    clamp: function (x, min, max) {
-        return x < min ? min : (x > max ? max : x);
     }
 };

@@ -14,10 +14,10 @@ Game.PreloaderState.prototype = {
         // Tile Maps
         this.game.load.tilemap('map', 'assets/game/tilemaps/maps/collision_test.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('ground_1x1', 'assets/game/tilemaps/tiles/ground_1x1.png');
-        this.game.load.image('walls_1x2', 'assets/game/tilemaps/tiles/walls_1x2.png');
-        this.game.load.image('tiles2', 'assets/game/tilemaps/tiles/tiles2.png');
+        // this.game.load.image('walls_1x2', 'assets/game/tilemaps/tiles/walls_1x2.png');
+        // this.game.load.image('tiles2', 'assets/game/tilemaps/tiles/tiles2.png');
         // Player
-        this.game.load.atlas('player_atlas', 'assets/game/spritesheets/shae_spritesheet_100-80-13.png', 'assets/game/spritesheets/shae_spritesheet_100-80-13.json');
+        this.game.load.atlas('player_atlas', 'assets/game/spritesheets/shae_spritesheet_100-100-20.png', 'assets/game/spritesheets/shae_spritesheet_100-100-20.json');
 
         this.ready = true;
     },
