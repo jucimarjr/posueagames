@@ -21,9 +21,11 @@ Player.prototype = {
 		//this.sprite.body.checkCollision.right = false;
 		this.sprite.body.gravity.y = Config.player.gravity;
 	    
-	    //  Our two animations, walking left and right.
+	    //  Animations. When not moving, sprite = 0.
 	    this.sprite.animations.add('left', [0], 10, true);
 	    this.sprite.animations.add('right', [0], 10, true);
+	    this.sprite.animations.add('run',[1,2,3,4,5,6,7],5,true);
+	    this.sprite.animations.add('dead',[8,9],5,true);
 	    
 	    this.game.camera.follow(this.sprite);
 
