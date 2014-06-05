@@ -14,7 +14,7 @@
  </tileset>
  <layer name="Platform" width="300" height="15">
   <data encoding="base64" compression="zlib">
-   eJztmclOxDAMhss67Pty4ABIMCwXxCIxFHj/18KRGhFFTbM0duKOP+k/AGViJ/FfJ9M0giAIgiAIgiAsEy+lAxCq5B40Bz0QjbcP2ux0QjSmj0/QAvTleW4FtApaG3iGe53p/bBo4vfFuvXzFmg7c1w592nougvLh/KpY9AB6LLTUfe7WnzLxw5oF7RXYOyU2sKsx9y+jOXzsT73CHoCPSPFUyPcfVvHnzOHa9CNQ3eBnxHS32ByCjoDnSN9PuW+oe4Dc/VZ2LyC3kDvpQMR2JOjv8ntCaU9lApfnrp/Du2XQ/2Lut8J9atl7MO4oWud6q7LBru/SaHkGVFD0Zf58jT7Z7tfNr0sxNNUPjoXrH7HHMMkdDzXcxuNOzc1D7OIGIfAWnPtwyFebJ7DTNV8rjTzC82zNsas/VgPHRpbzS3FXLpq12RMnhegQ0tXgf9LfT4b61fKt7VfK+9S3yvNjL/d5glzNK59p/PidiYOrWEzv9x5+mKo9Z4w1/2fmltOe8ZF391l6J0lN78y0XnHelRf30L1PYtZzx8N3x7EBaZflab0HYXLr1L3Y63+PkQtfmX3ulO9l++r5ynlGeJXqk7mnbjUitqfv83/e6aEZ02lv/Ix5KN6f5nvekzpNbfn3V4L8SueTLW/svOiqBfbE1P8yj5LcHk/uHDVD7a4+1XfvXKMX9uiel9QvY9S/Sp1XkvkVbpGMIidf+o+c8p+hbn3S+xfLH0j68e3UAYtQTxcZM9bGzmXKcTOP3Y8Y+OjWovW8RyH3LjpD5ltq3o=
+   eJztmclOxDAMhss67Pty4ABIMCwXxCIxFHj/18KRGhFFTeO0sVN3/En/AejQ2HH+OJmqUhRFURRFURRFUZade9Ac9MD0vn3QZqMTpnfG+AQtQF+R51ZAq6C1jmdecg2qELYeFlV6Xax7P2+BtjOPi6JOzfzH5l5ZLoxPHYMOQJeNjprfjcW3YuyAdkF7Bd6N9VTMZ3J5ak5vpvL5VJ97BD2BnonGM1Yke7at89T10cU16CagO+T/wPQ3lJyCzkDnhO+QXDdd5OqzqHkFvYHeSw9EEU+O/ia3H5T2UC5icdr+GdsvY/2Lu9/B+tWy9mGSsH0X112XD0d/k0rJM6ILdV8Wi9Ptn/1+2fUyjKe5sVD0O125wr4v9NxGFY7N5GGGHGOMPvcDGKwPY7zYPYe5GvP5wI0PG+fYGDL3Qz20a+2Y3HLkEuN1Q+K8AB16ukJ+lvt8NtSvjG9bvzbeZb5Xmjl/u80zzMGEat7GJe1MjN2v3fhyx4kZw1jve3Lsfya3kmomRNvdJfbOUppfudi4Uz2qrW/J8T0LBnc9f1Rye5AQlH5VmtJ3FCG/6luPVGcISsbiV36vO9V7+bb1PKU4MX5l1sm8kZS1Yurzt/rfZ0p41lT6qxhdPmrry93rKWXn3M+7PxfqVzKZan/lx8WxXnxP7ONX/llCyv4QIrR+qCXdr9rulVP82hfXfsG1H/X1q755LRFX6TVCQWr+ufvMKfsVZe2XqF8qfRPrJzZRDjXDeKTIz1udmMs+pOafejxDx8c1F3XgOQmxSdMfNFqpGw==
   </data>
  </layer>
  <layer name="Thorn" width="300" height="15">
@@ -65,7 +65,6 @@
   <object gid="66" x="2221" y="442"/>
   <object gid="66" x="2520" y="200"/>
   <object gid="66" x="2560" y="200"/>
-  <object gid="66" x="2600" y="200"/>
   <object gid="66" x="2760" y="280"/>
   <object gid="66" x="3951" y="294"/>
   <object gid="66" x="3905" y="246"/>
@@ -79,7 +78,6 @@
   <object gid="66" x="4360" y="120"/>
   <object gid="66" x="4400" y="120"/>
   <object gid="66" x="4440" y="120"/>
-  <object gid="66" x="4080" y="160"/>
   <object gid="66" x="4120" y="160"/>
   <object gid="66" x="4160" y="160"/>
   <object gid="66" x="4520" y="360"/>
@@ -91,7 +89,6 @@
   <object gid="66" x="4800" y="440"/>
   <object gid="66" x="4840" y="440"/>
   <object gid="66" x="4880" y="440"/>
-  <object gid="66" x="5160" y="160"/>
   <object gid="66" x="5280" y="280"/>
   <object gid="66" x="5320" y="280"/>
   <object gid="66" x="5040" y="360"/>
@@ -100,7 +97,6 @@
   <object gid="66" x="5440" y="80"/>
   <object gid="66" x="5520" y="80"/>
   <object gid="66" x="5680" y="200"/>
-  <object gid="66" x="5800" y="120"/>
   <object gid="66" x="6000" y="200"/>
   <object gid="66" x="6000" y="160"/>
   <object gid="66" x="6040" y="160"/>
@@ -127,9 +123,7 @@
   <object gid="66" x="1240" y="360"/>
   <object gid="66" x="2520" y="160"/>
   <object gid="66" x="2560" y="160"/>
-  <object gid="66" x="2600" y="160"/>
   <object gid="66" x="2760" y="240"/>
-  <object gid="66" x="4080" y="120"/>
   <object gid="66" x="4120" y="120"/>
   <object gid="66" x="4160" y="120"/>
   <object gid="66" x="4360" y="80"/>
@@ -137,7 +131,6 @@
   <object gid="66" x="4440" y="80"/>
   <object gid="66" x="4680" y="200"/>
   <object gid="66" x="4680" y="160"/>
-  <object gid="66" x="5160" y="120"/>
   <object gid="66" x="4880" y="80"/>
   <object gid="66" x="4920" y="80"/>
   <object gid="66" x="4960" y="80"/>
@@ -167,12 +160,11 @@
   <object gid="66" x="7560" y="400"/>
   <object gid="66" x="7600" y="400"/>
   <object gid="66" x="7640" y="400"/>
-  <object gid="66" x="7720" y="240"/>
-  <object gid="66" x="7760" y="240"/>
-  <object gid="66" x="7760" y="80"/>
-  <object gid="66" x="7800" y="80"/>
-  <object gid="66" x="7840" y="80"/>
-  <object gid="66" x="8000" y="120"/>
+  <object gid="66" x="7684" y="241"/>
+  <object gid="66" x="7724" y="241"/>
+  <object gid="66" x="7823" y="80"/>
+  <object gid="66" x="7863" y="80"/>
+  <object gid="66" x="7903" y="80"/>
   <object gid="66" x="8200" y="360"/>
   <object gid="66" x="8240" y="360"/>
   <object gid="66" x="8360" y="200"/>
@@ -236,7 +228,6 @@
   <object gid="66" x="10160" y="360"/>
   <object gid="66" x="10120" y="440"/>
   <object gid="66" x="10120" y="320"/>
-  <object gid="66" x="10400" y="120"/>
   <object gid="66" x="10440" y="120"/>
   <object gid="66" x="10480" y="120"/>
   <object gid="66" x="10560" y="240"/>
@@ -250,5 +241,18 @@
   <object gid="66" x="11160" y="240"/>
   <object gid="66" x="11160" y="240"/>
   <object gid="66" x="11200" y="240"/>
+  <object gid="66" x="6600" y="360"/>
+  <object gid="66" x="6600" y="80"/>
+  <object gid="66" x="5840" y="120"/>
+  <object gid="66" x="4720" y="240"/>
+  <object gid="66" x="4720" y="200"/>
+  <object gid="66" x="4720" y="160"/>
+  <object gid="66" x="360" y="320"/>
+  <object gid="66" x="400" y="480"/>
+  <object gid="66" x="440" y="480"/>
+  <object gid="66" x="480" y="480"/>
+  <object gid="66" x="520" y="480"/>
+  <object gid="66" x="560" y="480"/>
+  <object gid="66" x="5120" y="120"/>
  </objectgroup>
 </map>
