@@ -14,7 +14,7 @@
  </tileset>
  <layer name="Camada de Tiles 1" width="30" height="20">
   <data encoding="base64" compression="zlib">
-   eJzVldEOgCAIRVH+/597kcUYXkArFxvTKXFAIZmI2gHlMdKYk9p7SzT/BFdEc9mx7SAe2deKbDPrDeyh9dm5oXvPxJDlej6amiO/u1wvl2bsIv/RGXm23rpng/LOMKNvZ7FJPfaCzwxzxv9KbJ8i2fkv/oVb7fsse4W7IrZGLVfqeKVHKqK5ne53cadHI7F+WXFlfDp/Lx/hyjvGZtypZ6QM2NEdVPUCXiMBTw==
+   eJzVleEOQBEIhaP3f+f7R7ut5Yi4ds/WWJpPBCaicsG4tdT6pMZOSfNvcEWay05sBeuRcW0oNuIvYAz5e/uGzj2yhijXm6OoPpo3y/VyKSZuxEf704vz/F7MqXr2ctc+qce6mdnjfyV7T5Ey7+JfuLP3Pspe4a7I1qjlSh2P7mZWmlvp/Rejb8OK7LysuNLuzt/LR7jyj7FpM/WMjAF7dAaz9gA3dwFI
   </data>
  </layer>
  <objectgroup name="Camada de Objetos 1" width="30" height="20">

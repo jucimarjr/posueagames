@@ -4,6 +4,8 @@ State.GamePlay = function (game) {
 	"use strict";
 	this.game = game;
 	var deadAnimation;
+	var jumping;
+	var cursors;
 	/*var player;
 	var level;
 	var map;
@@ -30,7 +32,7 @@ State.GamePlay.prototype = {
 		//player.body.checkCollision.left = false;
 		//player.body.checkCollision.right = false;
 		//player.animations.add('walk',[1,2,1,3],12,true);
-		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13,14],15,true);
+		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13,14],20,true);
 		this.player.animations.add('stoped',[0,1],2,true);
 		this.player.animations.add('down',[3,4],12,true);		
 		this.player.animations.add('dead',[24,25,26],10,false);
@@ -48,7 +50,7 @@ State.GamePlay.prototype = {
 		this.loadLevel(this.level);
 		this.game.camera.y = 1000;
 		
-		//cursors = this.game.input.Keyboardboard.createCursorKeys();
+		cursors = this.game.input.keyboard.createCursorKeys();
 		//jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
 		/*this.right = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
@@ -80,7 +82,7 @@ State.GamePlay.prototype = {
 		
 		this.player.body.velocity.x = 0;
 
-        if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ) {
+        if (cursors.left.isDown ) {
         //if (this.back){
 			this.player.scale.x = 1; 
 			this.player.scale.x = -1;			
@@ -91,7 +93,7 @@ State.GamePlay.prototype = {
 			}
 			//this.bg.tilePosition.x+=1;
 		}
-		else if(this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+		else if(cursors.right.isDown){
 		//else if(this.run){
 			this.player.scale.x = -1; 
 			this.player.scale.x = 1;
@@ -110,22 +112,34 @@ State.GamePlay.prototype = {
 		if(this.player.body.velocity.y !== 0){
 			this.player.animations.play('jump');
 		}
-		if ( (this.game.input.keyboard.isDown(Phaser.Keyboard.UP) || 
-			this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) ) && 
-			this.player.body.onFloor()){
+		if ( this.isToJumping() && (!jumping) ){
 		/*if (this.jump && this.player.body.onFloor()){	*/
+			jumping = true;
 			this.player.animations.play('jump');
 			this.player.body.velocity.y = -450;
+		}
+		if(!cursors.up.isDown){
+			jumping = false;
 		}
 	//}
 	},
 
+	isToJumping: function(){
+		if( cursors.up.isDown || this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) ){
+			if(this.player.body.onFloor()){
+				return true;
+			}
+		}
+		return false;
+	},
+
 	loadLevel: function (level) {
+		jumping = false;
 		this.player.alpha = 1;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 		this.player.position.setTo(75, 650);
-		this.player.body.gravity.y = 800;
+		this.player.body.gravity.y = 1000;
 		this.game.camera.follow(this.player);
 
 		this.level = level;
@@ -194,8 +208,8 @@ State.GamePlay.prototype = {
 
 		emitter.makeParticles('acidicWater');
 
-		/*emitter.minParticleScale = 0.1;
-		emitter.maxParticleScale = 0.5;*/
+		emitter.minParticleScale = 0.1;
+		emitter.maxParticleScale = 0.5;
 		emitter.setYSpeed(80);
 		emitter.setXSpeed(0);
 		//emitter.setYSpeed(300, 500);
