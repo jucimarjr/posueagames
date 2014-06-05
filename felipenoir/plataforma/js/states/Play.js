@@ -47,7 +47,7 @@ State.Play.prototype = {
     update:function(){
         game.physics.arcade.collide(this.level.layer, this.hero.hero);
 		game.physics.arcade.collide(this.level.layer,this.enemy.enemies);
-		//game.physics.arcade.overlap(this.level.weapons, this.hero.hero, this.grabsGun, null, this);
+		game.physics.arcade.overlap(this.level.weapons, this.hero.hero, this.grabsGun, null, this);
 		
         this.level.update(this.hero);
         this.hero.update();
