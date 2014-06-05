@@ -20,6 +20,8 @@ Phase1.World = {
 	itemRock825100 : "assets/phase1/images/rock_825-100.png",	
 	itemRock925220 : "assets/phase1/images/rock_925-220.png",	
 	smoke : "assets/phase1/images/smoke_12000-300-4.png", 											
+	spearTrap : "assets/phase1/images/armadilha1_30-305-3.png",
+	//greatSpearTrap : "assets/phase1/images/greatspeartrap_10-525.png",
 	weith : 3000,
 	height : 2000,
 	background : null,
