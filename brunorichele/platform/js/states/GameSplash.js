@@ -26,13 +26,19 @@ State.GameSplash.prototype = {
 
 		//HowToPlay
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
-
-		//Game
-		this.loadWorld();
-		this.game.load.tilemap('tilemap', Config.game.dir.tilemap, null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('tileset', Config.game.dir.tileset);
-		this.game.load.image('jogador', Config.game.jogador.dir);
-		this.game.load.audio('bgmusic', Config.game.dir.worldAudio);
+		
+		Phase1.World.game = this.game;
+		Phase1.World.init();
+		Phase1.Rock.game = this.game;
+		Phase1.Rock.init();
+		Phase1.Smoke.game = this.game;	
+		Phase1.Smoke.init();
+		Phase1.Door.game = this.game;	
+		Phase1.Door.init();
+		Phase1.Trap.game = this.game;
+		Phase1.Trap.init();
+		Phase1.Player.game = this.game;
+		Phase1.Player.init();
 	},
 	create: function () {
 		"use strict";
@@ -40,29 +46,5 @@ State.GameSplash.prototype = {
 	update: function () {
 		"use strict";
 		Config.global.screen.resize(this.game);
-	},
-		/* Adicionar depois a classe Phase1.World*/
-	loadWorld : function(){
-		this.game.load.image('bgphase1', Phase1.World.bgImage);
-		this.game.load.image('bgphase1-alpha', Phase1.World.bgImageAlpha);	
-		
-		this.game.load.image('itemRock9075', Phase1.World.itemRock9075);			
-		this.game.load.image('itemRock92230', Phase1.World.itemRock92230);
-		this.game.load.image('itemRock10035', Phase1.World.itemRock10035);
-		this.game.load.image('itemRock12575', Phase1.World.itemRock12575);
-		this.game.load.image('itemRock22085', Phase1.World.itemRock22085);	
-		this.game.load.image('itemRock37085', Phase1.World.itemRock37085);			
-		this.game.load.image('itemRock371108', Phase1.World.itemRock371108);
-		this.game.load.image('itemRock412190', Phase1.World.itemRock412190);
-		this.game.load.image('itemRock500100', Phase1.World.itemRock500100);
-		this.game.load.image('itemRock515130', Phase1.World.itemRock515130);			
-		this.game.load.image('itemRock540190', Phase1.World.itemRock540190);			
-		this.game.load.image('itemRock550165', Phase1.World.itemRock550165);
-		this.game.load.image('itemRock655230', Phase1.World.itemRock655230);
-		this.game.load.image('itemRock825100', Phase1.World.itemRock825100);
-		this.game.load.image('itemRock925220', Phase1.World.itemRock925220);			
-		this.game.load.spritesheet('smoke', Phase1.World.smoke, 3000, 300);				
-		this.game.load.spritesheet('spearTrap', Phase1.World.spearTrap, 10, 305);
-		//this.game.load.spritesheet('greatspeartrap', Phase1.World.greatSpearTrap);
 	}
 };

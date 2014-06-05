@@ -14,7 +14,7 @@
  </tileset>
  <layer name="Platform" width="300" height="15">
   <data encoding="base64" compression="zlib">
-   eJztmclOxDAMhss67Pty4ABIMCwXxCIxFHj/18KRGhFFTbM0duKOP+k/AGViJ/FfJ9M0giAIgiAIgiAsEy+lAxCq5B40Bz0QjbcP2ux0QjSmj0/QAvTleW4FtApaG3iGe53p/bBo4vfFuvXzFmg7c1w592nougvLh/KpY9AB6LLTUfe7WnzLxw5oF7RXYOyU2sKsx9y+jOXzsT73CHoCPSPFUyPcfVvHnzOHa9CNQ3eBnxHS32ByCjoDnSN9PuW+oe4Dc/VZ2LyC3kDvpQMR2JOjv8ntCaU9lApfnrp/Du2XQ/2Lut8J9atl7MO4oWud6q7LBru/SaHkGVFD0Zf58jT7Z7tfNr0sxNNUPjoXrH7HHMMkdDzXcxuNOzc1D7OIGIfAWnPtwyFebJ7DTNV8rjTzC82zNsas/VgPHRpbzS3FXLpq12RMnhegQ0tXgf9LfT4b61fKt7VfK+9S3yvNjL/d5glzNK59p/PidiYOrWEzv9x5+mKo9Z4w1/2fmltOe8ZF391l6J0lN78y0XnHelRf30L1PYtZzx8N3x7EBaZflab0HYXLr1L3Y63+PkQtfmX3ulO9l++r5ynlGeJXqk7mnbjUitqfv83/e6aEZ02lv/Ix5KN6f5nvekzpNbfn3V4L8SueTLW/svOiqBfbE1P8yj5LcHk/uHDVD7a4+1XfvXKMX9uiel9QvY9S/Sp1XkvkVbpGMIidf+o+c8p+hbn3S+xfLH0j68e3UAYtQTxcZM9bGzmXKcTOP3Y8Y+OjWovW8RyH3LjpD5ltq3o=
+   eJztmdlOwzAQRVO2sm9leeABkNhfEItEKfD/v8VYisVg2fE48XhJ50hXFZDibeZ67DSNIAiCIAiCIAiCsOzcgu5A94na2wNttDpO1KaPD9Ac9Ol5bgJaAa12PPMcq1OZ0PEwb8LjYs34eRO0FblfHHGq1t+39kLZxF5D5VNHoH3QeavD9nel+JaPbdAOaDdD21RPpXynRE/l6lOozz2AHkFPTP0pFfHs/1yCrhy6If4PSn3DyQx0AjplbGOscROrzuLmBfQKesvdEaF6YtQ3sf0gt4fqGiq09gplgj5t49X1M7VWpvpX6nqH6lfLWofVhM4NXFvrdcPiWsMU9U0oOc+IOXCNV9fPtlpZe5mWz9PwnsJR73TtWdT2XM+tN+7xqXmYEvvoo8/9AAWcz748xnslVsnnA71uWLXV0kPWfqiHduWOih0u7+9q1zYfM/QZOt4z0AHSRcB3U5/PhvqV8m3t2cq71HulKfrbdZxuDsYV8zifa8pj6rmJ068ofSj1vifG/qfmtqaYcWHeXVLvKxW1+RVGjzvUo2x1S4z3LBRwPr83/Gem1IyhvnKR+45iLH41hFL8yqx1x3ovb8vnMY2T4lfK7+9alVgL2VDx+dP87TM5PAv7Fdd9RQl0jU3HF97rOaXX3Ixhc+8Qv6qTsdZX5rhS5IvpiX3qK/MsUbu/ufKHW7X7le09WIhfm0q1X6Taj/r6Vd95zTGu3DnCQej8p64zx+xXnLGfI3659MWsb99CIRYJ+lOLzHlbBM5lH0Lnn7s/Q/uXai0WjudqGFtt+gUo3Km7
   </data>
  </layer>
  <layer name="Thorn" width="300" height="15">
@@ -24,7 +24,7 @@
  </layer>
  <objectgroup name="PowerStar" width="300" height="15">
   <object gid="65" x="6955" y="82"/>
-  <object gid="65" x="855" y="191"/>
+  <object gid="65" x="855" y="120"/>
   <object gid="65" x="2755" y="73"/>
  </objectgroup>
  <objectgroup name="PowerLife" width="300" height="15">
@@ -32,17 +32,17 @@
   <object gid="64" x="9679" y="233"/>
  </objectgroup>
  <objectgroup name="Coins" width="300" height="15">
-  <object gid="66" x="326" y="159"/>
-  <object gid="66" x="381" y="135"/>
-  <object gid="66" x="435" y="159"/>
+  <object gid="66" x="320" y="104"/>
+  <object gid="66" x="375" y="80"/>
+  <object gid="66" x="429" y="104"/>
   <object gid="66" x="1119" y="399"/>
   <object gid="66" x="1160" y="400"/>
   <object gid="66" x="1200" y="400"/>
   <object gid="66" x="1240" y="400"/>
-  <object gid="66" x="760" y="280"/>
-  <object gid="66" x="960" y="280"/>
-  <object gid="66" x="798" y="219"/>
-  <object gid="66" x="921" y="219"/>
+  <object gid="66" x="760" y="209"/>
+  <object gid="66" x="960" y="209"/>
+  <object gid="66" x="798" y="148"/>
+  <object gid="66" x="921" y="148"/>
   <object gid="66" x="120" y="480"/>
   <object gid="66" x="160" y="480"/>
   <object gid="66" x="200" y="480"/>
@@ -65,7 +65,6 @@
   <object gid="66" x="2221" y="442"/>
   <object gid="66" x="2520" y="200"/>
   <object gid="66" x="2560" y="200"/>
-  <object gid="66" x="2600" y="200"/>
   <object gid="66" x="2760" y="280"/>
   <object gid="66" x="3951" y="294"/>
   <object gid="66" x="3905" y="246"/>
@@ -79,11 +78,8 @@
   <object gid="66" x="4360" y="120"/>
   <object gid="66" x="4400" y="120"/>
   <object gid="66" x="4440" y="120"/>
-  <object gid="66" x="4080" y="160"/>
   <object gid="66" x="4120" y="160"/>
   <object gid="66" x="4160" y="160"/>
-  <object gid="66" x="4520" y="360"/>
-  <object gid="66" x="4680" y="240"/>
   <object gid="66" x="4880" y="120"/>
   <object gid="66" x="4920" y="120"/>
   <object gid="66" x="4920" y="120"/>
@@ -91,34 +87,16 @@
   <object gid="66" x="4800" y="440"/>
   <object gid="66" x="4840" y="440"/>
   <object gid="66" x="4880" y="440"/>
-  <object gid="66" x="5160" y="160"/>
-  <object gid="66" x="5280" y="280"/>
-  <object gid="66" x="5320" y="280"/>
-  <object gid="66" x="5040" y="360"/>
-  <object gid="66" x="5080" y="360"/>
-  <object gid="66" x="5120" y="360"/>
   <object gid="66" x="5440" y="80"/>
   <object gid="66" x="5520" y="80"/>
-  <object gid="66" x="5680" y="200"/>
-  <object gid="66" x="5800" y="120"/>
   <object gid="66" x="6000" y="200"/>
-  <object gid="66" x="6000" y="160"/>
-  <object gid="66" x="6040" y="160"/>
-  <object gid="66" x="6040" y="200"/>
-  <object gid="66" x="6040" y="120"/>
-  <object gid="66" x="6000" y="120"/>
   <object gid="66" x="6280" y="240"/>
   <object gid="66" x="6280" y="200"/>
   <object gid="66" x="6320" y="200"/>
   <object gid="66" x="6360" y="200"/>
-  <object gid="66" x="6400" y="200"/>
-  <object gid="66" x="6400" y="240"/>
   <object gid="66" x="6360" y="240"/>
   <object gid="66" x="6320" y="240"/>
   <object gid="66" x="6600" y="120"/>
-  <object gid="66" x="6720" y="240"/>
-  <object gid="66" x="6760" y="240"/>
-  <object gid="66" x="6600" y="400"/>
   <object gid="66" x="600" y="200"/>
   <object gid="66" x="600" y="160"/>
   <object gid="66" x="1120" y="360"/>
@@ -127,29 +105,15 @@
   <object gid="66" x="1240" y="360"/>
   <object gid="66" x="2520" y="160"/>
   <object gid="66" x="2560" y="160"/>
-  <object gid="66" x="2600" y="160"/>
   <object gid="66" x="2760" y="240"/>
-  <object gid="66" x="4080" y="120"/>
   <object gid="66" x="4120" y="120"/>
   <object gid="66" x="4160" y="120"/>
   <object gid="66" x="4360" y="80"/>
   <object gid="66" x="4400" y="80"/>
   <object gid="66" x="4440" y="80"/>
-  <object gid="66" x="4680" y="200"/>
-  <object gid="66" x="4680" y="160"/>
-  <object gid="66" x="5160" y="120"/>
   <object gid="66" x="4880" y="80"/>
   <object gid="66" x="4920" y="80"/>
   <object gid="66" x="4960" y="80"/>
-  <object gid="66" x="4800" y="400"/>
-  <object gid="66" x="4840" y="400"/>
-  <object gid="66" x="4880" y="400"/>
-  <object gid="66" x="5040" y="320"/>
-  <object gid="66" x="5080" y="320"/>
-  <object gid="66" x="5120" y="320"/>
-  <object gid="66" x="4520" y="320"/>
-  <object gid="66" x="5280" y="240"/>
-  <object gid="66" x="5320" y="240"/>
   <object gid="66" x="7480" y="120"/>
   <object gid="66" x="7520" y="120"/>
   <object gid="66" x="7560" y="120"/>
@@ -167,48 +131,40 @@
   <object gid="66" x="7560" y="400"/>
   <object gid="66" x="7600" y="400"/>
   <object gid="66" x="7640" y="400"/>
-  <object gid="66" x="7720" y="240"/>
-  <object gid="66" x="7760" y="240"/>
-  <object gid="66" x="7760" y="80"/>
-  <object gid="66" x="7800" y="80"/>
-  <object gid="66" x="7840" y="80"/>
-  <object gid="66" x="8000" y="120"/>
-  <object gid="66" x="8200" y="360"/>
-  <object gid="66" x="8240" y="360"/>
+  <object gid="66" x="7684" y="241"/>
+  <object gid="66" x="7724" y="241"/>
+  <object gid="66" x="7823" y="80"/>
+  <object gid="66" x="7863" y="80"/>
+  <object gid="66" x="7903" y="80"/>
+  <object gid="66" x="8120" y="360"/>
+  <object gid="66" x="8120" y="480"/>
   <object gid="66" x="8360" y="200"/>
   <object gid="66" x="8400" y="200"/>
   <object gid="66" x="8440" y="200"/>
-  <object gid="66" x="8240" y="320"/>
-  <object gid="66" x="8200" y="320"/>
-  <object gid="66" x="8200" y="280"/>
-  <object gid="66" x="8240" y="280"/>
+  <object gid="66" x="8120" y="440"/>
+  <object gid="66" x="8120" y="320"/>
+  <object gid="66" x="8120" y="280"/>
+  <object gid="66" x="8120" y="400"/>
   <object gid="66" x="8360" y="160"/>
   <object gid="66" x="8400" y="160"/>
   <object gid="66" x="8440" y="160"/>
-  <object gid="66" x="8600" y="240"/>
-  <object gid="66" x="8640" y="240"/>
-  <object gid="66" x="8640" y="200"/>
   <object gid="66" x="8600" y="200"/>
-  <object gid="66" x="8600" y="160"/>
+  <object gid="66" x="8640" y="200"/>
   <object gid="66" x="8640" y="160"/>
-  <object gid="66" x="8720" y="280"/>
-  <object gid="66" x="8760" y="280"/>
-  <object gid="66" x="8800" y="280"/>
-  <object gid="66" x="8800" y="240"/>
-  <object gid="66" x="8760" y="240"/>
+  <object gid="66" x="8600" y="160"/>
   <object gid="66" x="8720" y="240"/>
-  <object gid="66" x="8720" y="200"/>
-  <object gid="66" x="8760" y="200"/>
+  <object gid="66" x="8760" y="240"/>
+  <object gid="66" x="8800" y="240"/>
   <object gid="66" x="8800" y="200"/>
-  <object gid="66" x="8800" y="160"/>
-  <object gid="66" x="8760" y="160"/>
+  <object gid="66" x="8760" y="200"/>
+  <object gid="66" x="8720" y="200"/>
   <object gid="66" x="8720" y="160"/>
-  <object gid="66" x="8880" y="240"/>
-  <object gid="66" x="8920" y="240"/>
-  <object gid="66" x="8920" y="200"/>
+  <object gid="66" x="8760" y="160"/>
+  <object gid="66" x="8800" y="160"/>
   <object gid="66" x="8880" y="200"/>
-  <object gid="66" x="8880" y="160"/>
+  <object gid="66" x="8920" y="200"/>
   <object gid="66" x="8920" y="160"/>
+  <object gid="66" x="8880" y="160"/>
   <object gid="66" x="9280" y="320"/>
   <object gid="66" x="9320" y="320"/>
   <object gid="66" x="9360" y="320"/>
@@ -222,7 +178,6 @@
   <object gid="66" x="9600" y="480"/>
   <object gid="66" x="9640" y="480"/>
   <object gid="66" x="9680" y="480"/>
-  <object gid="66" x="9760" y="480"/>
   <object gid="66" x="9720" y="480"/>
   <object gid="66" x="10280" y="280"/>
   <object gid="66" x="10320" y="280"/>
@@ -236,7 +191,6 @@
   <object gid="66" x="10160" y="360"/>
   <object gid="66" x="10120" y="440"/>
   <object gid="66" x="10120" y="320"/>
-  <object gid="66" x="10400" y="120"/>
   <object gid="66" x="10440" y="120"/>
   <object gid="66" x="10480" y="120"/>
   <object gid="66" x="10560" y="240"/>
@@ -250,5 +204,24 @@
   <object gid="66" x="11160" y="240"/>
   <object gid="66" x="11160" y="240"/>
   <object gid="66" x="11200" y="240"/>
+  <object gid="66" x="6600" y="80"/>
+  <object gid="66" x="360" y="320"/>
+  <object gid="66" x="400" y="480"/>
+  <object gid="66" x="440" y="480"/>
+  <object gid="66" x="480" y="480"/>
+  <object gid="66" x="520" y="480"/>
+  <object gid="66" x="560" y="480"/>
+  <object gid="66" x="5120" y="120"/>
+  <object gid="66" x="4360" y="400"/>
+  <object gid="66" x="4400" y="400"/>
+  <object gid="66" x="4440" y="400"/>
+  <object gid="66" x="4440" y="360"/>
+  <object gid="66" x="4400" y="360"/>
+  <object gid="66" x="4360" y="360"/>
+  <object gid="66" x="5760" y="200"/>
+  <object gid="66" x="5760" y="160"/>
+  <object gid="66" x="5760" y="120"/>
+  <object gid="66" x="5960" y="200"/>
+  <object gid="66" x="6040" y="200"/>
  </objectgroup>
 </map>
