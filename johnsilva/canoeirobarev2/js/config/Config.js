@@ -106,6 +106,61 @@ Config.credits = {
 	y: 0
 };
 
-Config.level = {
-	dir: 'assets/level/'
+Config.levelConfig = {
+	player:{
+		posX: 0,
+		posY: 0
+	},
+	branches:{
+		exists: true
+	},
+	waters:{
+		exists: true,
+		id: 12
+	},
+	bees:{
+		exists: true,
+		id: 9
+	},
+	tubes:{
+		exists: true,
+		id: 11
+	},
+	thorns:{
+		exists: true,
+		id: 0
+	}
 };
+
+Config.update = {
+	updateLevel: function(x,y,branchesE,watersE,watersId,beesE,beesId,tubesE,tubesId,thornsE,thornsId){
+		Config.levelConfig.player.posX = x;
+		Config.levelConfig.player.posY = y;
+
+		Config.levelConfig.branches = branchesE;
+
+		Config.levelConfig.waters.exists = watersE;
+		Config.levelConfig.waters.id = watersId;
+
+		Config.levelConfig.bees.exists = beesE;
+		Config.levelConfig.bees.id = beesId;
+
+		Config.levelConfig.tubes.exists = tubesE;
+		Config.levelConfig.tubes.id = tubesId;
+
+		Config.levelConfig.thorns.exists = thornsE;
+		Config.levelConfig.thorns.id = thornsId;
+	}
+}
+
+Config.level = {
+	getLevel: function(level){
+		//x,y,branches-exists,waters-exists,waters-id, bees-exists,bees-id,tubes-exists,tubes-id,thorns-exists,thorns-id 
+		if(level == 1)
+			Config.update.updateLevel(75, 150, false, false, 0, false, 0, false, 0, true, 9);
+		else if(level == 3)
+			Config.update.updateLevel(75, 650, true, true, 12, true, 9, true, 11, false, 0);
+		return Config.levelConfig;
+	}
+};
+

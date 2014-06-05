@@ -6,6 +6,7 @@ State.GamePlay = function (game) {
 	var deadAnimation;
 	var jumping;
 	var cursors;
+	var levelConfig;
 	/*var player;
 	var level;
 	var map;
@@ -21,7 +22,7 @@ State.GamePlay.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;
-		this.level = 3;
+		this.level = 1;
 		//this.game.world.setBounds(0, -600, 1600, 1200);
 
 		this.player = game.add.sprite(10,1000 ,'playerS');
@@ -47,8 +48,10 @@ State.GamePlay.prototype = {
 		this.player.body.collideWorldBounds = true;
 		this.game.physics.enable(this.player);
 		this.player.body.setSize(25, 60, 0, 0);
-		this.loadLevel(this.level);
 		this.game.camera.y = 1000;
+
+		this.loadLevel(this.level);
+		
 		
 		cursors = this.game.input.keyboard.createCursorKeys();
 		//jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -74,11 +77,13 @@ State.GamePlay.prototype = {
 
 		//if(!this.gameOver){
 		
-		Config.global.screen.resize(this.game);
+		//Config.global.screen.resize(this.game);
 		//player.animations.play('walk');
 
 		game.physics.arcade.collide(this.layer, this.player);
-		game.physics.arcade.overlap(this.player, this.bees, this.die, null,this);
+
+		if(levelConfig.bees.exists) game.physics.arcade.overlap(this.player, this.bees, this.die, null,this);
+		if(levelConfig.thorns.exists) game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
 		
 		this.player.body.velocity.x = 0;
 		//this.branches.tilePosition.x = this.player.body.x;
@@ -134,76 +139,91 @@ State.GamePlay.prototype = {
 	},
 
 	loadLevel: function (level) {
+		this.level = level;
+		levelConfig = Config.level.getLevel(level);
+
 		jumping = false;
+		
 		this.player.alpha = 1;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
-		this.player.position.setTo(75, 650);
 		this.player.body.gravity.y = 1000;
+		this.player.position.setTo(levelConfig.player.posX, levelConfig.player.posY);
 		this.game.camera.follow(this.player);
 
-		this.level = level;
-
 		if (this.layer) this.layer.destroy();
-		//if (this.flag) this.flag.destroy();
+		if (this.flag) this.flag.destroy();
 		if (this.bees) this.bees.destroy();
 		if (this.waters) this.waters.destroy();
-		if (this.tubes) this.bees.destroy();
+		if (this.tubes) this.tubes.destroy();
+		if (this.thorns) this.thorns.destroy();
 
 		this.bg = this.game.add.tileSprite(0,0,1200,800,'bg'+level);
-		this.bg.fixedToCamera = true;
-		/*this.branches = this.game.add.tileSprite(200,0,1200,800,'branches'+level);
-		this.branches.fixedToCamera = true;*/
-
-		this.player.bringToTop();
+		this.bg.fixedToCamera = true;		
 
 		this.map = game.add.tilemap('level'+level);
-		this.map.addTilesetImage('tileset','tileset');		
-		this.map.addTilesetImage('branches','branches');
-		this.map.setCollisionBetween(0,5, true,'Camada de Tiles 1');
-		//this.map.setCollisionBetween(0,3);
-
-		this.waters = game.add.group();
-		this.waters.enableBody = true;
-		this.waters.physicsBodyType = Phaser.Physics.ARCADE;
-
-		this.map.createFromObjects('waters',7,'acidicWater', 0,true,false,this.waters);
-		this.waters.forEach(function (water){ 
-			water.body.allowGravity = false;
-			water.body.immovable = true;
-			water.anchor.setTo(.5, 1);
-			this.addEmmiter(water.body.x, water.body.y);
-		}, this);
+		this.map.addTilesetImage('tileset','tileset');
+		this.map.setCollisionBetween(1,8, true,'Camada de Tiles 1');
 
 		this.layer = this.map.createLayer('Camada de Tiles 1');
 		this.layer.resizeWorld();
 		this.game.physics.enable(this.layer);
 
-		this.layer2 = this.map.createLayer('branches');
-		this.layer2.resizeWorld();
-		this.game.physics.enable(this.layer2);
+		if(levelConfig.branches.exists) this.map.addTilesetImage('branches','branches');
+		if(levelConfig.waters.exists) this.addWaters(levelConfig.waters.id);
+		if(levelConfig.bees.exists) this.addBees(levelConfig.bees.id);
+		if(levelConfig.tubes.exists) this.addTubes(levelConfig.tubes.id);
+		if(levelConfig.thorns.exists) this.addThorns(levelConfig.thorns.id);
 
+		this.player.bringToTop();
+	},
+
+	addWaters: function(id){
+		this.waters = game.add.group();
+		this.waters.enableBody = true;
+		this.waters.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('waters',id,'acidicWater', 0,true,false,this.waters);
+		this.waters.forEach(function (water){ 
+			water.body.allowGravity = false;
+			water.body.immovable = true;
+			//water.anchor.setTo(.5, 1);
+			this.addEmmiter(water.body.x, water.body.y);
+		}, this);
+	},
+
+	addBees: function(id){
 		this.bees = game.add.group();
 		this.bees.enableBody = true;
 		this.bees.physicsBodyType = Phaser.Physics.ARCADE;
-		this.map.createFromObjects('Camada de Objetos 1',4,'bee', 0,true,false,this.bees);
+		this.map.createFromObjects('Camada de Objetos 1',id,'bee', 0,true,false,this.bees);
 		this.bees.callAll('animations.add', 'animations', 'spin', [0, 1], 3, true);
     	this.bees.callAll('animations.play', 'animations', 'spin');
 		this.bees.forEach(function (bee){ 
 			bee.body.allowGravity = false;
 			bee.body.immovable = true;
 		}, this);
+	},
 
-
+	addTubes: function(id){
 		this.tubes = game.add.group();
 		this.tubes.enableBody = true;
 		this.tubes.physicsBodyType = Phaser.Physics.ARCADE;
-		this.map.createFromObjects('tubes',6,'tube', 0,true,false,this.tubes);
+		this.map.createFromObjects('tubes',id,'tube', 0,true,false,this.tubes);
 		this.tubes.forEach(function (tube){ 
 			tube.body.allowGravity = false;
 			tube.body.immovable = true;
 		}, this);
-		//this.addEmmiter(500,500);
+	},
+
+	addThorns: function(id){
+		this.thorns = game.add.group();
+		this.thorns.enableBody = true;
+		this.thorns.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('thorns',id,'thorn', 0,true,false,this.thorns);
+		this.thorns.forEach(function (thorn){ 
+			thorn.body.allowGravity = false;
+			thorn.body.immovable = true;
+		}, this);
 	},
 
 	addEmmiter: function(x,y){
@@ -231,12 +251,12 @@ State.GamePlay.prototype = {
 		emitter.start(false, 1800, 1,0);
 	},
 
-	die : function(player, bee) {
+	die : function(player, enemie) {
 		//this.gameOver = true;
 		//this.player.anchor.setTo(0.5, 0.5);
 		this.player.animations.play('dead');
 		var t = this.game.add.tween(this.player).to({alpha:0}, 1000).start();
-		bee.kill();	
+		enemie.kill();	
 		this.player.body.gravity.y = 0;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;

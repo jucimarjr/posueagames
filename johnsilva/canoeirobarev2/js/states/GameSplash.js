@@ -25,26 +25,23 @@ State.GameSplash.prototype = {
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
 		
 		//Game
-		//this.game.load.tilemap('level1', Config.level.dir+'1/map.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.tilemap('level1', 'assets/level/1.json', null, Phaser.Tilemap.TILED_JSON);
 		//this.game.load.tilemap('level2', 'assets/level/2.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level3', 'assets/level/3.json', null, Phaser.Tilemap.TILED_JSON);
 		/*this.game.load.tilemap('level4', Config.level.dir+'4/map.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level5', Config.level.dir+'5/map.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level6', Config.level.dir+'6/map.json', null, Phaser.Tilemap.TILED_JSON);*/
 
-		this.game.load.image('bg2', 'assets/level/bg2.png');
-		this.game.load.image('bg3', 'assets/level/bg1_462-800.jpg');
-		this.game.load.image('branches', 'assets/level/branches_396-800.png');
-		this.game.load.image('tileset', 'assets/tileset.png');
-		//this.game.load.image('star', 'assets/star.png');
-		//this.game.load.image('bees', 'assets/enemies/bee.png');
-		//this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_81-125-15.png', 81,125,15);
-		//this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_81-125-15.png', 81,60,15);
-		this.game.load.spritesheet('bee', 'assets/enemies/bee.png',40,40,2);
-		this.game.load.image('tube', 'assets/enemies/tube_40-29.png',40,29);
-		this.game.load.image('acidicWater', 'assets/enemies/acidicWater_14-17.png',14,17);
-		//this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_81-125-15.png', 81,125,15);
 		this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_39-60-27.png', 39,60,27);
+		this.game.load.spritesheet('bee', 'assets/enemies/bee.png',40,40,2);
+
+		this.game.load.image('bg1', 'assets/level/bg1_462-800.jpg');
+		this.game.load.image('bg3', 'assets/level/bg1_462-800.jpg');
+		this.game.load.image('branches', 'assets/level/branches_360-283.png');
+		this.game.load.image('tileset', 'assets/level/tile_40-40-8.png');		
+		this.game.load.image('thorn', 'assets/enemies/thorn_20-25.jpg');
+		this.game.load.image('tube', 'assets/enemies/tube_40-29.png');
+		this.game.load.image('acidicWater', 'assets/enemies/acidicWater_14-17.png');
 	},
 	create: function () {
 		"use strict";
