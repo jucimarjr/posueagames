@@ -11,12 +11,7 @@ State.Phase1.prototype = {
     create: function() {
         "use strict";		
 		Phase1.World.createBg(this.game);
-			
-        // traps
-        this.enemyGroup = game.add.group();
-        this.createSpear(1500, 0);
-        this.createSpear(2000, 0);
-
+		Phase1.Trap.create(this.game);
         // player defs
         this.createPlayer();
         this.game.camera.follow(this.player);
@@ -35,7 +30,7 @@ State.Phase1.prototype = {
     update: function(){
         "use strict";
         Config.global.screen.resize(this.game); 
-        this.game.physics.arcade.overlap(this.player, this.enemyGroup, this.enemyCollision, null, this);
+        this.game.physics.arcade.overlap(this.player, Phase1.Trap.trapGroup, Phase1.Trap.trapCollision, null, this);
         if(this.cursors.left.isDown){
             this.player.body.velocity.x = -this.player.velocity;
         }
@@ -58,30 +53,5 @@ State.Phase1.prototype = {
         this.game.physics.enable(this.player);
         this.player.body.collideWorldBounds = true;
         this.player.velocity = 300;
-    },
-    
-    createSpear : function (x, y){
-        "use strict";
-        var spear = this.enemyGroup.create(x, y, 'spearTrap');
-        spear.enemyType = "spear";
-        spear.frame = 2;
-        spear.anchor.setTo(0.5, 0);
-        spear.angle = 30;
-        this.game.physics.enable(spear);
-        this.game.add.tween(spear)
-            .to({angle: -30}, 2200, Phaser.Easing.Sinusoidal.InOut)
-            .to({angle: 30}, 2200, Phaser.Easing.Sinusoidal.InOut)
-            .start().loop();
-        
-        // TODO: animacao
-        console.log("desenhando lanca");
-    },
-
-    enemyCollision : function (player, enemy){
-        "use strict";
-        if(enemy.enemyType === "spear"){
-            //TODO: animacao morte pela lanca
-            console.log("e morreu: armadilha lanca");
-        }
     }
 };
