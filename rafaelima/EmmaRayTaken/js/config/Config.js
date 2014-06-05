@@ -47,7 +47,11 @@ Config.gameSplash = {
 	millis: 2000,
 	nextState: 4000
 };
-
+//Animation fall
+Config.animationFall = {
+	fallGif: [],
+	dir: 'assets/images/gif_fall/screen_rotate_000'
+};
 
 //Play
 Config.game = {

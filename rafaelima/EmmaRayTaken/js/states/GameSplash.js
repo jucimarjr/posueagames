@@ -32,6 +32,17 @@ State.GameSplash.prototype = {
 		this.game.load.image('collect', 'assets/images/pv.png');
 		this.game.load.spritesheet('monster1', 'assets/spritesheets/monstercat_38_18_3.png', 38, 18);
 
+		//gif fall
+        for (var i = 0; i < 30; i++) {
+            var zeros = "";
+            if (i < 10){
+                zeros = "0";
+            }
+            var name = Config.animationFall.dir + zeros + i;
+            this.game.load.spritesheet(name, name + ".png", 0, 0);
+            Config.animationFall.fallGif[i] = name;
+        }
+		
 		//Credits
 		this.game.load.image('credits', Config.credits.dir);
 		

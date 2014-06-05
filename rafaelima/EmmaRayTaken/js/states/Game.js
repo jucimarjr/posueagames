@@ -182,7 +182,7 @@ State.Game.prototype = {
 
 		gameRotate: function () {
 			"use strict";
-			this.game.state.start('GameRotate');
+			this.game.state.start('GifFall');
 		},
 		
 		render: function () {
