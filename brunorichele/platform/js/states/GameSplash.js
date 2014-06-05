@@ -64,5 +64,6 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('smoke', Phase1.World.smoke, 3000, 300);				
 		this.game.load.spritesheet('spearTrap', Phase1.World.spearTrap, 10, 305);
 		//this.game.load.spritesheet('greatspeartrap', Phase1.World.greatSpearTrap);
+		this.game.load.spritesheet('door', Phase1.Door.itemDoor, 135, 255);
 	}
 };
