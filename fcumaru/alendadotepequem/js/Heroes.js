@@ -57,7 +57,7 @@ Hero.prototype = {
 	create : function() {
 		"use strict";
 
-		this.hero = this.game.add.sprite(10, 500, this.key, 3);
+		this.hero = this.game.add.sprite(60, 500, this.key, 3);
 		this.hero.animations.add('walk', [ 1, 2 ], 6, true);
 		this.hero.animations.add('jump', [ 3, 4, 5 ], 4, true);
 		// permite que a sprite tenha um corpo fisico

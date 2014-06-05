@@ -2,6 +2,7 @@ State.Game = function(game) {
 	"use strict";
 	this.game = game;
 	this.heroes = new Heroes(game);
+	this.enemies = new Enemies(game);
 };
 
 var dino, layer, group, map, posicao;
@@ -13,6 +14,7 @@ State.Game.prototype = {
 		this.game.load.image('fundo', 'assets/fundo_960_1200.png');
 		this.game.load.image('tileset', 'assets/grama2.png');
 		this.heroes.preload();
+		this.enemies.preload();
 	},
 	create : function() {
 		"use strict";
@@ -31,6 +33,8 @@ State.Game.prototype = {
 
 		this.heroes.create();
 		this.game.camera.follow(this.heroes.getCurrent());
+		
+		this.enemies.create();
 
 		var style = {
 			font : "20px Courier",
@@ -45,6 +49,7 @@ State.Game.prototype = {
 		this.game.physics.arcade.collide(layer, dino);
 
 		this.heroes.update(layer);
+		this.enemies.update(layer);
 	}
 };
 
