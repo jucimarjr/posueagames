@@ -54,6 +54,10 @@ State.Phase1.prototype = {
         this.game.camera.follow(this.player);
 		
 		this.backgroundAlpha = game.add.sprite(0, 0, 'bgphase1-alpha');
+		
+		this.smoke = game.add.sprite(0, 1700, 'smoke');
+        this.smoke.animations.add('fear', [0, 1, 2, 3], 10, true);
+        this.smoke.animations.play('fear');
 
         //misc defs
         this.cursors = this.game.input.keyboard.createCursorKeys();
