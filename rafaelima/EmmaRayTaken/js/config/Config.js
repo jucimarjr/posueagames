@@ -51,8 +51,12 @@ Config.gameSplash = {
 
 //Play
 Config.game = {
-	dir: 'assets/images/bg.png',
-	dir2: 'assets/images/bg2.png',
+	dirBg1: 'assets/images/BgForest01_3000-540.png',
+	dirBg2: 'assets/images/BgForest02_3000-540.png',
+	dirBg3: 'assets/images/BgForest03_3000-540.png',
+	dirBg4: 'assets/images/BgCave01_3955-540.png',
+	dirBg5: 'assets/images/Glow_3905-540.png',
+	
 	x: 0,
 	y: 0,
 	tilemap:{

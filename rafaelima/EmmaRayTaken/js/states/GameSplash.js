@@ -19,8 +19,11 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('button-how-to-play', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
 		
 		//Game
-		this.game.load.image('background', Config.game.dir);
-		this.game.load.image('background2', Config.game.dir2);
+		this.game.load.image('bg1', Config.game.dirBg1);
+		this.game.load.image('bg2', Config.game.dirBg2);
+		this.game.load.image('bg3', Config.game.dirBg3);
+		this.game.load.image('bg4', Config.game.dirBg4);
+		this.game.load.image('bg5', Config.game.dirBg5);
 		this.game.load.tilemap('stage', Config.game.tilemap.dir, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tileset', Config.game.tileset.dir);
 		this.game.load.spritesheet('dude', Config.game.player.dir , 32, 48);

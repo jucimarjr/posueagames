@@ -7,9 +7,15 @@ var layer;
 var player;
 var cursors;
 var jumpButton;
-var background2;
 var map;
 var rotate;
+var bg1;
+var bg2;
+var bg3;
+var bg4;
+var bg5;
+var previousX;
+var previousY;
 
 State.Game.prototype = {
 		preload: function () {
@@ -19,12 +25,18 @@ State.Game.prototype = {
 			"use strict";
 			
 			rotate = 0.05;
-			
 			this.game.physics.startSystem(Phaser.Physics.P2JS);
 			this.game.physics.p2.setImpactEvents(true);
 		    this.game.stage.backgroundColor = '#2d2d2d';
-		    
 		    this.game.physics.p2.updateBoundsCollisionGroup();
+		    
+		    bg1 = game.add.tileSprite(0, 3060, 3000, 540, 'bg1');
+		    bg2 = game.add.tileSprite(0, 3060, 3000, 540, 'bg2');
+		    bg3 = game.add.tileSprite(0, 3060, 3000, 540, 'bg3');
+		    bg4 = game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
+
+			var map = this.game.add.tilemap('stage');
+			map.addTilesetImage('tileset_arcane_forest', 'tileset');
 
 		    //Map
 		    map = this.game.add.tilemap('stage');
@@ -58,8 +70,6 @@ State.Game.prototype = {
 
 		    
 		    this.game.physics.p2.enable(player, true);
-//		    player.body.clearShapes();
-//		    player.body.loadPolygon('physicsData', 'dude');
 		    
 		    player.body.fixedRotation = true;
 		    this.game.camera.follow(player);
@@ -70,7 +80,9 @@ State.Game.prototype = {
 		    
 			layer.resizeWorld();
 		    
-//		    this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
+		    previousX = 0;
+		    previousY = 0;
+		    
 		    cursors = this.game.input.keyboard.createCursorKeys();
 			jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 			
@@ -101,10 +113,27 @@ State.Game.prototype = {
 			if (jumpButton.isDown){
 				player.body.moveUp(300);
 				player.frame = 4;
-			}		
+			}
+			
+			if( parseInt(player.x) > (Config.global.screen.width/2) && previousX!= parseInt(player.x)){
+				if(previousX>player.x){
+					bg2.tilePosition.x += 0.2;
+					bg3.tilePosition.x += 0.3;
+				}else{
+					bg2.tilePosition.x -= 0.2;
+					bg3.tilePosition.x -= 0.3;
+				}
+			}
+			
+			previousX = parseInt(player.x);
 		},
 		
 		onClick: function () {
 			"use strict";
 		},
+		
+		render: function () {
+		    this.game.debug.spriteInfo(player, 32, 32);
+		}
+
 };
