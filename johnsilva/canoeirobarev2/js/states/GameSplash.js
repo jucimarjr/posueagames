@@ -33,7 +33,8 @@ State.GameSplash.prototype = {
 		this.game.load.tilemap('level6', Config.level.dir+'6/map.json', null, Phaser.Tilemap.TILED_JSON);*/
 
 		this.game.load.image('bg2', 'assets/level/bg2.png');
-		this.game.load.image('bg3', 'assets/level/bg2.png');
+		this.game.load.image('bg3', 'assets/level/bg1_462-800.jpg');
+		this.game.load.image('branches', 'assets/level/branches_396-800.png');
 		this.game.load.image('tileset', 'assets/tileset.png');
 		//this.game.load.image('star', 'assets/star.png');
 		//this.game.load.image('bees', 'assets/enemies/bee.png');

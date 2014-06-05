@@ -81,7 +81,7 @@ State.GamePlay.prototype = {
 		game.physics.arcade.overlap(this.player, this.bees, this.die, null,this);
 		
 		this.player.body.velocity.x = 0;
-
+		//this.branches.tilePosition.x = this.player.body.x;
         if (cursors.left.isDown ) {
         //if (this.back){
 			this.player.scale.x = 1; 
@@ -150,13 +150,16 @@ State.GamePlay.prototype = {
 		if (this.waters) this.waters.destroy();
 		if (this.tubes) this.bees.destroy();
 
-		this.bg = this.game.add.tileSprite(0,-600,2000,2400,'bg'+level);
+		this.bg = this.game.add.tileSprite(0,0,1200,800,'bg'+level);
 		this.bg.fixedToCamera = true;
+		/*this.branches = this.game.add.tileSprite(200,0,1200,800,'branches'+level);
+		this.branches.fixedToCamera = true;*/
 
 		this.player.bringToTop();
 
 		this.map = game.add.tilemap('level'+level);
-		this.map.addTilesetImage('tileset','tileset');
+		this.map.addTilesetImage('tileset','tileset');		
+		this.map.addTilesetImage('branches','branches');
 		this.map.setCollisionBetween(0,5, true,'Camada de Tiles 1');
 		//this.map.setCollisionBetween(0,3);
 
@@ -175,6 +178,10 @@ State.GamePlay.prototype = {
 		this.layer = this.map.createLayer('Camada de Tiles 1');
 		this.layer.resizeWorld();
 		this.game.physics.enable(this.layer);
+
+		this.layer2 = this.map.createLayer('branches');
+		this.layer2.resizeWorld();
+		this.game.physics.enable(this.layer2);
 
 		this.bees = game.add.group();
 		this.bees.enableBody = true;
@@ -208,8 +215,8 @@ State.GamePlay.prototype = {
 
 		emitter.makeParticles('acidicWater');
 
-		emitter.minParticleScale = 0.1;
-		emitter.maxParticleScale = 0.5;
+		/*emitter.minParticleScale = 0.1;
+		emitter.maxParticleScale = 0.5;*/
 		emitter.setYSpeed(80);
 		emitter.setXSpeed(0);
 		//emitter.setYSpeed(300, 500);
