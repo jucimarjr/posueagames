@@ -11,7 +11,9 @@ State.GamePlay.prototype = {
 		this.level1 = new Level1(game);
 		this.layer1 = new Layer1(game, this.tilemap);
 		this.coins = new Coins(game, this.tilemap);
-		this.player = new Player(game, this.coins, this.layer1);
+		this.powerlifes = new PowerLifes(game, this.tilemap);
+		this.powerstars = new PowerStars(game, this.tilemap);
+		this.player = new Player(game, this.coins, this.layer1, this.powerlifes, this.powerstars);
 	},
 	create: function () {
 		"use strict";
@@ -19,7 +21,9 @@ State.GamePlay.prototype = {
 		this.level1.create();
 		this.layer1.create();
 		this.coins.create();
-		this.player.create()
+		this.powerlifes.create();
+		this.powerstars.create();
+		this.player.create();
 	},
 	update: function () {
 		"use strict";

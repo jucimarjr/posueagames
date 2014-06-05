@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="300" height="15" tilewidth="40" tileheight="40">
- <tileset firstgid="1" name="tileset_40-40" tilewidth="40" tileheight="40">
-  <image source="tileset_40-40.png" width="360" height="280"/>
+ <tileset firstgid="1" name="tileset_360-280" tilewidth="40" tileheight="40">
+  <image source="../../images/tileset_360-280.png" width="360" height="280"/>
  </tileset>
  <tileset firstgid="64" name="powerlife_42-42" tilewidth="42" tileheight="42">
-  <image source="powerlife_42-42.png" width="42" height="42"/>
+  <image source="../../images/powerlife_42-42.png" width="42" height="42"/>
  </tileset>
  <tileset firstgid="65" name="powerstar_42-42" tilewidth="42" tileheight="42">
-  <image source="powerstar_42-42.png" width="42" height="42"/>
+  <image source="../../images/powerstar_42-42.png" width="42" height="42"/>
  </tileset>
  <tileset firstgid="66" name="coin_36-36" tilewidth="36" tileheight="36">
-  <image source="coin_36-36.png" width="36" height="36"/>
+  <image source="../../images/coin_36-36.png" width="36" height="36"/>
  </tileset>
  <layer name="Platform" width="300" height="15">
   <data encoding="base64" compression="zlib">
-   eJztmclOxDAMhss67Pty4ABI7BfEJoYB3v+1cKSJsKKmcdrYSTr+pP8AlEmc2H+dTNMoiqIoiqIoirJIPOeegFIkt6A70L3QeLug9bmOhMYM8Qmagr4Czy2BlkErHc/UXmc2H6ZNfF6sOj9vgDYTzytlnlL3XVk8jE8dgvZA53MdzH9Xim+F2AJtg3YyjN2ntjjrMbUvc/l8rM89gB5BT0zzKZHafdvOP2UMl6Arj26In0Hpbzg5Bp2ATpk+XzJvpPvAVH0WNy+gV9Bb7oko1ZOiv0ntCbk9VIpQnLZ/pvbLVP+S7neofrWIfVht2FqXuuty4e5v+pDzjGiR6MtCceL+2e2XsZdRPM3EY2Ph6nfwGBjqeL7n1hp/bGYdJhFz7IJrz60PU7wYn8OwSj5X4viocZbGkL0f6qFdY5u1lVhLX+1ihsR5Btp3dEH8X+nz2VC/Mr5t/dp4l/leaYL+dp1mmoPx5Z2Nq7YzMbWGcXyp4wzNodR7wlT3f2Zta8oZH213l9Q7y9r8CmPjjvWotr5F6nsWXM/vTb09iA9Ov8pN7jsKn1/1zcdS/b2LUvzK7XXHei/fVs9jipPiV6ZO7uaqpVZMfv42/++ZHJ41lv4qRJeP2vzC73pO2T13193dC/WrOhlrf+XGJVEvrif28Sv3LFHL+8GHr364Vbtftd0rx/i1K6n3hdT7qK9f9V3XHHHlrhEOYtdfus8cs19x5n6O/OXSN7N+QhuFmAnMpxaZdftAmkWuZR9i1597PkPnx70X+Oe252KkuU/TH7vasAg=
+   eJztmclOxDAMhss67Pty4ABIMCwXxCIxFHj/18KRGhFFTbM0duKOP+k/AGViJ/FfJ9M0giAIgiAIgiAsEy+lAxCq5B40Bz0QjbcP2ux0QjSmj0/QAvTleW4FtApaG3iGe53p/bBo4vfFuvXzFmg7c1w592nougvLh/KpY9AB6LLTUfe7WnzLxw5oF7RXYOyU2sKsx9y+jOXzsT73CHoCPSPFUyPcfVvHnzOHa9CNQ3eBnxHS32ByCjoDnSN9PuW+oe4Dc/VZ2LyC3kDvpQMR2JOjv8ntCaU9lApfnrp/Du2XQ/2Lut8J9atl7MO4oWud6q7LBru/SaHkGVFD0Zf58jT7Z7tfNr0sxNNUPjoXrH7HHMMkdDzXcxuNOzc1D7OIGIfAWnPtwyFebJ7DTNV8rjTzC82zNsas/VgPHRpbzS3FXLpq12RMnhegQ0tXgf9LfT4b61fKt7VfK+9S3yvNjL/d5glzNK59p/PidiYOrWEzv9x5+mKo9Z4w1/2fmltOe8ZF391l6J0lN78y0XnHelRf30L1PYtZzx8N3x7EBaZflab0HYXLr1L3Y63+PkQtfmX3ulO9l++r5ynlGeJXqk7mnbjUitqfv83/e6aEZ02lv/Ix5KN6f5nvekzpNbfn3V4L8SueTLW/svOiqBfbE1P8yj5LcHk/uHDVD7a4+1XfvXKMX9uiel9QvY9S/Sp1XkvkVbpGMIidf+o+c8p+hbn3S+xfLH0j68e3UAYtQTxcZM9bGzmXKcTOP3Y8Y+OjWovW8RyH3LjpD5ltq3o=
   </data>
  </layer>
- <layer name="Espinhos" width="300" height="15">
+ <layer name="Thorn" width="300" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt1jEKACAIBVAv1f2v1u4QkTlE74G7fAWNAAAAAAAAAAAAAAAAoGqkAgDW8u3cLerk+iYzA/iDn+ie03+zK//OfuwH2QSOhRIE
+   eJzt1kEKABAQBVCXcv+r2U9IpEzeq9lZ8GfKlAIAAAAAAAAAAAAAAMCpGgoAmIt/52pxTq456RnAH+xEe3rZ7O6bt/K/eZ+X5mPWi9G5LG/LpAGw8haS
   </data>
  </layer>
  <objectgroup name="PowerStar" width="300" height="15">

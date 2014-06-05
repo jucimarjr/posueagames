@@ -1,10 +1,12 @@
 
 
-Player = function(game, coins, layer1) {
+Player = function(game, coins, layer1, powerlifes, powerstars) {
 
 	this.game = game;
 	this.coins = coins;
 	this.layer1 = layer1;
+	this.powerlifes = powerlifes;
+	this.powerstars = powerstars;
 	this.sprite = null;
 	this.cursors = null;
 	
@@ -34,10 +36,17 @@ Player.prototype = {
 	},
 
 	update: function() {
+		"use strict";
+		Config.global.screen.resize(this.game);
 
-		this.game.physics.arcade.collide(this.sprite, this.layer1.mainLayer);
+		this.game.physics.arcade.collide(this.sprite, this.layer1.platform);
+		this.game.physics.arcade.collide(this.sprite, this.layer1.thorn);
 
-    	this.game.physics.arcade.overlap(this.sprite, this.coins.group, this.collectStar, null, this);
+    	this.game.physics.arcade.overlap(this.sprite, this.coins.group, this.collectCoins, null, this);
+
+    	this.game.physics.arcade.overlap(this.sprite, this.powerlifes.group, this.collectPowerLifes, null, this);
+
+    	this.game.physics.arcade.overlap(this.sprite, this.powerstars.group, this.collectPowerStars, null, this);
 
 		this.sprite.body.velocity.x = 0;
 
@@ -66,8 +75,15 @@ Player.prototype = {
 	    }
 	},
 	
-	collectStar: function(sprite, coins) {
-	    // Removes the star from the screen
+	collectCoins: function(sprite, coins) {
 		coins.kill();
+	},
+	
+	collectPowerLifes: function(sprite, powerlifes) {
+		powerlifes.kill();
+	},
+	
+	collectPowerStars: function(sprite, powerstars) {
+		powerstars.kill();
 	}
 };
