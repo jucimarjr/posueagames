@@ -26,6 +26,7 @@ State.Game.prototype = {
 		    
 		    this.game.physics.p2.updateBoundsCollisionGroup();
 
+		    //Map
 		    map = this.game.add.tilemap('stage');
 			map.addTilesetImage('tileset_arcane_forest', 'tileset');
 			
@@ -42,13 +43,14 @@ State.Game.prototype = {
 		    var monsterCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    var tileCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    
+		    //Tile collision
 		    for( var i=0; i<tileObjects.length; i++)
 		    {
 		    	tileObjects[i].setCollisionGroup(tileCollisionGroup);
 		    	tileObjects[i].collides(playerCollisionGroup);
 		    }
 
-		    
+		    //player
 		    player = this.game.add.sprite(60, 3300, 'dude');
 		    player.animations.add('left', [0, 1, 2, 3], 10, true);
 		    player.animations.add('turn', [4], 20, true);
@@ -62,6 +64,8 @@ State.Game.prototype = {
 		    player.body.fixedRotation = true;
 		    this.game.camera.follow(player);
 		    player.body.setCollisionGroup(playerCollisionGroup);
+		    
+		    //Collision tile/player
 		    player.body.collides(tileCollisionGroup);
 		    
 			layer.resizeWorld();
