@@ -4,6 +4,7 @@
     	this.bg = null;
         this.map = null;
         this.layer = null;
+        this.player = null;
     };
 
     Gameplay.prototype = {
@@ -22,13 +23,19 @@
             this.layer.resizeWorld();
             this.map.setCollisionBetween(1, 10, true, 'game_layer');
 
-            this.player = this.game.add.sprite(40, 2600, 'saci');
+            this.player = this.game.add.sprite(40, 2600, 'ninja');
+
             this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+
+            this.player.scale.set(2, 2);
+            this.player.anchor.setTo(0.5, 0.5);
             this.player.body.gravity.y = 500;
-            this.player.scale.set(0.5,0.5);
             this.player.body.collideWorldBounds = true;
 
-            this.player.animations.add('walk', [0,1], 6, true);
+            this.player.animations.add('idle', [0, 1, 2], 4, true);
+            this.player.animations.add('walk', [0, 1, 2], 8, true);//FIXME: Create a walk animation
+            this.player.animations.play('idle');
+
             this.game.camera.follow(this.player);
         },
 
@@ -37,17 +44,30 @@
             this.handleKeyDown();
         },
 
+        turnLeft: function() {
+            if (this.player.scale.x > 0) {
+                this.player.scale.x *= -1;
+            }
+        },
+
+        turnRight: function() {
+            if (this.player.scale.x < 0) {
+                this.player.scale.x *= -1;
+            }
+        },
+
         handleKeyDown: function () {
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
                 this.player.body.velocity.x = 400;
                 this.player.animations.play('walk');
+                this.turnRight();
             } else if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
                 this.player.body.velocity.x = -400;
                 this.player.animations.play('walk');
+                this.turnLeft();
             } else {
-                this.player.animations.stop();
-                this.player.frame = 0;
                 this.player.body.velocity.x = 0;
+                this.player.animations.play('idle');
             }
 
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
