@@ -28,13 +28,16 @@ State.Phase1.prototype = {
         Config.global.screen.resize(this.game); 
         this.game.physics.arcade.overlap(this.player, Phase1.Trap.trapGroup, Phase1.Trap.trapCollision, null, this);
         if(this.cursors.left.isDown){
+			this.player.animations.play('run');
             this.player.body.velocity.x = -this.player.velocity;
         }
         else if(this.cursors.right.isDown){
+			this.player.animations.play('run');
             this.player.body.velocity.x = this.player.velocity;
         }
         else this.player.body.velocity.x = 0;
         if(this.cursors.up.isDown){
+			this.player.animations.play('jump');
             this.player.body.velocity.y = -this.player.velocity;
         }
         else if(this.cursors.down.isDown){
