@@ -7,21 +7,23 @@ State.GamePlay = function (game) {
 State.GamePlay.prototype = {
 	preload: function () {
 		"use strict";
-		this.load.tilemap('stage', Config.game.mapLevel1.dir, null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('tiles', Config.game.mapLevel1.tileset);
+		this.tilemap = new Tilemap(game);
+		this.level1 = new Level1(game);
+		this.layer1 = new Layer1(game, this.tilemap);
+		this.coins = new Coins(game, this.tilemap);
+		this.player = new Player(game, this.coins, this.layer1);
 	},
 	create: function () {
 		"use strict";
-		this.game.physics.startSystem(Phaser.Game.ARCADE);
-		this.game.physics.arcade.gravity.y = Config.game.gravity;
-		
-		this.map = this.game.add.tilemap('stage');
-		this.map.addTilesetImage('world 1-1','tiles');
-	
-		this.layer = this.map.createLayer('Tile Layer 1');
-		this.layer.resizeWorld();
+		this.tilemap.create();
+		this.level1.create();
+		this.layer1.create();
+		this.coins.create();
+		this.player.create()
 	},
 	update: function () {
 		"use strict";
+		this.level1.update();
+		this.player.update();
 	}
 };

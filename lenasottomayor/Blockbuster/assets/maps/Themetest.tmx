@@ -3,9 +3,47 @@
  <tileset firstgid="1" name="Tileset-01-01" tilewidth="32" tileheight="32">
   <image source="Tileset-01-01.png" width="198" height="190"/>
  </tileset>
- <layer name="Tile Layer 1" width="150" height="18">
+ <tileset firstgid="31" name="coinscore_20-20" tilewidth="20" tileheight="20">
+  <image source="../images/coinscore_20-20.png" width="20" height="20"/>
+ </tileset>
+ <layer name="Layer1" width="150" height="18">
   <data encoding="base64" compression="zlib">
    eJztl1EPwiAMhHnRt5m9bdPE3+5P1SUSEUtXR6Gg9yWXmM3QC9woOAfA/7A8dBbqauQRAAAA6Bnfa9FHAQAc615xSQj7hxy/52L+AAB7OBA6mjoCrTJk6lTf8k/SUt/XuPeNzt0ype5pL7nfiERAhnauLBkrqCVS/aOFHoNc9ZurnHVr2VvtXG3dG3rLVe49CLl6UeLM4/d161yVPNdRvQu5eqtXbL2tc1W7tmaupGczafYVcvXh0WLuS44tzdX01BwofDZFz7h3MyFpvfg3NV7ce7m6Ke/U/8LxuHG+9chpyz9Vg5u3eM7j9dLWWucOsAubPA==
   </data>
  </layer>
+ <objectgroup name="Coins" width="150" height="18">
+  <object gid="31" x="456" y="472"/>
+  <object gid="31" x="486" y="472"/>
+  <object gid="31" x="519" y="472"/>
+  <object gid="31" x="737" y="310"/>
+  <object gid="31" x="801" y="311"/>
+  <object gid="31" x="866" y="310"/>
+  <object gid="31" x="968" y="182"/>
+  <object gid="31" x="930" y="472"/>
+  <object gid="31" x="1025" y="182"/>
+  <object gid="31" x="1090" y="181"/>
+  <object gid="31" x="1253" y="20"/>
+  <object gid="31" x="1346" y="20"/>
+  <object gid="31" x="1346" y="376"/>
+  <object gid="31" x="1396" y="376"/>
+  <object gid="31" x="1439" y="375"/>
+  <object gid="31" x="1860" y="312"/>
+  <object gid="31" x="2054" y="119"/>
+  <object gid="31" x="2117" y="408"/>
+  <object gid="31" x="2056" y="441"/>
+  <object gid="31" x="1995" y="470"/>
+  <object gid="31" x="2181" y="441"/>
+  <object gid="31" x="2241" y="469"/>
+  <object gid="31" x="2474" y="219"/>
+  <object gid="31" x="2506" y="217"/>
+  <object gid="31" x="2537" y="215"/>
+  <object gid="31" x="3042" y="317"/>
+  <object gid="31" x="3642" y="186"/>
+  <object gid="31" x="3699" y="180"/>
+  <object gid="31" x="4160" y="302"/>
+  <object gid="31" x="4265" y="310"/>
+  <object gid="31" x="4375" y="303"/>
+  <object gid="31" x="4515" y="287"/>
+  <object gid="31" x="4657" y="285"/>
+ </objectgroup>
 </map>

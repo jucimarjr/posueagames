@@ -90,8 +90,6 @@ Level.prototype = {
 
     update : function(hero) {
         this.upStair(hero, this.checkOverlap(this.escadas, hero.hero));
-        this.game.physics.arcade.overlap(this.weapons, hero.hero, this.grabsGun, null, this);
-//        this.game.physics.arcade.overlap(this.escadas, hero.hero, this.upStair, null, this);
     },
 
     checkOverlap : function(group, hero) {
@@ -102,8 +100,14 @@ Level.prototype = {
         hero.climb(bool);
     },
 
-    grabsGun : function(hero, weapon) {
-        console.log('grabsGUn');
-        weapon.kill();
-    }
+	updateEnemyAttack : function(enemy,hero){
+		var muduloHero = Math.round(Math.abs(hero.hero.body.x));
+		enemy.enemies.forEach(function(enemy){
+			var moduloEnemy =  Math.round(Math.abs(enemy.body.x));
+			
+			if(Math.abs(moduloEnemy - muduloHero) < 300){
+				
+			}
+		},this);
+	}
 }

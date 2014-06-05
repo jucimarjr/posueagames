@@ -47,8 +47,10 @@ State.GameSplash.prototype = {
 		var bHowPlay = game.cache.checkImageKey('button-how-to-play');
 		var cr = game.cache.checkImageKey('credits');
 		var h2play = game.cache.checkImageKey('how-to-play');
-		if (menu & bOpening && bPlay && bCredits && bHowPlay && cr&& h2play){
-			this.game.state.start('Menu');		
+		if (menu && bOpening && bPlay && bCredits && bHowPlay && cr && h2play){
+			setTimeout(function () {
+				this.game.state.start('Menu');}
+			, Config.gameSplash.millis);		
 		}
 		
 	}

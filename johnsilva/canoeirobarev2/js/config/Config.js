@@ -105,3 +105,7 @@ Config.credits = {
 	x: 0,
 	y: 0
 };
+
+Config.level = {
+	dir: 'assets/level/'
+};

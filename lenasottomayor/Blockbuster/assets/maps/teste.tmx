@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="48" height="15" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="Tileset-01-02" tilewidth="40" tileheight="40">
+  <image source="Tileset-01-02.png" width="200" height="200"/>
+ </tileset>
+ <tileset firstgid="26" name="coin_36-36" tilewidth="36" tileheight="36">
+  <image source="../images/coin_36-36.png" width="36" height="36"/>
+ </tileset>
+ <layer name="Layer1" width="48" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUDBUghoYHGgw294wCBKAkboZyvKK7mVg/oKsZSv7G5kdS/D2QcY3L7qGQ/vCFHT3ClXeI46EOAJxuBjk=
+  </data>
+ </layer>
+ <objectgroup name="Coins" width="48" height="15">
+  <object gid="26" x="243" y="318"/>
+  <object gid="26" x="362" y="318"/>
+  <object gid="26" x="302" y="278"/>
+  <object gid="26" x="681" y="438"/>
+  <object gid="26" x="843" y="317"/>
+  <object gid="26" x="1004" y="438"/>
+  <object gid="26" x="1322" y="120"/>
+  <object gid="26" x="1379" y="119"/>
+  <object gid="26" x="1381" y="378"/>
+  <object gid="26" x="1882" y="38"/>
+  <object gid="26" x="1803" y="39"/>
+  <object gid="26" x="1563" y="277"/>
+  <object gid="26" x="1641" y="239"/>
+  <object gid="26" x="1722" y="161"/>
+ </objectgroup>
+</map>

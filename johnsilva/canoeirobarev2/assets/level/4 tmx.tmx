@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="20" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="tile_40-40-4" tilewidth="40" tileheight="40">
+  <image source="tile_40-40-4.png" width="320" height="40"/>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20JT6AAAHgaCWAAAQ==
+  </data>
+ </layer>
+ <layer name="Cópia de Camada de Tiles 1" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJy1lUsOwzAIRLFbJbn/iaMuLKERDBPcILEK8PiZTDObG3o0VfHNmF/ri+L7IezxIvc0XnuH/bRXWe3IHkU+M7BhPouLO3ARxgg0i419WPa7+7Tiq1zlm5eqrsjWzwx9VS7LgdXrdyb6ps4six8JvhvM9R99rnJFTqfPUUzFZpdbzTeaFXJ+M7jsnfmiTaev6nyr+9S9/1lMJv4tK2y134yLzN3/nsLNmHjHuruF88U72VGWk49/A70/AmQ=
+  </data>
+ </layer>
+</map>
