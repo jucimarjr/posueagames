@@ -32,9 +32,10 @@ State.GameSplash.prototype = {
 		this.game.load.tilemap('tilemap', Config.game.dir.tilemap, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tileset', Config.game.dir.tileset);
 		this.game.load.image('jogador', Config.game.jogador.dir);
-		this.game.load.audio('bgmusic', Config.game.dir.worldAudio);
 
-		Phase1.Rock.init(this.game);		
+		Phase1.World.init(this.game);
+		Phase1.Rock.init(this.game);	
+		Phase1.Smoke.init(this.game);	
 		Phase1.Door.init(this.game);
 	},
 	create: function () {
@@ -45,11 +46,7 @@ State.GameSplash.prototype = {
 		Config.global.screen.resize(this.game);
 	},
 		/* Adicionar depois a classe Phase1.World*/
-	loadWorld : function(){
-		this.game.load.image('bgphase1', Phase1.World.bgImage);
-		this.game.load.image('bgphase1-alpha', Phase1.World.bgImageAlpha);	
-					
-		this.game.load.spritesheet('smoke', Phase1.World.smoke, 3000, 300);				
+	loadWorld : function(){		
 		this.game.load.spritesheet('spearTrap', Phase1.World.spearTrap, 10, 305);
 		//this.game.load.spritesheet('greatspeartrap', Phase1.World.greatSpearTrap);
 	}

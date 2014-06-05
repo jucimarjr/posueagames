@@ -5,17 +5,12 @@ State.Phase1 = function (game){
 };
 
 State.Phase1.prototype = {
-	door : Phase1.Door,
     preload: function () {
         "use strict";
     },
     create: function() {
-        "use strict";
-        // game defs
-		game.world.setBounds(0, 0, 3000, 2000);
-        this.game.physics.startSystem(Phaser.Game.ARCADE);
-		
-		this.background = this.game.add.tileSprite(0, 0,  3000, 2000,  'bgphase1');
+        "use strict";		
+		Phase1.World.createBg(this.game);
 			
         // traps
         this.enemyGroup = game.add.group();
@@ -26,19 +21,15 @@ State.Phase1.prototype = {
         this.createPlayer();
         this.game.camera.follow(this.player);
 		
-		this.backgroundAlpha = game.add.sprite(0, 0, 'bgphase1-alpha');
-		
-		this.smoke = game.add.sprite(0, 1700, 'smoke');
-        this.smoke.animations.add('fear', [0, 1, 2, 3], 10, true);
-        this.smoke.animations.play('fear');
-		
-	    Phase1.Rock.create(this.game);	   
+	    Phase1.Rock.create(this.game);		
+	    Phase1.Smoke.create(this.game);	   
 	    Phase1.Door.create(this.game);
+		Phase1.World.createBgAlpha(this.game);
 
         //misc defs
         this.cursors = this.game.input.keyboard.createCursorKeys();
 		
-		//this.playBgSound(); /* Comentado pq encomoda durante o desenvolvimento*/
+		//Phase1.World.createSound(this.game); /* Comentado pq encomoda durante o desenvolvimento*/
     },
 
     update: function(){
@@ -92,10 +83,5 @@ State.Phase1.prototype = {
             //TODO: animacao morte pela lanca
             console.log("e morreu: armadilha lanca");
         }
-    },
-	/* Adicionar depois a classe Phase1.World*/
-	playBgSound : function(){
-		this.bgmusic = this.game.add.audio('bgmusic');
-        this.bgmusic.play('', 0, 1, true);	
-	}
+    }
 };
