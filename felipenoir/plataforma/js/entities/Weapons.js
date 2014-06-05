@@ -33,26 +33,30 @@ function Weapon(game, weapon) {
 Weapon.prototype = {
     preload : function() {
         this.game.load.image('bullet', this.weapon.bulletImg);
+        /*this.game.load.image('bullet2', Weapon2.bulletImg);
+        this.game.load.image('bullet3', Weapon3.bulletImg);*/
     },
 
     create : function() {
-        var bullet, i;
-        this.bulletGroup = this.game.add.group();
-        for(i = 0; i < this.weapon.numberOfBullets; i++) {
-            bullet = this.game.add.sprite(0,0,'bullet');
-            this.bulletGroup.add(bullet);
-            bullet.anchor.setTo(.5,.5);
-            this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
-            bullet.kill();
+        var bullet, i, path;
+        if(this.weapon !== Weapon1) {
+            this.bulletGroup = this.game.add.group();
+            for (i = 0; i < this.weapon.numberOfBullets; i++) {
+                bullet = this.game.add.sprite(0,0,'bullet');
+                this.bulletGroup.add(bullet);
+                bullet.anchor.setTo(.5,.5);
+                this.game.physics.enable(bullet, Phaser.Physics.ARCADE);
+                bullet.kill();
+            }
+            this.game.time.advancedTiming = true;
         }
-        this.game.time.advancedTiming = true;
     },
 
     update : function(hero) {
         var bullet;
-        if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
-            if(this.lastBulletShotAt === undefined) this.lastBulletShotAt = 0;
-            if(this.game.time.now - this.lastBulletShotAt < this.weapon.shotDelay) return;
+        if (this.game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
+            if (this.lastBulletShotAt === undefined) this.lastBulletShotAt = 0;
+            if (this.game.time.now - this.lastBulletShotAt < this.weapon.shotDelay) return;
             this.lastBulletShotAt = this.game.time.now;
 
             bullet = this.bulletGroup.getFirstDead();
@@ -70,5 +74,18 @@ Weapon.prototype = {
             bullet.body.velocity.y = 0;
             bullet.body.allowGravity = false;
         }
+    },
+
+    change : function(weapon) {
+        console.log(weapon);
+        console.log(this.weapon);
+        console.log(this.bulletGroup);
+        /*if (weapon !=== this.weapon)
+            this.weapon = weapon;
+        var i, bullet;
+        for (i = 0; i < weapon.numberOfBullets; i++) {
+            bullet = this.bulletGroup.getIndex(i);
+            bullet.loadTexture();
+        }*/
     }
 }

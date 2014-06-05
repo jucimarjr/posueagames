@@ -2,7 +2,7 @@ State.Play = function() {
     this.level = new Level(game, Level1),
     this.panel = new Panel(game),
     this.hero = new Hero(game),
-    this.weapon = new Weapon(game, Weapon3);
+    this.weapon = new Weapon(game, Weapon2);
     this.pause  = new Pause(game);
     this.enemy = new Enemy(game);
 }
@@ -47,6 +47,7 @@ State.Play.prototype = {
     update:function(){
         game.physics.arcade.collide(this.level.layer, this.hero.hero);
 		game.physics.arcade.collide(this.level.layer,this.enemy.enemies);
+		//game.physics.arcade.overlap(this.level.weapons, this.hero.hero, this.grabsGun, null, this);
 		
         this.level.update(this.hero);
         this.hero.update();
@@ -56,4 +57,13 @@ State.Play.prototype = {
 		this.level.updateEnemyAttack(this.enemy,this.hero);
     },
 
+    grabsGun : function(hero, weapon) {
+        if(weapon.key == 'weapon1')
+            this.weapon.change(Weapon1);
+        else if(weapon.key == 'weapon2')
+            this.weapon.change(Weapon2);
+        else if(weapon.key == 'weapon3')
+            this.weapon.change(Weapon3);
+        weapon.kill();
+    },
 }
