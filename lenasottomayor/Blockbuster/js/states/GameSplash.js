@@ -36,15 +36,19 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('button-how-to-play', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
 
 		//TileMap
-		this.load.tilemap('tilemap', Config.tilemap.dir, null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('tiles', Config.tiles.dir);
+		this.load.tilemap('fase01', Config.tilemap.fase01.dir, null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.image('tiles', Config.tilemap.tiles.tileset.dir);
 		
-		this.game.load.image('coin', Config.coins.dir);
+		this.game.load.image('coin', Config.tilemap.tiles.coins.dir);
+		
+		this.game.load.image('powerlife', Config.tilemap.tiles.powerlifes.dir);
+		
+		this.game.load.image('powerstar', Config.tilemap.tiles.powerstars.dir);
 		
 		//Player
 		this.game.load.spritesheet('oscar', Config.player.dir, Config.player.width, Config.player.height);
 		
 		//Background
-		this.game.load.image('game-background', 'assets/images/background_960-576.png');
+		this.game.load.image('game-background', Config.background.game.dir);
 	}
 };

@@ -104,36 +104,57 @@ Config.game = {
 	}
 };
 
-//TileMap
-Config.tilemap = {
-	dir: 'assets/maps/teste.json'
+Config.background = {
+	game: {
+		dir: 'assets/images/background_960-600.png'
+	}
 };
 
-//Tiles
-Config.tiles = {
-	dir: 'assets/maps/Tileset-01-02.png'
+//TileMap
+Config.tilemap = {
+	fase01: {
+		dir: 'assets/maps/Fase01/map01.json'
+	},
+	tiles: {
+		tileset: {
+			dir: 'assets/images/tileset_360-280.png',
+			name: 'tileset_360-280',
+			platform: 'Platform',
+			thorn: 'Thorn',
+			height: 360,
+			width: 280
+		},
+		powerlifes: {
+			dir: 'assets/images/powerlife_42-42.png',
+			name: 'PowerLife',
+			gid: 64,
+			frame: 0
+		},
+		powerstars: {
+			dir: 'assets/images/powerstar_42-42.png',
+			name: 'PowerStar',
+			gid: 65,
+			frame: 0
+		},
+		coins: {
+			dir: 'assets/images/coin_36-36.png',
+			name: 'Coins',
+			gid: 66,
+			frame: 0
+		}
+	}
 };
 
 //Level
 Config.level1 = {
-//	dir: 'assets/images/GameBackground.png',
 	x: 0,
 	y: 0,
 	worldBounds: {
 		xi: 0,
 		yi: 0,
-		xf: 1920,
+		xf: 12000,
 		yf: 600
 	}
-};
-
-//Layer
-Config.layer = {
-	dir: 'assets/maps/Tileset-01-01.png',
-	name: 'Layer1',
-	tileset: 'Tileset-01-01',
-	height: 190,
-	width: 198
 };
 
 //Player
@@ -144,22 +165,14 @@ Config.player = {
 	speed: 250,
 	height: 95,
 	width: 55,
-	archor: {
+	anchor: {
 		x: 0.5,
 		y: 0.5
 	},
 	position: {
-		x: 100,
-		y: 400
+		x: 50,
+		y: 450
 	}
-};
-
-//Coins
-Config.coins = {
-	dir: 'assets/images/coin_36-36.png',
-	name: 'Coins',
-	gid: 26,
-	frame: 0
 };
 
 //HowToPlay

@@ -13,27 +13,32 @@ Hero = function(game, type) {
 		this.jump = 500;
 		this.walk = 200;
 		this.life = 1;
+		this.maxJump = 2;
 
 		break;
 
 	case HERO_TYPE_3:
 		this.key = 'hero3';
 		this.asset = 'assets/dinossauro_40-32-6.png';
-		this.jump = 200;
-		this.walk = 50;
+		this.jump = 400;
+		this.walk = 100;
 		this.life = 2;
+		this.maxJump = 2;
 
 		break;
 
 	default:
 		this.key = 'hero1';
 		this.asset = 'assets/dinossauro_40-32-6.png';
-		this.jump = 300;
-		this.walk = 100;
+		this.jump = 450;
+		this.walk = 150;
 		this.life = 1;
+		this.maxJump = 3;
 
 		break;
 	}
+
+	this.jumpCount = 0;
 };
 
 Hero.prototype = {
@@ -52,7 +57,7 @@ Hero.prototype = {
 	create : function() {
 		"use strict";
 
-		this.hero = this.game.add.sprite(10, 500, this.key, 3);
+		this.hero = this.game.add.sprite(60, 500, this.key, 3);
 		this.hero.animations.add('walk', [ 1, 2 ], 6, true);
 		this.hero.animations.add('jump', [ 3, 4, 5 ], 4, true);
 		// permite que a sprite tenha um corpo fisico
@@ -70,6 +75,9 @@ Hero.prototype = {
 		this.hero.body.gravity.y = 150;
 
 		this.hero.health = this.life;
+
+		this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+		this.jumpKey.onDown.add(this.jumpCheck, this);
 	},
 	update : function(layer) {
 		"use strict";
@@ -93,17 +101,27 @@ Hero.prototype = {
 			keyPressed = true;
 		}
 
-		// vai para cima
-		if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-			this.hero.body.velocity.y = -this.jump;
+		// executar a animação para para cima
+		if (this.jumpCount > 0) {
 			this.hero.animations.play('jump');
-
+			
+			// resetando o contador de pulo quando votlar ao chão
+			if (this.hero.body.onFloor()) {
+				this.jumpCount = 0;
+			}
+			
 			keyPressed = true;
 		}
 
 		if (!keyPressed) {
 			this.hero.animations.stop();
 			this.hero.frame = 0;
+		}
+	},
+	jumpCheck : function() {
+		if (this.jumpCount < this.maxJump) {
+			this.hero.body.velocity.y = -this.jump;
+			this.jumpCount++;
 		}
 	}
 };

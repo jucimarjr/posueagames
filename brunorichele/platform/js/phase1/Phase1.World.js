@@ -1,25 +1,38 @@
 var Phase1 = {};
 Phase1.World = {
 	bgImage : "assets/phase1/images/bg1_3000-2000.jpg",
+	//bgImage : "assets/phase1/images/cenariogameguia.jpg",
 	bgImageAlpha : "assets/phase1/images/bg2_3000-2000.png",
-	bgAudio : "assets/phase1/audio/In_my_own_place.mp3",
-	itemRock9075 : "assets/phase1/images/rock_90-75.png",
-	itemRock92230 : "assets/phase1/images/rock_92-230.png",
-	itemRock10035 : "assets/phase1/images/rock_100-35.png",
-	itemRock12575 : "assets/phase1/images/rock_125-75.png",
-	itemRock22085 : "assets/phase1/images/rock_220-85.png",	
-	itemRock37085 : "assets/phase1/images/rock_370-85.png",	
-	itemRock371108 : "assets/phase1/images/rock_371-108.png",	
-	itemRock412190 : "assets/phase1/images/rock_412-190.png",	
-	itemRock500100 : "assets/phase1/images/rock_500-100.png",	
-	itemRock515130 : "assets/phase1/images/rock_515-130.png",	
-	itemRock540190 : "assets/phase1/images/rock_540-190.png",	
-	itemRock550165 : "assets/phase1/images/rock_550-165.png",	
-	itemRock655230 : "assets/phase1/images/rock_655-230.png",	
-	itemRock825100 : "assets/phase1/images/rock_825-100.png",	
-	itemRock925220 : "assets/phase1/images/rock_925-220.png",												
+	bgAudio : "assets/phase1/audio/In_my_own_place.mp3",	 											
 	weith : 3000,
 	height : 2000,
+	x : 0,
+	y : 0,
 	background : null,
-	bgmusic : null	
+	backgroundAlpha : null,
+	bgmusic : null,	
+	init : function(){
+		this.game.load.image('bgphase1', this.bgImage);
+		this.game.load.image('bgphase1-alpha', this.bgImageAlpha);
+		this.game.load.audio('bgmusic', this.bgAudio);
+	},
+	createBg : function(){
+		this.game.world.setBounds(0, 0, this.weith, this.height);
+		this.game.physics.startSystem(Phaser.Physics.NINJA);
+		
+		this.background = this.game.add.tileSprite(this.x, this.y, this.weith, this.height, 'bgphase1');
+		
+		return this.background;	
+	},	
+	createBgAlpha : function(){
+		this.backgroundAlpha = this.game.add.sprite(this.x, this.y, 'bgphase1-alpha');
+		
+		return this.backgroundAlpha;	
+	},	
+	createSound : function(){
+		this.bgmusic = this.game.add.audio('bgmusic');
+        this.bgmusic.play('', 0, 1, true);	
+		
+		return this.bgmusic;
+	}			
 };

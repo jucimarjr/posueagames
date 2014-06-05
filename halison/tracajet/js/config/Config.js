@@ -125,5 +125,8 @@ Config.game = {
 		floor: {
 			dir: 'assets/images/chao.jpg',
 		},
+		jacare:{
+			
+		}
 
 };
