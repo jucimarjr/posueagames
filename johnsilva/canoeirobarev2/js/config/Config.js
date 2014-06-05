@@ -148,7 +148,7 @@ Config.level = {
 	getLevel: function(level){
 		//x,y,branches-exists,bush-id,waters-id,bees-id,tubes-id,thorns-id 
 		if(level == 1)
-			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 9);
+			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 18);
 		else if(level == 3)
 			Config.update.updateLevel(75, 650, true, 13, 12, 9, 11, 0);
 		return Config.levelConfig;

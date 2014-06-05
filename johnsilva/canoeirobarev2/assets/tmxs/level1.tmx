@@ -12,27 +12,6 @@
  <objectgroup name="flag" width="24" height="15">
   <object gid="19" x="879" y="440"/>
  </objectgroup>
- <objectgroup name="thorns" width="24" height="15">
-  <object gid="18" x="878" y="280"/>
-  <object gid="18" x="601" y="361"/>
-  <object gid="18" x="319" y="398"/>
-  <object gid="18" x="162" y="401"/>
-  <object gid="18" x="-1" y="522"/>
-  <object gid="18" x="39" y="561"/>
-  <object gid="18" x="281" y="560"/>
-  <object gid="18" x="520" y="559"/>
-  <object gid="18" x="761" y="561"/>
-  <object gid="18" x="43" y="280">
-   <properties>
-    <property name="rotation" value="90"/>
-   </properties>
-  </object>
-  <object gid="18" x="39" y="407">
-   <properties>
-    <property name="rotation" value="90"/>
-   </properties>
-  </object>
- </objectgroup>
  <objectgroup name="bushes" width="24" height="15">
   <object gid="13" x="880" y="280"/>
   <object gid="13" x="640" y="360"/>
@@ -47,7 +26,16 @@
  </objectgroup>
  <layer name="Camada de Tiles 1" width="24" height="15">
   <data encoding="base64" compression="zlib">
-   eJzFk90KgCAMRmfM7O9ivf/LZjDBymnDRoNzIx8H2Q8CwGQERkawK9/hp8jOtPwpS0IeMxxTenOCHyv5E03Pl4L/bV5bPf3/079GAny3n9K87n4S8pIzMK35pppBtyut+Vv1nxgr/wDXG9wqf0ho3j08bzZ8SO49AC/DBOo=
+   eJzFk90KgCAMRmfM7O9ivf/LZjDBymVDR4ODMD4OsikCwGQERkawK9/gp8jO1PwpS0IeMxxT6jnBjy/5E83Ml4L/a15bLfP/079GAvR7n9K+7n4S8pIzMLX9pppB91Zq+7eaPzFW/gGuf3AT7pCfmr6H558NHcm9BwODBJo=
   </data>
  </layer>
+ <objectgroup name="thorns" width="24" height="15">
+  <object gid="18" x="878" y="280"/>
+  <object gid="18" x="610" y="369"/>
+  <object gid="18" x="318" y="405"/>
+  <object gid="18" x="161" y="404"/>
+  <object gid="18" x="-1" y="522"/>
+  <object gid="18" x="21" y="560"/>
+  <object gid="18" x="787" y="561"/>
+ </objectgroup>
 </map>

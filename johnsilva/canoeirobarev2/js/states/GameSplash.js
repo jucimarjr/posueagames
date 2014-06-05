@@ -40,7 +40,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('bg3', 'assets/level/bg1_462-800.jpg');
 		this.game.load.image('branches', 'assets/level/branches_360-283.png');
 		this.game.load.image('tileset', 'assets/tile_40-40-17.png');		
-		this.game.load.image('thorn', 'assets/enemies/thorn_20-25.jpg');
+		this.game.load.image('thorn', 'assets/enemies/thorns_80-40.png');
 		this.game.load.image('tube', 'assets/enemies/tube_40-29.png');
 		this.game.load.image('acidicWater', 'assets/enemies/acidicWater_14-17.png');
 	},

@@ -236,6 +236,7 @@ State.GamePlay.prototype = {
 		this.thorns.physicsBodyType = Phaser.Physics.ARCADE;
 		this.map.createFromObjects('thorns',id,'thorn', 0,true,false,this.thorns);
 		this.thorns.forEach(function (thorn){ 
+			thorn.body.setSize(75, 30, 0, 10);
 			thorn.body.allowGravity = false;
 			thorn.body.immovable = true;
 		}, this);
@@ -285,5 +286,10 @@ State.GamePlay.prototype = {
 
     render: function (){
     	//game.debug.body(this.player);
+    	//game.debug.body(this.thorns);
+
+		/*this.thorns.forEach(function (thorn){ 
+			game.debug.body(thorn);
+		}, this);*/
     },
 };
