@@ -12,10 +12,7 @@ State.Phase1.prototype = {
         "use strict";		
 		Phase1.World.createBg(this.game);
 		Phase1.Trap.create(this.game);
-        // player defs
-        this.createPlayer();
-        this.game.camera.follow(this.player);
-		
+        this.player = Phase1.Player.create(this.game);		
 	    Phase1.Rock.create(this.game);		
 	    Phase1.Smoke.create(this.game);	   
 	    Phase1.Door.create(this.game);
@@ -26,7 +23,6 @@ State.Phase1.prototype = {
 		
 		//Phase1.World.createSound(this.game); /* Comentado pq encomoda durante o desenvolvimento*/
     },
-
     update: function(){
         "use strict";
         Config.global.screen.resize(this.game); 
@@ -46,12 +42,5 @@ State.Phase1.prototype = {
         }
         else this.player.body.velocity.y = 0;
 
-    },
-    createPlayer : function (){
-        "use strict";
-        this.player = this.game.add.sprite(0, 300, 'jogador');
-        this.game.physics.enable(this.player);
-        this.player.body.collideWorldBounds = true;
-        this.player.velocity = 300;
     }
 };

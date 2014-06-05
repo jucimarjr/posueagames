@@ -37,6 +37,7 @@ State.GameSplash.prototype = {
 		Phase1.Smoke.init(this.game);	
 		Phase1.Door.init(this.game);
 		Phase1.Trap.init(this.game);
+		Phase1.Player.init(this.game);
 	},
 	create: function () {
 		"use strict";
