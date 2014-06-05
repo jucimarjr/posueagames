@@ -157,7 +157,7 @@ State.GamePlay.prototype = {
 
 		this.map = game.add.tilemap('level'+level);
 		this.map.addTilesetImage('tileset','tileset');
-		this.map.setCollisionBetween(0,5, true,'Camada de Tiles 1');
+		this.map.setCollisionBetween(0, 25, true, 'Camada de Tiles 1');
 		//this.map.setCollisionBetween(0,3);
 
 		this.waters = game.add.group();
@@ -191,7 +191,7 @@ State.GamePlay.prototype = {
 		this.tubes = game.add.group();
 		this.tubes.enableBody = true;
 		this.tubes.physicsBodyType = Phaser.Physics.ARCADE;
-		this.map.createFromObjects('tubes',6,'tube', 0,true,false,this.tubes);
+		this.map.createFromObjects('tubes',5,'tube', 0,true,false,this.tubes);
 		this.tubes.forEach(function (tube){ 
 			tube.body.allowGravity = false;
 			tube.body.immovable = true;

@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="30" height="20" tilewidth="40" tileheight="40">
- <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
-  <image source="../tileset.png" width="120" height="40"/>
- </tileset>
- <tileset firstgid="4" name="bee" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="bee" tilewidth="40" tileheight="40">
   <image source="../enemies/bee.png" width="80" height="40"/>
  </tileset>
- <tileset firstgid="6" name="tube" tilewidth="40" tileheight="29">
-  <image source="../enemies/tube_40-29.png" width="40" height="29"/>
- </tileset>
- <tileset firstgid="7" name="water" tilewidth="14" tileheight="17">
+ <tileset firstgid="3" name="water" tilewidth="14" tileheight="17">
   <image source="../enemies/acidicWater_14-17.png" width="14" height="17"/>
+ </tileset>
+ <tileset firstgid="4" name="tileset" tilewidth="40" tileheight="40">
+  <image source="../tilesetNew.png" width="200" height="200"/>
+ </tileset>
+ <tileset firstgid="29" name="tube" tilewidth="40" tileheight="40">
+  <image source="../enemies/globeTeto40-40.png" width="40" height="40"/>
  </tileset>
  <layer name="Camada de Tiles 1" width="30" height="20">
   <data encoding="base64" compression="zlib">
-   eJzVleEOQBEIhaP3f+f7R7ut5Yi4ds/WWJpPBCaicsG4tdT6pMZOSfNvcEWay05sBeuRcW0oNuIvYAz5e/uGzj2yhijXm6OoPpo3y/VyKSZuxEf704vz/F7MqXr2ctc+qce6mdnjfyV7T5Ey7+JfuLP3Pspe4a7I1qjlSh2P7mZWmlvp/Rejb8OK7LysuNLuzt/LR7jyj7FpM/WMjAF7dAaz9gA3dwFI
+   eJy9lckOgzAMRH1oD0CVLpSC1Pz/dzaRYska7GwtHWkuDvglJjYrET2DL3/0I3gNnqhdg3CrxsS/drz7jSL3pMRd8GzENiMXr0trzw6Je4a4T3HMyboHv2B9Cb6JvFz71WCPyh5nkYNof+7JWMO9Mldjj2JNmqXdGcn1kAvrIHNu8GwrN9a5VKOoxchZwz1CLu3R4sb9vmlfu5KWzDvyfmqzqiQv3KuWWaX1aI21XkJubu5Z96Fk7Wwcs3hOifWw8cylOmvzoEfIRi5+Q+zLX4m5nvK9hfNSqvWfGDly/ljMHL/US7ieO1uNe/qp9mxH+gOt2RVI
   </data>
  </layer>
  <objectgroup name="Camada de Objetos 1" width="30" height="20">
-  <object gid="4" x="562" y="280"/>
-  <object gid="4" x="640" y="279"/>
-  <object gid="4" x="867" y="441"/>
-  <object gid="4" x="360" y="640"/>
-  <object gid="4" x="439" y="681"/>
-  <object gid="4" x="520" y="720"/>
-  <object gid="4" x="768" y="440"/>
+  <object gid="1" x="562" y="280"/>
+  <object gid="1" x="640" y="279"/>
+  <object gid="1" x="867" y="441"/>
+  <object gid="1" x="360" y="640"/>
+  <object gid="1" x="439" y="681"/>
+  <object gid="1" x="520" y="720"/>
+  <object gid="1" x="768" y="440"/>
  </objectgroup>
  <objectgroup name="tubes" width="30" height="20">
-  <object gid="6" x="120" y="429"/>
-  <object gid="6" x="681" y="565"/>
-  <object gid="6" x="719" y="566"/>
-  <object gid="6" x="760" y="566"/>
-  <object gid="6" x="1080" y="607"/>
+  <object gid="29" x="1080" y="640"/>
+  <object gid="29" x="681" y="601"/>
+  <object gid="29" x="721" y="601"/>
+  <object gid="29" x="761" y="601"/>
+  <object gid="29" x="121" y="481"/>
  </objectgroup>
  <objectgroup name="waters" width="30" height="20">
-  <object gid="7" x="133" y="429"/>
-  <object gid="7" x="695" y="564"/>
-  <object gid="7" x="733" y="554"/>
-  <object gid="7" x="775" y="543"/>
-  <object gid="7" x="1095" y="606"/>
+  <object gid="3" x="133" y="429"/>
+  <object gid="3" x="695" y="564"/>
+  <object gid="3" x="733" y="554"/>
+  <object gid="3" x="775" y="543"/>
+  <object gid="3" x="1095" y="606"/>
  </objectgroup>
 </map>
