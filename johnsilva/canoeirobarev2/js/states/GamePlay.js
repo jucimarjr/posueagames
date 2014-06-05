@@ -82,8 +82,8 @@ State.GamePlay.prototype = {
 
 		game.physics.arcade.collide(this.layer, this.player);
 
-		if(levelConfig.bees.exists) game.physics.arcade.overlap(this.player, this.bees, this.die, null,this);
-		if(levelConfig.thorns.exists) game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
+		if(levelConfig.bees.id>0) game.physics.arcade.overlap(this.player, this.bees, this.die, null,this);
+		if(levelConfig.thorns.id>0) game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
 		
 		this.player.body.velocity.x = 0;
 		//this.branches.tilePosition.x = this.player.body.x;
@@ -163,19 +163,34 @@ State.GamePlay.prototype = {
 
 		this.map = game.add.tilemap('level'+level);
 		this.map.addTilesetImage('tileset','tileset');
-		this.map.setCollisionBetween(1,8, true,'Camada de Tiles 1');
+		this.map.setCollisionBetween(1,12, true,'Camada de Tiles 1');
+
+		if(levelConfig.branches.exists) this.map.addTilesetImage('branches','branches');
+		if(levelConfig.waters.id>0) this.addWaters(levelConfig.waters.id);
+		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);
+		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
+		if(levelConfig.thorns.id>0) this.addThorns(levelConfig.thorns.id);
+
+		this.player.bringToTop();
+
+		if(levelConfig.bushes.id>0) this.addBushes(levelConfig.bushes.id);
 
 		this.layer = this.map.createLayer('Camada de Tiles 1');
 		this.layer.resizeWorld();
 		this.game.physics.enable(this.layer);
+	},
 
-		if(levelConfig.branches.exists) this.map.addTilesetImage('branches','branches');
-		if(levelConfig.waters.exists) this.addWaters(levelConfig.waters.id);
-		if(levelConfig.bees.exists) this.addBees(levelConfig.bees.id);
-		if(levelConfig.tubes.exists) this.addTubes(levelConfig.tubes.id);
-		if(levelConfig.thorns.exists) this.addThorns(levelConfig.thorns.id);
-
-		this.player.bringToTop();
+	addBushes: function(id){
+		this.bushes = game.add.group();
+		this.bushes.enableBody = true;
+		this.bushes.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('bushes',id,'bush', 0,true,false,this.bushes);
+		this.bushes.callAll('animations.add', 'animations', 'spin', [0, 1, 2], 3, true);
+    	this.bushes.callAll('animations.play', 'animations', 'spin');
+		this.bushes.forEach(function (bush){ 
+			bush.body.allowGravity = false;
+			bush.body.immovable = true;
+		}, this);
 	},
 
 	addWaters: function(id){

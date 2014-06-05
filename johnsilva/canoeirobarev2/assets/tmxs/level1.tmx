@@ -6,12 +6,12 @@
  <tileset firstgid="18" name="thorns" tilewidth="80" tileheight="40">
   <image source="../enemies/thorns_80-40.png" width="80" height="40"/>
  </tileset>
- <tileset firstgid="19" name="thorns3_20-80" tilewidth="20" tileheight="80">
-  <image source="../enemies/thorns3_20-80.png" width="20" height="80"/>
+ <tileset firstgid="19" name="flag" tilewidth="40" tileheight="40">
+  <image source="../level/coins_40-40-8.png" width="320" height="40"/>
  </tileset>
- <tileset firstgid="20" name="flag" tilewidth="30" tileheight="34">
-  <image source="../level/flag_30-34-3.png" width="90" height="34"/>
- </tileset>
+ <objectgroup name="flag" width="24" height="15">
+  <object gid="19" x="879" y="440"/>
+ </objectgroup>
  <objectgroup name="thorns" width="24" height="15">
   <object gid="18" x="878" y="280"/>
   <object gid="18" x="601" y="361"/>
@@ -22,13 +22,32 @@
   <object gid="18" x="281" y="560"/>
   <object gid="18" x="520" y="559"/>
   <object gid="18" x="761" y="561"/>
+  <object gid="18" x="43" y="280">
+   <properties>
+    <property name="rotation" value="90"/>
+   </properties>
+  </object>
+  <object gid="18" x="39" y="407">
+   <properties>
+    <property name="rotation" value="90"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="bushes" width="24" height="15">
+  <object gid="13" x="880" y="280"/>
+  <object gid="13" x="640" y="360"/>
+  <object gid="13" x="360" y="400"/>
+  <object gid="13" x="360" y="120"/>
+  <object gid="13" x="400" y="120"/>
+  <object gid="13" x="440" y="120"/>
+  <object gid="13" x="160" y="400"/>
+  <object gid="13" x="80" y="560"/>
+  <object gid="13" x="40" y="520"/>
+  <object gid="13" x="600" y="360"/>
  </objectgroup>
  <layer name="Camada de Tiles 1" width="24" height="15">
   <data encoding="base64" compression="zlib">
-   eJy1lAkKwCAMBNcSa0+w//9sFQykHlVBFwYhhCXkkABskyDHinnSjf63gGUFNX+f84g3FglUIBdTBX/6yff09PzI+Lfm96q1/73iWc3yPx0GY/bT11maV+xvC/lyL1kq1GhQny9rR9+u1OY/q/98d/K+RmrB9wYvpD22yP8BLXGN9GbNQKTvC59uBW0=
+   eJzFk90KgCAMRmfM7O9ivf/LZjDBymnDRoNzIx8H2Q8CwGQERkawK9/hp8jOtPwpS0IeMxxTenOCHyv5E03Pl4L/bV5bPf3/079GAny3n9K87n4S8pIzMK35pppBtyut+Vv1nxgr/wDXG9wqf0ho3j08bzZ8SO49AC/DBOo=
   </data>
  </layer>
- <objectgroup name="flag" width="24" height="15">
-  <object gid="20" x="883" y="454"/>
- </objectgroup>
 </map>
