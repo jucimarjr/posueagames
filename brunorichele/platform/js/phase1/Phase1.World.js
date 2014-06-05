@@ -11,26 +11,26 @@ Phase1.World = {
 	background : null,
 	backgroundAlpha : null,
 	bgmusic : null,	
-	init : function(game){
-		game.load.image('bgphase1', this.bgImage);
-		game.load.image('bgphase1-alpha', this.bgImageAlpha);
-		game.load.audio('bgmusic', this.bgAudio);
+	init : function(){
+		this.game.load.image('bgphase1', this.bgImage);
+		this.game.load.image('bgphase1-alpha', this.bgImageAlpha);
+		this.game.load.audio('bgmusic', this.bgAudio);
 	},
-	createBg : function(game){
-		game.world.setBounds(0, 0, this.weith, this.height);
-        game.physics.startSystem(Phaser.Game.ARCADE);
+	createBg : function(){
+		this.game.world.setBounds(0, 0, this.weith, this.height);
+		this.game.physics.startSystem(Phaser.Physics.NINJA);
 		
-		this.background = game.add.tileSprite(this.x, this.y, this.weith, this.height, 'bgphase1');
+		this.background = this.game.add.tileSprite(this.x, this.y, this.weith, this.height, 'bgphase1');
 		
 		return this.background;	
 	},	
-	createBgAlpha : function(game){
-		this.backgroundAlpha = game.add.sprite(this.x, this.y, 'bgphase1-alpha');
+	createBgAlpha : function(){
+		this.backgroundAlpha = this.game.add.sprite(this.x, this.y, 'bgphase1-alpha');
 		
 		return this.backgroundAlpha;	
 	},	
-	createSound : function(game){
-		this.bgmusic = game.add.audio('bgmusic');
+	createSound : function(){
+		this.bgmusic = this.game.add.audio('bgmusic');
         this.bgmusic.play('', 0, 1, true);	
 		
 		return this.bgmusic;
