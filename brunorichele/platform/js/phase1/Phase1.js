@@ -2,9 +2,10 @@
 State.Phase1 = function (game){
     "use strict";
     this.game = game;
-}
+};
 
 State.Phase1.prototype = {
+	door : Phase1.Door,
     preload: function () {
         "use strict";
     },
@@ -13,42 +14,9 @@ State.Phase1.prototype = {
         // game defs
 		game.world.setBounds(0, 0, 3000, 2000);
         this.game.physics.startSystem(Phaser.Game.ARCADE);
-
-     /*   // map defs
-        var map = this.game.add.tilemap('tilemap');
-        // ordem correta: nome do tileset no Tiled, nome do asset no Phaser
-        // nesse caso o nome do tileset é texturebreakout, e o nome do assed é tileset
-        map.addTilesetImage('texturebreakout', 'tileset');
-        this.layer = map.createLayer('Camada de Tiles 1');
-        this.layer.resizeWorld();
-        map.setCollisionByExclusion([9], true, 'Camada de Tiles 1');*/
 		
 		this.background = this.game.add.tileSprite(0, 0,  3000, 2000,  'bgphase1');
 			
-		game.add.sprite(1764, 1772, 'itemRock9075');
-		game.add.sprite(0, 1620, 'itemRock92230');
-		game.add.sprite(212, 406, 'itemRock10035');
-		game.add.sprite(348, 504, 'itemRock10035');
-		game.add.sprite(245, 852, 'itemRock10035');
-		game.add.sprite(2510, 1413, 'itemRock10035');
-		game.add.sprite(2638, 1505, 'itemRock10035');
-		game.add.sprite(2792, 1582, 'itemRock10035');
-		game.add.sprite(1336, 1772, 'itemRock12575');
-		game.add.sprite(1538, 1772, 'itemRock12575');
-		game.add.sprite(0, 240, 'itemRock22085');
-		game.add.sprite(1383, 1275, 'itemRock37085');
-		game.add.sprite(2634, 1737, 'itemRock371108');
-		game.add.sprite(99, 1659, 'itemRock412190');
-		game.add.sprite(1996, 1256, 'itemRock500100');
-		game.add.sprite(1986, 1716, 'itemRock515130');
-		game.add.sprite(738, 1170, 'itemRock540190');
-		game.add.sprite(681, 1686, 'itemRock550165');
-		game.add.sprite(0, 1021, 'itemRock655230');
-		this.foorTheDoors = game.add.sprite(3000, 354, 'itemRock655230');
-		this.foorTheDoors.scale.x *= -1;
-		game.add.sprite(1552, 704, 'itemRock825100');
-		game.add.sprite(478, 587, 'itemRock925220');
-
         // traps
         this.enemyGroup = game.add.group();
         this.createSpear(1500, 0);
@@ -64,9 +32,8 @@ State.Phase1.prototype = {
         this.smoke.animations.add('fear', [0, 1, 2, 3], 10, true);
         this.smoke.animations.play('fear');
 		
-		this.door = game.add.sprite(2770, 140, 'door');
-        this.door.animations.add('blink', [0, 1, 2, 3,4,5], 10, true);
-        this.door.animations.play('blink');
+	    Phase1.Rock.create(this.game);	   
+	    Phase1.Door.create(this.game);
 
         //misc defs
         this.cursors = this.game.input.keyboard.createCursorKeys();
