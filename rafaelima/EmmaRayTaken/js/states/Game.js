@@ -14,6 +14,7 @@ var bg2;
 var bg3;
 var bg4;
 var bg5;
+var bar;
 var previousX;
 var previousY;
 var collects;
@@ -101,6 +102,10 @@ State.Game.prototype = {
 		    collect.body.kinematic = true;
 		    collect.body.setCollisionGroup(collectCollisionGroup);
 		    collect.body.collides([collectCollisionGroup ,playerCollisionGroup]);
+
+		    //bar
+		    bar = game.add.sprite(Config.game.bar.startX, Config.game.bar.startY, 'bar');
+		    game.add.tween(bar).to({ x: Config.game.bar.widthArea }, Config.game.bar.startX, Phaser.Easing.Linear.None, true, 0, 1000, true)
 		    
 		    //player
 		    player = this.game.add.sprite(60, 3300, 'dude');
@@ -108,6 +113,7 @@ State.Game.prototype = {
 		    player.animations.add('turn', [4], 20, true);
 		    player.animations.add('right', [5, 6, 7, 8], 10, true);
 		    player.name = 'player';
+
 		    this.game.physics.p2.enable(player, true);
 		    player.body.fixedRotation = true;
 		    this.game.camera.follow(player);
@@ -199,7 +205,6 @@ State.Game.prototype = {
 		render: function () {
 			//DEBUG
 		    this.game.debug.spriteInfo(player, 32, 32);
-			this.game.debug.text(result, 120, 100);
 		}
 
 };

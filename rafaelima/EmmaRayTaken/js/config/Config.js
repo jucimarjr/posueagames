@@ -56,7 +56,6 @@ Config.game = {
 	dirBg3: 'assets/images/BgForest03_3000-540.png',
 	dirBg4: 'assets/images/BgCave01_3955-540.png',
 	dirBg5: 'assets/images/Glow_3905-540.png',
-	
 	x: 0,
 	y: 0,
 	tilemap:{
@@ -69,6 +68,12 @@ Config.game = {
 	},
 	player:{
 		dir: 'assets/spritesheets/dude.png'
+	},
+	bar:{
+		dir: 'assets/images/bar.png',
+		startX:4360,
+		startY: 3470,
+		widthArea: 3650,
 	}
 };
 
