@@ -48,6 +48,7 @@
 
         update: function() {
             this.game.physics.arcade.collide(this.player, this.layer);
+            this.game.physics.arcade.overlap(this.shurikens, this.layer, this.shurikenCollision, null, this);
             this.handleKeyDown();
         },
 
@@ -75,6 +76,10 @@
                 clearTimeout(self.shurikenTimer);
                 self.shurikenTimer = null;
             }, this.shurikenDelay);
+        },
+
+        shurikenCollision: function (shuriken, layer) {
+            shuriken.kill();
         },
 
         turnLeft: function() {
