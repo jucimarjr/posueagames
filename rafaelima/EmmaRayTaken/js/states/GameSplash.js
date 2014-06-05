@@ -10,7 +10,7 @@ State.GameSplash.prototype = {
 		var progressBar = this.game.add.sprite(0, 500, 'progress-bar');
 		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
 		this.game.load.setPreloadSprite(progressBar);
-		this.game.load.onLoadComplete.add(function () {this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); setTimeout(function () {this.game.state.start('Menu');}, Config.gameSplash.millis);}, this);
+		this.game.load.onLoadComplete.add(function () {this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); setTimeout(function () {this.game.state.start('Game');}, Config.gameSplash.millis);}, this);
 		
 		//Menu
 		this.game.load.image('menu-background',  Config.menu.dir);
