@@ -60,8 +60,9 @@ State.GameSplash.prototype = {
 		this.game.load.image('itemRock550165', Phase1.World.itemRock550165);
 		this.game.load.image('itemRock655230', Phase1.World.itemRock655230);
 		this.game.load.image('itemRock825100', Phase1.World.itemRock825100);
-		this.game.load.image('itemRock925220', Phase1.World.itemRock925220);
-		
+		this.game.load.image('itemRock925220', Phase1.World.itemRock925220);			
 		this.game.load.spritesheet('smoke', Phase1.World.smoke, 3000, 300);				
+		this.game.load.spritesheet('spearTrap', Phase1.World.spearTrap, 10, 305);
+		//this.game.load.spritesheet('greatspeartrap', Phase1.World.greatSpearTrap);
 	}
 };

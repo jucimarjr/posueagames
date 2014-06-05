@@ -19,7 +19,7 @@
  "tileheight":40,
  "tilesets":[
         {
-         "firstgid":0,
+         "firstgid":1,
          "image":"../sprites/tileset.png",
          "imageheight":40,
          "imagewidth":400,

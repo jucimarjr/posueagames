@@ -144,7 +144,7 @@ Config.player = {
 	speed: 250,
 	height: 95,
 	width: 55,
-	archor: {
+	anchor: {
 		x: 0.5,
 		y: 0.5
 	},

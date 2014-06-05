@@ -14,7 +14,7 @@ Player.prototype = {
 	create: function () {
 		this.sprite = game.add.sprite(Config.player.position.x, Config.player.position.y, 'oscar');
 	    this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-		this.sprite.anchor.setTo(Config.player.archor.x, Config.player.archor.y);
+		this.sprite.anchor.setTo(Config.player.anchor.x, Config.player.anchor.y);
 	    this.sprite.body.collideWorldBounds = true;
 		//this.sprite.body.checkCollision.up = false;
 		//this.sprite.body.checkCollision.left = false;
@@ -24,8 +24,8 @@ Player.prototype = {
 	    //  Animations. When not moving, sprite = 0.
 	    this.sprite.animations.add('left', [0], 10, true);
 	    this.sprite.animations.add('right', [0], 10, true);
-	    this.sprite.animations.add('run',[1,2,3,4,5,6,7],5,true);
-	    this.sprite.animations.add('dead',[8,9],5,true);
+//	    this.sprite.animations.add('run',[1,2,3,4,5,6,7],5,true);
+//	    this.sprite.animations.add('dead',[8,9],5,true);
 	    
 	    this.game.camera.follow(this.sprite);
 

@@ -24,7 +24,7 @@ State.Phase1.prototype = {
         map.setCollisionByExclusion([9], true, 'Camada de Tiles 1');*/
 		
 		this.background = this.game.add.tileSprite(0, 0,  3000, 2000,  'bgphase1');
-				
+			
 		game.add.sprite(1764, 1772, 'itemRock9075');
 		game.add.sprite(0, 1620, 'itemRock92230');
 		game.add.sprite(212, 406, 'itemRock10035');
@@ -49,6 +49,11 @@ State.Phase1.prototype = {
 		game.add.sprite(1552, 704, 'itemRock825100');
 		game.add.sprite(478, 587, 'itemRock925220');
 
+        // traps
+        this.enemyGroup = game.add.group();
+        this.createSpear(1500, 0);
+        this.createSpear(2000, 0);
+
         // player defs
         this.createPlayer();
         this.game.camera.follow(this.player);
@@ -64,10 +69,11 @@ State.Phase1.prototype = {
 		
 		//this.playBgSound(); /* Comentado pq encomoda durante o desenvolvimento*/
     },
+
     update: function(){
         "use strict";
-        Config.global.screen.resize(this.game);
-        this.game.physics.arcade.collide(this.layer, this.player, this.wallCollision, null, this);
+        Config.global.screen.resize(this.game); 
+        this.game.physics.arcade.overlap(this.player, this.enemyGroup, this.enemyCollision, null, this);
         if(this.cursors.left.isDown){
             this.player.body.velocity.x = -this.player.velocity;
         }
@@ -87,13 +93,34 @@ State.Phase1.prototype = {
     createPlayer : function (){
         "use strict";
         this.player = this.game.add.sprite(0, 300, 'jogador');
-        this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+        this.game.physics.enable(this.player);
         this.player.body.collideWorldBounds = true;
         this.player.velocity = 300;
     },
+    
+    createSpear : function (x, y){
+        "use strict";
+        var spear = this.enemyGroup.create(x, y, 'spearTrap');
+        spear.enemyType = "spear";
+        spear.frame = 2;
+        spear.anchor.setTo(0.5, 0);
+        spear.angle = 30;
+        this.game.physics.enable(spear);
+        this.game.add.tween(spear)
+            .to({angle: -30}, 2200, Phaser.Easing.Sinusoidal.InOut)
+            .to({angle: 30}, 2200, Phaser.Easing.Sinusoidal.InOut)
+            .start().loop();
+        
+        // TODO: animacao
+        console.log("desenhando lanca");
+    },
 
-    wallCollision : function (){
-        //do something
+    enemyCollision : function (player, enemy){
+        "use strict";
+        if(enemy.enemyType === "spear"){
+            //TODO: animacao morte pela lanca
+            console.log("e morreu: armadilha lanca");
+        }
     },
 	/* Adicionar depois a classe Phase1.World*/
 	playBgSound : function(){
