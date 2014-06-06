@@ -32,28 +32,43 @@ Phase1.Rock = {
 		this.game.load.image('itemRock925220', this.itemRock925220);
 	},
 	create : function(){
-		this.game.add.sprite(1764, 1772, 'itemRock9075');
-		this.game.add.sprite(0, 1620, 'itemRock92230');
-		this.game.add.sprite(212, 406, 'itemRock10035');
-		this.game.add.sprite(348, 504, 'itemRock10035');
-		this.game.add.sprite(245, 852, 'itemRock10035');
-		this.game.add.sprite(2510, 1413, 'itemRock10035');
-		this.game.add.sprite(2638, 1505, 'itemRock10035');
-		this.game.add.sprite(2792, 1582, 'itemRock10035');
-		this.game.add.sprite(1336, 1772, 'itemRock12575');
-		this.game.add.sprite(1538, 1772, 'itemRock12575');
-		this.game.add.sprite(0, 240, 'itemRock22085');
-		this.game.add.sprite(1383, 1275, 'itemRock37085');
-		this.game.add.sprite(2634, 1737, 'itemRock371108');
-		this.game.add.sprite(99, 1659, 'itemRock412190');
-		this.game.add.sprite(1996, 1256, 'itemRock500100');
-		this.game.add.sprite(1986, 1716, 'itemRock515130');
-		this.game.add.sprite(738, 1170, 'itemRock540190');
-		this.game.add.sprite(681, 1686, 'itemRock550165');
-		this.game.add.sprite(0, 1021, 'itemRock655230');
-		this.foorTheDoors = this.game.add.sprite(3000, 354, 'itemRock655230');
+		this.rocks = []; 
+		this.rocks[0] = this.game.add.sprite(1764, 1772, 'itemRock9075');
+		this.rocks[1] = this.game.add.sprite(0, 1620, 'itemRock92230');
+		this.rocks[2] = this.game.add.sprite(212, 406, 'itemRock10035');
+		this.rocks[3] = this.game.add.sprite(348, 504, 'itemRock10035');	
+		this.rocks[4] = this.game.add.sprite(245, 852, 'itemRock10035');
+		this.rocks[5] = this.game.add.sprite(2510, 1413, 'itemRock10035');	
+		this.rocks[6] = this.game.add.sprite(2638, 1505, 'itemRock10035');
+		this.rocks[7] = this.game.add.sprite(2792, 1582, 'itemRock10035');
+		this.rocks[8] = this.game.add.sprite(1336, 1772, 'itemRock12575');
+		this.rocks[9] = this.game.add.sprite(1538, 1772, 'itemRock12575');
+		this.rocks[10] = this.game.add.sprite(0, 240, 'itemRock22085');
+		this.rocks[11] = this.game.add.sprite(1383, 1275, 'itemRock37085');
+		this.rocks[12] = this.game.add.sprite(2634, 1737, 'itemRock371108');
+		this.rocks[13] = this.game.add.sprite(99, 1659, 'itemRock412190');
+		this.rocks[14] = this.game.add.sprite(1996, 1256, 'itemRock500100');
+		this.rocks[15] = this.game.add.sprite(1986, 1716, 'itemRock515130');
+		this.rocks[16] = this.game.add.sprite(738, 1170, 'itemRock540190');
+		this.rocks[17] = this.game.add.sprite(681, 1686, 'itemRock550165');
+		this.rocks[18] = this.game.add.sprite(0, 1021, 'itemRock655230');
+		this.rocks[19] = this.foorTheDoors = this.game.add.sprite(3000, 354, 'itemRock655230');
 		this.foorTheDoors.scale.x *= -1;
-		this.game.add.sprite(1552, 704, 'itemRock825100');
-		this.game.add.sprite(478, 587, 'itemRock925220');
+		this.rocks[20] = this.game.add.sprite(1552, 704, 'itemRock825100');
+		this.rocks[21] = this.game.add.sprite(478, 587, 'itemRock925220');
+		
+		this.enableTile();
+		
+		return this.rocks;
+	},
+	enableTile : function(){
+		for(var x = 0; x < 22; x++ ){	
+			this.game.physics.ninja.enableTile(this.rocks[x], this.rocks[x].frame);	
+		}
+	},
+	collide : function(player){
+		for(var x = 0; x < 22; x++){
+			this.game.physics.ninja.collide(player, this.rocks[x]);		
+		}	
 	}
 };
