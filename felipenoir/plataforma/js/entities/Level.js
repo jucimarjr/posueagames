@@ -123,7 +123,7 @@ Level.prototype = {
                     enemy.play('attack');
 					enemy.ultimoAtaque = time + 3000;
 					enemy.isAttack = true;
-					this.game.physics.arcade.accelerateToXY(enemy,hero.hero.x,hero.hero.y);
+					this.game.physics.arcade.accelerateToXY(enemy,hero.hero.x,hero.hero.y,100);
                 }else if(!enemy.isAttack && enemy.TYPE == myEnemy.MIDLE_TYPE && enemy.ultimoAtaque < time){
                     var proj = myEnemy.projectiles.getFirstDead();
                     if (proj == null) {
@@ -140,7 +140,7 @@ Level.prototype = {
 					enemy.play('rollAtaack');
 					enemy.ultimoAtaque = time + 3000;
 					enemy.isAttack = true;
-					this.game.physics.arcade.accelerateToXY(enemy,hero.hero.x,hero.hero.y);
+					this.game.physics.arcade.accelerateToXY(enemy,hero.hero.x,hero.hero.y,100);
 					 
 				}
                 
@@ -150,12 +150,10 @@ Level.prototype = {
 		myEnemy.enemies.forEachExists(function(enemy){
 			var time = this.game.time.time;
 			if(enemy.isAttack && enemy.TYPE == myEnemy.BIG_TYPE && time > enemy.ultimoAtaque){
-				console.log("fui resetado");
 				enemy.reset(enemy.body.x,enemy.body.y);
 				enemy.isAttack = false;
 				enemy.play('walk')
 			}else if(enemy.isAttack && enemy.TYPE == myEnemy.LITTLE_TYPE && time > enemy.ultimoAtaque){
-				console.log("fui resetado");
 				enemy.reset(enemy.body.x,enemy.body.y);
 				enemy.isAttack = false;
 				enemy.play('walk')
