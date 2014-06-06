@@ -62,12 +62,12 @@ Phase1.Rock = {
 		return this.rocks;
 	},
 	enableTile : function(){
-		for(var x = 0; x < 21; x++ ){	
+		for(var x = 0; x < 22; x++ ){	
 			this.game.physics.ninja.enableTile(this.rocks[x], this.rocks[x].frame);	
 		}
 	},
 	collide : function(player){
-		for(var x = 0; x < 21; x++){
+		for(var x = 0; x < 22; x++){
 			this.game.physics.ninja.collide(player, this.rocks[x]);		
 		}	
 	}
