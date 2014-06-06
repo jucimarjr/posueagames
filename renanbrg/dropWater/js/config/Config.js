@@ -94,7 +94,7 @@ Config.Menu = {
 
 //GamePlay
 Config.gamePlay = {
-	dir: 'assets/images/GamePlay_960-600.jpg',
+	dir: 'assets/images/background_4800-600.png',
 	x: 0,
 	y: 0
 };
