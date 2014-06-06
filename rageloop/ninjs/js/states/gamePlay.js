@@ -21,9 +21,9 @@
             this.map = this.game.add.tilemap('map');
             this.map.addTilesetImage('map', 'tileset');
 
-            this.layer = this.map.createLayer('game_layer');
+            this.layer = this.map.createLayer('layer');
             this.layer.resizeWorld();
-            this.map.setCollisionBetween(1, 10, true, 'game_layer');
+            this.map.setCollisionBetween(1, 10, true, 'layer');
 
             this.shurikens = this.game.add.group();
             this.shurikens.createMultiple(10, 'shuriken');
@@ -44,7 +44,7 @@
 
             this.player.animations.play('idle');
 
-            this.game.camera.follow(this.player);
+            this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_PLATFORMER);
         },
 
         update: function() {
@@ -97,7 +97,7 @@
 
         handleKeyDown: function () {
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
-                this.player.body.velocity.x = 400;
+                this.player.body.velocity.x = 250;
                 this.turnRight();
 
                 if (this.player.body.onFloor()) {
@@ -108,7 +108,7 @@
             }
 
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-                this.player.body.velocity.x = -400;
+                this.player.body.velocity.x = -250;
                 this.turnLeft();
 
                 if (this.player.body.onFloor()) {
@@ -134,7 +134,7 @@
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
                 if (this.player.body.onFloor()) {
                     this.player.animations.play('jump');
-                    this.player.body.velocity.y = -700;
+                    this.player.body.velocity.y = -650;
                 }
             }
         }
