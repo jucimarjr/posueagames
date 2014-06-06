@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="30" height="20" tilewidth="40" tileheight="40">
  <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
-  <image source="../level/tile_40-40-8.png" width="320" height="40"/>
+  <image source="../tile_40-40-17.png" width="680" height="40"/>
  </tileset>
- <tileset firstgid="9" name="bee" tilewidth="40" tileheight="40">
-  <image source="../enemies/bee.png" width="80" height="40"/>
+ <tileset firstgid="18" name="bee" tilewidth="40" tileheight="70">
+  <image source="../enemies/casacaba_40-70-4.png" width="160" height="70"/>
  </tileset>
- <tileset firstgid="11" name="tube" tilewidth="40" tileheight="29">
-  <image source="../enemies/tube_40-29.png" width="40" height="29"/>
+ <tileset firstgid="22" name="tube" tilewidth="25" tileheight="40">
+  <image source="../enemies/cannon_25-40.png" width="25" height="40"/>
  </tileset>
- <tileset firstgid="12" name="water" tilewidth="14" tileheight="17">
+ <tileset firstgid="23" name="water" tilewidth="14" tileheight="17">
   <image source="../enemies/acidicWater_14-17.png" width="14" height="17"/>
  </tileset>
- <tileset firstgid="13" name="branches" tilewidth="40" tileheight="40">
+ <tileset firstgid="24" name="branches" tilewidth="40" tileheight="40">
   <image source="../level/branches_360-283.png" width="360" height="284"/>
  </tileset>
  <layer name="Camada de Tiles 1" width="30" height="20">
   <data encoding="base64" compression="zlib">
-   eJy91GdSwzAQhmHZTuEE9N4Dobcwofdy//vwMqOFZUeODJbZmedHRmt9KnZy51znn+VoYQKTmMI0ZjCLOcxjPHFP4XMXsYRlrGAVa1jHBhYS90huD1vYRh872MUe9rGJTAn16HE5zywwT0/lHuIIxzjBKc4wwLl/Plf3Euop/PiY+67CPzvwvw98luQOcYFLXOEaN7g165dc23On5tLzyFoytZah6n3AI57wjBe84g3vuPc9Xb+fUI+MOTWP5NpsyZXKjLKyfWW9n2vpuJ9nL7myFn2HookK5WjyPo7ad91M+39iz6WJasVbvip0r1XVyZX3ZNT9hIQyYrmhtUr+b9h5Yrmp3uuuyba59l6a+p50tV35HaX+nuzeYurmV82poq3E+lJl/tUHjrYZBw==
+   eJy909dSwzAQhWEZ7ATnLei9hdA7YUIvob3/o/BfaGFnR44yWGZnvovEax1bK+fOual/lqOFGcxiDvNYwCKWsIzpxD2Fz13FGtaxgU1sYRtdrCTukdwedrGHfRzgEEc4xg4yJdSjr8t+ZoF1eir3FGc4xwUucYU+rv39uZpLqKfw1zvutwp/b9//PvFZkjvADW5xh3s84NE8v+Tanie1ll5HniVTzzJQvS94xRBveMcHPvGFZ99T+vcJ9cg1p9aRXJstuVKZUVW2r6q39PvUMf/rfdAzFE1UKEeT8zjqvetm6nMT2pcmqhVv+akJF55tzGTNXDkno+YTEsqI5YbmK/l6PnZmll0nlpvqXJcm2+ba2TT1Pelqu+oZpf6e7LvF1M0fN2ccbSXWlyrzr74B+Asf6A==
   </data>
  </layer>
- <objectgroup name="Camada de Objetos 1" width="30" height="20">
-  <object gid="9" x="562" y="280"/>
-  <object gid="9" x="640" y="279"/>
-  <object gid="9" x="867" y="441"/>
-  <object gid="9" x="360" y="640"/>
-  <object gid="9" x="439" y="681"/>
-  <object gid="9" x="520" y="720"/>
-  <object gid="9" x="768" y="440"/>
+ <objectgroup name="bees" width="30" height="20">
+  <object gid="18" x="358" y="671"/>
+  <object gid="18" x="437" y="712"/>
+  <object gid="18" x="519" y="751"/>
+  <object gid="18" x="767" y="470"/>
+  <object gid="18" x="868" y="472"/>
+  <object gid="18" x="560" y="310"/>
+  <object gid="18" x="640" y="309"/>
  </objectgroup>
  <objectgroup name="tubes" width="30" height="20">
-  <object gid="11" x="121" y="441"/>
-  <object gid="11" x="681" y="565"/>
-  <object gid="11" x="719" y="566"/>
-  <object gid="11" x="760" y="566"/>
-  <object gid="11" x="1080" y="607"/>
+  <object gid="22" x="127" y="449"/>
+  <object gid="22" x="689" y="565"/>
+  <object gid="22" x="728" y="565"/>
+  <object gid="22" x="768" y="565"/>
+  <object gid="22" x="1089" y="607"/>
  </objectgroup>
  <objectgroup name="waters" width="30" height="20">
-  <object gid="12" x="133" y="429"/>
-  <object gid="12" x="695" y="564"/>
-  <object gid="12" x="733" y="554"/>
-  <object gid="12" x="775" y="543"/>
-  <object gid="12" x="1095" y="606"/>
+  <object gid="23" x="137" y="435"/>
+  <object gid="23" x="700" y="563"/>
+  <object gid="23" x="739" y="553"/>
+  <object gid="23" x="782" y="540"/>
+  <object gid="23" x="1101" y="606"/>
  </objectgroup>
 </map>

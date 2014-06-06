@@ -27,6 +27,7 @@ State.GamePlay.prototype = {
 
 		this.player = game.add.sprite(10,1000 ,'playerS');
 		this.player.anchor.setTo(.5, 1);
+
 		
 		//player.smoothed = false;
 		//player.body.checkCollision.up = false;
@@ -46,6 +47,7 @@ State.GamePlay.prototype = {
 		this.player.body.collideWorldBounds = true;
 		this.game.physics.enable(this.player);
 		this.player.body.setSize(25, 60, 0, 0);
+		//this.player.body.bounce.set(0.5);
 		this.game.camera.y = 1000;
 
 		this.loadLevel(this.level);
