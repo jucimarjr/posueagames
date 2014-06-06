@@ -7,11 +7,6 @@ State.GamePlay = function (game) {
 	var jumping;
 	var cursors;
 	var levelConfig;
-	/*var player;
-	var level;
-	var map;
-	var bees;
-	var layer;*/
 };
 State.GamePlay.prototype = {
 	preload: function () {
@@ -23,12 +18,9 @@ State.GamePlay.prototype = {
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;
 		this.level = 3;
-		//this.game.world.setBounds(0, -600, 1600, 1200);
 
 		this.player = game.add.sprite(10,1000 ,'playerS');
-		this.player.anchor.setTo(.5, 1);
-
-		
+		this.player.anchor.setTo(.5, 1);		
 		//player.smoothed = false;
 		//player.body.checkCollision.up = false;
 		//player.body.checkCollision.left = false;
