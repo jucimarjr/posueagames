@@ -33,7 +33,7 @@ State.GameSplash.prototype = {
 		this.game.load.tilemap('level6', Config.level.dir+'6/map.json', null, Phaser.Tilemap.TILED_JSON);*/
 
 		this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_39-60-27.png', 39,60,27);
-		this.game.load.spritesheet('bee', 'assets/enemies/bee.png',40,40,2);
+		this.game.load.spritesheet('bee', 'assets/enemies/casacaba_40-70-4.png',40,70,4);
 		this.game.load.spritesheet('bush', 'assets/spritesheets/bush_40-35-3.png',40,35,3);
 		this.game.load.spritesheet('coin', 'assets/spritesheets/coins/coins_40-40-8.png',40,40,8);
 		this.game.load.spritesheet('coinIara', 'assets/spritesheets/coins/coinsIara_40-40-8.png',40,40,8);
@@ -43,8 +43,8 @@ State.GameSplash.prototype = {
 		this.game.load.image('branches', 'assets/level/branches_360-283.png');
 		this.game.load.image('tileset', 'assets/tile_40-40-17.png');		
 		this.game.load.image('thorn', 'assets/enemies/thorns_80-40.png');
-		this.game.load.image('tube', 'assets/enemies/tube_40-29.png');
-		this.game.load.image('acidicWater', 'assets/enemies/acidicWater_14-17.png');
+		this.game.load.image('tube', 'assets/enemies/cannon_25-40.png');
+		this.game.load.image('acidicWater', 'assets/enemies/gota_13-37.png');
 	},
 	create: function () {
 		"use strict";

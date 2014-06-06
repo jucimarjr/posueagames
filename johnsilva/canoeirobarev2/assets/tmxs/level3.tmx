@@ -3,44 +3,75 @@
  <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
   <image source="../tile_40-40-17.png" width="680" height="40"/>
  </tileset>
- <tileset firstgid="18" name="bee" tilewidth="40" tileheight="70">
-  <image source="../enemies/casacaba_40-70-4.png" width="160" height="70"/>
- </tileset>
- <tileset firstgid="22" name="tube" tilewidth="25" tileheight="40">
-  <image source="../enemies/cannon_25-40.png" width="25" height="40"/>
- </tileset>
- <tileset firstgid="23" name="water" tilewidth="14" tileheight="17">
+ <tileset firstgid="18" name="water" tilewidth="14" tileheight="17">
   <image source="../enemies/acidicWater_14-17.png" width="14" height="17"/>
  </tileset>
- <tileset firstgid="24" name="branches" tilewidth="40" tileheight="40">
+ <tileset firstgid="19" name="bee" tilewidth="40" tileheight="70">
+  <image source="../enemies/casacaba_40-70-4.png" width="160" height="70"/>
+ </tileset>
+ <tileset firstgid="23" name="tube" tilewidth="25" tileheight="40">
+  <image source="../enemies/cannon_25-40.png" width="25" height="40"/>
+ </tileset>
+ <tileset firstgid="24" name="thorns" tilewidth="80" tileheight="40">
+  <image source="../enemies/thorns_80-40.png" width="80" height="40"/>
+ </tileset>
+ <tileset firstgid="25" name="coins" tilewidth="40" tileheight="40">
+  <image source="../spritesheets/coins/coinsIara_40-40-8.png" width="320" height="40"/>
+ </tileset>
+ <tileset firstgid="33" name="branches" tilewidth="40" tileheight="40">
   <image source="../level/branches_360-283.png" width="360" height="284"/>
  </tileset>
+ <objectgroup name="thorns" width="30" height="20">
+  <object gid="24" x="802" y="736"/>
+  <object gid="24" x="947" y="736"/>
+  <object gid="24" x="278" y="601"/>
+  <object gid="24" x="39" y="318"/>
+  <object gid="24" x="797" y="450"/>
+ </objectgroup>
  <layer name="Camada de Tiles 1" width="30" height="20">
   <data encoding="base64" compression="zlib">
-   eJy909dSwzAQhWEZ7ATnLei9hdA7YUIvob3/o/BfaGFnR44yWGZnvovEax1bK+fOual/lqOFGcxiDvNYwCKWsIzpxD2Fz13FGtaxgU1sYRtdrCTukdwedrGHfRzgEEc4xg4yJdSjr8t+ZoF1eir3FGc4xwUucYU+rv39uZpLqKfw1zvutwp/b9//PvFZkjvADW5xh3s84NE8v+Tanie1ll5HniVTzzJQvS94xRBveMcHPvGFZ99T+vcJ9cg1p9aRXJstuVKZUVW2r6q39PvUMf/rfdAzFE1UKEeT8zjqvetm6nMT2pcmqhVv+akJF55tzGTNXDkno+YTEsqI5YbmK/l6PnZmll0nlpvqXJcm2+ba2TT1Pelqu+oZpf6e7LvF1M0fN2ccbSXWlyrzr74B+Asf6A==
+   eJy91EduwzAQhWEKkIzI2STXSO/d6T0OnN7L/W+Rf8FJJgOaAgFaA3wLmSM+iaRVOufGWlaig2nMYBZzmMcCFrGEqcw9lc9dwSrWsI4NbGIL21jO3CO5PexiD/s4wCGOcIwdFEqoR4/LehaBeXoq9xRnOMcFLnGFPq79/aXal1BP5ce77q8qf2/fX5/4LMkd4Aa3uMM9HvBonl9ybc+TmkvPI89SqGcZqN4XvOIN7/jAJ77wjWffU/v3CfXImFPzSK7NllypwhhWtm9Yb+3XqWt+1+ug91CMoir3fx0sOY+x904tOSeSq89NaF2kJjAZuU6pTnPLb8XWJyaUkZIr56SN3ND+Sr7eH30uQuw8Tbm5znVtsm1uaJ1GXaH/cKnGclXq+cyRP56YafP1tf5exu5rGm/DD82/JL0=
   </data>
  </layer>
  <objectgroup name="bees" width="30" height="20">
-  <object gid="18" x="358" y="671"/>
-  <object gid="18" x="437" y="712"/>
-  <object gid="18" x="519" y="751"/>
-  <object gid="18" x="767" y="470"/>
-  <object gid="18" x="868" y="472"/>
-  <object gid="18" x="560" y="310"/>
-  <object gid="18" x="640" y="309"/>
+  <object gid="19" x="360" y="680"/>
+  <object gid="19" x="440" y="720"/>
+  <object gid="19" x="520" y="760"/>
+  <object gid="19" x="717" y="336"/>
+  <object gid="19" x="909" y="349"/>
+  <object gid="19" x="497" y="288"/>
+  <object gid="19" x="706" y="173"/>
  </objectgroup>
  <objectgroup name="tubes" width="30" height="20">
-  <object gid="22" x="127" y="449"/>
-  <object gid="22" x="689" y="565"/>
-  <object gid="22" x="728" y="565"/>
-  <object gid="22" x="768" y="565"/>
-  <object gid="22" x="1089" y="607"/>
+  <object gid="23" x="127" y="449"/>
+  <object gid="23" x="689" y="565"/>
+  <object gid="23" x="728" y="565"/>
+  <object gid="23" x="768" y="565"/>
+  <object gid="23" x="1089" y="607"/>
  </objectgroup>
  <objectgroup name="waters" width="30" height="20">
-  <object gid="23" x="137" y="435"/>
-  <object gid="23" x="700" y="563"/>
-  <object gid="23" x="739" y="553"/>
-  <object gid="23" x="782" y="540"/>
-  <object gid="23" x="1101" y="606"/>
+  <object gid="18" x="137" y="435"/>
+  <object gid="18" x="700" y="563"/>
+  <object gid="18" x="739" y="553"/>
+  <object gid="18" x="782" y="540"/>
+  <object gid="18" x="1101" y="606"/>
+ </objectgroup>
+ <objectgroup name="bushes" width="30" height="20">
+  <object gid="13" x="320" y="520"/>
+  <object gid="13" x="160" y="600"/>
+  <object gid="13" x="200" y="600"/>
+  <object gid="13" x="240" y="600"/>
+  <object gid="13" x="280" y="600"/>
+  <object gid="13" x="0" y="680"/>
+  <object gid="13" x="40" y="680"/>
+  <object gid="13" x="80" y="680"/>
+  <object gid="13" x="800" y="440"/>
+  <object gid="13" x="840" y="440"/>
+  <object gid="13" x="760" y="440"/>
+  <object gid="13" x="880" y="440"/>
+  <object gid="13" x="1120" y="320"/>
+ </objectgroup>
+ <objectgroup name="coin" width="30" height="20">
+  <object gid="25" x="891" y="642"/>
  </objectgroup>
 </map>

@@ -156,7 +156,7 @@ Config.level = {
 		if(level == 1)
 			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 18, 19, 'coin');
 		else if(level == 3)
-			Config.update.updateLevel(75, 650, true, 13, 12, 9, 11, 0, 0, 'coinIara');
+			Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara');
 		return Config.levelConfig;
 	}
 };
