@@ -57,6 +57,7 @@ Enemy.prototype = {
 	        enemy.health = 100;
 			enemy.TYPE = Math.round(Math.random()*2);
 			enemy.ultimoAtaque = 0;
+			enemy.isAttack = false;
 
 	    }
 	}
