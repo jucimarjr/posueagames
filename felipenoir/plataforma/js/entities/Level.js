@@ -103,10 +103,13 @@ Level.prototype = {
 	updateEnemyAttack : function(myEnemy,hero){
         //Verifica de a bola cuspida ainda está em jogo
         myEnemy.projectiles.forEachExists(function(projectile) {
-            this.game.physics.arcade.accelerateToObject(projectile, hero.hero, Math.random() * 100);
-            //if (projectile.body.x < 0 || projectile.body.y < 0 || projectile.body.x > game.width || projectile.body.y > game.height) {
-             ///   projectile.kill();
-            //}
+            this.game.physics.arcade.accelerateToObject(projectile, hero.hero, Math.random() * 300);
+            var moduloPosition = Math.abs(this.game.world.position.x);
+			if (projectile.body.x < moduloPosition  || projectile.body.x >  moduloPosition + this.game.width
+			|| projectile.body.y > this.game.height || projectile.body.y < 0 || projectile.timeLife > this.game.time.time){
+			  console.log("DEVE MORER")
+			  projectile.kill();
+            }
         }, this);
 
 		var muduloHero = Math.round(Math.abs(hero.hero.body.x));
@@ -128,6 +131,7 @@ Level.prototype = {
                       this.game.physics.arcade.enable(proj, Phaser.Physics.ARCADE);
                       proj.body.allowGravity = false;
                       proj.anchor.setTo(0.5, 0.5);
+					  proj.timeLife = time + 5000;
 
                     } else {
                       proj.reset(enemy.body.x + enemy.body.width / 2, enemy.body.y + enemy.body.height / 2);
