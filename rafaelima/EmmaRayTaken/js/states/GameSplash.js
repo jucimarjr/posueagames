@@ -26,6 +26,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('bg5', Config.game.dirBg5);
 		this.game.load.image('bar', Config.game.bar.dir);
 		this.game.load.tilemap('stage', Config.game.tilemap.dir, null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.tilemap('stageRotate', Config.game.tilemapRotate.dir, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tileset', Config.game.tileset.dir);
 		this.game.load.spritesheet('dude', Config.game.player.dir , 32, 48);
 		this.game.load.image('collect', 'assets/images/pv.png');

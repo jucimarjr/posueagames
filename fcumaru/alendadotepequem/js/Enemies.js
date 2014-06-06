@@ -15,6 +15,7 @@ Enemy = function(game, type) {
 		this.key = 'enemy2';
 		this.asset = 'assets/magma_40-40-4.png';
 		this.walk = 200;
+		this.life = 5;
 
 		break;
 
@@ -22,6 +23,7 @@ Enemy = function(game, type) {
 		this.key = 'enemy3';
 		this.asset = 'assets/magma_40-40-4.png';
 		this.walk = 100;
+		this.life = 6;
 
 		break;
 
@@ -29,6 +31,7 @@ Enemy = function(game, type) {
 		this.key = 'enemy1';
 		this.asset = 'assets/magma_40-40-4.png';
 		this.walk = 150;
+		this.life = 5;
 
 		break;
 	}
@@ -59,14 +62,24 @@ Enemy.prototype = {
 		// diminui o espaco do deslocamento do espelhamento
 		this.enemy.anchor.setTo(.5, .5);
 		this.enemy.body.gravity.y = 150;
+
+		this.enemy.health = this.life;
 	},
 	update : function(layer) {
 		"use strict";
-		this.game.physics.arcade.collide(layer, this.enemy, this.collide);
+		this.game.physics.arcade.collide(layer, this.enemy);
 
 		this.enemy.animations.play('walk');
 
 		if (this.enemy.body.onFloor()) {
+			if (this.enemy.body.blocked.left) {
+				this.direction = RIGHT;
+				this.enemy.damage(1);
+			} else if (this.enemy.body.blocked.right) {
+				this.direction = LEFT;
+				this.enemy.damage(1);
+			}
+
 			if (this.direction == LEFT) {
 				// vai para esquerda
 				this.enemy.body.velocity.x = -this.walk;
@@ -74,13 +87,6 @@ Enemy.prototype = {
 				// vai para direita
 				this.enemy.body.velocity.x = this.walk;
 			}
-		}
-	},
-	collide : function(enemy) {
-		if (enemy.body.touching.left) {
-			this.direction = RIGHT;	
-		} else if (enemy.body.touching.right) {
-			this.direction = LEFT;
 		}
 	}
 };

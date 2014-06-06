@@ -63,6 +63,11 @@ Config.game = {
 		x: 0,
 		y: 0
 	},
+	tilemapRotate:{
+		dir: 'assets/images/arcane_forest_level_01_rotate_map.json',
+		x: 0,
+		y: 0
+	},
 	tileset:{
 		dir: 'assets/spritesheets/tileset_arcane_forest_1404-36.png'
 	},
@@ -71,8 +76,11 @@ Config.game = {
 	},
 	bar:{
 		dir: 'assets/images/bar.png',
-		startX:4360,
+		startX: 3770,
 		startY: 3470,
+		startRotateX: 1270,
+		startRotateY: 444,
+		widthAreaRotate: 1725,
 		widthArea: 3650,
 	}
 };

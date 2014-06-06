@@ -19,7 +19,7 @@ State.Fase1= function (game) {
 	
 	this.jacare1;
 	this.jacare2;
-	
+
 	this.speed = 70;
 
 };
