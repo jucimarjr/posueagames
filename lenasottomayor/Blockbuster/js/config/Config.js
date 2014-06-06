@@ -98,10 +98,7 @@ Config.menu = {
 
 //GamePlay
 Config.game = {
-	gravity: 800,
-	camera: {
-		y: 1000
-	}
+	gravity: 800
 };
 
 Config.background = {
@@ -152,17 +149,16 @@ Config.level1 = {
 	worldBounds: {
 		xi: 0,
 		yi: 0,
-		xf: 12000,
-		yf: 600
+		xf: 12800,
+		yf: 800
 	}
 };
 
 //Player
 Config.player = {
 	dir: 'assets/spritesheets/Oscar_spritesheet_900-95-18.png',
-	gravity: 800,
 	jump: 550,
-	speed: 150,
+	speed: 175,
 	height: 95,
 	width: 50,
 	anchor: {
@@ -171,7 +167,7 @@ Config.player = {
 	},
 	position: {
 		x: 50,
-		y: 400
+		y: 625
 	}
 };
 
