@@ -137,7 +137,9 @@ Level.prototype = {
 					proj.timeLife = time + 5000;
                     enemy.ultimoAtaque = time + 5000;  
                 }else if(enemy.TYPE == myEnemy.LITTLE_TYPE){
-					
+					this.game.physics.arcade.accelerateToXY(enemy,hero.hero.x,hero.hero.y);
+					enemy.play('rollAtaack');
+					enemy.ultimoAtaque = time + 5000;   
 				}
                 
 			}
