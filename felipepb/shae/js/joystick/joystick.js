@@ -5,7 +5,7 @@
  * creation fail, default (unpressed) values are returned for each method.
  */
 function Joystick() {
-	//this.ctl = Joystick.createPlugin();
+	this.ctl = Joystick.createPlugin();
 
 	if (navigator.getGamepads) {
 		console.log('pads: ' + navigator.getGamepads().length);
