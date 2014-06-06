@@ -10,6 +10,7 @@ State.GamePlay = function (game) {
     this.dropCollisionGroup = null;
     this.crabCollisionGroup = null;
     this.layerBody = null;
+    this.hud = new HUD(this.game);
 
     try {
         this.drop = new Character(this.game, 'dude',
@@ -25,8 +26,9 @@ State.GamePlay.prototype = {
 		this.game.load.tilemap('map', 'assets/mapLevel1_960-600.json', null, Phaser.Tilemap.TILED_JSON);
 	    this.game.load.image('tileset','assets/images/tileset.png');
 	    this.game.load.image('crab','assets/images/crab_80-80.png');
-	    
+
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
+        this.hud.preload();
 
 		// Player
         this.drop.preload();
@@ -70,7 +72,9 @@ State.GamePlay.prototype = {
 		
 		dropSprite.body.createBodyCallback(this.crab, this.checkOverlapCrabDrop, this); // check collision between drop and crab
 		this.game.physics.p2.setImpactEvents(true);
-		//this.game.physics.p2.setPostBroadphaseCallback(this.checkOverlap, this);   //this is used to start the check		
+		//this.game.physics.p2.setPostBroadphaseCallback(this.checkOverlap, this);   //this is used to start the check
+
+        this.hud.create();
 		
         // Sounds
         this.jumpSound = this.game.add.audio("jump");                
