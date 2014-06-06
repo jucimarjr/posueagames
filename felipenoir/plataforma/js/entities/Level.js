@@ -105,8 +105,8 @@ Level.prototype = {
         myEnemy.projectiles.forEachExists(function(projectile) {
             this.game.physics.arcade.accelerateToObject(projectile, hero.hero, Math.random() * 300);
             var moduloPosition = Math.abs(this.game.world.position.x);
-			if (projectile.body.x < moduloPosition  || projectile.body.x >  moduloPosition + this.game.width
-			|| projectile.body.y > this.game.height || projectile.body.y < 0 || projectile.timeLife < this.game.time.time){
+			if (projectile.body.x  < moduloPosition - 50 || projectile.body.x >  moduloPosition + this.game.width
+			|| projectile.body.y > this.game.height + 50|| projectile.body.y < 0 ||  this.game.time.time > projectile.timeLife){
 			  console.log("DEVE MORER")
 			  projectile.kill();
             }
@@ -116,7 +116,7 @@ Level.prototype = {
 		myEnemy.enemies.forEachExists(function(enemy){
 			var moduloEnemy =  Math.round(Math.abs(enemy.body.x));
 			
-			if(Math.abs(moduloEnemy - muduloHero) < 300){
+			if(Math.abs(moduloEnemy - muduloHero) < 400){
                 var sentido = hero.hero.body.x > enemy.body.x;
                 var time = this.game.time.time;
 
@@ -131,11 +131,11 @@ Level.prototype = {
                       this.game.physics.arcade.enable(proj, Phaser.Physics.ARCADE);
                       proj.body.allowGravity = false;
                       proj.anchor.setTo(0.5, 0.5);
-					  proj.timeLife = time + 5000;
-
+					  
                     } else {
                       proj.reset(enemy.body.x + enemy.body.width / 2, enemy.body.y + enemy.body.height / 2);
                     }
+					proj.timeLife = time + 5000;
                     enemy.ultimoAtaque = time + 5000;  
                 }
                 
