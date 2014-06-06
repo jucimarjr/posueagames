@@ -351,9 +351,13 @@ State.GamePlay.prototype = {
 
 		/*this.thorns.forEach(function (thorn){ 
 			game.debug.body(thorn);
-		}, this);
+		}, this);*/
 
-		this.bees.forEach(function (bees){ 
+		/*this.waters.forEach(function (w){ 
+			game.debug.body(w);
+		}, this);*/
+
+		/*this.bees.forEach(function (bees){ 
 			game.debug.body(bees);
 		}, this);*/
     },
