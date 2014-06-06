@@ -100,13 +100,41 @@ Level.prototype = {
         hero.climb(bool);
     },
 
-	updateEnemyAttack : function(enemy,hero){
+	updateEnemyAttack : function(myEnemy,hero){
+        //Verifica de a bola cuspida ainda está em jogo
+        myEnemy.projectiles.forEachExists(function(projectile) {
+            this.game.physics.arcade.accelerateToObject(projectile, hero.hero, Math.random() * 100);
+            //if (projectile.body.x < 0 || projectile.body.y < 0 || projectile.body.x > game.width || projectile.body.y > game.height) {
+             ///   projectile.kill();
+            //}
+        }, this);
+
 		var muduloHero = Math.round(Math.abs(hero.hero.body.x));
-		enemy.enemies.forEach(function(enemy){
+		myEnemy.enemies.forEachExists(function(enemy){
 			var moduloEnemy =  Math.round(Math.abs(enemy.body.x));
 			
 			if(Math.abs(moduloEnemy - muduloHero) < 300){
-				
+                var sentido = hero.hero.body.x > enemy.body.x;
+                var time = this.game.time.time;
+
+                if(enemy.TYPE == myEnemy.BIG_TYPE && enemy.ultimoAtaque < time){
+                    this.game.physics.arcade.accelerateToObject(enemy,hero.hero, 100 + Math.random() * 400);
+                    enemy.play('attack');
+                    enemy.ultimoAtaque = time + 5000;    
+                }else if(enemy.TYPE == myEnemy.MIDLE_TYPE && enemy.ultimoAtaque < time){
+                    var proj = myEnemy.projectiles.getFirstDead();
+                    if (proj == null) {
+                      proj = myEnemy.projectiles.create(enemy.body.x + enemy.body.width / 2, enemy.body.y + enemy.body.height / 2, 'projectile');
+                      this.game.physics.arcade.enable(proj, Phaser.Physics.ARCADE);
+                      proj.body.allowGravity = false;
+                      proj.anchor.setTo(0.5, 0.5);
+
+                    } else {
+                      proj.reset(enemy.body.x + enemy.body.width / 2, enemy.body.y + enemy.body.height / 2);
+                    }
+                    enemy.ultimoAtaque = time + 5000;  
+                }
+                
 			}
 		},this);
 	}
