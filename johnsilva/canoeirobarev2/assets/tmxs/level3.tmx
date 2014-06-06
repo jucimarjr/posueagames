@@ -23,7 +23,6 @@
  </tileset>
  <objectgroup name="thorns" width="30" height="20">
   <object gid="24" x="802" y="736"/>
-  <object gid="24" x="947" y="740"/>
   <object gid="24" x="278" y="601"/>
   <object gid="24" x="39" y="318"/>
   <object gid="24" x="799" y="456"/>
