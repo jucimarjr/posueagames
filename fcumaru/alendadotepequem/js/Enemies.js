@@ -1,6 +1,21 @@
-var ENEMY_TYPE_1 = 0;
-var ENEMY_TYPE_2 = 1;
-var ENEMY_TYPE_3 = 2;
+ENEMY_TYPE_1 = function() {
+	this.key = 'enemy1';
+	this.asset = 'assets/magma_40-40-4.png';
+	this.walk = 150;
+	this.life = 5;
+};
+ENEMY_TYPE_2 = function() {
+	this.key = 'enemy2';
+	this.asset = 'assets/magma_40-40-4.png';
+	this.walk = 200;
+	this.life = 5;
+};
+ENEMY_TYPE_3 = function() {
+	this.key = 'enemy3';
+	this.asset = 'assets/magma_40-40-4.png';
+	this.walk = 100;
+	this.life = 6;
+};
 
 var LEFT = 0;
 var RIGHT = 1;
@@ -8,33 +23,12 @@ var RIGHT = 1;
 Enemy = function(game, type) {
 	"use strict";
 	this.game = game;
-	this.direction = LEFT;
+	this.direction = Math.round(Math.random());
 
-	switch (type) {
-	case ENEMY_TYPE_2:
-		this.key = 'enemy2';
-		this.asset = 'assets/magma_40-40-4.png';
-		this.walk = 200;
-		this.life = 5;
-
-		break;
-
-	case ENEMY_TYPE_3:
-		this.key = 'enemy3';
-		this.asset = 'assets/magma_40-40-4.png';
-		this.walk = 100;
-		this.life = 6;
-
-		break;
-
-	default:
-		this.key = 'enemy1';
-		this.asset = 'assets/magma_40-40-4.png';
-		this.walk = 150;
-		this.life = 5;
-
-		break;
-	}
+	this.key = type.key;
+	this.asset = type.asset;
+	this.walk = type.walk;
+	this.life = type.life;
 };
 
 Enemy.prototype = {
@@ -85,6 +79,12 @@ Enemy.prototype = {
 				this.enemy.body.velocity.x = this.walk;
 			}
 		}
+	},
+	checkCollision : function(hero) {
+		this.game.physics.arcade.collide(this.enemy, hero, this.heroCollision);
+	},
+	heroCollision : function(enemy, hero) {
+		hero.damage(1);
 	}
 };
 
@@ -92,19 +92,17 @@ Enemies = function(game) {
 	"use strict";
 	this.game = game;
 	this.values = new Array();
+	
+	this.type1 = new ENEMY_TYPE_1();
+	this.type2 = new ENEMY_TYPE_2();
+	this.type3 = new ENEMY_TYPE_3();
 };
 
 Enemies.prototype = {
-	pop : function() {
-		var enemy = new Enemy(game, ENEMY_TYPE_1);
-		this.values.push(enemy);
-		
-		enemy.create();
-	},
 	preload : function() {
-		this.game.load.spritesheet('enemy1', 'assets/magma_40-40-4.png', 40, 40, 4);
-		this.game.load.spritesheet('enemy2', 'assets/magma_40-40-4.png', 40, 40, 4);
-		this.game.load.spritesheet('enemy3', 'assets/magma_40-40-4.png', 40, 40, 4);
+		this.game.load.spritesheet(this.type1.key, this.type1.asset, 40, 40, 4);
+		this.game.load.spritesheet(this.type2.key, this.type2.asset, 40, 40, 4);
+		this.game.load.spritesheet(this.type3.key, this.type3.asset, 40, 40, 4);
 	},
 	create : function() {
 		"use strict";
@@ -118,14 +116,16 @@ Enemies.prototype = {
 			this.values[i].update(layer);
 		}
 	},
+	pop : function() {
+		var enemy = new Enemy(game, this.type1);
+		this.values.push(enemy);
+
+		enemy.create();
+	},
 	checkCollision : function(hero) {
 		for (var i = 0; i < this.values.length; i++) {
-			this.game.physics.arcade.collide(this.values[i].enemy, hero,
-					this.heroCollision);
+			this.values[i].checkCollision(hero);
 		}
-	},
-	heroCollision : function(enemy, hero) {
-		hero.damage(1);
 	},
 	close : function() {
 		this.game.time.events.remove(this.timer);
