@@ -22,7 +22,7 @@ State.GamePlay.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;
-		this.level = 1;
+		this.level = 4;
 		//this.game.world.setBounds(0, -600, 1600, 1200);
 
 		this.player = game.add.sprite(10,1000 ,'playerS');
@@ -129,7 +129,7 @@ State.GamePlay.prototype = {
 		/*if (this.jump && this.player.body.onFloor()){	*/
 			jumping = true;
 			this.player.animations.play('jump');
-			this.player.body.velocity.y = -450;
+			this.player.body.velocity.y = -550;
 		}
 		if(!cursors.up.isDown){
 			jumping = false;
@@ -169,6 +169,7 @@ State.GamePlay.prototype = {
 		if (this.tubes) this.tubes.destroy();
 		if (this.thorns) this.thorns.destroy();
 		if (this.coin) this.coin.destroy();
+		if (this.bushes) this.bushes.destroy();
 
 		this.bg = this.game.add.tileSprite(0,0,1200,800,'bg'+level);
 		this.bg.fixedToCamera = true;		
@@ -179,8 +180,7 @@ State.GamePlay.prototype = {
 
 		if(levelConfig.branches.exists) this.map.addTilesetImage('branches','branches');
 		if(levelConfig.waters.id>0) this.addWaters(levelConfig.waters.id);
-		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);
-		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
+		
 		if(levelConfig.thorns.id>0) this.addThorns(levelConfig.thorns.id);
 		if(levelConfig.coin.id>0) this.addCoin(levelConfig.coin.id, levelConfig.coin.image);
 
@@ -191,6 +191,9 @@ State.GamePlay.prototype = {
 		this.layer = this.map.createLayer('Camada de Tiles 1');
 		this.layer.resizeWorld();
 		this.game.physics.enable(this.layer);
+
+		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);
+		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
 	},
 
 	addCoin: function(id, image){
@@ -236,10 +239,11 @@ State.GamePlay.prototype = {
 		this.bees = game.add.group();
 		this.bees.enableBody = true;
 		this.bees.physicsBodyType = Phaser.Physics.ARCADE;
-		this.map.createFromObjects('Camada de Objetos 1',id,'bee', 0,true,false,this.bees);
-		this.bees.callAll('animations.add', 'animations', 'spin', [0, 1], 3, true);
+		this.map.createFromObjects('bees',id,'bee', 0,true,false,this.bees);
+		this.bees.callAll('animations.add', 'animations', 'spin', [0,1,2,3], 6, true);
     	this.bees.callAll('animations.play', 'animations', 'spin');
 		this.bees.forEach(function (bee){ 
+			bee.body.setSize(34, 53, 3, 8);
 			bee.body.allowGravity = false;
 			bee.body.immovable = true;
 		}, this);
@@ -315,8 +319,12 @@ State.GamePlay.prototype = {
     	//game.debug.body(this.player);
     	//game.debug.body(this.thorns);
 
-		/*this.thorns.forEach(function (thorn){ 
+		this.thorns.forEach(function (thorn){ 
 			game.debug.body(thorn);
-		}, this);*/
+		}, this);
+
+		this.bees.forEach(function (bees){ 
+			game.debug.body(bees);
+		}, this);
     },
 };

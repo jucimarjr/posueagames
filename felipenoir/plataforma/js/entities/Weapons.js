@@ -87,8 +87,7 @@ function MachineGun() {
 MachineGun.prototype = new WeaponA();
 MachineGun.prototype.constructor = MachineGun;
 
-function Weapon(game, weapon) {
-    this.game = game,
+function Weapon(weapon) {
     this.weapon = weapon,
     this.pistol = new Pistol(),
     this.machineGun = new MachineGun();
@@ -103,7 +102,7 @@ Weapon.prototype = {
     create : function() {
         this.pistol.create();
         this.machineGun.create();
-        this.game.time.advancedTiming = true;
+        game.time.advancedTiming = true;
     },
 
     update : function(hero) {
@@ -114,6 +113,11 @@ Weapon.prototype = {
     },
 
     change : function(weapon) {
-        this.weapon = weapon;
+        if(weapon.key == 'weapon1')
+            this.weapon = Weapon1;
+        else if(weapon.key == 'weapon2')
+            this.weapon = Weapon2;
+        else if(weapon.key == 'weapon3')
+            this.weapon = Weapon3;
     }
 }
