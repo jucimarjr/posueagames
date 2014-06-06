@@ -107,7 +107,6 @@ Level.prototype = {
             var moduloPosition = Math.abs(this.game.world.position.x);
 			if (projectile.body.x  < moduloPosition - 50 || projectile.body.x >  moduloPosition + this.game.width
 			|| projectile.body.y > this.game.height + 50|| projectile.body.y < 0 ||  this.game.time.time > projectile.timeLife){
-			  console.log("DEVE MORER")
 			  projectile.kill();
             }
         }, this);
@@ -121,7 +120,7 @@ Level.prototype = {
                 var time = this.game.time.time;
 
                 if(enemy.TYPE == myEnemy.BIG_TYPE && enemy.ultimoAtaque < time){
-                    this.game.physics.arcade.accelerateToObject(enemy,hero.hero, 100 + Math.random() * 400);
+                    this.game.physics.arcade.accelerateToXY(enemy,hero.hero.x,hero.hero.y);
                     enemy.play('attack');
                     enemy.ultimoAtaque = time + 5000;    
                 }else if(enemy.TYPE == myEnemy.MIDLE_TYPE && enemy.ultimoAtaque < time){
@@ -137,7 +136,9 @@ Level.prototype = {
                     }
 					proj.timeLife = time + 5000;
                     enemy.ultimoAtaque = time + 5000;  
-                }
+                }else if(enemy.TYPE == myEnemy.LITTLE_TYPE){
+					
+				}
                 
 			}
 		},this);
