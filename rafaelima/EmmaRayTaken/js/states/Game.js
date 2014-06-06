@@ -34,23 +34,22 @@ State.Game.prototype = {
 			"use strict";
 			
 			rotate = 0.05;
+			
+			//set p2
 			this.game.physics.startSystem(Phaser.Physics.P2JS);
 			this.game.physics.p2.setImpactEvents(true);
 		    this.game.stage.backgroundColor = '#2d2d2d';
 		    this.game.physics.p2.updateBoundsCollisionGroup();
 		    
+		    //bg
 		    bg1 = game.add.tileSprite(0, 3060, 3000, 540, 'bg1');
 		    bg2 = game.add.tileSprite(0, 3060, 3000, 540, 'bg2');
 		    bg3 = game.add.tileSprite(0, 3060, 3000, 540, 'bg3');
 		    bg4 = game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
 
-//			var map = this.game.add.tilemap('stage');
-//			map.addTilesetImage('tileset_arcane_forest', 'tileset');
-
 		    //Map
 		    map = this.game.add.tilemap('stage');
 			map.addTilesetImage('tileset_arcane_forest', 'tileset');
-			
 			layer = map.createLayer('Camada de Tiles 1');
 			map.setCollisionBetween(1, 5);
 			map.setCollisionBetween(8, 22);
@@ -62,6 +61,7 @@ State.Game.prototype = {
 			this.game.physics.p2.restitution = 0.8;
 		    this.game.physics.p2.gravity.y = 800;
 
+		    //var
 		    var playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    var obstacleCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    var monsterCollisionGroup = this.game.physics.p2.createCollisionGroup();
@@ -199,7 +199,7 @@ State.Game.prototype = {
 		render: function () {
 			//DEBUG
 		    this.game.debug.spriteInfo(player, 32, 32);
-			this.game.debug.text(result, 100, 100);
+			this.game.debug.text(result, 120, 100);
 		}
 
 };
