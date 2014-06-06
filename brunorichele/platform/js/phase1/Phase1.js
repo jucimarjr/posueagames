@@ -13,12 +13,12 @@ State.Phase1.prototype = {
 		Phase1.World.createBg();
 		Phase1.Trap.create();
         this.player = Phase1.Player.create();		
-	    Phase1.Rock.create();		
+	    this.rocks = Phase1.Rock.create();		
 	    this.smoke = Phase1.Smoke.create();	   
 	    Phase1.Door.create();
 		Phase1.World.createBgAlpha();
 	
-		game.physics.ninja.enableAABB([this.player, this.smoke]);
+	//	game.physics.ninja.enableAABB([this.player, this.smoke]);
 		
         //misc defs
         this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -29,8 +29,9 @@ State.Phase1.prototype = {
         "use strict";
         Config.global.screen.resize(this.game); 
 		
-
-    	game.physics.ninja.collide(this.player, this.smoke, this.collisionHandler, null, this);
+		//game.physics.ninja.collide(this.player, this.smoke);
+		Phase1.Rock.collide(this.player);
+    	//game.physics.ninja.collide(this.player, this.smoke, this.collisionHandler, null, this);
 	
       //  this.game.physics.arcade.overlap(this.player, Phase1.Trap.trapGroup, Phase1.Trap.trapCollision, null, this);
 	  
@@ -55,9 +56,5 @@ State.Phase1.prototype = {
         }
         else this.player.body.velocity.y = 0;*/
 
-    },
-	collisionHandler : function() {
-		this.smoke.x = 0;
-		this.smoke.y = 1700;
-	}	
+    }
 };
