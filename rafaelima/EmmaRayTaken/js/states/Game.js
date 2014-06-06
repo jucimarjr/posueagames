@@ -21,10 +21,11 @@ var collects;
 var itemsTaken;
 var idPlayer;
 var helper;
-var flagId;
+var flagId, flagMove;
 var monster;
-var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup;
+var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup, barCollisionGroup;
 var isJumping, beInGround, yBeforeJump;
+var timer;
 
 State.Game.prototype = {
 		preload: function () {
@@ -38,6 +39,8 @@ State.Game.prototype = {
 			rotate = 0.05;
 			previousX = 0;
 		    previousY = 0;
+		    flagMove = false;
+		    timer = 0;
 		},
 		create: function () {
 			"use strict";
@@ -57,6 +60,7 @@ State.Game.prototype = {
 		    monsterCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    tileCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    collectCollisionGroup = this.game.physics.p2.createCollisionGroup();
+		    barCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    
 		    //bg
 		    bg1 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg1');
@@ -107,8 +111,11 @@ State.Game.prototype = {
 		    collect.body.collides([collectCollisionGroup ,playerCollisionGroup]);
 
 		    //bar
-		    bar = game.add.sprite(Config.game.bar.startX, Config.game.bar.startY, 'bar');
-		    game.add.tween(bar).to({ x: Config.game.bar.widthArea }, Config.game.bar.startX, Phaser.Easing.Linear.None, true, 0, 1000, true)
+		    bar = this.game.add.sprite(100, 3400, 'bar');
+		    this.game.physics.p2.enable(bar, true);
+		    bar.body.kinematic = true;
+		    bar.body.setCollisionGroup(barCollisionGroup);
+		    bar.body.collides([barCollisionGroup, playerCollisionGroup]);
 		    
 		    //player
 		    player = this.game.add.sprite(60, 3300, 'dude');
@@ -121,10 +128,13 @@ State.Game.prototype = {
 		    player.body.collideWorldBounds = true;
 		    player.body.fixedRotation = true;
 		    player.body.setCollisionGroup(playerCollisionGroup);
+		    
+		    //collide
 			player.body.collides(monsterCollisionGroup, hitMonsters, this);
 			player.body.collides(obstacleCollisionGroup, hitObstacles, this);
 			player.body.collides(tileCollisionGroup, hitTiles, this);
 			player.body.collides(collectCollisionGroup, this.collectItems, this);
+			player.body.collides(barCollisionGroup);
 		    
 			//add 'things' to the world
 			putObstacles();
@@ -139,30 +149,9 @@ State.Game.prototype = {
 			attackButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 			
 		},
-		collectItems: function (varPlayer, collect) {
-			"use strict";
-			if ((collect.data.id != idPlayer) && !flagId) {
-				idPlayer = collect.data.id;
-	
-				console.log(varPlayer.data.id, collect.data.id);
-				collect.sprite.kill();
-				itemsTaken++;
-	
-				if (itemsTaken > 0) {
-					var fixedItem = this.game.add.sprite(0, 0, 'collect');
-					fixedItem.fixedToCamera = true;
-					fixedItem.cameraOffset.setTo(720 + (40 * itemsTaken), 40);
-					flagId = true;
-				}
-			}
-	
-			if ((collect.data.id == idPlayer) && flagId) {
-				flagId = false;
-			}
-
-		},
 		update: function () {
 			"use strict";
+			this.moveBar(bar, 200);
 //			Config.global.screen.resize(this.game);
 			if (cursors.left.isDown){
 				player.body.moveLeft(200);
@@ -209,7 +198,42 @@ State.Game.prototype = {
 		render: function () {
 			//DEBUG
 		    this.game.debug.spriteInfo(player, 32, 32);
-		}
+		},
+		
+		//collect item (diamond and key)
+		collectItems: function (varPlayer, collect) {
+			"use strict";
+			//hit once
+			if ((collect.data.id != idPlayer) && !flagId) {
+				idPlayer = collect.data.id;
+	
+				console.log(varPlayer.data.id, collect.data.id);
+				collect.sprite.kill();
+				itemsTaken++;
+	
+				if (itemsTaken > 0) {
+					var fixedItem = this.game.add.sprite(0, 0, 'collect');
+					fixedItem.fixedToCamera = true;
+					fixedItem.cameraOffset.setTo(720 + (40 * itemsTaken), 40);
+					flagId = true;
+				}
+			}
+			if ((collect.data.id == idPlayer) && flagId) {
+				flagId = false;
+			}
+		},
+		
+		//move the bar (obstacle)
+		moveBar: function (obj, velocity) {
+			"use strict";
+			timer ++;
+			if(timer >= 100 ){
+				obj.body.moveLeft(velocity);
+				if(timer >= 200){timer = 0;}
+			}else {
+				obj.body.moveRight(velocity);
+			}
+		},
 
 };
 
@@ -353,3 +377,4 @@ function followPlayer()
   }
   
 }
+
