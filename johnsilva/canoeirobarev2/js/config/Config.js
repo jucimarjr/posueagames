@@ -152,7 +152,7 @@ Config.update = {
 
 Config.level = {
 	getLevel: function(level){
-		//x,y,branches-exists,bush-id,waters-id,bees-id,tubes-id,thorns-id,cois-id
+		//x,y,branches-exists,bush-id,waters-id,bees-id,tubes-id,thorns-id,coin-id,coin-image
 		if(level == 1)
 			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 18, 19, 'coin');
 		else if(level == 3)
