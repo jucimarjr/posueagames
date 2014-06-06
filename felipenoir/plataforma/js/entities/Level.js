@@ -106,7 +106,7 @@ Level.prototype = {
             this.game.physics.arcade.accelerateToObject(projectile, hero.hero, Math.random() * 300);
             var moduloPosition = Math.abs(this.game.world.position.x);
 			if (projectile.body.x < moduloPosition  || projectile.body.x >  moduloPosition + this.game.width
-			|| projectile.body.y > this.game.height || projectile.body.y < 0 || projectile.timeLife > this.game.time.time){
+			|| projectile.body.y > this.game.height || projectile.body.y < 0 || projectile.timeLife < this.game.time.time){
 			  console.log("DEVE MORER")
 			  projectile.kill();
             }
