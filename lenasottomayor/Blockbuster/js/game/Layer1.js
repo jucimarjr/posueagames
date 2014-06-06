@@ -15,8 +15,14 @@ Layer1.prototype = {
 		this.platform = this.tilemap.map.createLayer(Config.tilemap.tiles.tileset.platform);
 		this.thorn = this.tilemap.map.createLayer(Config.tilemap.tiles.tileset.thorn);
 
-		this.tilemap.map.setCollisionBetween(1,52, true, Config.tilemap.tiles.tileset.platform);
-		this.tilemap.map.setCollisionBetween(54,63, true, Config.tilemap.tiles.tileset.platform);
+		this.tilemap.map.setCollision([2,20,47],true, Config.tilemap.tiles.tileset.platform);
+		this.tilemap.map.setCollisionBetween(5,7, true, Config.tilemap.tiles.tileset.platform);
+		this.tilemap.map.setCollisionBetween(10,18, true, Config.tilemap.tiles.tileset.platform);
+		this.tilemap.map.setCollisionBetween(22,27, true, Config.tilemap.tiles.tileset.platform);
+		this.tilemap.map.setCollisionBetween(31,33, true, Config.tilemap.tiles.tileset.platform);
+		this.tilemap.map.setCollisionBetween(35,42, true, Config.tilemap.tiles.tileset.platform);
+		this.tilemap.map.setCollisionBetween(49,52, true, Config.tilemap.tiles.tileset.platform);
+		this.tilemap.map.setCollisionBetween(55,61, true, Config.tilemap.tiles.tileset.platform);
 
 		this.tilemap.map.setCollision([53],true, Config.tilemap.tiles.tileset.thorn);
 	}

@@ -21,7 +21,7 @@ Pause.prototype = {
 	},
 	pauseGame : function (){		
 		this.game.paused = true;
-		var moduloPosition = this.game.world.position.x < 0?(-1)*this.game.world.position.x : this.game.world.position.x; 
+		var moduloPosition = Math.abs(this.game.world.position.x); 
 		this.menu = game.add.sprite(moduloPosition + this.game.width/2, this.game.height/2, 'menu');
 		this.menu.anchor.setTo(0.5, 0.5);
 	},

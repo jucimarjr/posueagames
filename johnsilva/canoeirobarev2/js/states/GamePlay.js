@@ -7,11 +7,6 @@ State.GamePlay = function (game) {
 	var jumping;
 	var cursors;
 	var levelConfig;
-	/*var player;
-	var level;
-	var map;
-	var bees;
-	var layer;*/
 };
 State.GamePlay.prototype = {
 	preload: function () {
@@ -22,13 +17,10 @@ State.GamePlay.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;
-		this.level = 3;
-		//this.game.world.setBounds(0, -600, 1600, 1200);
+		this.level = 4;
 
 		this.player = game.add.sprite(10,1000 ,'playerS');
-		this.player.anchor.setTo(.5, 1);
-
-		
+		this.player.anchor.setTo(.5, 1);		
 		//player.smoothed = false;
 		//player.body.checkCollision.up = false;
 		//player.body.checkCollision.left = false;
@@ -49,7 +41,7 @@ State.GamePlay.prototype = {
 		this.player.body.setSize(25, 60, 0, 0);
 		//this.player.body.bounce.set(0.5);
 		this.game.camera.y = 1000;
-
+		cursors = this.game.input.keyboard.createCursorKeys();
 		this.loadLevel(this.level);
 		
 		
@@ -87,10 +79,20 @@ State.GamePlay.prototype = {
 
 		if(levelConfig.bees.id>0) this.game.physics.arcade.overlap(this.player, this.bees, this.collideWithBees, null,this);
 		if(levelConfig.thorns.id>0) this.game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
-		if(levelConfig.waters.id>0) this.game.physics.arcade.collide(this.player, this.acidicWater, this.die, null,this);
+		//if(levelConfig.waters.id>0) this.game.physics.arcade.collide(this.player, this.acidicWater, this.die, null,this);
+		if(levelConfig.waters.id>0){
+			this.game.physics.arcade.overlap(this.player, this.waters, this.die, null,this);
+			this.game.physics.arcade.overlap(this.waters, this.layer, this.renew, null,this);
+		}
+		if(levelConfig.checkPoint.id>0){
+			this.game.physics.arcade.overlap(this.player, this.checkPoint, this.saveCP, null,this);
+		}
+
 		
 		this.game.physics.arcade.overlap(this.player, this.coin,
 			function () {
+			levelConfig.checkPoint.x = 0;
+			levelConfig.checkPoint.y = 0;
 			this.loadLevel(this.level + 1);
 			//this.loadLevel(3);
 		}, null, this);
@@ -149,7 +151,6 @@ State.GamePlay.prototype = {
 	},
 
 	loadLevel: function (level) {
-		cursors = this.game.input.keyboard.createCursorKeys();
 		this.gameOver = false;
 		this.level = level;
 		levelConfig = Config.level.getLevel(level);
@@ -160,7 +161,12 @@ State.GamePlay.prototype = {
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 		this.player.body.gravity.y = 1000;
-		this.player.position.setTo(levelConfig.player.posX, levelConfig.player.posY);
+
+		if(levelConfig.checkPoint.x > 0){
+			this.player.position.setTo(levelConfig.checkPoint.x, levelConfig.checkPoint.y);
+		}else{
+			this.player.position.setTo(levelConfig.player.posX, levelConfig.player.posY);
+		}		
 		this.game.camera.follow(this.player);
 
 		if (this.layer) this.layer.destroy();
@@ -173,6 +179,7 @@ State.GamePlay.prototype = {
 		if (this.coin) this.coin.destroy();
 		if (this.bushes) this.bushes.destroy();
 		if (this.acidicWater) this.acidicWater.destroy();
+		if (this.checkPoint) this.checkPoint.destroy();
 
 		this.bg = this.game.add.tileSprite(0,0,1200,800,'bg'+level);
 		this.bg.fixedToCamera = true;		
@@ -197,6 +204,21 @@ State.GamePlay.prototype = {
 
 		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);
 		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
+		if(levelConfig.checkPoint.id>0) this.addCheckPoint(levelConfig.checkPoint.id);
+
+
+	},
+
+	addCheckPoint: function(id){
+		this.checkPoint = game.add.group();
+		this.checkPoint.enableBody = true;
+		this.checkPoint.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('checkPoint',id,'checkP', 0,true,false,this.checkPoint);
+		this.checkPoint.callAll('animations.add', 'animations', 'spin', [0,1,2], 5, false);
+		this.checkPoint.forEach(function (c){ 
+			c.body.allowGravity = false;
+			c.body.immovable = true;
+		}, this);
 	},
 
 	addCoin: function(id, image){
@@ -225,16 +247,19 @@ State.GamePlay.prototype = {
 		}, this);
 	},
 
+	renew: function(water, bloco){
+		water.position.setTo(water.initX, water.initY);
+	},
+
 	addWaters: function(id){
 		this.waters = game.add.group();
 		this.waters.enableBody = true;
 		this.waters.physicsBodyType = Phaser.Physics.ARCADE;
 		this.map.createFromObjects('waters',id,'acidicWater', 0,true,false,this.waters);
-		this.waters.forEach(function (water){ 
-			water.body.allowGravity = false;
-			water.body.immovable = true;
-			//water.anchor.setTo(.5, 1);
-			this.addEmmiter(water.body.x, water.body.y);
+		this.waters.forEach(function (water){
+			water.initX = water.body.x;
+			water.initY = water.body.y;
+			water.anchor.setTo(.3, 1);
 		}, this);
 	},
 
@@ -275,27 +300,6 @@ State.GamePlay.prototype = {
 		}, this);
 	},
 
-	addEmmiter: function(x,y){
-		this.acidicWater = game.add.emitter(x,y,1);
-		//var emitter = game.add.emitter(game.world.centerX, game.world.centerY);
-		//emitter.width = game.world.width;
-		//emitter.angle = 30; // uncomment to set an angle for the rain.
-		/*emitter.minParticleScale = 0.1;
-		emitter.maxParticleScale = 0.5;*/
-		this.acidicWater.setYSpeed(80);
-		this.acidicWater.setXSpeed(0);
-		//emitter.setYSpeed(300, 500);
-		//emitter.setXSpeed(-5, 5);
-
-		/*emitter.minParticleSpeed.setTo(-300, -300);
-    	emitter.maxParticleSpeed.setTo(300, 300);*/
-
-		this.acidicWater.minRotation = 0;
-		this.acidicWater.maxRotation = 0;
-		this.acidicWater.makeParticles('acidicWater');
-		this.acidicWater.start(false, 1800, 1, 0);
-	},
-
 	collideWithBees: function(player, enemie){
 		var emitter = game.add.emitter(enemie.body.x, enemie.body.y, 250);
 		emitter.minParticleSpeed.setTo(-500, -500);
@@ -326,17 +330,26 @@ State.GamePlay.prototype = {
 		}, this);
     },
 
-    //game
+    saveCP : function(player, cp) {    	
+    	this.checkPoint.callAll('animations.play', 'animations', 'spin');
+    	levelConfig.checkPoint.x = player.body.x;
+    	levelConfig.checkPoint.y = player.body.y;
+    },
 
     render: function (){
     	//game.debug.body(this.player);
     	//game.debug.body(this.thorns);
+    	//game.debug.text(levelConfig.checkPoint.x,32,32);
 
 		/*this.thorns.forEach(function (thorn){ 
 			game.debug.body(thorn);
-		}, this);
+		}, this);*/
 
-		this.bees.forEach(function (bees){ 
+		/*this.waters.forEach(function (w){ 
+			game.debug.body(w);
+		}, this);*/
+
+		/*this.bees.forEach(function (bees){ 
 			game.debug.body(bees);
 		}, this);*/
     },

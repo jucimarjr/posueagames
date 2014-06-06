@@ -11,7 +11,7 @@
             this.game.load.spritesheet('reset_btn','assets/sprites/reset_btn_199-114.png', 199, 57);
 
             /*Gameplay assets*/
-            this.game.load.spritesheet('ninja', 'assets/sprites/ninja_475-34-16.png', 22, 34);
+            this.game.load.spritesheet('ninjas', 'assets/sprites/ninjas_2879-587.png', 89, 83);
             this.game.load.tilemap('map', 'assets/maps/map01.json', null, Phaser.Tilemap.TILED_JSON);
             this.game.load.image('tileset','assets/sprites/tileset.png');
             this.game.load.image('shuriken', 'assets/sprites/shuriken_14-13.png');
