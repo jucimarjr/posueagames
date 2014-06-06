@@ -30,17 +30,18 @@
             this.shurikens.setAll('anchor.x', 0.5);
             this.shurikens.setAll('anchor.y', 0.5);
 
-            this.player = this.game.add.sprite(40, 2600, 'ninja');
+            this.player = this.game.add.sprite(40, 2600, 'ninjas');
 
             this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
 
-            this.player.scale.set(2, 2);
             this.player.anchor.setTo(0.5, 0.5);
             this.player.body.gravity.y = 1200;
             this.player.body.collideWorldBounds = true;
 
-            this.player.animations.add('idle', [0, 1, 2], 4, true);
-            this.player.animations.add('walk', [0, 1, 2], 8, true);//FIXME: Create a walk animation
+            this.player.animations.add('idle', [64, 65, 66, 67], 4, true);
+            this.player.animations.add('walk', [0, 1, 2, 3], 8, true);
+            this.player.animations.add('jump', [99, 98], 8, false);
+
             this.player.animations.play('idle');
 
             this.game.camera.follow(this.player);
@@ -97,19 +98,33 @@
         handleKeyDown: function () {
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
                 this.player.body.velocity.x = 400;
-                this.player.animations.play('walk');
                 this.turnRight();
+
+                if (this.player.body.onFloor()) {
+                    this.player.animations.play('walk');
+                } else if (this.player.animations.currentAnim.name != 'jump') {
+                    this.player.animations.play('jump');
+                }
             }
 
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
                 this.player.body.velocity.x = -400;
-                this.player.animations.play('walk');
                 this.turnLeft();
+
+                if (this.player.body.onFloor()) {
+                    this.player.animations.play('walk');
+                } else if (this.player.animations.currentAnim.name != 'jump') {
+                    this.player.animations.play('jump');
+                }
             }
 
             if (!this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT) && !this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-                this.player.body.velocity.x = 0;
-                this.player.animations.play('idle');
+                if (this.player.body.onFloor()) {
+                    this.player.body.velocity.x = 0;
+                    this.player.animations.play('idle');
+                } else if (this.player.animations.currentAnim.name != 'jump') {
+                    this.player.animations.play('jump');
+                }
             }
 
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
@@ -118,8 +133,7 @@
 
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
                 if (this.player.body.onFloor()) {
-                    this.player.animations.stop();
-                    this.player.frame = 0;
+                    this.player.animations.play('jump');
                     this.player.body.velocity.y = -700;
                 }
             }

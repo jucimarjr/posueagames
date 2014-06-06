@@ -107,7 +107,6 @@ Level.prototype = {
             var moduloPosition = Math.abs(this.game.world.position.x);
 			if (projectile.body.x  < moduloPosition - 50 || projectile.body.x >  moduloPosition + this.game.width
 			|| projectile.body.y > this.game.height + 50|| projectile.body.y < 0 ||  this.game.time.time > projectile.timeLife){
-			  console.log("DEVE MORER")
 			  projectile.kill();
             }
         }, this);
@@ -120,25 +119,44 @@ Level.prototype = {
                 var sentido = hero.hero.body.x > enemy.body.x;
                 var time = this.game.time.time;
 
-                if(enemy.TYPE == myEnemy.BIG_TYPE && enemy.ultimoAtaque < time){
-                    this.game.physics.arcade.accelerateToObject(enemy,hero.hero, 100 + Math.random() * 400);
+                if(!enemy.isAttack && enemy.TYPE == myEnemy.BIG_TYPE && enemy.ultimoAtaque < time){
                     enemy.play('attack');
-                    enemy.ultimoAtaque = time + 5000;    
-                }else if(enemy.TYPE == myEnemy.MIDLE_TYPE && enemy.ultimoAtaque < time){
+					enemy.ultimoAtaque = time + 3000;
+					enemy.isAttack = true;
+					this.game.physics.arcade.accelerateToXY(enemy,hero.hero.x,hero.hero.y,100);
+                }else if(!enemy.isAttack && enemy.TYPE == myEnemy.MIDLE_TYPE && enemy.ultimoAtaque < time){
                     var proj = myEnemy.projectiles.getFirstDead();
                     if (proj == null) {
                       proj = myEnemy.projectiles.create(enemy.body.x + enemy.body.width / 2, enemy.body.y + enemy.body.height / 2, 'projectile');
                       this.game.physics.arcade.enable(proj, Phaser.Physics.ARCADE);
                       proj.body.allowGravity = false;
                       proj.anchor.setTo(0.5, 0.5);
-					  
                     } else {
                       proj.reset(enemy.body.x + enemy.body.width / 2, enemy.body.y + enemy.body.height / 2);
                     }
 					proj.timeLife = time + 5000;
                     enemy.ultimoAtaque = time + 5000;  
-                }
+                }else if(!enemy.isAttack && enemy.TYPE == myEnemy.LITTLE_TYPE){
+					enemy.play('rollAtaack');
+					enemy.ultimoAtaque = time + 3000;
+					enemy.isAttack = true;
+					this.game.physics.arcade.accelerateToXY(enemy,hero.hero.x,hero.hero.y,100);
+					 
+				}
                 
+			}
+		},this);
+		
+		myEnemy.enemies.forEachExists(function(enemy){
+			var time = this.game.time.time;
+			if(enemy.isAttack && enemy.TYPE == myEnemy.BIG_TYPE && time > enemy.ultimoAtaque){
+				enemy.reset(enemy.body.x,enemy.body.y);
+				enemy.isAttack = false;
+				enemy.play('walk')
+			}else if(enemy.isAttack && enemy.TYPE == myEnemy.LITTLE_TYPE && time > enemy.ultimoAtaque){
+				enemy.reset(enemy.body.x,enemy.body.y);
+				enemy.isAttack = false;
+				enemy.play('walk')
 			}
 		},this);
 	}

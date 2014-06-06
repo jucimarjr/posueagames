@@ -52,10 +52,12 @@ Enemy.prototype = {
 	        enemy.scale.setTo(0.5,0.5);
 	        enemy.animations.add('walk', [0,1,2,3,4,3,2,1], 10, true);
 	        enemy.animations.add('attack',[0,1],2,true);
+			enemy.animations.add('rollAtaack',[2,3],2,true);
 			enemy.animations.play('walk');
 	        enemy.health = 100;
 			enemy.TYPE = Math.round(Math.random()*2);
 			enemy.ultimoAtaque = 0;
+			enemy.isAttack = false;
 
 	    }
 	}

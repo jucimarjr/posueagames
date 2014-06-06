@@ -23,9 +23,10 @@ State.GamePlay.prototype = {
 	preload: function () {
 		"use strict";
 		this.game.load.image('gameplay-bg',  Config.gamePlay.dir);
-		this.game.load.tilemap('map', 'assets/mapLevel1_960-600.json', null, Phaser.Tilemap.TILED_JSON);
-	    this.game.load.image('tileset','assets/images/tileset.png');
-	    this.game.load.image('crab','assets/images/crab_80-80.png');
+		this.game.load.tilemap('map', 'assets/mapaLevel1_4800-600.json', null, Phaser.Tilemap.TILED_JSON);
+	    this.game.load.image('plataforma','assets/images/barra_160-80.png');
+	    this.game.load.image('areia','assets/images/areiaSeca_40-40.png');
+	    this.game.load.spritesheet('crab','assets/images/crab_150-69.png', 150, 69);
 	    this.game.load.image('life_drop', 'assets/images/lifedrop_40-40.png');
 
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
@@ -37,18 +38,19 @@ State.GamePlay.prototype = {
 	create: function () {
 		"use strict";
 		var background;
-		background = this.game.add.tileSprite(Config.gamePlay.x, Config.gamePlay.y, this.game.world.width, this.game.world.height, 'gameplay-bg');
-		background.fixedToCamera = true;
-		this.crab = game.add.sprite(this.game.width+130, this.game.height-160, 'crab');
-		
+		background = this.game.add.tileSprite(Config.gamePlay.x, Config.gamePlay.y, 4800, 600, 'gameplay-bg');
+		//background.fixedToCamera = true;
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.gravity.y = 800;
         //this.game.physics.p2.restitution = 0.8;
 		
 		this.map = this.game.add.tilemap('map');
-		this.map.addTilesetImage('tileset');
-		this.layer = this.map.createLayer('Camada de Tile 1');
+		this.map.addTilesetImage('barra_160-80', 'plataforma');
+		this.map.addTilesetImage('areiaSeca_40-40', 'areia');
+		this.layer = this.map.createLayer('Camada de Tiles 1');
         this.layer.resizeWorld();
+
+		this.crab = game.add.sprite(this.game.width-130, this.game.height-80, 'crab');
         
         //  Set the tiles for collision.
         //  Do this BEFORE generating the p2 bodies below.
@@ -65,10 +67,11 @@ State.GamePlay.prototype = {
         
         // create enemy crab
         this.game.physics.p2.enableBody(this.crab);
-		this.crab.body.setRectangle(60, 60, 0, 0);
+		this.crab.body.setRectangle(140, 60, 0, 0);
 		this.crab.body.fixedRotation = true;
+		
         //this.crab.body.collideWorldBounds = false;
-        this.crab.body.moveLeft(500);
+        this.crab.body.moveLeft(2000);
         this.crab.name = 'crab';
 
         // Add a 'life drop"
@@ -192,12 +195,12 @@ State.GamePlay.prototype = {
         }
         return false;
     },
-	moveCrab: function () {
+	moveCrab: function () {		
 		if (this.touchingLeft(this.crab.body)) {
 			//this.crab.body.velocity.x = 100;
-			this.crab.body.moveRight(500);
+			this.crab.body.moveRight(2000);
 		} else if (this.touchingRight(this.crab.body)) {
-			this.crab.body.moveLeft(500);
+			this.crab.body.moveLeft(2000);
 		} else {
 			//this.crab.body.velocity.x = -100;
 		}					
