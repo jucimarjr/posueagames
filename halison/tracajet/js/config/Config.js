@@ -45,33 +45,33 @@ Config.menu = {
 	x: 0,
 	y: 0,
 	buttonHowToPlay: {
-		dir: 'assets/sprites/button_instruction_247-16.png',
+		dir: 'assets/sprites/buttonintructions_266-58-4.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.60,
-		width: 123,
-		height: 16,
+		y: Config.global.screen.height * 0.50,
+		width: 266,
+		height: 58,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonPlay: {
-		dir: 'assets/sprites/button_play_180-33.png',
+		dir: 'assets/sprites/buttonplay_130-58-4.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.69,
-		width:90,
-		height: 33,
+		y: Config.global.screen.height * 0.59,
+		width:130,
+		height: 58,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonCredits: {
-		dir: 'assets/sprites/button_credits_192-16.png',
+		dir: 'assets/sprites/buttoncredits_216-58-4.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.79,
-		width: 96,
-		height: 16,
+		y: Config.global.screen.height * 0.69,
+		width: 216,
+		height: 58,
 		anchor: {
 			x: 0.5,
 			y: 0.5
