@@ -17,7 +17,7 @@ State.GamePlay.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;
-		this.level = 3;
+		this.level = 4;
 
 		this.player = game.add.sprite(10,1000 ,'playerS');
 		this.player.anchor.setTo(.5, 1);		
