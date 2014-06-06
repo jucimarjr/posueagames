@@ -28,8 +28,8 @@ State.GameSplash.prototype = {
 		this.game.load.tilemap('level1', 'assets/level/1.json', null, Phaser.Tilemap.TILED_JSON);
 		//this.game.load.tilemap('level2', 'assets/level/2.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level3', 'assets/level/3.json', null, Phaser.Tilemap.TILED_JSON);
-		/*this.game.load.tilemap('level4', Config.level.dir+'4/map.json', null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.tilemap('level5', Config.level.dir+'5/map.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.tilemap('level4', 'assets/level/4.json', null, Phaser.Tilemap.TILED_JSON);
+	    /*this.game.load.tilemap('level5', Config.level.dir+'5/map.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level6', Config.level.dir+'6/map.json', null, Phaser.Tilemap.TILED_JSON);*/
 
 		this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_39-60-27.png', 39,60,27);
@@ -40,6 +40,7 @@ State.GameSplash.prototype = {
 
 		this.game.load.image('bg1', 'assets/level/bg1_462-800.jpg');
 		this.game.load.image('bg3', 'assets/level/bg1_462-800.jpg');
+		this.game.load.image('bg4', 'assets/level/bg1_462-800.jpg');
 		this.game.load.image('branches', 'assets/level/branches_360-283.png');
 		this.game.load.image('tileset', 'assets/tile_40-40-17.png');		
 		this.game.load.image('thorn', 'assets/enemies/thorns_80-40.png');

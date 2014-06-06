@@ -22,7 +22,7 @@ State.GamePlay.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;
-		this.level = 1;
+		this.level = 4;
 		//this.game.world.setBounds(0, -600, 1600, 1200);
 
 		this.player = game.add.sprite(10,1000 ,'playerS');
@@ -129,7 +129,7 @@ State.GamePlay.prototype = {
 		/*if (this.jump && this.player.body.onFloor()){	*/
 			jumping = true;
 			this.player.animations.play('jump');
-			this.player.body.velocity.y = -450;
+			this.player.body.velocity.y = -550;
 		}
 		if(!cursors.up.isDown){
 			jumping = false;
