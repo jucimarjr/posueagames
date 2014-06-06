@@ -175,6 +175,23 @@ Config.player = {
 	}
 };
 
+//Enemy
+Config.enemy = {
+	dir: 'assets/images/regularenemy_95-55.png',
+	gravity: 800,
+	speed: 250,
+	height: 95,
+	width: 55,
+	anchor: {
+		x: 0.5,
+		y: 0.5
+	},
+	position: {
+		x: 321,
+		y: 272
+	}	
+};
+
 //HowToPlay
 Config.howToPlay = {
 	dir: 'assets/images/HowToPlay_960-600.png',
