@@ -18,18 +18,17 @@ var bar;
 var previousX;
 var previousY;
 var collects;
-var result;
 var itemsTaken;
 var idPlayer;
 var helper;
 var flagId;
-var flagNamePlayer;
 
 State.Game.prototype = {
 		preload: function () {
 			"use strict";
 			itemsTaken = 0;
-			flagId = true;
+			flagId = false;
+			idPlayer = 0;
 		},
 		create: function () {
 			"use strict";
@@ -112,7 +111,6 @@ State.Game.prototype = {
 		    player.animations.add('left', [0, 1, 2, 3], 10, true);
 		    player.animations.add('turn', [4], 20, true);
 		    player.animations.add('right', [5, 6, 7, 8], 10, true);
-		    player.name = 'player';
 
 		    this.game.physics.p2.enable(player, true);
 		    player.body.fixedRotation = true;
@@ -121,7 +119,6 @@ State.Game.prototype = {
 
 		    //DEBUG LAYER - deletar
 		    layer.debug = true;
-		    result = 'inicio';
 		    
 		    //Collision tile/player
 		    player.body.collides(tileCollisionGroup);
@@ -138,24 +135,25 @@ State.Game.prototype = {
 		},
 		collectItems: function (varPlayer, collect) {
 			"use strict";
-			if(flagId){
-				idPlayer = varPlayer.data.id;
-				flagId = false;
-			}
-			if(idPlayer == varPlayer.data.id){
+			if ((collect.data.id != idPlayer) && !flagId) {
+				idPlayer = collect.data.id;
+	
 				console.log(varPlayer.data.id, collect.data.id);
 				collect.sprite.kill();
-				itemsTaken ++;
-				
-				//DEBUG
-				result = varPlayer.data.id;
-				
-				if(itemsTaken > 0){
-					var fixedItem = this.game.add.sprite(0 , 0, 'collect');
+				itemsTaken++;
+	
+				if (itemsTaken > 0) {
+					var fixedItem = this.game.add.sprite(0, 0, 'collect');
 					fixedItem.fixedToCamera = true;
-					fixedItem.cameraOffset.setTo(720 + (40*itemsTaken), 40);
+					fixedItem.cameraOffset.setTo(720 + (40 * itemsTaken), 40);
+					flagId = true;
 				}
 			}
+	
+			if ((collect.data.id == idPlayer) && flagId) {
+				flagId = false;
+			}
+
 		},
 		update: function () {
 			"use strict";
