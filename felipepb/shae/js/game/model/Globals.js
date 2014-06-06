@@ -7,9 +7,9 @@ var PhysicsConsts = {
 
 var PlayerConsts = {
 	movementVelocity: 1.1,
-	jumpVelocity: 6.0,
-	runModifier: 2.0,
-	runModifierDamping: 0.025
+	jumpVelocity: 3.0,
+	runModifier: 1.5,
+	runModifierDamping: 0.05
 };
 
 var JoystickConsts = {

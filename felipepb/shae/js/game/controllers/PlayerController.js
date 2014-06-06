@@ -181,7 +181,7 @@ Game.PlayerController.prototype = {
 
     handleJump: function () {
 		var joystick = this.joystick;
-		var jumpButtonIsDown = this.jumpButton.isDown || joystick.getB();
+		var jumpButtonIsDown = this.jumpButton.justPressed(150) || joystick.getB();
 		
         // if (!this.canJump && this.isGrounded && !this.isJumping && !jumpButtonIsDown)
         //     this.canJump = true;
@@ -196,6 +196,8 @@ Game.PlayerController.prototype = {
             this.doJump = true;
             this.canJump = false;
             this.animState = Game.PlayerController.AnimState.JumpStart;
+        } else if (this.currentAnim == 'jump-ascend' && this.jumpButton.justPressed(350)) {
+            this.doJump = true;
         } else if (this.isGrounded && (Utils.stringContains(this.currentAnim, 'jump-start') ||
                                        Utils.stringContains(this.currentAnim, 'jump-ascend') ||
                                        Utils.stringContains(this.currentAnim, 'jump-apex') ||
