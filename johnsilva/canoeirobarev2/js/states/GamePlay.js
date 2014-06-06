@@ -42,8 +42,6 @@ State.GamePlay.prototype = {
 									}, this);	*/
 		this.player.animations.add('jump',[15,16,17,18,19],4,false);
 
-		
-
 		this.game.physics.enable(this.player);
 		this.player.body.collideWorldBounds = true;
 		this.game.physics.enable(this.player);
@@ -53,7 +51,7 @@ State.GamePlay.prototype = {
 		this.loadLevel(this.level);
 		
 		
-		cursors = this.game.input.keyboard.createCursorKeys();
+		
 		//jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
 		/*this.right = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
@@ -75,17 +73,25 @@ State.GamePlay.prototype = {
 	},
 	update: function () {
 
-		//if(!this.gameOver){
+		this.game.physics.arcade.collide(this.layer, this.player);
+		this.player.body.velocity.x = 0;
+
+	if(!this.gameOver){
 		
 		//Config.global.screen.resize(this.game);
 		//player.animations.play('walk');
 
-		game.physics.arcade.collide(this.layer, this.player);
-
-		if(levelConfig.bees.id>0) game.physics.arcade.overlap(this.player, this.bees, this.die, null,this);
-		if(levelConfig.thorns.id>0) game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
 		
-		this.player.body.velocity.x = 0;
+
+		if(levelConfig.bees.id>0) this.game.physics.arcade.overlap(this.player, this.bees, this.die, null,this);
+		if(levelConfig.thorns.id>0) this.game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
+		this.game.physics.arcade.overlap(this.player, this.coin,
+			function () {
+			//this.loadLevel(this.level + 1);
+			this.loadLevel(3);
+		}, null, this);
+		
+		
 		//this.branches.tilePosition.x = this.player.body.x;
         if (cursors.left.isDown ) {
         //if (this.back){
@@ -126,7 +132,7 @@ State.GamePlay.prototype = {
 		if(!cursors.up.isDown){
 			jumping = false;
 		}
-	//}
+	}
 	},
 
 	isToJumping: function(){
@@ -139,6 +145,8 @@ State.GamePlay.prototype = {
 	},
 
 	loadLevel: function (level) {
+		cursors = this.game.input.keyboard.createCursorKeys();
+		this.gameOver = false;
 		this.level = level;
 		levelConfig = Config.level.getLevel(level);
 
@@ -152,11 +160,13 @@ State.GamePlay.prototype = {
 		this.game.camera.follow(this.player);
 
 		if (this.layer) this.layer.destroy();
-		if (this.flag) this.flag.destroy();
-		if (this.bees) this.bees.destroy();
+		//if (this.flag) this.flag.destroy();
+		if (this.branches) this.branches.destroy();
 		if (this.waters) this.waters.destroy();
+		if (this.bees) this.bees.destroy();
 		if (this.tubes) this.tubes.destroy();
 		if (this.thorns) this.thorns.destroy();
+		if (this.coin) this.coin.destroy();
 
 		this.bg = this.game.add.tileSprite(0,0,1200,800,'bg'+level);
 		this.bg.fixedToCamera = true;		
@@ -170,6 +180,7 @@ State.GamePlay.prototype = {
 		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);
 		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
 		if(levelConfig.thorns.id>0) this.addThorns(levelConfig.thorns.id);
+		if(levelConfig.coin.id>0) this.addCoin(levelConfig.coin.id, levelConfig.coin.image);
 
 		this.player.bringToTop();
 
@@ -178,6 +189,19 @@ State.GamePlay.prototype = {
 		this.layer = this.map.createLayer('Camada de Tiles 1');
 		this.layer.resizeWorld();
 		this.game.physics.enable(this.layer);
+	},
+
+	addCoin: function(id, image){
+		this.coin = game.add.group();
+		this.coin.enableBody = true;
+		this.coin.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('coin',id,image, 0,true,false,this.coin);
+		this.coin.callAll('animations.add', 'animations', 'spin', [0,1,2,3,4,5,6,7], 12, true);
+    	this.coin.callAll('animations.play', 'animations', 'spin');
+		this.coin.forEach(function (c){ 
+			c.body.allowGravity = false;
+			c.body.immovable = true;
+		}, this);
 	},
 
 	addBushes: function(id){
@@ -268,14 +292,15 @@ State.GamePlay.prototype = {
 	},
 
 	die : function(player, enemie) {
-		//this.gameOver = true;
-		//this.player.anchor.setTo(0.5, 0.5);
-		this.player.animations.play('dead');
-		var t = this.game.add.tween(this.player).to({alpha:0}, 1000).start();
-		enemie.kill();	
+		this.gameOver = true;
+		this.player.animations.stop();
 		this.player.body.gravity.y = 0;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
+		//this.player.anchor.setTo(0.5, 0.5);
+		this.player.animations.play('dead');
+		var t = this.game.add.tween(this.player).to({alpha:0}, 500).start();
+		enemie.kill();	
 	
 		t.onComplete.add(function() {
 		    this.loadLevel(this.level);

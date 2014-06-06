@@ -9,7 +9,7 @@
  <tileset firstgid="19" name="flag" tilewidth="40" tileheight="40">
   <image source="../level/coins_40-40-8.png" width="320" height="40"/>
  </tileset>
- <objectgroup name="flag" width="24" height="15">
+ <objectgroup name="coin" width="24" height="15">
   <object gid="19" x="879" y="440"/>
  </objectgroup>
  <objectgroup name="bushes" width="24" height="15">
