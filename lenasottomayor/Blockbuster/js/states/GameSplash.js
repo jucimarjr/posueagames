@@ -48,6 +48,9 @@ State.GameSplash.prototype = {
 		//Player
 		this.game.load.spritesheet('oscar', Config.player.dir, Config.player.width, Config.player.height);
 		
+		//Enemy
+		this.game.load.spritesheet('enemy', Config.enemy.dir, Config.enemy.width, Config.enemy.height);
+		
 		//Background
 		this.game.load.image('game-background', Config.background.game.dir);
 	}
