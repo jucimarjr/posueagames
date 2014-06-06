@@ -79,9 +79,10 @@ Hero.prototype = {
 		this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 		this.jumpKey.onDown.add(this.jumpCheck, this);
 	},
-	update : function(layer) {
+	update : function(layer, enemies) {
 		"use strict";
 		this.game.physics.arcade.collide(layer, this.hero);
+		enemies.checkCollision(this.hero);
 
 		// PEGA A ENTRADA (tecla pressionada):
 		var keyPressed = false;
@@ -162,8 +163,8 @@ Heroes.prototype = {
 			}
 		}
 	},
-	update : function(layer) {
+	update : function(layer, enemies) {
 		"use strict";
-		this.heroes[this.index].update(layer);
+		this.heroes[this.index].update(layer, enemies);
 	}
 };

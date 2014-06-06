@@ -87,6 +87,8 @@ State.GamePlay.prototype = {
 
 		if(levelConfig.bees.id>0) this.game.physics.arcade.overlap(this.player, this.bees, this.collideWithBees, null,this);
 		if(levelConfig.thorns.id>0) this.game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
+		if(levelConfig.waters.id>0) this.game.physics.arcade.collide(this.player, this.acidicWater, this.die, null,this);
+		
 		this.game.physics.arcade.overlap(this.player, this.coin,
 			function () {
 			this.loadLevel(this.level + 1);
@@ -170,6 +172,7 @@ State.GamePlay.prototype = {
 		if (this.thorns) this.thorns.destroy();
 		if (this.coin) this.coin.destroy();
 		if (this.bushes) this.bushes.destroy();
+		if (this.acidicWater) this.acidicWater.destroy();
 
 		this.bg = this.game.add.tileSprite(0,0,1200,800,'bg'+level);
 		this.bg.fixedToCamera = true;		
@@ -273,28 +276,24 @@ State.GamePlay.prototype = {
 	},
 
 	addEmmiter: function(x,y){
-		var emitter = game.add.emitter(x,y,1);
+		this.acidicWater = game.add.emitter(x,y,1);
 		//var emitter = game.add.emitter(game.world.centerX, game.world.centerY);
-
 		//emitter.width = game.world.width;
 		//emitter.angle = 30; // uncomment to set an angle for the rain.
-
-		emitter.makeParticles('acidicWater');
-
 		/*emitter.minParticleScale = 0.1;
 		emitter.maxParticleScale = 0.5;*/
-		emitter.setYSpeed(80);
-		emitter.setXSpeed(0);
+		this.acidicWater.setYSpeed(80);
+		this.acidicWater.setXSpeed(0);
 		//emitter.setYSpeed(300, 500);
 		//emitter.setXSpeed(-5, 5);
 
 		/*emitter.minParticleSpeed.setTo(-300, -300);
     	emitter.maxParticleSpeed.setTo(300, 300);*/
 
-		emitter.minRotation = 0;
-		emitter.maxRotation = 0;
-
-		emitter.start(false, 1800, 1,0);
+		this.acidicWater.minRotation = 0;
+		this.acidicWater.maxRotation = 0;
+		this.acidicWater.makeParticles('acidicWater');
+		this.acidicWater.start(false, 1800, 1, 0);
 	},
 
 	collideWithBees: function(player, enemie){
@@ -306,6 +305,7 @@ State.GamePlay.prototype = {
 		emitter.minRotation = 0;
 		emitter.maxRotation = 0;
 		emitter.makeParticles('caba');
+		emitter.gravity = 0;
 		emitter.start(false, 1800, 15);
 		this.die(player, enemie)
 	},

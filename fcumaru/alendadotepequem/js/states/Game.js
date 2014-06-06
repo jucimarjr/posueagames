@@ -48,7 +48,7 @@ State.Game.prototype = {
 		"use strict";
 		this.game.physics.arcade.collide(layer, dino);
 
-		this.heroes.update(layer);
+		this.heroes.update(layer, this.enemies);
 		this.enemies.update(layer);
 	}
 };
