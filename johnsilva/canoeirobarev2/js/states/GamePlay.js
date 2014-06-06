@@ -89,8 +89,8 @@ State.GamePlay.prototype = {
 		if(levelConfig.thorns.id>0) this.game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
 		this.game.physics.arcade.overlap(this.player, this.coin,
 			function () {
-			//this.loadLevel(this.level + 1);
-			this.loadLevel(3);
+			this.loadLevel(this.level + 1);
+			//this.loadLevel(3);
 		}, null, this);
 		
 		

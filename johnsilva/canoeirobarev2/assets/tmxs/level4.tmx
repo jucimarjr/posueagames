@@ -40,7 +40,7 @@
  </objectgroup>
  <layer name="Camada de Tiles 1" width="48" height="20">
   <data encoding="base64" compression="zlib">
-   eJzd1vdqwzAQx3E1dgekf9SP0L1nuvfee+++/1v0G+qDQ0iJnNiBVPCBgI+7nxQ7cWyM6WlTMbowiSlMYwazmMM8FtCPAQxiCMMYwSjGMJ5jzURAHqnpTPMvYgnLWMEq1rCOjYw9m62pBOSRGsm/hW3sYBd72McBDgN79iEJnFurZjMgj9RI/mOc4BRnOMcFLs3fSlK+niV0pCKrxr5WL9uRyiNL57lSNZL/Bre4wz0e8IgyupVezx51T985uGpkb5GquU7zlK251TxPeFY1kl/3+cAnvtLrsSK1kdqj3dN1DllqXvBqzdYZJadR+X3Llf/d2uM3ftTctyZrXLN9GRvJX+SS79aenTW/9Gl1fr2KPn/9zPhWqc71WitL/iSgRxHnX2t/rvz2M6x/f1x9/vP941vN3DO+2Y3kT0z+559lb43m189laP68ztzOVsT/V6tWO/5/+WZX58r7baI+2+8/mu/+cdXmzZ7tmuvK145+AQN2RX0=
+   eJzV1udqwzAUhmElcQekP+pL6N4z3Xvvne55/3fR19SCU2E58gQLHgj4oPPpICfxlFK9FeWhG1OYxgxmMYd5LGARAxjEEIYxglGMYRwTOdZMOuTRNV1h/iUsYwWrWMM6NrCZcM+sNS2HPLpG59/GDnaxh30c4BBHjnv2w3fsG1ez5ZBH1+j8JzjFGc5xgUtcqb/lh2x71lELNYwa81mnbMcij14yz7Wo0flvcYd7PKCNRzTRI/RZzij3tM0hqkafrSFqbsI8TaNvkOcJz6ImyO8Z8/nAJ77Ec0nXtS17Rs0hSc0LXiN619T/nErM37bMPYLad+OM3/gRfd8y1kT1tmVMk7/IFdwnOdu0+fW9NO9O0fnlKnr+8t2zrXqH53ErSX7fYY8i5h93vqj88rtY3g/bHMu+/7beZb6/We6MrXea/L7Kf/5JzpY2v7xjrt8/ec3czFbE71dZq4q/X7beQV/9/9YXn83/Pybz/sTV5s2lb1S+qvkFQk9FUw==
   </data>
  </layer>
  <objectgroup name="bees" width="48" height="20">

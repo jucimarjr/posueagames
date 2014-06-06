@@ -159,6 +159,8 @@ Config.level = {
 		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara');
 		else if (level == 4)
 		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara');
+		else if (level == 5)
+		    Config.update.updateLevel(75, 2050, true, 13, 18, 19, 23, 24, 25, 'coinIara');
 		return Config.levelConfig;
 	}
 };
