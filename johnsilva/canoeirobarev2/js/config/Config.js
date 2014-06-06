@@ -132,11 +132,16 @@ Config.levelConfig = {
 	coin:{
 		id: 0,
 		image: 'coin'
-	}
+	},
+	checkPoint:{
+		id: 0,
+		x: 0,
+		y: 0
+	},
 };
 
 Config.update = {
-	updateLevel: function(x,y,branchesE,bushId,watersId,beesId,tubesId,thornsId,coinId,coinImage){
+	updateLevel: function(x,y,branchesE,bushId,watersId,beesId,tubesId,thornsId,coinId,coinImage,ccpId){
 		Config.levelConfig.player.posX = x;
 		Config.levelConfig.player.posY = y;
 		Config.levelConfig.branches.exists = branchesE;
@@ -147,6 +152,7 @@ Config.update = {
 		Config.levelConfig.thorns.id = thornsId;		
 		Config.levelConfig.coin.id = coinId;		
 		Config.levelConfig.coin.image = coinImage;
+		Config.levelConfig.checkPoint.id = ccpId;
 	}
 }
 
@@ -154,13 +160,13 @@ Config.level = {
 	getLevel: function(level){
 		//x,y,branches-exists,bush-id,waters-id,bees-id,tubes-id,thorns-id,coin-id,coin-image
 		if(level == 1)
-			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 18, 19, 'coin');
+			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 18, 19, 'coin', 0);
 		else if(level == 3)
-		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara');
+		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara', 33);
 		else if (level == 4)
-		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara');
+		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara', 0);
 		else if (level == 5)
-		    Config.update.updateLevel(75, 2050, true, 13, 18, 19, 23, 24, 25, 'coinIara');
+		    Config.update.updateLevel(75, 2050, true, 13, 18, 19, 23, 24, 25, 'coinIara', 0);
 		return Config.levelConfig;
 	}
 };

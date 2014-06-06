@@ -49,7 +49,7 @@ State.GamePlay.prototype = {
 		this.player.body.setSize(25, 60, 0, 0);
 		//this.player.body.bounce.set(0.5);
 		this.game.camera.y = 1000;
-
+		cursors = this.game.input.keyboard.createCursorKeys();
 		this.loadLevel(this.level);
 		
 		
@@ -92,10 +92,15 @@ State.GamePlay.prototype = {
 			this.game.physics.arcade.overlap(this.player, this.waters, this.die, null,this);
 			this.game.physics.arcade.overlap(this.waters, this.layer, this.renew, null,this);
 		}
+		if(levelConfig.checkPoint.id>0){
+			this.game.physics.arcade.overlap(this.player, this.checkPoint, this.saveCP, null,this);
+		}
 
 		
 		this.game.physics.arcade.overlap(this.player, this.coin,
 			function () {
+			levelConfig.checkPoint.x = 0;
+			levelConfig.checkPoint.y = 0;
 			this.loadLevel(this.level + 1);
 			//this.loadLevel(3);
 		}, null, this);
@@ -154,7 +159,6 @@ State.GamePlay.prototype = {
 	},
 
 	loadLevel: function (level) {
-		cursors = this.game.input.keyboard.createCursorKeys();
 		this.gameOver = false;
 		this.level = level;
 		levelConfig = Config.level.getLevel(level);
@@ -165,7 +169,12 @@ State.GamePlay.prototype = {
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 		this.player.body.gravity.y = 1000;
-		this.player.position.setTo(levelConfig.player.posX, levelConfig.player.posY);
+
+		if(levelConfig.checkPoint.x > 0){
+			this.player.position.setTo(levelConfig.checkPoint.x, levelConfig.checkPoint.y);
+		}else{
+			this.player.position.setTo(levelConfig.player.posX, levelConfig.player.posY);
+		}		
 		this.game.camera.follow(this.player);
 
 		if (this.layer) this.layer.destroy();
@@ -178,6 +187,7 @@ State.GamePlay.prototype = {
 		if (this.coin) this.coin.destroy();
 		if (this.bushes) this.bushes.destroy();
 		if (this.acidicWater) this.acidicWater.destroy();
+		if (this.checkPoint) this.checkPoint.destroy();
 
 		this.bg = this.game.add.tileSprite(0,0,1200,800,'bg'+level);
 		this.bg.fixedToCamera = true;		
@@ -202,6 +212,21 @@ State.GamePlay.prototype = {
 
 		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);
 		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
+		if(levelConfig.checkPoint.id>0) this.addCheckPoint(levelConfig.checkPoint.id);
+
+
+	},
+
+	addCheckPoint: function(id){
+		this.checkPoint = game.add.group();
+		this.checkPoint.enableBody = true;
+		this.checkPoint.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('checkPoint',id,'checkP', 0,true,false,this.checkPoint);
+		this.checkPoint.callAll('animations.add', 'animations', 'spin', [0,1,2], 5, false);
+		this.checkPoint.forEach(function (c){ 
+			c.body.allowGravity = false;
+			c.body.immovable = true;
+		}, this);
 	},
 
 	addCoin: function(id, image){
@@ -313,9 +338,16 @@ State.GamePlay.prototype = {
 		}, this);
     },
 
+    saveCP : function(player, cp) {    	
+    	this.checkPoint.callAll('animations.play', 'animations', 'spin');
+    	levelConfig.checkPoint.x = player.body.x;
+    	levelConfig.checkPoint.y = player.body.y;
+    },
+
     render: function (){
     	//game.debug.body(this.player);
     	//game.debug.body(this.thorns);
+    	//game.debug.text(levelConfig.checkPoint.x,32,32);
 
 		/*this.thorns.forEach(function (thorn){ 
 			game.debug.body(thorn);
