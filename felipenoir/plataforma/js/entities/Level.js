@@ -100,13 +100,33 @@ Level.prototype = {
         hero.climb(bool);
     },
 
-	updateEnemyAttack : function(enemy,hero){
+	updateEnemyAttack : function(myEnemy,hero){
+        //Verifica de a bola cuspida ainda está em jogo
+        myEnemy.projectiles.forEachExists(function(projectile) {
+            this.game.physics.accelerateToObject(projectile, hero.hero, 50 + Math.random() * 100);
+            if (projectile.body.x < 0 || projectile.body.y < 0 || projectile.body.x > game.width || projectile.body.y > game.height) {
+                projectile.kill();
+            }
+        }, this);
+
 		var muduloHero = Math.round(Math.abs(hero.hero.body.x));
-		enemy.enemies.forEach(function(enemy){
+		myEnemy.enemies.forEachExists(function(enemy){
 			var moduloEnemy =  Math.round(Math.abs(enemy.body.x));
 			
 			if(Math.abs(moduloEnemy - muduloHero) < 300){
-				
+                var sentido = hero.hero.body.x > enemy.body.x;
+                var time = this.game.time.time;
+
+                if(enemy.TYPE == myEnemy.BIG_TYPE && enemy.ultimoAtaque < time){
+                    console.log("atacou");
+                    console.log()
+                    this.game.physics.arcade.accelerateToObject(enemy,hero.hero, Math.random() * 500);
+                    enemy.play('attack');
+                    enemy.ultimoAtaque = time + 5000;    
+                }else if(enemy.Type == myEnemy.BIG_TYPE && enemy.ultimoAtaque < time){
+                    enemy.ultimoAtaque = time + 1000;  
+                }
+                
 			}
 		},this);
 	}
