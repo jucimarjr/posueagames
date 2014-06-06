@@ -47,6 +47,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('thorn', 'assets/enemies/thorns_80-40.png');
 		this.game.load.image('tube', 'assets/enemies/cannon_25-40.png');
 		this.game.load.image('acidicWater', 'assets/enemies/gota_13-37.png');
+		this.game.load.image('caba', 'assets/enemies/caba_8-8.png');		
 	},
 	create: function () {
 		"use strict";

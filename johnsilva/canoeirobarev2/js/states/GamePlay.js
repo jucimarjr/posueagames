@@ -22,7 +22,7 @@ State.GamePlay.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;
-		this.level = 4;
+		this.level = 3;
 		//this.game.world.setBounds(0, -600, 1600, 1200);
 
 		this.player = game.add.sprite(10,1000 ,'playerS');
@@ -85,7 +85,7 @@ State.GamePlay.prototype = {
 
 		
 
-		if(levelConfig.bees.id>0) this.game.physics.arcade.overlap(this.player, this.bees, this.die, null,this);
+		if(levelConfig.bees.id>0) this.game.physics.arcade.overlap(this.player, this.bees, this.collideWithBees, null,this);
 		if(levelConfig.thorns.id>0) this.game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
 		this.game.physics.arcade.overlap(this.player, this.coin,
 			function () {
@@ -277,7 +277,7 @@ State.GamePlay.prototype = {
 		//var emitter = game.add.emitter(game.world.centerX, game.world.centerY);
 
 		//emitter.width = game.world.width;
-		// emitter.angle = 30; // uncomment to set an angle for the rain.
+		//emitter.angle = 30; // uncomment to set an angle for the rain.
 
 		emitter.makeParticles('acidicWater');
 
@@ -295,6 +295,19 @@ State.GamePlay.prototype = {
 		emitter.maxRotation = 0;
 
 		emitter.start(false, 1800, 1,0);
+	},
+
+	collideWithBees: function(player, enemie){
+		var emitter = game.add.emitter(enemie.body.x, enemie.body.y, 250);
+		emitter.minParticleSpeed.setTo(-500, -500);
+		emitter.maxParticleSpeed.setTo(500, 500);
+		emitter.minParticleScale = 0.5;
+		emitter.maxParticleScale = 2;
+		emitter.minRotation = 0;
+		emitter.maxRotation = 0;
+		emitter.makeParticles('caba');
+		emitter.start(false, 1800, 15);
+		this.die(player, enemie)
 	},
 
 	die : function(player, enemie) {
@@ -319,12 +332,12 @@ State.GamePlay.prototype = {
     	//game.debug.body(this.player);
     	//game.debug.body(this.thorns);
 
-		this.thorns.forEach(function (thorn){ 
+		/*this.thorns.forEach(function (thorn){ 
 			game.debug.body(thorn);
 		}, this);
 
 		this.bees.forEach(function (bees){ 
 			game.debug.body(bees);
-		}, this);
+		}, this);*/
     },
 };
