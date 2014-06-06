@@ -67,7 +67,9 @@ State.Game.prototype = {
 		    bg2 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg2');
 		    bg3 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg3');
 		    bg4 = this.game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
-
+		    bg4 = this.game.add.tileSprite(2560, 2520, 3000, 540, 'bg4');
+		    this.game.add.tileSprite(2560, 1980, 3000, 540, 'bg4');
+		    
 		    //Map
 		    map = this.game.add.tilemap('stage');
 			map.addTilesetImage('tileset_arcane_forest', 'tileset');
