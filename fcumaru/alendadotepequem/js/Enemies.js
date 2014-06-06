@@ -41,14 +41,11 @@ Enemy.prototype = {
 	getSprite : function() {
 		return this.enemy;
 	},
-	preload : function() {
-		this.game.load.spritesheet(this.key, this.asset, 40, 40, 4);
-	},
 	create : function() {
 		"use strict";
 
 		var x = game.world.randomX;
-		var y = 500;
+		var y = 100;
 
 		this.enemy = this.game.add.sprite(x, y, this.key, 3);
 		this.enemy.animations.add('walk', [ 1, 2, 3, 4 ], 6, true);
@@ -93,34 +90,44 @@ Enemy.prototype = {
 
 Enemies = function(game) {
 	"use strict";
-	this.enemies = new Array();
-
-	var enemy = new Enemy(game, ENEMY_TYPE_1);
-	this.enemies.push(enemy);
+	this.game = game;
+	this.values = new Array();
 };
 
 Enemies.prototype = {
 	pop : function() {
 		var enemy = new Enemy(game, ENEMY_TYPE_1);
-		this.enemies.push(enemy);
+		this.values.push(enemy);
+		
+		enemy.create();
 	},
 	preload : function() {
-		for (var i = 0; i < this.enemies.length; i++) {
-			this.enemies[i].preload();
-		}
+		this.game.load.spritesheet('enemy1', 'assets/magma_40-40-4.png', 40, 40, 4);
+		this.game.load.spritesheet('enemy2', 'assets/magma_40-40-4.png', 40, 40, 4);
+		this.game.load.spritesheet('enemy3', 'assets/magma_40-40-4.png', 40, 40, 4);
 	},
 	create : function() {
 		"use strict";
-		// pop();
 
-		for (var i = 0; i < this.enemies.length; i++) {
-			this.enemies[i].create();
-		}
+		this.timer = this.game.time.events.loop(1500, this.pop, this);
 	},
 	update : function(layer) {
 		"use strict";
-		for (var i = 0; i < this.enemies.length; i++) {
-			this.enemies[i].update(layer);
+
+		for (var i = 0; i < this.values.length; i++) {
+			this.values[i].update(layer);
 		}
+	},
+	checkCollision : function(hero) {
+		for (var i = 0; i < this.values.length; i++) {
+			this.game.physics.arcade.collide(this.values[i].enemy, hero,
+					this.heroCollision);
+		}
+	},
+	heroCollision : function(enemy, hero) {
+		hero.damage(1);
+	},
+	close : function() {
+		this.game.time.events.remove(this.timer);
 	}
 };
