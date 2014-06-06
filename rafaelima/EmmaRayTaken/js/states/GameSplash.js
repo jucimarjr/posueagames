@@ -27,6 +27,7 @@ State.GameSplash.prototype = {
 		this.game.load.tilemap('stage', Config.game.tilemap.dir, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tileset', Config.game.tileset.dir);
 		this.game.load.spritesheet('dude', Config.game.player.dir , 32, 48);
+		this.game.load.image('collect', 'assets/images/pv.png');
 
 		//Credits
 		this.game.load.image('credits', Config.credits.dir);

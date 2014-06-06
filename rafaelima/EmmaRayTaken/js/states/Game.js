@@ -16,10 +16,19 @@ var bg4;
 var bg5;
 var previousX;
 var previousY;
+var collects;
+var result;
+var itemsTaken;
+var idPlayer;
+var helper;
+var flagId;
+var flagNamePlayer;
 
 State.Game.prototype = {
 		preload: function () {
 			"use strict";
+			itemsTaken = 0;
+			flagId = true;
 		},
 		create: function () {
 			"use strict";
@@ -35,15 +44,18 @@ State.Game.prototype = {
 		    bg3 = game.add.tileSprite(0, 3060, 3000, 540, 'bg3');
 		    bg4 = game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
 
-			var map = this.game.add.tilemap('stage');
-			map.addTilesetImage('tileset_arcane_forest', 'tileset');
+//			var map = this.game.add.tilemap('stage');
+//			map.addTilesetImage('tileset_arcane_forest', 'tileset');
 
 		    //Map
 		    map = this.game.add.tilemap('stage');
 			map.addTilesetImage('tileset_arcane_forest', 'tileset');
 			
 			layer = map.createLayer('Camada de Tiles 1');
-			map.setCollisionBetween(1, 12);
+			map.setCollisionBetween(1, 5);
+			map.setCollisionBetween(8, 22);
+			map.setCollisionBetween(25, 32);
+			map.setCollisionBetween(34, 37);
 			this.game.physics.p2.enable(layer);
 			var tileObjects = this.game.physics.p2.convertTilemap(map, layer);
 
@@ -53,6 +65,7 @@ State.Game.prototype = {
 		    var playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    var obstacleCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    var monsterCollisionGroup = this.game.physics.p2.createCollisionGroup();
+		    var collectCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    var tileCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    
 		    //Tile collision
@@ -61,22 +74,52 @@ State.Game.prototype = {
 		    	tileObjects[i].setCollisionGroup(tileCollisionGroup);
 		    	tileObjects[i].collides(playerCollisionGroup);
 		    }
-
+		    
+		    //Group Item
+		    var collects = this.game.add.group();
+		    
+		    //Collect Items 1
+		    var collect = collects.create(90, 3500, 'collect');
+		    this.game.physics.p2.enable(collect, true);
+		    collect.body.fixedRotation = true; //no circle movement 
+		    collect.body.kinematic = true;
+		    collect.body.setCollisionGroup(collectCollisionGroup);
+		    collect.body.collides([collectCollisionGroup ,playerCollisionGroup]);
+		    
+		    //Collect Items 2
+		    var collect = collects.create(150, 3500, 'collect');
+		    this.game.physics.p2.enable(collect, true);
+		    collect.body.fixedRotation = true; //no circle movement 
+		    collect.body.kinematic = true;
+		    collect.body.setCollisionGroup(collectCollisionGroup);
+		    collect.body.collides([collectCollisionGroup ,playerCollisionGroup]);
+		    
+		    //Collect Items 3
+		    var collect = collects.create(200, 3500, 'collect');
+		    this.game.physics.p2.enable(collect, true);
+		    collect.body.fixedRotation = true; //no circle movement 
+		    collect.body.kinematic = true;
+		    collect.body.setCollisionGroup(collectCollisionGroup);
+		    collect.body.collides([collectCollisionGroup ,playerCollisionGroup]);
+		    
 		    //player
 		    player = this.game.add.sprite(60, 3300, 'dude');
 		    player.animations.add('left', [0, 1, 2, 3], 10, true);
 		    player.animations.add('turn', [4], 20, true);
 		    player.animations.add('right', [5, 6, 7, 8], 10, true);
-
-		    
+		    player.name = 'player';
 		    this.game.physics.p2.enable(player, true);
-		    
 		    player.body.fixedRotation = true;
 		    this.game.camera.follow(player);
 		    player.body.setCollisionGroup(playerCollisionGroup);
+
+		    //DEBUG LAYER - deletar
+		    layer.debug = true;
+		    result = 'inicio';
 		    
 		    //Collision tile/player
 		    player.body.collides(tileCollisionGroup);
+		    player.body.collides(collectCollisionGroup, this.collectItems, this);
 		    
 			layer.resizeWorld();
 		    
@@ -86,6 +129,27 @@ State.Game.prototype = {
 		    cursors = this.game.input.keyboard.createCursorKeys();
 			jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 			
+		},
+		collectItems: function (varPlayer, collect) {
+			"use strict";
+			if(flagId){
+				idPlayer = varPlayer.data.id;
+				flagId = false;
+			}
+			if(idPlayer == varPlayer.data.id){
+				console.log(varPlayer.data.id, collect.data.id);
+				collect.sprite.kill();
+				itemsTaken ++;
+				
+				//DEBUG
+				result = varPlayer.data.id;
+				
+				if(itemsTaken > 0){
+					var fixedItem = this.game.add.sprite(0 , 0, 'collect');
+					fixedItem.fixedToCamera = true;
+					fixedItem.cameraOffset.setTo(720 + (40*itemsTaken), 40);
+				}
+			}
 		},
 		update: function () {
 			"use strict";
@@ -133,7 +197,9 @@ State.Game.prototype = {
 		},
 		
 		render: function () {
+			//DEBUG
 		    this.game.debug.spriteInfo(player, 32, 32);
+			this.game.debug.text(result, 100, 100);
 		}
 
 };
