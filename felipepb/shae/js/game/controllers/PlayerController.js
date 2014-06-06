@@ -42,7 +42,7 @@ Game.PlayerController.AnimState = {
 Game.PlayerController.prototype = {
     create: function () {
         // Setup sprites
-        this.sprite = this.gameState.game.add.sprite(0, 0, 'player_atlas');
+        this.sprite = this.gameState.game.add.sprite(0, 0, 'main_sprite_atlas');
         this.sprite.frameName = 'shae_idle_1_100-100.png';
         this.sprite.anchor.setTo(0.73, 0.5);
         this.sprite.x = 140;
