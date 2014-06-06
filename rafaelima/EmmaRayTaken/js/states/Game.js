@@ -121,7 +121,7 @@ State.Game.prototype = {
 			"use strict";
 
 			//move the bars
-			this.moveBar(bar, 200);
+			this.moveBar(bar, 500);
 			this.moveBar(bar2, 300);
 			this.moveBar(bar3, 500);
 			
@@ -162,13 +162,23 @@ State.Game.prototype = {
 			doJump();
 			doAttack();
 			followPlayer();
+			
+			if(player.x	<3050 && player.y<2451){
+				this.gameRotate();
+			}
 		},
 		
 		onClick: function () {
 			"use strict";
 		},
+
+		gameRotate: function () {
+			"use strict";
+			this.game.state.start('GameRotate');
+		},
 		
 		render: function () {
+			"use strict";
 			//DEBUG
 		    this.game.debug.spriteInfo(player, 32, 32);
 		},
@@ -335,7 +345,7 @@ function putMonsters(){
 //Create Bars
 function putBar(){
     //bar 1
-    bar = this.game.add.sprite(100, 3400, 'bar');
+    bar = this.game.add.sprite(Config.game.bar.startX, Config.game.bar.startY, 'bar');
     this.game.physics.p2.enable(bar, true);
     bar.body.kinematic = true;
     bar.body.setCollisionGroup(barCollisionGroup);
@@ -410,4 +420,3 @@ function followPlayer()
   }
   
 }
-

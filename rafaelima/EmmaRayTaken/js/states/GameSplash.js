@@ -10,7 +10,7 @@ State.GameSplash.prototype = {
 		var progressBar = this.game.add.sprite(0, 500, 'progress-bar');
 		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
 		this.game.load.setPreloadSprite(progressBar);
-		this.game.load.onLoadComplete.add(function () {this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); setTimeout(function () {this.game.state.start('Game');}, Config.gameSplash.millis);}, this);
+		this.game.load.onLoadComplete.add(function () {this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); setTimeout(function () {this.game.state.start('GameRotate');}, Config.gameSplash.millis);}, this);
 		
 		//Menu
 		this.game.load.image('menu-background',  Config.menu.dir);
@@ -26,6 +26,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('bg5', Config.game.dirBg5);
 		this.game.load.image('bar', Config.game.bar.dir);
 		this.game.load.tilemap('stage', Config.game.tilemap.dir, null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.tilemap('stageRotate', Config.game.tilemapRotate.dir, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tileset', Config.game.tileset.dir);
 		this.game.load.spritesheet('dude', Config.game.player.dir , 32, 48);
 		this.game.load.image('collect', 'assets/images/pv.png');
