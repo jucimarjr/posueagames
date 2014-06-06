@@ -63,12 +63,13 @@ State.Game.prototype = {
 		    barCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    
 		    //bg
-		    bg1 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg1');
+		    bg4 = this.game.add.tileSprite(1700, 1950, 3600, 1200, 'bg4');
+		    bg4.tileScale.setTo(4, 4);
+		    bg1 = this.game.add.tileSprite(0, 2850, 3000, 540, 'bg1');
+		    bg1.tileScale.setTo(2, 2);
 		    bg2 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg2');
 		    bg3 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg3');
-		    bg4 = this.game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
-		    bg4 = this.game.add.tileSprite(2560, 2520, 3000, 540, 'bg4');
-		    this.game.add.tileSprite(2560, 1980, 3000, 540, 'bg4');
+		    this.game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
 		    
 		    //Map
 		    map = this.game.add.tilemap('stage');
@@ -165,7 +166,7 @@ State.Game.prototype = {
 			doAttack();
 			followPlayer();
 			
-			if(player.x	<3050 && player.y<2451){
+			if(player.x	<2863 && player.y<=2461){
 				this.gameRotate();
 			}
 		},
