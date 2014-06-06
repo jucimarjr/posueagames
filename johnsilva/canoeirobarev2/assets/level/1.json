@@ -2,7 +2,7 @@
  "layers":[
         {
          "height":15,
-         "name":"flag",
+         "name":"coin",
          "objects":[
                 {
                  "gid":19,
