@@ -6,7 +6,7 @@ State.Game = function (game) {
 var layer;
 var player;
 var cursors;
-var jumpButton;
+var attackButton;
 var map;
 var rotate;
 var bg1;
@@ -22,6 +22,9 @@ var itemsTaken;
 var idPlayer;
 var helper;
 var flagId;
+var monster;
+var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup;
+var isJumping, beInGround, yBeforeJump;
 
 State.Game.prototype = {
 		preload: function () {
@@ -29,50 +32,51 @@ State.Game.prototype = {
 			itemsTaken = 0;
 			flagId = false;
 			idPlayer = 0;
+			beInGround = true;
+			isJumping = false;
+			yBeforeJump = 3504;
+			rotate = 0.05;
+			previousX = 0;
+		    previousY = 0;
 		},
 		create: function () {
 			"use strict";
 			
-			rotate = 0.05;
-			
 			//set p2
 			this.game.physics.startSystem(Phaser.Physics.P2JS);
 			this.game.physics.p2.setImpactEvents(true);
+			this.game.physics.p2.restitution = 0.1;
+		    this.game.physics.p2.gravity.y = 800;
 		    this.game.stage.backgroundColor = '#2d2d2d';
 		    this.game.physics.p2.updateBoundsCollisionGroup();
+
+		    //collision groups
+		    //start collision groups
+			playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
+		    obstacleCollisionGroup = this.game.physics.p2.createCollisionGroup();
+		    monsterCollisionGroup = this.game.physics.p2.createCollisionGroup();
+		    tileCollisionGroup = this.game.physics.p2.createCollisionGroup();
+		    collectCollisionGroup = this.game.physics.p2.createCollisionGroup();
 		    
 		    //bg
-		    bg1 = game.add.tileSprite(0, 3060, 3000, 540, 'bg1');
-		    bg2 = game.add.tileSprite(0, 3060, 3000, 540, 'bg2');
-		    bg3 = game.add.tileSprite(0, 3060, 3000, 540, 'bg3');
-		    bg4 = game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
+		    bg1 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg1');
+		    bg2 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg2');
+		    bg3 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg3');
+		    bg4 = this.game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
 
 		    //Map
 		    map = this.game.add.tilemap('stage');
 			map.addTilesetImage('tileset_arcane_forest', 'tileset');
 			layer = map.createLayer('Camada de Tiles 1');
-			map.setCollisionBetween(1, 5);
-			map.setCollisionBetween(8, 22);
-			map.setCollisionBetween(25, 32);
-			map.setCollisionBetween(34, 37);
+			map.setCollisionBetween(0, 38);
 			this.game.physics.p2.enable(layer);
 			var tileObjects = this.game.physics.p2.convertTilemap(map, layer);
-
-			this.game.physics.p2.restitution = 0.8;
-		    this.game.physics.p2.gravity.y = 800;
-
-		    //var
-		    var playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
-		    var obstacleCollisionGroup = this.game.physics.p2.createCollisionGroup();
-		    var monsterCollisionGroup = this.game.physics.p2.createCollisionGroup();
-		    var collectCollisionGroup = this.game.physics.p2.createCollisionGroup();
-		    var tileCollisionGroup = this.game.physics.p2.createCollisionGroup();
-		    
+ 
 		    //Tile collision
-		    for( var i=0; i<tileObjects.length; i++)
+		    for(var tile in tileObjects)
 		    {
-		    	tileObjects[i].setCollisionGroup(tileCollisionGroup);
-		    	tileObjects[i].collides(playerCollisionGroup);
+		    	tileObjects[tile].setCollisionGroup(tileCollisionGroup);
+		    	tileObjects[tile].collides(playerCollisionGroup, hitTiles, this);
 		    }
 		    
 		    //Group Item
@@ -111,26 +115,28 @@ State.Game.prototype = {
 		    player.animations.add('left', [0, 1, 2, 3], 10, true);
 		    player.animations.add('turn', [4], 20, true);
 		    player.animations.add('right', [5, 6, 7, 8], 10, true);
-
+			player.smoothed = false;
 		    this.game.physics.p2.enable(player, true);
+			this.game.camera.follow(player);
+		    player.body.collideWorldBounds = true;
 		    player.body.fixedRotation = true;
-		    this.game.camera.follow(player);
 		    player.body.setCollisionGroup(playerCollisionGroup);
-
+			player.body.collides(monsterCollisionGroup, hitMonsters, this);
+			player.body.collides(obstacleCollisionGroup, hitObstacles, this);
+			player.body.collides(tileCollisionGroup, hitTiles, this);
+			player.body.collides(collectCollisionGroup, this.collectItems, this);
+		    
+			//add 'things' to the world
+			putObstacles();
+			putMonsters();
+		    
 		    //DEBUG LAYER - deletar
 		    layer.debug = true;
 		    
-		    //Collision tile/player
-		    player.body.collides(tileCollisionGroup);
-		    player.body.collides(collectCollisionGroup, this.collectItems, this);
-		    
 			layer.resizeWorld();
 		    
-		    previousX = 0;
-		    previousY = 0;
-		    
 		    cursors = this.game.input.keyboard.createCursorKeys();
-			jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+			attackButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 			
 		},
 		collectItems: function (varPlayer, collect) {
@@ -166,22 +172,18 @@ State.Game.prototype = {
 				player.animations.play('right');
 			} else if(cursors.up.isDown){
 //				layer.rotation -=0.05;
-				layer.resizeWorld();
-				map.setCollisionBetween(1, 12);
-				this.game.physics.p2.enable(layer);
+//				layer.resizeWorld();
+//				map.setCollisionBetween(1, 12);
+//				this.game.physics.p2.enable(layer);
 			}else if(cursors.down.isDown){
 //				layer.rotation +=0.05;
-				layer.resizeWorld();
+//				layer.resizeWorld();
 			}else{
 				player.body.velocity.x = 0;
 				player.animations.stop();
 				player.frame = 4;
 			}
 
-			if (jumpButton.isDown){
-				player.body.moveUp(300);
-				player.frame = 4;
-			}
 			
 			if( parseInt(player.x) > (Config.global.screen.width/2) && previousX!= parseInt(player.x)){
 				if(previousX>player.x){
@@ -194,6 +196,10 @@ State.Game.prototype = {
 			}
 			
 			previousX = parseInt(player.x);
+
+			doJump();
+			doAttack();
+			followPlayer();
 		},
 		
 		onClick: function () {
@@ -206,3 +212,144 @@ State.Game.prototype = {
 		}
 
 };
+
+function doJump(){
+	if(cursors.up.isDown)
+    {
+		if(isJumping === false && beInGround === true)
+		{
+			yBeforeJump = player.body.y;
+			player.body.moveUp(500);
+			isJumping = true;
+			beInGround = false;
+		}
+    }
+	if(isJumping === true){
+		player.body.moveUp(500);
+		if(player.body.y <= (yBeforeJump-400)){
+			isJumping = false;
+			player.body.moveDown(500);
+		}
+	}else if (beInGround != true){
+		player.body.moveDown(500);
+	}
+}
+
+function doAttack(){
+	if(attackButton.isDown)
+    {
+		player.animations.play('turn');
+    }
+}
+
+function hitTiles(){
+	beInGround = checkIfCanJump();
+	isJumping = false;
+}
+
+function hitObstacles(){
+	beInGround = checkIfCanJump();
+	isJumping = false;
+}
+
+function hitMonsters(){
+	if(player.animations.currentFrame.index === 4 && checkIfConered()===true)
+	{
+		monster.kill();
+		player.body.moveLeft(500);
+	}else
+	{
+		player.kill();
+		monster.body.moveRight(500);
+	}
+}
+
+//internet magic...player is over something
+function checkIfCanJump() {
+
+    var yAxis = p2.vec2.fromValues(0, 1);
+    var result = false;
+
+    for (var i = 0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++)
+    {
+        var c = game.physics.p2.world.narrowphase.contactEquations[i];
+
+        if (c.bodyA === player.body.data || c.bodyB === player.body.data)
+        {
+            var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis
+            if (c.bodyA === player.body.data) d *= -1;
+            if (d > 0.5) result = true;
+        }
+    }
+    
+    return result;
+
+}
+//internet magic...player has something beside her rightside
+function checkIfConered() {
+
+    var xAxis = p2.vec2.fromValues(1, 0);
+    var result = false;
+
+    for (var i = 0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++)
+    {
+        var c = game.physics.p2.world.narrowphase.contactEquations[i];
+
+        if (c.bodyA === player.body.data || c.bodyB === player.body.data)
+        {
+            var d = p2.vec2.dot(c.normalA, xAxis); // Normal dot Y-axis
+            if (c.bodyA === player.body.data) d *= -1;
+            if (d > 0.5) result = true;
+        }
+    }
+    
+    return result;
+
+}
+
+function putObstacles(){
+	obstacles = game.add.group();
+
+    for (var i = 1; i <= 4; i++)
+    {
+        var obstacle = obstacles.create(game.world.randomX, game.world.randomY, 'obstacle'+i);
+        game.physics.p2.enable(obstacle, true);
+        obstacle.body.fixedRotation = true; //no circle movement 
+        obstacle.body.kinematic = true;
+        obstacle.body.setCollisionGroup(obstacleCollisionGroup);
+        obstacle.body.collides([obstacleCollisionGroup, playerCollisionGroup]);
+    }
+}
+
+function putMonsters(){
+    monster = game.add.sprite(160, 3500, 'monster1');
+    monster.animations.add('walk', [0,1,2,3], 10, true);
+    monster.play('walk');
+    game.physics.p2.enable(monster, true);
+    monster.body.fixedRotation = true; //no circle movement 
+    monster.body.kinematic = true;
+    monster.body.setCollisionGroup(monsterCollisionGroup);
+    monster.body.collides([monsterCollisionGroup, playerCollisionGroup]);
+}
+
+var monster_speed = 5;
+function followPlayer()
+{
+  if (player.body.x < monster.body.x)
+  {
+    monster.body.velocity.x = monster_speed * -1;
+  }
+  else
+  {
+    monster.body.velocity.x = monster_speed;
+  }
+    if (player.body.y < monster.body.y)
+  {
+    monster.body.velocity.y = monster_speed * -1;
+  }
+  else
+  {
+    monster.body.velocity.y = monster_speed;
+  }
+  
+}

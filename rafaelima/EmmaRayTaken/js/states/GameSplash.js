@@ -29,6 +29,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('tileset', Config.game.tileset.dir);
 		this.game.load.spritesheet('dude', Config.game.player.dir , 32, 48);
 		this.game.load.image('collect', 'assets/images/pv.png');
+		this.game.load.spritesheet('monster1', 'assets/spritesheets/monstercat_38_18_3.png', 38, 18);
 
 		//Credits
 		this.game.load.image('credits', Config.credits.dir);
