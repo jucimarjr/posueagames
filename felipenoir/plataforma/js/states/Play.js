@@ -1,8 +1,8 @@
 State.Play = function() {
     this.level = new Level(game, Level1),
-    this.panel = new Panel(game),
+    this.panel = new Panel(Weapon1),
     this.hero = new Hero(game),
-    this.weapon = new Weapon(game, Weapon2);
+    this.weapon = new Weapon(game, Weapon1);
     this.pause  = new Pause(game);
     this.enemy = new Enemy(game);
 }
@@ -58,12 +58,8 @@ State.Play.prototype = {
     },
 
     grabsGun : function(hero, weapon) {
-        if(weapon.key == 'weapon1')
-            this.weapon.change(Weapon1);
-        else if(weapon.key == 'weapon2')
-            this.weapon.change(Weapon2);
-        else if(weapon.key == 'weapon3')
-            this.weapon.change(Weapon3);
+        this.weapon.change(weapon);
+        this.panel.change(weapon);
         weapon.kill();
     },
 }
