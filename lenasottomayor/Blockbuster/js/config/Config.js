@@ -159,19 +159,19 @@ Config.level1 = {
 
 //Player
 Config.player = {
-	dir: 'assets/images/player_95-55.png',
+	dir: 'assets/spritesheets/Oscar_spritesheet_900-95-18.png',
 	gravity: 800,
-	jump: 600,
-	speed: 250,
+	jump: 550,
+	speed: 150,
 	height: 95,
-	width: 55,
+	width: 50,
 	anchor: {
-		x: 0.5,
-		y: 0.5
+		x: .5,
+		y: .5
 	},
 	position: {
 		x: 50,
-		y: 450
+		y: 400
 	}
 };
 

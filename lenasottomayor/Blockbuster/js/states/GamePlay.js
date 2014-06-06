@@ -25,7 +25,7 @@ State.GamePlay.prototype = {
 		this.powerlifes.create();
 		this.powerstars.create();
 		this.player.create();
-		this;enemy.create();
+		this.enemy.create();
 	},
 	update: function () {
 		"use strict";
