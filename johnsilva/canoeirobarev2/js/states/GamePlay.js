@@ -87,7 +87,12 @@ State.GamePlay.prototype = {
 
 		if(levelConfig.bees.id>0) this.game.physics.arcade.overlap(this.player, this.bees, this.collideWithBees, null,this);
 		if(levelConfig.thorns.id>0) this.game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
-		if(levelConfig.waters.id>0) this.game.physics.arcade.collide(this.player, this.acidicWater, this.die, null,this);
+		//if(levelConfig.waters.id>0) this.game.physics.arcade.collide(this.player, this.acidicWater, this.die, null,this);
+		if(levelConfig.waters.id>0){
+			this.game.physics.arcade.overlap(this.player, this.waters, this.die, null,this);
+			this.game.physics.arcade.overlap(this.waters, this.layer, this.renew, null,this);
+		}
+
 		
 		this.game.physics.arcade.overlap(this.player, this.coin,
 			function () {
@@ -225,16 +230,19 @@ State.GamePlay.prototype = {
 		}, this);
 	},
 
+	renew: function(water, bloco){
+		water.position.setTo(water.initX, water.initY);
+	},
+
 	addWaters: function(id){
 		this.waters = game.add.group();
 		this.waters.enableBody = true;
 		this.waters.physicsBodyType = Phaser.Physics.ARCADE;
 		this.map.createFromObjects('waters',id,'acidicWater', 0,true,false,this.waters);
-		this.waters.forEach(function (water){ 
-			water.body.allowGravity = false;
-			water.body.immovable = true;
-			//water.anchor.setTo(.5, 1);
-			this.addEmmiter(water.body.x, water.body.y);
+		this.waters.forEach(function (water){
+			water.initX = water.body.x;
+			water.initY = water.body.y;
+			water.anchor.setTo(.3, 1);
 		}, this);
 	},
 
@@ -275,27 +283,6 @@ State.GamePlay.prototype = {
 		}, this);
 	},
 
-	addEmmiter: function(x,y){
-		this.acidicWater = game.add.emitter(x,y,1);
-		//var emitter = game.add.emitter(game.world.centerX, game.world.centerY);
-		//emitter.width = game.world.width;
-		//emitter.angle = 30; // uncomment to set an angle for the rain.
-		/*emitter.minParticleScale = 0.1;
-		emitter.maxParticleScale = 0.5;*/
-		this.acidicWater.setYSpeed(80);
-		this.acidicWater.setXSpeed(0);
-		//emitter.setYSpeed(300, 500);
-		//emitter.setXSpeed(-5, 5);
-
-		/*emitter.minParticleSpeed.setTo(-300, -300);
-    	emitter.maxParticleSpeed.setTo(300, 300);*/
-
-		this.acidicWater.minRotation = 0;
-		this.acidicWater.maxRotation = 0;
-		this.acidicWater.makeParticles('acidicWater');
-		this.acidicWater.start(false, 1800, 1, 0);
-	},
-
 	collideWithBees: function(player, enemie){
 		var emitter = game.add.emitter(enemie.body.x, enemie.body.y, 250);
 		emitter.minParticleSpeed.setTo(-500, -500);
@@ -325,8 +312,6 @@ State.GamePlay.prototype = {
 		    this.loadLevel(this.level);
 		}, this);
     },
-
-    //game
 
     render: function (){
     	//game.debug.body(this.player);
