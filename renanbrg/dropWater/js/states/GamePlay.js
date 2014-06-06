@@ -26,6 +26,7 @@ State.GamePlay.prototype = {
 		this.game.load.tilemap('map', 'assets/mapLevel1_960-600.json', null, Phaser.Tilemap.TILED_JSON);
 	    this.game.load.image('tileset','assets/images/tileset.png');
 	    this.game.load.image('crab','assets/images/crab_80-80.png');
+	    this.game.load.image('life_drop', 'assets/images/lifedrop_40-40.png');
 
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
         this.hud.preload();
@@ -69,8 +70,17 @@ State.GamePlay.prototype = {
         //this.crab.body.collideWorldBounds = false;
         this.crab.body.moveLeft(500);
         this.crab.name = 'crab';
+
+        // Add a 'life drop"
+        this.lifeDrop = this.game.add.sprite(380, 320, 'life_drop');
+        this.game.physics.p2.enableBody(this.lifeDrop);
+        this.lifeDrop.body.setRectangle(40, 40, 0, 0);
+        this.lifeDrop.body.fixedRotation = true;
+        this.lifeDrop.name = 'lifeDrop';
 		
 		dropSprite.body.createBodyCallback(this.crab, this.checkOverlapCrabDrop, this); // check collision between drop and crab
+		this.lifeDrop.body.createBodyCallback(dropSprite,
+		        this.checkOverlapWithLifeDrop, this);
 		this.game.physics.p2.setImpactEvents(true);
 		//this.game.physics.p2.setPostBroadphaseCallback(this.checkOverlap, this);   //this is used to start the check
 
@@ -89,7 +99,7 @@ State.GamePlay.prototype = {
 	update: function () {
 		"use strict";
 		this.handleKeyDown();					
-		this.moveCrab();		
+		this.moveCrab();
 	},	
 	handleKeyDown: function () {
 		"use strict";
@@ -171,7 +181,17 @@ State.GamePlay.prototype = {
 			return true;
 		}
 		return false;
-	},	
+    },
+    checkOverlapWithLifeDrop: function (body1, body2) {
+        // body1 is the drop; body2 is the life drop.
+        if (!this.touchingUp(body2)) {
+            console.log('Player get the life drop!!!!');
+            this.hud.increaseDropBar();
+            this.lifeDrop.kill();
+            return true;
+        }
+        return false;
+    },
 	moveCrab: function () {
 		if (this.touchingLeft(this.crab.body)) {
 			//this.crab.body.velocity.x = 100;
