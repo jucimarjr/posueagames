@@ -56,6 +56,7 @@
             this.player.animations.add('idle', [64, 65, 66, 67], 4, true);
             this.player.animations.add('walk', [0, 1, 2, 3], 8, true);
             this.player.animations.add('jump', [99, 98], 8, false);
+            this.player.animations.add('death', [130, 131, 132, 133, 135], 8, false);
 
             this.player.animations.play('idle');
 
@@ -68,9 +69,11 @@
 
             this.game.physics.arcade.overlap(this.shurikens, this.layer, this.shurikenCollision, null, this);
             this.game.physics.arcade.overlap(this.shurikens, this.enemies, this.killEnemy, null, this);
-
             this.game.physics.arcade.overlap(this.enemyShurikens, this.layer, this.shurikenCollision, null, this);
-            this.game.physics.arcade.overlap(this.enemyShurikens, this.player, this.die, null, this);
+
+            if (!this.player.dead) {
+                this.game.physics.arcade.overlap(this.player, this.enemyShurikens, this.die, null, this);
+            }
 
             this.enemies.forEachAlive(this.updateEnemies, this);
 
@@ -95,9 +98,12 @@
             return true;
         },
 
-        die: function (shuriken, player) {
+        die: function (player, shuriken) {
             shuriken.kill();
-            player.kill();
+
+            player.body.velocity.x = 0;
+            player.dead = true;
+            player.animations.play('death');
         },
 
         createEnemyIdle: function (x, y) {
@@ -177,6 +183,8 @@
         },
 
         handleKeyDown: function () {
+            if (this.player.dead) return;
+
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
                 this.player.body.velocity.x = 250;
                 this.turnRight();
