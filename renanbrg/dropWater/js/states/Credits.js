@@ -7,12 +7,21 @@ State.Credits = function (game) {
 State.Credits.prototype = {
 	preload: function () {
 		"use strict";
+		this.game.load.audio('credits','assets/gotaExtra.wav');
+		this.game.load.image('credits-bg',  Config.credits.dir);
+		
 	},
 	create: function () {
 		"use strict";
-		var background = this.game.add.sprite(Config.credits.x, Config.credits.y, 'credits');
+		var background = this.game.add.sprite(Config.credits.x, Config.credits.y, 'credits-bg');
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
+		
+		this.inicioSound.stop();
+		
+		this.creditsSound = this.game.add.audio("credits");
+        this.creditsSound.loop = true;
+        this.creditsSound.play();
 	},
 	update: function () {
 		"use strict";

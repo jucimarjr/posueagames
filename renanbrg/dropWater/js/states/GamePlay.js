@@ -118,6 +118,7 @@ State.GamePlay.prototype = {
         this.jumpSound = this.game.add.audio("jump"); 
         this.mainSound = this.game.add.audio("main");
         this.powUpSound = this.game.add.audio("powup");
+       // this.inicioSound.stop();
         this.mainSound.loop = true;
         this.mainSound.play();
     },
