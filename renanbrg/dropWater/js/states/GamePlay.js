@@ -36,10 +36,16 @@ State.GamePlay.prototype = {
 	            'assets/spritesheets/molecula_110-48.png', 55, 48);
 
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
+	    this.game.load.audio('main','assets/gotaMain.wav');
+	    this.game.load.audio('powup','assets/gotaPowerUp.wav');
         this.hud.preload();
 
 		// Player
         this.drop.preload();
+        
+        // Straw physics
+        this.game.load.physics('strawPhysics',
+                'assets/straw2_collision_points.json');
 	},
 	create: function () {
 		"use strict";
@@ -62,21 +68,27 @@ State.GamePlay.prototype = {
 		this.game.add.image(0, this.game.height-80, 'wetSand');
 		this.game.add.image(2008, 23, 'bucket');
 		this.game.add.image(2008, 508, 'straw1');
-		this.game.add.image(2525, 127, 'straw2');
         
         //  Set the tiles for collision.
         //  Do this BEFORE generating the p2 bodies below.
         this.map.setCollisionBetween(1, 3);                
         this.game.physics.p2.convertTilemap(this.map, this.layer);
         this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
-                
+
         // create player
-        this.drop.create(300, this.game.world.height-200);
+        this.drop.create(200, this.game.world.height-200);
         var dropSprite = this.drop.getSpriteObject();   
         this.game.physics.p2.enableBody(dropSprite, false);        
         this.game.camera.follow(dropSprite);
         this.drop.configureCharacter(this.setCharacterInicialValues);
-        
+
+		this.diagonalStraw = this.game.add.sprite(2640, 270, 'straw2');
+		this.game.physics.p2.enableBody(this.diagonalStraw, false);
+		this.diagonalStraw.body.clearShapes();
+		this.diagonalStraw.body.loadPolygon('strawPhysics', 'straw2_236-276');
+		this.diagonalStraw.body.fixedRotation = true;
+		this.diagonalStraw.body.static = true;
+
         // create enemy crabs
         for (var i = 0; i < 2; i++) {
             this.game.physics.p2.enableBody(this.crab[i]);
@@ -94,7 +106,7 @@ State.GamePlay.prototype = {
         this.crab[1].name = 'crab2';
 
         // Add a "life drop"
-        this.lifeDrop = this.game.add.sprite(380, 320, 'life_drop');
+        this.lifeDrop = this.game.add.sprite(280, 220, 'life_drop');
         this.game.physics.p2.enableBody(this.lifeDrop);
         this.lifeDrop.body.setRectangle(40, 40, 0, 0);
         this.lifeDrop.body.fixedRotation = true;
@@ -111,9 +123,16 @@ State.GamePlay.prototype = {
 		//this.game.physics.p2.setPostBroadphaseCallback(this.checkOverlap, this);   //this is used to start the check
 
         this.hud.create();
+        
+//        this.userDead();
 		
         // Sounds
-        this.jumpSound = this.game.add.audio("jump");                
+        this.jumpSound = this.game.add.audio("jump"); 
+        this.mainSound = this.game.add.audio("main");
+        this.powUpSound = this.game.add.audio("powup");
+       // this.inicioSound.stop();
+        this.mainSound.loop = true;
+        this.mainSound.play();
     },
     setCharacterInicialValues: function(character) {    	
     	character.smoothed = false;
@@ -125,8 +144,13 @@ State.GamePlay.prototype = {
 	update: function () {
 		"use strict";
 		this.handleKeyDown();					
+
 		this.moveCrab(this.crab[0]);
 		this.moveCrab(this.crab[1]);
+
+//		if(this.userDead()){ 
+//		      this.restart();  
+//		   }
 	},	
 	handleKeyDown: function () {
 		"use strict";
@@ -205,6 +229,7 @@ State.GamePlay.prototype = {
 		if (!this.touchingUp(body2)) { 
 			console.log('Matou o Player!!!!');
 			this.drop.getSpriteObject().kill();
+			//this.userDead = true;
 			return true;
 		}
 		return false;
@@ -213,6 +238,7 @@ State.GamePlay.prototype = {
         // body1 is the drop; body2 is the life drop.
         if (!this.touchingUp(body2)) {
             console.log('Player get the life drop!!!!');
+            this.powUpSound.play();
             this.hud.increaseDropBar();
             this.lifeDrop.kill();
             return true;
@@ -248,4 +274,11 @@ State.GamePlay.prototype = {
 		"use strict";
 		this.game.state.start('Credits');
 	}
+//	restart: function(){
+//		player.resetPosition(); 
+//        if (lifeCounter==0){
+//        	this.game.state.start('GameOver');
+//        }	
+//		this.game.state.restart();
+//	}
 };

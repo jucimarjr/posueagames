@@ -3,7 +3,7 @@ var WeaponBase = {
 }
 
 var Weapon1 = {
-    weaponImg:WeaponBase.path + 'weapon1.png'
+    weaponImg:WeaponBase.path + '_weapon1.png'
 }
 
 var Weapon2 = {
@@ -30,11 +30,13 @@ var Weapon3 = {
 
 function WeaponA(weapon) {
     this.weapon = weapon,
+    this.shot,
     this.bulletGroup;
 }
 
 WeaponA.prototype.preload = function() {
     game.load.image(this.weapon.bulletName, this.weapon.bulletImg);
+    game.load.audio('shot_audio', 'assets/sounds/shoot.ogg');
 }
 
 WeaponA.prototype.create = function() {
@@ -47,6 +49,7 @@ WeaponA.prototype.create = function() {
         game.physics.enable(bullet, Phaser.Physics.ARCADE);
         bullet.kill();
     }
+    this.shot = game.add.audio('shot_audio');
 }
 
 WeaponA.prototype.update = function(hero) {
@@ -70,6 +73,7 @@ WeaponA.prototype.update = function(hero) {
         bullet.body.velocity.x = hero.scale.x < 0 ? -this.weapon.bulletSpeed : this.weapon.bulletSpeed;
         bullet.body.velocity.y = 0;
         bullet.body.allowGravity = false;
+        this.shot.play();
     }
 }
 
