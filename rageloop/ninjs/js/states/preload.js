@@ -5,6 +5,12 @@
     Preload.prototype = {
         preload: function () {
 
+            /* audios */
+            this.game.load.audio('bgsound','assets/sounds/gameplay_audio.ogg');
+            this.game.load.audio('gameoversound','assets/sounds/game_over.ogg');            
+            this.game.load.audio('shuriken_sound','assets/sounds/thrown_shuriken.mp3');
+            this.game.load.audio('click','assets/sounds/click.mp3');
+
             /*Menu assets*/
             this.game.load.image('menu_bg','assets/images/menuBg_960-600.png');
             this.game.load.spritesheet('start_btn','assets/sprites/start_btn_199-114.png', 199, 57);

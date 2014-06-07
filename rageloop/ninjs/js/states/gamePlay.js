@@ -89,6 +89,16 @@
 
             this.player.animations.play('idle');
 
+            /*audios*/
+
+            this.bgSound = this.game.add.audio('bgsound');
+            this.bgSound.volume = 0.8;
+            this.bgSound.loop = true;
+            this.bgSound.play();
+
+            this.shurikenAudio = this.game.add.audio('shuriken_sound');
+            this.shurikenAudio.volume = 0.6;
+
             this.hud = new HUD(this.game);
             this.hud.init();
 
@@ -133,6 +143,8 @@
             shuriken.checkWorldBounds = true;
             shuriken.outOfBoundsKill = true;
 
+            this.shurikenAudio.play();
+
             this.startShurikenTimer();
 
             return true;
@@ -155,6 +167,7 @@
             if (this.hud.lifes === 0) {
             
                 setTimeout(function(){
+                    self.bgSound.stop();
                     self.game.state.start('Gameover');
                 }, 800);    
             
@@ -235,6 +248,8 @@
             shuriken.scale.set(0.8, 0.8);
             shuriken.checkWorldBounds = true;
             shuriken.outOfBoundsKill = true;
+
+            this.shurikenAudio.play();
 
             return true;
         },
