@@ -167,36 +167,38 @@ Game.PlayerController.prototype = {
             this._actualRunModifier += PlayerConsts.runModifierDamping;
             this._actualRunModifier = Math.min(this._actualRunModifier, 
                                                PlayerConsts.runModifier);
-            this.direction += this.direction == Game.PlayerController.Direction.Right
-			                                     ? this._actualRunModifier
-												 : -this._actualRunModifier;
 
             if (this.isGrounded && this.canJump)
                 this.animState = Game.PlayerController.AnimState.Run;
 
-        } else if (this.runButton.isUp) {
+        } else if ((this.runButton.isUp && this.isGrounded) || 
+                    this.direction == Game.PlayerController.Direction.None) {
             this._actualRunModifier = 0.0;
         }
+
+        this.direction += this.direction == Game.PlayerController.Direction.Right
+                          ? this._actualRunModifier
+                          : -this._actualRunModifier;
     },
 
     handleJump: function () {
 		var joystick = this.joystick;
-		var jumpButtonIsDown = this.jumpButton.justPressed(150) || joystick.getB();
+		var hasJumpInput = this.jumpButton.justPressed(100) || joystick.getB();
 		
-        // if (!this.canJump && this.isGrounded && !this.isJumping && !jumpButtonIsDown)
+        // if (!this.canJump && this.isGrounded && !this.isJumping && !hasJumpInput)
         //     this.canJump = true;
 
-        if (!jumpButtonIsDown && !this.isJumpInputReleased)
-            this.isJumpInputReleased = true;
+        if (this.jumpButton.isUp && !this.isJumpInputReleased)
+             this.isJumpInputReleased = true;
 
-        if (this.canJump && this.isGrounded && jumpButtonIsDown && this.isJumpInputReleased) {
+        if (this.canJump && hasJumpInput/* && this.isJumpInputReleased*/) {
             // Jump!
             this.isJumpInputReleased = false;
             this.isJumping = true;
             this.doJump = true;
             this.canJump = false;
             this.animState = Game.PlayerController.AnimState.JumpStart;
-        } else if (this.currentAnim == 'jump-ascend' && this.jumpButton.justPressed(350)) {
+        } else if (!this.isJumpInputReleased && this.currentAnim == 'jump-ascend' && this.jumpButton.justPressed(350)) {
             this.doJump = true;
         } else if (this.isGrounded && (Utils.stringContains(this.currentAnim, 'jump-start') ||
                                        Utils.stringContains(this.currentAnim, 'jump-ascend') ||
@@ -226,8 +228,7 @@ Game.PlayerController.prototype = {
         if (this.direction <= Game.PlayerController.Direction.Left && this.sprite.scale.x != -1) {
             this.sprite.scale.x = -1;
             this.sprite.anchor.setTo(0.65, 0.5);
-        } else if (((this.direction == Game.PlayerController.Direction.None && this.currentAnim == 'idle') || 
-                     this.direction >= Game.PlayerController.Direction.Right) && this.sprite.scale.x != 1) {
+        } else if (this.direction >= Game.PlayerController.Direction.Right && this.sprite.scale.x != 1) {
             this.sprite.scale.x = 1;
             this.sprite.anchor.setTo(0.73, 0.5);
         }
@@ -270,14 +271,33 @@ Game.PlayerController.prototype = {
 
     applyVelocity: function () {
         // Handle horizontal velocity.
-        this.sprite.body.velocity.x = this.direction * 
-                                      PlayerConsts.movementVelocity * 
-                                      PhysicsConsts.pixelsToUnit;
+        var body = this.sprite.body;
+        if ((body.velocity.x >= 0 && this.direction > 0) || (body.velocity.x <= 0 && this.direction < 0)) {
+            // Player is going in the same direction as the input.
+            if (this.direction > 0)
+                body.velocity.x = Math.min(body.velocity.x + PlayerConsts.walkAccel * this.direction, 
+                                           PlayerConsts.walkVelocity * this.direction);
+            else
+                body.velocity.x = Math.max(body.velocity.x + PlayerConsts.walkAccel * this.direction,
+                                           PlayerConsts.walkVelocity * this.direction);
+        } else if ((body.velocity.x >= 0 && this.direction < 0) || (body.velocity.x <= 0 && this.direction > 0)) {
+            // Player is going in a different direction from the input.
+            if (this.direction > 0)
+                body.velocity.x = Math.min(body.velocity.x + PlayerConsts.walkDamping * this.direction, 
+                                           PlayerConsts.walkDamping * this.direction);
+            else
+                body.velocity.x = Math.max(body.velocity.x + PlayerConsts.walkDamping * this.direction, 
+                                           PlayerConsts.walkDamping * this.direction);
+        } else {
+            if (body.velocity.x > 0)
+                body.velocity.x = Math.max(0.0, body.velocity.x - PlayerConsts.walkDamping * 3.0);
+            else if (body.velocity.x < 0)
+                body.velocity.x = Math.min(0.0, body.velocity.x + PlayerConsts.walkDamping * 3.0);
+        }
 
         // Handle vertical velocity.
         if (this.doJump) {
-            this.sprite.body.velocity.y = -PlayerConsts.jumpVelocity *
-                                           PhysicsConsts.pixelsToUnit;
+            this.sprite.body.velocity.y = -PlayerConsts.jumpVelocity;
             this.doJump = false;
         }
     },

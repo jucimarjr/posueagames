@@ -6,8 +6,10 @@ var PhysicsConsts = {
 };
 
 var PlayerConsts = {
-	movementVelocity: 1.1,
-	jumpVelocity: 3.0,
+	walkVelocity: 1.1 * PhysicsConsts.pixelsToUnit,
+	walkAccel: 2.5,
+	walkDamping: 5.0,
+	jumpVelocity: 3.0 * PhysicsConsts.pixelsToUnit,
 	runModifier: 1.5,
 	runModifierDamping: 0.05
 };
