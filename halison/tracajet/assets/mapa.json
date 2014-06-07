@@ -20,7 +20,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"/Users/Rhedson/Java/WorkSuea/posueagames/halison/tracajet/frutas_110-22.png",
+         "image":"frutas_110-22.png",
          "imageheight":22,
          "imagewidth":110,
          "margin":0,

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="60" height="60" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
+  <image source="../tile_40-40-17.png" width="680" height="40"/>
+ </tileset>
+ <tileset firstgid="18" name="water" tilewidth="14" tileheight="17">
+  <image source="../enemies/acidicWater_14-17.png" width="14" height="17"/>
+ </tileset>
+ <tileset firstgid="19" name="bee" tilewidth="40" tileheight="70">
+  <image source="../enemies/casacaba_40-70-4.png" width="160" height="70"/>
+ </tileset>
+ <tileset firstgid="23" name="tube" tilewidth="25" tileheight="40">
+  <image source="../enemies/cannon_25-40.png" width="25" height="40"/>
+ </tileset>
+ <tileset firstgid="24" name="thorns" tilewidth="80" tileheight="40">
+  <image source="../enemies/thorns_80-40.png" width="80" height="40"/>
+ </tileset>
+ <tileset firstgid="25" name="coins" tilewidth="40" tileheight="40">
+  <image source="../spritesheets/coins/coinsIara_40-40-8.png" width="320" height="40"/>
+ </tileset>
+ <tileset firstgid="33" name="branches" tilewidth="40" tileheight="40">
+  <image source="../level/branches_360-283.png" width="360" height="284"/>
+ </tileset>
+ <objectgroup name="thorns" width="60" height="60">
+  <object gid="24" x="166" y="2332"/>
+  <object gid="24" x="924" y="1332"/>
+  <object gid="24" x="1157" y="1329"/>
+  <object gid="24" x="1442" y="772"/>
+  <object gid="24" x="1369" y="772"/>
+  <object gid="24" x="1293" y="772"/>
+  <object gid="24" x="1224" y="772"/>
+  <object gid="24" x="1163" y="768"/>
+  <object gid="24" x="1521" y="1975"/>
+  <object gid="24" x="1451" y="1975"/>
+  <object gid="24" x="1390" y="1972"/>
+  <object gid="24" x="1318" y="1972"/>
+  <object gid="24" x="1239" y="1972"/>
+  <object gid="24" x="1163" y="1972"/>
+  <object gid="24" x="1084" y="1972"/>
+  <object gid="24" x="842" y="2329"/>
+  <object gid="24" x="896" y="2329"/>
+  <object gid="24" x="2278" y="2329"/>
+  <object gid="24" x="2208" y="2332"/>
+  <object gid="24" x="2133" y="2332"/>
+  <object gid="24" x="2057" y="2335"/>
+  <object gid="24" x="1987" y="2332"/>
+  <object gid="24" x="1912" y="2329"/>
+  <object gid="24" x="1839" y="2329"/>
+  <object gid="24" x="1784" y="2329"/>
+  <object gid="24" x="1948" y="944"/>
+ </objectgroup>
+ <layer name="Camada de Tiles 1" width="60" height="60">
+  <data encoding="base64" compression="zlib">
+   eJzlWttuwyAMpWu7mzZpX7TbUzdpe9zbtv//i4FUJIQwOPaBmMySpbYhrg82J8bh4Jy7NqyHs6JsXTrbcnQ4H5G2avJwVon0wvvo9cnrs9cLr7sVdZ/4E3wMeXgl0LsK3iAnr2+V+Unn5MXrKzEuHcOxU5OIV6J5XkRbu8Z/luQ9+fyRXTsJ7JXsBIk+SvjpNrGzczi++vL6CRhTEmt89cMc81u5/l0Zo/UxzV3Kloav9grfSoKOb2n9IjkC4SPCZm39bhEvZSvOAwJvWBfa/B7BV9biK31mBknnfBa8lM2cV1u5NDtfHbPvrf+2EN97V99P1PKZwkvxxpp4qWd87mfv+CL5GSGj8tlK/6DkY8yNEt4ab2m5nuNbKpI6FTmH6P5Gy56GFxAxGYU3xnVtThidz9L4/td81u5Lo3/S3iFlr3Zd86zT5kSaz6U5KdUp1G8cLr1x8n47guNG57PUZvBd06vr5V+0h+zrWOnXlfK6V3x793OkYhlvamsUP69tM+VnzXrj8rNENHiX8jO1b6bqsRnii16/klqIUxOh/ZPkc76/61UTWeFndH3YEy/CVk+8PThQm89rxHdJTY+uhyi80vMzvWveWi+MO1+cGKF9XMMWxcfW3h/lttD5vNX4xvu3jjd/vzgarzV+njm+rffzGryjYhKlVLssPX+wtfhy7p8Rr/T86gx4S/wqPS/Gxas5v4beL4zIZ+2+Yja8kvcKrX1ETZae34j3tHJ8xPpFygz8zBHuc1SKN/K5FbxcWYqX25/rcS4490Paj9lCPnPlP+LN642ltQCVzxYV1VecSf8ASxoejw==
+  </data>
+ </layer>
+ <objectgroup name="bees" width="60" height="60">
+  <object gid="19" x="680" y="1111"/>
+  <object gid="19" x="86" y="1114"/>
+  <object gid="19" x="925" y="235"/>
+  <object gid="19" x="968" y="235"/>
+  <object gid="19" x="1089" y="1111"/>
+  <object gid="19" x="1641" y="2150"/>
+  <object gid="19" x="1892" y="311"/>
+  <object gid="19" x="1944" y="308"/>
+  <object gid="19" x="2153" y="1153"/>
+ </objectgroup>
+ <objectgroup name="tubes" width="60" height="60">
+  <object gid="23" x="327" y="1872"/>
+  <object gid="23" x="88" y="1550"/>
+  <object gid="23" x="288" y="1872"/>
+  <object gid="23" x="291" y="1356"/>
+  <object gid="23" x="327" y="1356"/>
+  <object gid="23" x="570" y="796"/>
+  <object gid="23" x="609" y="796"/>
+  <object gid="23" x="370" y="799"/>
+  <object gid="23" x="406" y="799"/>
+  <object gid="23" x="206" y="796"/>
+  <object gid="23" x="327" y="193"/>
+  <object gid="23" x="373" y="193"/>
+  <object gid="23" x="409" y="193"/>
+  <object gid="23" x="570" y="193"/>
+  <object gid="23" x="609" y="193"/>
+  <object gid="23" x="646" y="193"/>
+  <object gid="23" x="930" y="520"/>
+  <object gid="23" x="970" y="520"/>
+  <object gid="23" x="1370" y="1078"/>
+  <object gid="23" x="1409" y="1078"/>
+  <object gid="23" x="1330" y="199"/>
+  <object gid="23" x="1373" y="199"/>
+  <object gid="23" x="91" y="75"/>
+  <object gid="23" x="130" y="75"/>
+  <object gid="23" x="1288" y="1596"/>
+  <object gid="23" x="1333" y="1596"/>
+  <object gid="23" x="933" y="1599"/>
+  <object gid="23" x="970" y="1599"/>
+  <object gid="23" x="1130" y="2117"/>
+  <object gid="23" x="1173" y="2117"/>
+  <object gid="23" x="1212" y="2117"/>
+  <object gid="23" x="1409" y="2117"/>
+  <object gid="23" x="1452" y="2117"/>
+  <object gid="23" x="1491" y="2117"/>
+  <object gid="23" x="1846" y="1117"/>
+  <object gid="23" x="1891" y="1117"/>
+  <object gid="23" x="2046" y="1117"/>
+  <object gid="23" x="2091" y="1117"/>
+  <object gid="23" x="1970" y="1796"/>
+  <object gid="23" x="2009" y="1796"/>
+  <object gid="23" x="2167" y="278"/>
+  <object gid="23" x="2130" y="278"/>
+  <object gid="23" x="2291" y="81"/>
+ </objectgroup>
+ <objectgroup name="waters" width="60" height="60">
+  <object gid="18" x="332" y="1875"/>
+  <object gid="18" x="293" y="1875"/>
+  <object gid="18" x="93" y="1550"/>
+  <object gid="18" x="296" y="1356"/>
+  <object gid="18" x="332" y="1353"/>
+  <object gid="18" x="614" y="793"/>
+  <object gid="18" x="575" y="796"/>
+  <object gid="18" x="411" y="793"/>
+  <object gid="18" x="375" y="793"/>
+  <object gid="18" x="211" y="790"/>
+  <object gid="18" x="332" y="187"/>
+  <object gid="18" x="378" y="187"/>
+  <object gid="18" x="411" y="187"/>
+  <object gid="18" x="578" y="187"/>
+  <object gid="18" x="614" y="187"/>
+  <object gid="18" x="651" y="187"/>
+  <object gid="18" x="1335" y="193"/>
+  <object gid="18" x="1378" y="193"/>
+  <object gid="18" x="935" y="511"/>
+  <object gid="18" x="975" y="511"/>
+  <object gid="18" x="1375" y="1066"/>
+  <object gid="18" x="1411" y="1066"/>
+  <object gid="18" x="96" y="69"/>
+  <object gid="18" x="135" y="69"/>
+  <object gid="18" x="1978" y="1793"/>
+  <object gid="18" x="2017" y="1793"/>
+  <object gid="18" x="1851" y="1114"/>
+  <object gid="18" x="1899" y="1114"/>
+  <object gid="18" x="2051" y="1108"/>
+  <object gid="18" x="2096" y="1108"/>
+  <object gid="18" x="2135" y="272"/>
+  <object gid="18" x="2175" y="272"/>
+  <object gid="18" x="2296" y="75"/>
+  <object gid="18" x="935" y="1590"/>
+  <object gid="18" x="978" y="1590"/>
+  <object gid="18" x="1293" y="1587"/>
+  <object gid="18" x="1338" y="1587"/>
+  <object gid="18" x="1132" y="2105"/>
+  <object gid="18" x="1178" y="2108"/>
+  <object gid="18" x="1217" y="2108"/>
+  <object gid="18" x="1414" y="2102"/>
+  <object gid="18" x="1457" y="2105"/>
+  <object gid="18" x="1499" y="2105"/>
+ </objectgroup>
+ <objectgroup name="bushes" width="60" height="60">
+  <object gid="13" x="162" y="2326"/>
+  <object gid="13" x="322" y="2320"/>
+  <object gid="13" x="359" y="2320"/>
+  <object gid="13" x="444" y="320"/>
+  <object gid="13" x="486" y="323"/>
+  <object gid="13" x="522" y="323"/>
+  <object gid="13" x="722" y="1365"/>
+  <object gid="13" x="683" y="1365"/>
+  <object gid="13" x="1562" y="762"/>
+  <object gid="13" x="1525" y="762"/>
+  <object gid="13" x="844" y="1326"/>
+  <object gid="13" x="880" y="1326"/>
+  <object gid="13" x="759" y="123"/>
+  <object gid="13" x="804" y="123"/>
+  <object gid="13" x="1238" y="123"/>
+  <object gid="13" x="1280" y="123"/>
+  <object gid="13" x="359" y="123"/>
+  <object gid="13" x="401" y="123"/>
+  <object gid="16" x="719" y="323"/>
+  <object gid="16" x="762" y="323"/>
+  <object gid="4" x="3859" y="1662"/>
+  <object gid="13" x="1241" y="2320"/>
+  <object gid="13" x="1283" y="2323"/>
+  <object gid="13" x="1322" y="2323"/>
+  <object gid="13" x="1362" y="2323"/>
+ </objectgroup>
+ <objectgroup name="coin" width="60" height="60">
+  <object gid="25" x="1704" y="102"/>
+ </objectgroup>
+</map>

@@ -42,6 +42,10 @@ Config.gameSplash = {
 		background: 'assets/images/GameSplash_960-600.png',
 		bar: 'assets/images/ProgressBar_960-30.png'
 	},
+	progressBar: {
+		x: 0,
+		y: 500
+	},
 	x: 0,
 	y: 0,
 	millis: 2000,
@@ -90,6 +94,188 @@ Config.menu = {
 		font: '25px Ms Sans Serif',
 		fill: '#ffffff'
 	}
+};
+
+//GamePlay
+Config.game = {
+	gravity: 800
+};
+
+Config.background = {
+	game: {
+		dir: 'assets/images/background_960-600.png'
+	}
+};
+
+//TileMap
+Config.tilemap = {
+	fase01: {
+		dir: 'assets/maps/Fase01/map01.json'
+	},
+	tiles: {
+		tileset: {
+			dir: 'assets/images/tileset_360-280.png',
+			name: 'tileset_360-280',
+			platform: 'Platform',
+			height: 360,
+			width: 280
+		},
+		powerlifes: {
+			dir: 'assets/images/powerlife_42-42.png',
+			name: 'PowerLife',
+			gid: 64,
+			frame: 0
+		},
+		powerstars: {
+			dir: 'assets/images/powerstar_42-42.png',
+			name: 'PowerStar',
+			gid: 65,
+			frame: 0
+		},
+		coins: {
+			dir: 'assets/images/coin_36-36.png',
+			name: 'Coins',
+			gid: 66,
+			frame: 0
+		},
+		thorn: {
+			dir: 'assets/images/Thorn_40-40.png',
+			name: 'Thorn_40-40',
+			thorns: 'Thorn',
+			height: 40,
+			width: 40
+		}
+	}
+};
+
+//Level
+Config.level1 = {
+	x: 0,
+	y: 0,
+	worldBounds: {
+		xi: 0,
+		yi: 0,
+		xf: 12800,
+		yf: 800
+	}
+};
+
+//Player
+Config.player = {
+	dir: 'assets/spritesheets/Oscar_spritesheet_900-95-18.png',
+	jump: 550,
+	speed: 175,
+	height: 95,
+	width: 50,
+	anchor: {
+		x: .5,
+		y: .5
+	},
+	position: {
+		x: 50,
+		y: 625
+	}
+};
+
+//Enemy
+Config.enemy = {
+	cruella: {
+		dir: 'assets/spritesheets/Cruella_305-97-5.png',
+		height: 97,
+		width: 61,
+		frames: 5,
+		name: 'Cruella',
+		walk: {
+			gid: 67,
+			frame: 0
+		},
+		jump: {
+			gid: 68,
+			frame: 1
+		}
+	},
+	freddy: {
+		dir: 'assets/spritesheets/Freddy_472-95-8.png',
+		height: 95,
+		width: 59,
+		frames: 8,
+		name: 'Freddy',
+		walk: {
+			gid: 72,
+			frame: 0
+		},
+		jump: {
+			gid: 75,
+			frame: 3
+		}
+	},
+	hannibal: {
+		dir: 'assets/spritesheets/Hannibal_432-97-8.png',
+		height: 97,
+		width: 54,
+		frames: 8,
+		name: 'Hannibal',
+		walk: {
+			gid: 80,
+			frame: 0
+		},
+		jump: {
+			gid: 83,
+			frame: 3
+		}
+	},
+	jason: {
+		dir: 'assets/spritesheets/Jason_400-97-8.png',
+		height: 97,
+		width: 50,
+		frames: 8,
+		name: 'Jason',
+		walk: {
+			gid: 88,
+			frame: 0
+		},
+		jump: {
+			gid: 91,
+			frame: 3
+		}
+	},
+	joker: {
+		dir: 'assets/spritesheets/Joker_448-97-8.png',
+		height: 97,
+		width: 56,
+		frames: 8,
+		name: 'Joker',
+		walk: {
+			gid: 96,
+			frame: 0
+		},
+		jump: {
+			gid: 99,
+			frame: 3
+		}
+	},
+	vader: {
+		dir: 'assets/spritesheets/Vader_1500-217-10.png',
+		height: 217,
+		width: 150,
+		frames: 10,
+		name: 'Vader',
+		gid: 104,
+		frame: 0
+	},
+	dir: 'assets/images/regularenemy_95-55.png',
+	gravity: 800,
+	speed: 250,
+	height: 95,
+	width: 55,
+	anchor: {
+		x: 0.5,
+		y: 0.5
+	},
+	position: {
+		x: 321,
+		y: 272
+	}	
 };
 
 //HowToPlay

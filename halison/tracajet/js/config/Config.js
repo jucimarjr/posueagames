@@ -5,13 +5,13 @@ var Config = {
 	global: {
 		animationVelocity: 6,
 		screen: {
-			width: 960,
-			height: 600,
+			width: 600,
+			height: 960,
 			resize: function (game) {
 				"use strict";
-				if (window.innerHeight < 600 || window.innerWidth < 960) {
-					game.scale.setExactFit();
-					game.scale.refresh();
+				if (window.innerHeight < Config.global.screen.height || window.innerWidth < Config.global.screen.width) {
+					game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+				    game.scale.setScreenSize();
 				}
 			}
 		}
@@ -20,68 +20,58 @@ var Config = {
 
 //LudusSplash
 Config.ludusSplash = {
-	dir: 'assets/images/LudusSplash_960-600.png',
+	dir: 'assets/images/LudusSplash_600-960.png',
 	x: 0,
 	y: 0,
-	millis: 3500,
+	millis: 2000,
 	nextState: 4000
 };
 
 //GameSplash
 Config.gameSplash = {
 	dir: {
-		bar: 'assets/images/ProgressBar_960-30.png'
+		bar: 'assets/images/ProgressBar_600-30.png',
+		background: 'assets/images/gameSplash_600-960.png'
 	},
 	x: 0,
 	y: 0,
-	millis: 6000,
-	nextState: 7000
+	millis: 3000,
+	nextState: 4000
 };
 
 //Menu
 Config.menu = {
-	dir: 'assets/images/main_960-600.png',
+	dir: 'assets/images/menuTracajet_600-960.png',
 	x: 0,
 	y: 0,
-	buttonOpening: {
-		dir: 'assets/sprites/button_opening_206-17.png',
+	buttonHowToPlay: {
+		dir: 'assets/sprites/buttonintructions_266-58-4.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.62,
-		width: 103,
-		height: 17,
+		y: Config.global.screen.height * 0.50,
+		width: 266,
+		height: 58,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonPlay: {
-		dir: 'assets/sprites/button_start_140-16.png',
+		dir: 'assets/sprites/buttonplay_130-58-4.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.68,
-		width: 70,
-		height: 16,
-		anchor: {
-			x: 0.5,
-			y: 0.5
-		}
-	},
-	buttonHowToPlay: {
-		dir: 'assets/sprites/button_instruction_247-16.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.74,
-		width: 123,
-		height: 16,
+		y: Config.global.screen.height * 0.59,
+		width:130,
+		height: 58,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonCredits: {
-		dir: 'assets/sprites/button_credits_192-16.png',
+		dir: 'assets/sprites/buttoncredits_216-58-4.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.8,
-		width: 96,
-		height: 16,
+		y: Config.global.screen.height * 0.69,
+		width: 216,
+		height: 58,
 		anchor: {
 			x: 0.5,
 			y: 0.5
@@ -93,16 +83,16 @@ Config.menu = {
 	}
 };
 
-//HowToPlay
+// How To Play
 Config.howToPlay = {
-	dir: 'assets/images/how_to_play_960-600.png',
-	x: Config.global.screen.width/2,
-	y: Config.global.screen.height/2
+	dir: 'assets/images/howToPlay_600-960.png',
+	x: 0,
+	y: 0
 };
 
-//Credits
+// Credits
 Config.credits = {
-	dir: 'assets/images/credits_960-600.png',
+	dir: 'assets/images/credits_600-960.png',
 	x: 0,
 	y: 0
 };
@@ -135,5 +125,8 @@ Config.game = {
 		floor: {
 			dir: 'assets/images/chao.jpg',
 		},
+		jacare:{
+			
+		}
 
 };

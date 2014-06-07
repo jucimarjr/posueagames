@@ -3,48 +3,67 @@
 	<head>
 		<meta charset="UTF-8"/>
         <meta property="og:locale" content="pt_BR">
-        <meta property="og:url" content="http://computacao.uea.edu.br/ludus/posueagames/halison/tracajet">
+        <meta property="og:url" content="http://computacao.uea.edu.br/ludus/posueagames/halison/tracajet/">
         <meta property="og:title" content="Tracajet">
         <meta property="og:site_name" content="Especializacao em Desenvolvimento de Jogos Eletrônicos da UEA">
-        <meta property="og:description" content="Essa galerinha endiabrada, vai aprontar todas!">
+        <meta property="og:description" content="Esse Tracajá endiabrado, vai aprontar todas para entrar na festa do céu!">
         <meta property="og:image" content="http://computacao.uea.edu.br/ludus/posueagames/halison/tracajet/assets/images/ad_600-600.png">
         <meta property="og:image:type" content="image/jpeg">
-        <meta property="og:image:width" content="800">
+        <meta property="og:image:width" content="600">
         <meta property="og:image:height" content="600">
         <meta property="og:type" content="website">
         
 		<title>Tracajet</title>
 	</head>
-
+	<style>
+			body {
+				margin: auto;
+				display: table;
+			}
+			#footer {
+				text-align: center;
+			}
+	</style>
 	<body>
-<!-- 		<div id="fb-root"></div> -->
-<!-- 		<script>(function(d, s, id) { 
-//           var js, fjs = d.getElementsByTagName(s)[0];
-//           if (d.getElementById(id)) return;
-//           js = d.createElement(s); js.id = id;
-//           js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0";
-//           fjs.parentNode.insertBefore(js, fjs);
-//         }(document, 'script', 'facebook-jssdk'));
-      </script> -->
+	
+<!-- <div id="fb-root"></div> 
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=391075467572191&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
-<!-- 		<div  -->
-<!--              class="fb-like"  -->
-<!--              data-href="http://computacao.uea.edu.br/ludus/posueagames/jucimarjr/dinossauro/"  -->
-<!--              data-layout="button_count" data-action="like" data-show-faces="true"  -->
-<!--              data-share="false"> -->
-<!--         </div> -->
-
+<div class="fb-like" data-href="http://computacao.uea.edu.br/ludus/posueagames/halison/tracajet" data-width="960" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+-->
         
         
-		<div id ="phaser-game"></div>
+		<div id ="id-phaser-game"></div>
 	
 <!-- 		<div class="fb-comments"  -->
 <!--              data-href="http://computacao.uea.edu.br/ludus/posueagames/jucimarjr/dinossauro/"  -->
 <!--              data-width="960" data-numposts="10" data-colorscheme="light"> -->
 <!--         </div> -->
 		<script src="../../phaser/phaser.min.js"></script>
-		<script type="text/javascript" src="js/Config/config.js"></script>
-		<!--<script type="text/javascript" src="js/game.js"></script>-->
-        <script type="text/javascript" src="js/fase1.js"></script>
+		<script type="text/javascript" src="./js/config/Config.js"></script>
+		<script type="text/javascript" src="./js/states/LudusSplash.js"></script>
+		<script type="text/javascript" src="./js/states/GameSplash.js"></script>
+		<script type="text/javascript" src="./js/states/Menu.js"></script>
+		<script type="text/javascript" src="./js/states/HowToPlay.js"></script>
+		<script type="text/javascript" src="./js/states/Credits.js"></script>
+        <script type="text/javascript" src="./js/states/Fase1.js"></script>
+        <script type="text/javascript" src="./js/Main.js"></script>
 	</body>
+	
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-51647554-1', 'uea.edu.br');
+ga('send', 'pageview');
+
+</script>
 </html>

@@ -1,0 +1,15 @@
+
+body{
+	background-image:url('../assets/images/game_background_960-600.png');
+	background-color:#cccccc;
+}
+.fb-like{
+	left: 50%;
+	margin-left:-464px;  /* largura é 960*/
+	margin-bottom:2px;  /* largura é 960*/
+}
+.fb-comments{
+	left: 50%;
+ 	margin-left:-464px;  /* largura é 960*/
+ 	margin-top:2px;  /* largura é 960*/ 
+}

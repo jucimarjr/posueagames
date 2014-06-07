@@ -5,11 +5,11 @@ var Config = {
 	global: {
 		animationVelocity: 6,
 		screen: {
-			width: 480,
-			height: 900,
+			width: 960,
+			height: 600,
 			resize: function (game) {
 				"use strict";
-				if (window.innerHeight < 900 || window.innerWidth < 480) {
+				if (window.innerHeight < 600 || window.innerWidth < 960) {
 					game.scale.setExactFit();
 					game.scale.refresh();
 				}
@@ -94,7 +94,7 @@ Config.Menu = {
 
 //GamePlay
 Config.gamePlay = {
-	dir: 'assets/images/GamePlayBg_480-900.jpg',
+	dir: 'assets/images/background_4800-600.png',
 	x: 0,
 	y: 0
 };
@@ -113,6 +113,12 @@ Config.credits = {
 	y: 0
 };
 
+//GameOver
+//Config.credits = {
+//	dir: 'assets/images/GameOver_960-600.png',
+//	x: 0,
+//	y: 0
+//};
 /*Config.gamePlay = {
 	dir: 'assets/images/GamePlayBg_600-960.png',
 	x: 0,

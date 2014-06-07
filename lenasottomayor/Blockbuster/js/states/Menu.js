@@ -5,18 +5,15 @@ State.Menu = function (game) {
 	this.game = game;
 };
 State.Menu.prototype = {
-	preload: function () {
-		"use strict";
-	},
 	create: function () {
 		"use strict";
-		var background, buttonPlay, buttonCredits, buttonHowToPlay ;
+		var background, buttonPlay, buttonCredits, buttonHowToPlay;
 		background = this.game.add.sprite(Config.menu.x, Config.menu.y, 'menu-background');
-		buttonPlay = this.game.add.button(Config.menu.buttonPlay.x, Config.menu.buttonPlay.y, 'button-play', this.clickPlay, this, 0, 1, 2, 3);
+		buttonPlay = this.game.add.button(Config.menu.buttonPlay.x, Config.menu.buttonPlay.y, 'button-play', this.clickPlay, this, 1, 0, 2, 1);
 		buttonPlay.anchor.setTo(Config.menu.buttonPlay.anchor.x, Config.menu.buttonPlay.anchor.y);
-		buttonHowToPlay = this.game.add.button(Config.menu.buttonHowToPlay.x, Config.menu.buttonHowToPlay.y, 'button-how-to-play', this.clickHowToPlay, this, 0, 1, 2, 3);
+		buttonHowToPlay = this.game.add.button(Config.menu.buttonHowToPlay.x, Config.menu.buttonHowToPlay.y, 'button-how-to-play', this.clickHowToPlay, this, 0, 1, 2, 0);
 		buttonHowToPlay.anchor.setTo(Config.menu.buttonHowToPlay.anchor.x, Config.menu.buttonHowToPlay.anchor.y);
-		buttonCredits = this.game.add.button(Config.menu.buttonCredits.x, Config.menu.buttonCredits.y, 'button-credits', this.clickCredits, this, 0, 1, 2, 3);
+		buttonCredits = this.game.add.button(Config.menu.buttonCredits.x, Config.menu.buttonCredits.y, 'button-credits', this.clickCredits, this, 2, 1, 0, 0);
 		buttonCredits.anchor.setTo(Config.menu.buttonCredits.anchor.x, Config.menu.buttonCredits.anchor.y);
 	},
 	update: function () {
@@ -25,7 +22,7 @@ State.Menu.prototype = {
 	},
 	clickPlay: function () {
 		"use strict";
-		//this.game.state.start('Game');
+		this.game.state.start('GamePlay');
 	},
 	clickHowToPlay: function () {
 		"use strict";

@@ -25,6 +25,30 @@ State.GameSplash.prototype = {
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
 		
 		//Game
+		this.game.load.tilemap('level1', 'assets/level/1.json', null, Phaser.Tilemap.TILED_JSON);
+		//this.game.load.tilemap('level2', 'assets/level/2.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.tilemap('level3', 'assets/level/3.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.tilemap('level4', 'assets/level/4.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.tilemap('level5', 'assets/level/5.json', null, Phaser.Tilemap.TILED_JSON);
+	    /*this.game.load.tilemap('level6', Config.level.dir+'6/map.json', null, Phaser.Tilemap.TILED_JSON);*/
+
+		this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_39-60-27.png', 39,60,27);
+		this.game.load.spritesheet('bee', 'assets/enemies/casacaba_40-70-4.png',40,70,4);
+		this.game.load.spritesheet('bush', 'assets/spritesheets/bush_40-35-3.png',40,35,3);
+		this.game.load.spritesheet('coin', 'assets/spritesheets/coins/coins_40-40-8.png',40,40,8);
+		this.game.load.spritesheet('coinIara', 'assets/spritesheets/coins/coinsIara_40-40-8.png',40,40,8);
+		this.game.load.spritesheet('checkP', 'assets/spritesheets/check_20-37-3.png',20,37,3);
+
+		this.game.load.image('bg1', 'assets/level/bg1_462-800.jpg');
+		this.game.load.image('bg3', 'assets/level/bg3_462-800.jpg');
+		this.game.load.image('bg4', 'assets/level/bg4_462-800.jpg');
+		this.game.load.image('bg5', 'assets/level/bg5_462-800.jpg');
+		this.game.load.image('branches', 'assets/level/branches_360-283.png');
+		this.game.load.image('tileset', 'assets/tile_40-40-17.png');		
+		this.game.load.image('thorn', 'assets/enemies/thorns_80-40.png');
+		this.game.load.image('tube', 'assets/enemies/cannon_25-40.png');
+		this.game.load.image('acidicWater', 'assets/enemies/gota_13-37.png');
+		this.game.load.image('caba', 'assets/enemies/caba_8-8.png');		
 	},
 	create: function () {
 		"use strict";

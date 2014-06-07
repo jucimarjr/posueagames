@@ -25,7 +25,7 @@ State.Menu.prototype = {
 	},
 	clickPlay: function () {
 		"use strict";
-		//this.game.state.start('SecondPhase');
+		this.game.state.start('GamePlay');
 	},
 	clickHowToPlay: function () {
 		"use strict";

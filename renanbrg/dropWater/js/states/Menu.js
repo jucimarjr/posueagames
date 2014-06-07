@@ -7,6 +7,7 @@ State.Menu = function (game) {
 State.Menu.prototype = {
 	preload: function () {
 		"use strict";
+		this.game.load.audio('Inicio','assets/gotaTelaInicio.wav');
 	},
 	create: function () {
 		"use strict";
@@ -18,6 +19,11 @@ State.Menu.prototype = {
 		buttonHowToPlay.anchor.setTo(Config.menu.buttonHowToPlay.anchor.x, Config.menu.buttonHowToPlay.anchor.y);
 		buttonCredits = this.game.add.button(Config.menu.buttonCredits.x, Config.menu.buttonCredits.y, 'button-credits', this.clickCredits, this, 0, 1, 2, 3);
 		buttonCredits.anchor.setTo(Config.menu.buttonCredits.anchor.x, Config.menu.buttonCredits.anchor.y);
+		
+		this.creditsSound.stop();
+		this.inicioSound = this.game.add.audio("Inicio");
+        this.inicioSound.loop = true;
+        this.inicioSound.play();
 	},
 	update: function () {
 		"use strict";

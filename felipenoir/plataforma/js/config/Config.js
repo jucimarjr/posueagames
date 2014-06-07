@@ -54,11 +54,11 @@ Config.menu = {
 	x: 0,
 	y: 0,
 	buttonPlay: {
-		dir: 'assets/spritesheets/ButtonPlay_600-95.png',
+		dir: 'assets/spritesheets/LabelStartGame_2000-100.png',
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.4,
-		width: 150,
-		height: 95,
+		width: 500,
+		height: 100,
 		anchor: {
 			x: 0.5,
 			y: 0.5
