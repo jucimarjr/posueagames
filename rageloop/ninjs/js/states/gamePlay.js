@@ -5,10 +5,15 @@
         this.map = null;
         this.layer = null;
         this.player = null;
-        this.enemies = null;
+
         this.shurikens = null;
         this.shurikenTimer = null;
         this.shurikenDelay = 400;
+
+        //enemies
+        this.enemies = null;
+        this.enemyShurikens = null;
+        this.enemyFireTimer = 0;
     };
 
     Gameplay.prototype = {
@@ -35,6 +40,11 @@
             this.createEnemyIdle(40*26, 40*38);
             this.createEnemyIdle(40*51, 40*38);
 
+            this.enemyShurikens = this.game.add.group();
+            this.enemyShurikens.createMultiple(10, 'shuriken_enemy');
+            this.enemyShurikens.setAll('anchor.x', 0.5);
+            this.enemyShurikens.setAll('anchor.y', 0.5);
+
             this.player = this.game.add.sprite(40, 2600, 'ninjas');
 
             this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
@@ -59,6 +69,9 @@
             this.game.physics.arcade.overlap(this.shurikens, this.layer, this.shurikenCollision, null, this);
             this.game.physics.arcade.overlap(this.shurikens, this.enemies, this.killEnemy, null, this);
 
+            this.game.physics.arcade.overlap(this.enemyShurikens, this.layer, this.shurikenCollision, null, this);
+            this.game.physics.arcade.overlap(this.enemyShurikens, this.player, this.die, null, this);
+
             this.enemies.forEachAlive(this.updateEnemies, this);
 
             this.handleKeyDown();
@@ -71,15 +84,20 @@
 
             this.game.physics.enable(shuriken, Phaser.Physics.ARCADE);
 
-            shuriken.scale.set(1.5, 1.5);
             shuriken.reset(this.player.x + this.player.width, this.player.y);
             shuriken.body.velocity.x = (this.player.scale.x > 0) ? 1000 : -1000;
+            shuriken.scale.set(0.8, 0.8);
             shuriken.checkWorldBounds = true;
             shuriken.outOfBoundsKill = true;
 
             this.startShurikenTimer();
 
             return true;
+        },
+
+        die: function (shuriken, player) {
+            shuriken.kill();
+            player.kill();
         },
 
         createEnemyIdle: function (x, y) {
@@ -102,7 +120,31 @@
                 if ((this.player.x < enemy.x && enemy.scale.x > 0) || (this.player.x > enemy.x && enemy.scale.x < 0)) {
                     enemy.scale.x *= -1; //move enemy to always front the player
                 }
+
+                //fire if player is near
+                if (Math.abs(this.player.x - enemy.x) < 400) {
+                    if (this.game.time.now > this.enemyFireTimer + 1500) {
+                        this.enemyFire(enemy);
+                        this.enemyFireTimer = this.game.time.now;
+                    }
+                }
             }
+        },
+
+        enemyFire: function (enemy) {
+            var shuriken = this.enemyShurikens.getFirstDead();
+
+            if (!shuriken) return false;
+
+            this.game.physics.enable(shuriken, Phaser.Physics.ARCADE);
+
+            shuriken.reset(enemy.x + enemy.width, enemy.y);
+            shuriken.body.velocity.x = (enemy.scale.x > 0) ? 700 : -700;
+            shuriken.scale.set(0.8, 0.8);
+            shuriken.checkWorldBounds = true;
+            shuriken.outOfBoundsKill = true;
+
+            return true;
         },
 
         killEnemy: function (shuriken, enemy) {
