@@ -31,12 +31,14 @@ function Hero(game) {
     this.game = game,
     this.hero,
     this.animation,
+    this.jumpAudio,
     this.attacking = false;
 }
 
 Hero.prototype = {
     preload : function() {
         this.game.load.spritesheet('hero', HeroProperties.path, HeroProperties.width, HeroProperties.height, HeroProperties.animationsQtd);
+        game.load.audio('jump_audio', 'assets/sounds/jump.ogg');
     },
 
     create : function() {
@@ -60,6 +62,8 @@ Hero.prototype = {
             run : heroAnim.run.sword.name,
             attack : heroAnim.attack.sword.name
         };
+
+        this.jumpAudio = this.game.add.audio('jump_audio');
 
         this.hero.anchor.setTo(.5, .5);
         this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
@@ -85,6 +89,7 @@ Hero.prototype = {
 
         if(cursors.up.isDown && this.hero.body.onFloor()) {
             this.hero.body.velocity.y = HeroProperties.jump;
+            this.jumpAudio.play();
         }
 
         if(this.game.input.keyboard.isDown(Phaser.Keyboard.X)) {
