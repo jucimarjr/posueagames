@@ -106,7 +106,7 @@ State.GamePlay.prototype = {
         this.crab[1].name = 'crab2';
 
         // Add a "life drop"
-        this.lifeDrop = this.game.add.sprite(380, 320, 'life_drop');
+        this.lifeDrop = this.game.add.sprite(280, 220, 'life_drop');
         this.game.physics.p2.enableBody(this.lifeDrop);
         this.lifeDrop.body.setRectangle(40, 40, 0, 0);
         this.lifeDrop.body.fixedRotation = true;
