@@ -84,6 +84,7 @@
 
             this.player.animations.add('idle', [64, 65, 66, 67], 4, true);
             this.player.animations.add('walk', [0, 1, 2, 3], 8, true);
+            this.player.animations.add('dash', [33, 34], 8, false);
             this.player.animations.add('jump', [99, 98], 8, false);
             this.player.animations.add('death', [130, 131, 132, 133, 135], 8, false);
 
@@ -288,23 +289,33 @@
         handleKeyDown: function () {
             if (this.player.dead) return;
 
+            var shiftPressed = this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT);
+
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
-                this.player.body.velocity.x = 250;
+                this.player.body.velocity.x = 250 * (shiftPressed ? 2 : 1);
                 this.turnRight();
 
                 if (this.player.body.onFloor()) {
-                    this.player.animations.play('walk');
+                    if (shiftPressed) {
+                        this.player.animations.play('dash');
+                    } else {
+                        this.player.animations.play('walk');
+                    }
                 } else if (this.player.animations.currentAnim.name != 'jump') {
                     this.player.animations.play('jump');
                 }
             }
 
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-                this.player.body.velocity.x = -250;
+                this.player.body.velocity.x = -250 * (shiftPressed ? 2 : 1);
                 this.turnLeft();
 
                 if (this.player.body.onFloor()) {
-                    this.player.animations.play('walk');
+                    if (shiftPressed) {
+                        this.player.animations.play('dash');
+                    } else {
+                        this.player.animations.play('walk');
+                    }
                 } else if (this.player.animations.currentAnim.name != 'jump') {
                     this.player.animations.play('jump');
                 }
