@@ -28,6 +28,10 @@ State.GamePlay.prototype = {
 	    this.game.load.image('areia','assets/images/areiaSeca_40-40.png');
 	    this.game.load.spritesheet('crab','assets/images/crab_150-69.png', 150, 69);
 	    this.game.load.image('life_drop', 'assets/images/lifedrop_40-40.png');
+	    this.game.load.image('wetSand', 'assets/images/areiaMolhada_330-75.png');
+	    this.game.load.image('bucket', 'assets/images/balde_384-497.png');
+	    this.game.load.image('straw1', 'assets/images/straw1_375-72.png');
+	    this.game.load.image('straw2', 'assets/images/straw2_236-276.png');
 
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
         this.hud.preload();
@@ -51,6 +55,10 @@ State.GamePlay.prototype = {
         this.layer.resizeWorld();
 
 		this.crab = game.add.sprite(this.game.width-130, this.game.height-80, 'crab');
+		this.game.add.image(0, this.game.height-80, 'wetSand');
+		this.game.add.image(2008, 23, 'bucket');
+		this.game.add.image(2008, 508, 'straw1');
+		this.game.add.image(2525, 127, 'straw2');
         
         //  Set the tiles for collision.
         //  Do this BEFORE generating the p2 bodies below.
@@ -59,7 +67,8 @@ State.GamePlay.prototype = {
         this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
                 
         // create player
-        this.drop.create(300, this.game.world.height-200);
+        //this.drop.create(300, this.game.world.height-200);
+        this.drop.create(2008, this.game.world.height-200);
         var dropSprite = this.drop.getSpriteObject();   
         this.game.physics.p2.enableBody(dropSprite, false);        
         this.game.camera.follow(dropSprite);
@@ -71,7 +80,7 @@ State.GamePlay.prototype = {
 		this.crab.body.fixedRotation = true;
 		
         //this.crab.body.collideWorldBounds = false;
-        this.crab.body.moveLeft(2000);
+        this.crab.body.moveLeft(900);
         this.crab.name = 'crab';
 
         // Add a 'life drop"
@@ -110,11 +119,11 @@ State.GamePlay.prototype = {
 
 		if ( this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
             this.drop.moveRight(4);
-			this.drop.getSpriteObject().body.moveRight(150);
+			this.drop.getSpriteObject().body.moveRight(250);
 
 		} else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
             this.drop.moveLeft(4);
-            this.drop.getSpriteObject().body.moveLeft(150);
+            this.drop.getSpriteObject().body.moveLeft(250);
 
 		} else {
             this.drop.stop();
@@ -198,9 +207,9 @@ State.GamePlay.prototype = {
 	moveCrab: function () {		
 		if (this.touchingLeft(this.crab.body)) {
 			//this.crab.body.velocity.x = 100;
-			this.crab.body.moveRight(2000);
+			this.crab.body.moveRight(900);
 		} else if (this.touchingRight(this.crab.body)) {
-			this.crab.body.moveLeft(2000);
+			this.crab.body.moveLeft(900);
 		} else {
 			//this.crab.body.velocity.x = -100;
 		}					
