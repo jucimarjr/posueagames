@@ -222,7 +222,7 @@
                 }
 
                 //fire if player is near
-                if (Math.abs(this.player.x - enemy.x) < 400) {
+                if ((Math.abs(this.player.x - enemy.x) < 400) && (Math.abs(this.player.y - enemy.y) < 300)) {
                     if (this.game.time.now > this.enemyFireTimer + 1500) {
                         this.enemyFire(enemy);
                         this.enemyFireTimer = this.game.time.now;
