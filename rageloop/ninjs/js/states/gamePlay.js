@@ -5,6 +5,7 @@
         this.map = null;
         this.layer = null;
         this.player = null;
+        this.enemies = null;
         this.shurikens = null;
         this.shurikenTimer = null;
         this.shurikenDelay = 400;
@@ -30,6 +31,10 @@
             this.shurikens.setAll('anchor.x', 0.5);
             this.shurikens.setAll('anchor.y', 0.5);
 
+            this.enemies = this.game.add.group();
+            this.createEnemyIdle(40*26, 40*38);
+            this.createEnemyIdle(40*51, 40*38);
+
             this.player = this.game.add.sprite(40, 2600, 'ninjas');
 
             this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
@@ -49,7 +54,13 @@
 
         update: function() {
             this.game.physics.arcade.collide(this.player, this.layer);
+            this.game.physics.arcade.collide(this.enemies, this.layer);
+
             this.game.physics.arcade.overlap(this.shurikens, this.layer, this.shurikenCollision, null, this);
+            this.game.physics.arcade.overlap(this.shurikens, this.enemies, this.killEnemy, null, this);
+
+            this.enemies.forEachAlive(this.updateEnemies, this);
+
             this.handleKeyDown();
         },
 
@@ -69,6 +80,34 @@
             this.startShurikenTimer();
 
             return true;
+        },
+
+        createEnemyIdle: function (x, y) {
+            var enemy = this.enemies.create(x, y, 'ninjas');
+
+            this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
+
+            enemy.type = 'idle';
+            enemy.anchor.setTo(0.5, 0.5);
+            enemy.body.gravity.y = 1200;
+            enemy.body.collideWorldBounds = true;
+            enemy.scale.x *= -1;
+
+            enemy.animations.add('idle', [72, 73, 74, 75], 4, true);
+            enemy.animations.play('idle');
+        },
+
+        updateEnemies: function (enemy) {
+            if (enemy.type == 'idle') {
+                if ((this.player.x < enemy.x && enemy.scale.x > 0) || (this.player.x > enemy.x && enemy.scale.x < 0)) {
+                    enemy.scale.x *= -1; //move enemy to always front the player
+                }
+            }
+        },
+
+        killEnemy: function (shuriken, enemy) {
+            shuriken.kill();
+            enemy.kill();
         },
 
         startShurikenTimer: function () {
