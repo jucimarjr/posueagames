@@ -29,7 +29,7 @@
 
             this.layer = this.map.createLayer('layer');
             this.layer.resizeWorld();
-            this.map.setCollisionBetween(0, 10, true, 'layer');
+            this.map.setCollisionBetween(0, 15, true, 'layer');
 
             this.shurikens = this.game.add.group();
             this.shurikens.createMultiple(10, 'shuriken');
@@ -37,9 +37,24 @@
             this.shurikens.setAll('anchor.y', 0.5);
 
             this.enemies = this.game.add.group();
+
             this.createEnemyIdle(40*26, 40*38);
             this.createEnemyIdle(40*51, 40*38);
+            this.createEnemyIdle(40*22, 40*26);
+            this.createEnemyIdle(40*10, 40*23);
+            this.createEnemyIdle(40*31, 40*18);
+            this.createEnemyIdle(40*8, 40*12);
+            this.createEnemyIdle(40*17, 40*10);
+            this.createEnemyIdle(40*27, 40*5);
+            this.createEnemyIdle(40*47, 40*9);
+            this.createEnemyIdle(40*51, 40*7);
+
             this.createEnemyWalker(40*37, 40*41);
+            this.createEnemyWalker(40*46, 40*21);
+            this.createEnemyWalker(40*28, 40*24);
+            this.createEnemyWalker(40*31, 40*10);
+            this.createEnemyWalker(40*12, 40*6);
+            this.createEnemyWalker(40*60, 40*7);
 
             this.enemyShurikens = this.game.add.group();
             this.enemyShurikens.createMultiple(10, 'shuriken_enemy');
