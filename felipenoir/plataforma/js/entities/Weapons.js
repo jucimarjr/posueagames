@@ -3,7 +3,7 @@ var WeaponBase = {
 }
 
 var Weapon1 = {
-    weaponImg:WeaponBase.path + 'weapon1.png'
+    weaponImg:WeaponBase.path + '_weapon1.png'
 }
 
 var Weapon2 = {

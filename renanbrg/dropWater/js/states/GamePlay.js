@@ -36,6 +36,8 @@ State.GamePlay.prototype = {
 	            'assets/spritesheets/molecula_110-48.png', 55, 48);
 
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
+	    this.game.load.audio('main','assets/gotaMain.wav');
+	    this.game.load.audio('powup','assets/gotaPowerUp.wav');
         this.hud.preload();
 
 		// Player
@@ -113,7 +115,11 @@ State.GamePlay.prototype = {
         this.hud.create();
 		
         // Sounds
-        this.jumpSound = this.game.add.audio("jump");                
+        this.jumpSound = this.game.add.audio("jump"); 
+        this.mainSound = this.game.add.audio("main");
+        this.powUpSound = this.game.add.audio("powup");
+        this.mainSound.loop = true;
+        this.mainSound.play();
     },
     setCharacterInicialValues: function(character) {    	
     	character.smoothed = false;
@@ -125,8 +131,10 @@ State.GamePlay.prototype = {
 	update: function () {
 		"use strict";
 		this.handleKeyDown();					
+
 		this.moveCrab(this.crab[0]);
 		this.moveCrab(this.crab[1]);
+
 	},	
 	handleKeyDown: function () {
 		"use strict";
@@ -213,6 +221,7 @@ State.GamePlay.prototype = {
         // body1 is the drop; body2 is the life drop.
         if (!this.touchingUp(body2)) {
             console.log('Player get the life drop!!!!');
+            this.powUpSound.play();
             this.hud.increaseDropBar();
             this.lifeDrop.kill();
             return true;

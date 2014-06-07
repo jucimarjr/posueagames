@@ -11,8 +11,10 @@ Layer1.prototype = {
 	create: function () {
 		"use strict";
 		this.tilemap.map.addTilesetImage(Config.tilemap.tiles.tileset.name, 'tiles');
+		this.tilemap.map.addTilesetImage(Config.tilemap.tiles.thorn.name, 'thorn');
 		
 		this.platform = this.tilemap.map.createLayer(Config.tilemap.tiles.tileset.platform);
+		this.thorn = this.tilemap.map.createLayer(Config.tilemap.tiles.thorn.thorns);
 
 		this.tilemap.map.setCollision([2,20,47],true, Config.tilemap.tiles.tileset.platform);
 		this.tilemap.map.setCollisionBetween(5,7, true, Config.tilemap.tiles.tileset.platform);
@@ -22,5 +24,7 @@ Layer1.prototype = {
 		this.tilemap.map.setCollisionBetween(35,42, true, Config.tilemap.tiles.tileset.platform);
 		this.tilemap.map.setCollisionBetween(49,52, true, Config.tilemap.tiles.tileset.platform);
 		this.tilemap.map.setCollisionBetween(55,61, true, Config.tilemap.tiles.tileset.platform);
+
+		this.tilemap.map.setCollision([114],true, Config.tilemap.tiles.thorn.thorns);
 	}
 };

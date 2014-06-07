@@ -42,7 +42,7 @@ Player.prototype = {
 		"use strict";
 
 		this.game.physics.arcade.collide(this.spritePlayer, this.layer1.platform);
-		this.game.physics.arcade.collide(this.spritePlayer, this.thorns.group);
+		this.game.physics.arcade.collide(this.spritePlayer, this.layer1.thorn);
 
     	this.game.physics.arcade.overlap(this.spritePlayer, this.coins.group, this.collectCoins, null, this);
 
