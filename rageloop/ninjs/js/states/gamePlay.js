@@ -65,9 +65,10 @@
             this.createEnemyWalker(40*37, 40*41);
             this.createEnemyWalker(40*46, 40*21);
             this.createEnemyWalker(40*28, 40*24);
-            this.createEnemyWalker(40*31, 40*10);
-            this.createEnemyWalker(40*12, 40*6);
-            this.createEnemyWalker(40*60, 40*7);
+
+            this.createEnemyDash(40*12, 40*6);
+            this.createEnemyDash(40*60, 40*7);
+            this.createEnemyDash(40*31, 40*10);
 
             this.enemyShurikens = this.game.add.group();
             this.enemyShurikens.createMultiple(10, 'shuriken_enemy');
@@ -84,6 +85,7 @@
 
             this.player.animations.add('idle', [64, 65, 66, 67], 4, true);
             this.player.animations.add('walk', [0, 1, 2, 3], 8, true);
+            this.player.animations.add('dash', [33, 34], 8, false);
             this.player.animations.add('jump', [99, 98], 8, false);
             this.player.animations.add('death', [130, 131, 132, 133, 135], 8, false);
 
@@ -198,6 +200,7 @@
 
             enemy.animations.add('idle', [72, 73, 74, 75], 4, true);
             enemy.animations.add('walk', [8, 9, 10, 11], 4, true);
+            enemy.animations.add('dash', [39, 40], 4, true);
 
             return enemy;
         },
@@ -215,6 +218,13 @@
             enemy.body.velocity.x = -150;
         },
 
+        createEnemyDash: function (x, y) {
+            var enemy = this.createEnemy(x, y);
+            enemy.type = 'dasher';
+            enemy.animations.play('dash');
+            enemy.body.velocity.x = -300;
+        },
+
         updateEnemies: function (enemy) {
             if (enemy.type == 'idle') {
                 if ((this.player.x < enemy.x && enemy.scale.x > 0) || (this.player.x > enemy.x && enemy.scale.x < 0)) {
@@ -222,7 +232,7 @@
                 }
 
                 //fire if player is near
-                if (Math.abs(this.player.x - enemy.x) < 400) {
+                if ((Math.abs(this.player.x - enemy.x) < 400) && (Math.abs(this.player.y - enemy.y) < 300)) {
                     if (this.game.time.now > this.enemyFireTimer + 1500) {
                         this.enemyFire(enemy);
                         this.enemyFireTimer = this.game.time.now;
@@ -233,6 +243,12 @@
                 if (enemy.body.blocked.left || enemy.body.blocked.right) {
                     enemy.scale.x *= -1;
                     enemy.body.velocity.x = (enemy.scale.x > 0) ? 150 : -150;
+                }
+            }
+            if (enemy.type == 'dasher') {
+                if (enemy.body.blocked.left || enemy.body.blocked.right) {
+                    enemy.scale.x *= -1;
+                    enemy.body.velocity.x = (enemy.scale.x > 0) ? 300 : -300;
                 }
             }
         },
@@ -288,23 +304,33 @@
         handleKeyDown: function () {
             if (this.player.dead) return;
 
+            var shiftPressed = this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT);
+
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
-                this.player.body.velocity.x = 250;
+                this.player.body.velocity.x = 250 * (shiftPressed ? 2 : 1);
                 this.turnRight();
 
                 if (this.player.body.onFloor()) {
-                    this.player.animations.play('walk');
+                    if (shiftPressed) {
+                        this.player.animations.play('dash');
+                    } else {
+                        this.player.animations.play('walk');
+                    }
                 } else if (this.player.animations.currentAnim.name != 'jump') {
                     this.player.animations.play('jump');
                 }
             }
 
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-                this.player.body.velocity.x = -250;
+                this.player.body.velocity.x = -250 * (shiftPressed ? 2 : 1);
                 this.turnLeft();
 
                 if (this.player.body.onFloor()) {
-                    this.player.animations.play('walk');
+                    if (shiftPressed) {
+                        this.player.animations.play('dash');
+                    } else {
+                        this.player.animations.play('walk');
+                    }
                 } else if (this.player.animations.currentAnim.name != 'jump') {
                     this.player.animations.play('jump');
                 }
