@@ -7,6 +7,6 @@ var Tilemap = function (game) {
 Tilemap.prototype = {
 	create: function () {
 		"use strict";
-		this.map = this.game.add.tilemap('tilemap');
+		this.map = this.game.add.tilemap('fase01');
 	}
 };

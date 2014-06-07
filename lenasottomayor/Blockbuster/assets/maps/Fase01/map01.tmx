@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="320" height="20" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="tileset_360-280" tilewidth="40" tileheight="40">
+  <image source="../../images/tileset_360-280.png" width="360" height="280"/>
+ </tileset>
+ <tileset firstgid="64" name="powerlife_42-42" tilewidth="42" tileheight="42">
+  <image source="../../images/powerlife_42-42.png" width="42" height="42"/>
+ </tileset>
+ <tileset firstgid="65" name="powerstar_42-42" tilewidth="42" tileheight="42">
+  <image source="../../images/powerstar_42-42.png" width="42" height="42"/>
+ </tileset>
+ <tileset firstgid="66" name="coin_36-36" tilewidth="36" tileheight="36">
+  <image source="../../images/coin_36-36.png" width="36" height="36"/>
+ </tileset>
+ <tileset firstgid="67" name="Cruella_305-97-5" tilewidth="61" tileheight="97">
+  <image source="../../spritesheets/Cruella_305-97-5.png" width="305" height="97"/>
+ </tileset>
+ <tileset firstgid="72" name="Freddy_472-95-8" tilewidth="59" tileheight="95">
+  <image source="../../spritesheets/Freddy_472-95-8.png" width="472" height="97"/>
+ </tileset>
+ <tileset firstgid="80" name="Hannibal_432-97-8" tilewidth="54" tileheight="97">
+  <image source="../../spritesheets/Hannibal_432-97-8.png" width="432" height="97"/>
+ </tileset>
+ <tileset firstgid="88" name="Jason_400-97-8" tilewidth="50" tileheight="97">
+  <image source="../../spritesheets/Jason_400-97-8.png" width="400" height="97"/>
+ </tileset>
+ <tileset firstgid="96" name="Joker_448-97-8" tilewidth="56" tileheight="97">
+  <image source="../../spritesheets/Joker_448-97-8.png" width="448" height="97"/>
+ </tileset>
+ <tileset firstgid="104" name="Vader_1500-217-10" tilewidth="150" tileheight="217">
+  <image source="../../spritesheets/Vader_1500-217-10.png" width="1500" height="217"/>
+ </tileset>
+ <tileset firstgid="114" name="Thorn_40-40" tilewidth="40" tileheight="40">
+  <image source="../../images/Thorn_40-40.png" width="40" height="40"/>
+ </tileset>
+ <layer name="Platform" width="320" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztmVlPxSAQhblq3Pf1wQc1cX8xLol61f//t4RYIiG0DJRh6T1fctLcprcd6HAYqBAAAAAAAAAAAAAAAAAAAAAAAAAAAADUzVLpAAAAoACbUltS2wWefSN1K3VnnX+X+mR43o7UaqdDhvvHoNr6IfztnXXH5YFrnpJEVA6dDx/CnRdDrFi/16U2EscVEg8VrlznpvVcMzkuHQAzyvcOpHalzjrtd+dq8UEfyv9UnT7kf1xQPZrynxrHDVdMob55L/Ug9cgUT61wzgE6D0Pzd0pcSF326Jp4j5L+o8hRp7dai/hIVQdy8yz1IvVaOpAIapzXQDpS+M8YfzkSf3X6iXGOsiaeAjPj6JqDdH1PreWpfpi7HqP636LWiYuMrmPNtYTOA1NcOeHyn9KUrknHri1C54O+OUjX965aXnujls8jzZg46rGhNlOf13cd5Ttmim+dMfshFMzxDG/3o/PAVGtrhzG5FFuTUnxL5WItOXhkHEPnoFOpPUPnAf/NvR4d63/2Pr7y/jXPNbkZyndzPPv6wMxhU1PYv6HWBZz+R4mh9H5Znx+kmJ9V36Ye9yX6y977pe73KlrzPxvV9qvAGFy+kuK7FwVzPL8J1II+plD/9VF6j4fD/yhwra1iqMX/7Fq85e8kQ7jG8xTbmQqK/6nxdNuphjFFQeX7j/ifB0t4oMv/avKmVFDWY2Ytwin9zu1+t98F/A8oplr/2e3KMf5sj42p/+y1U+s+2TceudW6/7m+S4b4v61c809rcvVXSE7EvqcS7So95jgI7f/cdfCU/Y8z90vkL5e+GtO3oDOvIN5aZPfbPLAvYwjtf+54xsaX613Me65roW2t6RexNLNI
+  </data>
+ </layer>
+ <layer name="Thorn" width="320" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt1jkKACAMBEDf7P8Le1ERDzQwA+ksdBMwKQEAAAAAAAAAAAAAAAAAAAAAAADwSq4KAIit/ttniz2yfeNExvoFwA/sbGta2azuw7fyv3mfn+Zj1IveuShvi6QAzvwyUw==
+  </data>
+ </layer>
+ <objectgroup name="PowerLife" width="320" height="20">
+  <object gid="64" x="955" y="289"/>
+  <object gid="64" x="5720" y="280"/>
+ </objectgroup>
+ <objectgroup name="PowerStar" width="320" height="20">
+  <object gid="65" x="7755" y="282"/>
+  <object gid="65" x="3555" y="273"/>
+  <object gid="65" x="10480" y="280"/>
+ </objectgroup>
+ <objectgroup name="Coins" width="320" height="20">
+  <object gid="66" x="1120" y="304"/>
+  <object gid="66" x="1175" y="280"/>
+  <object gid="66" x="1229" y="304"/>
+  <object gid="66" x="1919" y="599"/>
+  <object gid="66" x="1960" y="600"/>
+  <object gid="66" x="2000" y="600"/>
+  <object gid="66" x="2040" y="600"/>
+  <object gid="66" x="1560" y="409"/>
+  <object gid="66" x="1760" y="409"/>
+  <object gid="66" x="1598" y="348"/>
+  <object gid="66" x="1721" y="348"/>
+  <object gid="66" x="400" y="680"/>
+  <object gid="66" x="440" y="680"/>
+  <object gid="66" x="480" y="680"/>
+  <object gid="66" x="520" y="680"/>
+  <object gid="66" x="560" y="680"/>
+  <object gid="66" x="640" y="680"/>
+  <object gid="66" x="600" y="680"/>
+  <object gid="66" x="1200" y="520"/>
+  <object gid="66" x="1400" y="440"/>
+  <object gid="66" x="2120" y="280"/>
+  <object gid="66" x="2040" y="280"/>
+  <object gid="66" x="2080" y="280"/>
+  <object gid="66" x="2160" y="280"/>
+  <object gid="66" x="2347" y="639"/>
+  <object gid="66" x="2385" y="579"/>
+  <object gid="66" x="2678" y="343"/>
+  <object gid="66" x="2443" y="531"/>
+  <object gid="66" x="2918" y="531"/>
+  <object gid="66" x="2978" y="574"/>
+  <object gid="66" x="3021" y="642"/>
+  <object gid="66" x="3320" y="400"/>
+  <object gid="66" x="3360" y="400"/>
+  <object gid="66" x="3560" y="480"/>
+  <object gid="66" x="4751" y="494"/>
+  <object gid="66" x="4705" y="446"/>
+  <object gid="66" x="4638" y="401"/>
+  <object gid="66" x="4562" y="401"/>
+  <object gid="66" x="4495" y="443"/>
+  <object gid="66" x="4453" y="503"/>
+  <object gid="66" x="4280" y="280"/>
+  <object gid="66" x="4160" y="440"/>
+  <object gid="66" x="3960" y="320"/>
+  <object gid="66" x="5160" y="320"/>
+  <object gid="66" x="5200" y="320"/>
+  <object gid="66" x="5240" y="320"/>
+  <object gid="66" x="4920" y="360"/>
+  <object gid="66" x="4960" y="360"/>
+  <object gid="66" x="5680" y="320"/>
+  <object gid="66" x="5720" y="320"/>
+  <object gid="66" x="5720" y="320"/>
+  <object gid="66" x="5760" y="320"/>
+  <object gid="66" x="5600" y="640"/>
+  <object gid="66" x="5640" y="640"/>
+  <object gid="66" x="5680" y="640"/>
+  <object gid="66" x="6240" y="280"/>
+  <object gid="66" x="6320" y="280"/>
+  <object gid="66" x="6800" y="400"/>
+  <object gid="66" x="7120" y="400"/>
+  <object gid="66" x="7160" y="400"/>
+  <object gid="66" x="7160" y="440"/>
+  <object gid="66" x="7120" y="440"/>
+  <object gid="66" x="7400" y="320"/>
+  <object gid="66" x="1400" y="400"/>
+  <object gid="66" x="1400" y="360"/>
+  <object gid="66" x="1920" y="560"/>
+  <object gid="66" x="1960" y="560"/>
+  <object gid="66" x="2000" y="560"/>
+  <object gid="66" x="2040" y="560"/>
+  <object gid="66" x="3320" y="360"/>
+  <object gid="66" x="3360" y="360"/>
+  <object gid="66" x="3560" y="440"/>
+  <object gid="66" x="4920" y="320"/>
+  <object gid="66" x="4960" y="320"/>
+  <object gid="66" x="5160" y="280"/>
+  <object gid="66" x="5200" y="280"/>
+  <object gid="66" x="5240" y="280"/>
+  <object gid="66" x="8280" y="320"/>
+  <object gid="66" x="8320" y="320"/>
+  <object gid="66" x="8360" y="320"/>
+  <object gid="66" x="8360" y="280"/>
+  <object gid="66" x="8320" y="280"/>
+  <object gid="66" x="8280" y="280"/>
+  <object gid="66" x="8080" y="600"/>
+  <object gid="66" x="8120" y="600"/>
+  <object gid="66" x="8160" y="600"/>
+  <object gid="66" x="8200" y="600"/>
+  <object gid="66" x="8240" y="600"/>
+  <object gid="66" x="8240" y="600"/>
+  <object gid="66" x="8280" y="600"/>
+  <object gid="66" x="8320" y="600"/>
+  <object gid="66" x="8360" y="600"/>
+  <object gid="66" x="8400" y="600"/>
+  <object gid="66" x="8440" y="600"/>
+  <object gid="66" x="8484" y="441"/>
+  <object gid="66" x="8524" y="441"/>
+  <object gid="66" x="8623" y="280"/>
+  <object gid="66" x="8663" y="280"/>
+  <object gid="66" x="8703" y="280"/>
+  <object gid="66" x="8920" y="560"/>
+  <object gid="66" x="8920" y="680"/>
+  <object gid="66" x="9160" y="400"/>
+  <object gid="66" x="9200" y="400"/>
+  <object gid="66" x="9240" y="400"/>
+  <object gid="66" x="8920" y="640"/>
+  <object gid="66" x="8920" y="520"/>
+  <object gid="66" x="8920" y="480"/>
+  <object gid="66" x="8920" y="600"/>
+  <object gid="66" x="9160" y="360"/>
+  <object gid="66" x="9200" y="360"/>
+  <object gid="66" x="9240" y="360"/>
+  <object gid="66" x="9400" y="400"/>
+  <object gid="66" x="9400" y="360"/>
+  <object gid="66" x="9560" y="440"/>
+  <object gid="66" x="9600" y="440"/>
+  <object gid="66" x="9600" y="400"/>
+  <object gid="66" x="9560" y="400"/>
+  <object gid="66" x="9560" y="360"/>
+  <object gid="66" x="9600" y="360"/>
+  <object gid="66" x="9760" y="400"/>
+  <object gid="66" x="9760" y="360"/>
+  <object gid="66" x="10080" y="520"/>
+  <object gid="66" x="10120" y="520"/>
+  <object gid="66" x="10160" y="520"/>
+  <object gid="66" x="10200" y="520"/>
+  <object gid="66" x="10240" y="520"/>
+  <object gid="66" x="10280" y="520"/>
+  <object gid="66" x="10720" y="520"/>
+  <object gid="66" x="10800" y="520"/>
+  <object gid="66" x="10760" y="520"/>
+  <object gid="66" x="10360" y="680"/>
+  <object gid="66" x="10400" y="680"/>
+  <object gid="66" x="10440" y="680"/>
+  <object gid="66" x="10480" y="680"/>
+  <object gid="66" x="10520" y="680"/>
+  <object gid="66" x="11040" y="480"/>
+  <object gid="66" x="11080" y="480"/>
+  <object gid="66" x="11120" y="480"/>
+  <object gid="66" x="10920" y="560"/>
+  <object gid="66" x="10920" y="600"/>
+  <object gid="66" x="10920" y="600"/>
+  <object gid="66" x="10960" y="640"/>
+  <object gid="66" x="10960" y="600"/>
+  <object gid="66" x="10960" y="520"/>
+  <object gid="66" x="10960" y="560"/>
+  <object gid="66" x="10920" y="640"/>
+  <object gid="66" x="10920" y="520"/>
+  <object gid="66" x="11240" y="320"/>
+  <object gid="66" x="11280" y="320"/>
+  <object gid="66" x="11360" y="440"/>
+  <object gid="66" x="11400" y="440"/>
+  <object gid="66" x="11520" y="520"/>
+  <object gid="66" x="11840" y="480"/>
+  <object gid="66" x="11880" y="480"/>
+  <object gid="66" x="11920" y="480"/>
+  <object gid="66" x="11960" y="480"/>
+  <object gid="66" x="12000" y="480"/>
+  <object gid="66" x="7400" y="280"/>
+  <object gid="66" x="1160" y="520"/>
+  <object gid="66" x="680" y="680"/>
+  <object gid="66" x="720" y="680"/>
+  <object gid="66" x="760" y="680"/>
+  <object gid="66" x="800" y="680"/>
+  <object gid="66" x="840" y="680"/>
+  <object gid="66" x="5920" y="320"/>
+  <object gid="66" x="5240" y="600"/>
+  <object gid="66" x="5280" y="600"/>
+  <object gid="66" x="5320" y="600"/>
+  <object gid="66" x="5320" y="560"/>
+  <object gid="66" x="5280" y="560"/>
+  <object gid="66" x="5240" y="560"/>
+  <object gid="66" x="6560" y="400"/>
+  <object gid="66" x="6560" y="360"/>
+  <object gid="66" x="6560" y="320"/>
+  <object gid="66" x="6760" y="400"/>
+  <object gid="66" x="6840" y="400"/>
+  <object gid="66" x="10880" y="640"/>
+  <object gid="66" x="10880" y="600"/>
+  <object gid="66" x="10880" y="560"/>
+  <object gid="66" x="10880" y="520"/>
+  <object gid="66" x="11760" y="480"/>
+  <object gid="66" x="11800" y="480"/>
+  <object gid="66" x="1660" y="316"/>
+  <object gid="66" x="7080" y="400"/>
+  <object gid="66" x="7080" y="440"/>
+  <object gid="66" x="9760" y="440"/>
+  <object gid="66" x="9400" y="440"/>
+ </objectgroup>
+ <objectgroup name="Cruella" width="320" height="20">
+  <object gid="67" x="1696" y="475"/>
+  <object gid="68" x="2491" y="557"/>
+  <object gid="68" x="5052" y="518"/>
+  <object gid="67" x="6298" y="596"/>
+ </objectgroup>
+ <objectgroup name="Freddy" width="320" height="20">
+  <object gid="72" x="3657" y="718"/>
+  <object gid="75" x="5603" y="677"/>
+  <object gid="72" x="7177" y="478"/>
+  <object gid="75" x="9008" y="596"/>
+ </objectgroup>
+ <objectgroup name="Hannibal" width="320" height="20">
+  <object gid="80" x="1504" y="716"/>
+  <object gid="83" x="2855" y="559"/>
+  <object gid="80" x="4865" y="677"/>
+  <object gid="83" x="9563" y="517"/>
+ </objectgroup>
+ <objectgroup name="Jason" width="320" height="20">
+  <object gid="88" x="2145" y="317"/>
+  <object gid="91" x="3801" y="597"/>
+  <object gid="88" x="8705" y="636"/>
+  <object gid="91" x="10640" y="398"/>
+ </objectgroup>
+ <objectgroup name="Joker" width="320" height="20">
+  <object gid="99" x="3242" y="716"/>
+  <object gid="96" x="4362" y="557"/>
+  <object gid="96" x="10540" y="717"/>
+  <object gid="99" x="11483" y="556"/>
+ </objectgroup>
+ <objectgroup name="Vader" width="320" height="20">
+  <object gid="104" x="12641" y="673"/>
+ </objectgroup>
+</map>

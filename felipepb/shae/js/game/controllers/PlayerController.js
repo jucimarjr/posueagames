@@ -10,8 +10,10 @@ Game.PlayerController = function (gameState) {
 
     this.isGrounded;
     this.canJump;
-    this.direction;
     this.doJump;
+    this.isJumping;
+    this.isJumpInputReleased;
+    this.direction;
     this.groundBodies = new Array();
 
     this.currentAnim;
@@ -27,21 +29,21 @@ Game.PlayerController.Direction = {
 }
 
 Game.PlayerController.AnimState = {
-    Idle: 0,
-    Walk: 1,
-    Run: 2,
-    JumpStart: 3,
-    JumpAscend: 4,
-    JumpApex: 5,
-    JumpDescend: 6,
-    JumpTouchDown: 7
+    Idle: 'idle',
+    Walk: 'walk',
+    Run: 'run',
+    JumpStart: 'jump start',
+    JumpAscend: 'jump ascend',
+    JumpApex: 'jump apex',
+    JumpDescend: 'jump descend',
+    JumpTouchdown: 'jump touchdown'
 }
 
 Game.PlayerController.prototype = {
     create: function () {
         // Setup sprites
-        this.sprite = this.gameState.game.add.sprite(0, 0, 'player_atlas');
-        this.sprite.frameName = 'shae_idle_1_100-80.png';
+        this.sprite = this.gameState.game.add.sprite(0, 0, 'main_sprite_atlas');
+        this.sprite.frameName = 'shae_idle_1_100-100.png';
         this.sprite.anchor.setTo(0.73, 0.5);
         this.sprite.x = 140;
         this.sprite.y = 70;
@@ -49,30 +51,62 @@ Game.PlayerController.prototype = {
         // Create animations
         var idleAnimFrames = new Array();
         for (var i = 1; i <= 5; i++) {
-            idleAnimFrames.push('shae_idle_' + i + '_100-80.png');
+            idleAnimFrames.push('shae_idle_' + i + '_100-100.png');
         };
 
         var walkAnimFrames = new Array();
         for (var i = 1; i <= 4; i++) {
-            walkAnimFrames.push('shae_walk_' + i + '_100-80.png');
+            walkAnimFrames.push('shae_walk_' + i + '_100-100.png');
         };
 
         var runAnimFrames = new Array();
         for (var i = 1; i <= 4; i++) {
-            runAnimFrames.push('shae_run_' + i + '_100-80.png');
+            runAnimFrames.push('shae_run_' + i + '_100-100.png');
         };
+
+        var jumpStartAnimFrames = new Array();
+        jumpStartAnimFrames.push('shae_jump_1_100-100.png');
+
+        var jumpAscendAnimFrames = new Array();
+        jumpAscendAnimFrames.push('shae_jump_2_100-100.png');
+        jumpAscendAnimFrames.push('shae_jump_3_100-100.png');
+
+        var jumpApexAnimFrames = new Array();
+        jumpApexAnimFrames.push('shae_jump_4_100-100.png');
+
+        var jumpDescendAnimFrames = new Array();
+        jumpDescendAnimFrames.push('shae_jump_5_100-100.png');
+        jumpDescendAnimFrames.push('shae_jump_6_100-100.png');
+
+        var jumpTouchDownAnimFrames = new Array();
+        jumpTouchDownAnimFrames.push('shae_jump_7_100-100.png');
+
+        var jumpStartAnim, jumpApexAnim, jumpTouchdownAnim;
 
         this.sprite.animations.add('idle', idleAnimFrames, 10, true);
         this.sprite.animations.add('walk', walkAnimFrames, 10, true);
         this.sprite.animations.add('run', runAnimFrames, 10, true);
+        this.sprite.animations.add('jump-ascend', jumpAscendAnimFrames, 10, true);
+        this.sprite.animations.add('jump-descend', jumpDescendAnimFrames, 10, true);
+
+        jumpStartAnim = this.sprite.animations.add('jump-start', jumpStartAnimFrames, 7.5, false);
+        jumpStartAnim.onComplete.add(this.onJumpStartFinished, this);
+        
+        jumpApexAnim = this.sprite.animations.add('jump-apex', jumpApexAnimFrames, 7.5, false);
+        jumpApexAnim.onComplete.add(this.onJumpApexFinished, this);
+        
+        jumpTouchdownAnim = this.sprite.animations.add('jump-touchdown', jumpTouchDownAnimFrames, 7.5, false);
+        jumpTouchdownAnim.onComplete.add(this.onJumpTouchdownFinished, this);
 
         // Create body
         this.gameState.registerBody(this.sprite);
         this.sprite.body.setSize(26, 64, 0, 0);
 
         // Setup input
+        this.canJump = true;
+        this.isJumping = false;
         this.blockInput = false;
-        this.doLongJump = false;
+        // this.doLongJump = false;
 
         this._actualRunModifier = 0.0;
 
@@ -83,6 +117,8 @@ Game.PlayerController.prototype = {
     },
 
     update: function () {
+        // console.log(this.animState);
+
         this.isGrounded = this.sprite.body.onFloor();
         this.handleInput();
         this.handleAnimation();
@@ -110,81 +146,185 @@ Game.PlayerController.prototype = {
 		var joystickX = joystick.getX();
 		var joystickY = joystick.getY();
 		
-		console.log('x: ' + joystickX + ' |y:  ' + joystickY);
+		// console.log('x: ' + joystickX + ' |y:  ' + joystickY);
 		
 		var runButtonIsDown = this.runButton.isDown || joystick.getA();
 		
         this.direction = Game.PlayerController.Direction.None;
-        this.animState = Game.PlayerController.AnimState.Idle;
+
+        if (this.isGrounded && this.canJump)
+            this.animState = Game.PlayerController.AnimState.Idle;
 
         if (this.cursorKeys.left.isDown || joystickX < JoystickConsts.leftOffset)
             this.direction = Game.PlayerController.Direction.Left;
         else if (this.cursorKeys.right.isDown || joystickX > JoystickConsts.rightOffset)
             this.direction = Game.PlayerController.Direction.Right;
 
-        if (this.direction != Game.PlayerController.Direction.None)
+        if (this.direction != Game.PlayerController.Direction.None && this.isGrounded && this.canJump)
             this.animState = Game.PlayerController.AnimState.Walk;
 
         if (this.direction != Game.PlayerController.Direction.None && runButtonIsDown) {
             this._actualRunModifier += PlayerConsts.runModifierDamping;
             this._actualRunModifier = Math.min(this._actualRunModifier, 
                                                PlayerConsts.runModifier);
-            this.direction += this.direction == Game.PlayerController.Direction.Right
-			                                     ? this._actualRunModifier
-												 : -this._actualRunModifier;
 
-            this.animState = Game.PlayerController.AnimState.Run;
-        } else if (this.runButton.isUp) {
+            if (this.isGrounded && this.canJump)
+                this.animState = Game.PlayerController.AnimState.Run;
+
+        } else if ((this.runButton.isUp && this.isGrounded) || 
+                    this.direction == Game.PlayerController.Direction.None) {
             this._actualRunModifier = 0.0;
         }
+
+        this.direction += this.direction == Game.PlayerController.Direction.Right
+                          ? this._actualRunModifier
+                          : -this._actualRunModifier;
     },
 
     handleJump: function () {
 		var joystick = this.joystick;
-		var jumpButtonIsDown = this.jumpButton.isDown || joystick.getB();
+		var hasJumpInput = this.jumpButton.justPressed(100) || joystick.getB();
 		
-        if (this.canJump && this.isGrounded && jumpButtonIsDown) {
+        // if (!this.canJump && this.isGrounded && !this.isJumping && !hasJumpInput)
+        //     this.canJump = true;
+
+        if (this.jumpButton.isUp && !this.isJumpInputReleased)
+             this.isJumpInputReleased = true;
+
+        if (this.canJump && hasJumpInput/* && this.isJumpInputReleased*/) {
+            // Jump!
+            this.isJumpInputReleased = false;
+            this.isJumping = true;
             this.doJump = true;
             this.canJump = false;
-        } else if (this.isGrounded && !jumpButtonIsDown) {
-            this.canJump = true;
-        }
+            this.animState = Game.PlayerController.AnimState.JumpStart;
+        } else if (!this.isJumpInputReleased && this.currentAnim == 'jump-ascend' && this.jumpButton.justPressed(350)) {
+            this.doJump = true;
+        } else if (this.isGrounded && (Utils.stringContains(this.currentAnim, 'jump-start') ||
+                                       Utils.stringContains(this.currentAnim, 'jump-ascend') ||
+                                       Utils.stringContains(this.currentAnim, 'jump-apex') ||
+                                       Utils.stringContains(this.currentAnim, 'jump-descend'))) {
+            // Player hit the ground.
+            this.animState = Game.PlayerController.AnimState.JumpTouchdown;
+        } else if (!this.isGrounded) {
+            // Player is mid-air...
+            if (this.currentAnim == 'jump-ascend' && this.sprite.body.velocity.y > -0.1) {
+                // ...and is slowing down. Play apex animation.
+                this.animState = Game.PlayerController.AnimState.JumpApex;
+            } else if (this.currentAnim != 'jump-descend' && this.sprite.body.velocity.y > 0) {
+                this.animState = Game.PlayerController.AnimState.JumpDescend;
+                
+                if (!this.isJumping) 
+                    this.isJumping = true;
+                
+                if (this.canJump) 
+                    this.canJump = false;
+            }
+         }
     },
 
     handleAnimation: function () {
+        // Handle scaleX to mirror the sprite horizontally.
         if (this.direction <= Game.PlayerController.Direction.Left && this.sprite.scale.x != -1) {
             this.sprite.scale.x = -1;
             this.sprite.anchor.setTo(0.65, 0.5);
-        } else if (this.direction >= Game.PlayerController.Direction.None && this.sprite.scale.x != 1) {
+        } else if (this.direction >= Game.PlayerController.Direction.Right && this.sprite.scale.x != 1) {
             this.sprite.scale.x = 1;
             this.sprite.anchor.setTo(0.73, 0.5);
         }
 
+        // Handle animation based on current player state.
         if (this.animState == Game.PlayerController.AnimState.Idle && this.currentAnim != 'idle') {
+            // Idle animation.
             this.sprite.animations.play('idle');
             this.currentAnim = 'idle';
-
         } else if (this.animState == Game.PlayerController.AnimState.Walk && this.currentAnim != 'walk') {
+            // Walk animation when player is grounded.
             this.sprite.animations.play('walk');
             this.currentAnim = 'walk';
         } else if (this.animState == Game.PlayerController.AnimState.Run && this.currentAnim != 'run') {
+            // Run animation when player is grounded.
             this.sprite.animations.play('run');
             this.currentAnim = 'run';
+        } else if (this.animState == Game.PlayerController.AnimState.JumpStart && this.currentAnim != 'jump-start') {
+            // Jump start animation, run when player is starting to jump, duh.
+            this.sprite.animations.play('jump-start');
+            this.currentAnim = 'jump-start';
+        } else if (this.animState == Game.PlayerController.AnimState.JumpAscend && this.currentAnim != 'jump-ascend') {
+            // Jump ascend animation, run when player is going up.
+            this.sprite.animations.play('jump-ascend');
+            this.currentAnim = 'jump-ascend';
+        } else if (this.animState == Game.PlayerController.AnimState.JumpApex && this.currentAnim != 'jump-apex') {
+            // Jump apex animation, run when player reaches close to 0 horizontal velocity while jumping.
+            this.sprite.animations.play('jump-apex');
+            this.currentAnim = 'jump-apex';
+        } else if (this.animState == Game.PlayerController.AnimState.JumpDescend && this.currentAnim != 'jump-descend') {
+            // Jump descend animation, run when player is falling.
+            this.sprite.animations.play('jump-descend');
+            this.currentAnim = 'jump-descend';
+        } else if (this.animState == Game.PlayerController.AnimState.JumpTouchdown && this.currentAnim != 'jump-touchdown') {
+            // Jump touchdown animation, run when player touched the ground coming from a jump/fall.
+            this.sprite.animations.play('jump-touchdown');
+            this.currentAnim = 'jump-touchdown';
         }
     },
 
     applyVelocity: function () {
-        // Handle horizontal velocity        
-        this.sprite.body.velocity.x = this.direction * 
-                                      PlayerConsts.movementVelocity * 
-                                      PhysicsConsts.pixelsToUnit;
+        // Handle horizontal velocity.
+        var body = this.sprite.body;
+        if ((body.velocity.x >= 0 && this.direction > 0) || (body.velocity.x <= 0 && this.direction < 0)) {
+            // Player is going in the same direction as the input.
+            if (this.direction > 0)
+                body.velocity.x = Math.min(body.velocity.x + PlayerConsts.walkAccel * this.direction, 
+                                           PlayerConsts.walkVelocity * this.direction);
+            else
+                body.velocity.x = Math.max(body.velocity.x + PlayerConsts.walkAccel * this.direction,
+                                           PlayerConsts.walkVelocity * this.direction);
+        } else if ((body.velocity.x >= 0 && this.direction < 0) || (body.velocity.x <= 0 && this.direction > 0)) {
+            // Player is going in a different direction from the input.
+            if (this.direction > 0)
+                body.velocity.x = Math.min(body.velocity.x + PlayerConsts.walkDamping * this.direction, 
+                                           PlayerConsts.walkDamping * this.direction);
+            else
+                body.velocity.x = Math.max(body.velocity.x + PlayerConsts.walkDamping * this.direction, 
+                                           PlayerConsts.walkDamping * this.direction);
+        } else {
+            if (body.velocity.x > 0)
+                body.velocity.x = Math.max(0.0, body.velocity.x - PlayerConsts.walkDamping * 3.0);
+            else if (body.velocity.x < 0)
+                body.velocity.x = Math.min(0.0, body.velocity.x + PlayerConsts.walkDamping * 3.0);
+        }
 
-        // Handle vertical velocity
+        // Handle vertical velocity.
         if (this.doJump) {
-            this.sprite.body.velocity.y = -PlayerConsts.jumpVelocity *
-                                           PhysicsConsts.pixelsToUnit;
+            this.sprite.body.velocity.y = -PlayerConsts.jumpVelocity;
             this.doJump = false;
         }
+    },
+
+    onJumpStartFinished: function () {
+        if (this.sprite.body.velocity.y < 0 && this.currentAnim != 'jump-ascend') {
+            // this.doJump = true;
+            // this.sprite.body.velocity.y = -PlayerConsts.jumpVelocity *
+            //                                PhysicsConsts.pixelsToUnit;
+            this.animState = Game.PlayerController.AnimState.JumpAscend;
+            // this.sprite.animations.play('jump-ascend');
+            // this.currentAnim = 'jump-ascend';
+        }
+    },
+
+    onJumpApexFinished: function () {
+        // Player is mid-air...
+        if (this.sprite.body.velocity.y > 0) {
+            // ...and is falling.
+            this.animState = Game.PlayerController.AnimState.JumpDescend;
+        }
+    },
+
+    onJumpTouchdownFinished: function () {
+        // console.log('onJumpTouchdownFinished');
+        this.canJump = true;
+        this.isJumping = false;
     }
 
     // onBeginContact: function (otherBody, otherShape, shape, contactDataArray) {

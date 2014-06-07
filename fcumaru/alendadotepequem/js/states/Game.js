@@ -65,8 +65,8 @@ State.Game.prototype = {
 			font : "20px Courier",
 			fill : "#000000"
 		};
-		posicao = this.game.add.text(10, 550, " ", style);
 
+		posicao = this.game.add.text(10, 550, " ", style);
 		posicao.fixedToCamera = true;
 
 		// // exibe score

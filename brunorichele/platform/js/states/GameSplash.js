@@ -26,13 +26,19 @@ State.GameSplash.prototype = {
 
 		//HowToPlay
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
-
-		//Game
-		this.game.load.image('imageTemp', Config.game.dir.imageTemp);
-		this.game.load.tilemap('tilemap', Config.game.dir.tilemap, null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('tileset', Config.game.dir.tileset);
-		this.game.load.image('jogador', Config.game.jogador.dir);
-		this.game.load.audio('bgmusic', Config.game.dir.worldAudio);
+		
+		Phase1.World.game = this.game;
+		Phase1.World.init();
+		Phase1.Rock.game = this.game;
+		Phase1.Rock.init();
+		Phase1.Smoke.game = this.game;	
+		Phase1.Smoke.init();
+		Phase1.Door.game = this.game;	
+		Phase1.Door.init();
+		Phase1.Trap.game = this.game;
+		Phase1.Trap.init();
+		Phase1.Player.game = this.game;
+		Phase1.Player.init();
 	},
 	create: function () {
 		"use strict";

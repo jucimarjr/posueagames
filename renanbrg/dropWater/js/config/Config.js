@@ -94,7 +94,7 @@ Config.Menu = {
 
 //GamePlay
 Config.gamePlay = {
-	dir: 'assets/images/GamePlay_960-600.jpg',
+	dir: 'assets/images/background_4800-600.png',
 	x: 0,
 	y: 0
 };
@@ -113,6 +113,12 @@ Config.credits = {
 	y: 0
 };
 
+//GameOver
+//Config.credits = {
+//	dir: 'assets/images/GameOver_960-600.png',
+//	x: 0,
+//	y: 0
+//};
 /*Config.gamePlay = {
 	dir: 'assets/images/GamePlayBg_600-960.png',
 	x: 0,

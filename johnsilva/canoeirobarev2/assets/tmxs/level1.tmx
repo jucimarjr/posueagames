@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="24" height="15" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
+  <image source="../level/tile_40-40-17.png" width="680" height="40"/>
+ </tileset>
+ <tileset firstgid="18" name="thorns" tilewidth="80" tileheight="40">
+  <image source="../enemies/thorns_80-40.png" width="80" height="40"/>
+ </tileset>
+ <tileset firstgid="19" name="flag" tilewidth="40" tileheight="40">
+  <image source="../level/coins_40-40-8.png" width="320" height="40"/>
+ </tileset>
+ <objectgroup name="coin" width="24" height="15">
+  <object gid="19" x="879" y="440"/>
+ </objectgroup>
+ <objectgroup name="bushes" width="24" height="15">
+  <object gid="13" x="880" y="280"/>
+  <object gid="13" x="640" y="360"/>
+  <object gid="13" x="360" y="400"/>
+  <object gid="13" x="360" y="120"/>
+  <object gid="13" x="400" y="120"/>
+  <object gid="13" x="440" y="120"/>
+  <object gid="13" x="160" y="400"/>
+  <object gid="13" x="80" y="560"/>
+  <object gid="13" x="40" y="520"/>
+  <object gid="13" x="600" y="360"/>
+ </objectgroup>
+ <layer name="Camada de Tiles 1" width="24" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzFk90KgCAMRmfM7O9ivf/LZjDBymVDR4ODMD4OsikCwGQERkawK9/gp8jO1PwpS0IeMxxT6jnBjy/5E83Ml4L/a15bLfP/079GAvR7n9K+7n4S8pIzMLX9pppB91Zq+7eaPzFW/gGuf3AT7pCfmr6H558NHcm9BwODBJo=
+  </data>
+ </layer>
+ <objectgroup name="thorns" width="24" height="15">
+  <object gid="18" x="878" y="280"/>
+  <object gid="18" x="610" y="369"/>
+  <object gid="18" x="318" y="405"/>
+  <object gid="18" x="161" y="404"/>
+  <object gid="18" x="-1" y="522"/>
+  <object gid="18" x="21" y="560"/>
+  <object gid="18" x="787" y="561"/>
+ </objectgroup>
+</map>

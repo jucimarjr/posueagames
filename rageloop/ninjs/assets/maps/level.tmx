@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="72" height="45" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="background" tilewidth="40" tileheight="40">
+  <image source="../sprites/tileset.png" width="400" height="40"/>
+ </tileset>
+ <layer name="layer" width="72" height="45">
+  <data encoding="base64" compression="zlib">
+   eJztmgEOwiAMRafRef8bmyWSYMNKS/9nsPCSxsQNpw9oYfO1bdvLGW/QOS3tvJ/b+j1kPFb8RcnNTOyNxyzkfmZ0k2A5kmNp8c/h9vN7XX50lh8dzY9lDu/O86K5szdaDkrzUIu9cN6ZA4Yba994juf5J9UwJL391MZmrZ/P2qU6j65jTD9nfZ0CSe4HSakvPXnK8tk98lnET2nM7tkxaxvrWC/lOcaYyWGOH8/7o1Lzk/eX57eN5sdaXyWHl/fGGT+euTMqrPp1FVH/sj0r/1xFpJ6V2t7Nz0Gp/ltDwso/d0EbP8h+KNFaG3tS81Nby53tVe8COv8w1/3ePTgCRn5mOWrdg0dg7t977iNZeOpX1KEnb6OI9otnfiH8WHM8itn8INcHnmu2IvPPKIEi6j9/jhp5jm9pO5Ifqyv5HJ75X4jjWs8Bw+IH9T8HzefsflqQfrTxNdMeWPZ/xI9ljs56/y16f+OqutSLO94f86L13fKjs/zoLD86I+fOK78b6trM+tXSDu0T5Yex/hlhbDP8lNbQM/tBRG3/hbpOy5yNtLfMDUQw/bDjC58RC6A=
+  </data>
+ </layer>
+ <layer name="spines" width="72" height="45">
+  <data encoding="base64" compression="zlib">
+   eJzt1zENAAAIwDBe/BvGAzwE2mQiFgEAAAAAXJKNAAAAPur8k6cCAACAvaYP7/9nCtJrAZ8=
+  </data>
+ </layer>
+ <layer name="items" width="72" height="45">
+  <data encoding="base64" compression="zlib">
+   eJzt1rsNACAIBUBK95/YlljZENDcTfAC4RMBAPxidQcArpnXfnpQa2J9J2YCAGbyNwBQyZ0BTvYCAJD5DQCAl21+OABJ
+  </data>
+ </layer>
+</map>

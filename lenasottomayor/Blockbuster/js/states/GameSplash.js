@@ -36,12 +36,30 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('button-how-to-play', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
 
 		//TileMap
-		this.load.tilemap('tilemap', Config.tilemap.dir, null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('tiles', Config.tiles.dir);
+		this.load.tilemap('fase01', Config.tilemap.fase01.dir, null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.image('tiles', Config.tilemap.tiles.tileset.dir);
 		
-		this.game.load.image('coin', Config.coins.dir);
+		this.game.load.image('coin', Config.tilemap.tiles.coins.dir);
+		
+		this.game.load.image('powerlife', Config.tilemap.tiles.powerlifes.dir);
+		
+		this.game.load.image('powerstar', Config.tilemap.tiles.powerstars.dir);
+		
+		this.game.load.image('thorn', Config.tilemap.tiles.thorn.dir);
+		
+		//Player
+		this.game.load.spritesheet('oscar', Config.player.dir, Config.player.width, Config.player.height);
+		
+		//Enemy
+		this.game.load.spritesheet('enemy', Config.enemy.dir, Config.enemy.width, Config.enemy.height);
+		this.game.load.spritesheet('cruella', Config.enemy.cruella.dir,  Config.enemy.cruella.width,  Config.enemy.cruella.height, Config.enemy.cruella.frames);
+		this.game.load.spritesheet('freddy', Config.enemy.freddy.dir,  Config.enemy.freddy.width,  Config.enemy.freddy.height, Config.enemy.freddy.frames);
+		this.game.load.spritesheet('hannibal', Config.enemy.hannibal.dir,  Config.enemy.hannibal.width,  Config.enemy.hannibal.height, Config.enemy.hannibal.frames);
+		this.game.load.spritesheet('jason', Config.enemy.jason.dir,  Config.enemy.jason.width,  Config.enemy.jason.height, Config.enemy.jason.frames);
+		this.game.load.spritesheet('joker', Config.enemy.joker.dir,  Config.enemy.joker.width,  Config.enemy.joker.height, Config.enemy.joker.frames);
+		this.game.load.spritesheet('vader', Config.enemy.vader.dir,  Config.enemy.vader.width,  Config.enemy.vader.height, Config.enemy.vader.frames);
 		
 		//Background
-		//this.game.load.image('game-background', 'assets/images/GameBackground_1920-600.png');
+		this.game.load.image('game-background', Config.background.game.dir);
 	}
 };

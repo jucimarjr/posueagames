@@ -108,18 +108,3 @@ Config.credits = {
 	x: 0,
 	y: 0
 };
-
-// Game
-Config.game = {
-	dir: {
-		imageTemp : "assets/cenariogame-01.jpg",
-		tilemap: "assets/spritesheets/mapa.json",
-		tileset: "assets/spritesheets/texturebreakout.png",
-		worldAudio: "assets/audio/In my own place.mp3"
-	},
-	jogador: {
-		dir: 'assets/images/jogador_40-40.png',
-		width: 40,
-		height: 40
-	}
-};
