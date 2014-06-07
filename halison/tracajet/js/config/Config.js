@@ -89,7 +89,7 @@ Config.howToPlay = {
 	x: 0,
 	y: 0,
 	text: { 
-		dir: 'assets/images/creditos_400-100.png',
+		dir: 'assets/images/intrucoes_400-100.png',		
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.5,
 		width: 400,
@@ -97,6 +97,10 @@ Config.howToPlay = {
 		anchor: {
 			x: 0.5,
 			y: 0.5
+		},
+		scale: {
+			x: 1.2,
+			y: 1.2
 		}
 	}
 };
@@ -106,8 +110,8 @@ Config.credits = {
 	dir: 'assets/images/credits_600-960.png',
 	x: 0,
 	y: 0,
-	text: { 
-		dir: 'assets/images/intrucoes_400-100.png',
+	text: {
+		dir: 'assets/images/creditos_400-100.png',
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.5,
 		width: 400,
@@ -115,6 +119,10 @@ Config.credits = {
 		anchor: {
 			x: 0.5,
 			y: 0.5
+		},
+		scale: {
+			x: 1.8,
+			y: 1.8
 		}
 	}
 };
