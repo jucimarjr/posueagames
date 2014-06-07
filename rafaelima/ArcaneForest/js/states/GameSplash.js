@@ -29,7 +29,6 @@ State.GameSplash.prototype = {
 		this.game.load.tilemap('stageRotate', Config.game.tilemapRotate.dir, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tileset', Config.game.tileset.dir);
 		this.game.load.spritesheet('dude', Config.game.player.dir , 32, 48);
-		this.game.load.image('collect', 'assets/images/pv.png');
 		this.game.load.spritesheet('monstercat', 'assets/spritesheets/monstercat_38_18_3.png', 38, 18);
 		this.game.load.spritesheet('bigbosjumping', 'assets/spritesheets/bigbosjumping_104_214_4_.png', 104, 214);
 		this.game.load.spritesheet('bigbosjumping', 'assets/spritesheets/bigbosjumping_114_208_6_.png', 114, 208);
@@ -42,6 +41,12 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('greenmonsterleft', 'assets/spritesheets/greenmonsterleft_74_62_5.png', 74, 62);
 		this.game.load.spritesheet('greenmonsterright', 'assets/spritesheets/greenmonsterright_74_62_5.png', 74, 62);
 		this.game.load.spritesheet('greenmonsterright', 'assets/spritesheets/ray_47_56_2.png', 47, 52);
+		this.game.load.image('blue', 'assets/images/bluediamond_13-25.png');
+		this.game.load.image('red', 'assets/images/reddiamond_13-25.png');
+		this.game.load.image('pink', 'assets/images/pinkdiamond_13-25.png');
+		this.game.load.image('key', 'assets/images/keytopbar_13-25.png');
+		this.game.load.image('life', 'assets/images/life_28-22.png');
+		this.game.load.image('nolife', 'assets/images/emptylife_28-22.png');
 
 		//gif fall
         for (var i = 0; i < 30; i++) {
