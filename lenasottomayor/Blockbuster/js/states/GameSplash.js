@@ -45,6 +45,8 @@ State.GameSplash.prototype = {
 		
 		this.game.load.image('powerstar', Config.tilemap.tiles.powerstars.dir);
 		
+		this.game.load.image('thorn', Config.tilemap.tiles.thorn.dir);
+		
 		//Player
 		this.game.load.spritesheet('oscar', Config.player.dir, Config.player.width, Config.player.height);
 		
@@ -55,6 +57,7 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('hannibal', Config.enemy.hannibal.dir,  Config.enemy.hannibal.width,  Config.enemy.hannibal.height, Config.enemy.hannibal.frames);
 		this.game.load.spritesheet('jason', Config.enemy.jason.dir,  Config.enemy.jason.width,  Config.enemy.jason.height, Config.enemy.jason.frames);
 		this.game.load.spritesheet('joker', Config.enemy.joker.dir,  Config.enemy.joker.width,  Config.enemy.joker.height, Config.enemy.joker.frames);
+		this.game.load.spritesheet('vader', Config.enemy.vader.dir,  Config.enemy.vader.width,  Config.enemy.vader.height, Config.enemy.vader.frames);
 		
 		//Background
 		this.game.load.image('game-background', Config.background.game.dir);

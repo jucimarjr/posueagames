@@ -1,12 +1,13 @@
 
 
-Player = function(game, coins, layer1, powerlifes, powerstars) {
+Player = function(game, coins, layer1, powerlifes, powerstars, thorns) {
 
 	this.game = game;
 	this.coins = coins;
 	this.layer1 = layer1;
 	this.powerlifes = powerlifes;
 	this.powerstars = powerstars;
+	this.thorns = thorns;
 	this.gold = false;
 	this.life = 3;
 	this.spritePlayer = null;
@@ -41,7 +42,7 @@ Player.prototype = {
 		"use strict";
 
 		this.game.physics.arcade.collide(this.spritePlayer, this.layer1.platform);
-		this.game.physics.arcade.collide(this.spritePlayer, this.layer1.thorn);
+		this.game.physics.arcade.collide(this.spritePlayer, this.thorns.group);
 
     	this.game.physics.arcade.overlap(this.spritePlayer, this.coins.group, this.collectCoins, null, this);
 

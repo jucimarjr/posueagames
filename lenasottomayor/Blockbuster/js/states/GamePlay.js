@@ -13,12 +13,14 @@ State.GamePlay.prototype = {
 		this.coins = new Coins(game, this.tilemap);
 		this.powerlifes = new PowerLifes(game, this.tilemap);
 		this.powerstars = new PowerStars(game, this.tilemap);
-		this.cruela = new Cruella(game, this.tilemap);
+		this.thorns = new Thorns(game, this.tilemap);
+		this.cruella = new Cruella(game, this.tilemap);
 		this.freddy = new Freddy(game, this.tilemap);
 		this.hannibal = new Hannibal(game, this.tilemap);
 		this.jason = new Jason(game, this.tilemap);
 		this.joker = new Joker(game, this.tilemap);
-		this.player = new Player(game, this.coins, this.layer1, this.powerlifes, this.powerstars);
+		this.vader = new Vader(game, this.tilemap);
+		this.player = new Player(game, this.coins, this.layer1, this.powerlifes, this.powerstars, this.thorns);
 	},
 	create: function () {
 		"use strict";
@@ -28,11 +30,13 @@ State.GamePlay.prototype = {
 		this.coins.create();
 		this.powerlifes.create();
 		this.powerstars.create();
-		this.cruela.create();
+		this.thorns.create();
+		this.cruella.create();
 		this.freddy.create();
 		this.hannibal.create();
 		this.jason.create();
 		this.joker.create();
+		this.vader.create();
 		this.player.create();
 	},
 	update: function () {
