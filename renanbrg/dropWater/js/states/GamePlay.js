@@ -34,6 +34,7 @@ State.GamePlay.prototype = {
 	    this.game.load.image('straw2', 'assets/images/straw2_236-276.png');
 
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
+	    this.game.load.audio('main','assets/gotaMain.wav');
         this.hud.preload();
 
 		// Player
@@ -99,7 +100,10 @@ State.GamePlay.prototype = {
         this.hud.create();
 		
         // Sounds
-        this.jumpSound = this.game.add.audio("jump");                
+        this.jumpSound = this.game.add.audio("jump"); 
+        this.mainSound = this.game.add.audio("main");
+        this.mainSound.loop = true;
+        this.mainSound.play();
     },
     setCharacterInicialValues: function(character) {    	
     	character.smoothed = false;
@@ -112,6 +116,7 @@ State.GamePlay.prototype = {
 		"use strict";
 		this.handleKeyDown();					
 		this.moveCrab();
+		
 	},	
 	handleKeyDown: function () {
 		"use strict";
