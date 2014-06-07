@@ -214,6 +214,7 @@ Config.enemy = {
 			frame: 0
 		},
 		jump: {
+			y:350,
 			gid: 75,
 			frame: 3
 		}
@@ -233,6 +234,7 @@ Config.enemy = {
 			frame: 0
 		},
 		jump: {
+			y: 300,
 			gid: 83,
 			frame: 3
 		}
@@ -252,6 +254,7 @@ Config.enemy = {
 			frame: 0
 		},
 		jump: {
+			y:400,
 			gid: 91,
 			frame: 3
 		}
@@ -271,6 +274,7 @@ Config.enemy = {
 			frame: 0
 		},
 		jump: {
+			y: 450,
 			gid: 99,
 			frame: 3
 		}
