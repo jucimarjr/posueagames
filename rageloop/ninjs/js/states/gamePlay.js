@@ -21,8 +21,8 @@
         create: function () {
             this.game.physics.startSystem(Phaser.Game.ARCADE);
 
-            //var bg = this.game.add.tileSprite(0, 0, 1920, 600, 'fundo');
-            //bg.fixedToCamera = true;
+            var bg = this.game.add.tileSprite(0, 0, 960, 600, 'background');
+            bg.fixedToCamera = true;
 
             this.map = this.game.add.tilemap('map');
             this.map.addTilesetImage('background', 'tileset');
