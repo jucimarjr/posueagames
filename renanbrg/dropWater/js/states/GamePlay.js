@@ -37,6 +37,7 @@ State.GamePlay.prototype = {
 
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
 	    this.game.load.audio('main','assets/gotaMain.wav');
+	    this.game.load.audio('powup','assets/gotaPowerUp.wav');
         this.hud.preload();
 
 		// Player
@@ -116,6 +117,7 @@ State.GamePlay.prototype = {
         // Sounds
         this.jumpSound = this.game.add.audio("jump"); 
         this.mainSound = this.game.add.audio("main");
+        this.powUpSound = this.game.add.audio("powup");
         this.mainSound.loop = true;
         this.mainSound.play();
     },
@@ -219,6 +221,7 @@ State.GamePlay.prototype = {
         // body1 is the drop; body2 is the life drop.
         if (!this.touchingUp(body2)) {
             console.log('Player get the life drop!!!!');
+            this.powUpSound.play();
             this.hud.increaseDropBar();
             this.lifeDrop.kill();
             return true;
