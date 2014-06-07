@@ -30,6 +30,10 @@ var Utils = {
 	    sprite.scale.y = 0.0;
 	},
 
+	random: function (from, to) {
+    	return Math.floor(Math.random() * (to - from + 1) + from);
+	},
+
 	showSprite: function (sprite) {
 	    sprite.scale.x = 1.0;
 	    sprite.scale.y = 1.0;

@@ -10,9 +10,7 @@ Phase1.Smoke = {
         this.smoke.animations.play('fear');
 		this.smoke.width = 3000;
     	this.smoke.height = 300;
-		
-		this.game.physics.ninja.enableTile(this.smoke, this.smoke.frame);
-				
+	
 		return this.smoke;	
 	}
 };

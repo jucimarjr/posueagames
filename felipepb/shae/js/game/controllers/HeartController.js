@@ -5,7 +5,7 @@ Game.HeartController = function (game, waypoints) {
 
 	this.currentAnimation;
 	this.backwards = false;
-	this.currentWaypointIndex = 0;
+	this.currentWaypointIndex;
 }
 
 Game.HeartController.prototype = {
@@ -30,8 +30,11 @@ Game.HeartController.prototype = {
 
         this.playIdleAnimation();
 
-        this.sprite.x = this.waypoints.x + this.waypoints.polyline[0][0];
-        this.sprite.y = this.waypoints.y + this.waypoints.polyline[0][1];
+        this.currentWaypointIndex = Utils.random(0, this.waypoints.polyline.length - 1);
+        // console.log('currentWaypointIndex: ' + this.currentWaypointIndex);
+
+        this.sprite.x = this.waypoints.x + this.waypoints.polyline[this.currentWaypointIndex][0];
+        this.sprite.y = this.waypoints.y + this.waypoints.polyline[this.currentWaypointIndex][1];
 
         this.flyToNextWaypoint(HeartConsts.delayToNextWaypoint);
 	},
