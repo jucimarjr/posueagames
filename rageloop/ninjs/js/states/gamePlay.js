@@ -39,6 +39,7 @@
             this.enemies = this.game.add.group();
             this.createEnemyIdle(40*26, 40*38);
             this.createEnemyIdle(40*51, 40*38);
+            this.createEnemyWalker(40*37, 40*41);
 
             this.enemyShurikens = this.game.add.group();
             this.enemyShurikens.createMultiple(10, 'shuriken_enemy');
@@ -73,6 +74,7 @@
 
             if (!this.player.dead) {
                 this.game.physics.arcade.overlap(this.player, this.enemyShurikens, this.die, null, this);
+                this.game.physics.arcade.overlap(this.player, this.enemies, this.die, null, this);
             }
 
             this.enemies.forEachAlive(this.updateEnemies, this);
@@ -106,19 +108,33 @@
             player.animations.play('death');
         },
 
-        createEnemyIdle: function (x, y) {
+        createEnemy: function (x, y) {
             var enemy = this.enemies.create(x, y, 'ninjas');
 
             this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
 
-            enemy.type = 'idle';
             enemy.anchor.setTo(0.5, 0.5);
             enemy.body.gravity.y = 1200;
             enemy.body.collideWorldBounds = true;
             enemy.scale.x *= -1;
 
             enemy.animations.add('idle', [72, 73, 74, 75], 4, true);
+            enemy.animations.add('walk', [8, 9, 10, 11], 4, true);
+
+            return enemy;
+        },
+
+        createEnemyIdle: function (x, y) {
+            var enemy = this.createEnemy(x, y);
+            enemy.type = 'idle';
             enemy.animations.play('idle');
+        },
+
+        createEnemyWalker: function (x, y) {
+            var enemy = this.createEnemy(x, y);
+            enemy.type = 'walker';
+            enemy.animations.play('walk');
+            enemy.body.velocity.x = -150;
         },
 
         updateEnemies: function (enemy) {
@@ -133,6 +149,12 @@
                         this.enemyFire(enemy);
                         this.enemyFireTimer = this.game.time.now;
                     }
+                }
+            }
+            if (enemy.type == 'walker') {
+                if (enemy.body.blocked.left || enemy.body.blocked.right) {
+                    enemy.scale.x *= -1;
+                    enemy.body.velocity.x = (enemy.scale.x > 0) ? 150 : -150;
                 }
             }
         },
