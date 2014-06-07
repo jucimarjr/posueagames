@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="72" height="45" tilewidth="40" tileheight="40">
- <tileset firstgid="1" name="Ninjs" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="background" tilewidth="40" tileheight="40">
   <image source="../sprites/tileset.png" width="400" height="40"/>
  </tileset>
  <layer name="layer" width="72" height="45">
   <data encoding="base64" compression="zlib">
-   eJzt10EKwyAQBVBJhNLc/8CpkEJ3hY4yNr4Hf6mMf6FYCgAAAMB/27IHAAAAgJfH4tFPrJ9t8egn1k9E9izPAXs2tfSZObuf2enn/vYrAG+Z93r9SMTI9+uXde2ejZ6pp9n6mc0K/WT/f6I5vmT0+tVzAlSkBvU=
+   eJzt2G0PgiAUBlBstur//+Fqra01S+2CAp2z3Y+ge0BeTAkAAACgbYe9XwAAAABuTn9e8onlM25UQ3r8S6mt5gzB6j2fiLX55HYu0Ofd6/jn6GdJNiXyqd3ab5H2GDvg3Z7reu79vcT+9Uu72tbakuefHs4FU/kcU1/5RO9f3+bPM6scz/hUl5mKtt/q7t5qXQHUbQb6
   </data>
  </layer>
 </map>

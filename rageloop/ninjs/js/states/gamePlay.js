@@ -25,11 +25,11 @@
             //bg.fixedToCamera = true;
 
             this.map = this.game.add.tilemap('map');
-            this.map.addTilesetImage('map', 'tileset');
+            this.map.addTilesetImage('background', 'tileset');
 
             this.layer = this.map.createLayer('layer');
             this.layer.resizeWorld();
-            this.map.setCollisionBetween(1, 10, true, 'layer');
+            this.map.setCollisionBetween(0, 10, true, 'layer');
 
             this.shurikens = this.game.add.group();
             this.shurikens.createMultiple(10, 'shuriken');
@@ -46,7 +46,7 @@
             this.enemyShurikens.setAll('anchor.x', 0.5);
             this.enemyShurikens.setAll('anchor.y', 0.5);
 
-            this.player = this.game.add.sprite(40, 2600, 'ninjas');
+            this.player = this.game.add.sprite(40, 40*41, 'ninjas');
 
             this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
 
