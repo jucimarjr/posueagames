@@ -23,7 +23,7 @@
         },
 
         onResetClick: function() {
-            //this.game.state.start('Gameplay');
+            this.game.state.start('Credits');
         },
     };
 

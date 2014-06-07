@@ -11,6 +11,8 @@
 		app_container.game.state.add('Gameplay', app_container.Gameplay);
 		app_container.game.state.add('Gameover', app_container.Gameover);
 
+		app_container.game.state.add('Credits', app_container.Credits);
+
 		// start preload
 		app_container.game.state.start('Preload');
 	};
