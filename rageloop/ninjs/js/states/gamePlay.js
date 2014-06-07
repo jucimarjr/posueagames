@@ -126,6 +126,7 @@
         },
 
         collectItem: function (player, tile) {
+            this.hud.updateItemsCollected(1)
             this.itemCount++;
             this.map.removeTile(tile.x, tile.y, this.itemLayer);
         },
