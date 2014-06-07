@@ -113,6 +113,8 @@ State.GamePlay.prototype = {
 		//this.game.physics.p2.setPostBroadphaseCallback(this.checkOverlap, this);   //this is used to start the check
 
         this.hud.create();
+        
+//        this.userDead();
 		
         // Sounds
         this.jumpSound = this.game.add.audio("jump"); 
@@ -136,6 +138,9 @@ State.GamePlay.prototype = {
 		this.moveCrab(this.crab[0]);
 		this.moveCrab(this.crab[1]);
 
+//		if(this.userDead()){ 
+//		      this.restart();  
+//		   }
 	},	
 	handleKeyDown: function () {
 		"use strict";
@@ -214,6 +219,7 @@ State.GamePlay.prototype = {
 		if (!this.touchingUp(body2)) { 
 			console.log('Matou o Player!!!!');
 			this.drop.getSpriteObject().kill();
+			//this.userDead = true;
 			return true;
 		}
 		return false;
@@ -258,4 +264,11 @@ State.GamePlay.prototype = {
 		"use strict";
 		this.game.state.start('Credits');
 	}
+//	restart: function(){
+//		player.resetPosition(); 
+//        if (lifeCounter==0){
+//        	this.game.state.start('GameOver');
+//        }	
+//		this.game.state.restart();
+//	}
 };
