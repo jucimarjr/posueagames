@@ -185,11 +185,16 @@ Config.enemy = {
 		width: 61,
 		frames: 5,
 		name: 'Cruella',
+		anchor: {
+			x: .5,
+			y: .5
+		},
 		walk: {
 			gid: 67,
 			frame: 0
 		},
 		jump: {
+			y: 200,
 			gid: 68,
 			frame: 1
 		}
@@ -200,6 +205,10 @@ Config.enemy = {
 		width: 59,
 		frames: 8,
 		name: 'Freddy',
+		anchor: {
+			x: .5,
+			y: .5
+		},
 		walk: {
 			gid: 72,
 			frame: 0
@@ -215,6 +224,10 @@ Config.enemy = {
 		width: 54,
 		frames: 8,
 		name: 'Hannibal',
+		anchor: {
+			x: .5,
+			y: .5
+		},
 		walk: {
 			gid: 80,
 			frame: 0
@@ -230,6 +243,10 @@ Config.enemy = {
 		width: 50,
 		frames: 8,
 		name: 'Jason',
+		anchor: {
+			x: .5,
+			y: .5
+		},
 		walk: {
 			gid: 88,
 			frame: 0
@@ -245,6 +262,10 @@ Config.enemy = {
 		width: 56,
 		frames: 8,
 		name: 'Joker',
+		anchor: {
+			x: .5,
+			y: .5
+		},
 		walk: {
 			gid: 96,
 			frame: 0
@@ -260,21 +281,12 @@ Config.enemy = {
 		width: 150,
 		frames: 10,
 		name: 'Vader',
+		anchor: {
+			x: .5,
+			y: .5
+		},
 		gid: 104,
 		frame: 0
-	},
-	dir: 'assets/images/regularenemy_95-55.png',
-	gravity: 800,
-	speed: 250,
-	height: 95,
-	width: 55,
-	anchor: {
-		x: 0.5,
-		y: 0.5
-	},
-	position: {
-		x: 321,
-		y: 272
 	}	
 };
 
