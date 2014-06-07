@@ -120,7 +120,7 @@ Config.howToPlay = {
 
 //Credits
 Config.credits = {
-	dir: 'assets/images/Credits_960-600.png',
+	dir: 'assets/images/Gamecredits_170_261.png',
 	x: 0,
 	y: 0
 };
