@@ -42,6 +42,10 @@ State.GamePlay.prototype = {
 
 		// Player
         this.drop.preload();
+        
+        // Straw physics
+        this.game.load.physics('strawPhysics',
+                'assets/straw2_collision_points.json');
 	},
 	create: function () {
 		"use strict";
@@ -64,21 +68,27 @@ State.GamePlay.prototype = {
 		this.game.add.image(0, this.game.height-80, 'wetSand');
 		this.game.add.image(2008, 23, 'bucket');
 		this.game.add.image(2008, 508, 'straw1');
-		this.game.add.image(2525, 127, 'straw2');
         
         //  Set the tiles for collision.
         //  Do this BEFORE generating the p2 bodies below.
         this.map.setCollisionBetween(1, 3);                
         this.game.physics.p2.convertTilemap(this.map, this.layer);
         this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
-                
+
         // create player
-        this.drop.create(300, this.game.world.height-200);
+        this.drop.create(200, this.game.world.height-200);
         var dropSprite = this.drop.getSpriteObject();   
         this.game.physics.p2.enableBody(dropSprite, false);        
         this.game.camera.follow(dropSprite);
         this.drop.configureCharacter(this.setCharacterInicialValues);
-        
+
+		this.diagonalStraw = this.game.add.sprite(2640, 270, 'straw2');
+		this.game.physics.p2.enableBody(this.diagonalStraw, false);
+		this.diagonalStraw.body.clearShapes();
+		this.diagonalStraw.body.loadPolygon('strawPhysics', 'straw2_236-276');
+		this.diagonalStraw.body.fixedRotation = true;
+		this.diagonalStraw.body.static = true;
+
         // create enemy crabs
         for (var i = 0; i < 2; i++) {
             this.game.physics.p2.enableBody(this.crab[i]);
