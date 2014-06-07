@@ -9,6 +9,9 @@
 		app_container.game.state.add('Preload', app_container.Preload);
 		app_container.game.state.add('Menu', app_container.Menu);
 		app_container.game.state.add('Gameplay', app_container.Gameplay);
+		app_container.game.state.add('Gameover', app_container.Gameover);
+
+		app_container.game.state.add('Credits', app_container.Credits);
 
 		// start preload
 		app_container.game.state.start('Preload');
