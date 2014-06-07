@@ -30,15 +30,15 @@ State.Phase1.prototype = {
 		
         if(this.cursors.left.isDown){
 			this.player.animations.play('run');
-			this.player.body.moveLeft(300);
+			this.player.body.moveLeft(250);
         }
         else if(this.cursors.right.isDown){
 			this.player.animations.play('run');
-			this.player.body.moveRight(300);
+			this.player.body.moveRight(250);
         }
-        else if(this.cursors.up.isDown){
+        if(this.cursors.up.isDown){
 			this.player.animations.play('jump');
-			this.player.body.moveUp(300);
+			this.player.body.moveUp(400);
         }
     }
 };
