@@ -17,8 +17,8 @@ Game.GameState.prototype = {
 
         this.setupPhysicsSystem();
         this.createTileMap();
+        this.createHearts();
         this.createPlayer();
-		// this.createHearts();
     },
 
     setupPhysicsSystem: function () {
@@ -61,8 +61,9 @@ Game.GameState.prototype = {
 		// Game.HeartController.setWalls(collisions);
 		// Game.HeartController.setStageCorners(0, 0, this.game.width, this.game.height);
 		
-		var heart = new Game.HeartController(this.game);
-		heart.create(this.game.width / 2.0 - 250, 500, this.game);
+        var waypoints = this.map.collision.collision[0];
+		var heart = new Game.HeartController(this.game, waypoints);
+		heart.create();
 		this.hearts.push(heart);
 		
 		// heart = new Game.HeartController(this.game);
@@ -76,24 +77,17 @@ Game.GameState.prototype = {
         this.playerLightSprite.x = this.game.camera.x;
         this.playerLightSprite.y = this.game.camera.y;
 		
-		var hearts = this.hearts;
-        var length = hearts.length;
-		for (var i = 0; i < length; i++) {
+		// var hearts = this.hearts;
+        // var length = hearts.length;
+		// for (var i = 0; i < length; i++) {
             // console.log(Math.sin(this.game.time.elapsed / 10.0));
-            hearts[i].x += Math.sin(this.game.time.elapsed / 1000.0) * 2.0;
-            hearts[i].update();
-        }
+            // hearts[i].x += Math.sin(this.game.time.elapsed / 1000.0) * 2.0;
+            // hearts[i].update();
+        // }
     },
 
     render: function () {
-		var hearts = this.hearts;
-        var length = hearts.length;
-		
         this.player.render(this.game);
-		// Game.HeartController.clearBitmap();
-		// for (var i = 0; i < length; i++)
-  //           hearts[i].render();
-		// Game.HeartController.renderBitmap();
 		this.renderPlayerLight();
     },
 	
