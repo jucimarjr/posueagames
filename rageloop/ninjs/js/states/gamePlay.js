@@ -65,9 +65,10 @@
             this.createEnemyWalker(40*37, 40*41);
             this.createEnemyWalker(40*46, 40*21);
             this.createEnemyWalker(40*28, 40*24);
-            this.createEnemyWalker(40*31, 40*10);
-            this.createEnemyWalker(40*12, 40*6);
-            this.createEnemyWalker(40*60, 40*7);
+
+            this.createEnemyDash(40*12, 40*6);
+            this.createEnemyDash(40*60, 40*7);
+            this.createEnemyDash(40*31, 40*10);
 
             this.enemyShurikens = this.game.add.group();
             this.enemyShurikens.createMultiple(10, 'shuriken_enemy');
@@ -199,6 +200,7 @@
 
             enemy.animations.add('idle', [72, 73, 74, 75], 4, true);
             enemy.animations.add('walk', [8, 9, 10, 11], 4, true);
+            enemy.animations.add('dash', [39, 40], 4, true);
 
             return enemy;
         },
@@ -214,6 +216,13 @@
             enemy.type = 'walker';
             enemy.animations.play('walk');
             enemy.body.velocity.x = -150;
+        },
+
+        createEnemyDash: function (x, y) {
+            var enemy = this.createEnemy(x, y);
+            enemy.type = 'dasher';
+            enemy.animations.play('dash');
+            enemy.body.velocity.x = -300;
         },
 
         updateEnemies: function (enemy) {
@@ -234,6 +243,12 @@
                 if (enemy.body.blocked.left || enemy.body.blocked.right) {
                     enemy.scale.x *= -1;
                     enemy.body.velocity.x = (enemy.scale.x > 0) ? 150 : -150;
+                }
+            }
+            if (enemy.type == 'dasher') {
+                if (enemy.body.blocked.left || enemy.body.blocked.right) {
+                    enemy.scale.x *= -1;
+                    enemy.body.velocity.x = (enemy.scale.x > 0) ? 300 : -300;
                 }
             }
         },
