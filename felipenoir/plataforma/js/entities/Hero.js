@@ -1,5 +1,5 @@
 var HeroProperties = {
-    path:'assets/images/hero/hero_50-50-12.png',
+    path:'assets/images/hero/hero_50-50-28.png',
     width:50,
     height:50,
     dragX:200,
@@ -9,30 +9,28 @@ var HeroProperties = {
     climb:150,
     animations:{
         idle:{
-            frames:[0, 1],
-            framerate:2
+            sword:{name:'idle', frames:[24, 25], framerate:2},
+            pistol:{name:'idle-pistol', frames:[22, 23], framerate:2},
+            machinegun:{name:'idle-machinegun', frames:[20, 21], framerate:2}
         },
         run:{
-            frames:[2, 3, 4, 5, 6],
-            framerate:6
+            sword:{name:'run', frames:[5, 6, 7, 8, 15], framerate:5},
+            pistol:{name:'run-pistol',frames:[1, 2, 3, 4, 14], framerate:5},
+            machinegun:{name:'run-machinegun',frames:[9, 10, 11, 12, 13], framerate:5}
         },
         attack:{
-            frames:[7, 8, 9],
-            framerate:3
-        },
-        shot:{
-            frames:[10, 11],
-            framerate:4
+            sword:{name:'attack', frames:[26, 27, 28], framerate:3},
+            pistol:{name:'attack-pistol', frames:[18, 19],framerate:2},
+            machinegun:{name:'attack-machinegun', frames:[16, 17], framerate:2}
         }
     },
-    animationsQtd:12
+    animationsQtd:28
 }
 
 function Hero(game) {
     this.game = game,
     this.hero,
-    this.attack,
-    this.shot,
+    this.animation,
     this.attacking = false;
 }
 
@@ -44,12 +42,26 @@ Hero.prototype = {
     create : function() {
         var heroAnim = HeroProperties.animations;
         this.hero = game.add.sprite(10, game.world.height - 200,'hero', 0);
-        this.hero.animations.add('idle', heroAnim.idle.frames, heroAnim.idle.framerate);
-        this.hero.animations.add('run', heroAnim.run.frames, heroAnim.run.framerate);
-        this.hero.animations.add('attack', heroAnim.attack.frames, heroAnim.attack.framerate, false);
-        this.hero.animations.add('shot', heroAnim.shot.frames, heroAnim.shot.framerate, false);
 
-        this.hero.anchor.setTo(.5,.5);
+        this.hero.animations.add(heroAnim.idle.sword.name, heroAnim.idle.sword.frames, heroAnim.idle.sword.framerate);
+        this.hero.animations.add(heroAnim.idle.pistol.name, heroAnim.idle.pistol.frames, heroAnim.idle.pistol.framerate);
+        this.hero.animations.add(heroAnim.idle.machinegun.name, heroAnim.idle.machinegun.frames, heroAnim.idle.machinegun.framerate);
+
+        this.hero.animations.add(heroAnim.run.sword.name, heroAnim.run.sword.frames, heroAnim.run.sword.framerate);
+        this.hero.animations.add(heroAnim.run.pistol.name, heroAnim.run.pistol.frames, heroAnim.run.pistol.framerate);
+        this.hero.animations.add(heroAnim.run.machinegun.name, heroAnim.run.machinegun.frames, heroAnim.run.machinegun.framerate);
+
+        this.hero.animations.add(heroAnim.attack.sword.name, heroAnim.attack.sword.frames, heroAnim.attack.sword.framerate);
+        this.hero.animations.add(heroAnim.attack.pistol.name, heroAnim.attack.pistol.frames, heroAnim.attack.pistol.framerate);
+        this.hero.animations.add(heroAnim.attack.machinegun.name, heroAnim.attack.machinegun.frames, heroAnim.attack.machinegun.framerate);
+
+        this.animation = {
+            idle : heroAnim.idle.sword.name,
+            run : heroAnim.run.sword.name,
+            attack : heroAnim.attack.sword.name
+        };
+
+        this.hero.anchor.setTo(.5, .5);
         this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
 
         this.hero.body.collideWorldBounds = true;
@@ -62,13 +74,13 @@ Hero.prototype = {
         if (cursors.right.isDown) {
             this.hero.body.velocity.x = HeroProperties.velocityX;
             this.hero.scale.x = +1;
-            this.hero.animations.play('run');
+            this.hero.animations.play(this.animation.run);
         } else if (cursors.left.isDown) {
             this.hero.body.velocity.x = -HeroProperties.velocityX;
             this.hero.scale.x = -1;
-            this.hero.animations.play('run');
+            this.hero.animations.play(this.animation.run);
         } else {
-            this.hero.animations.play('idle');
+            this.hero.animations.play(this.animation.idle);
         }
 
         if(cursors.up.isDown && this.hero.body.onFloor()) {
@@ -76,9 +88,9 @@ Hero.prototype = {
         }
 
         if(this.game.input.keyboard.isDown(Phaser.Keyboard.X)) {
-            this.hero.animations.play('attack');
+            this.hero.animations.play(HeroProperties.animations.attack.sword.name);
         } else if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
-            this.hero.animations.play('shot');
+            this.hero.animations.play(HeroProperties.animations.attack.pistol.name);
         }
     },
 
@@ -98,5 +110,21 @@ Hero.prototype = {
             this.hero.body.allowGravity = true;
         }
     },
+
+    change : function(weapon) {
+        if (weapon.key == 'weapon1') {
+            this.animation.idle = HeroProperties.animations.idle.sword.name;
+            this.animation.run = HeroProperties.animations.run.sword.name;
+            this.animation.attack = HeroProperties.animations.attack.sword.name;
+        } else if(weapon.key == 'weapon2') {
+            this.animation.idle = HeroProperties.animations.idle.pistol.name;
+            this.animation.run = HeroProperties.animations.run.pistol.name;
+            this.animation.attack = HeroProperties.animations.attack.pistol.name;
+        } else if(weapon.key == 'weapon3') {
+            this.animation.idle = HeroProperties.animations.idle.machinegun.name;
+            this.animation.run = HeroProperties.animations.run.machinegun.name;
+            this.animation.attack = HeroProperties.animations.attack.machinegun.name;
+        }
+    }
 
 }
