@@ -28,6 +28,7 @@ var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCol
 var isJumping, beInGround, yBeforeJump;
 var monster_speed = 5;
 var health;
+var music;
 
 State.Game.prototype = {
 	preload : function() {
@@ -46,6 +47,9 @@ State.Game.prototype = {
 	create : function() {
 		"use strict";
 
+		music = this.game.add.audio('music_game', 1, true);
+	    music.play('', 0, 1, true);
+		
 		//set p2
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
 		this.game.physics.p2.setImpactEvents(true);
@@ -192,7 +196,9 @@ State.Game.prototype = {
 
 	gameRotate : function() {
 		"use strict";
+		 music.pause();
 		this.game.state.start('GifFall');
+		
 	},
 
 	render : function() {

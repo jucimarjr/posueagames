@@ -81,6 +81,9 @@ Config.game = {
 	player:{
 		dir: 'assets/spritesheets/dude.png'
 	},
+	audio:{
+		dir: 'assets/audio/arcane_forest_soundtrack.mp3'
+	},
 	bar:{
 		dir: 'assets/images/bar.png',
 		startX: 3770,

@@ -28,6 +28,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('button-credits-selector', Config.menu.buttonCredits.selector);
 		
 		//Game
+		game.load.audio('music_game', Config.game.audio.dir);
 		this.game.load.image('bg1', Config.game.dirBg1);
 		this.game.load.image('bg2', Config.game.dirBg2);
 		this.game.load.image('bg3', Config.game.dirBg3);
