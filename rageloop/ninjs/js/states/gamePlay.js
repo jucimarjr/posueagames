@@ -89,6 +89,9 @@
 
             this.player.animations.play('idle');
 
+            this.hud = new HUD(this.game);
+            this.hud.init();
+
             this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_PLATFORMER);
         },
 
@@ -147,10 +150,26 @@
             player.dead = true;
             player.animations.play('death');
 
-            setTimeout(function(){
-                self.game.state.start('Gameover');
-            }, 800);
+            this.hud.updateLifes(-1);
 
+            if (this.hud.lifes === 0) {
+            
+                setTimeout(function(){
+                    self.game.state.start('Gameover');
+                }, 800);    
+            
+            } else {
+
+                setTimeout(function(){
+                    self.revive();
+                }, 1200);
+            }            
+
+        },
+
+        revive: function() {
+            this.player.dead = false;
+            this.player.animations.play('idle');
         },
 
         createEnemy: function (x, y) {
@@ -223,6 +242,7 @@
         killEnemy: function (shuriken, enemy) {
             shuriken.kill();
             enemy.kill();
+            this.hud.updateScore(1);
         },
 
         startShurikenTimer: function () {

@@ -19,6 +19,7 @@
             this.game.load.image('tileset','assets/sprites/tileset.png');
             this.game.load.image('shuriken', 'assets/sprites/shuriken-ninjs_32-31.png');
             this.game.load.image('shuriken_enemy', 'assets/sprites/shuriken-enemy_28-27.png');
+            this.game.load.image('ninja_life', 'assets/images/vida-hud-27-26.png');
         },
         create: function () {},
         update: function() {
