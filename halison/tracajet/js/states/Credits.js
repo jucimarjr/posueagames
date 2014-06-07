@@ -7,10 +7,13 @@ State.Credits = function (game) {
 State.Credits.prototype = {
 	preload: function () {
 		"use strict";
+		this.game.load.image('credits-text', Config.credits.text.dir);
 	},
 	create: function () {
 		"use strict";
 		var background = this.game.add.sprite(Config.credits.x, Config.credits.y, 'credits');
+		var sprite = game.add.sprite(Config.credits.text.x, Config.credits.text.y, 'credits-text');
+		sprite.anchor.setTo(Config.credits.text.anchor.x, Config.credits.text.anchor.y);
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
 	},

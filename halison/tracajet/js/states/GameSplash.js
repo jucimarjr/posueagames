@@ -17,6 +17,8 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('button-how-to-play', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
 		this.game.load.image('credits', Config.credits.dir);
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
+//		this.game.load.spritesheet('credits-text', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
+//		this.game.load.spritesheet('how-to-play-text', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
 	},
 	create: function () {
 		"use strict";
@@ -30,7 +32,7 @@ State.GameSplash.prototype = {
 		var bHowPlay = game.cache.checkImageKey('button-how-to-play');
 		var cr =       game.cache.checkImageKey('credits');
 		var h2play =   game.cache.checkImageKey('how-to-play');
-		if (menu && bPlay && bCredits && bHowPlay && cr&& h2play){
+		if (menu && bPlay && bCredits && bHowPlay && cr && h2play){
 			setTimeout(function () {
 				this.game.state.start('Menu');}
 			, Config.gameSplash.millis);		

@@ -10,7 +10,7 @@ State.Menu.prototype = {
 	},
 	create: function () {
 		"use strict";
-		var background, buttonPlay, buttonCredits, buttonHowToPlay ;
+		var background, buttonPlay, buttonCredits, buttonHowToPlay;
 		background = this.game.add.sprite(Config.menu.x, Config.menu.y, 'menu-background');
 		buttonPlay = this.game.add.button(Config.menu.buttonPlay.x, Config.menu.buttonPlay.y, 'button-play', this.clickPlay, this, 0, 2, 1	);
 		buttonPlay.anchor.setTo(Config.menu.buttonPlay.anchor.x, Config.menu.buttonPlay.anchor.y);

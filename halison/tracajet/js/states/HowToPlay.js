@@ -7,10 +7,13 @@ State.HowToPlay = function (game) {
 State.HowToPlay.prototype = {
 	preload: function () {
 		"use strict";
+		this.game.load.image('how-to-play-text', Config.howToPlay.text.dir);
 	},
 	create: function () {
 		"use strict";
 		var background = this.game.add.sprite(Config.howToPlay.x, Config.howToPlay.y, 'how-to-play');
+		var sprite = game.add.sprite(Config.howToPlay.text.x, Config.howToPlay.text.x, 'how-to-play-text');
+		sprite.anchor.setTo(Config.howToPlay.text.anchor.x, Config.howToPlay.text.anchor.y);
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
 	},
