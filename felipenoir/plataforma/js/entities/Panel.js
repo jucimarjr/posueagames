@@ -12,7 +12,7 @@ Panel.prototype = {
         game.load.image(w1.name, 'assets/images/weapon/arma1.jpg');
         game.load.image(w2.name, 'assets/images/weapon/arma2.jpg');
         game.load.image(w3.name, 'assets/images/weapon/arma3.png');
-        game.load.image('selector', 'assets/images/weapon/selector.png');
+        game.load.image('selector', 'assets/images/weapon/_selector.png');
     },
 
     create : function() {
