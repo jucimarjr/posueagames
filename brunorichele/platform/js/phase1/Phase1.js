@@ -18,21 +18,27 @@ State.Phase1.prototype = {
 	    Phase1.Door.create();
 		Phase1.World.createBgAlpha();
 		Phase1.Smoke.create();
+		//Phase1.World.createSound(this.game); /* Comentado pq encomoda durante o desenvolvimento*/		
 						
         //misc defs
         this.cursors = this.game.input.keyboard.createCursorKeys();
-		
-		//Phase1.World.createSound(this.game); /* Comentado pq encomoda durante o desenvolvimento*/
     },
     update: function(){
         "use strict";
         Config.global.screen.resize(this.game); 
 		
         if(this.cursors.left.isDown){
+			if(this.player.scale.x != -1){
+				this.player.scale.x *= -1;
+			}
+			
 			this.player.animations.play('run');
 			this.player.body.moveLeft(250);
         }
         else if(this.cursors.right.isDown){
+			if(this.player.scale.x != 1){
+				this.player.scale.x *= -1;
+			}			
 			this.player.animations.play('run');
 			this.player.body.moveRight(250);
         }
