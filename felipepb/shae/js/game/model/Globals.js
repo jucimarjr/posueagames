@@ -14,6 +14,11 @@ var PlayerConsts = {
 	runModifierDamping: 0.05
 };
 
+var HeartConsts = {
+	delayToNextWaypoint: 1000.0, // milliseconds
+	flightSpeed: 2.5 * PhysicsConsts.pixelsToUnit
+};
+
 var JoystickConsts = {
     leftOffset: 28672,
     rightOffset: 36864

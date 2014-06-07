@@ -8,7 +8,11 @@
    eJzt0CEOACAMA8CN/z8aMYtAbQncJTVVTSMAAAAAAADKmh7woNOnt91vUlqyAXLsAGM=
   </data>
  </layer>
- <objectgroup name="objects" width="90" height="20"/>
+ <objectgroup name="objects" width="90" height="20">
+  <object gid="7" x="929" y="608"/>
+  <object gid="6" x="642" y="545"/>
+  <object gid="6" x="641" y="545"/>
+ </objectgroup>
  <objectgroup name="inimigos" width="90" height="20">
   <object gid="6" x="179" y="144"/>
   <object gid="6" x="345" y="238"/>

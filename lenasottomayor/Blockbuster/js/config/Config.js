@@ -117,7 +117,6 @@ Config.tilemap = {
 			dir: 'assets/images/tileset_360-280.png',
 			name: 'tileset_360-280',
 			platform: 'Platform',
-			thorn: 'Thorn',
 			height: 360,
 			width: 280
 		},
@@ -141,9 +140,10 @@ Config.tilemap = {
 		},
 		thorn: {
 			dir: 'assets/images/Thorn_40-40.png',
-			name: 'Thorn',
-			gid: 114,
-			frame: 0
+			name: 'Thorn_40-40',
+			thorns: 'Thorn',
+			height: 40,
+			width: 40
 		}
 	}
 };
