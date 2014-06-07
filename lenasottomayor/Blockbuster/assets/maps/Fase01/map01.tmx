@@ -242,10 +242,10 @@
   <object gid="66" x="9400" y="440"/>
  </objectgroup>
  <objectgroup name="Cruella" width="320" height="20">
-  <object gid="67" x="1696" y="475"/>
-  <object gid="68" x="2491" y="557"/>
-  <object gid="68" x="5052" y="518"/>
-  <object gid="67" x="6298" y="596"/>
+  <object gid="67" x="1737" y="476"/>
+  <object gid="68" x="2531" y="557"/>
+  <object gid="68" x="5069" y="515"/>
+  <object gid="67" x="6325" y="596"/>
  </objectgroup>
  <objectgroup name="Freddy" width="320" height="20">
   <object gid="72" x="3657" y="718"/>
