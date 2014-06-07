@@ -1,0 +1,32 @@
+	{ 
+		 
+		"armadilha2_330-535": [
+			
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   65, 404  ,  105, 444  ,  167, 538  ,  88, 521  ,  40, 493  ,  1, 452  ]
+				}  ,
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   293, 492  ,  240, 522  ,  167, 538  ,  222, 443  ,  266, 405  ,  327, 452  ]
+				}  ,
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   167, 538  ,  170, 456  ,  222, 443  ]
+				}  ,
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   159, 454  ,  167, 538  ,  105, 444  ]
+				}  ,
+				{
+					"density": 2, "friction": 0, "bounce": 0, 
+					"filter": { "categoryBits": 1, "maskBits": 65535 },
+					"shape": [   159, 454  ,  159, 1  ,  170, 0  ,  170, 456  ,  167, 538  ]
+				}  
+		]
+
+	}
