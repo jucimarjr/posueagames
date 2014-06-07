@@ -13,7 +13,6 @@ State.GamePlay.prototype = {
 		this.coins = new Coins(game, this.tilemap);
 		this.powerlifes = new PowerLifes(game, this.tilemap);
 		this.powerstars = new PowerStars(game, this.tilemap);
-		this.thorns = new Thorns(game, this.tilemap);
 		this.cruella = new Cruella(game, this.tilemap);
 		this.freddy = new Freddy(game, this.tilemap);
 		this.hannibal = new Hannibal(game, this.tilemap);
@@ -30,7 +29,6 @@ State.GamePlay.prototype = {
 		this.coins.create();
 		this.powerlifes.create();
 		this.powerstars.create();
-		this.thorns.create();
 		this.cruella.create();
 		this.freddy.create();
 		this.hannibal.create();
