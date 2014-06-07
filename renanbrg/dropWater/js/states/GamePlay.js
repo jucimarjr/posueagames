@@ -32,6 +32,8 @@ State.GamePlay.prototype = {
 	    this.game.load.image('bucket', 'assets/images/balde_384-497.png');
 	    this.game.load.image('straw1', 'assets/images/straw1_375-72.png');
 	    this.game.load.image('straw2', 'assets/images/straw2_236-276.png');
+	    this.game.load.spritesheet('life_drop',
+	            'assets/spritesheets/molecula_110-48.png', 55, 48);
 
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
         this.hud.preload();
@@ -91,12 +93,14 @@ State.GamePlay.prototype = {
         this.crab[1].body.moveRight(1000);
         this.crab[1].name = 'crab2';
 
-        // Add a 'life drop"
+        // Add a "life drop"
         this.lifeDrop = this.game.add.sprite(380, 320, 'life_drop');
         this.game.physics.p2.enableBody(this.lifeDrop);
         this.lifeDrop.body.setRectangle(40, 40, 0, 0);
         this.lifeDrop.body.fixedRotation = true;
         this.lifeDrop.name = 'lifeDrop';
+        this.lifeDrop.animations.add('move_molecule', [0, 1, 2, 3], 10, true);
+        this.lifeDrop.animations.play('move_molecule');
 		
 		dropSprite.body.createBodyCallback(this.crab[0], this.checkOverlapCrabDrop, this); // check collision between drop and crab
 		dropSprite.body.createBodyCallback(this.crab[1], this.checkOverlapCrabDrop, this); // check collision between drop and crab
