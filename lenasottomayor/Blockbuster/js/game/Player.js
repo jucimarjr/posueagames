@@ -1,12 +1,13 @@
 
 
-Player = function(game, coins, layer1, powerlifes, powerstars) {
+Player = function(game, coins, layer1, powerlifes, powerstars, thorns) {
 
 	this.game = game;
 	this.coins = coins;
 	this.layer1 = layer1;
 	this.powerlifes = powerlifes;
 	this.powerstars = powerstars;
+	this.thorns = thorns;
 	this.gold = false;
 	this.life = 3;
 	this.spritePlayer = null;
@@ -19,8 +20,8 @@ Player.prototype = {
 		this.spritePlayer = game.add.sprite(Config.player.position.x, Config.player.position.y, 'oscar');
 		
 	    //  Animations. When not moving, spritePlayer = 0.
-	    this.spritePlayer.animations.add('walk', [1,2,3,4,5,6,7], 7, true);
-	    this.spritePlayer.animations.add('walk-gold', [11,12,13,14,15,16,17], 7, true);
+	    this.spritePlayer.animations.add('walk', [1,2,3,4,5,6,7], 10, true);
+	    this.spritePlayer.animations.add('walk-gold', [11,12,13,14,15,16,17], 10, true);
 	    this.spritePlayer.animations.add('jump', [4], 1, true);
 	    this.spritePlayer.animations.add('jump-gold', [14], 1, true);
 	    this.spritePlayer.animations.add('fall', [3], 1, true);
@@ -30,7 +31,6 @@ Player.prototype = {
 	    this.game.physics.enable(this.spritePlayer);
 	    this.spritePlayer.body.collideWorldBounds = true;
 		this.spritePlayer.anchor.setTo(Config.player.anchor.x, Config.player.anchor.y);
-//		this.spritePlayer.body.gravity.y = Config.player.gravity;
 	    
 	    this.game.camera.follow(this.spritePlayer);
 
@@ -42,7 +42,7 @@ Player.prototype = {
 		"use strict";
 
 		this.game.physics.arcade.collide(this.spritePlayer, this.layer1.platform);
-		this.game.physics.arcade.collide(this.spritePlayer, this.layer1.thorn);
+		this.game.physics.arcade.collide(this.spritePlayer, this.thorns.group);
 
     	this.game.physics.arcade.overlap(this.spritePlayer, this.coins.group, this.collectCoins, null, this);
 

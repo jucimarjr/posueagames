@@ -22,7 +22,7 @@
         <key>dataFormat</key>
         <string>json-array</string>
         <key>textureFileName</key>
-        <filename>h.png</filename>
+        <filename></filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -40,7 +40,7 @@
             </struct>
         </struct>
         <key>shapePadding</key>
-        <uint>2</uint>
+        <uint>0</uint>
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
@@ -50,7 +50,7 @@
         <key>textureFormat</key>
         <enum type="SettingsBase::TextureFormat">png</enum>
         <key>borderPadding</key>
-        <uint>2</uint>
+        <uint>0</uint>
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
@@ -74,7 +74,7 @@
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
-            <enum type="AlgorithmSettings::SizeConstraints">POT</enum>
+            <enum type="AlgorithmSettings::SizeConstraints">AnySize</enum>
             <key>forceSquared</key>
             <false/>
             <key>forceWordAligned</key>
@@ -99,7 +99,7 @@
             <key>packageName</key>
             <string>Texture</string>
             <key>javaFileName</key>
-            <filename>../../../../../../../../../../Program Files (x86)/CodeAndWeb/TexturePacker/t.java</filename>
+            <filename>hero.java</filename>
             <key>wrap</key>
             <struct type="AndEngineWrap">
                 <key>s</key>
@@ -111,7 +111,7 @@
             <enum type="AndEngine::MagFilter">MagLinear</enum>
         </struct>
         <key>dataFileName</key>
-        <filename>h.json</filename>
+        <filename></filename>
         <key>multiPack</key>
         <false/>
         <key>mainExtension</key>
@@ -148,10 +148,34 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>h1.png</filename>
-            <filename>h2.png</filename>
-            <filename>h3.png</filename>
-            <filename>h4.png</filename>
+            <filename>idle/idle1.png</filename>
+            <filename>idle/idle2.png</filename>
+            <filename>idle/idle3.png</filename>
+            <filename>idle/idle4.png</filename>
+            <filename>idle/idle5.png</filename>
+            <filename>idle/idle6.png</filename>
+            <filename>attack/attack1.png</filename>
+            <filename>attack/attack2.png</filename>
+            <filename>attack/attack3.png</filename>
+            <filename>walk/walk1.png</filename>
+            <filename>walk/walk2.png</filename>
+            <filename>walk/walk3.png</filename>
+            <filename>walk/walk4.png</filename>
+            <filename>walk/walk5.png</filename>
+            <filename>walk/walk6.png</filename>
+            <filename>walk/walk7.png</filename>
+            <filename>walk/walk8.png</filename>
+            <filename>walk/walk9.png</filename>
+            <filename>walk/walk10.png</filename>
+            <filename>walk/walk11.png</filename>
+            <filename>walk/walk12.png</filename>
+            <filename>walk/walk13.png</filename>
+            <filename>walk/walk14.png</filename>
+            <filename>walk/walk15.png</filename>
+            <filename>shot/shot1.png</filename>
+            <filename>shot/shot2.png</filename>
+            <filename>shot/shot3.png</filename>
+            <filename>shot/shot4.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

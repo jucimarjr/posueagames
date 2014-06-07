@@ -59,6 +59,7 @@ State.Play.prototype = {
 
     grabsGun : function(hero, weapon) {
         this.weapon.change(weapon);
+        this.hero.change(weapon);
         this.panel.change(weapon);
         weapon.kill();
     },

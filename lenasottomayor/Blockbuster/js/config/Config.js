@@ -138,6 +138,12 @@ Config.tilemap = {
 			name: 'Coins',
 			gid: 66,
 			frame: 0
+		},
+		thorn: {
+			dir: 'assets/images/Thorn_40-40.png',
+			name: 'Thorn',
+			gid: 114,
+			frame: 0
 		}
 	}
 };
@@ -173,6 +179,90 @@ Config.player = {
 
 //Enemy
 Config.enemy = {
+	cruella: {
+		dir: 'assets/spritesheets/Cruella_305-97-5.png',
+		height: 97,
+		width: 61,
+		frames: 5,
+		name: 'Cruella',
+		walk: {
+			gid: 67,
+			frame: 0
+		},
+		jump: {
+			gid: 68,
+			frame: 1
+		}
+	},
+	freddy: {
+		dir: 'assets/spritesheets/Freddy_472-95-8.png',
+		height: 95,
+		width: 59,
+		frames: 8,
+		name: 'Freddy',
+		walk: {
+			gid: 72,
+			frame: 0
+		},
+		jump: {
+			gid: 75,
+			frame: 3
+		}
+	},
+	hannibal: {
+		dir: 'assets/spritesheets/Hannibal_432-97-8.png',
+		height: 97,
+		width: 54,
+		frames: 8,
+		name: 'Hannibal',
+		walk: {
+			gid: 80,
+			frame: 0
+		},
+		jump: {
+			gid: 83,
+			frame: 3
+		}
+	},
+	jason: {
+		dir: 'assets/spritesheets/Jason_400-97-8.png',
+		height: 97,
+		width: 50,
+		frames: 8,
+		name: 'Jason',
+		walk: {
+			gid: 88,
+			frame: 0
+		},
+		jump: {
+			gid: 91,
+			frame: 3
+		}
+	},
+	joker: {
+		dir: 'assets/spritesheets/Joker_448-97-8.png',
+		height: 97,
+		width: 56,
+		frames: 8,
+		name: 'Joker',
+		walk: {
+			gid: 96,
+			frame: 0
+		},
+		jump: {
+			gid: 99,
+			frame: 3
+		}
+	},
+	vader: {
+		dir: 'assets/spritesheets/Vader_1500-217-10.png',
+		height: 217,
+		width: 150,
+		frames: 10,
+		name: 'Vader',
+		gid: 104,
+		frame: 0
+	},
 	dir: 'assets/images/regularenemy_95-55.png',
 	gravity: 800,
 	speed: 250,

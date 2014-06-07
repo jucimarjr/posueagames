@@ -5,9 +5,15 @@
         this.map = null;
         this.layer = null;
         this.player = null;
+
         this.shurikens = null;
         this.shurikenTimer = null;
         this.shurikenDelay = 400;
+
+        //enemies
+        this.enemies = null;
+        this.enemyShurikens = null;
+        this.enemyFireTimer = 0;
     };
 
     Gameplay.prototype = {
@@ -21,14 +27,23 @@
             this.map = this.game.add.tilemap('map');
             this.map.addTilesetImage('map', 'tileset');
 
-            this.layer = this.map.createLayer('game_layer');
+            this.layer = this.map.createLayer('layer');
             this.layer.resizeWorld();
-            this.map.setCollisionBetween(1, 10, true, 'game_layer');
+            this.map.setCollisionBetween(1, 10, true, 'layer');
 
             this.shurikens = this.game.add.group();
             this.shurikens.createMultiple(10, 'shuriken');
             this.shurikens.setAll('anchor.x', 0.5);
             this.shurikens.setAll('anchor.y', 0.5);
+
+            this.enemies = this.game.add.group();
+            this.createEnemyIdle(40*26, 40*38);
+            this.createEnemyIdle(40*51, 40*38);
+
+            this.enemyShurikens = this.game.add.group();
+            this.enemyShurikens.createMultiple(10, 'shuriken_enemy');
+            this.enemyShurikens.setAll('anchor.x', 0.5);
+            this.enemyShurikens.setAll('anchor.y', 0.5);
 
             this.player = this.game.add.sprite(40, 2600, 'ninjas');
 
@@ -41,15 +56,27 @@
             this.player.animations.add('idle', [64, 65, 66, 67], 4, true);
             this.player.animations.add('walk', [0, 1, 2, 3], 8, true);
             this.player.animations.add('jump', [99, 98], 8, false);
+            this.player.animations.add('death', [130, 131, 132, 133, 135], 8, false);
 
             this.player.animations.play('idle');
 
-            this.game.camera.follow(this.player);
+            this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_PLATFORMER);
         },
 
         update: function() {
             this.game.physics.arcade.collide(this.player, this.layer);
+            this.game.physics.arcade.collide(this.enemies, this.layer);
+
             this.game.physics.arcade.overlap(this.shurikens, this.layer, this.shurikenCollision, null, this);
+            this.game.physics.arcade.overlap(this.shurikens, this.enemies, this.killEnemy, null, this);
+            this.game.physics.arcade.overlap(this.enemyShurikens, this.layer, this.shurikenCollision, null, this);
+
+            if (!this.player.dead) {
+                this.game.physics.arcade.overlap(this.player, this.enemyShurikens, this.die, null, this);
+            }
+
+            this.enemies.forEachAlive(this.updateEnemies, this);
+
             this.handleKeyDown();
         },
 
@@ -60,15 +87,75 @@
 
             this.game.physics.enable(shuriken, Phaser.Physics.ARCADE);
 
-            shuriken.scale.set(1.5, 1.5);
             shuriken.reset(this.player.x + this.player.width, this.player.y);
             shuriken.body.velocity.x = (this.player.scale.x > 0) ? 1000 : -1000;
+            shuriken.scale.set(0.8, 0.8);
             shuriken.checkWorldBounds = true;
             shuriken.outOfBoundsKill = true;
 
             this.startShurikenTimer();
 
             return true;
+        },
+
+        die: function (player, shuriken) {
+            shuriken.kill();
+
+            player.body.velocity.x = 0;
+            player.dead = true;
+            player.animations.play('death');
+        },
+
+        createEnemyIdle: function (x, y) {
+            var enemy = this.enemies.create(x, y, 'ninjas');
+
+            this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
+
+            enemy.type = 'idle';
+            enemy.anchor.setTo(0.5, 0.5);
+            enemy.body.gravity.y = 1200;
+            enemy.body.collideWorldBounds = true;
+            enemy.scale.x *= -1;
+
+            enemy.animations.add('idle', [72, 73, 74, 75], 4, true);
+            enemy.animations.play('idle');
+        },
+
+        updateEnemies: function (enemy) {
+            if (enemy.type == 'idle') {
+                if ((this.player.x < enemy.x && enemy.scale.x > 0) || (this.player.x > enemy.x && enemy.scale.x < 0)) {
+                    enemy.scale.x *= -1; //move enemy to always front the player
+                }
+
+                //fire if player is near
+                if (Math.abs(this.player.x - enemy.x) < 400) {
+                    if (this.game.time.now > this.enemyFireTimer + 1500) {
+                        this.enemyFire(enemy);
+                        this.enemyFireTimer = this.game.time.now;
+                    }
+                }
+            }
+        },
+
+        enemyFire: function (enemy) {
+            var shuriken = this.enemyShurikens.getFirstDead();
+
+            if (!shuriken) return false;
+
+            this.game.physics.enable(shuriken, Phaser.Physics.ARCADE);
+
+            shuriken.reset(enemy.x + enemy.width, enemy.y);
+            shuriken.body.velocity.x = (enemy.scale.x > 0) ? 700 : -700;
+            shuriken.scale.set(0.8, 0.8);
+            shuriken.checkWorldBounds = true;
+            shuriken.outOfBoundsKill = true;
+
+            return true;
+        },
+
+        killEnemy: function (shuriken, enemy) {
+            shuriken.kill();
+            enemy.kill();
         },
 
         startShurikenTimer: function () {
@@ -96,8 +183,10 @@
         },
 
         handleKeyDown: function () {
+            if (this.player.dead) return;
+
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
-                this.player.body.velocity.x = 400;
+                this.player.body.velocity.x = 250;
                 this.turnRight();
 
                 if (this.player.body.onFloor()) {
@@ -108,7 +197,7 @@
             }
 
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-                this.player.body.velocity.x = -400;
+                this.player.body.velocity.x = -250;
                 this.turnLeft();
 
                 if (this.player.body.onFloor()) {
@@ -134,7 +223,7 @@
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
                 if (this.player.body.onFloor()) {
                     this.player.animations.play('jump');
-                    this.player.body.velocity.y = -700;
+                    this.player.body.velocity.y = -650;
                 }
             }
         }
