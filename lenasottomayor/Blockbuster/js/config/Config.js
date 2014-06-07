@@ -138,6 +138,12 @@ Config.tilemap = {
 			name: 'Coins',
 			gid: 66,
 			frame: 0
+		},
+		thorn: {
+			dir: 'assets/images/Thorn_40-40.png',
+			name: 'Thorn',
+			gid: 114,
+			frame: 0
 		}
 	}
 };
@@ -247,6 +253,15 @@ Config.enemy = {
 			gid: 99,
 			frame: 3
 		}
+	},
+	vader: {
+		dir: 'assets/spritesheets/Vader_1500-217-10.png',
+		height: 217,
+		width: 150,
+		frames: 10,
+		name: 'Vader',
+		gid: 104,
+		frame: 0
 	},
 	dir: 'assets/images/regularenemy_95-55.png',
 	gravity: 800,
