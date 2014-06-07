@@ -21,7 +21,7 @@ Phase1.Rock = {
 		{"x": 2670, "y": 475,  "item": "rock2_655-230"},	
 		{"x": 1764, "y": 1772, "item": "rock_90-75"},
 		{"x": 1952, "y": 734,  "item": "rock_825-100"},
-		{"x": 0,    "y": 1620, "item": "rock_92-230"},
+		{"x": 47,    "y": 1755, "item": "rock_92-230"},
 		{"x": 212,  "y": 406,  "item": "rock_100-35"},
 		{"x": 348,  "y": 504,  "item": "rock_100-35"},
 		{"x": 245,  "y": 852,  "item": "rock_100-35"},
@@ -31,13 +31,13 @@ Phase1.Rock = {
 		{"x": 1336, "y": 1772, "item": "rock_125-75"},
 		{"x": 1538, "y": 1772, "item": "rock_125-75"},
 		{"x": 0,    "y": 240,  "item": "rock_220-85"},
-		{"x": 1383, "y": 1275, "item": "rock_370-85"},
+		{"x": 1580, "y": 1320, "item": "rock_370-85"},
 		{"x": 2810, "y": 1800, "item": "rock_371-108"},
-		{"x": 99,   "y": 1659, "item": "rock_412-190"},
+		{"x": 300,  "y": 1772, "item": "rock_412-190"},
 		{"x": 2250, "y": 1300, "item": "rock_500-100"},
-		{"x": 1986, "y": 1716, "item": "rock_515-130"},
-		{"x": 738,  "y": 1170, "item": "rock_540-190"},
-		{"x": 681,  "y": 1686, "item": "rock_550-165"},			
+		{"x": 2220, "y": 1800, "item": "rock_515-130"},
+		{"x": 800,  "y": 1170, "item": "rock_540-190"},
+		{"x": 950,  "y": 1772, "item": "rock_550-165"},			
 		{"x": 478,  "y": 587,  "item": "rock_925-220"},
 		{"x": 0,    "y": 1021, "item": "rock_655-230"}	
 	],
@@ -51,7 +51,7 @@ Phase1.Rock = {
 		for(var x = 0; x < this.posItem.length; x++){		
 			this.rocks[x] = this.game.add.sprite(this.posItem[x].x, this.posItem[x].y, this.posItem[x].item);
 			
-			this.game.physics.p2.enable(this.rocks[x], true);
+			this.game.physics.p2.enable(this.rocks[x], false);
 						
 			this.rocks[x].body.clearShapes();
 			this.rocks[x].body.loadPolygon('physicsDataRocks', this.posItem[x].item);

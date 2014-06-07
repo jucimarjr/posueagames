@@ -14,10 +14,10 @@ State.Phase1.prototype = {
 		Phase1.World.createBg();
 		Phase1.Trap.create();
         this.player = Phase1.Player.create();		
-	    this.rocks = Phase1.Rock.create();		
-	    Phase1.Smoke.create();	   
+	    this.rocks = Phase1.Rock.create();			   
 	    Phase1.Door.create();
 		Phase1.World.createBgAlpha();
+		Phase1.Smoke.create();
 						
         //misc defs
         this.cursors = this.game.input.keyboard.createCursorKeys();

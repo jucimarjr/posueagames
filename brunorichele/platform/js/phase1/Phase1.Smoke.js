@@ -6,7 +6,7 @@ Phase1.Smoke = {
 	},
 	create : function(){
 		this.smoke = this.game.add.sprite(0, 1700, 'smoke');
-        this.smoke.animations.add('fear', [0, 1, 2, 3], 10, true);
+        this.smoke.animations.add('fear', [0, 1, 2, 3], 4, true);
         this.smoke.animations.play('fear');
 		this.smoke.width = 3000;
     	this.smoke.height = 300;
