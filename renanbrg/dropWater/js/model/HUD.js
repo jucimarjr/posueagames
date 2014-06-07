@@ -83,6 +83,12 @@ HUD.prototype = {
                 [24, 23, 22, 21, 20, 19], 10, false);
         this.dropAttemps.animations.add('attempt0', [0], 10, false);
         this.dropAttemps.fixedToCamera = true;
+
+        this.game.time.advancedTiming = true;
+        var styleFPS = {font: '16px Arial', fill: '#ffffff'};
+        this.fpsText = this.game.add.text(this.game.camera.width / 2, 10, '',
+                styleFPS);
+        this.fpsText.fixedToCamera = true;
     },
     decreaseLife: function() {
     	this.lifeCounter--;
@@ -102,4 +108,9 @@ HUD.prototype = {
                     'Down');
         }
     },
+    updateFPS: function() {
+        if (this.game.time.fps !== 0) {
+            this.fpsText.setText('FPS: ' + this.game.time.fps);
+        }
+    }
 };
