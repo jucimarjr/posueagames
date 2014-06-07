@@ -12,7 +12,7 @@ function Joystick() {
 		var gamepads = navigator.getGamepads();
 		if (gamepads && gamepads.length > 0) {
             for (var i = 0; i < gamepads.length; i++) {
-				console.log(i + ' | gamepad: ' + gamepads[i]);
+//				console.log(i + ' | gamepad: ' + gamepads[i]);
 				if (gamepads[i] && gamepads[i].buttons) {
 					console.log('buttons: ' + gamepads[i].buttons.length);
 					this.gamepadIndex = i;
