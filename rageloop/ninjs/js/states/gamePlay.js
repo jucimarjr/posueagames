@@ -4,6 +4,8 @@
     	this.bg = null;
         this.map = null;
         this.layer = null;
+        this.itemLayer = null;
+        this.spineLayer = null;
         this.player = null;
 
         this.shurikens = null;
@@ -14,6 +16,9 @@
         this.enemies = null;
         this.enemyShurikens = null;
         this.enemyFireTimer = 0;
+
+        //items collected
+        this.itemCount = 0;
     };
 
     Gameplay.prototype = {
@@ -28,8 +33,16 @@
             this.map.addTilesetImage('background', 'tileset');
 
             this.layer = this.map.createLayer('layer');
+            this.itemLayer = this.map.createLayer('items');
+            this.spineLayer = this.map.createLayer('spines');
+
             this.layer.resizeWorld();
+            this.itemLayer.resizeWorld();
+            this.spineLayer.resizeWorld();
+
             this.map.setCollisionBetween(0, 15, true, 'layer');
+            this.map.setCollisionBetween(0, 15, true, 'items');
+            this.map.setCollisionBetween(0, 15, true, 'spines');
 
             this.shurikens = this.game.add.group();
             this.shurikens.createMultiple(10, 'shuriken');
@@ -83,6 +96,7 @@
             this.game.physics.arcade.collide(this.player, this.layer);
             this.game.physics.arcade.collide(this.enemies, this.layer);
 
+            this.game.physics.arcade.overlap(this.player, this.itemLayer, this.collectItem, null, this);
             this.game.physics.arcade.overlap(this.shurikens, this.layer, this.shurikenCollision, null, this);
             this.game.physics.arcade.overlap(this.shurikens, this.enemies, this.killEnemy, null, this);
             this.game.physics.arcade.overlap(this.enemyShurikens, this.layer, this.shurikenCollision, null, this);
@@ -90,11 +104,17 @@
             if (!this.player.dead) {
                 this.game.physics.arcade.overlap(this.player, this.enemyShurikens, this.die, null, this);
                 this.game.physics.arcade.overlap(this.player, this.enemies, this.die, null, this);
+                this.game.physics.arcade.overlap(this.player, this.spineLayer, this.die, null, this);
             }
 
             this.enemies.forEachAlive(this.updateEnemies, this);
 
             this.handleKeyDown();
+        },
+
+        collectItem: function (player, tile) {
+            this.itemCount++;
+            this.map.removeTile(tile.x, tile.y, this.itemLayer);
         },
 
         fire: function () {
@@ -115,11 +135,13 @@
             return true;
         },
 
-        die: function (player, shuriken) {
+        die: function (player, obj) {
 
             var self = this;
 
-            shuriken.kill();
+            if (obj.kill) {
+                obj.kill();
+            }
 
             player.body.velocity.x = 0;
             player.dead = true;
