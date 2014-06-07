@@ -30,7 +30,18 @@ State.GameSplash.prototype = {
 		this.game.load.image('tileset', Config.game.tileset.dir);
 		this.game.load.spritesheet('dude', Config.game.player.dir , 32, 48);
 		this.game.load.image('collect', 'assets/images/pv.png');
-		this.game.load.spritesheet('monster1', 'assets/spritesheets/monstercat_38_18_3.png', 38, 18);
+		this.game.load.spritesheet('monstercat', 'assets/spritesheets/monstercat_38_18_3.png', 38, 18);
+		this.game.load.spritesheet('bigbosjumping', 'assets/spritesheets/bigbosjumping_104_214_4_.png', 104, 214);
+		this.game.load.spritesheet('bigbosjumping', 'assets/spritesheets/bigbosjumping_114_208_6_.png', 114, 208);
+		this.game.load.spritesheet('bigbossattackcompose', 'assets/spritesheets/bigbossattack_compose_270_208_6_.png', 270, 208);
+		this.game.load.spritesheet('bigbossattackfire', 'assets/spritesheets/bigbossattack_fire_50_42_4_.png', 50, 42);
+		this.game.load.spritesheet('bluemonster', 'assets/spritesheets/bluemonster_60_50_3.png', 60, 50);
+		this.game.load.spritesheet('emmaattack', 'assets/spritesheets/emmaattack_110_113_3.png', 110, 113);
+		this.game.load.spritesheet('emmajumping', 'assets/spritesheets/emmajumping_104_97_3.png', 104, 97);
+		this.game.load.spritesheet('emmarun', 'assets/spritesheets/emmarun_104_104_5.png', 104, 104);
+		this.game.load.spritesheet('greenmonsterleft', 'assets/spritesheets/greenmonsterleft_74_62_5.png', 74, 62);
+		this.game.load.spritesheet('greenmonsterright', 'assets/spritesheets/greenmonsterright_74_62_5.png', 74, 62);
+		this.game.load.spritesheet('greenmonsterright', 'assets/spritesheets/ray_47_56_2.png', 47, 52);
 
 		//gif fall
         for (var i = 0; i < 30; i++) {
