@@ -31,10 +31,14 @@ Config.ludusSplash = {
 Config.gameSplash = {
 	dir: {
 		bar: 'assets/images/ProgressBar_600-30.png',
-		background: 'assets/images/gameSplash_600-960.png'
+		background: 'assets/images/ad_600-600.png'
 	},
-	x: 0,
-	y: 0,
+	x: Config.global.screen.width * 0.5,
+	y: Config.global.screen.height * 0.5,
+	anchor: {
+		x: 0.5,
+		y: 0.5
+	},
 	millis: 2000,
 	nextState: 4000
 };
