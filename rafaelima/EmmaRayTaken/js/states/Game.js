@@ -7,6 +7,7 @@ var layer;
 var player;
 var cursors;
 var attackButton;
+var pauseButton;
 var map;
 var rotate;
 var bg1;
@@ -65,8 +66,7 @@ State.Game.prototype = {
 		    //bg
 		    bg4 = this.game.add.tileSprite(1700, 1950, 3600, 1200, 'bg4');
 		    bg4.tileScale.setTo(4, 4);
-		    bg1 = this.game.add.tileSprite(0, 2850, 3000, 540, 'bg1');
-		    bg1.tileScale.setTo(2, 2);
+		    bg1 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg1');
 		    bg2 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg2');
 		    bg3 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg3');
 		    this.game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
@@ -119,7 +119,19 @@ State.Game.prototype = {
 		    cursors = this.game.input.keyboard.createCursorKeys();
 			attackButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 			
+			pauseButton = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER); 
+			pauseButton.onDown.add(this.pauseGame, this);
+			
 		},
+		
+		pauseGame: function (){
+			if(this.game.paused ){
+				this.game.paused = false;
+			}else{
+				this.game.paused = true;
+			}
+		},
+		
 		update: function () {
 			"use strict";
 
@@ -128,7 +140,7 @@ State.Game.prototype = {
 			this.moveBar(bar2, 300);
 			this.moveBar(bar3, 500);
 			
-//			Config.global.screen.resize(this.game);
+//				Config.global.screen.resize(this.game);
 			if (cursors.left.isDown){
 				player.body.moveLeft(200);
 				player.animations.play('left');
@@ -136,13 +148,13 @@ State.Game.prototype = {
 				player.body.moveRight(200);
 				player.animations.play('right');
 			} else if(cursors.up.isDown){
-//				layer.rotation -=0.05;
-//				layer.resizeWorld();
-//				map.setCollisionBetween(1, 12);
-//				this.game.physics.p2.enable(layer);
+//					layer.rotation -=0.05;
+//					layer.resizeWorld();
+//					map.setCollisionBetween(1, 12);
+//					this.game.physics.p2.enable(layer);
 			}else if(cursors.down.isDown){
-//				layer.rotation +=0.05;
-//				layer.resizeWorld();
+//					layer.rotation +=0.05;
+//					layer.resizeWorld();
 			}else{
 				player.body.velocity.x = 0;
 				player.animations.stop();
@@ -169,6 +181,7 @@ State.Game.prototype = {
 			if(player.x	<2863 && player.y<=2461){
 				this.gameRotate();
 			}
+		
 		},
 		
 		onClick: function () {
