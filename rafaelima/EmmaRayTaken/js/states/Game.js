@@ -125,11 +125,7 @@ State.Game.prototype = {
 		},
 		
 		pauseGame: function (){
-			if(this.game.paused ){
-				this.game.paused = false;
-			}else{
-				this.game.paused = true;
-			}
+			this.game.paused = !this.game.paused;
 		},
 		
 		update: function () {

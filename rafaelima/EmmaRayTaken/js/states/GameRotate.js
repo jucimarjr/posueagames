@@ -7,6 +7,7 @@ var layer;
 var player;
 var cursors;
 var jumpButton;
+var pauseButton;
 var map;
 var rotate;
 var bg1;
@@ -142,7 +143,15 @@ State.GameRotate.prototype = {
 		    cursors = this.game.input.keyboard.createCursorKeys();
 			jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 			
+			pauseButton = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER); 
+			pauseButton.onDown.add(this.pauseGame, this);
+			
 		},
+		
+		pauseGame: function (){
+			this.game.paused = !this.game.paused;
+		},
+		
 		collectItems: function (varPlayer, collect) {
 			"use strict";
 			if(flagId){
