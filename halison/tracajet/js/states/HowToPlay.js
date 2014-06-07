@@ -13,6 +13,9 @@ State.HowToPlay.prototype = {
 		var background = this.game.add.sprite(Config.howToPlay.x, Config.howToPlay.y, 'how-to-play');
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
+		var sprite = game.add.sprite(Config.howToPlay.text.x, Config.howToPlay.text.y, 'how-to-play-text');
+		sprite.anchor.setTo(Config.howToPlay.text.anchor.x, Config.howToPlay.text.anchor.y);
+		sprite.scale.setTo( Config.howToPlay.text.scale.x,Config.howToPlay.text.scale.y );
 	},
 	update: function () {
 		"use strict";

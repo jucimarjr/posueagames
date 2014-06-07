@@ -35,7 +35,7 @@ Config.gameSplash = {
 	},
 	x: 0,
 	y: 0,
-	millis: 3000,
+	millis: 2000,
 	nextState: 4000
 };
 
@@ -53,7 +53,7 @@ Config.menu = {
 		anchor: {
 			x: 0.5,
 			y: 0.5
-		}
+		},
 	},
 	buttonPlay: {
 		dir: 'assets/sprites/buttonplay_130-58-4.png',
@@ -87,14 +87,44 @@ Config.menu = {
 Config.howToPlay = {
 	dir: 'assets/images/howToPlay_600-960.png',
 	x: 0,
-	y: 0
+	y: 0,
+	text: { 
+		dir: 'assets/images/intrucoes_400-100.png',		
+		x: Config.global.screen.width * 0.5,
+		y: Config.global.screen.height * 0.5,
+		width: 400,
+		height: 100,
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		},
+		scale: {
+			x: 1.2,
+			y: 1.2
+		}
+	}
 };
 
 // Credits
 Config.credits = {
 	dir: 'assets/images/credits_600-960.png',
 	x: 0,
-	y: 0
+	y: 0,
+	text: {
+		dir: 'assets/images/creditos_400-100.png',
+		x: Config.global.screen.width * 0.5,
+		y: Config.global.screen.height * 0.5,
+		width: 400,
+		height: 100,
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		},
+		scale: {
+			x: 1.8,
+			y: 1.8
+		}
+	}
 };
 
 //Global
