@@ -101,11 +101,19 @@
         },
 
         die: function (player, shuriken) {
+
+            var self = this;
+
             shuriken.kill();
 
             player.body.velocity.x = 0;
             player.dead = true;
             player.animations.play('death');
+
+            setTimeout(function(){
+                self.game.state.start('Gameover');
+            }, 800);
+
         },
 
         createEnemy: function (x, y) {
