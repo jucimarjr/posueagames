@@ -117,7 +117,6 @@ Config.tilemap = {
 			dir: 'assets/images/tileset_360-280.png',
 			name: 'tileset_360-280',
 			platform: 'Platform',
-			thorn: 'Thorn',
 			height: 360,
 			width: 280
 		},
@@ -138,6 +137,13 @@ Config.tilemap = {
 			name: 'Coins',
 			gid: 66,
 			frame: 0
+		},
+		thorn: {
+			dir: 'assets/images/Thorn_40-40.png',
+			name: 'Thorn_40-40',
+			thorns: 'Thorn',
+			height: 40,
+			width: 40
 		}
 	}
 };
@@ -247,6 +253,15 @@ Config.enemy = {
 			gid: 99,
 			frame: 3
 		}
+	},
+	vader: {
+		dir: 'assets/spritesheets/Vader_1500-217-10.png',
+		height: 217,
+		width: 150,
+		frames: 10,
+		name: 'Vader',
+		gid: 104,
+		frame: 0
 	},
 	dir: 'assets/images/regularenemy_95-55.png',
 	gravity: 800,

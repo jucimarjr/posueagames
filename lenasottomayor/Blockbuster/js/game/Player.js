@@ -1,12 +1,13 @@
 
 
-Player = function(game, coins, layer1, powerlifes, powerstars) {
+Player = function(game, coins, layer1, powerlifes, powerstars, thorns) {
 
 	this.game = game;
 	this.coins = coins;
 	this.layer1 = layer1;
 	this.powerlifes = powerlifes;
 	this.powerstars = powerstars;
+	this.thorns = thorns;
 	this.gold = false;
 	this.life = 3;
 	this.spritePlayer = null;

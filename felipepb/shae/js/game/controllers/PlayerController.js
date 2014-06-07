@@ -36,7 +36,9 @@ Game.PlayerController.AnimState = {
     JumpAscend: 'jump ascend',
     JumpApex: 'jump apex',
     JumpDescend: 'jump descend',
-    JumpTouchdown: 'jump touchdown'
+    JumpTouchdown: 'jump touchdown',
+    Respawning: 'respawning',
+    Dying: 'dying'
 }
 
 Game.PlayerController.prototype = {
@@ -47,6 +49,8 @@ Game.PlayerController.prototype = {
         this.sprite.anchor.setTo(0.73, 0.5);
         this.sprite.x = 140;
         this.sprite.y = 70;
+        this.sprite.scale.x = 0;
+        this.sprite.scale.y = 0;
         
         // Create animations
         var idleAnimFrames = new Array();
@@ -81,7 +85,17 @@ Game.PlayerController.prototype = {
         var jumpTouchDownAnimFrames = new Array();
         jumpTouchDownAnimFrames.push('shae_jump_7_100-100.png');
 
-        var jumpStartAnim, jumpApexAnim, jumpTouchdownAnim;
+        var deathAnimFrames = new Array();
+        for (var i = 1; i <= 7; i++) {
+            deathAnimFrames.push('shae_dying_'+ i + '_100-100.png');
+        };
+
+        var respawnAnimFrames = new Array();
+        for (var i = 7; i >= 1; i--) {
+            respawnAnimFrames.push('shae_dying_'+ i + '_100-100.png');
+        };
+
+        var jumpStartAnim, jumpApexAnim, jumpTouchdownAnim, respawnAnim, deathAnim;
 
         this.sprite.animations.add('idle', idleAnimFrames, 10, true);
         this.sprite.animations.add('walk', walkAnimFrames, 10, true);
@@ -98,15 +112,16 @@ Game.PlayerController.prototype = {
         jumpTouchdownAnim = this.sprite.animations.add('jump-touchdown', jumpTouchDownAnimFrames, 7.5, false);
         jumpTouchdownAnim.onComplete.add(this.onJumpTouchdownFinished, this);
 
-        // Create body
-        this.gameState.registerBody(this.sprite);
-        this.sprite.body.setSize(26, 64, 0, 0);
+        respawnAnim = this.sprite.animations.add('respawn', respawnAnimFrames, 10, false);
+        respawnAnim.onComplete.add(this.onRespawnAnimFinished, this);
+
+        deathAnim = this.sprite.animations.add('dying', deathAnimFrames, 10, false);
+        deathAnim.onComplete.add(this.onDeathAnimFinished, this);
 
         // Setup input
         this.canJump = true;
         this.isJumping = false;
         this.blockInput = false;
-        // this.doLongJump = false;
 
         this._actualRunModifier = 0.0;
 
@@ -114,12 +129,29 @@ Game.PlayerController.prototype = {
         this.runButton = this.gameState.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
         this.jumpButton = this.gameState.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		this.joystick = new Joystick();
+
+        this.playRespawnAnimation();
+    },
+
+    createBody: function() {
+        this.gameState.registerBody(this.sprite);
+        this.sprite.body.setSize(26, 64, 0, 0);
+    },
+
+    destroyBody: function() {
+        if (this.sprite && this.sprite.body)
+            this.gameState.game.unregisterBody(this.sprite.body);
     },
 
     update: function () {
         // console.log(this.animState);
 
+        if (this.animState == Game.PlayerController.AnimState.Respawning ||
+            this.animState == Game.PlayerController.AnimState.Dying)
+            return;
+
         this.isGrounded = this.sprite.body.onFloor();
+        
         this.handleInput();
         this.handleAnimation();
     },
@@ -167,36 +199,38 @@ Game.PlayerController.prototype = {
             this._actualRunModifier += PlayerConsts.runModifierDamping;
             this._actualRunModifier = Math.min(this._actualRunModifier, 
                                                PlayerConsts.runModifier);
-            this.direction += this.direction == Game.PlayerController.Direction.Right
-			                                     ? this._actualRunModifier
-												 : -this._actualRunModifier;
 
             if (this.isGrounded && this.canJump)
                 this.animState = Game.PlayerController.AnimState.Run;
 
-        } else if (this.runButton.isUp) {
+        } else if ((this.runButton.isUp && this.isGrounded) || 
+                    this.direction == Game.PlayerController.Direction.None) {
             this._actualRunModifier = 0.0;
         }
+
+        this.direction += this.direction == Game.PlayerController.Direction.Right
+                          ? this._actualRunModifier
+                          : -this._actualRunModifier;
     },
 
     handleJump: function () {
 		var joystick = this.joystick;
-		var jumpButtonIsDown = this.jumpButton.justPressed(150) || joystick.getB();
+		var hasJumpInput = this.jumpButton.justPressed(100) || joystick.getB();
 		
-        // if (!this.canJump && this.isGrounded && !this.isJumping && !jumpButtonIsDown)
+        // if (!this.canJump && this.isGrounded && !this.isJumping && !hasJumpInput)
         //     this.canJump = true;
 
-        if (!jumpButtonIsDown && !this.isJumpInputReleased)
-            this.isJumpInputReleased = true;
+        if (this.jumpButton.isUp && !this.isJumpInputReleased)
+             this.isJumpInputReleased = true;
 
-        if (this.canJump && this.isGrounded && jumpButtonIsDown && this.isJumpInputReleased) {
+        if (this.canJump && hasJumpInput/* && this.isJumpInputReleased*/) {
             // Jump!
             this.isJumpInputReleased = false;
             this.isJumping = true;
             this.doJump = true;
             this.canJump = false;
             this.animState = Game.PlayerController.AnimState.JumpStart;
-        } else if (this.currentAnim == 'jump-ascend' && this.jumpButton.justPressed(350)) {
+        } else if (!this.isJumpInputReleased && this.currentAnim == 'jump-ascend' && this.jumpButton.justPressed(350)) {
             this.doJump = true;
         } else if (this.isGrounded && (Utils.stringContains(this.currentAnim, 'jump-start') ||
                                        Utils.stringContains(this.currentAnim, 'jump-ascend') ||
@@ -226,8 +260,7 @@ Game.PlayerController.prototype = {
         if (this.direction <= Game.PlayerController.Direction.Left && this.sprite.scale.x != -1) {
             this.sprite.scale.x = -1;
             this.sprite.anchor.setTo(0.65, 0.5);
-        } else if (((this.direction == Game.PlayerController.Direction.None && this.currentAnim == 'idle') || 
-                     this.direction >= Game.PlayerController.Direction.Right) && this.sprite.scale.x != 1) {
+        } else if (this.direction >= Game.PlayerController.Direction.Right && this.sprite.scale.x != 1) {
             this.sprite.scale.x = 1;
             this.sprite.anchor.setTo(0.73, 0.5);
         }
@@ -270,27 +303,40 @@ Game.PlayerController.prototype = {
 
     applyVelocity: function () {
         // Handle horizontal velocity.
-        this.sprite.body.velocity.x = this.direction * 
-                                      PlayerConsts.movementVelocity * 
-                                      PhysicsConsts.pixelsToUnit;
+        var body = this.sprite.body;
+        if ((body.velocity.x >= 0 && this.direction > 0) || (body.velocity.x <= 0 && this.direction < 0)) {
+            // Player is going in the same direction as the input.
+            if (this.direction > 0)
+                body.velocity.x = Math.min(body.velocity.x + PlayerConsts.walkAccel * this.direction, 
+                                           PlayerConsts.walkVelocity * this.direction);
+            else
+                body.velocity.x = Math.max(body.velocity.x + PlayerConsts.walkAccel * this.direction,
+                                           PlayerConsts.walkVelocity * this.direction);
+        } else if ((body.velocity.x >= 0 && this.direction < 0) || (body.velocity.x <= 0 && this.direction > 0)) {
+            // Player is going in a different direction from the input.
+            if (this.direction > 0)
+                body.velocity.x = Math.min(body.velocity.x + PlayerConsts.walkDamping * this.direction, 
+                                           PlayerConsts.walkDamping * this.direction);
+            else
+                body.velocity.x = Math.max(body.velocity.x + PlayerConsts.walkDamping * this.direction, 
+                                           PlayerConsts.walkDamping * this.direction);
+        } else {
+            if (body.velocity.x > 0)
+                body.velocity.x = Math.max(0.0, body.velocity.x - PlayerConsts.walkDamping * 3.0);
+            else if (body.velocity.x < 0)
+                body.velocity.x = Math.min(0.0, body.velocity.x + PlayerConsts.walkDamping * 3.0);
+        }
 
         // Handle vertical velocity.
         if (this.doJump) {
-            this.sprite.body.velocity.y = -PlayerConsts.jumpVelocity *
-                                           PhysicsConsts.pixelsToUnit;
+            this.sprite.body.velocity.y = -PlayerConsts.jumpVelocity;
             this.doJump = false;
         }
     },
 
     onJumpStartFinished: function () {
-        if (this.sprite.body.velocity.y < 0 && this.currentAnim != 'jump-ascend') {
-            // this.doJump = true;
-            // this.sprite.body.velocity.y = -PlayerConsts.jumpVelocity *
-            //                                PhysicsConsts.pixelsToUnit;
+        if (this.sprite.body.velocity.y < 0 && this.currentAnim != 'jump-ascend')
             this.animState = Game.PlayerController.AnimState.JumpAscend;
-            // this.sprite.animations.play('jump-ascend');
-            // this.currentAnim = 'jump-ascend';
-        }
     },
 
     onJumpApexFinished: function () {
@@ -305,6 +351,35 @@ Game.PlayerController.prototype = {
         // console.log('onJumpTouchdownFinished');
         this.canJump = true;
         this.isJumping = false;
+    },
+
+    playRespawnAnimation: function () {
+        this.sprite.animations.play('respawn');
+        this.currentAnim = 'respawn';
+        this.animState = Game.PlayerController.AnimState.Respawning;
+        
+        this.sprite.scale.x = 1;
+        this.sprite.scale.y = 1;
+    },
+
+    playDeathAnimation: function () {
+        this.sprite.animations.play('dying');
+        this.currentAnim = 'dying';
+        this.animState = Game.PlayerController.AnimState.Dying;
+    },
+
+    onRespawnAnimFinished: function () {
+        // console.log('onRespawnAnimFinished');
+        this.createBody();
+        this.animState = Game.PlayerController.AnimState.Idle;
+    },
+
+    onDeathAnimFinished: function () {
+        // console.log('onDeathAnimFinished');
+        this.sprite.scale.x = 0;
+        this.sprite.scale.y = 0;
+        
+        this.playRespawnAnimation();
     }
 
     // onBeginContact: function (otherBody, otherShape, shape, contactDataArray) {

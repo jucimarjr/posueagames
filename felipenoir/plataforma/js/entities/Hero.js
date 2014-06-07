@@ -9,19 +9,19 @@ var HeroProperties = {
     climb:150,
     animations:{
         idle:{
-            sword:{name:'idle', frames:[24, 25], framerate:2},
-            pistol:{name:'idle-pistol', frames:[22, 23], framerate:2},
-            machinegun:{name:'idle-machinegun', frames:[20, 21], framerate:2}
+            sword:{name:'idle', frames:[23, 24], framerate:2},
+            pistol:{name:'idle-pistol', frames:[21, 22], framerate:2},
+            machinegun:{name:'idle-machinegun', frames:[19, 20], framerate:2}
         },
         run:{
-            sword:{name:'run', frames:[5, 6, 7, 8, 15], framerate:5},
-            pistol:{name:'run-pistol',frames:[1, 2, 3, 4, 14], framerate:5},
-            machinegun:{name:'run-machinegun',frames:[9, 10, 11, 12, 13], framerate:5}
+            sword:{name:'run', frames:[14, 7, 6, 5, 4], framerate:5},
+            pistol:{name:'run-pistol',frames:[3, 2, 1, 0, 13], framerate:5},
+            machinegun:{name:'run-machinegun',frames:[12, 11, 10, 9, 8], framerate:5}
         },
         attack:{
-            sword:{name:'attack', frames:[26, 27, 28], framerate:3},
-            pistol:{name:'attack-pistol', frames:[18, 19],framerate:2},
-            machinegun:{name:'attack-machinegun', frames:[16, 17], framerate:2}
+            sword:{name:'attack', frames:[27, 26, 25], framerate:3},
+            pistol:{name:'attack-pistol', frames:[18, 17],framerate:2},
+            machinegun:{name:'attack-machinegun', frames:[16, 15], framerate:2}
         }
     },
     animationsQtd:28
@@ -31,12 +31,14 @@ function Hero(game) {
     this.game = game,
     this.hero,
     this.animation,
+    this.jumpAudio,
     this.attacking = false;
 }
 
 Hero.prototype = {
     preload : function() {
         this.game.load.spritesheet('hero', HeroProperties.path, HeroProperties.width, HeroProperties.height, HeroProperties.animationsQtd);
+        game.load.audio('jump_audio', 'assets/sounds/jump.ogg');
     },
 
     create : function() {
@@ -60,6 +62,8 @@ Hero.prototype = {
             run : heroAnim.run.sword.name,
             attack : heroAnim.attack.sword.name
         };
+
+        this.jumpAudio = this.game.add.audio('jump_audio');
 
         this.hero.anchor.setTo(.5, .5);
         this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
@@ -85,12 +89,14 @@ Hero.prototype = {
 
         if(cursors.up.isDown && this.hero.body.onFloor()) {
             this.hero.body.velocity.y = HeroProperties.jump;
+            this.jumpAudio.play();
         }
 
         if(this.game.input.keyboard.isDown(Phaser.Keyboard.X)) {
             this.hero.animations.play(HeroProperties.animations.attack.sword.name);
         } else if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
-            this.hero.animations.play(HeroProperties.animations.attack.pistol.name);
+            if(this.animation.attack != 'attack')
+                this.hero.animations.play(this.animation.attack);
         }
     },
 
