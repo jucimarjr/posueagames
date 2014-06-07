@@ -190,10 +190,13 @@ Config.enemy = {
 			y: .5
 		},
 		walk: {
+			x: 50,
+			y: 0,
 			gid: 67,
 			frame: 0
 		},
 		jump: {
+			x: 0,
 			y: 200,
 			gid: 68,
 			frame: 1

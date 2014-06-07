@@ -11,6 +11,8 @@ Enemy = function(game, layer1, tilemap){
 	this.jasons = null;
 	this.jokers = null;
 	this.vaders = null;
+	this.cruellaWalk = 0;
+	this.cruellaIsLeft = true;
 };
 
 Enemy.prototype = {
@@ -27,24 +29,28 @@ Enemy.prototype = {
 					case 0:
 						cruella.animations.add('walk', [0,1,2,3], 4, true);
 						cruella.animations.add('dead',[4],1,false);
-						cruella.frame = 0;
+						cruella.scale.x = -1;
+						cruella.frame = Config.enemy.cruella.walk.frame;
 						break;
 					case 1:
 						cruella.animations.add('walk', [0,1,2,3], 4, true);
 						cruella.animations.add('dead',[4],1,false);
-						cruella.frame = 0;
+						cruella.scale.x = -1;
+						cruella.frame = Config.enemy.cruella.walk.frame;
 						break;
 					case 2:
 						cruella.animations.add('jump', [1], 1, true);
 						cruella.animations.add('fall', [2], 1, true);
 						cruella.animations.add('dead',[4],1,false);
-						cruella.frame = 1;
+						cruella.scale.x = -1;
+						cruella.frame = Config.enemy.cruella.jump.frame;
 						break;
 					case 3:
 						cruella.animations.add('jump', [1], 1, true);
 						cruella.animations.add('fall', [2], 1, true);
 						cruella.animations.add('dead',[4],1,false);
-						cruella.frame = 1;
+						cruella.scale.x = -1;
+						cruella.frame = Config.enemy.cruella.jump.frame;
 						break;
 					default:
 						break;
@@ -249,35 +255,70 @@ Enemy.prototype = {
 
 				switch (this.cruellas.getIndex(cruella)) {
 					case 0:
-							
+						cruella.body.velocity.y = Config.enemy.cruella.walk.y;
+						
+						if(this.cruellaIsLeft) {
+							cruella.scale.x = -1;
+							cruella.body.velocity.x = -Config.enemy.cruella.walk.x;
+							this.cruellaWalk += Config.enemy.cruella.walk.x; 
+						} else {
+							cruella.scale.x = 1;
+							cruella.body.velocity.x = Config.enemy.cruella.walk.x;
+							this.cruellaWalk += Config.enemy.cruella.walk.x;
+						} 
+						
+						if (this.cruellaWalk >= 6000) {
+							this.cruellaWalk = 0;
+							this.cruellaIsLeft = !this.cruellaIsLeft;
+						}
+						
+				    	cruella.animations.play('walk');
 						break;
 					case 1:
+						cruella.body.velocity.y = Config.enemy.cruella.walk.y;
+						
+						if(this.cruellaIsLeft) {
+							cruella.scale.x = -1;
+							cruella.body.velocity.x = -Config.enemy.cruella.walk.x;
+							this.cruellaWalk += Config.enemy.cruella.walk.x; 
+						} else {
+							cruella.scale.x = 1;
+							cruella.body.velocity.x = Config.enemy.cruella.walk.x;
+							this.cruellaWalk += Config.enemy.cruella.walk.x;
+						} 
+						
+						if (this.cruellaWalk >= 6000) {
+							this.cruellaWalk = 0;
+							this.cruellaIsLeft = !this.cruellaIsLeft;
+						}
+						
+				    	cruella.animations.play('walk');
 						break;
 					case 2:
-						cruella.body.velocity.x = 0;
+						cruella.body.velocity.x = Config.enemy.cruella.jump.x;
+						
+						if (cruella.body.onFloor()) {
+							cruella.body.velocity.y = -Config.enemy.cruella.jump.y;
+						}
 						
 						if(cruella.body.velocity.y < 0){
 					    	cruella.animations.play('jump');
 				    	} else if (cruella.body.velocity.y > 0){
 				    		cruella.animations.play('fall');
 				    	}
-						
-						if (cruella.body.onFloor()) {
-							cruella.body.velocity.y = -Config.enemy.cruella.jump.y;
-						}
 						break;
 					case 3:
-						cruella.body.velocity.x = 0;
+						cruella.body.velocity.x = Config.enemy.cruella.jump.x;
+						
+						if (cruella.body.onFloor()) {
+							cruella.body.velocity.y = -Config.enemy.cruella.jump.y;
+						}
 						
 						if(cruella.body.velocity.y < 0){
 					    	cruella.animations.play('jump');
 				    	} else if (cruella.body.velocity.y > 0){
 				    		cruella.animations.play('fall');
 				    	}
-						
-						if (cruella.body.onFloor()) {
-							cruella.body.velocity.y = -Config.enemy.cruella.jump.y;
-						}
 						break;
 					default:
 						break;
