@@ -6,7 +6,7 @@ State.GamePlay = function (game) {
     this.map = null;
     this.layer = null;
     this.player = null;
-    this.crab = null;
+    this.crab = new Array();
     this.dropCollisionGroup = null;
     this.crabCollisionGroup = null;
     this.layerBody = null;
@@ -54,7 +54,9 @@ State.GamePlay.prototype = {
 		this.layer = this.map.createLayer('Camada de Tiles 1');
         this.layer.resizeWorld();
 
-		this.crab = game.add.sprite(this.game.width-130, this.game.height-80, 'crab');
+		this.crab[0] = game.add.sprite(this.game.width-180, this.game.height-80-69, 'crab');
+		this.crab[1] = game.add.sprite(this.game.width, this.game.height-80-69, 'crab');
+		
 		this.game.add.image(0, this.game.height-80, 'wetSand');
 		this.game.add.image(2008, 23, 'bucket');
 		this.game.add.image(2008, 508, 'straw1');
@@ -67,21 +69,27 @@ State.GamePlay.prototype = {
         this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
                 
         // create player
-        //this.drop.create(300, this.game.world.height-200);
-        this.drop.create(2008, this.game.world.height-200);
+        this.drop.create(300, this.game.world.height-200);
         var dropSprite = this.drop.getSpriteObject();   
         this.game.physics.p2.enableBody(dropSprite, false);        
         this.game.camera.follow(dropSprite);
         this.drop.configureCharacter(this.setCharacterInicialValues);
         
-        // create enemy crab
-        this.game.physics.p2.enableBody(this.crab);
-		this.crab.body.setRectangle(140, 60, 0, 0);
-		this.crab.body.fixedRotation = true;
-		
+        // create enemy crabs
+        for (var i = 0; i < 2; i++) {
+            this.game.physics.p2.enableBody(this.crab[i]);
+    		this.crab[i].body.setRectangle(140, 60, 0, 0);
+    		this.crab[i].body.fixedRotation = true;
+    		this.crab[i].body.velocity.y = 0;
+    		this.crab[i].gravity = 0;
+        }
+        		
         //this.crab.body.collideWorldBounds = false;
-        this.crab.body.moveLeft(900);
-        this.crab.name = 'crab';
+        this.crab[0].body.moveLeft(1000);
+        this.crab[0].name = 'crab1';
+        
+        this.crab[1].body.moveRight(1000);
+        this.crab[1].name = 'crab2';
 
         // Add a 'life drop"
         this.lifeDrop = this.game.add.sprite(380, 320, 'life_drop');
@@ -90,7 +98,9 @@ State.GamePlay.prototype = {
         this.lifeDrop.body.fixedRotation = true;
         this.lifeDrop.name = 'lifeDrop';
 		
-		dropSprite.body.createBodyCallback(this.crab, this.checkOverlapCrabDrop, this); // check collision between drop and crab
+		dropSprite.body.createBodyCallback(this.crab[0], this.checkOverlapCrabDrop, this); // check collision between drop and crab
+		dropSprite.body.createBodyCallback(this.crab[1], this.checkOverlapCrabDrop, this); // check collision between drop and crab
+		
 		this.lifeDrop.body.createBodyCallback(dropSprite,
 		        this.checkOverlapWithLifeDrop, this);
 		this.game.physics.p2.setImpactEvents(true);
@@ -111,7 +121,8 @@ State.GamePlay.prototype = {
 	update: function () {
 		"use strict";
 		this.handleKeyDown();					
-		this.moveCrab();
+		this.moveCrab(this.crab[0]);
+		this.moveCrab(this.crab[1]);
 	},	
 	handleKeyDown: function () {
 		"use strict";
@@ -131,7 +142,7 @@ State.GamePlay.prototype = {
 		// Jump
 		if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) {
 			if (this.touchingDown(this.drop.getSpriteObject().body)) { 
-				this.drop.jump(450);  
+				this.drop.jump(600);  
 				this.jumpSound.play();
 			}
 		}
@@ -204,15 +215,23 @@ State.GamePlay.prototype = {
         }
         return false;
     },
-	moveCrab: function () {		
-		if (this.touchingLeft(this.crab.body)) {
-			//this.crab.body.velocity.x = 100;
-			this.crab.body.moveRight(900);
-		} else if (this.touchingRight(this.crab.body)) {
-			this.crab.body.moveLeft(900);
+	moveCrab: function (crab) {
+		if (crab.name == "crab1") {
+			if (this.touchingLeft(crab.body)) {
+				crab.body.moveRight(1000);
+			} else if (this.touchingRight(crab.body)) {
+				crab.body.moveLeft(1000);
+			} else {
+			}								
 		} else {
-			//this.crab.body.velocity.x = -100;
-		}					
+			if (this.touchingRight(crab.body)) {
+				crab.body.moveLeft(1000);
+			} else if (this.touchingLeft(crab.body)) {
+				crab.body.moveRight(1000);
+			} else {
+				//this.crab.body.velocity.x = -100;
+			}			
+		}		
 	},
 	crabKillDrop: function () {
 		this.drop.getSpriteObject().kill();		
