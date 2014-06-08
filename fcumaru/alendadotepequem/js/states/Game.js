@@ -61,29 +61,10 @@ State.Game.prototype = {
 
 		this.enemies.create();
 
-		var style = {
-			font : "20px Courier",
-			fill : "#000000"
-		};
-
-		posicao = this.game.add.text(10, 550, " ", style);
-		posicao.fixedToCamera = true;
-
-		// // exibe score
-		// var style = {
-		// font : "20px Arial",
-		// fill : "#ffcc99",
-		// align : "center"
-		// };
-		// this.score = this.game.add.text(10, 550, "00", style);
-		// this.score.fixedToCamera = true;
-
 		startTimer();
 	},
 	update : function() {
 		"use strict";
-		
-		// this.score.setText("Tempo : " + timerSecond);
 		this.heroes.update(layer, this.enemies);
 		this.enemies.update(layer);
 		if (!this.heroes.isAlive()) {
@@ -92,6 +73,17 @@ State.Game.prototype = {
 		}
 	}
 };
+
+function showScore() {
+	var style = {
+		font : "20px Arial",
+		fill : "#ffcc99",
+		align : "center"
+	};
+
+	this.score = this.game.add.text(10, 550, "00", style);
+	this.score.fixedToCamera = true;
+}
 
 function printPosition() {
 	posicao.content = Math.floor(dino.x) + " " + Math.floor(dino.y);
