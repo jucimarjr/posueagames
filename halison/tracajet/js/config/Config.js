@@ -5,8 +5,8 @@ var Config = {
 	global: {
 		animationVelocity: 6,
 		screen: {
-			width: 600,
-			height: 960,
+			width: 960,
+			height: 600,
 			resize: function (game) {
 				"use strict";
 				if (window.innerHeight < Config.global.screen.height || window.innerWidth < Config.global.screen.width) {
@@ -20,7 +20,7 @@ var Config = {
 
 //LudusSplash
 Config.ludusSplash = {
-	dir: 'assets/images/LudusSplash_600-960.png',
+	dir: 'assets/images/LudusSplash_960-600.png',
 	x: 0,
 	y: 0,
 	millis: 2000,
@@ -30,7 +30,7 @@ Config.ludusSplash = {
 //GameSplash
 Config.gameSplash = {
 	dir: {
-		bar: 'assets/images/ProgressBar_600-30.png',
+		bar: 'assets/images/ProgressBar_960-30.png',
 		background: 'assets/images/ad_600-600.png'
 	},
 	x: Config.global.screen.width * 0.5,
@@ -45,13 +45,13 @@ Config.gameSplash = {
 
 //Menu
 Config.menu = {
-	dir: 'assets/images/menuTracajet_600-960.png',
+	dir: 'assets/images/tela_menu_960-600.png',
 	x: 0,
 	y: 0,
 	buttonHowToPlay: {
 		dir: 'assets/sprites/buttonintructions_266-58-4.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.50,
+		y: Config.global.screen.height * 0.47,
 		width: 266,
 		height: 58,
 		anchor: {
@@ -60,11 +60,11 @@ Config.menu = {
 		},
 	},
 	buttonPlay: {
-		dir: 'assets/sprites/buttonplay_130-58-4.png',
+		dir: 'assets/sprites/buttonplay_166-60-4.png',
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.59,
-		width:130,
-		height: 58,
+		width:166,
+		height: 60,
 		anchor: {
 			x: 0.5,
 			y: 0.5
@@ -73,7 +73,7 @@ Config.menu = {
 	buttonCredits: {
 		dir: 'assets/sprites/buttoncredits_216-58-4.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.69,
+		y: Config.global.screen.height * 0.72,
 		width: 216,
 		height: 58,
 		anchor: {
@@ -89,7 +89,7 @@ Config.menu = {
 
 // How To Play
 Config.howToPlay = {
-	dir: 'assets/images/howToPlay_600-960.png',
+	dir: 'assets/images/instrucoes_960-600.png',
 	x: 0,
 	y: 0,
 	text: { 
@@ -111,7 +111,7 @@ Config.howToPlay = {
 
 // Credits
 Config.credits = {
-	dir: 'assets/images/credits_600-960.png',
+	dir: 'assets/images/creditos_960-600.png',
 	x: 0,
 	y: 0,
 	text: {
@@ -141,9 +141,9 @@ Config.game = {
 			y: 300
 		},
 		tracajet: {
-			dir: 'assets/sprites/tracajet_320-40.png',
-			width: 40,
-			height: 40,
+			dir: 'assets/sprites/tracajet_80-80-8.png',
+			width: 80,
+			height: 80,
 			x: 340,
 			y: 300
 		},
