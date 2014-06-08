@@ -115,5 +115,9 @@ Game.GameState.prototype = {
 
     registerBody: function (sprite) {
         this.game.physics.arcade.enableBody(sprite);
+    },
+
+    unregisterBody: function (body) {
+        body.destroy();
     }
 };

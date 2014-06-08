@@ -143,6 +143,7 @@ State.GamePlay.prototype = {
     },
 	update: function () {
 		"use strict";
+		this.hud.updateFPS();
 		this.handleKeyDown();					
 
 		this.moveCrab(this.crab[0]);

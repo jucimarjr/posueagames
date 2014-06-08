@@ -51,7 +51,6 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('oscar', Config.player.dir, Config.player.width, Config.player.height);
 		
 		//Enemy
-		this.game.load.spritesheet('enemy', Config.enemy.dir, Config.enemy.width, Config.enemy.height);
 		this.game.load.spritesheet('cruella', Config.enemy.cruella.dir,  Config.enemy.cruella.width,  Config.enemy.cruella.height, Config.enemy.cruella.frames);
 		this.game.load.spritesheet('freddy', Config.enemy.freddy.dir,  Config.enemy.freddy.width,  Config.enemy.freddy.height, Config.enemy.freddy.frames);
 		this.game.load.spritesheet('hannibal', Config.enemy.hannibal.dir,  Config.enemy.hannibal.width,  Config.enemy.hannibal.height, Config.enemy.hannibal.frames);

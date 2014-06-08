@@ -1,20 +1,20 @@
 ENEMY_TYPE_1 = function() {
 	this.key = 'enemy1';
-	this.asset = 'assets/magma_40-40-4.png';
+	this.asset = 'assets/bola_de_fogo.png';
 	this.walk = 150;
-	this.life = 5;
+	this.life = 3;
 };
 ENEMY_TYPE_2 = function() {
 	this.key = 'enemy2';
 	this.asset = 'assets/magma_40-40-4.png';
 	this.walk = 200;
-	this.life = 5;
+	this.life = 3;
 };
 ENEMY_TYPE_3 = function() {
 	this.key = 'enemy3';
 	this.asset = 'assets/magma_40-40-4.png';
 	this.walk = 100;
-	this.life = 6;
+	this.life = 4;
 };
 
 var LEFT = 0;
@@ -92,7 +92,7 @@ Enemies = function(game) {
 	"use strict";
 	this.game = game;
 	this.values = new Array();
-	
+
 	this.type1 = new ENEMY_TYPE_1();
 	this.type2 = new ENEMY_TYPE_2();
 	this.type3 = new ENEMY_TYPE_3();
@@ -100,7 +100,7 @@ Enemies = function(game) {
 
 Enemies.prototype = {
 	preload : function() {
-		this.game.load.spritesheet(this.type1.key, this.type1.asset, 40, 40, 4);
+		this.game.load.spritesheet(this.type1.key, this.type1.asset, 40, 40, 6);
 		this.game.load.spritesheet(this.type2.key, this.type2.asset, 40, 40, 4);
 		this.game.load.spritesheet(this.type3.key, this.type3.asset, 40, 40, 4);
 	},

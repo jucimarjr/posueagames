@@ -5,7 +5,7 @@ Phase1.Player = {
 		this.game.load.spritesheet('player', this.itemPlayer, 80, 100);	
 	},
 	create : function(){
-		this.player = this.game.add.sprite(20, 1580, 'player');
+		this.player = this.game.add.sprite(100, 100, 'player');
 		this.game.physics.p2.enable(this.player);
 		this.player.body.fixedRotation = true;
         this.player.body.collideWorldBounds = true;
@@ -14,9 +14,6 @@ Phase1.Player = {
 		this.player.animations.add('jump', [8, 9, 10, 11, 12, 13, 14], 10, false);
         this.player.animations.play('run');			
 		this.game.camera.follow(this.player);
-		
-
-		
 		return this.player;	
 	}
 };

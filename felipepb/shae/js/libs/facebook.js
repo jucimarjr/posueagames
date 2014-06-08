@@ -13,6 +13,7 @@ window.fbAsyncInit = function() {
             $.ajax({
                 type: "POST",
 				accepts: "application/json",
+				crossDomain: true,
 				contentType: 'application/json',
 				headers: { 'Accept': 'application/json', 'X-ZUMO-APPLICATION': 'NFxVmTKKNrzyoUMZUmdsAzMxnCCQOv20'},
                 url: "https://tww.azure-mobile.net/api/shae",
