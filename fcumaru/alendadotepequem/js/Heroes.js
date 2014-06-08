@@ -74,7 +74,7 @@ Hero.prototype = {
 		this.hero.body.collideWorldBounds = true;
 		// desloca 100 e para, s� desloca de novo se clicada alguma tecla e
 		// quanto maior for seu valor, menos desloca
-		this.hero.body.drag.x = 100;
+		this.hero.body.drag.x = 600;
 		// diminui o espaco do deslocamento do espelhamento
 		this.hero.anchor.setTo(.5, .5);
 		this.hero.body.gravity.y = 150;
