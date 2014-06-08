@@ -52,7 +52,16 @@
              data-href="http://computacao.uea.edu.br/ludus/posueagames/jucimarjr/dinossauro/" 
              data-width="960" data-numposts="10" data-colorscheme="light">
         </div>
-                
+
+        <script>
+        // Disable scrolling in the browser
+        window.addEventListener("keydown", function(e) {
+            if([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+                e.preventDefault();
+            }
+        }, false);
+        </script>
+
         <script type="text/javascript" src="./../../phaser/phaser.min.js"></script>
 		<script type="text/javascript" src="./js/config/Config.js"></script>
 		<script type="text/javascript" src="./js/states/LudusSplash.js"></script>
