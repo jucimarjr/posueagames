@@ -1,11 +1,4 @@
 
-// Foi realizada mudan�a para utilizar o conceito de estados do phaser
-// Todos os estados s�o declarados no Main.js
-// Utilize sempre 'this.' para declarar as vari�veis globais do estado
-// Utilize sempre 'this.' para executar os metodos do estado
-
-
-
 State.Fase1= function (game) {
 	"use strict";
 	this.game = game;
@@ -16,12 +9,9 @@ State.Fase1= function (game) {
 	this.layer;
 	this.jacareLeft;
 	this.jacareRight;
-	
 	this.jacare1;
 	this.jacare2;
-
 	this.speed = 70;
-
 };
 
 var folha;
@@ -44,6 +34,7 @@ State.Fase1.prototype = {
 	   var jacare1CG = game.physics.p2.createCollisionGroup();
 	   var jacare2CG = game.physics.p2.createCollisionGroup();	
 	   */
+//		game.world.setBounds(0, 0, 2880, 1200);
 		
 		var bg = game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('bg').height, 'bg');
 

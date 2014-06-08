@@ -15,7 +15,7 @@ State.Credits.prototype = {
 		background.events.onInputDown.add(this.onClick, this);
 		var sprite = game.add.sprite(Config.credits.text.x, Config.credits.text.y, 'credits-text');
 		sprite.anchor.setTo(Config.credits.text.anchor.x, Config.credits.text.anchor.y);
-		sprite.scale.setTo( Config.credits.text.scale.x,Config.credits.text.scale.y );
+//		sprite.scale.setTo( Config.credits.text.scale.x,Config.credits.text.scale.y );
 	},
 	update: function () {
 		"use strict";
