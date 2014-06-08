@@ -31,14 +31,11 @@ State.Fase1.prototype = {
 
 	preload: function () {
 		game.load.tilemap('mapa','assets/1aFase/mapaFase1a.json',null,Phaser.Tilemap.TILED_JSON);
-		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height); // 200x160 eh o tamanho do frame da sprite
+		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height);
 		game.load.spritesheet('folhas', "assets/1aFase/folhas_120-40.png",40,40);
 		game.load.spritesheet('jacare', "assets/1aFase/jacare_spritesheet_240-80.png",40,40);
-		//game.load.image('star',  Config.game.star.dir);
-		//game.load.image('block', Config.game.tileset.dir);
-		game.load.image('bg',"assets/1aFase/bg2_600-1920.png");
+		game.load.image('bg',Config.game.fase1.background);
 		game.load.image('tilesetPlataforma','assets/1aFase/assets_1.png');
-		
 	},
 
 	create: function () {

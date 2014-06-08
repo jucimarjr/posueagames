@@ -162,6 +162,10 @@ Config.game = {
 		jacare:{
 			
 		},
+		fase1: {
+			background: "assets/images/bg1_2880-1200.png",
+			
+		},
 		fase3: {
 			background: "assets/bg3_600-1920.png",
 			nuvens: { 
