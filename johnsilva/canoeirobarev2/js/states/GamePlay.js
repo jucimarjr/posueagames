@@ -17,7 +17,7 @@ State.GamePlay.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;
-		this.level = 4;
+		this.level = 1;
 
 		this.player = game.add.sprite(10,1000 ,'playerS');
 		this.player.anchor.setTo(.5, 1);		
@@ -311,6 +311,7 @@ State.GamePlay.prototype = {
 		emitter.makeParticles('caba');
 		emitter.gravity = 0;
 		emitter.start(false, 1800, 15);
+		//emitter.onComplete()
 		this.die(player, enemie)
 	},
 
