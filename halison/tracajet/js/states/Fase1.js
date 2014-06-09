@@ -182,13 +182,15 @@ State.Fase1.prototype = {
     	this.jacare1.frame = 0;
     	this.jacare2.animations.stop();
     	this.jacare2.frame = 0;
-		   var dieText = this.game.add.text(game.camera.width / 2, game.camera.height / 2, "", {
-		        font: "48px Arial",
-		        fill: "#ff0044",
-		        align: "left"
-		    });
-		    dieText.fixedToCamera = false;
-		    dieText.setText("GAME OVER");
+		var moduloPositionX = Math.abs(game.world.position.x);
+		var moduloPositionY = Math.abs(game.world.position.y); 
+	    var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
+			font: "48px Arial",
+			fill: "#ff0044",
+			align: "left"
+		});
+		//dieText.fixedToCamera = false;
+		dieText.setText("GAME OVER");
 	},
 	
 	followTracajet: function(jacare){

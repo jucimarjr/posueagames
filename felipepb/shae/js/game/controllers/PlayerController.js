@@ -48,7 +48,7 @@ Game.PlayerController.prototype = {
         this.sprite.frameName = 'shae_idle_1_100-100.png';
         this.sprite.anchor.setTo(0.73, 0.5);
         this.sprite.x = 140;
-        this.sprite.y = 70;
+        this.sprite.y = 64;
         this.sprite.scale.x = 0;
         this.sprite.scale.y = 0;
         
@@ -157,7 +157,7 @@ Game.PlayerController.prototype = {
     },
 
     render: function (game) {
-        if (PhysicsConsts.debugDraw)
+        if (PhysicsConsts.debugDraw && this.sprite && this.sprite.body)
             game.debug.body(this.sprite);
     },
 

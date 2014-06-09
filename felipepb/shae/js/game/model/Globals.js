@@ -1,5 +1,5 @@
 var PhysicsConsts = {
-	debugDraw: false,
+	debugDraw: true,
 	pixelsToUnit: 80,
 	gravity: 9.8 * 80,
 	tileBias: 32
