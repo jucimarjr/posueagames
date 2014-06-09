@@ -11,7 +11,9 @@ State.Fase1= function (game) {
 	this.jacareRight;
 	this.jacare1;
 	this.jacare2;
-	this.speed = 70;
+	this.jacare3;
+	this.jacare4;
+	this.speed = 90;
 };
 
 var folha;
@@ -100,6 +102,22 @@ State.Fase1.prototype = {
 		game.physics.enable(this.jacare2, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 		this.jacare2.body.collideWorldBounds = true;
 		
+		//cria os jacarés
+	    this.jacare3 = game.add.sprite(500, 1200, 'jacare');
+		this.jacare3.animations.add('left',[0,1,2,3,4,5],10,true);
+		this.jacare3.animations.add('right',[6,7,8,9,10,11],10,true);
+		game.physics.enable(this.jacare3, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
+		this.jacare3.body.collideWorldBounds = true;
+		
+		//cria os jacarés
+	    this.jacare4 = game.add.sprite(750, 1800, 'jacare');
+		this.jacare4.animations.add('left',[0,1,2,3,4,5],10,true);
+		this.jacare4.animations.add('right',[6,7,8,9,10,11],10,true);
+		game.physics.enable(this.jacare4, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
+		this.jacare4.body.collideWorldBounds = true;
+		
+		
+		
 	},
 
 
@@ -107,8 +125,13 @@ State.Fase1.prototype = {
 	    game.physics.arcade.collide(this.tracajet, this.layer);
 	    game.physics.arcade.collide(this.jacare2, this.layer);
 	    game.physics.arcade.collide(this.jacare1, this.layer);
+	    game.physics.arcade.collide(this.jacare3, this.layer);
+	    game.physics.arcade.collide(this.jacare4, this.layer);
 	    game.physics.arcade.overlap(this.tracajet, this.star, this.tracajetEatStar,null,this);
-	    game.physics.arcade.overlap(this.tracajet, [this.jacare1, this.jacare2], this.gameOver,null,this);
+	    game.physics.arcade.overlap(this.tracajet, this.jacare1, this.gameOver,null,this);
+	    game.physics.arcade.overlap(this.tracajet, this.jacare2, this.gameOver,null,this);
+	    game.physics.arcade.overlap(this.tracajet, this.jacare3, this.gameOver,null,this);
+	    game.physics.arcade.overlap(this.tracajet, this.jacare4, this.gameOver,null,this);
 	    this.tracajet.body.velocity.x = 0;
 	    
 	    if ( this.cursors.left.isDown) { // vai para esquerda
@@ -123,10 +146,12 @@ State.Fase1.prototype = {
 	    }
 	    else if (this.cursors.up.isDown ) { // vai para cima
 	    	this.tracajet.body.velocity.y = -this.speed;
+	    	this.tracajet.animations.play('walk');
 	//		tracajet.animations.play('jump');
 	        }
 	    else if (this.cursors.down.isDown ) { // vai para cima
 	    	this.tracajet.body.velocity.y = this.speed;
+	    	this.tracajet.animations.play('walk');
 	//		tracajet.animations.play('jump');
 	    }
 	    else{
@@ -139,9 +164,12 @@ State.Fase1.prototype = {
 	    	this.jacare2.frame = 0;*/
 	    }
 	    
-	    if(this.tracajet.body.y>=300){
-	    	this.followTracajet();
-	    }
+	   // if(this.tracajet.body.y>=300){
+	    	this.followTracajet(this.jacare1);
+	    	this.followTracajet(this.jacare2);
+	    	this.followTracajet(this.jacare3);
+	    	this.followTracajet(this.jacare4);
+	  //  }
 	    
 	},
 	
@@ -165,33 +193,33 @@ State.Fase1.prototype = {
 	},
 	
 	followTracajet: function(jacare){
-		  if (this.tracajet.body.x < this.jacare1.body.x)
+		  if (this.tracajet.body.x < jacare.body.x)
 		  {
 			//this.jacare1.animations.stop();    
-			this.jacare1.animations.play('left');  
-		    this.jacare1.body.velocity.x = 50 * -1;
+			jacare.animations.play('left');  
+		    jacare.body.velocity.x = 50 * -1;
 		    
-		    this.jacare2.animations.play('left');  
-		    this.jacare2.body.velocity.x = 50 * -1;
+		    /*this.jacare2.animations.play('left');  
+		    this.jacare2.body.velocity.x = 50 * -1;*/
 		  }
 		  else
 		  {
 			 // this.jacare1.animations.stop();    
-			  this.jacare1.animations.play('right');  
-			  this.jacare1.body.velocity.x = 50;
+			  jacare.animations.play('right');  
+			  jacare.body.velocity.x = 50;
 			  
-			  this.jacare2.animations.play('right');  
-			  this.jacare2.body.velocity.x = 50;
+			  /*this.jacare2.animations.play('right');  
+			  this.jacare2.body.velocity.x = 50;*/
 		  }
-		    if (this.tracajet.body.y < this.jacare1.body.y)
+		    if (this.tracajet.body.y < jacare.body.y)
 		  {
-		    	this.jacare1.body.velocity.y = 45 * -1;
-		    	this.jacare2.body.velocity.y = 45 * -1;
+		    	jacare.body.velocity.y = 50 * -1;
+		    	//this.jacare2.body.velocity.y = 45 * -1;
 		  }
 		  else
 		  {
-			  this.jacare1.body.velocity.y = 50;
-			  this.jacare2.body.velocity.y = 50;
+			  jacare.body.velocity.y = 50;
+			  //this.jacare2.body.velocity.y = 50;
 		  }
 	}
 
