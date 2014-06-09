@@ -213,6 +213,8 @@ Config.enemy = {
 			y: .5
 		},
 		walk: {
+			x: 50,
+			y: 0,
 			gid: 72,
 			frame: 0
 		},
@@ -233,10 +235,13 @@ Config.enemy = {
 			y: .5
 		},
 		walk: {
+			x: 50,
+			y: 0,
 			gid: 80,
 			frame: 0
 		},
 		jump: {
+			x: 0,
 			y: 300,
 			gid: 83,
 			frame: 3
@@ -253,10 +258,13 @@ Config.enemy = {
 			y: .5
 		},
 		walk: {
+			x: 50,
+			y: 0,
 			gid: 88,
 			frame: 0
 		},
 		jump: {
+			x: 0,
 			y:400,
 			gid: 91,
 			frame: 3
@@ -273,10 +281,13 @@ Config.enemy = {
 			y: .5
 		},
 		walk: {
+			x: 50,
+			y: 0,
 			gid: 96,
 			frame: 0
 		},
 		jump: {
+			x: 0,
 			y: 450,
 			gid: 99,
 			frame: 3

@@ -242,36 +242,36 @@
   <object gid="66" x="9400" y="440"/>
  </objectgroup>
  <objectgroup name="Cruella" width="320" height="20">
-  <object gid="67" x="1737" y="476"/>
-  <object gid="68" x="2531" y="557"/>
-  <object gid="68" x="5069" y="515"/>
-  <object gid="67" x="6325" y="596"/>
+  <object gid="67" x="1730" y="477"/>
+  <object gid="68" x="2523" y="557"/>
+  <object gid="68" x="5085" y="512"/>
+  <object gid="67" x="6350" y="595"/>
  </objectgroup>
  <objectgroup name="Freddy" width="320" height="20">
-  <object gid="72" x="3657" y="718"/>
-  <object gid="75" x="5603" y="677"/>
-  <object gid="72" x="7177" y="478"/>
-  <object gid="75" x="9008" y="596"/>
+  <object gid="72" x="3683" y="718"/>
+  <object gid="75" x="5662" y="674"/>
+  <object gid="72" x="7214" y="476"/>
+  <object gid="75" x="9043" y="594"/>
  </objectgroup>
  <objectgroup name="Hannibal" width="320" height="20">
-  <object gid="80" x="1504" y="716"/>
-  <object gid="83" x="2855" y="559"/>
-  <object gid="80" x="4865" y="677"/>
-  <object gid="83" x="9563" y="517"/>
+  <object gid="80" x="1529" y="714"/>
+  <object gid="83" x="2884" y="555"/>
+  <object gid="80" x="4895" y="672"/>
+  <object gid="83" x="9603" y="518"/>
  </objectgroup>
  <objectgroup name="Jason" width="320" height="20">
-  <object gid="88" x="2145" y="317"/>
-  <object gid="91" x="3801" y="597"/>
-  <object gid="88" x="8705" y="636"/>
-  <object gid="91" x="10640" y="398"/>
+  <object gid="88" x="2176" y="317"/>
+  <object gid="91" x="3826" y="594"/>
+  <object gid="88" x="8722" y="636"/>
+  <object gid="91" x="10664" y="395"/>
  </objectgroup>
  <objectgroup name="Joker" width="320" height="20">
-  <object gid="99" x="3242" y="716"/>
-  <object gid="96" x="4362" y="557"/>
-  <object gid="96" x="10540" y="717"/>
-  <object gid="99" x="11483" y="556"/>
+  <object gid="99" x="3263" y="717"/>
+  <object gid="96" x="4455" y="552"/>
+  <object gid="96" x="10568" y="718"/>
+  <object gid="99" x="11581" y="553"/>
  </objectgroup>
  <objectgroup name="Vader" width="320" height="20">
-  <object gid="104" x="12641" y="673"/>
+  <object gid="104" x="12725" y="674"/>
  </objectgroup>
 </map>

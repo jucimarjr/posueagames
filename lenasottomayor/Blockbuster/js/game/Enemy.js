@@ -11,8 +11,10 @@ Enemy = function(game, layer1, tilemap){
 	this.jasons = null;
 	this.jokers = null;
 	this.vaders = null;
-	this.cruellaWalk = 0;
-	this.cruellaIsLeft = true;
+	this.cruellaWalk1 = 0;
+	this.cruellaIsLeft1 = true;
+	this.cruellaWalk2 = 0;
+	this.cruellaIsLeft2 = true;
 };
 
 Enemy.prototype = {
@@ -27,13 +29,13 @@ Enemy.prototype = {
 
 					switch (this.cruellas.getIndex(cruella)) {
 					case 0:
-						cruella.animations.add('walk', [0,1,2,3], 4, true);
+						cruella.animations.add('walk', [0,1,2,3], 3, true);
 						cruella.animations.add('dead',[4],1,false);
 						cruella.scale.x = -1;
 						cruella.frame = Config.enemy.cruella.walk.frame;
 						break;
 					case 1:
-						cruella.animations.add('walk', [0,1,2,3], 4, true);
+						cruella.animations.add('walk', [0,1,2,3], 3, true);
 						cruella.animations.add('dead',[4],1,false);
 						cruella.scale.x = -1;
 						cruella.frame = Config.enemy.cruella.walk.frame;
@@ -73,12 +75,14 @@ Enemy.prototype = {
 					case 0:
 						hannibal.animations.add('walk', [0,1,2,3,4,5,6], 8, true);
 						hannibal.animations.add('dead',[7],1,false);
-						hannibal.frame = Config.enemy.hannibal.jump.frame;;
+						hannibal.scale.x = -1;
+						hannibal.frame = Config.enemy.hannibal.walk.frame;;
 						break;
 					case 1:
 						hannibal.animations.add('walk', [0,1,2,3,4,5,6], 8, true);
 						hannibal.animations.add('dead',[7],1,false);
-						hannibal.frame = Config.enemy.hannibal.jump.frame;;
+						hannibal.scale.x = -1;
+						hannibal.frame = Config.enemy.hannibal.walk.frame;;
 						break;
 					case 2:
 						hannibal.animations.add('jump', [3], 1, true);
@@ -115,12 +119,14 @@ Enemy.prototype = {
 					case 0:
 						freddy.animations.add('walk', [0,1,2,3,4,5,6], 8, true);
 						freddy.animations.add('dead',[7],1,false);
-						freddy.frame = Config.enemy.freddy.jump.frame;
+						freddy.scale.x = -1;
+						freddy.frame = Config.enemy.freddy.walk.frame;
 						break;
 					case 1:
 						freddy.animations.add('walk', [0,1,2,3,4,5,6], 8, true);
 						freddy.animations.add('dead',[7],1,false);
-						freddy.frame = Config.enemy.freddy.jump.frame;
+						freddy.scale.x = -1;
+						freddy.frame = Config.enemy.freddy.walk.frame;
 						break;
 					case 2:
 						freddy.animations.add('jump', [3], 1, true);
@@ -158,12 +164,14 @@ Enemy.prototype = {
 					case 0:
 						jason.animations.add('walk', [0,1,2,3,4,5,6], 8, true);
 						jason.animations.add('dead',[7],1,false);
-						jason.frame = Config.enemy.jason.jump.frame;
+						jason.scale.x = -1;
+						jason.frame = Config.enemy.jason.walk.frame;
 						break;
 					case 1:
 						jason.animations.add('walk', [0,1,2,3,4,5,6], 8, true);
 						jason.animations.add('dead',[7],1,false);
-						jason.frame = Config.enemy.jason.jump.frame;
+						jason.scale.x = -1;
+						jason.frame = Config.enemy.jason.walk.frame;
 						break;
 					case 2:
 						jason.animations.add('jump', [3], 1, true);
@@ -200,12 +208,14 @@ Enemy.prototype = {
 					case 0:
 						joker.animations.add('walk', [0,1,2,3,4,5,6], 8, true);
 						joker.animations.add('dead',[7],1,false);
-						joker.frame = Config.enemy.joker.jump.frame;
+						joker.scale.x = -1;
+						joker.frame = Config.enemy.joker.walk.frame;
 						break;
 					case 1:
 						joker.animations.add('walk', [0,1,2,3,4,5,6], 8, true);
 						joker.animations.add('dead',[7],1,false);
-						joker.frame = Config.enemy.joker.jump.frame;
+						joker.scale.x = -1;
+						joker.frame = Config.enemy.joker.walk.frame;
 						break;
 					case 2:
 						joker.animations.add('jump', [3], 1, true);
@@ -237,11 +247,15 @@ Enemy.prototype = {
 		this.tilemap.map.createFromObjects(Config.enemy.vader.name, Config.enemy.vader.gid, 'vader', Config.enemy.vader.frame,true,false,this.vaders);
 		this.vaders.forEach(
 			function (vader){ 
-								vader.scale.x = -1;
-												this.game.physics.enable(vader);
-												vader.body.collideWorldBounds = true;
-												vader.anchor.setTo(Config.enemy.vader.anchor.x, Config.enemy.vader.anchor.y);
-											}, this
+				vader.animations.add('walk', [0,1,2,3,4,5,6,7], 5, true);
+				vader.animations.add('dead',[8,9],2,true);
+				vader.scale.x = -1;
+				vader.frame = Config.enemy.vader.frame;
+				this.game.physics.enable(vader);
+				vader.body.collideWorldBounds = true;
+				vader.anchor.setTo(Config.enemy.vader.anchor.x, Config.enemy.vader.anchor.y);
+			},
+			this
 		);
 
 	
@@ -257,19 +271,19 @@ Enemy.prototype = {
 					case 0:
 						cruella.body.velocity.y = Config.enemy.cruella.walk.y;
 						
-						if(this.cruellaIsLeft) {
+						if(this.cruellaIsLeft1) {
 							cruella.scale.x = -1;
 							cruella.body.velocity.x = -Config.enemy.cruella.walk.x;
-							this.cruellaWalk += Config.enemy.cruella.walk.x; 
+							this.cruellaWalk1 += Config.enemy.cruella.walk.x; 
 						} else {
 							cruella.scale.x = 1;
 							cruella.body.velocity.x = Config.enemy.cruella.walk.x;
-							this.cruellaWalk += Config.enemy.cruella.walk.x;
+							this.cruellaWalk1 += Config.enemy.cruella.walk.x;
 						} 
 						
-						if (this.cruellaWalk >= 6000) {
-							this.cruellaWalk = 0;
-							this.cruellaIsLeft = !this.cruellaIsLeft;
+						if (this.cruellaWalk1 >= 2500) {
+							this.cruellaWalk1 = 0;
+							this.cruellaIsLeft1 = !this.cruellaIsLeft1;
 						}
 						
 				    	cruella.animations.play('walk');
@@ -277,19 +291,19 @@ Enemy.prototype = {
 					case 1:
 						cruella.body.velocity.y = Config.enemy.cruella.walk.y;
 						
-						if(this.cruellaIsLeft) {
+						if(this.cruellaIsLeft2) {
 							cruella.scale.x = -1;
 							cruella.body.velocity.x = -Config.enemy.cruella.walk.x;
-							this.cruellaWalk += Config.enemy.cruella.walk.x; 
+							this.cruellaWalk2 += Config.enemy.cruella.walk.x; 
 						} else {
 							cruella.scale.x = 1;
 							cruella.body.velocity.x = Config.enemy.cruella.walk.x;
-							this.cruellaWalk += Config.enemy.cruella.walk.x;
+							this.cruellaWalk2 += Config.enemy.cruella.walk.x;
 						} 
 						
-						if (this.cruellaWalk >= 6000) {
-							this.cruellaWalk = 0;
-							this.cruellaIsLeft = !this.cruellaIsLeft;
+						if (this.cruellaWalk2 >= 2000) {
+							this.cruellaWalk2 = 0;
+							this.cruellaIsLeft2 = !this.cruellaIsLeft2;
 						}
 						
 				    	cruella.animations.play('walk');
