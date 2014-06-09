@@ -14,6 +14,8 @@ State.Fase1= function (game) {
 	this.jacare3;
 	this.jacare4;
 	this.speed = 90;
+	this.MIN_DISTANCE = 10;
+	this.MAX_DISTANCE = 300;
 };
 
 var folha;
@@ -159,9 +161,6 @@ State.Fase1.prototype = {
 	    	this.tracajet.frame = 0;
 	    	this.jacare1.animations.stop();
 	    	this.jacare1.frame = 5;
-	    	
-	    	/*this.jacare2.animations.stop();
-	    	this.jacare2.frame = 0;*/
 	    }
 	    
 	   // if(this.tracajet.body.y>=300){
@@ -193,35 +192,39 @@ State.Fase1.prototype = {
 	},
 	
 	followTracajet: function(jacare){
-		  if (this.tracajet.body.x < jacare.body.x)
-		  {
-			//this.jacare1.animations.stop();    
-			jacare.animations.play('left');  
-		    jacare.body.velocity.x = 50 * -1;
-		    
-		    /*this.jacare2.animations.play('left');  
-		    this.jacare2.body.velocity.x = 50 * -1;*/
-		  }
-		  else
-		  {
-			 // this.jacare1.animations.stop();    
-			  jacare.animations.play('right');  
-			  jacare.body.velocity.x = 50;
-			  
-			  /*this.jacare2.animations.play('right');  
-			  this.jacare2.body.velocity.x = 50;*/
-		  }
-		    if (this.tracajet.body.y < jacare.body.y)
-		  {
-		    	jacare.body.velocity.y = 50 * -1;
-		    	//this.jacare2.body.velocity.y = 45 * -1;
-		  }
-		  else
-		  {
-			  jacare.body.velocity.y = 50;
-			  //this.jacare2.body.velocity.y = 50;
-		  }
-	}
+		
+		var distance = this.game.math.distance(jacare.x, jacare.y, this.tracajet.x, this.tracajet.y);
+
+	    // If the distance > MIN_DISTANCE then move
+	    if (distance > this.MIN_DISTANCE && distance < this.MAX_DISTANCE) {
+		
+		
+			  if (this.tracajet.body.x < jacare.body.x)
+			  {
+				//this.jacare1.animations.stop();    
+				jacare.animations.play('left');  
+			    jacare.body.velocity.x = 50 * -1;
+			    
+			  }
+			  else
+			  {
+				 // this.jacare1.animations.stop();    
+				  jacare.animations.play('right');  
+				  jacare.body.velocity.x = 50;
+				  
+			  }
+			    if (this.tracajet.body.y < jacare.body.y)
+			  {
+			    	jacare.body.velocity.y = 50 * -1;
+			  }
+			  else
+			  {
+				  jacare.body.velocity.y = 50;
+			  }
+	    }else{
+	    	jacare.animations.stop();
+	    }
+	}	    
 
 };
 
