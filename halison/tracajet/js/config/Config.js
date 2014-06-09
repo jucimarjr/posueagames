@@ -167,11 +167,12 @@ Config.game = {
 			
 		},
 		fase3: {
-			background: "assets/bg3_600-1920.png",
+			background: "assets/images/bg3_tmp_2880-1200.png",
 			nuvens: { 
-				dir: "assets/nuvens_120-40.png",
+				dir: "assets/sprites/nuvens_120-40-4.png",
 				width: 120,
 				height: 40
-			}
+			},
+			frutas: "assets/sprites/frutas_24-30-5.png"
 		}
 };
