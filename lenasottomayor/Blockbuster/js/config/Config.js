@@ -235,7 +235,7 @@ Config.enemy = {
 			y: .5
 		},
 		walk: {
-			x: 50,
+			x: 150,
 			y: 0,
 			gid: 80,
 			frame: 0

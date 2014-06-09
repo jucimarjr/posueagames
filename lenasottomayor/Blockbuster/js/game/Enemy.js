@@ -15,6 +15,10 @@ Enemy = function(game, layer1, tilemap){
 	this.cruellaIsLeft1 = true;
 	this.cruellaWalk2 = 0;
 	this.cruellaIsLeft2 = true;
+	this.hannibalWalk1 = 0;
+	this.hannibalIsLeft1 = true;
+	this.hannibalWalk2 = 0;
+	this.hannibalIsLeft2 = true;
 };
 
 Enemy.prototype = {
@@ -73,13 +77,13 @@ Enemy.prototype = {
 			function(hannibal){
 				switch (this.hannibals.getIndex(hannibal)) {
 					case 0:
-						hannibal.animations.add('walk', [0,1,2,3,4,5,6], 8, true);
+						hannibal.animations.add('walk', [0,1,2,3,4,5,6], 5, true);
 						hannibal.animations.add('dead',[7],1,false);
 						hannibal.scale.x = -1;
 						hannibal.frame = Config.enemy.hannibal.walk.frame;;
 						break;
 					case 1:
-						hannibal.animations.add('walk', [0,1,2,3,4,5,6], 8, true);
+						hannibal.animations.add('walk', [0,1,2,3,4,5,6], 5, true);
 						hannibal.animations.add('dead',[7],1,false);
 						hannibal.scale.x = -1;
 						hannibal.frame = Config.enemy.hannibal.walk.frame;;
@@ -348,8 +352,25 @@ Enemy.prototype = {
 
 				switch (this.hannibals.getIndex(hannibal)) {
 					case 0:
-						break;
+						hannibal.body.velocity.y = Config.enemy.hannibal.walk.y;
 						
+						if(this.hannibalIsLeft1) {
+							hannibal.scale.x = -1;
+							hannibal.body.velocity.x = -Config.enemy.hannibal.walk.x;
+							this.hannibalWalk1 += Config.enemy.hannibal.walk.x; 
+						} else {
+							hannibal.scale.x = 1;
+							hannibal.body.velocity.x = Config.enemy.hannibal.walk.x;
+							this.hannibalWalk1 += Config.enemy.hannibal.walk.x;
+						} 
+						
+						if (this.hannibalWalk1 >= 10000) {
+							this.hannibalWalk1 = 0;
+							this.hannibalIsLeft1 = !this.hannibalIsLeft1;
+						}
+						
+				    	hannibal.animations.play('walk');
+						break;
 					case 1:
 						break;
 						
