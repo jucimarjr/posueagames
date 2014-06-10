@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
+  <image source="../tile_40-40-17.png" width="680" height="40"/>
+ </tileset>
+ <tileset firstgid="18" name="cipo" tilewidth="10" tileheight="80">
+  <image source="../level/cipo_10-80.png" width="10" height="80"/>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwzENAAAMA6Ae9a+5MrYDEhIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC7VVwfX7wGR
+  </data>
+ </layer>
+ <objectgroup name="cipo" width="100" height="100">
+  <object gid="18" x="240" y="3920"/>
+  <object gid="18" x="240" y="3840"/>
+  <object gid="18" x="240" y="3760"/>
+  <object gid="18" x="240" y="3680"/>
+  <object gid="18" x="240" y="3600"/>
+  <object gid="18" x="240" y="3520"/>
+  <object gid="18" x="240" y="3440"/>
+ </objectgroup>
+</map>
