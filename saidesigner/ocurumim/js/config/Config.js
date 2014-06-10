@@ -105,3 +105,57 @@ Config.credits = {
 	x: 0,
 	y: 0
 };
+
+// Game
+
+Config.game = {
+
+	gravity: 800
+
+}
+
+
+// Player
+
+Config.player = {
+
+	x: 60,
+	y: 10,
+
+	sprite: {
+		src: 'assets/spritesheets/curumim.png', 
+		width: 60,
+		height: 75
+	},
+
+	keys: {
+		left: Phaser.Keyboard.LEFT, 
+		right: Phaser.Keyboard.RIGHT,
+		jump: Phaser.Keyboard.UP,
+		run: Phaser.Keyboard.CONTROL,
+		fire: Phaser.Keyboard.SPACEBAR 
+	},
+
+	velocity: {
+		walk: 200,
+		walk_fps: 15,
+		run: 400,
+		run_fps: 20
+	},
+
+	jump: {
+		max: 2,
+		walking_force: -400,
+		running_force: -500
+	}
+};
+
+// Bullet
+
+Config.bullet = {
+	src: 'assets/spritesheets/bullet.png',
+	number: 5,
+	velocity: 250,
+	acceleration: 50,
+	interval: 200
+};
