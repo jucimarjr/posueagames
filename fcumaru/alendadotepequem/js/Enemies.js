@@ -107,7 +107,8 @@ Enemies.prototype = {
 	create : function() {
 		"use strict";
 
-		this.timer = this.game.time.events.loop(1500, this.pop, this);
+		// desligando inimigos, temporariamente
+		//this.timer = this.game.time.events.loop(1500, this.pop, this);
 	},
 	update : function(layer) {
 		"use strict";

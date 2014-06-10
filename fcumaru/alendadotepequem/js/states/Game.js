@@ -71,6 +71,13 @@ State.Game.prototype = {
 			this.game.state.start('GameOver');
 
 		}
+	},
+
+	render : function(){
+		// debug settings
+		this.game.debug.spriteBounds(this.heroes.getCurrent());
+		game.debug.spriteInfo(this.heroes.getCurrent(), 32, 32);
+		game.debug.inputInfo(400, 32);
 	}
 };
 
