@@ -106,6 +106,22 @@ Config.credits = {
 	y: 0
 };
 
+Config.player = {
+	velocity:{
+		run: 150,
+		jump: 550,
+		climbing: 100,
+		down: 4
+	}
+};
+
+Config.climbing = {
+	frames: {
+		min: 20,
+		max: 23
+	}
+};
+
 Config.levelConfig = {
 	player:{
 		posX: 0,
@@ -138,10 +154,13 @@ Config.levelConfig = {
 		x: 0,
 		y: 0
 	},
+	cipo:{
+		id:0
+	}
 };
 
 Config.update = {
-	updateLevel: function(x,y,branchesE,bushId,watersId,beesId,tubesId,thornsId,coinId,coinImage,ccpId){
+	updateLevel: function(x,y,branchesE,bushId,watersId,beesId,tubesId,thornsId,coinId,coinImage,ccpId,cipoId){
 		Config.levelConfig.player.posX = x;
 		Config.levelConfig.player.posY = y;
 		Config.levelConfig.branches.exists = branchesE;
@@ -153,6 +172,7 @@ Config.update = {
 		Config.levelConfig.coin.id = coinId;		
 		Config.levelConfig.coin.image = coinImage;
 		Config.levelConfig.checkPoint.id = ccpId;
+		Config.levelConfig.cipo.id = cipoId;
 	}
 }
 
@@ -160,15 +180,17 @@ Config.level = {
 	getLevel: function(level){
 		//x,y,branches-exists,bush-id,waters-id,bees-id,tubes-id,thorns-id,coin-id,coin-image,checkPoint-Id
 		if(level == 1)
-			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 18, 19, 'coin', 0);
+			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 18, 19, 'coin', 0,0);
 		else if(level == 2)
-		    Config.update.updateLevel(75, 650, true, 13, 0, 18, 0, 22, 23, 'coinIara', 31);
+		    Config.update.updateLevel(75, 650, true, 13, 0, 18, 0, 22, 23, 'coinIara', 31,0);
 		else if(level == 3)
-		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coin', 33);
+		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coin', 33,0);
 		else if (level == 4)
-		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara', 33);
+		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara', 33,0);
 		else if (level == 5)
-		    Config.update.updateLevel(75, 2050, true, 13, 18, 19, 23, 24, 25, 'coin', 33);
+		    Config.update.updateLevel(75, 2050, true, 13, 18, 19, 23, 24, 25, 'coin', 33,0);
+		else if (level == 9)
+		    Config.update.updateLevel(2000, 2000, false, 0, 0, 0, 0, 0, 0, 'coin', 0, 18);
 		return Config.levelConfig;
 	}
 };
