@@ -30,13 +30,12 @@ State.GamePlay.prototype = {
 		//player.animations.add('walk',[1,2,1,3],12,true);
 		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13,14],20,true);
 		this.player.animations.add('stoped',[0,1],2,true);
-		this.player.animations.add('climbing',[20,21,22,23],8,false);		
+		this.player.animations.add('climbing',[20,21,22,23],5,true);		
 		this.player.animations.add('dead',[24,25,26],10,false);
 		/*deadAnimation.onComplete.add(function() {
 	    								this.loadLevel(this.level);
 									}, this);	*/
-		this.player.animations.add('jump',[15,16,17,18,19],4,false);
-
+		jumpAnim = this.player.animations.add('jump',[15,16,17,18,19],9,false);
 		this.game.physics.enable(this.player);
 		this.player.body.collideWorldBounds = true;
 		this.game.physics.enable(this.player);
@@ -129,20 +128,21 @@ State.GamePlay.prototype = {
 			this.player.animations.play('stoped');
 		}
 		if(this.player.body.velocity.y !== 0 && !onCipo){
-			this.player.animations.play('jump');
+			//this.player.animations.play('jump');
+			this.player.frame = 19;
 		}
 		if ( this.isToJumping() && (!jumping) ){
 		/*if (this.jump && this.player.body.onFloor()){	*/
 			jumping = true;
 			this.player.animations.play('jump');
 			this.player.body.velocity.y = -Config.player.velocity.jump;
-		}
-		if(onCipo){
+		}else if(onCipo){
 			if(cursors.up.isDown){
 				this.climb();
-			}
-			if(cursors.down.isDown){
+			}else if(cursors.down.isDown){
 				this.player.body.velocity.y = Config.player.velocity.climbing;
+			}else{
+				this.player.frame = Config.climbing.frames.max;
 			}
 		}
 		if(!cursors.up.isDown){
@@ -363,7 +363,7 @@ State.GamePlay.prototype = {
     runCipo : function(player, cipo) {
     	onCipo = true;
     	player.body.velocity.y = Config.player.velocity.down;
-    	player.frame = Config.climbing.frames.min;
+    	//player.frame = Config.climbing.frames.min;
     },
 
     climb : function() {
