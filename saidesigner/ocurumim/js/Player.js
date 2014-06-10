@@ -1,6 +1,5 @@
 var Curumim = {}
 
-
 Curumim.Player = function(game) 
 {
 	this.game = game;
@@ -141,5 +140,9 @@ Curumim.Player.prototype =
 
 	        this.nextBullet = this.game.time.now + Config.bullet.interval;
 	    } 
+	},
+
+	getCollider: function() {		
+		return this.sprite;
 	}
 };

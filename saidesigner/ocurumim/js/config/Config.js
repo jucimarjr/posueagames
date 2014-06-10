@@ -3,6 +3,7 @@
 //Global
 var Config = {
 	global: {
+		debug: false,
 		animationVelocity: 6,
 		screen: {
 			width: 960,
@@ -120,7 +121,7 @@ Config.game = {
 Config.player = {
 
 	x: 60,
-	y: 10,
+	y: 600,
 
 	sprite: {
 		src: 'assets/spritesheets/curumim.png', 
@@ -145,8 +146,8 @@ Config.player = {
 
 	jump: {
 		max: 2,
-		walking_force: -400,
-		running_force: -500
+		walking_force: -450,
+		running_force: -550
 	}
 };
 
