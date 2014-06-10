@@ -53,9 +53,12 @@ State.GamePlay.prototype = {
 		background = this.game.add.tileSprite(Config.gamePlay.x, Config.gamePlay.y, 4800, 600, 'gameplay-bg');
 		//background.fixedToCamera = true;
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
-        this.game.physics.p2.gravity.y = 800;
+        this.game.physics.p2.gravity.y = 1400
         //this.game.physics.p2.restitution = 0.8;
-		
+        this.game.physics.defaultRestitution = 0 ;
+        this.game.stage.smoothed = false;  // no antialiasing
+        this.game.world.enableBodySleeping=true;
+        		
 		this.map = this.game.add.tilemap('map');
 		this.map.addTilesetImage('barra_160-80', 'plataforma');
 		this.map.addTilesetImage('areiaSeca_40-40', 'areia');
@@ -159,11 +162,12 @@ State.GamePlay.prototype = {
 
 		if ( this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
             this.drop.moveRight(4);
-			this.drop.getSpriteObject().body.moveRight(250);
-
+			this.drop.getSpriteObject().body.moveRight(300);
+			this.drop.getSpriteObject().body.data.force[0] = 300;
 		} else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
             this.drop.moveLeft(4);
-            this.drop.getSpriteObject().body.moveLeft(250);
+            this.drop.getSpriteObject().body.moveLeft(300);
+            this.drop.getSpriteObject().body.data.force[0] = -300;            
 
 		} else {
             this.drop.stop();
@@ -171,7 +175,7 @@ State.GamePlay.prototype = {
 		// Jump
 		if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) {
 			if (this.touchingDown(this.drop.getSpriteObject().body)) { 
-				this.drop.jump(600);  
+				this.drop.getSpriteObject().body.moveUp(700);
 				this.jumpSound.play();
 			}
 		}
