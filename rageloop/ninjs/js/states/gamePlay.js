@@ -25,6 +25,7 @@
 
         create: function () {
             this.game.physics.startSystem(Phaser.Game.ARCADE);
+            this.game.time.deltaCap = 1/70;
 
             var bg = this.game.add.tileSprite(0, 0, 960, 600, 'background');
             bg.fixedToCamera = true;
