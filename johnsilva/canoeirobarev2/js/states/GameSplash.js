@@ -26,7 +26,7 @@ State.GameSplash.prototype = {
 		
 		//Game
 		this.game.load.tilemap('level1', 'assets/level/1.json', null, Phaser.Tilemap.TILED_JSON);
-		//this.game.load.tilemap('level2', 'assets/level/2.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.tilemap('level2', 'assets/level/2.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level3', 'assets/level/3.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level4', 'assets/level/4.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level5', 'assets/level/5.json', null, Phaser.Tilemap.TILED_JSON);
@@ -40,6 +40,7 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('checkP', 'assets/spritesheets/check_20-37-3.png',20,37,3);
 
 		this.game.load.image('bg1', 'assets/level/bg1_462-800.jpg');
+		this.game.load.image('bg2', 'assets/level/bg2_462-800.jpg');
 		this.game.load.image('bg3', 'assets/level/bg3_462-800.jpg');
 		this.game.load.image('bg4', 'assets/level/bg4_462-800.jpg');
 		this.game.load.image('bg5', 'assets/level/bg5_462-800.jpg');
