@@ -106,12 +106,21 @@ Config.credits = {
 	y: 0
 };
 
-Config.climbing = {
-		frames: {
-			min: 20,
-			max: 23
-		}
+Config.player = {
+	velocity:{
+		run: 150,
+		jump: 550,
+		climbing: 100,
+		down: 4
 	}
+};
+
+Config.climbing = {
+	frames: {
+		min: 20,
+		max: 23
+	}
+};
 
 Config.levelConfig = {
 	player:{
@@ -181,7 +190,7 @@ Config.level = {
 		else if (level == 5)
 		    Config.update.updateLevel(75, 2050, true, 13, 18, 19, 23, 24, 25, 'coin', 33,0);
 		else if (level == 9)
-		    Config.update.updateLevel(75, 3000, false, 0, 0, 0, 0, 0, 0, 'coin', 0, 18);
+		    Config.update.updateLevel(2000, 2000, false, 0, 0, 0, 0, 0, 0, 'coin', 0, 18);
 		return Config.levelConfig;
 	}
 };

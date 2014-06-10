@@ -105,7 +105,7 @@ State.GamePlay.prototype = {
         //if (this.back){
 			this.player.scale.x = 1; 
 			this.player.scale.x = -1;			
-			this.player.body.velocity.x = -150;
+			this.player.body.velocity.x = -Config.player.velocity.run;
 			this.crouched = false;
 			if(this.player.body.onFloor()){
 				this.player.animations.play('walk');
@@ -116,7 +116,7 @@ State.GamePlay.prototype = {
 		//else if(this.run){
 			this.player.scale.x = -1; 
 			this.player.scale.x = 1;
-			this.player.body.velocity.x = 150;
+			this.player.body.velocity.x = Config.player.velocity.run;
 			this.crouched = false;
 			if(this.player.body.onFloor()){
 				this.player.animations.play('walk');
@@ -135,10 +135,15 @@ State.GamePlay.prototype = {
 		/*if (this.jump && this.player.body.onFloor()){	*/
 			jumping = true;
 			this.player.animations.play('jump');
-			this.player.body.velocity.y = -550;
+			this.player.body.velocity.y = -Config.player.velocity.jump;
 		}
-		if(onCipo && cursors.up.isDown){
+		if(onCipo){
+			if(cursors.up.isDown){
 				this.climb();
+			}
+			if(cursors.down.isDown){
+				this.player.body.velocity.y = Config.player.velocity.climbing;
+			}
 		}
 		if(!cursors.up.isDown){
 			jumping = false;
@@ -357,13 +362,13 @@ State.GamePlay.prototype = {
 
     runCipo : function(player, cipo) {
     	onCipo = true;
-    	player.body.velocity.y = -10;
+    	player.body.velocity.y = Config.player.velocity.down;
     	player.frame = Config.climbing.frames.min;
     },
 
     climb : function() {
     	this.player.animations.play('climbing');
-    	this.player.body.velocity.y = -100;
+    	this.player.body.velocity.y = -Config.player.velocity.climbing;
     	/*frameClimbing++;
     	this.player.frame  = frameClimbing;
     	if(frameClimbing > Config.climbing.frames.max){

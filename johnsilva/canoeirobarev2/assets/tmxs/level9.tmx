@@ -8,16 +8,59 @@
  </tileset>
  <layer name="Camada de Tiles 1" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJztwzENAAAMA6Ae9a+5MrYDEhIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC7VVwfX7wGR
+   eJztzjsKgDAURcEIAb+F7n+zphSrJIUxOgOHB6+6IQAAAAAAAAAAAAAAAAAAPCdeuv8AAAAAAOjTUBEAAAAAAAAAAAAAAAAAAAAAQC/W1FjQ1mbmb8ypqaClzUzgw/bUkXFrRL2qE3r4AyY=
   </data>
  </layer>
  <objectgroup name="cipo" width="100" height="100">
-  <object gid="18" x="240" y="3920"/>
-  <object gid="18" x="240" y="3840"/>
-  <object gid="18" x="240" y="3760"/>
-  <object gid="18" x="240" y="3680"/>
-  <object gid="18" x="240" y="3600"/>
-  <object gid="18" x="240" y="3520"/>
-  <object gid="18" x="240" y="3440"/>
+  <object gid="18" x="1720" y="2000"/>
+  <object gid="18" x="1720" y="1920"/>
+  <object gid="18" x="1720" y="1840"/>
+  <object gid="18" x="1720" y="1760"/>
+  <object gid="18" x="1720" y="1680"/>
+  <object gid="18" x="1720" y="1600"/>
+  <object gid="18" x="1720" y="1520"/>
+  <object gid="18" x="1720" y="1440"/>
+  <object gid="18" x="1720" y="1360"/>
+  <object gid="18" x="1720" y="1280"/>
+  <object gid="18" x="1720" y="1200"/>
+  <object gid="18" x="1720" y="1120"/>
+  <object gid="18" x="1720" y="1040"/>
+  <object gid="18" x="1720" y="960"/>
+  <object gid="18" x="1720" y="880"/>
+  <object gid="18" x="1720" y="800"/>
+  <object gid="18" x="1720" y="720"/>
+  <object gid="18" x="1720" y="640"/>
+  <object gid="18" x="1720" y="560"/>
+  <object gid="18" x="1720" y="480"/>
+  <object gid="18" x="1720" y="400"/>
+  <object gid="18" x="1720" y="320"/>
+  <object gid="18" x="1720" y="240"/>
+  <object gid="18" x="1720" y="160"/>
+  <object gid="18" x="1720" y="80"/>
+  <object gid="18" x="2480" y="1920"/>
+  <object gid="18" x="2480" y="720"/>
+  <object gid="18" x="2480" y="80"/>
+  <object gid="18" x="2480" y="1360"/>
+  <object gid="18" x="2480" y="1600"/>
+  <object gid="18" x="2480" y="480"/>
+  <object gid="18" x="2480" y="1440"/>
+  <object gid="18" x="2480" y="1040"/>
+  <object gid="18" x="2480" y="240"/>
+  <object gid="18" x="2480" y="2000"/>
+  <object gid="18" x="2480" y="960"/>
+  <object gid="18" x="2480" y="1680"/>
+  <object gid="18" x="2480" y="640"/>
+  <object gid="18" x="2480" y="1280"/>
+  <object gid="18" x="2480" y="400"/>
+  <object gid="18" x="2480" y="1760"/>
+  <object gid="18" x="2480" y="800"/>
+  <object gid="18" x="2480" y="160"/>
+  <object gid="18" x="2480" y="1520"/>
+  <object gid="18" x="2480" y="1200"/>
+  <object gid="18" x="2480" y="1840"/>
+  <object gid="18" x="2480" y="560"/>
+  <object gid="18" x="2480" y="1120"/>
+  <object gid="18" x="2480" y="880"/>
+  <object gid="18" x="2480" y="320"/>
  </objectgroup>
 </map>
