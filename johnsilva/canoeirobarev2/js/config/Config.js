@@ -178,7 +178,7 @@ Config.update = {
 
 Config.level = {
 	getLevel: function(level){
-		//x,y,branches-exists,bush-id,waters-id,bees-id,tubes-id,thorns-id,coin-id,coin-image,checkPoint-Id
+		//x,y,branches-exists,bush-id,waters-id,bees-id,tubes-id,thorns-id,coin-id,coin-image,checkPoint-Id,cipo-id
 		if(level == 1)
 			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 18, 19, 'coin', 0,0);
 		else if(level == 2)
@@ -190,7 +190,7 @@ Config.level = {
 		else if (level == 5)
 		    Config.update.updateLevel(75, 2050, true, 13, 18, 19, 23, 24, 25, 'coin', 33,0);
 		else if (level == 9)
-		    Config.update.updateLevel(2000, 2000, false, 0, 0, 0, 0, 0, 0, 'coin', 0, 18);
+		    Config.update.updateLevel(2000, 2000, true, 0, 19, 0, 20, 0, 0, 'coin', 0, 18);
 		return Config.levelConfig;
 	}
 };
