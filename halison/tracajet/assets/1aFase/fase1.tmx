@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="72" height="30" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="assets_1" tilewidth="40" tileheight="40">
+  <image source="assets_1.png" width="320" height="280"/>
+ </tileset>
+ <layer name="TileWorld" width="72" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt0DEOgCAQRUFaS/AE4v3v6BZUJIYKlGQmedU2P5sSMEuOSuv8eAv7Obre7ldUo3vdtG2MfggAAAAAAAB/8QCBgwEJ
+  </data>
+ </layer>
+ <objectgroup name="Enemies" width="72" height="30">
+  <object gid="42" x="155" y="516"/>
+  <object gid="42" x="601" y="521"/>
+ </objectgroup>
+</map>
