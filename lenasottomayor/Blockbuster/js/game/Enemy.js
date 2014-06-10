@@ -15,10 +15,22 @@ Enemy = function(game, layer1, tilemap){
 	this.cruellaIsLeft1 = true;
 	this.cruellaWalk2 = 0;
 	this.cruellaIsLeft2 = true;
+	this.freddyWalk1 = 0;
+	this.freddyIsLeft1 = true;
+	this.freddyWalk2 = 0;
+	this.freddyIsLeft2 = true;
 	this.hannibalWalk1 = 0;
 	this.hannibalIsLeft1 = true;
 	this.hannibalWalk2 = 0;
 	this.hannibalIsLeft2 = true;
+	this.jasonWalk1 = 0;
+	this.jasonIsLeft1 = true;
+	this.jasonWalk2 = 0;
+	this.jasonIsLeft2 = true;
+	this.jokerWalk1 = 0;
+	this.jokerIsLeft1 = true;
+	this.jokerWalk2 = 0;
+	this.jokerIsLeft2 = true;
 };
 
 Enemy.prototype = {
@@ -33,13 +45,13 @@ Enemy.prototype = {
 
 					switch (this.cruellas.getIndex(cruella)) {
 					case 0:
-						cruella.animations.add('walk', [0,1,2,3], 3, true);
+						cruella.animations.add('walk', [0,1,2,3], 4, true);
 						cruella.animations.add('dead',[4],1,false);
 						cruella.scale.x = -1;
 						cruella.frame = Config.enemy.cruella.walk.frame;
 						break;
 					case 1:
-						cruella.animations.add('walk', [0,1,2,3], 3, true);
+						cruella.animations.add('walk', [0,1,2,3], 4, true);
 						cruella.animations.add('dead',[4],1,false);
 						cruella.scale.x = -1;
 						cruella.frame = Config.enemy.cruella.walk.frame;
@@ -77,13 +89,13 @@ Enemy.prototype = {
 			function(hannibal){
 				switch (this.hannibals.getIndex(hannibal)) {
 					case 0:
-						hannibal.animations.add('walk', [0,1,2,3,4,5,6], 5, true);
+						hannibal.animations.add('walk', [0,1,2,3,4,5,6], 6, true);
 						hannibal.animations.add('dead',[7],1,false);
 						hannibal.scale.x = -1;
 						hannibal.frame = Config.enemy.hannibal.walk.frame;;
 						break;
 					case 1:
-						hannibal.animations.add('walk', [0,1,2,3,4,5,6], 5, true);
+						hannibal.animations.add('walk', [0,1,2,3,4,5,6], 6, true);
 						hannibal.animations.add('dead',[7],1,false);
 						hannibal.scale.x = -1;
 						hannibal.frame = Config.enemy.hannibal.walk.frame;;
@@ -285,13 +297,14 @@ Enemy.prototype = {
 							this.cruellaWalk1 += Config.enemy.cruella.walk.x;
 						} 
 						
-						if (this.cruellaWalk1 >= 2500) {
+						if (this.cruellaWalk1 >= 3500) {
 							this.cruellaWalk1 = 0;
 							this.cruellaIsLeft1 = !this.cruellaIsLeft1;
 						}
 						
 				    	cruella.animations.play('walk');
 						break;
+						
 					case 1:
 						cruella.body.velocity.y = Config.enemy.cruella.walk.y;
 						
@@ -312,6 +325,7 @@ Enemy.prototype = {
 						
 				    	cruella.animations.play('walk');
 						break;
+						
 					case 2:
 						cruella.body.velocity.x = Config.enemy.cruella.jump.x;
 						
@@ -325,6 +339,7 @@ Enemy.prototype = {
 				    		cruella.animations.play('fall');
 				    	}
 						break;
+						
 					case 3:
 						cruella.body.velocity.x = Config.enemy.cruella.jump.x;
 						
@@ -338,6 +353,7 @@ Enemy.prototype = {
 				    		cruella.animations.play('fall');
 				    	}
 						break;
+						
 					default:
 						break;
 				}
@@ -364,14 +380,33 @@ Enemy.prototype = {
 							this.hannibalWalk1 += Config.enemy.hannibal.walk.x;
 						} 
 						
-						if (this.hannibalWalk1 >= 10000) {
+						if (this.hannibalWalk1 >= 30000) {
 							this.hannibalWalk1 = 0;
 							this.hannibalIsLeft1 = !this.hannibalIsLeft1;
 						}
 						
 				    	hannibal.animations.play('walk');
 						break;
+						
 					case 1:
+						hannibal.body.velocity.y = Config.enemy.hannibal.walk.y;
+						
+						if(this.hannibalIsLeft2) {
+							hannibal.scale.x = -1;
+							hannibal.body.velocity.x = -Config.enemy.hannibal.walk.x;
+							this.hannibalWalk2 += Config.enemy.hannibal.walk.x; 
+						} else {
+							hannibal.scale.x = 1;
+							hannibal.body.velocity.x = Config.enemy.hannibal.walk.x;
+							this.hannibalWalk2 += Config.enemy.hannibal.walk.x;
+						} 
+						
+						if (this.hannibalWalk2 >= 30000) {
+							this.hannibalWalk2 = 0;
+							this.hannibalIsLeft2 = !this.hannibalIsLeft2;
+						}
+						
+				    	hannibal.animations.play('walk');
 						break;
 						
 					case 2:
@@ -413,6 +448,24 @@ Enemy.prototype = {
 
 				switch (this.freddys.getIndex(freddy)) {
 					case 0:
+						freddy.body.velocity.y = Config.enemy.freddy.walk.y;
+						
+						if(this.freddyIsLeft1) {
+							freddy.scale.x = -1;
+							freddy.body.velocity.x = -Config.enemy.freddy.walk.x;
+							this.freddyWalk1 += Config.enemy.freddy.walk.x; 
+						} else {
+							freddy.scale.x = 1;
+							freddy.body.velocity.x = Config.enemy.freddy.walk.x;
+							this.freddyWalk1 += Config.enemy.freddy.walk.x;
+						} 
+						
+						if (this.freddyWalk1 >= 30000) {
+							this.freddyWalk1 = 0;
+							this.freddyIsLeft1 = !this.freddyIsLeft1;
+						}
+						
+				    	freddy.animations.play('walk');
 						break;
 						
 					case 1:
@@ -457,6 +510,24 @@ Enemy.prototype = {
 
 				switch (this.jasons.getIndex(jason)) {
 					case 0:
+						jason.body.velocity.y = Config.enemy.jason.walk.y;
+						
+						if(this.jasonIsLeft1) {
+							jason.scale.x = -1;
+							jason.body.velocity.x = -Config.enemy.jason.walk.x;
+							this.jasonWalk1 += Config.enemy.jason.walk.x; 
+						} else {
+							jason.scale.x = 1;
+							jason.body.velocity.x = Config.enemy.jason.walk.x;
+							this.jasonWalk1 += Config.enemy.jason.walk.x;
+						} 
+						
+						if (this.jasonWalk1 >= 4800) {
+							this.jasonWalk1 = 0;
+							this.jasonIsLeft1 = !this.jasonIsLeft1;
+						}
+						
+				    	jason.animations.play('walk');
 						break;
 						
 					case 1:
@@ -501,6 +572,24 @@ Enemy.prototype = {
 
 				switch (this.jokers.getIndex(joker)) {
 					case 0:
+						joker.body.velocity.y = Config.enemy.joker.walk.y;
+						
+						if(this.jokerIsLeft1) {
+							joker.scale.x = -1;
+							joker.body.velocity.x = -Config.enemy.joker.walk.x;
+							this.jokerWalk1 += Config.enemy.joker.walk.x; 
+						} else {
+							joker.scale.x = 1;
+							joker.body.velocity.x = Config.enemy.joker.walk.x;
+							this.jokerWalk1 += Config.enemy.joker.walk.x;
+						} 
+						
+						if (this.jokerWalk1 >= 3000) {
+							this.jokerWalk1 = 0;
+							this.jokerIsLeft1 = !this.jokerIsLeft1;
+						}
+						
+						joker.animations.play('walk');
 						break;
 						
 					case 1:
