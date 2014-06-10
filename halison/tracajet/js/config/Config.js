@@ -115,18 +115,18 @@ Config.credits = {
 	x: 0,
 	y: 0,
 	text: {
-		dir: 'assets/images/creditos_400-400.png',
+		dir: 'assets/images/creditos_400-300.png',
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.5,
 		width: 400,
-		height: 400,
+		height: 300,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		},
 		scale: {
-			x: 1.8,
-			y: 1.8
+			x: 1.5,
+			y: 1.5
 		}
 	}
 };

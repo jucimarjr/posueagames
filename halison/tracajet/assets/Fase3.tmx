@@ -6,17 +6,22 @@
  <tileset firstgid="5" name="frutas_24-30-5" tilewidth="23" tileheight="30">
   <image source="sprites/frutas_24-30-5.png" trans="ff00ff" width="120" height="30"/>
  </tileset>
- <layer name="Camada de Tiles 1" width="36" height="15">
+ <layer name="Background" width="36" height="15">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUjIKBBYxIeCQBRgb8fkeXH2nhQyxAD5vRcIIAfOEyEGkKADV8ABY=
   </data>
  </layer>
- <layer name="Camade de Tiles 2" width="36" height="15">
+ <layer name="Foreground" width="36" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRAAOsQMwGxOxQ9ijABMjhA8MwscEGGOloF3rawcYerOFEDwAA9bQAhQ==
+   eJxjYBgFo2AU0AMwI+HBBAabe0CABYoHGgwWdwx2wDTQDhgFQwIAAIAkAB8=
   </data>
  </layer>
- <objectgroup name="Frutas" width="36" height="15">
+ <layer name="Items" width="36" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRAAOsQMwGxOxQ9ijABMjhA8MwsZEM0NMONvZIDicA9CgAhA==
+  </data>
+ </layer>
+ <objectgroup name="Colision" width="36" height="15">
   <object x="93" y="786">
    <ellipse/>
   </object>
@@ -78,6 +83,9 @@
    <ellipse/>
   </object>
   <object x="573" y="1105">
+   <ellipse/>
+  </object>
+  <object x="811" y="1108">
    <ellipse/>
   </object>
  </objectgroup>
