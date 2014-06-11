@@ -137,13 +137,12 @@ State.GamePlay.prototype = {
 			this.player.animations.play('jump');
 			this.player.body.velocity.y = -Config.player.velocity.jump;
 		}else if(onCipo){
-			if(cursors.up.isDown){
-				this.climb();
-			}else if(cursors.down.isDown){
-				this.player.body.velocity.y = Config.player.velocity.climbing;
-			}else{
+			if(cursors.up.isDown) 
+				this.climb(-Config.player.velocity.climbing);
+			else if(cursors.down.isDown) 
+				this.climb(Config.player.velocity.climbing);
+			else 
 				this.player.frame = Config.climbing.frames.max;
-			}
 		}
 		if(!cursors.up.isDown){
 			jumping = false;
@@ -366,9 +365,9 @@ State.GamePlay.prototype = {
     	//player.frame = Config.climbing.frames.min;
     },
 
-    climb : function() {
+    climb : function(velocity) {
     	this.player.animations.play('climbing');
-    	this.player.body.velocity.y = -Config.player.velocity.climbing;
+    	this.player.body.velocity.y = velocity;
     	/*frameClimbing++;
     	this.player.frame  = frameClimbing;
     	if(frameClimbing > Config.climbing.frames.max){

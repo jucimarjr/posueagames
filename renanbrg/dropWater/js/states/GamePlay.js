@@ -11,6 +11,7 @@ State.GamePlay = function (game) {
     this.crabCollisionGroup = null;
     this.layerBody = null;
     this.hud = new HUD(this.game);
+    this.forceSlidingStraw = false;
 
     try {
         this.drop = new Character(this.game, 'dude',
@@ -27,14 +28,13 @@ State.GamePlay.prototype = {
 	    this.game.load.image('plataforma','assets/images/barra_160-80.png');
 	    this.game.load.image('areia','assets/images/areiaSeca_40-40.png');
 	    this.game.load.spritesheet('crab','assets/images/crab_150-69.png', 150, 69);
-	    this.game.load.image('life_drop', 'assets/images/lifedrop_40-40.png');
 	    this.game.load.image('wetSand', 'assets/images/areiaMolhada_330-75.png');
 	    this.game.load.image('bucket', 'assets/images/balde_384-497.png');
 	    this.game.load.image('straw1', 'assets/images/straw1_375-72.png');
 	    this.game.load.image('straw2', 'assets/images/straw2_236-276.png');
 	    this.game.load.spritesheet('life_drop',
 	            'assets/spritesheets/molecula_110-48.png', 55, 48);
-
+	    
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
 	    this.game.load.audio('main','assets/gotaMain.wav');
 	    this.game.load.audio('powup','assets/gotaPowerUp.wav');
@@ -44,8 +44,7 @@ State.GamePlay.prototype = {
         this.drop.preload();
         
         // Straw physics
-        this.game.load.physics('strawPhysics',
-                'assets/straw2_collision_points.json');
+        this.game.load.physics('strawPhysics', 'assets/straw-polygon.json');
 	},
 	create: function () {
 		"use strict";
@@ -53,9 +52,12 @@ State.GamePlay.prototype = {
 		background = this.game.add.tileSprite(Config.gamePlay.x, Config.gamePlay.y, 4800, 600, 'gameplay-bg');
 		//background.fixedToCamera = true;
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
-        this.game.physics.p2.gravity.y = 800;
+        this.game.physics.p2.gravity.y = 1400
         //this.game.physics.p2.restitution = 0.8;
-		
+        this.game.physics.defaultRestitution = 0 ;
+        this.game.stage.smoothed = false;  // no antialiasing
+        this.game.world.enableBodySleeping=true;
+        		
 		this.map = this.game.add.tilemap('map');
 		this.map.addTilesetImage('barra_160-80', 'plataforma');
 		this.map.addTilesetImage('areiaSeca_40-40', 'areia');
@@ -82,12 +84,20 @@ State.GamePlay.prototype = {
         this.game.camera.follow(dropSprite);
         this.drop.configureCharacter(this.setCharacterInicialValues);
 
+        this.characterMaterial =
+            game.physics.p2.createMaterial('characterMaterial');
+        this.slidingMaterial =
+            game.physics.p2.createMaterial('slidingMaterial');
+
 		this.diagonalStraw = this.game.add.sprite(2640, 270, 'straw2');
 		this.game.physics.p2.enableBody(this.diagonalStraw, false);
 		this.diagonalStraw.body.clearShapes();
 		this.diagonalStraw.body.loadPolygon('strawPhysics', 'straw2_236-276');
 		this.diagonalStraw.body.fixedRotation = true;
 		this.diagonalStraw.body.static = true;
+
+        this.game.physics.p2.createContactMaterial(this.characterMaterial,
+        		this.slidingMaterial, {friction: 0.1, restitution: 0});
 
         // create enemy crabs
         for (var i = 0; i < 2; i++) {
@@ -144,7 +154,8 @@ State.GamePlay.prototype = {
 	update: function () {
 		"use strict";
 		this.hud.updateFPS();
-		this.handleKeyDown();					
+		this.handleKeyDown();
+		this.playerOverDiagonalStraw();
 
 		this.moveCrab(this.crab[0]);
 		this.moveCrab(this.crab[1]);
@@ -152,26 +163,41 @@ State.GamePlay.prototype = {
 //		if(this.userDead()){ 
 //		      this.restart();  
 //		   }
-	},	
+    },
+    playerOverDiagonalStraw: function() {
+        var characterSprite = this.drop.getSpriteObject();
+        if (characterSprite.x >= 2513.0 && characterSprite.x <= 2750.0 &&
+                characterSprite.y <= (this.game.world.height - 200.0) &&
+                this.touchingDown(characterSprite.body)) {
+            this.forceSlidingStraw = true;
+        } else {
+            this.forceSlidingStraw = false;
+        }
+    },
 	handleKeyDown: function () {
 		"use strict";
 		//this.drop.getSpriteObject().body.setZeroVelocity();
 
 		if ( this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
-            this.drop.moveRight(4);
-			this.drop.getSpriteObject().body.moveRight(250);
-
-		} else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
+            if (this.forceSlidingStraw == true) {
+                this.drop.getSpriteObject().body.moveLeft(1);
+                this.drop.getSpriteObject().body.data.force[0] = -1;
+            } else {
+                this.drop.moveRight(4);
+                this.drop.getSpriteObject().body.moveRight(300);
+                this.drop.getSpriteObject().body.data.force[0] = 300;
+            }
+        } else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
             this.drop.moveLeft(4);
-            this.drop.getSpriteObject().body.moveLeft(250);
-
+            this.drop.getSpriteObject().body.moveLeft(300);
+            this.drop.getSpriteObject().body.data.force[0] = -300;
 		} else {
             this.drop.stop();
 		}
 		// Jump
 		if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) {
 			if (this.touchingDown(this.drop.getSpriteObject().body)) { 
-				this.drop.jump(600);  
+				this.drop.getSpriteObject().body.moveUp(700);
 				this.jumpSound.play();
 			}
 		}

@@ -6,9 +6,18 @@
  <tileset firstgid="18" name="cipo" tilewidth="10" tileheight="80">
   <image source="../level/cipo_10-80.png" width="10" height="80"/>
  </tileset>
+ <tileset firstgid="19" name="acidicWater_14-17" tilewidth="14" tileheight="17">
+  <image source="../enemies/acidicWater_14-17.png" width="14" height="17"/>
+ </tileset>
+ <tileset firstgid="20" name="cannon_25-40" tilewidth="25" tileheight="40">
+  <image source="../enemies/cannon_25-40.png" width="25" height="40"/>
+ </tileset>
+ <tileset firstgid="21" name="branches" tilewidth="40" tileheight="40">
+  <image source="../level/branches_360-283.png" width="360" height="284"/>
+ </tileset>
  <layer name="Camada de Tiles 1" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJztzjsKgDAURcEIAb+F7n+zphSrJIUxOgOHB6+6IQAAAAAAAAAAAAAAAAAAPCdeuv8AAAAAAOjTUBEAAAAAAAAAAAAAAAAAAAAAQC/W1FjQ1mbmb8ypqaClzUzgw/bUkXFrRL2qE3r4AyY=
+   eJztmVlPE1EARsekcX/QB1wB9x2VRXFfcBd3/P//xa9JDcROpXdg2tP2nOSkhHzpkHumzEPnqqo6FU/HM/FsPBfPx/m4EOfcjGyzGC/Ei/FSvByvxKvxWrzuZqSbToG34u14Jy7Fu73f34834s0Bm3tuht50z3NlwPk/io/jcsFmNa7FB/FhXHdTtOme6dMBZ/16x891m1e9zUZ80ts8i8/ji/jSTfFm5/m+jx/ix/ip5vzf1Ww+x834Jr51s+dN95y7fIvf44/4M/6KW/F3/BK/Fm5Knkt//4am15qmzcGqHUp7dOrfZuZou8d+b6edf3s0ua/3es/7udnGHixG2WMWz7cUe7Co69EWs/x/aFjG2cMu/RB6+Dzf5n899vtZYo/dGeXnQ3bHHizswcIeLOzBwh4s7MHCHizswcIeLNr6vlaaYQ8W9mBhDxb2YGEPFvZgYQ8W9mBhDxb2YGEPFvZgYQ8W9mBhDxb2YGEPFvZgYQ8W9mBhDxb2YDGpPQ40cBKY1B7Tij1Y2IOFPVjYo5+NMV7bHv1sjvHa9mBhDxb2YGEPFvZgYQ8W9mBhDxb2YGEPFvZgYQ8W9mBhDxb2YGEPFvZgYQ8W9mBhDxb2YGEPFvZgYQ8W9mBhDxb2YGEPFvZgYQ8W9mBhDxb2YGEPFvZgYQ8W9mBhj/Y4Fg8VeLyyR5sciYcLPFrZg4Y9WNijnBPx5BCvTegoyj9t54oa
   </data>
  </layer>
  <objectgroup name="cipo" width="100" height="100">
@@ -62,5 +71,71 @@
   <object gid="18" x="2480" y="1120"/>
   <object gid="18" x="2480" y="880"/>
   <object gid="18" x="2480" y="320"/>
+  <object gid="18" x="80" y="320"/>
+  <object gid="18" x="80" y="400"/>
+  <object gid="18" x="80" y="480"/>
+  <object gid="18" x="80" y="560"/>
+  <object gid="18" x="80" y="640"/>
+  <object gid="18" x="80" y="720"/>
+  <object gid="18" x="80" y="800"/>
+  <object gid="18" x="80" y="880"/>
+  <object gid="18" x="80" y="960"/>
+  <object gid="18" x="80" y="1040"/>
+  <object gid="18" x="80" y="1120"/>
+  <object gid="18" x="80" y="1200"/>
+  <object gid="18" x="80" y="1280"/>
+  <object gid="18" x="80" y="1360"/>
+  <object gid="18" x="80" y="1440"/>
+  <object gid="18" x="80" y="1520"/>
+  <object gid="18" x="80" y="1600"/>
+  <object gid="18" x="80" y="1680"/>
+  <object gid="18" x="240" y="640"/>
+  <object gid="18" x="240" y="720"/>
+  <object gid="18" x="240" y="800"/>
+  <object gid="18" x="240" y="880"/>
+  <object gid="18" x="240" y="960"/>
+  <object gid="18" x="240" y="1040"/>
+  <object gid="18" x="240" y="1120"/>
+  <object gid="18" x="240" y="1200"/>
+  <object gid="18" x="240" y="1280"/>
+  <object gid="18" x="240" y="1360"/>
+ </objectgroup>
+ <objectgroup name="tubes" width="100" height="100">
+  <object gid="20" x="880" y="520"/>
+  <object gid="20" x="720" y="520"/>
+  <object gid="20" x="840" y="520"/>
+  <object gid="20" x="800" y="520"/>
+  <object gid="20" x="760" y="520"/>
+  <object gid="20" x="680" y="520"/>
+  <object gid="20" x="640" y="520"/>
+  <object gid="20" x="600" y="520"/>
+  <object gid="20" x="560" y="520"/>
+  <object gid="20" x="520" y="520"/>
+  <object gid="20" x="480" y="520"/>
+  <object gid="20" x="440" y="520"/>
+  <object gid="20" x="360" y="520"/>
+  <object gid="20" x="320" y="520"/>
+  <object gid="20" x="280" y="520"/>
+  <object gid="20" x="400" y="520"/>
+  <object gid="20" x="920" y="520"/>
+ </objectgroup>
+ <objectgroup name="waters" width="100" height="100">
+  <object gid="19" x="290" y="472"/>
+  <object gid="19" x="330" y="476"/>
+  <object gid="19" x="930" y="536"/>
+  <object gid="19" x="893" y="532"/>
+  <object gid="19" x="850" y="528"/>
+  <object gid="19" x="810" y="524"/>
+  <object gid="19" x="770" y="520"/>
+  <object gid="19" x="730" y="516"/>
+  <object gid="19" x="690" y="512"/>
+  <object gid="19" x="650" y="508"/>
+  <object gid="19" x="610" y="504"/>
+  <object gid="19" x="570" y="500"/>
+  <object gid="19" x="530" y="496"/>
+  <object gid="19" x="490" y="492"/>
+  <object gid="19" x="450" y="488"/>
+  <object gid="19" x="410" y="484"/>
+  <object gid="19" x="370" y="480"/>
  </objectgroup>
 </map>

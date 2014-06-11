@@ -163,7 +163,7 @@ Config.level1 = {
 //Player
 Config.player = {
 	dir: 'assets/spritesheets/Oscar_spritesheet_900-95-18.png',
-	jump: 550,
+	jump: 575,
 	speed: 175,
 	height: 95,
 	width: 50,
@@ -213,7 +213,7 @@ Config.enemy = {
 			y: .5
 		},
 		walk: {
-			x: 50,
+			x: 100,
 			y: 0,
 			gid: 72,
 			frame: 0
@@ -235,7 +235,7 @@ Config.enemy = {
 			y: .5
 		},
 		walk: {
-			x: 80,
+			x: 100,
 			y: 0,
 			gid: 80,
 			frame: 0
@@ -258,7 +258,7 @@ Config.enemy = {
 			y: .5
 		},
 		walk: {
-			x: 150,
+			x: 100,
 			y: 0,
 			gid: 88,
 			frame: 0
@@ -281,7 +281,7 @@ Config.enemy = {
 			y: .5
 		},
 		walk: {
-			x: 50,
+			x: 100,
 			y: 0,
 			gid: 96,
 			frame: 0
