@@ -6,7 +6,7 @@ State.GamePlay = function (game) {
 };
 State.GamePlay.prototype = {
 	preload: function () {
-		var deadAnimation;
+		//var deadAnimation;
 		var jumping;
 		var cursors;
 		var levelConfig;
@@ -19,7 +19,17 @@ State.GamePlay.prototype = {
 		this.game.stage.smoothed = false;		
 		this.game.world.setBounds(-10, -10, this.game.width + 20, this.game.height + 20);
 
-		this.player = game.add.sprite(10,1000 ,'playerS');
+		levelConfig = Config.level.getLevel(Config.levelId.level);
+
+		if(levelConfig.checkPoint.x > 0){
+			//this.player.position.setTo(levelConfig.checkPoint.x, levelConfig.checkPoint.y);
+			this.player = game.add.sprite(levelConfig.checkPoint.x, levelConfig.checkPoint.y ,'playerS');
+		}else{
+			this.player = game.add.sprite(levelConfig.player.posX, levelConfig.player.posY ,'playerS');
+			//this.player.position.setTo(levelConfig.player.posX, levelConfig.player.posY);
+		}		
+		this.game.camera.follow(this.player);
+		
 		this.player.anchor.setTo(.5, 1);		
 		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13,14],20,true);
 		this.player.animations.add('stoped',[0,1],2,true);
@@ -34,9 +44,15 @@ State.GamePlay.prototype = {
 		this.game.physics.enable(this.player);
 		this.player.body.setSize(25, 60, 0, 0);
 
-		this.game.camera.y = 1000;
+		//this.game.camera.y = 1000;
 		cursors = this.game.input.keyboard.createCursorKeys();
 		this.loadLevel(Config.levelId.level);
+
+		// Show FPS
+    	this.game.time.advancedTiming = true;
+    	this.fpsText = this.game.add.text(
+        	20, 20, '', { font: '16px Arial', fill: '#ffffff' }
+    	);
 	},
 	update: function () {
 
@@ -129,22 +145,12 @@ State.GamePlay.prototype = {
 	loadLevel: function (level) {
 		this.gameOver = false;
 		this.level = level;
-		levelConfig = Config.level.getLevel(level);
-		
-
 		jumping = false;
 		
 		this.player.alpha = 1;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 		this.player.body.gravity.y = 1000;
-
-		if(levelConfig.checkPoint.x > 0){
-			this.player.position.setTo(levelConfig.checkPoint.x, levelConfig.checkPoint.y);
-		}else{
-			this.player.position.setTo(levelConfig.player.posX, levelConfig.player.posY);
-		}		
-		this.game.camera.follow(this.player);
 
 		if (this.layer) this.layer.destroy();
 		//if (this.flag) this.flag.destroy();
@@ -185,11 +191,7 @@ State.GamePlay.prototype = {
 		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
 		if(levelConfig.checkPoint.id>0) this.addCheckPoint(levelConfig.checkPoint.id);
 
-		// Show FPS
-    	this.game.time.advancedTiming = true;
-    	this.fpsText = this.game.add.text(
-        	20, 20, '', { font: '16px Arial', fill: '#ffffff' }
-    	);
+		
 	},
 
 	addCipo: function(id){
@@ -309,12 +311,9 @@ State.GamePlay.prototype = {
 	},
 
 	die: function(player, enemie) {
-
-		this.game.camera.y = 0;
-		this.game.camera.x = 0;
-        this.game.add.tween(this.game.camera).to({ x: -10 }, 40, 
-        	Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true).start();
-
+        /*this.game.add.tween(this.game.camera).to({ x: -10 }, 40, 
+        	Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true).start();*/
+		enemie.kill();
 		this.gameOver = true;
 		this.player.animations.stop();
 		this.player.body.gravity.y = 0;
@@ -324,8 +323,7 @@ State.GamePlay.prototype = {
 		this.game.add.tween(this.player).to({alpha:0}, 500).start().onComplete.add(function() {
 		    	//this.loadLevel(this.level);
 		    	this.game.state.start('GamePlay');
-			}, this);
-		enemie.kill();
+			}, this);		
     },
 
     saveCP : function(player, cp) {
