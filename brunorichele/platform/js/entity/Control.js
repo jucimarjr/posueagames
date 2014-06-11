@@ -18,25 +18,24 @@ Control.prototype = {
             this.jumpTimer = this.game.time.now + 750;
         }
 
-        if (this.cursors.left.isDown) {
-            if (this.player.state != PlayerState.JUMPING;)
-            this.player.state = PlayerState.RUNNING;
-            this.player.player.body.velocity.x = -PlayerProperties.velRun;
-            this.player.player.scale.x = -1;
-        } else if (this.cursors.right.isDown) {
-            this.player.state = PlayerState.RUNNING;
-            this.player.player.body.velocity.x = PlayerProperties.velRun;
-            this.player.player.scale.x = +1;
-        } else {
-            if (this.player.state != PlayerState.JUMPING) {
-                this.player.state = PlayerState.IDLE;
-                this.player.player.body.velocity.x = 0;
+        if (this.player.state != PlayerState.JUMPING) {
+            if (this.cursors.left.isDown) {
+                this.player.state = PlayerState.RUNNING;
+                this.player.player.body.velocity.x = -PlayerProperties.velRun;
+                this.player.player.scale.x = -1;
+            } else if (this.cursors.right.isDown) {
+                this.player.state = PlayerState.RUNNING;
+                this.player.player.body.velocity.x = PlayerProperties.velRun;
+                this.player.player.scale.x = +1;
+            } else {
+                if (this.player.state != PlayerState.JUMPING) {
+                    this.player.state = PlayerState.IDLE;
+                    this.player.player.body.velocity.x = 0;
+                }
             }
         }
 
-        if (this.player.player.body.velocity.y > 0) {
-            this.player.state = PlayerState.JUMPING;
-        } else {
+        if (this.player.player.body.velocity.y <= 0) {
             this.player.state = PlayerState.IDLE;
         }
     },

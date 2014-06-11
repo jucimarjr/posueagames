@@ -3,7 +3,7 @@ var PlayerProperties = {
     width : 80,
     height : 100,
     frames : 15,
-    idle : [0, 1, 2, 3, 4, 5, 6, 7],
+    idle : [5, 6],
     run : [0, 1, 2, 3, 4, 5, 6, 7],
     jump : [8, 9, 10, 11, 12, 13, 14],
     velRun : 250,
