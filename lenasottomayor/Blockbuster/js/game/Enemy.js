@@ -3,7 +3,8 @@ Enemy = function(game, layer1, tilemap){
 	this.game = game;
 	this.layer1 = layer1;
 	this.tilemap = tilemap;
-	this.cruellas = null;
+	this.cruellasWalker = null;
+	this.cruellasJumper = null;
 	this.hannibals  = null;
 	this.freddys = null;
 	this.jasons = null;
@@ -36,47 +37,42 @@ Enemy = function(game, layer1, tilemap){
 Enemy.prototype = {
 	create: function () {
 	"use strict";
-		this.cruellas = game.add.group();
-		this.cruellas.enableBody = true;
-		this.tilemap.map.createFromObjects(Config.enemy.cruella.name, Config.enemy.cruella.walk.gid, 'cruella', Config.enemy.cruella.walk.frame,true,false,this.cruellas);
-		this.tilemap.map.createFromObjects(Config.enemy.cruella.name, Config.enemy.cruella.jump.gid, 'cruella', Config.enemy.cruella.jump.frame,true,false,this.cruellas);
-		this.cruellas.forEach(
+		this.cruellasWalker = game.add.group();
+		/* this.cruellasWalker.enableBody = true; */
+		this.cruellasJumper = game.add.group();
+		/* this.cruellasJumper.enableBody = true; */
+		this.tilemap.map.createFromObjects(Config.enemy.cruella.name, Config.enemy.cruella.walk.gid, 'cruella', Config.enemy.cruella.walk.frame,true,false,this.cruellasWalker);
+		this.tilemap.map.createFromObjects(Config.enemy.cruella.name, Config.enemy.cruella.jump.gid, 'cruella', Config.enemy.cruella.jump.frame,true,false,this.cruellasJumper);
+		this.cruellasWalker.forEach(
 				function (cruella){
-
-					switch (this.cruellas.getIndex(cruella)) {
-					case 0:
-						cruella.animations.add('walk', [0,1,2,3], 4, true);
-						cruella.animations.add('dead',[4],1,false);
-						cruella.scale.x = -1;
-						cruella.frame = Config.enemy.cruella.walk.frame;
-						break;
-					case 1:
-						cruella.animations.add('walk', [0,1,2,3], 4, true);
-						cruella.animations.add('dead',[4],1,false);
-						cruella.scale.x = -1;
-						cruella.frame = Config.enemy.cruella.walk.frame;
-						break;
-					case 2:
-						cruella.animations.add('jump', [1], 1, true);
-						cruella.animations.add('fall', [2], 1, true);
-						cruella.animations.add('dead',[4],1,false);
-						cruella.scale.x = -1;
-						cruella.frame = Config.enemy.cruella.jump.frame;
-						break;
-					case 3:
-						cruella.animations.add('jump', [1], 1, true);
-						cruella.animations.add('fall', [2], 1, true);
-						cruella.animations.add('dead',[4],1,false);
-						cruella.scale.x = -1;
-						cruella.frame = Config.enemy.cruella.jump.frame;
-						break;
-					default:
-						break;
-					}
+					this.game.physics.enable(cruella, Phaser.Physics.ARCADE);
 					
-					this.game.physics.enable(cruella);
-					cruella.body.collideWorldBounds = true;
 					cruella.anchor.setTo(Config.enemy.cruella.anchor.x, Config.enemy.cruella.anchor.y);
+					cruella.body.collideWorldBounds = true;
+					cruella.scale.x = -1;
+					
+					cruella.animations.add('walk', [0,1,2,3], 4, true);
+					cruella.animations.add('dead',[4],1,false);
+					
+					cruella.body.velocity.x = -100;
+					
+					cruella.frame = Config.enemy.cruella.walk.frame;
+				}, 
+				this
+		);
+		this.cruellasJumper.forEach(
+				function (cruella){
+					this.game.physics.enable(cruella, Phaser.Physics.ARCADE);
+					
+					cruella.anchor.setTo(Config.enemy.cruella.anchor.x, Config.enemy.cruella.anchor.y);
+					cruella.body.collideWorldBounds = true;
+					cruella.scale.x = -1;
+					
+					cruella.animations.add('jump', [1], 1, true);
+					cruella.animations.add('fall', [2], 1, true);
+					cruella.animations.add('dead',[4],1,false);
+					
+					cruella.frame = Config.enemy.cruella.jump.frame;
 				}, 
 				this
 		);
@@ -279,9 +275,12 @@ Enemy.prototype = {
 	
 	update: function() {
 		
-		this.cruellas.forEach(
+		this.game.physics.arcade.collide(this.cruellasWalker, this.layer1.platform);
+		this.game.physics.arcade.collide(this.cruellasJumper, this.layer1.platform);
+		
+		/* this.cruellas.forEach(
 			function (cruella){
-				this.game.physics.arcade.collide(cruella, this.layer1.platform);
+				
 
 				switch (this.cruellas.getIndex(cruella)) {
 					case 0:
@@ -356,7 +355,7 @@ Enemy.prototype = {
 					
 			},
 			this
-		);
+		);\\ */
 		
 		this.hannibals.forEach(
 			function (hannibal){
