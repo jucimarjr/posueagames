@@ -14,4 +14,14 @@
   <object gid="42" x="565" y="1185"/>
   <object gid="42" x="373" y="1046"/>
  </objectgroup>
+ <objectgroup name="Sheet" width="72" height="30">
+  <object gid="2" x="203" y="111"/>
+  <object gid="2" x="278" y="117"/>
+  <object gid="2" x="279" y="183"/>
+  <object gid="2" x="28" y="269"/>
+  <object gid="2" x="93" y="271"/>
+  <object gid="2" x="163" y="325"/>
+  <object gid="2" x="209" y="358"/>
+  <object gid="2" x="159" y="413"/>
+ </objectgroup>
 </map>

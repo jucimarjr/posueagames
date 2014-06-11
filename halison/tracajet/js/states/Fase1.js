@@ -19,6 +19,9 @@ State.Fase1= function (game) {
 	this.cursors;
 	this.enemies;
 	this.nameEnemy = 'Enemies';
+	this.nameSheets = 'Sheet';
+	this.sheets;
+	this.txtScore;
 };
 
 var folha;
@@ -50,6 +53,7 @@ State.Fase1.prototype = {
 		this.map.setCollision([9,10,11,12,13,14,17,18,19,20,21,22], true,'TileWorld'); // 0 espaco vazio 1 em diante os tiles do tileset
 		//Se tocar em algun desses tilesets morre
 		this.map.setTileIndexCallback([15,16,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,47,48,55,56],this.gameOver,this);
+
 		//Sprite do tracajet
 		this.tracajet = game.add.sprite(20, 20, 'tracajet');
 		this.tracajet.animations.add('walk',[0,1,2,1],6,false);
@@ -70,16 +74,43 @@ State.Fase1.prototype = {
 		this.map.createFromObjects(this.nameEnemy, 42, 'jacare', 0, true, false, this.enemies);
 		//Configura jacares
 		this.enemies.forEach(this.setupEnemies,this);
+
+		//Groups folhas
+		this.sheets = this.game.add.group();
+		this.sheets.enableBody  = true;
+		this.map.createFromObjects(this.nameSheets,2,'folhas',0,true,false,this.sheets);
+
+		//Cursor
 		this.cursors = this.game.input.keyboard.createCursorKeys();
+
+
+		//Score
+		var moduloPositionX = Math.abs(this.game.world.position.x);
+		var moduloPositionY = Math.abs(this.game.world.position.y); 
+		this.txtScore = this.game.add.text(moduloPositionX  + this.game.width - 100,moduloPositionY + 20, "", {
+			font: "20px Arial",
+			fill: "#ff0044",
+			align: "left"
+		});
+		this.txtScore.setText("Score : " + Config.game.score.score);
 		
 	},
 
 	update: function () {
 	    game.physics.arcade.collide(this.tracajet, this.layer)
 	    game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
+	    game.physics.arcade.overlap(this.sheets,this.tracajet,this.increaseScore,null,this);
 	    this.updateTracajet();
 	    this.updateEnemies();
+	    this.updateScorePosition();
 	},
+	updateScorePosition : function(){
+		var moduloPositionX = Math.abs(this.game.world.position.x) +  this.game.width -100;
+		var moduloPositionY = Math.abs(this.game.world.position.y) + 20; 
+		this.txtScore.x = moduloPositionX;
+		this.txtScore.y = moduloPositionY;
+	}
+	,
 	setupEnemies : function(jacare){
 		jacare = game.add.sprite(300, 450, 'jacare');
 		jacare.animations.add('left',[0,1,2,3,4,5],10,true);
@@ -170,7 +201,12 @@ State.Fase1.prototype = {
 	    }else{
 	    	jacare.animations.stop();
 	    }
-	}	    
+	},
+	increaseScore : function(tracajet,sheet){
+		sheet.kill();
+		Config.game.score.score += 1;
+		this.txtScore.setText("Score : " + Config.game.score.score);
+	}    
 
 };
 
