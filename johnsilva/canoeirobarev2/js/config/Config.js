@@ -54,33 +54,33 @@ Config.menu = {
 	x: 0,
 	y: 0,
 	buttonPlay: {
-		dir: 'assets/spritesheets/ButtonPlay_600-95.png',
+		dir: 'assets/spritesheets/buttons/Play_350-120.png',
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.4,
-		width: 150,
-		height: 95,
+		width: 350,
+		height: 120,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonHowToPlay: {
-		dir: 'assets/spritesheets/ButtonHowToPlay_600-95.png',
+		dir: 'assets/spritesheets/buttons/HowToPlay_350-120.png',
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.6,
-		width: 150,
-		height: 95,
+		width: 350,
+		height: 120,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonCredits: {
-		dir: 'assets/spritesheets/ButtonCredits_600-95.png',
+		dir: 'assets/spritesheets/buttons/Creditis_350-120.png',
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.8,
-		width: 150,
-		height: 95,
+		width: 350,
+		height: 120,
 		anchor: {
 			x: 0.5,
 			y: 0.5
