@@ -29,9 +29,12 @@ State.GameSplash.prototype = {
 		this.game.load.tilemap('level2', 'assets/level/2.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level3', 'assets/level/3.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level4', 'assets/level/4.json', null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.tilemap('level5', 'assets/level/5.json', null, Phaser.Tilemap.TILED_JSON);		
-	    /*this.game.load.tilemap('level6', Config.level.dir+'6/map.json', null, Phaser.Tilemap.TILED_JSON);*/
+		this.game.load.tilemap('level5', 'assets/level/5.json', null, Phaser.Tilemap.TILED_JSON);
+		/*this.game.load.tilemap('level6', 'assets/level/6.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.tilemap('level7', 'assets/level/7.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.tilemap('level8', 'assets/level/8.json', null, Phaser.Tilemap.TILED_JSON);*/
 	    this.game.load.tilemap('level9', 'assets/level/9.json', null, Phaser.Tilemap.TILED_JSON);
+	    //this.game.load.tilemap('level10', 'assets/level/10.json', null, Phaser.Tilemap.TILED_JSON);
 
 		this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_39-60-27.png', 39,60,27);
 		this.game.load.spritesheet('bee', 'assets/enemies/casacaba_40-70-4.png',40,70,4);

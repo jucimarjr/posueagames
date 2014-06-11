@@ -294,7 +294,6 @@ State.GamePlay.prototype = {
 		emitter.makeParticles('caba');
 		emitter.gravity = 0;
 		emitter.start(false, 1800, 15);
-		//emitter.onComplete()
 		this.die(player, enemie)
 	},
 
