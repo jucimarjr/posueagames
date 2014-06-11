@@ -53,6 +53,19 @@
                  "width":0,
                  "x":565,
                  "y":1185
+                }, 
+                {
+                 "gid":42,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "width":0,
+                 "x":373,
+                 "y":1046
                 }],
          "opacity":1,
          "type":"objectgroup",
