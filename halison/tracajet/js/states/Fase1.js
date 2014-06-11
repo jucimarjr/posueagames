@@ -22,6 +22,7 @@ State.Fase1= function (game) {
 	this.nameSheets = 'Sheet';
 	this.sheets;
 	this.txtScore;
+	this.txtPause;
 };
 
 var folha;
@@ -94,15 +95,17 @@ State.Fase1.prototype = {
 		});
 		this.txtScore.setText("Score : " + Config.game.score.score);
 		
+		this.game.input.keyboard.addCallbacks(this,this.changeGameState);
 	},
 
 	update: function () {
-	    game.physics.arcade.collide(this.tracajet, this.layer)
+		game.physics.arcade.collide(this.tracajet, this.layer)
 	    game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
 	    game.physics.arcade.overlap(this.sheets,this.tracajet,this.increaseScore,null,this);
 	    this.updateTracajet();
 	    this.updateEnemies();
-	    this.updateScorePosition();
+	    this.updateScorePosition
+		
 	},
 	updateScorePosition : function(){
 		var moduloPositionX = Math.abs(this.game.world.position.x) +  this.game.width -100;
@@ -219,7 +222,42 @@ State.Fase1.prototype = {
 		sheet.kill();
 		Config.game.score.score += 1;
 		this.txtScore.setText("Score : " + Config.game.score.score);
-	}    
+	},
+	changeGameState : function(event){
+		if(event.keyCode === Phaser.Keyboard.ENTER){
+			if(this.game.paused){
+				this.resumeGame();
+			}else{
+				this.pauseGame();
+			}
+		}else if(event.keyCode === Phaser.Keyboard.P){
+			if(this.game.paused){
+				this.resumeGame();
+			}else{
+				this.pauseGame();
+			}
+		}
+	
+	}
+	,
+	pauseGame : function (){
+		
+		this.game.paused = true;
+		var moduloPositionX = Math.abs(this.game.world.position.x);
+		var moduloPositionY = Math.abs(this.game.world.position.y); 
+		this.txtPause = this.game.add.text(moduloPositionX  + game.width/3 + 50,moduloPositionY + game.height/3 + 50, "", {
+			font: "50px Arial",
+			fill: "#ff0044",
+			align: "right"
+		});
+		this.txtPause.setText("Paused");
+	},
+	resumeGame : function (event){
+		if(this.game.paused){
+			this.txtPause.destroy();
+			this.game.paused = false;
+		}
+	}
 
 };
 
