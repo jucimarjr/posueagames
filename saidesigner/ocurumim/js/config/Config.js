@@ -3,6 +3,7 @@
 //Global
 var Config = {
 	global: {
+		debug: false,
 		animationVelocity: 6,
 		screen: {
 			width: 960,
@@ -104,4 +105,58 @@ Config.credits = {
 	dir: 'assets/images/Credits_960-600.png',
 	x: 0,
 	y: 0
+};
+
+// Game
+
+Config.game = {
+
+	gravity: 800
+
+}
+
+
+// Player
+
+Config.player = {
+
+	x: 60,
+	y: 600,
+
+	sprite: {
+		src: 'assets/spritesheets/curumim.png', 
+		width: 60,
+		height: 75
+	},
+
+	keys: {
+		left: Phaser.Keyboard.LEFT, 
+		right: Phaser.Keyboard.RIGHT,
+		jump: Phaser.Keyboard.UP,
+		run: Phaser.Keyboard.CONTROL,
+		fire: Phaser.Keyboard.SPACEBAR 
+	},
+
+	velocity: {
+		walk: 200,
+		walk_fps: 15,
+		run: 400,
+		run_fps: 20
+	},
+
+	jump: {
+		max: 2,
+		walking_force: -450,
+		running_force: -550
+	}
+};
+
+// Bullet
+
+Config.bullet = {
+	src: 'assets/spritesheets/bullet.png',
+	number: 5,
+	velocity: 250,
+	acceleration: 50,
+	interval: 200
 };

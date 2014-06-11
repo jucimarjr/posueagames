@@ -163,7 +163,7 @@ Config.level1 = {
 //Player
 Config.player = {
 	dir: 'assets/spritesheets/Oscar_spritesheet_900-95-18.png',
-	jump: 550,
+	jump: 575,
 	speed: 175,
 	height: 95,
 	width: 50,
@@ -185,11 +185,19 @@ Config.enemy = {
 		width: 61,
 		frames: 5,
 		name: 'Cruella',
+		anchor: {
+			x: .5,
+			y: .5
+		},
 		walk: {
+			x: 50,
+			y: 0,
 			gid: 67,
 			frame: 0
 		},
 		jump: {
+			x: 0,
+			y: 200,
 			gid: 68,
 			frame: 1
 		}
@@ -200,11 +208,18 @@ Config.enemy = {
 		width: 59,
 		frames: 8,
 		name: 'Freddy',
+		anchor: {
+			x: .5,
+			y: .5
+		},
 		walk: {
+			x: 100,
+			y: 0,
 			gid: 72,
 			frame: 0
 		},
 		jump: {
+			y:350,
 			gid: 75,
 			frame: 3
 		}
@@ -215,11 +230,19 @@ Config.enemy = {
 		width: 54,
 		frames: 8,
 		name: 'Hannibal',
+		anchor: {
+			x: .5,
+			y: .5
+		},
 		walk: {
+			x: 100,
+			y: 0,
 			gid: 80,
 			frame: 0
 		},
 		jump: {
+			x: 0,
+			y: 300,
 			gid: 83,
 			frame: 3
 		}
@@ -230,11 +253,19 @@ Config.enemy = {
 		width: 50,
 		frames: 8,
 		name: 'Jason',
+		anchor: {
+			x: .5,
+			y: .5
+		},
 		walk: {
+			x: 100,
+			y: 0,
 			gid: 88,
 			frame: 0
 		},
 		jump: {
+			x: 0,
+			y:400,
 			gid: 91,
 			frame: 3
 		}
@@ -245,11 +276,19 @@ Config.enemy = {
 		width: 56,
 		frames: 8,
 		name: 'Joker',
+		anchor: {
+			x: .5,
+			y: .5
+		},
 		walk: {
+			x: 100,
+			y: 0,
 			gid: 96,
 			frame: 0
 		},
 		jump: {
+			x: 0,
+			y: 450,
 			gid: 99,
 			frame: 3
 		}
@@ -260,21 +299,12 @@ Config.enemy = {
 		width: 150,
 		frames: 10,
 		name: 'Vader',
+		anchor: {
+			x: .5,
+			y: .5
+		},
 		gid: 104,
 		frame: 0
-	},
-	dir: 'assets/images/regularenemy_95-55.png',
-	gravity: 800,
-	speed: 250,
-	height: 95,
-	width: 55,
-	anchor: {
-		x: 0.5,
-		y: 0.5
-	},
-	position: {
-		x: 321,
-		y: 272
 	}	
 };
 

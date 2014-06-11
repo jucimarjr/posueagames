@@ -18,7 +18,10 @@
  </layer>
  <objectgroup name="collision" width="50" height="18">
   <object name="heart-sp" x="64" y="320">
-   <polyline points="0,0 96,0 96,-64 128,-64 128,-96 224,-96"/>
+   <polyline points="0,0 96,0 96,-64 128,-96 224,-96"/>
+  </object>
+  <object name="heart-sp" x="288" y="512">
+   <polyline points="0,0 192,0 320,-128 544,-128"/>
   </object>
  </objectgroup>
 </map>

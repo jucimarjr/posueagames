@@ -28,6 +28,7 @@ var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCol
 var isJumping, beInGround, yBeforeJump;
 var monster_speed = 5;
 var health;
+var music;
 
 State.Game.prototype = {
     preload: function () {
@@ -46,6 +47,9 @@ State.Game.prototype = {
     create: function () {
         "use strict";
 
+		music = this.game.add.audio('music_game', 1, true);
+	    music.play('', 0, 1, true);
+		
         //set p2
         this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.setImpactEvents(true);
@@ -96,7 +100,7 @@ State.Game.prototype = {
         player.animations.add('left', [4, 3, 2, 1, 0], 10, true);
         player.smoothed = false;
         player.health = 3;
-        this.game.physics.p2.enable(player, true);
+	this.game.physics.p2.enable(player, false);
         this.game.camera.follow(player);
         player.body.collideWorldBounds = true;
         player.body.fixedRotation = true;
@@ -192,13 +196,15 @@ State.Game.prototype = {
 
     gameRotate: function () {
         "use strict";
+		 music.pause();
         this.game.state.start('GifFall');
+		
     },
 
     render: function () {
         "use strict";
         //DEBUG
-        this.game.debug.spriteInfo(player, 32, 32);
+//		this.game.debug.spriteInfo(player, 32, 32);
     },
 
     //collect item (diamond and key)
@@ -243,7 +249,7 @@ State.Game.prototype = {
 
     resetPlayerBasic: function () {
         player.smoothed = false;
-        this.game.physics.p2.enable(player, true);
+	this.game.physics.p2.enable(player, false);
         this.game.camera.follow(player);
         player.body.collideWorldBounds = true;
         player.body.fixedRotation = true;
@@ -412,7 +418,7 @@ State.Game.prototype = {
         //bar 1
         bar = this.game.add.sprite(Config.game.bar.startX,
 				Config.game.bar.startY, 'bar');
-        this.game.physics.p2.enable(bar, true);
+	this.game.physics.p2.enable(bar, false);
         bar.body.kinematic = true;
         this.game.add.tween(bar.body.velocity).to({
             x: '+200'
@@ -424,7 +430,7 @@ State.Game.prototype = {
 
         //bar 2
         bar2 = this.game.add.sprite(3850, 3334, 'bar');
-        this.game.physics.p2.enable(bar2, true);
+	this.game.physics.p2.enable(bar2, false);
         bar2.body.kinematic = true;
         this.game.add.tween(bar2.body.velocity).to({
             x: '+200'
@@ -436,7 +442,7 @@ State.Game.prototype = {
 
         //bar 3
         bar3 = this.game.add.sprite(4250, 3234, 'bar');
-        this.game.physics.p2.enable(bar3, true);
+		this.game.physics.p2.enable(bar3, false);
         bar3.body.kinematic = true;
         this.game.add.tween(bar3.body.velocity).to({
             x: '+200'
@@ -453,7 +459,7 @@ State.Game.prototype = {
         for (var i = 1; i <= 4; i++) {
             var obstacle = obstacles.create(game.world.randomX,
 					game.world.randomY, 'obstacle' + i);
-            game.physics.p2.enable(obstacle, true);
+			game.physics.p2.enable(obstacle, false);
             obstacle.body.fixedRotation = true; //no circle movement 
             obstacle.body.kinematic = true;
             obstacle.body.setCollisionGroup(obstacleCollisionGroup);
@@ -474,7 +480,7 @@ State.Game.prototype = {
         }
         monster.animations.add('walk', [0, 1, 2], 10, true);
         monster.play('walk');
-        this.game.physics.p2.enable(monster, true);
+		game.physics.p2.enable(monster, false);
         monster.body.fixedRotation = true; //no circle movement 
         monster.body.kinematic = true;
         player.body.collideWorldBounds = true;
@@ -489,7 +495,7 @@ State.Game.prototype = {
 
         //Collect Items 1
         var collect = collects.create(1657, 3260, 'blue');
-        this.game.physics.p2.enable(collect, true);
+		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
         collect.body.setCollisionGroup(collectCollisionGroup);
@@ -497,7 +503,7 @@ State.Game.prototype = {
 
         //Collect Items 2
         var collect = collects.create(3239, 2345, 'pink');
-        this.game.physics.p2.enable(collect, true);
+		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
         collect.body.setCollisionGroup(collectCollisionGroup);
@@ -505,14 +511,14 @@ State.Game.prototype = {
 
         //Collect Items 3
         var collect = collects.create(200, 3500, 'red');
-        this.game.physics.p2.enable(collect, true);
+		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
         collect.body.setCollisionGroup(collectCollisionGroup);
         collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
 
         var collect = collects.create(300, 3500, 'key');
-        this.game.physics.p2.enable(collect, true);
+		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
         collect.body.setCollisionGroup(collectCollisionGroup);
