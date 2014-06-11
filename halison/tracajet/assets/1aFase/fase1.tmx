@@ -5,11 +5,12 @@
  </tileset>
  <layer name="TileWorld" width="72" height="30">
   <data encoding="base64" compression="zlib">
-   eJzt0DEOgCAQRUFaS/AE4v3v6BZUJIYKlGQmedU2P5sSMEuOSuv8eAv7Obre7ldUo3vdtG2MfggAAAAAAAB/8QCBgwEJ
+   eJztmcsKwjAQRWfrqyqKWvsgPnHp/3+dN2gghGRoXQgy98DZTAsNh1mlIoR8zxpu4BbulPcquDDocmBH36eGR9jAFnaw/8zDs9QmMv5uPG8Vu5H2A6wL5s4/po9F9oX5JKNFSvvjdyvdP4vMEmNWcPrzE/0PB2EfDSfso+GEfTScsI+GE/bReAj7aLCPDvvoPIV9Aid4hhd4hTd4F/YJVAXZhxBCCCEWSO9cS/evVmEfHd9hnpF93vgOuX+tFvu8ACXyD0k=
   </data>
  </layer>
  <objectgroup name="Enemies" width="72" height="30">
-  <object gid="42" x="155" y="516"/>
-  <object gid="42" x="601" y="521"/>
+  <object gid="42" x="-5" y="398"/>
+  <object gid="42" x="286" y="1039"/>
+  <object gid="42" x="565" y="1185"/>
  </objectgroup>
 </map>

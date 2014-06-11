@@ -51,7 +51,7 @@ State.Fase1.prototype = {
 		//Se tocar em algun desses tilesets morre
 		this.map.setTileIndexCallback([15,16,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,47,48,55,56],this.gameOver,this);
 		//Sprite do tracajet
-		this.tracajet = game.add.sprite(50, 50, 'tracajet');
+		this.tracajet = game.add.sprite(20, 20, 'tracajet');
 		this.tracajet.animations.add('walk',[0,1,2,1],6,false);
 		this.tracajet.animations.add('swim',[5,6,7],6,false);
 		this.tracajet.animations.add('startSwim',[3,4],4,true);
