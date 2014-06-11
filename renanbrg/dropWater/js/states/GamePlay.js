@@ -28,7 +28,6 @@ State.GamePlay.prototype = {
 	    this.game.load.image('plataforma','assets/images/barra_160-80.png');
 	    this.game.load.image('areia','assets/images/areiaSeca_40-40.png');
 	    this.game.load.spritesheet('crab','assets/images/crab_150-69.png', 150, 69);
-	    this.game.load.image('life_drop', 'assets/images/lifedrop_40-40.png');
 	    this.game.load.image('wetSand', 'assets/images/areiaMolhada_330-75.png');
 	    this.game.load.image('bucket', 'assets/images/balde_384-497.png');
 	    this.game.load.image('straw1', 'assets/images/straw1_375-72.png');
