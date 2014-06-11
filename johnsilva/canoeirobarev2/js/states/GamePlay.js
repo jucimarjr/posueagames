@@ -2,7 +2,7 @@
 
 State.GamePlay = function (game) {
 	"use strict";
-	this.game = game;	
+	this.game = game;
 };
 State.GamePlay.prototype = {
 	preload: function () {
@@ -11,15 +11,13 @@ State.GamePlay.prototype = {
 		var cursors;
 		var levelConfig;
 		var onCipo;
-		var frameClimbing;
 	},
 	create: function () {
-
-		frameClimbing = Config.climbing.frames.min;
+		this.game.time.deltaCap = 0.016;		
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
-		this.game.stage.smoothed = false;
-		this.level = 9;
+		this.game.stage.smoothed = false;		
+		this.game.world.setBounds(-10, -10, this.game.width + 20, this.game.height + 20);
 
 		this.player = game.add.sprite(10,1000 ,'playerS');
 		this.player.anchor.setTo(.5, 1);		
@@ -35,11 +33,16 @@ State.GamePlay.prototype = {
 		this.player.body.collideWorldBounds = true;
 		this.game.physics.enable(this.player);
 		this.player.body.setSize(25, 60, 0, 0);
+
 		this.game.camera.y = 1000;
 		cursors = this.game.input.keyboard.createCursorKeys();
-		this.loadLevel(this.level);		
+		this.loadLevel(Config.levelId.level);
 	},
 	update: function () {
+
+		if (this.game.time.fps !== 0) {
+        	this.fpsText.setText(this.game.time.fps + ' FPS');
+    	}
 
 		this.game.physics.arcade.collide(this.layer, this.player);
 		this.player.body.velocity.x = 0;
@@ -64,7 +67,8 @@ State.GamePlay.prototype = {
 			this.game.physics.arcade.overlap(this.player, this.coin, function () {
 				levelConfig.checkPoint.x = 0;
 				levelConfig.checkPoint.y = 0;
-				this.loadLevel(this.level + 1);
+				Config.levelId.level = ++this.level;
+				this.game.state.start('GamePlay');
 			}, null, this);		
 		
         	if (cursors.left.isDown ) {
@@ -126,6 +130,7 @@ State.GamePlay.prototype = {
 		this.gameOver = false;
 		this.level = level;
 		levelConfig = Config.level.getLevel(level);
+		
 
 		jumping = false;
 		
@@ -179,6 +184,12 @@ State.GamePlay.prototype = {
 		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);
 		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
 		if(levelConfig.checkPoint.id>0) this.addCheckPoint(levelConfig.checkPoint.id);
+
+		// Show FPS
+    	this.game.time.advancedTiming = true;
+    	this.fpsText = this.game.add.text(
+        	20, 20, '', { font: '16px Arial', fill: '#ffffff' }
+    	);
 	},
 
 	addCipo: function(id){
@@ -297,22 +308,27 @@ State.GamePlay.prototype = {
 		this.die(player, enemie)
 	},
 
-	die : function(player, enemie) {
+	die: function(player, enemie) {
+
+		this.game.camera.y = 0;
+		this.game.camera.x = 0;
+        this.game.add.tween(this.game.camera).to({ x: -10 }, 40, 
+        	Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true).start();
+
 		this.gameOver = true;
 		this.player.animations.stop();
 		this.player.body.gravity.y = 0;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 		this.player.animations.play('dead');
-		var t = this.game.add.tween(this.player).to({alpha:0}, 500).start();
-		enemie.kill();	
-	
-		t.onComplete.add(function() {
-		    this.loadLevel(this.level);
-		}, this);
+		this.game.add.tween(this.player).to({alpha:0}, 500).start().onComplete.add(function() {
+		    	//this.loadLevel(this.level);
+		    	this.game.state.start('GamePlay');
+			}, this);
+		enemie.kill();
     },
 
-    saveCP : function(player, cp) {    	
+    saveCP : function(player, cp) {
     	this.checkPoint.callAll('animations.play', 'animations', 'spin');
     	levelConfig.checkPoint.x = player.body.x;
     	levelConfig.checkPoint.y = player.body.y;

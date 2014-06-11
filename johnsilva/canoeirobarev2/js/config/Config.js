@@ -122,6 +122,10 @@ Config.climbing = {
 	}
 };
 
+Config.levelId = {
+	level: 1
+};
+
 Config.levelConfig = {
 	player:{
 		posX: 0,
