@@ -1,5 +1,3 @@
-
-
 Enemy = function(game, layer1, tilemap){
 	
 	this.game = game;
@@ -31,6 +29,8 @@ Enemy = function(game, layer1, tilemap){
 	this.jokerIsLeft1 = true;
 	this.jokerWalk2 = 0;
 	this.jokerIsLeft2 = true;
+	this.vaderWalk = 0;
+	this.vaderIsLeft = true;
 };
 
 Enemy.prototype = {
@@ -285,8 +285,6 @@ Enemy.prototype = {
 
 				switch (this.cruellas.getIndex(cruella)) {
 					case 0:
-						cruella.body.velocity.y = Config.enemy.cruella.walk.y;
-						
 						if(this.cruellaIsLeft1) {
 							cruella.scale.x = -1;
 							cruella.body.velocity.x = -Config.enemy.cruella.walk.x;
@@ -297,7 +295,7 @@ Enemy.prototype = {
 							this.cruellaWalk1 += Config.enemy.cruella.walk.x;
 						} 
 						
-						if (this.cruellaWalk1 >= 3500) {
+						if (this.cruellaWalk1 >= 2500) {
 							this.cruellaWalk1 = 0;
 							this.cruellaIsLeft1 = !this.cruellaIsLeft1;
 						}
@@ -306,8 +304,6 @@ Enemy.prototype = {
 						break;
 						
 					case 1:
-						cruella.body.velocity.y = Config.enemy.cruella.walk.y;
-						
 						if(this.cruellaIsLeft2) {
 							cruella.scale.x = -1;
 							cruella.body.velocity.x = -Config.enemy.cruella.walk.x;
@@ -368,8 +364,6 @@ Enemy.prototype = {
 
 				switch (this.hannibals.getIndex(hannibal)) {
 					case 0:
-						hannibal.body.velocity.y = Config.enemy.hannibal.walk.y;
-						
 						if(this.hannibalIsLeft1) {
 							hannibal.scale.x = -1;
 							hannibal.body.velocity.x = -Config.enemy.hannibal.walk.x;
@@ -380,7 +374,7 @@ Enemy.prototype = {
 							this.hannibalWalk1 += Config.enemy.hannibal.walk.x;
 						} 
 						
-						if (this.hannibalWalk1 >= 30000) {
+						if (this.hannibalWalk1 >= 15000) {
 							this.hannibalWalk1 = 0;
 							this.hannibalIsLeft1 = !this.hannibalIsLeft1;
 						}
@@ -389,8 +383,6 @@ Enemy.prototype = {
 						break;
 						
 					case 1:
-						hannibal.body.velocity.y = Config.enemy.hannibal.walk.y;
-						
 						if(this.hannibalIsLeft2) {
 							hannibal.scale.x = -1;
 							hannibal.body.velocity.x = -Config.enemy.hannibal.walk.x;
@@ -401,7 +393,7 @@ Enemy.prototype = {
 							this.hannibalWalk2 += Config.enemy.hannibal.walk.x;
 						} 
 						
-						if (this.hannibalWalk2 >= 30000) {
+						if (this.hannibalWalk2 >= 10000) {
 							this.hannibalWalk2 = 0;
 							this.hannibalIsLeft2 = !this.hannibalIsLeft2;
 						}
@@ -448,8 +440,6 @@ Enemy.prototype = {
 
 				switch (this.freddys.getIndex(freddy)) {
 					case 0:
-						freddy.body.velocity.y = Config.enemy.freddy.walk.y;
-						
 						if(this.freddyIsLeft1) {
 							freddy.scale.x = -1;
 							freddy.body.velocity.x = -Config.enemy.freddy.walk.x;
@@ -460,7 +450,7 @@ Enemy.prototype = {
 							this.freddyWalk1 += Config.enemy.freddy.walk.x;
 						} 
 						
-						if (this.freddyWalk1 >= 30000) {
+						if (this.freddyWalk1 >= 6000) {
 							this.freddyWalk1 = 0;
 							this.freddyIsLeft1 = !this.freddyIsLeft1;
 						}
@@ -469,11 +459,25 @@ Enemy.prototype = {
 						break;
 						
 					case 1:
+						if(this.freddyIsLeft2) {
+							freddy.scale.x = -1;
+							freddy.body.velocity.x = -Config.enemy.freddy.walk.x;
+							this.freddyWalk2 += Config.enemy.freddy.walk.x; 
+						} else {
+							freddy.scale.x = 1;
+							freddy.body.velocity.x = Config.enemy.freddy.walk.x;
+							this.freddyWalk2 += Config.enemy.freddy.walk.x;
+						} 
+						
+						if (this.freddyWalk2 >= 4000) {
+							this.freddyWalk2 = 0;
+							this.freddyIsLeft2 = !this.freddyIsLeft2;
+						}
+						
+				    	freddy.animations.play('walk');
 						break;
 						
 					case 2:
-						freddy.body.velocity.x = 0;
-						
 						if(freddy.body.velocity.y < 0){
 					    	freddy.animations.play('jump');
 				    	} else if (freddy.body.velocity.y > 0){
@@ -510,8 +514,6 @@ Enemy.prototype = {
 
 				switch (this.jasons.getIndex(jason)) {
 					case 0:
-						jason.body.velocity.y = Config.enemy.jason.walk.y;
-						
 						if(this.jasonIsLeft1) {
 							jason.scale.x = -1;
 							jason.body.velocity.x = -Config.enemy.jason.walk.x;
@@ -522,7 +524,7 @@ Enemy.prototype = {
 							this.jasonWalk1 += Config.enemy.jason.walk.x;
 						} 
 						
-						if (this.jasonWalk1 >= 4800) {
+						if (this.jasonWalk1 >= 3000) {
 							this.jasonWalk1 = 0;
 							this.jasonIsLeft1 = !this.jasonIsLeft1;
 						}
@@ -531,6 +533,22 @@ Enemy.prototype = {
 						break;
 						
 					case 1:
+						if(this.jasonIsLeft2) {
+							jason.scale.x = -1;
+							jason.body.velocity.x = -Config.enemy.jason.walk.x;
+							this.jasonWalk2 += Config.enemy.jason.walk.x; 
+						} else {
+							jason.scale.x = 1;
+							jason.body.velocity.x = Config.enemy.jason.walk.x;
+							this.jasonWalk2 += Config.enemy.jason.walk.x;
+						} 
+						
+						if (this.jasonWalk2 >= 10000) {
+							this.jasonWalk2 = 0;
+							this.jasonIsLeft2 = !this.jasonIsLeft2;
+						}
+						
+				    	jason.animations.play('walk');
 						break;
 						
 					case 2:
@@ -572,8 +590,6 @@ Enemy.prototype = {
 
 				switch (this.jokers.getIndex(joker)) {
 					case 0:
-						joker.body.velocity.y = Config.enemy.joker.walk.y;
-						
 						if(this.jokerIsLeft1) {
 							joker.scale.x = -1;
 							joker.body.velocity.x = -Config.enemy.joker.walk.x;
@@ -584,7 +600,7 @@ Enemy.prototype = {
 							this.jokerWalk1 += Config.enemy.joker.walk.x;
 						} 
 						
-						if (this.jokerWalk1 >= 3000) {
+						if (this.jokerWalk1 >= 2200) {
 							this.jokerWalk1 = 0;
 							this.jokerIsLeft1 = !this.jokerIsLeft1;
 						}
@@ -593,6 +609,22 @@ Enemy.prototype = {
 						break;
 						
 					case 1:
+						if(this.jokerIsLeft2) {
+							joker.scale.x = -1;
+							joker.body.velocity.x = -Config.enemy.joker.walk.x;
+							this.jokerWalk2 += Config.enemy.joker.walk.x; 
+						} else {
+							joker.scale.x = 1;
+							joker.body.velocity.x = Config.enemy.joker.walk.x;
+							this.jokerWalk2 += Config.enemy.joker.walk.x;
+						} 
+						
+						if (this.jokerWalk2 >= 15100) {
+							this.jokerWalk2 = 0;
+							this.jokerIsLeft2 = !this.jokerIsLeft1;
+						}
+						
+						joker.animations.play('walk');
 						break;
 						
 					case 2:
@@ -631,19 +663,8 @@ Enemy.prototype = {
 		this.vaders.forEach(
 			function (vader){
 				this.game.physics.arcade.collide(vader, this.layer1.platform);
+				
 			}, this
 		);
 	}
-	
-	
-	/*moveBack: function (sprite, coins) {
-		
-		this.sprite.body.velocity.x = Config.enemy.speed * (-1);
-	    this.sprite.animations.play('left');
-	    
-	   // this.sprite.body.velocity.x = Config.enemy.speed;
-
-	    //this.sprite.animations.play('right');  
-		
-	}*/
 };
