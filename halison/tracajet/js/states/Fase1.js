@@ -65,7 +65,7 @@ State.Fase1.prototype = {
 		this.tracajet.body.collideWorldBounds = true;
 	    this.tracajet.body.drag.x = 700;
 		this.tracajet.anchor.setTo(.5,.5);
-	    this.tracajet.body.gravity.y = 150;
+	    this.tracajet.body.gravity.y = 100;
 	    game.camera.follow(this.tracajet);
 
 	    //Group jacares
@@ -112,10 +112,23 @@ State.Fase1.prototype = {
 	}
 	,
 	setupEnemies : function(jacare){
-		jacare = game.add.sprite(300, 450, 'jacare');
+		jacare = game.add.sprite(game.world.randomX, game.world.randomY, 'jacare');
 		jacare.animations.add('left',[0,1,2,3,4,5],10,true);
 		jacare.animations.add('right',[6,7,8,9,10,11],10,true);
 		game.physics.enable(jacare, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
+		
+		
+		jacare_tween = this.add.tween(jacare);
+		
+		jacare_tween.to({x: jacare.body.x+40, y: jacare.body.y}, 1000 /*duration of the tween (in ms)*/, 
+				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 100 /*delay*/, false /*yoyo?*/)
+				.to({x: jacare.body.x-40, y: jacare.body.y}, 1000 /*duration of the tween (in ms)*/, 
+				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 100 /*delay*/, false /*yoyo?*/)
+				.loop()
+				.start()
+				; 
+		
+		
 		jacare.body.collideWorldBounds = true;
 	},
 	updateEnemies : function(){
@@ -181,22 +194,22 @@ State.Fase1.prototype = {
 			  if (this.tracajet.body.x < jacare.body.x)
 			  {
 				jacare.animations.play('left');  
-			    jacare.body.velocity.x = 50 * -1;
+			    jacare.body.velocity.x = 45 * -1;
 			    
 			  }
 			  else
 			  {
 				  jacare.animations.play('right');  
-				  jacare.body.velocity.x = 50;
+				  jacare.body.velocity.x = 45;
 				  
 			  }
 			    if (this.tracajet.body.y < jacare.body.y)
 			  {
-			    	jacare.body.velocity.y = 50 * -1;
+			    	jacare.body.velocity.y = 45 * -1;
 			  }
 			  else
 			  {
-				  jacare.body.velocity.y = 50;
+				  jacare.body.velocity.y = 45;
 			  }
 	    }else{
 	    	jacare.animations.stop();
