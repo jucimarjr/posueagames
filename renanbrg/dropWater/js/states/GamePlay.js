@@ -53,9 +53,8 @@ State.GamePlay.prototype = {
 		background = this.game.add.tileSprite(Config.gamePlay.x, Config.gamePlay.y, 4800, 600, 'gameplay-bg');
 		background.fixedToCamera = true;
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
-        this.game.physics.p2.gravity.y = 1400
-        //this.game.physics.p2.restitution = 0.8;
-        this.game.physics.defaultRestitution = 0 ;
+        this.game.physics.p2.gravity.y = 1400;
+        this.game.physics.defaultRestitution = 0;
         this.game.stage.smoothed = false;  // no antialiasing
         this.game.world.enableBodySleeping=true;
         		
@@ -64,9 +63,6 @@ State.GamePlay.prototype = {
 		this.map.addTilesetImage('areiaSeca_40-40', 'areia');
 		this.layer = this.map.createLayer('Camada de Tiles 1');
         this.layer.resizeWorld();
-
-		//this.crab[0] = game.add.sprite(this.game.width-180, this.game.height-80-69, 'crab');
-		//this.crab[1] = game.add.sprite(this.game.width, this.game.height-80-69, 'crab');
 		
 		this.game.add.image(0, this.game.height-80, 'wetSand');
 		this.game.add.image(2008, 23, 'bucket');
@@ -76,6 +72,8 @@ State.GamePlay.prototype = {
         //  Do this BEFORE generating the p2 bodies below.
 		//this.map.setCollisionByExclusion([0],true, this.layer);
 		this.layermain = game.physics.p2.convertTilemap(this.map, this.layer);
+        this.game.physics.p2.setImpactEvents(true);
+        this.game.physics.p2.updateBoundsCollisionGroup();
         
         // define collision group
 		this.playerCG = game.physics.p2.createCollisionGroup();
@@ -92,9 +90,6 @@ State.GamePlay.prototype = {
 			//layermain_tiles[i].setMaterial(groundMaterial);
 		}
 		
-        this.game.physics.p2.setImpactEvents(true);
-        this.game.physics.p2.updateBoundsCollisionGroup();
-
         // create player
         this.drop.create(200, this.game.world.height-200);
         var dropSprite = this.drop.getSpriteObject();   
@@ -107,11 +102,9 @@ State.GamePlay.prototype = {
         // create crabs
         this.crabs = game.add.group();
 		this.crabs.enableBody = true;
-		this.crabs.physicsBodyType = Phaser.Physics.P2JS;
-		
+		this.crabs.physicsBodyType = Phaser.Physics.P2JS;		
 		this.crabs.create(this.game.width-180, this.game.height-80-69, 'crab');
-        this.crabs.create(this.game.width, this.game.height-80-69, 'crab');
-				
+        this.crabs.create(this.game.width, this.game.height-80-69, 'crab');				
 		for (var i = 0; i < this.crabs.length; i++) {				
 			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);				
 			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG, this.groundCG]);
@@ -119,14 +112,15 @@ State.GamePlay.prototype = {
 		this.crabs.getAt(0).body.moveLeft(1000);
 		this.crabs.getAt(1).body.moveRight(1000);
 		
-		// collide drop with crab
-		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
-
+		// Material
         this.characterMaterial =
             game.physics.p2.createMaterial('characterMaterial');
         this.slidingMaterial =
             game.physics.p2.createMaterial('slidingMaterial');
 
+        this.game.physics.p2.createContactMaterial(this.characterMaterial,
+        		this.slidingzMaterial, {friction: 0.1, restitution: 0});        
+        
 		// canudo
 		this.diagonalStraw = this.game.add.sprite(2640, 270, 'straw2');
 		this.game.physics.p2.enableBody(this.diagonalStraw, false);
@@ -137,10 +131,6 @@ State.GamePlay.prototype = {
 		this.diagonalStraw.body.setCollisionGroup(this.strawCG);
         this.diagonalStraw.body.collides([this.groundCG, this.playerCG]);
 
-
-        this.game.physics.p2.createContactMaterial(this.characterMaterial,
-        		this.slidingMaterial, {friction: 0.1, restitution: 0});
-
         // Add a "life drop"
         this.lifeDrop = this.game.add.sprite(280, 220, 'life_drop');
         this.game.physics.p2.enableBody(this.lifeDrop);
@@ -148,13 +138,14 @@ State.GamePlay.prototype = {
         this.lifeDrop.body.fixedRotation = true;
         this.lifeDrop.name = 'lifeDrop';
         this.lifeDrop.animations.add('move_molecule', [0, 1, 2, 3], 10, true);
-        this.lifeDrop.animations.play('move_molecule');
-        
+        this.lifeDrop.animations.play('move_molecule');        
    		this.lifeDrop.body.setCollisionGroup(this.lifeDropCG);
         this.lifeDrop.body.collides([this.groundCG, this.playerCG]);
 
-		this.lifeDrop.body.createGroupCallback(this.playerCG, this.checkOverlapWithLifeDrop, this);				
-		
+        // collide callbacks
+		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
+		this.lifeDrop.body.createGroupCallback(this.playerCG, this.checkOverlapWithLifeDrop, this);
+				
         this.hud.create();
         
 		//this.userDead();
@@ -169,8 +160,7 @@ State.GamePlay.prototype = {
     },
     setCharacterInicialValues: function(character) {    	
     	character.smoothed = false;
-        character.body.fixedRotation = true;
-        character.name = 'drop';
+    	character.body.fixedRotation = true;
         character.animations.add('left', [0, 1, 2, 3], 10, true);
         character.animations.add('right', [5, 6, 7, 8], 10, true);
     },
