@@ -46,7 +46,12 @@ State.GamePlay.prototype = {
         // Straw physics
         this.game.load.physics('strawPhysics',
                 'assets/straw2_collision_points.json');
+        
+        //Bucket physics
+//        this.game.load.physics('bucketPhysics',
+//        'assets/bucket_collision_points.json');
 	},
+		
 	create: function () {
 		"use strict";
 		var background;
@@ -66,8 +71,15 @@ State.GamePlay.prototype = {
 		this.crab[1] = game.add.sprite(this.game.width, this.game.height-80-69, 'crab');
 		
 		this.game.add.image(0, this.game.height-80, 'wetSand');
+//		this.bucket = this.game.add.sprite(2008, 23, 'bucket');
 		this.game.add.image(2008, 23, 'bucket');
 		this.game.add.image(2008, 508, 'straw1');
+		
+//		this.game.physics.p2.enableBody(this.bucket, false);
+//		this.bucket.body.clearShapes();
+//		this.bucket.body.loadPolygon('bucketPhysics', 'balde_384-497');
+//		this.bucket.body.fixedRotation = true;
+//		this.bucket.body.static = true;
         
         //  Set the tiles for collision.
         //  Do this BEFORE generating the p2 bodies below.
