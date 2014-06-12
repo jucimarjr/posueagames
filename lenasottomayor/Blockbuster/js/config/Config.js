@@ -14,6 +14,9 @@ var Config = {
 					game.scale.refresh();
 				}
 			}
+		},
+		key: {
+			nextScreen: Phaser.Keyboard.ENTER
 		}
 	}
 };
@@ -30,6 +33,15 @@ Config.ludusSplash = {
 //SponsorSplash
 Config.sponsorSplash = {
 	dir: 'assets/images/SponsorSplash_960-600.png',
+	x: 0,
+	y: 0,
+	millis: 2000,
+	nextState: 4000
+};
+
+//Story
+Config.story = {
+	dir: 'assets/images/Story_960-600.png',
 	x: 0,
 	y: 0,
 	millis: 2000,

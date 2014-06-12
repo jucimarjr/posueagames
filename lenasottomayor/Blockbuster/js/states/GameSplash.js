@@ -7,19 +7,25 @@ State.GameSplash = function (game) {
 State.GameSplash.prototype = {
 	preload: function () {
 		"use strict";
-		var progressBar = this.game.add.sprite(Config.gameSplash.progressBar.x, Config.gameSplash.progressBar.y, 'progress-bar');
-		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
-		this.game.load.setPreloadSprite(progressBar);
-		this.game.load.onLoadComplete.add(function () {this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); setTimeout(function () {this.game.state.start('Menu');}, Config.gameSplash.millis);}, this);
 		
+		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
+		var progressBar = this.game.add.sprite(Config.gameSplash.progressBar.x, Config.gameSplash.progressBar.y, 'progress-bar');
+		this.game.load.setPreloadSprite(progressBar);
+		this.game.load.onLoadComplete.add(this.nextState, this);
 		this.loadAssets();
-	},
-	create: function () {
-		"use strict";
 	},
 	update: function () {
 		"use strict";
 		Config.global.screen.resize(this.game);
+	},
+	nextState: function () {
+		"use strict";
+		setTimeout(
+			function () {
+				this.game.state.start('Menu');
+			}, 
+			Config.gameSplash.nextState
+		);
 	},
 	loadAssets: function () {
 		
@@ -28,6 +34,9 @@ State.GameSplash.prototype = {
 		
 		//HowToPlay
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
+		
+		//Story
+		this.game.load.image('story', Config.story.dir);
 		
 		//Menu
 		this.game.load.image('menu-background',  Config.menu.dir);
@@ -38,19 +47,15 @@ State.GameSplash.prototype = {
 		//TileMap
 		this.load.tilemap('fase01', Config.tilemap.fase01.dir, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tiles', Config.tilemap.tiles.tileset.dir);
-		
 		this.game.load.image('coin', Config.tilemap.tiles.coins.dir);
-		
 		this.game.load.image('powerlife', Config.tilemap.tiles.powerlifes.dir);
-		
 		this.game.load.image('powerstar', Config.tilemap.tiles.powerstars.dir);
-		
 		this.game.load.image('thorn', Config.tilemap.tiles.thorn.dir);
 		
 		//Player
 		this.game.load.spritesheet('oscar', Config.player.dir, Config.player.width, Config.player.height);
 		
-		//Enemy
+		//Enemies
 		this.game.load.spritesheet('cruella', Config.enemy.cruella.dir,  Config.enemy.cruella.width,  Config.enemy.cruella.height, Config.enemy.cruella.frames);
 		this.game.load.spritesheet('freddy', Config.enemy.freddy.dir,  Config.enemy.freddy.width,  Config.enemy.freddy.height, Config.enemy.freddy.frames);
 		this.game.load.spritesheet('hannibal', Config.enemy.hannibal.dir,  Config.enemy.hannibal.width,  Config.enemy.hannibal.height, Config.enemy.hannibal.frames);
