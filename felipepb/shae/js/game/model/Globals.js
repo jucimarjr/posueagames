@@ -1,5 +1,5 @@
 var PhysicsConsts = {
-	debugDraw: false,
+	debugDraw: true,
 	pixelsToUnit: 80,
 	gravity: 9.8 * 80,
 	tileBias: 32
@@ -28,6 +28,10 @@ var Utils = {
 	hideSprite: function (sprite) {
 	    sprite.scale.x = 0.0;
 	    sprite.scale.y = 0.0;
+	},
+
+	random: function (from, to) {
+    	return Math.floor(Math.random() * (to - from + 1) + from);
 	},
 
 	showSprite: function (sprite) {

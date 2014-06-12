@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="36" height="15" tilewidth="80" tileheight="80">
+ <tileset firstgid="1" name="nuvens_120-40-4" tilewidth="120" tileheight="40">
+  <image source="sprites/nuvens_120-40-4.png" trans="ff00ff" width="480" height="40"/>
+ </tileset>
+ <tileset firstgid="5" name="frutas_24-30-5" tilewidth="23" tileheight="30">
+  <image source="sprites/frutas_24-30-5.png" trans="ff00ff" width="120" height="30"/>
+ </tileset>
+ <layer name="Background" width="36" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIKBBYxIeCQBRgb8fkeXH2nhQyxAD5vRcIIAfOEyEGkKADV8ABY=
+  </data>
+ </layer>
+ <layer name="Foreground" width="36" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AU0AMwI+HBBAabe0CABYoHGgwWdwx2wDTQDhgFQwIAAIAkAB8=
+  </data>
+ </layer>
+ <layer name="Items" width="36" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRAAOsQMwGxOxQ9ijABMjhA8MwsZEM0NMONvZIDicA9CgAhA==
+  </data>
+ </layer>
+ <objectgroup name="Colision" width="36" height="15">
+  <object x="93" y="786">
+   <ellipse/>
+  </object>
+  <object x="171" y="787">
+   <ellipse/>
+  </object>
+  <object x="251" y="785">
+   <ellipse/>
+  </object>
+  <object x="335" y="788">
+   <ellipse/>
+  </object>
+  <object x="174" y="945">
+   <ellipse/>
+  </object>
+  <object x="253" y="947">
+   <ellipse/>
+  </object>
+  <object x="335" y="950">
+   <ellipse/>
+  </object>
+  <object x="415" y="950">
+   <ellipse/>
+  </object>
+  <object x="493" y="945">
+   <ellipse/>
+  </object>
+  <object x="13" y="1106">
+   <ellipse/>
+  </object>
+  <object x="94" y="1107">
+   <ellipse/>
+  </object>
+  <object x="172" y="1107">
+   <ellipse/>
+  </object>
+  <object x="254" y="1109">
+   <ellipse/>
+  </object>
+  <object x="333" y="1105">
+   <ellipse/>
+  </object>
+  <object x="411" y="1107">
+   <ellipse/>
+  </object>
+  <object x="494" y="1108">
+   <ellipse/>
+  </object>
+  <object x="571" y="946">
+   <ellipse/>
+  </object>
+  <object x="651" y="945">
+   <ellipse/>
+  </object>
+  <object x="730" y="1106">
+   <ellipse/>
+  </object>
+  <object x="651" y="1107">
+   <ellipse/>
+  </object>
+  <object x="573" y="1105">
+   <ellipse/>
+  </object>
+  <object x="811" y="1108">
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>

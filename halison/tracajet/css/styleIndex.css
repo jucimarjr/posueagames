@@ -1,0 +1,15 @@
+body {
+	margin: auto;
+	display: table;
+}
+
+.fb-like{
+	left: 50%;
+	margin-left:300px; 
+	margin-bottom:2px; 
+}
+.fb-comments{
+	left: 50%;
+ 	margin-left:300px; 
+ 	margin-top:2px;  
+}

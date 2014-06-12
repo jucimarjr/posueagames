@@ -6,27 +6,24 @@
         <meta property="og:url" content="http://computacao.uea.edu.br/ludus/posueagames/halison/tracajet/">
         <meta property="og:title" content="Tracajet">
         <meta property="og:site_name" content="Especializacao em Desenvolvimento de Jogos Eletrônicos da UEA">
-        <meta property="og:description" content="Esse Tracajá endiabrado, vai aprontar todas para entrar na festa do céu!">
+        <meta property="og:description" content="Esse Tracajá endiabrado, vai aprontar todas para entrar nessa festa celeste!">
         <meta property="og:image" content="http://computacao.uea.edu.br/ludus/posueagames/halison/tracajet/assets/images/ad_600-600.png">
         <meta property="og:image:type" content="image/jpeg">
         <meta property="og:image:width" content="600">
         <meta property="og:image:height" content="600">
         <meta property="og:type" content="website">
-        
+        <link rel="stylesheet" href="css/styleIndex.css" type="text/css">
 		<title>Tracajet</title>
+		<style>
+			#id-phaser-game{
+				margin : 0 auto;
+				margin-top: 15px;
+			}
+		</style>
 	</head>
-	<style>
-			body {
-				margin: auto;
-				display: table;
-			}
-			#footer {
-				text-align: center;
-			}
-	</style>
 	<body>
 	
-<!-- <div id="fb-root"></div> 
+<div id="fb-root"></div> 
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -35,16 +32,16 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
-<div class="fb-like" data-href="http://computacao.uea.edu.br/ludus/posueagames/halison/tracajet" data-width="960" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+		<div id ="id-phaser-game"></div>
+		
+<!--         <div class="fb-like" data-href="http://computacao.uea.edu.br/ludus/posueagames/halison/tracajet/" data-width="960" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+		<div class="fb-comments" 
+             data-href="http://computacao.uea.edu.br/ludus/posueagames/jucimarjr/dinossauro/" 
+             data-width="960" data-numposts="10" data-colorscheme="light">
+        </div>
 -->
         
-        
-		<div id ="id-phaser-game"></div>
-	
-<!-- 		<div class="fb-comments"  -->
-<!--              data-href="http://computacao.uea.edu.br/ludus/posueagames/jucimarjr/dinossauro/"  -->
-<!--              data-width="960" data-numposts="10" data-colorscheme="light"> -->
-<!--         </div> -->
+    
 		<script src="../../phaser/phaser.min.js"></script>
 		<script type="text/javascript" src="./js/config/Config.js"></script>
 		<script type="text/javascript" src="./js/states/LudusSplash.js"></script>
@@ -53,8 +50,13 @@
 		<script type="text/javascript" src="./js/states/HowToPlay.js"></script>
 		<script type="text/javascript" src="./js/states/Credits.js"></script>
         <script type="text/javascript" src="./js/states/Fase1.js"></script>
+        <script type="text/javascript" src="./js/states/Fase3.js"></script>
         <script type="text/javascript" src="./js/Main.js"></script>
+    
 	</body>
+	
+	    
+	
 	
 <script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

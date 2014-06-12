@@ -61,10 +61,12 @@ Game.GameState.prototype = {
 		// Game.HeartController.setWalls(collisions);
 		// Game.HeartController.setStageCorners(0, 0, this.game.width, this.game.height);
 		
-        var waypoints = this.map.collision.collision[0];
-		var heart = new Game.HeartController(this.game, waypoints);
-		heart.create();
-		this.hearts.push(heart);
+        var waypoints = this.map.collision.collision;
+        for (var i = 0; i < waypoints.length; i++) {
+            var heart = new Game.HeartController(this.game, waypoints[i]);
+            heart.create();
+            this.hearts.push(heart);
+        };
 		
 		// heart = new Game.HeartController(this.game);
 		// heart.create(this.game.width - 100, this.game.height / 2.0 + 200, this.game);
@@ -113,5 +115,9 @@ Game.GameState.prototype = {
 
     registerBody: function (sprite) {
         this.game.physics.arcade.enableBody(sprite);
+    },
+
+    unregisterBody: function (body) {
+        body.destroy();
     }
 };

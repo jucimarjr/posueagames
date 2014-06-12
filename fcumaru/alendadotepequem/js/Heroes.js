@@ -1,44 +1,56 @@
-var HERO_TYPE_1 = 0;
-var HERO_TYPE_2 = 1;
-var HERO_TYPE_3 = 2;
+HERO_TYPE_1 = function() {
+	this.key = 'hero1';
+	this.asset = 'assets/india.png';
+	this.jump = 450;
+	this.walk = 150;
+	this.life = 1;
+	this.maxJump = 3;
+	this.initX = 20;
+	this.initY = 1720;
+};
+HERO_TYPE_2 = function() {
+	this.key = 'hero2';
+	this.asset = 'assets/dinossauro_40-32-6.png';
+	this.jump = 500;
+	this.walk = 200;
+	this.life = 1;
+	this.maxJump = 2;
+	this.initX = 100;
+	this.initY = 1700;
+
+};
+HERO_TYPE_3 = function() {
+	this.key = 'hero3';
+	this.asset = 'assets/dinossauro_40-32-6.png';
+	this.jump = 400;
+	this.walk = 100;
+	this.life = 2;
+	this.maxJump = 2;
+	this.initX = 400;
+	this.initY = 1700;
+};
+
+var GOAL_X = 420;
+var GOAL_Y = 400;
+var GOAL_WIDTH = 80;
+var GOAL_HEIGHT = 80;
 
 Hero = function(game, type) {
 	"use strict";
 	this.game = game;
+	this.type = type;
 
-	switch (type) {
-	case HERO_TYPE_2:
-		this.key = 'hero2';
-		this.asset = 'assets/dinossauro_40-32-6.png';
-		this.jump = 500;
-		this.walk = 200;
-		this.life = 1;
-		this.maxJump = 2;
-
-		break;
-
-	case HERO_TYPE_3:
-		this.key = 'hero3';
-		this.asset = 'assets/dinossauro_40-32-6.png';
-		this.jump = 400;
-		this.walk = 100;
-		this.life = 2;
-		this.maxJump = 2;
-
-		break;
-
-	default:
-		this.key = 'hero1';
-		this.asset = 'assets/dinossauro_40-32-6.png';
-		this.jump = 450;
-		this.walk = 150;
-		this.life = 1;
-		this.maxJump = 3;
-
-		break;
-	}
+	this.key = type.key;
+	this.asset = type.asset;
+	this.jump = type.jump;
+	this.walk = type.walk;
+	this.life = type.life;
+	this.maxJump = type.maxJump;
+	this.initX = type.initX;
+	this.initY = type.initY;
 
 	this.jumpCount = 0;
+	this.active = false;
 };
 
 Hero.prototype = {
@@ -57,9 +69,9 @@ Hero.prototype = {
 	create : function() {
 		"use strict";
 
-		this.hero = this.game.add.sprite(60, 500, this.key, 3);
-		this.hero.animations.add('walk', [ 1, 2 ], 6, true);
-		this.hero.animations.add('jump', [ 3, 4, 5 ], 4, true);
+		this.hero = this.game.add.sprite(this.initX, this.initY, this.key, 3);
+		this.hero.animations.add('walk', [ 1, 0 ], 6, true);
+		this.hero.animations.add('jump', [ 2 ], 4, true);
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
 
@@ -67,9 +79,9 @@ Hero.prototype = {
 
 		// para no limite inferio da tela
 		this.hero.body.collideWorldBounds = true;
-		// desloca 100 e para, só desloca de novo se clicada alguma tecla e
+		// desloca 100 e para, so desloca de novo se clicada alguma tecla e
 		// quanto maior for seu valor, menos desloca
-		this.hero.body.drag.x = 100;
+		this.hero.body.drag.x = 600;
 		// diminui o espaco do deslocamento do espelhamento
 		this.hero.anchor.setTo(.5, .5);
 		this.hero.body.gravity.y = 150;
@@ -86,59 +98,77 @@ Hero.prototype = {
 
 		// PEGA A ENTRADA (tecla pressionada):
 		var keyPressed = false;
-		if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-			// vai para esquerda
-			this.hero.body.velocity.x = -this.walk;
-			this.hero.animations.play('walk');
-			this.hero.scale.x = -1; // espelha se antes -1
-
-			keyPressed = true;
-		} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-			// vai para direita
-			this.hero.body.velocity.x = this.walk;
-			this.hero.scale.x = +1; // espelha se antes 1
-			this.hero.animations.play('walk');
-
-			keyPressed = true;
+		// apenas processar movimento se estiver ativo
+		if(this.active) {
+			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+				// vai para esquerda
+				this.hero.body.velocity.x = -this.walk;
+				this.hero.animations.play('walk');
+				this.hero.scale.x = -1; // espelha se antes -1
+				keyPressed = true;
+			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+				// vai para direita
+				this.hero.body.velocity.x = this.walk;
+				this.hero.scale.x = +1; // espelha se antes 1
+				this.hero.animations.play('walk');
+				keyPressed = true;
+			}
 		}
-
-		// executar a animação para para cima
+		// executar a animacao para para cima
 		if (this.jumpCount > 0) {
 			this.hero.animations.play('jump');
-			
-			// resetando o contador de pulo quando votlar ao chão
+
+			// resetando o contador de pulo quando votlar ao ch�o
 			if (this.hero.body.onFloor()) {
 				this.jumpCount = 0;
 			}
-			
 			keyPressed = true;
 		}
-
 		if (!keyPressed) {
 			this.hero.animations.stop();
 			this.hero.frame = 0;
 		}
 	},
+
 	jumpCheck : function() {
-		if (this.jumpCount < this.maxJump) {
+		// apenas processar pulo se estiver ativo
+		if (this.active && this.jumpCount < this.maxJump) {
 			this.hero.body.velocity.y = -this.jump;
 			this.jumpCount++;
 		}
+	},
+
+	reset : function() {
+	},
+
+	isGoalIn : function() {
+		if (this.hero.body.x >= GOAL_X && this.hero.body.x <= GOAL_X + GOAL_WIDTH) {
+			if (this.hero.body.y >= GOAL_Y && this.hero.body.y <= GOAL_Y + GOAL_HEIGHT) {
+				return true;
+			}	
+		}
+		return false;
 	}
 };
 
 Heroes = function(game) {
 	"use strict";
+	this.game = game;
 	this.index = 0;
+	
+	this.type1 = new HERO_TYPE_1();
+	this.type2 = new HERO_TYPE_2();
+	this.type3 = new HERO_TYPE_3();
+	
 	this.heroes = new Array();
 
-	var hero1 = new Hero(game, HERO_TYPE_1);
+	var hero1 = new Hero(game, this.type1);
 	this.heroes.push(hero1);
 
-	var hero2 = new Hero(game, HERO_TYPE_2);
+	var hero2 = new Hero(game, this.type2);
 	this.heroes.push(hero2);
 
-	var hero3 = new Hero(game, HERO_TYPE_3);
+	var hero3 = new Hero(game, this.type3);
 	this.heroes.push(hero3);
 };
 
@@ -158,13 +188,32 @@ Heroes.prototype = {
 		"use strict";
 		for (var i = 0; i < this.heroes.length; i++) {
 			this.heroes[i].create();
-			if (i != this.index) {
-				this.heroes[i].hero.kill();
-			}
 		}
+		this.heroes[this.index].active = true;
+		this.switchKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
+		this.switchKey.onDown.add(this.switchHero, this);
 	},
 	update : function(layer, enemies) {
 		"use strict";
-		this.heroes[this.index].update(layer, enemies);
+		for (var i = 0; i < this.heroes.length; i++) {
+			this.heroes[i].update(layer, enemies);
+		}
+		if (this.heroes[this.index].isGoalIn()) {
+			this.game.state.start('YouWin');
+		}
+	},
+	switchHero : function() {
+		this.heroes[this.index].active = false;
+		this.index++;
+		if (this.index >= this.heroes.length) {
+			// Reset value
+			this.index = 0;
+		}
+		this.heroes[this.index].active = true;
+		this.game.camera.follow(this.heroes[this.index].hero);
+	},
+
+	isAlive : function() {
+		return this.heroes[this.index].isAlive();
 	}
 };

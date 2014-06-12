@@ -19,27 +19,26 @@
   <image source="../spritesheets/coins/coinsIara_40-40-8.png" width="320" height="40"/>
  </tileset>
  <tileset firstgid="33" name="check" tilewidth="20" tileheight="37">
-  <image source="../spritesheets/check_20-37-3.png" width="60" height="37"/>
+  <image source="../spritesheets/check_20-37-3.png" width="80" height="37"/>
  </tileset>
- <tileset firstgid="36" name="branches" tilewidth="40" tileheight="40">
+ <tileset firstgid="37" name="branches" tilewidth="40" tileheight="40">
   <image source="../level/branches_360-283.png" width="360" height="284"/>
  </tileset>
  <objectgroup name="thorns" width="30" height="20">
-  <object gid="24" x="780" y="744"/>
   <object gid="24" x="278" y="601"/>
   <object gid="24" x="39" y="318"/>
-  <object gid="24" x="799" y="456"/>
+  <object gid="24" x="782" y="454"/>
  </objectgroup>
  <layer name="Camada de Tiles 1" width="30" height="20">
   <data encoding="base64" compression="zlib">
-   eJy91FduwzAQRVEKkAw7+UkWkt6703scOL2X/S8iNwAnGQ9oCgRoDXA+BI74KJJ26ZxrN6xEC9OYwSzmMI8FLGIJU5l7Kp+7glWsYR0b2MQWtrGcuUdyu9jFHvZxgEMc4Rg7KJRQjx6X/SwC83RV7inOcI4LXOIKPVz790t1LqGeyo+Puf+q/Ls9/3zisyS3jxvc4g73eMCjWb/k2p4nNZeeR9ZSqLX0Ve8LXvGGd3zgE1/4xrPv6fjvCfXImFPzSK7NllypwhhWtm9Y7+9a2m5w7yVX1qLPUIyiKje4D5bcx9h3p5bcE8nV9ya0L1ITmIw8p1SrvuWvYvsTE8pIyZV70kRu6HwlX5+Pvhchdp663Fz3umOybW5on0Zdod9wqcZyVer9zJE/nphp8/Wz/r+MvVc33oQfAcsmMQ==
+   eJy91NlOwzAQheFESqoWbuBF2Pe9Zd+Lyip2eP934EfygWHkJg1KO9J3kXri4zpOsiRJmiOWoYFpzGAWc5jHAhaxhKmae/KQu4JVrGEdG9jEFraxXHOPctvoYBd72McBDnGEHaRGrMeOaz/TyDxtk3uCU5zhHBe4RBdX4f7MPJdYTx7Gx5LfysO93XB9HLKU28M1bnCLO9zjwa1fub5n3GTaebSW1KylZ3Kf8IwXvOIN7/jAJx5DTyvM7Xv0u0rzKNdnK1eVOv1q0L7v9TTdmpSrtdhnKMOoPPm7D57OY9H/qVo6J8q15ya2L6oJTPa59mNl1Shv+ami/SkSy6iSq3MyitzY81W+fT72XMT4ecpy6zrXLZftc2P7NOyKvcOZGaurqp7PQfLL3id9y/8jcdf2m1l0X9n4KHwB+0QmPw==
   </data>
  </layer>
  <objectgroup name="bees" width="30" height="20">
   <object gid="19" x="360" y="680"/>
   <object gid="19" x="440" y="720"/>
   <object gid="19" x="520" y="760"/>
-  <object gid="19" x="717" y="336"/>
+  <object gid="19" x="739" y="310"/>
   <object gid="19" x="909" y="349"/>
   <object gid="19" x="497" y="288"/>
   <object gid="19" x="706" y="173"/>
@@ -56,7 +55,7 @@
   <object gid="18" x="699" y="563"/>
   <object gid="18" x="738" y="553"/>
   <object gid="18" x="778" y="540"/>
-  <object gid="18" x="1101" y="606"/>
+  <object gid="18" x="1099" y="634"/>
  </objectgroup>
  <objectgroup name="bushes" width="30" height="20">
   <object gid="13" x="320" y="520"/>
@@ -67,13 +66,8 @@
   <object gid="13" x="0" y="680"/>
   <object gid="13" x="40" y="680"/>
   <object gid="13" x="80" y="680"/>
-  <object gid="13" x="800" y="443"/>
-  <object gid="13" x="840" y="444"/>
-  <object gid="13" x="760" y="440"/>
   <object gid="13" x="880" y="440"/>
   <object gid="13" x="1120" y="320"/>
-  <object gid="13" x="800" y="720"/>
-  <object gid="13" x="840" y="720"/>
   <object gid="13" x="880" y="720"/>
   <object gid="13" x="920" y="720"/>
   <object gid="13" x="960" y="720"/>
@@ -84,6 +78,6 @@
   <object gid="25" x="891" y="642"/>
  </objectgroup>
  <objectgroup name="checkPoint" width="30" height="20">
-  <object gid="33" x="640" y="720"/>
+  <object gid="33" x="560" y="440"/>
  </objectgroup>
 </map>

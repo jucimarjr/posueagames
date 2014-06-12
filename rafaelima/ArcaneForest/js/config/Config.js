@@ -40,13 +40,16 @@ Config.sponsorSplash = {
 Config.gameSplash = {
 	dir: {
 		background: 'assets/images/GameSplash_960-600.png',
-		bar: 'assets/images/ProgressBar_960-30.png'
+		bar: 'assets/images/ProgressBar_960-30.png',
+		bg: 'assets/images/Splash_screen_bg_960-540.png',
+		text: 'assets/images/Loading_342_399.png'
 	},
 	x: 0,
 	y: 0,
 	millis: 2000,
 	nextState: 4000
 };
+
 //Animation fall
 Config.animationFall = {
 	fallGif: [],
@@ -78,6 +81,9 @@ Config.game = {
 	player:{
 		dir: 'assets/spritesheets/dude.png'
 	},
+	audio:{
+		dir: 'assets/audio/arcane_forest_soundtrack.mp3'
+	},
 	bar:{
 		dir: 'assets/images/bar.png',
 		startX: 3770,
@@ -91,46 +97,21 @@ Config.game = {
 
 //Menu
 Config.menu = {
-	dir: 'assets/images/MenuBackground_960-600.png',
-	x: 0,
-	y: 0,
-	buttonPlay: {
-		dir: 'assets/spritesheets/ButtonPlay_600-95.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.4,
-		width: 150,
-		height: 95,
-		anchor: {
-			x: 0.5,
-			y: 0.5
+		dir: 'assets/images/Splash_screen_bg_960-540.png',
+		x: 0,
+		y: 0,
+		buttonPlay: {
+			dir: 'assets/images/Play_416_334.png',
+			selector: 'assets/images/Play_selector_337_335.png',
+			x: 415,
+			y: 320
+		},
+		buttonCredits: {
+			dir: 'assets/images/Credits_372_432.png',
+			selector: 'assets/images/Credits_selector_293_431.png',
+			x: 370,
+			y: 430
 		}
-	},
-	buttonHowToPlay: {
-		dir: 'assets/spritesheets/ButtonHowToPlay_600-95.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.6,
-		width: 150,
-		height: 95,
-		anchor: {
-			x: 0.5,
-			y: 0.5
-		}
-	},
-	buttonCredits: {
-		dir: 'assets/spritesheets/ButtonCredits_600-95.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.8,
-		width: 150,
-		height: 95,
-		anchor: {
-			x: 0.5,
-			y: 0.5
-		}
-	},
-	textStyle: {
-		font: '25px Ms Sans Serif',
-		fill: '#ffffff'
-	}
 };
 
 //HowToPlay
@@ -142,7 +123,7 @@ Config.howToPlay = {
 
 //Credits
 Config.credits = {
-	dir: 'assets/images/Credits_960-600.png',
+	dir: 'assets/images/Gamecredits_170_261.png',
 	x: 0,
 	y: 0
 };

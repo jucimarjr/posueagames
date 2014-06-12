@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="400" height="100" tilewidth="10" tileheight="10">
+ <tileset firstgid="1" name="tileset" tilewidth="10" tileheight="10">
+  <image source="../images/tileset_debug.png" width="10" height="10"/>
+ </tileset>
+ <layer name="TileScene1" width="400" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt3UsKgDAMBUB7/0t7AIVWMaQmM/D2UqGfpOhxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAECekf0AAAAAAAAAAPAD+usAvVkHAMhkHQKAOGMSAAAAANapswDQjT7DM8YLAAAAAAAAAACAamZ343YOQJSI+cd8BgAAsMZZCQAAAIAdqVkBAAAAAAAV6HkAAACRnDngG75VBABwZT8EAAAAAADQT/Z/Et3feS/7PYlI71Rm3AAAAADgntoYAAAAAAAAAADUdwIB0AHc
+  </data>
+ </layer>
+ <imagelayer name="ImgScene1" width="400" height="100">
+  <image source="../images/platform.png"/>
+ </imagelayer>
+</map>

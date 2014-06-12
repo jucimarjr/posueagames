@@ -14,15 +14,24 @@
             this.menubutton = this.game.add.button(610, 460, 'reset_btn', this.onResetClick, this, 1, 0, 1);
             this.menubutton.anchor.set(0.5, 0.5);
 
+            this.clickAudio = this.game.add.audio('click');
+
+            this.bgSound = this.game.add.audio('gameoversound');
+            this.bgSound.volume = 0.8;
+            this.bgSound.play();
         },
 
         update: function() {},
 
         onPlayClick: function() {
+            this.bgSound.stop();
+            this.clickAudio.play();
             this.game.state.start('Gameplay');
         },
 
         onResetClick: function() {
+            this.bgSound.stop();
+            this.clickAudio.play();
             this.game.state.start('Menu');
         }
     };

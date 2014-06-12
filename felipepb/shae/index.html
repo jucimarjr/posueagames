@@ -18,6 +18,7 @@
 	<script src="js/game/controllers/HeartController.js"></script>
     <script src="js/game/model/Globals.js"></script>
     <!-- Facebook -->
+	<meta property="fb:app_id" content="250928885096517" />
     <meta property="og:locale" content="pt_BR">
     <meta property="og:url" content="http://computacao.uea.edu.br/ludus/posueagames/felipepb/shae/">
     <meta property="og:title" content="Shae">
@@ -37,9 +38,9 @@
         
             <div class="header">
                 <ul>
-                    <li><a href="http://computacao.uea.edu.br/ludus/posueagames/felipepb/breakup">Break Up</a></li>
-					<li><a href="http://computacao.uea.edu.br/ludus/posueagames/felipepb/relationship">RelationShip</a></li>
-                    <li><a href="http://computacao.uea.edu.br/ludus/posueagames/felipepb/shae">>>>Shae</a></li>
+                    <li><a href="http://computacao.uea.edu.br/ludus/posueagames/felipepb/breakup/">Break Up</a></li>
+					<li><a href="http://computacao.uea.edu.br/ludus/posueagames/felipepb/relationship/">RelationShip</a></li>
+                    <li><a href="http://computacao.uea.edu.br/ludus/posueagames/felipepb/shae/">>>>Shae</a></li>
                     <li><a href="./credits.html">Credits</a></li>
                 </ul>
                 
@@ -92,6 +93,16 @@
             //  Now start the Boot state.
             game.state.start('BootState');
         };
+		
+		// Google Analytics
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-51391202-2', 'uea.edu.br');
+		ga('require', 'displayfeatures');
+		ga('send', 'pageview');
 
     </script>
 

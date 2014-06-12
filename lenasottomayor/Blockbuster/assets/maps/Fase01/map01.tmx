@@ -35,7 +35,7 @@
  </tileset>
  <layer name="Platform" width="320" height="20">
   <data encoding="base64" compression="zlib">
-   eJztmdlOwzAQRVNA7HsLPPAASFCWF8QiUQr8/28xlmLVspxk7HhiO71HuooaJc3YGV+PnaoCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWPFAmpMerfNfpG+B5x2RtmudC/x/CKqti6q7vZP6uNlyzWuUiNKh82FRufOijS3r9y5pL3JcPvFwkcp1aUrPtXVC+d4Z6Zh0Veu0PpeLD3ah/G+javc/Kbgezbknx3EjFZOvbz6RnkkvQvHkSqlzQCnckG4bdM/8j5T+o9gnHZAOBZ8x1jyMVQdK80Z6J32kDiSAHOc1EI8Y/tPHX6akGenCOMdZE4+BiXF0zUG6vufW8lw/HLoe4/rfutaJ64xeT5lrCZ0HpqRywuU/qUldk+p34rs2Nu/3ua9pDtL1vauW196o1eWRZkwS9Vhbm7nPa7pug/F8zjVdhOyHcDDHM7y9G50HpkpbO/TJpdCalONbKhdzycGpcfSdgy5JJ4auPe4dej3a1/9m1m/l/Tsd1wxNW76b47mrD8wcNjWG/RtuXSDpf5wYUu+XNflBjPlZ9W3scZ+iv+y9X+5+r6I0/7NRbb/zjMHlKzG+e3Ewx/NnhVqwizHUf02k3uOR8D8OUmurEHLxP7sWL/k7SRuu8TzGdsaC439qPM1r5TCmOKh8/6tW82AKD3T5X07eFAvOesysRSSl37nd7/a7gP8BxVjrP7tdQ4w/22ND6j977VS6TzaNR2mV7n+u75I+/m9rqPmnNLn6yycnQt9TinalHnMS+Pb/0HXwmP1PMvdT5K+UfgrTb8VnmUG8ucjut6VnX4bg2//S8fSNb6h3sWy4roS2laZ/KzyyMQ==
+   eJztmVlPxSAQhblq3Pf1wQc1cX8xLol61f//t4RYIiG0DJRh6T1fctLcprcd6HAYqBAAAAAAAAAAAAAAAAAAAAAAAAAAAADUzVLpAAAAoACbUltS2wWefSN1K3VnnX+X+mR43o7UaqdDhvvHoNr6IfztnXXH5YFrnpJEVA6dDx/CnRdDrFi/16U2EscVEg8VrlznpvVcMzkuHQAzyvcOpHalzjrtd+dq8UEfyv9UnT7kf1xQPZrynxrHDVdMob55L/Ug9cgUT61wzgE6D0Pzd0pcSF326Jp4j5L+o8hRp7dai/hIVQdy8yz1IvVaOpAIapzXQDpS+M8YfzkSf3X6iXGOsiaeAjPj6JqDdH1PreWpfpi7HqP636LWiYuMrmPNtYTOA1NcOeHyn9KUrknHri1C54O+OUjX965aXnujls8jzZg46rGhNlOf13cd5Ttmim+dMfshFMzxDG/3o/PAVGtrhzG5FFuTUnxL5WItOXhkHEPnoFOpPUPnAf/NvR4d63/2Pr7y/jXPNbkZyndzPPv6wMxhU1PYv6HWBZz+R4mh9H5Znx+kmJ9V36Ye9yX6y977pe73KlrzPxvV9qvAGFy+kuK7FwVzPL8J1II+plD/9VF6j4fD/yhwra1iqMX/7Fq85e8kQ7jG8xTbmQqK/6nxdNuphjFFQeX7j/ifB0t4oMv/avKmVFDWY2Ytwin9zu1+t98F/A8oplr/2e3KMf5sj42p/+y1U+s+2TceudW6/7m+S4b4v61c809rcvVXSE7EvqcS7So95jgI7f/cdfCU/Y8z90vkL5e+GtO3oDOvIN5aZPfbPLAvYwjtf+54xsaX613Me65roW2t6RexNLNI
   </data>
  </layer>
  <layer name="Thorn" width="320" height="20">
@@ -242,36 +242,36 @@
   <object gid="66" x="9400" y="440"/>
  </objectgroup>
  <objectgroup name="Cruella" width="320" height="20">
-  <object gid="67" x="1696" y="475"/>
-  <object gid="68" x="2491" y="557"/>
-  <object gid="68" x="5052" y="518"/>
-  <object gid="67" x="6298" y="596"/>
+  <object gid="67" x="1730" y="477"/>
+  <object gid="68" x="2523" y="557"/>
+  <object gid="68" x="5085" y="512"/>
+  <object gid="67" x="6350" y="595"/>
  </objectgroup>
  <objectgroup name="Freddy" width="320" height="20">
-  <object gid="72" x="3657" y="718"/>
-  <object gid="75" x="5603" y="677"/>
-  <object gid="72" x="7177" y="478"/>
-  <object gid="75" x="9008" y="596"/>
+  <object gid="72" x="3690" y="717"/>
+  <object gid="75" x="5662" y="674"/>
+  <object gid="72" x="7214" y="476"/>
+  <object gid="75" x="9043" y="594"/>
  </objectgroup>
  <objectgroup name="Hannibal" width="320" height="20">
-  <object gid="80" x="1504" y="716"/>
-  <object gid="83" x="2855" y="559"/>
-  <object gid="80" x="4865" y="677"/>
-  <object gid="83" x="9563" y="517"/>
+  <object gid="80" x="1533" y="716"/>
+  <object gid="83" x="2884" y="555"/>
+  <object gid="80" x="4881" y="674"/>
+  <object gid="83" x="9603" y="518"/>
  </objectgroup>
  <objectgroup name="Jason" width="320" height="20">
-  <object gid="88" x="2145" y="317"/>
-  <object gid="91" x="3801" y="597"/>
-  <object gid="88" x="8705" y="636"/>
-  <object gid="91" x="10640" y="398"/>
+  <object gid="88" x="2183" y="317"/>
+  <object gid="91" x="3826" y="594"/>
+  <object gid="88" x="8722" y="636"/>
+  <object gid="91" x="10664" y="395"/>
  </objectgroup>
  <objectgroup name="Joker" width="320" height="20">
-  <object gid="99" x="3242" y="716"/>
-  <object gid="96" x="4362" y="557"/>
-  <object gid="96" x="10540" y="717"/>
-  <object gid="99" x="11483" y="556"/>
+  <object gid="99" x="3263" y="717"/>
+  <object gid="96" x="4455" y="552"/>
+  <object gid="96" x="10568" y="718"/>
+  <object gid="99" x="11581" y="553"/>
  </objectgroup>
  <objectgroup name="Vader" width="320" height="20">
-  <object gid="104" x="12641" y="673"/>
+  <object gid="104" x="12694" y="675"/>
  </objectgroup>
 </map>

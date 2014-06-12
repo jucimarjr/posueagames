@@ -4,21 +4,31 @@ State.GameSplash = function (game) {
 	"use strict";
 	this.game = game;
 };
+
+var progressBar;
+
 State.GameSplash.prototype = {
 	preload: function () {
 		"use strict";
-		var progressBar = this.game.add.sprite(0, 500, 'progress-bar');
-		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
-		this.game.load.setPreloadSprite(progressBar);
-		this.game.load.onLoadComplete.add(function () {this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); setTimeout(function () {this.game.state.start('Game');}, Config.gameSplash.millis);}, this);
+		this.game.load.image('bg_splash_load',  Config.gameSplash.dir.bg);
+		this.game.load.image('text_splash_load',   Config.gameSplash.dir.text);
+		
+	},
+	create: function() {
+		"use strict";
+		
+		this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'bg_splash_load');
+		this.game.add.sprite(387, 390, 'text_splash_load');
 		
 		//Menu
 		this.game.load.image('menu-background',  Config.menu.dir);
-		this.game.load.spritesheet('button-play', Config.menu.buttonPlay.dir, Config.menu.buttonPlay.width, Config.menu.buttonPlay.height);
-		this.game.load.spritesheet('button-credits', Config.menu.buttonCredits.dir, Config.menu.buttonCredits.width, Config.menu.buttonCredits.height);
-		this.game.load.spritesheet('button-how-to-play', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
+		this.game.load.image('button-play', Config.menu.buttonPlay.dir);
+		this.game.load.image('button-play-selector', Config.menu.buttonPlay.selector);
+		this.game.load.image('button-credits', Config.menu.buttonCredits.dir);
+		this.game.load.image('button-credits-selector', Config.menu.buttonCredits.selector);
 		
 		//Game
+		game.load.audio('music_game', Config.game.audio.dir);
 		this.game.load.image('bg1', Config.game.dirBg1);
 		this.game.load.image('bg2', Config.game.dirBg2);
 		this.game.load.image('bg3', Config.game.dirBg3);
@@ -63,14 +73,17 @@ State.GameSplash.prototype = {
 		this.game.load.image('credits', Config.credits.dir);
 		
 		//HowToPlay
-		this.game.load.image('how-to-play', Config.howToPlay.dir);
+//		this.game.load.image('how-to-play', Config.howToPlay.dir);
 		
-	},
-	create: function () {
-		"use strict";
+		this.game.load.onLoadComplete.add(this.loadComplete, this);
+		this.game.load.start();
+		
 	},
 	update: function () {
 		"use strict";
 		Config.global.screen.resize(this.game);
+	},
+	loadComplete: function() {
+		game.state.start('Menu');
 	}
 };

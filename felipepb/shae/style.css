@@ -125,7 +125,7 @@ content styles
 	margin: 10px 0 10px 0;
 	float: left;
 	border: 8px solid #000;
-	background-image: url(./assets/avatarFelipe_200-300.png)
+	background-image: url(./assets/credits/avatarFelipe_200-300.png)
 }
 
 .profileImageHeitor {
@@ -134,7 +134,7 @@ content styles
 	margin: 10px 0 10px 0;
 	float: left;
 	border: 8px solid #000;
-	background-image: url(./assets/avatarHeitor_200-300.png)
+	background-image: url(./assets/credits/avatarHeitor_200-300.png)
 }
 
 .profileImagePaulo {
@@ -143,7 +143,7 @@ content styles
 	margin: 10px 0 10px 0;
 	float: left;
 	border: 8px solid #000;
-	background-image: url(./assets/avatarPaulo_200-300.png)
+	background-image: url(./assets/credits/avatarPaulo_200-300.png)
 }
 
 .profileContact {
