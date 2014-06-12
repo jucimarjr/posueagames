@@ -1,33 +1,36 @@
 HERO_TYPE_1 = function() {
 	this.key = 'hero1';
-	this.asset = 'assets/india.png';
+	//this.asset = 'assets/india.png';
+	this.asset = 'assets/tmp1.png';
 	this.jump = 450;
 	this.walk = 150;
 	this.life = 1;
 	this.maxJump = 3;
 	this.initX = 20;
-	this.initY = 1720;
+	this.initY = 1000;
 };
 HERO_TYPE_2 = function() {
 	this.key = 'hero2';
-	this.asset = 'assets/dinossauro_40-32-6.png';
+	//this.asset = 'assets/dinossauro_40-32-6.png';
+	this.asset = 'assets/tmp2.png';
 	this.jump = 500;
 	this.walk = 200;
 	this.life = 1;
 	this.maxJump = 2;
-	this.initX = 100;
-	this.initY = 1700;
+	this.initX = 200;
+	this.initY = 1000;
 
 };
 HERO_TYPE_3 = function() {
 	this.key = 'hero3';
-	this.asset = 'assets/dinossauro_40-32-6.png';
+	//this.asset = 'assets/dinossauro_40-32-6.png';
+	this.asset = 'assets/tmp3.png';
 	this.jump = 400;
 	this.walk = 100;
 	this.life = 2;
 	this.maxJump = 2;
 	this.initX = 400;
-	this.initY = 1700;
+	this.initY = 1000;
 };
 
 var GOAL_X = 420;
@@ -64,7 +67,7 @@ Hero.prototype = {
 		return this.hero.health > 0;
 	},
 	preload : function() {
-		this.game.load.spritesheet(this.key, this.asset, 40, 32, 6);
+		this.game.load.image(this.key, this.asset, 120, 120);
 	},
 	create : function() {
 		"use strict";

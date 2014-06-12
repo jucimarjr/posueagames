@@ -17,10 +17,12 @@ var timerSecond = 0;
 
 State.Game.prototype = {
 	preload : function() {
-		this.game.load.tilemap('mapa', 'assets/mapa_.json', null,
+		this.game.load.tilemap('mapa', 'assets/mapa2.json', null,
 				Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('fundo', 'assets/bg_tepequem_960x1800.png');
-		this.game.load.image('tileset', 'assets/plataforma.png');
+		this.game.load.image('black', 'assets/black.png');
+		this.game.load.image('white', 'assets/white.png');
+
 		this.game.load.image('clouds', 'assets/nuvem.png');
 		this.game.load.image('faiscas', 'assets/efeito-faisca.png');
 		this.game.load.image('entrada', 'assets/entrada.png');
@@ -33,15 +35,18 @@ State.Game.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 800;
 
-		var bg = this.game.add.tileSprite(0, 0, 960, 1800, 'fundo');
-		bg.fixedToCamera = false;
+		//var bg = this.game.add.tileSprite(0, 1000, 960, 1800, 'fundo');
+		//bg.fixedToCamera = false;
+		this.game.stage.backgroundColor = "#ffff99";
 
 		map = this.game.add.tilemap('mapa');
-		map.addTilesetImage('tileset', 'tileset');
 
-		layer = map.createLayer('Camada de Tiles 1');
+		map.addTilesetImage('black', 'black');
+		map.addTilesetImage('white', 'white');
+
+		layer = map.createLayer('Tile Layer 1');
 		layer.resizeWorld(); // seta o mundo com as alterações feitas
-		map.setCollisionBetween(0, 10, true, 'Camada de Tiles 1'); // 0 espaco
+		map.setCollisionBetween(1, 1, true, 'Tile Layer 1'); // 0 espaco
 
 		// entrada
 		this.entrada = this.game.add.image(GOAL_X, GOAL_Y, 'entrada');
