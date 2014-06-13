@@ -42,12 +42,16 @@ Config.gameSplash = {
 		background: 'assets/images/GameSplash_960-600.png',
 		bar: 'assets/images/ProgressBar_960-30.png',
 		bg: 'assets/images/Splash_screen_bg_960-540.png',
-		text: 'assets/images/Loading_342_399.png'
 	},
 	x: 0,
 	y: 0,
 	millis: 2000,
-	nextState: 4000
+	nextState: 4000,
+	text: {
+		dir: 'assets/images/Loading_342_399.png',
+		x: 387, 
+		y: 390
+	}
 };
 
 //Animation fall
@@ -79,7 +83,77 @@ Config.game = {
 		dir: 'assets/spritesheets/tileset_arcane_forest_1404-36.png'
 	},
 	player:{
-		dir: 'assets/spritesheets/dude.png'
+		dir: 'assets/spritesheets/dude.png',
+		width: 32,
+		height: 48
+	},
+	monstercat:{
+		dir: 'assets/spritesheets/monstercat_38_18_3.png',
+		width: 38,
+		height: 18
+	},
+	bigbosjumping:{
+		dir: 'assets/spritesheets/bigbosjumping_114_208_6_.png',
+		width: 114,
+		height: 208
+	},
+	bigbossattackcompose:{
+		dir: 'assets/spritesheets/bigbossattack_compose_270_208_6_.png',
+		width: 270,
+		height: 208
+	},
+	bigbossattackfire:{
+		dir: 'assets/spritesheets/bigbossattack_fire_50_42_4_.png',
+		width: 50,
+		height: 42
+	},
+	bluemonster:{
+		dir: 'assets/spritesheets/bluemonster_60_50_3.png',
+		width: 60,
+		height: 50
+	},
+	emmaattack:{
+		dir: 'assets/spritesheets/emmaattack_110_113_3.png',
+		width: 110,
+		height: 113
+	},
+	emmajumping:{
+		dir: 'assets/spritesheets/emmajumping_104_97_3.png',
+		width: 104,
+		height:97
+	},
+	emmarun:{
+		dir: 'assets/spritesheets/emmarun_104_104_5.png',
+		width: 104,
+		height:104
+	},
+	greenmonsterleft:{
+		dir: 'assets/spritesheets/greenmonsterleft_74_62_5.png',
+		width: 74,
+		height:62
+	},
+	greenmonsterright:{
+		dir: 'assets/spritesheets/ray_47_56_2.png',
+		width: 47,
+		height:52
+	},
+	blue:{
+		dir: 'assets/images/bluediamond_13-25.png'
+	},
+	red:{
+		dir: 'assets/images/reddiamond_13-25.png'
+	},
+	pink:{
+		dir: 'assets/images/pinkdiamond_13-25.png'
+	},
+	key:{
+		dir: 'assets/images/keytopbar_13-25.png'
+	},
+	life:{
+		dir: 'assets/images/life_28-22.png'
+	},
+	nolife:{
+		dir: 'assets/images/emptylife_28-22.png'
 	},
 	audio:{
 		dir: 'assets/audio/arcane_forest_soundtrack.mp3'
