@@ -17,7 +17,7 @@ State.GamePlay.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;		
-		this.game.world.setBounds(-10, -10, this.game.width + 20, this.game.height + 20);
+		this.game.world.setBounds(-10, -10, this.game.world.width + 20, this.game.world.height + 20);
 
 		levelConfig = Config.level.getLevel(Config.levelId.level);
 
@@ -63,6 +63,8 @@ State.GamePlay.prototype = {
 		this.game.physics.arcade.collide(this.layer, this.player);
 		this.player.body.velocity.x = 0;
 		onCipo = false;
+		if(this.level == 3)
+			this.updateShadowTexture(this.player.body.x, this.player.body.y);
 
 		if(!this.gameOver){		
 			//Config.global.screen.resize(this.game);
@@ -192,6 +194,8 @@ State.GamePlay.prototype = {
 		if(levelConfig.checkPoint.id>0) this.addCheckPoint(levelConfig.checkPoint.id);
 
 		
+		if(this.level == 3)
+			this.initShadow();
 	},
 
 	addCipo: function(id){
@@ -311,8 +315,8 @@ State.GamePlay.prototype = {
 	},
 
 	die: function(player, enemie) {
-        /*this.game.add.tween(this.game.camera).to({ x: -10 }, 40, 
-        	Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true).start();*/
+        this.game.add.tween(this.game.camera).to({ x: -10 }, 40, 
+        	Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true).start();
 		enemie.kill();
 		this.gameOver = true;
 		this.player.animations.stop();
@@ -350,7 +354,44 @@ State.GamePlay.prototype = {
 
     },   
 
+    initShadow: function(){
+    	// Create the shadow texture
+    	this.shadowTexture = this.game.add.bitmapData(this.game.world.bounds.width, this.game.world.bounds.height);
+
+    	// Create an object that will use the bitmap as a texture
+    	var lightSprite = this.game.add.image(0, 0, this.shadowTexture);
+
+    	// Set the blend mode to MULTIPLY. This will darken the colors of
+    	// everything below this sprite.
+    	lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
+    },
+
+    updateShadowTexture: function(x, y) {
+    	// Draw shadow
+    	this.shadowTexture.context.fillStyle = 'rgb(9, 9, 9)';
+    	//this.shadowTexture.context.fillRect(0, 0, this.game.width, this.game.height);
+    	this.shadowTexture.context.fillRect(0, 0, this.game.world.bounds.width, this.game.world.bounds.height);
+    	
+    	// Draw circle of light with a soft edge
+    	var gradient = this.shadowTexture.context.createRadialGradient(
+    		x, y, Config.finalPhase.lightRadius * 0.75,
+    		x, y, Config.finalPhase.lightRadius);
+
+    	gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+    	gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+
+    	this.shadowTexture.context.beginPath();
+    	this.shadowTexture.context.fillStyle = gradient;
+    	this.shadowTexture.context.arc(x, y, Config.finalPhase.lightRadius, 0, Math.PI*2);
+    	this.shadowTexture.context.fill();
+
+    	// This just tells the engine it should update the texture cache
+    	this.shadowTexture.dirty = true;
+	},
+
     render: function (){
+    	/*game.debug.text(this.game.world.bounds.width,32,32);
+    	game.debug.text(this.game.world.bounds.height,32,64);*/
     	//game.debug.body(this.player);
     	//game.debug.body(this.thorns);
     	//game.debug.text(frameClimbing,32,32);
