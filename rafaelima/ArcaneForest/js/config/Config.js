@@ -15,7 +15,11 @@ var Config = {
 				}
 			}
 		}
-	}
+	},
+
+	assets: 'assets/',
+	images: 'assets/images/',
+	spriteSheets: 'assets/spritesheets/'
 };
 
 //LudusSplash
@@ -79,6 +83,83 @@ Config.game = {
 		dir: 'assets/spritesheets/tileset_arcane_forest_1404-36.png'
 	},
 	player:{
+		x: 60,
+		y: 3300,
+		sword:{
+			key: 'emmasword_spritesheet',
+			dir: Config.spriteSheets + 'emmasword-112_113_11.png',
+			width: 112,
+			height: 113,
+		},
+		nosword:{
+			key: 'emma_spritesheet',
+			dir: Config.spriteSheets + 'emmasword-112_113_11.png',
+			width: 112,
+			height: 113,
+		},
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		},
+		collider: {
+			emma: {
+				key: "player_collider",
+				dir: Config.images + 'emma_collider-36_93.png',
+				offset: {
+					right: {
+						x: 25,
+						y: -10,
+					},
+					left: {
+						x: -25,
+						y: -10,
+					}
+				},
+			},
+			sword: {
+				key: "sword_collider",
+				dir: Config.images + 'sword_collider-64_102.png',
+				offset: {
+					right: {
+						x: 50,
+						y: -5,
+					},
+					left: {
+						x: -50,
+						y: -5,
+					}
+				},
+			}
+		},
+		anim: {
+			stop: {
+				key: 'player_stop',
+				frames: [5],
+				speed: 10,
+				loop: false
+			},
+			walk: {
+				key: 'player_walk',
+				frames: [0, 1, 2, 3, 4],
+				speed: 10,
+				loop: true
+			},
+			jump: {
+				key: 'player_jump',
+				frames: [5, 6, 7],
+				speed: 10,
+				loop: false
+			},
+			attack: {
+				key: 'player_attack',
+				frames: [10, 9, 8],
+				speed: 8,
+				loop: false
+			},
+		},
+		attackCooldown: 200,
+		gravityY: 2000,
+		forceY: 1000,
 		dir: 'assets/spritesheets/dude.png'
 	},
 	audio:{

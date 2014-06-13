@@ -57,7 +57,13 @@ State.GameSplash.prototype = {
 		this.game.load.image('key', 'assets/images/keytopbar_13-25.png');
 		this.game.load.image('life', 'assets/images/life_28-22.png');
 		this.game.load.image('nolife', 'assets/images/emptylife_28-22.png');
-
+		
+		// PLAYER
+		this.game.load.spritesheet(Config.game.player.sword.key, Config.game.player.sword.dir, Config.game.player.sword.width, Config.game.player.sword.height);
+		this.game.load.image(Config.game.player.collider.emma.key, Config.game.player.collider.emma.dir);
+		this.game.load.image(Config.game.player.collider.sword.key, Config.game.player.collider.sword.dir);
+		
+		
 		//gif fall
         for (var i = 0; i < 30; i++) {
             var zeros = "";
