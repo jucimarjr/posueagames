@@ -106,6 +106,10 @@ Config.credits = {
 	y: 0
 };
 
+Config.audio = {
+	menu: 'assets/audio/menu.wav'
+};
+
 Config.player = {
 	velocity:{
 		run: 150,
