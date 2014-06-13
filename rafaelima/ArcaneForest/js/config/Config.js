@@ -89,7 +89,7 @@ Config.game = {
 	player:{
 		dir: 'assets/spritesheets/dude.png',
 		width: 32,
-		height: 48
+		height: 48,
 		x: 60,
 		y: 3300,
 		sword:{
