@@ -2,6 +2,7 @@ function HeroOfRope(game) {
 	"use strict";
 	var that = new Hero(game);
 
+	// Default parameters
 	that.key = 'hero2';
 	that.asset = 'assets/tmp2.png';
 	that.jump = 500;

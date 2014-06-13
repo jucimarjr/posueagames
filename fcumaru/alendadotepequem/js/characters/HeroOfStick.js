@@ -2,6 +2,7 @@ function HeroOfStick(game) {
 	"use strict";
 	var that = new Hero(game);
 
+	// Default parameters
 	that.key = 'hero3';
 	that.asset = 'assets/tmp3.png';
 	that.jump = 400;
