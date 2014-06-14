@@ -58,6 +58,17 @@ Config.gameSplash = {
 	}
 };
 
+Config.story = {
+	key: 'story_image',
+	dir: Config.images+'story_screen-960_540.png',
+	x: 0,
+	y: 0,
+	alphaTime: 500,
+	alphaWait: 4500,
+	nextStateWait: 5000
+};
+
+
 //Animation fall
 Config.animationFall = {
 	fallGif: [],

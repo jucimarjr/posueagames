@@ -26,6 +26,9 @@ State.GameSplash.prototype = {
 		this.game.load.image('button-credits', Config.menu.buttonCredits.dir);
 		this.game.load.image('button-credits-selector', Config.menu.buttonCredits.selector);
 		
+		// STORY
+		this.game.load.image(Config.story.key, Config.story.dir);
+		
 		//Game
 		game.load.audio('music_game', Config.game.audio.dir);
 		this.game.load.image('bg1', Config.game.dirBg1);
@@ -87,6 +90,7 @@ State.GameSplash.prototype = {
 		Config.global.screen.resize(this.game);
 	},
 	loadComplete: function() {
+		
 		game.state.start('Menu');
 	}
 };

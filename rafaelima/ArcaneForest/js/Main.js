@@ -5,6 +5,7 @@ game.state.add('LudusSplash', State.LudusSplash);
 game.state.add('SponsorSplash', State.SponsorSplash);
 game.state.add('GameSplash', State.GameSplash);
 game.state.add('Menu', State.Menu);
+game.state.add('Story', State.Story);
 game.state.add('HowToPlay', State.HowToPlay);
 game.state.add('Credits', State.Credits);
 game.state.add('Game', State.Game);
