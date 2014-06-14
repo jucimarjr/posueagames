@@ -2,26 +2,34 @@
 
 State.GamePlay = function (game) {
 	"use strict";
-	this.game = game;	
+	this.game = game;
 };
 State.GamePlay.prototype = {
 	preload: function () {
-		var deadAnimation;
+		//var deadAnimation;
 		var jumping;
 		var cursors;
 		var levelConfig;
 		var onCipo;
-		var frameClimbing;
 	},
 	create: function () {
-
-		frameClimbing = Config.climbing.frames.min;
+		this.game.time.deltaCap = 0.016;		
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
-		this.game.stage.smoothed = false;
-		this.level = 9;
+		this.game.stage.smoothed = false;		
+		this.game.world.setBounds(-10, -10, this.game.world.width + 20, this.game.world.height + 20);
 
-		this.player = game.add.sprite(10,1000 ,'playerS');
+		levelConfig = Config.level.getLevel(Config.levelId.level);
+
+		if(levelConfig.checkPoint.x > 0){
+			//this.player.position.setTo(levelConfig.checkPoint.x, levelConfig.checkPoint.y);
+			this.player = game.add.sprite(levelConfig.checkPoint.x, levelConfig.checkPoint.y ,'playerS');
+		}else{
+			this.player = game.add.sprite(levelConfig.player.posX, levelConfig.player.posY ,'playerS');
+			//this.player.position.setTo(levelConfig.player.posX, levelConfig.player.posY);
+		}		
+		this.game.camera.follow(this.player);
+		
 		this.player.anchor.setTo(.5, 1);		
 		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13,14],20,true);
 		this.player.animations.add('stoped',[0,1],2,true);
@@ -35,15 +43,28 @@ State.GamePlay.prototype = {
 		this.player.body.collideWorldBounds = true;
 		this.game.physics.enable(this.player);
 		this.player.body.setSize(25, 60, 0, 0);
-		this.game.camera.y = 1000;
+
+		//this.game.camera.y = 1000;
 		cursors = this.game.input.keyboard.createCursorKeys();
-		this.loadLevel(this.level);		
+		this.loadLevel(Config.levelId.level);
+
+		// Show FPS
+    	this.game.time.advancedTiming = true;
+    	this.fpsText = this.game.add.text(
+        	20, 20, '', { font: '16px Arial', fill: '#ffffff' }
+    	);
 	},
 	update: function () {
+
+		if (this.game.time.fps !== 0) {
+        	this.fpsText.setText(this.game.time.fps + ' FPS');
+    	}
 
 		this.game.physics.arcade.collide(this.layer, this.player);
 		this.player.body.velocity.x = 0;
 		onCipo = false;
+		if(this.level == 3)
+			this.updateShadowTexture(this.player.body.x, this.player.body.y);
 
 		if(!this.gameOver){		
 			//Config.global.screen.resize(this.game);
@@ -64,7 +85,8 @@ State.GamePlay.prototype = {
 			this.game.physics.arcade.overlap(this.player, this.coin, function () {
 				levelConfig.checkPoint.x = 0;
 				levelConfig.checkPoint.y = 0;
-				this.loadLevel(this.level + 1);
+				Config.levelId.level = ++this.level;
+				this.game.state.start('GamePlay');
 			}, null, this);		
 		
         	if (cursors.left.isDown ) {
@@ -125,21 +147,12 @@ State.GamePlay.prototype = {
 	loadLevel: function (level) {
 		this.gameOver = false;
 		this.level = level;
-		levelConfig = Config.level.getLevel(level);
-
 		jumping = false;
 		
 		this.player.alpha = 1;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 		this.player.body.gravity.y = 1000;
-
-		if(levelConfig.checkPoint.x > 0){
-			this.player.position.setTo(levelConfig.checkPoint.x, levelConfig.checkPoint.y);
-		}else{
-			this.player.position.setTo(levelConfig.player.posX, levelConfig.player.posY);
-		}		
-		this.game.camera.follow(this.player);
 
 		if (this.layer) this.layer.destroy();
 		//if (this.flag) this.flag.destroy();
@@ -179,6 +192,10 @@ State.GamePlay.prototype = {
 		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);
 		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
 		if(levelConfig.checkPoint.id>0) this.addCheckPoint(levelConfig.checkPoint.id);
+
+		
+		if(this.level == 3)
+			this.initShadow();
 	},
 
 	addCipo: function(id){
@@ -297,22 +314,23 @@ State.GamePlay.prototype = {
 		this.die(player, enemie)
 	},
 
-	die : function(player, enemie) {
+	die: function(player, enemie) {
+        this.game.add.tween(this.game.camera).to({ x: -10 }, 40, 
+        	Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true).start();
+		enemie.kill();
 		this.gameOver = true;
 		this.player.animations.stop();
 		this.player.body.gravity.y = 0;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 		this.player.animations.play('dead');
-		var t = this.game.add.tween(this.player).to({alpha:0}, 500).start();
-		enemie.kill();	
-	
-		t.onComplete.add(function() {
-		    this.loadLevel(this.level);
-		}, this);
+		this.game.add.tween(this.player).to({alpha:0}, 500).start().onComplete.add(function() {
+		    	//this.loadLevel(this.level);
+		    	this.game.state.start('GamePlay');
+			}, this);		
     },
 
-    saveCP : function(player, cp) {    	
+    saveCP : function(player, cp) {
     	this.checkPoint.callAll('animations.play', 'animations', 'spin');
     	levelConfig.checkPoint.x = player.body.x;
     	levelConfig.checkPoint.y = player.body.y;
@@ -336,7 +354,44 @@ State.GamePlay.prototype = {
 
     },   
 
+    initShadow: function(){
+    	// Create the shadow texture
+    	this.shadowTexture = this.game.add.bitmapData(this.game.world.bounds.width, this.game.world.bounds.height);
+
+    	// Create an object that will use the bitmap as a texture
+    	var lightSprite = this.game.add.image(0, 0, this.shadowTexture);
+
+    	// Set the blend mode to MULTIPLY. This will darken the colors of
+    	// everything below this sprite.
+    	lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
+    },
+
+    updateShadowTexture: function(x, y) {
+    	// Draw shadow
+    	this.shadowTexture.context.fillStyle = 'rgb(9, 9, 9)';
+    	//this.shadowTexture.context.fillRect(0, 0, this.game.width, this.game.height);
+    	this.shadowTexture.context.fillRect(0, 0, this.game.world.bounds.width, this.game.world.bounds.height);
+    	
+    	// Draw circle of light with a soft edge
+    	var gradient = this.shadowTexture.context.createRadialGradient(
+    		x, y, Config.finalPhase.lightRadius * 0.75,
+    		x, y, Config.finalPhase.lightRadius);
+
+    	gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+    	gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+
+    	this.shadowTexture.context.beginPath();
+    	this.shadowTexture.context.fillStyle = gradient;
+    	this.shadowTexture.context.arc(x, y, Config.finalPhase.lightRadius, 0, Math.PI*2);
+    	this.shadowTexture.context.fill();
+
+    	// This just tells the engine it should update the texture cache
+    	this.shadowTexture.dirty = true;
+	},
+
     render: function (){
+    	/*game.debug.text(this.game.world.bounds.width,32,32);
+    	game.debug.text(this.game.world.bounds.height,32,64);*/
     	//game.debug.body(this.player);
     	//game.debug.body(this.thorns);
     	//game.debug.text(frameClimbing,32,32);

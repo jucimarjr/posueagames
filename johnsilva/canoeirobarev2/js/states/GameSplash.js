@@ -17,6 +17,7 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('button-play', Config.menu.buttonPlay.dir, Config.menu.buttonPlay.width, Config.menu.buttonPlay.height);
 		this.game.load.spritesheet('button-credits', Config.menu.buttonCredits.dir, Config.menu.buttonCredits.width, Config.menu.buttonCredits.height);
 		this.game.load.spritesheet('button-how-to-play', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
+		this.game.load.audio('menu-audio', Config.audio.menu);
 
 		//Credits
 		this.game.load.image('credits', Config.credits.dir);

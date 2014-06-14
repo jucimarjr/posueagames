@@ -250,13 +250,13 @@
  <objectgroup name="Freddy" width="320" height="20">
   <object gid="72" x="3690" y="717"/>
   <object gid="75" x="5662" y="674"/>
-  <object gid="72" x="7214" y="476"/>
+  <object gid="72" x="7224" y="476"/>
   <object gid="75" x="9043" y="594"/>
  </objectgroup>
  <objectgroup name="Hannibal" width="320" height="20">
   <object gid="80" x="1533" y="716"/>
   <object gid="83" x="2884" y="555"/>
-  <object gid="80" x="4881" y="674"/>
+  <object gid="80" x="4894" y="675"/>
   <object gid="83" x="9603" y="518"/>
  </objectgroup>
  <objectgroup name="Jason" width="320" height="20">
@@ -267,7 +267,7 @@
  </objectgroup>
  <objectgroup name="Joker" width="320" height="20">
   <object gid="99" x="3263" y="717"/>
-  <object gid="96" x="4455" y="552"/>
+  <object gid="96" x="4467" y="555"/>
   <object gid="96" x="10568" y="718"/>
   <object gid="99" x="11581" y="553"/>
  </objectgroup>

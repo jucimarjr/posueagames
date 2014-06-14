@@ -8,7 +8,7 @@
         create: function () {
             
         	var names = [
-        		'Daniele Viera',
+        		'Daniele Vieira',
         		'Moacir de Oliveira',
         		'Paulo Carvalho',
         		'Rodrigo Braga'
