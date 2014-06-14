@@ -75,10 +75,7 @@
             }
 
             this.enemies.update();
-
             this.player.update();
-
-            this.handleKeyDown();
         },
 
         createEnemies: function () {
@@ -143,9 +140,6 @@
 
         shurikenCollision: function (shuriken, layer) {
             shuriken.kill();
-        },
-
-        handleKeyDown: function () {
         }
     };
 
