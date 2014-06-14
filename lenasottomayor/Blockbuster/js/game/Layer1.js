@@ -15,6 +15,9 @@ Layer1.prototype = {
 		
 		this.platform = this.tilemap.map.createLayer(Config.tilemap.tiles.tileset.platform);
 		this.thorn = this.tilemap.map.createLayer(Config.tilemap.tiles.thorn.thorns);
+		
+		this.platform.resizeWorld();
+		this.thorn.resizeWorld();
 
 		this.tilemap.map.setCollision([2,20,47],true, Config.tilemap.tiles.tileset.platform);
 		this.tilemap.map.setCollisionBetween(5,7, true, Config.tilemap.tiles.tileset.platform);
