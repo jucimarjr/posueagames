@@ -44,10 +44,12 @@ State.Game.prototype = {
 		map.addTilesetImage('black', 'black');
 		map.addTilesetImage('white', 'white');
 
-		layer = map.createLayer('Tile Layer 1');
-		layer.resizeWorld(); // seta o mundo com as alterações feitas
-		map.setCollisionBetween(1, 1, true, 'Tile Layer 1'); // 0 espaco
+		layer = map.createLayer('Stage');
+		layer.resizeWorld(); // seta o mundo com as alteraï¿½ï¿½es feitas
+		map.setCollisionBetween(1, 1, true, 0); // 0 espaco
 
+		var layer2 = map.createLayer('Movable objects');
+		
 		// entrada
 		this.entrada = this.game.add.image(GOAL_X, GOAL_Y, 'entrada');
 

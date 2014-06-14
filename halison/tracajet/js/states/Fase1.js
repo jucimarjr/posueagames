@@ -52,6 +52,7 @@ State.Fase1.prototype = {
 		this.layer.resizeWorld(); //seta o mundo com as alterações feitas
 		//Colide com esses tilesets
 		this.map.setCollision([9,10,11,12,13,14,17,18,19,20,21,22], true,'TileWorld'); // 0 espaco vazio 1 em diante os tiles do tileset
+		this.map.setTileSize(36, 40);
 		//Se tocar em algun desses tilesets morre
 		this.map.setTileIndexCallback([15,16,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,47,48,55,56],this.gameOver,this);
 
@@ -67,6 +68,7 @@ State.Fase1.prototype = {
 	    this.tracajet.body.drag.x = 700;
 		this.tracajet.anchor.setTo(.5,.5);
 	    this.tracajet.body.gravity.y = 100;
+		this.tracajet.body.setSize(38, 80);
 	    game.camera.follow(this.tracajet);
 
 	    //Group jacares
