@@ -167,6 +167,7 @@ Config.game = {
 		attackCooldown: 200,
 		gravityY: 2000,
 		forceY: 1000,
+		jumpForce: 700,
 	},
 	monstercat:{
 		dir: 'assets/spritesheets/monstercat_38_18_3.png',

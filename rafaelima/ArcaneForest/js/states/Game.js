@@ -396,7 +396,7 @@ State.Game.prototype = {
         	
         	player.animations.play(Config.game.player.anim.jump.key);
         	
-        	this.playerCollider.body.moveUp(500);
+        	this.playerCollider.body.moveUp(Config.game.player.jumpForce);
 //            if (isJumping === false && beInGround === true) {
 ////                if (player.key != 'emmajumping') {
 ////                    this.resetPlayerJumpUp();
