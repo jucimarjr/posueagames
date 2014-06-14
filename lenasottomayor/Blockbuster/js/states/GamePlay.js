@@ -29,8 +29,28 @@ State.GamePlay.prototype = {
 	},
 	update: function () {
 		"use strict";
-		this.level1.update();
+//		this.level1.update();
+		
+		this.game.physics.arcade.collide(this.player.spritePlayer, this.layer1.platform);
+		this.game.physics.arcade.collide(this.player.spritePlayer, this.layer1.thorn);
+
+    	this.game.physics.arcade.overlap(this.player.spritePlayer, this.coins.group, this.collectCoins, null, this);
+    	this.game.physics.arcade.overlap(this.player.spritePlayer, this.powerlifes.group, this.collectPowerLifes, null, this);
+    	this.game.physics.arcade.overlap(this.player.spritePlayer, this.powerstars.group, this.collectPowerStars, null, this);
+		
 		this.enemy.update();
 		this.player.update();
+	},
+	
+	collectCoins: function(spritePlayer, coins) {
+		coins.kill();
+	},
+	
+	collectPowerLifes: function(spritePlayer, powerlifes) {
+		powerlifes.kill();
+	},
+	
+	collectPowerStars: function(spritePlayer, powerstars) {
+		powerstars.kill();
 	}
 };

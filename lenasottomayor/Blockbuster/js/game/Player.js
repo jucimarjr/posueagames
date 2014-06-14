@@ -32,7 +32,7 @@ Player.prototype = {
 	    this.spritePlayer.body.collideWorldBounds = true;
 		this.spritePlayer.anchor.setTo(Config.player.anchor.x, Config.player.anchor.y);
 	    
-	    this.game.camera.follow(this.spritePlayer);
+	    this.game.camera.follow(this.spritePlayer, Phaser.Camera.FOLLOW_PLATFORMER);
 
 	    this.cursors = this.game.input.keyboard.createCursorKeys();
 		this.jump = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -40,15 +40,6 @@ Player.prototype = {
 
 	update: function() {
 		"use strict";
-
-		this.game.physics.arcade.collide(this.spritePlayer, this.layer1.platform);
-		this.game.physics.arcade.collide(this.spritePlayer, this.layer1.thorn);
-
-    	this.game.physics.arcade.overlap(this.spritePlayer, this.coins.group, this.collectCoins, null, this);
-
-    	this.game.physics.arcade.overlap(this.spritePlayer, this.powerlifes.group, this.collectPowerLifes, null, this);
-
-    	this.game.physics.arcade.overlap(this.spritePlayer, this.powerstars.group, this.collectPowerStars, null, this);
 
 		this.spritePlayer.body.velocity.x = 0;
 
@@ -97,17 +88,5 @@ Player.prototype = {
 	    {
 	        this.spritePlayer.body.velocity.y = -Config.player.jump;
 	    }
-	},
-	
-	collectCoins: function(spritePlayer, coins) {
-		coins.kill();
-	},
-	
-	collectPowerLifes: function(spritePlayer, powerlifes) {
-		powerlifes.kill();
-	},
-	
-	collectPowerStars: function(spritePlayer, powerstars) {
-		powerstars.kill();
 	}
 };
