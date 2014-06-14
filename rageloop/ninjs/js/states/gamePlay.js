@@ -8,10 +8,6 @@
         this.spineLayer = null;
         this.player = null;
 
-        this.shurikens = null;
-        this.shurikenTimer = null;
-        this.shurikenDelay = 400;
-
         //enemies
         this.enemies = null;
         this.enemyShurikens = null;
@@ -45,11 +41,6 @@
             this.map.setCollisionBetween(0, 15, true, 'items');
             this.map.setCollisionBetween(0, 15, true, 'spines');
 
-            this.shurikens = this.game.add.group();
-            this.shurikens.createMultiple(10, 'shuriken');
-            this.shurikens.setAll('anchor.x', 0.5);
-            this.shurikens.setAll('anchor.y', 0.5);
-
             this.enemies = this.game.add.group();
 
             this.createEnemyIdle(40*26, 40*38);
@@ -76,21 +67,8 @@
             this.enemyShurikens.setAll('anchor.x', 0.5);
             this.enemyShurikens.setAll('anchor.y', 0.5);
 
-            this.player = this.game.add.sprite(40, 40*41, 'ninjas');
-
-            this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
-
-            this.player.anchor.setTo(0.5, 0.5);
-            this.player.body.gravity.y = 1200;
-            this.player.body.collideWorldBounds = true;
-
-            this.player.animations.add('idle', [64, 65, 66, 67], 4, true);
-            this.player.animations.add('walk', [0, 1, 2, 3], 8, true);
-            this.player.animations.add('dash', [33, 34], 8, false);
-            this.player.animations.add('jump', [99, 98], 8, false);
-            this.player.animations.add('death', [130, 131, 132, 133, 135], 8, false);
-
-            this.player.animations.play('idle');
+            this.player = new Player(this.game);
+            this.player.create(40, 40*41);
 
             /*audios*/
 
@@ -105,25 +83,27 @@
             this.hud = new HUD(this.game);
             this.hud.init();
 
-            this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_PLATFORMER);
+            this.game.camera.follow(this.player.sprite, Phaser.Camera.FOLLOW_PLATFORMER);
         },
 
         update: function() {
-            this.game.physics.arcade.collide(this.player, this.layer);
+            this.game.physics.arcade.collide(this.player.sprite, this.layer);
             this.game.physics.arcade.collide(this.enemies, this.layer);
 
-            this.game.physics.arcade.overlap(this.player, this.itemLayer, this.collectItem, null, this);
-            this.game.physics.arcade.overlap(this.shurikens, this.layer, this.shurikenCollision, null, this);
-            this.game.physics.arcade.overlap(this.shurikens, this.enemies, this.killEnemy, null, this);
+            this.game.physics.arcade.overlap(this.player.sprite, this.itemLayer, this.collectItem, null, this);
+            this.game.physics.arcade.overlap(this.player.shurikens, this.layer, this.shurikenCollision, null, this);
+            this.game.physics.arcade.overlap(this.player.shurikens, this.enemies, this.killEnemy, null, this);
             this.game.physics.arcade.overlap(this.enemyShurikens, this.layer, this.shurikenCollision, null, this);
 
             if (!this.player.dead) {
-                this.game.physics.arcade.overlap(this.player, this.enemyShurikens, this.die, null, this);
-                this.game.physics.arcade.overlap(this.player, this.enemies, this.die, null, this);
-                this.game.physics.arcade.overlap(this.player, this.spineLayer, this.die, null, this);
+                this.game.physics.arcade.overlap(this.player.sprite, this.enemyShurikens, this.die, null, this);
+                this.game.physics.arcade.overlap(this.player.sprite, this.enemies, this.die, null, this);
+                this.game.physics.arcade.overlap(this.player.sprite, this.spineLayer, this.die, null, this);
             }
 
             this.enemies.forEachAlive(this.updateEnemies, this);
+
+            this.player.update();
 
             this.handleKeyDown();
         },
@@ -134,26 +114,6 @@
             this.map.removeTile(tile.x, tile.y, this.itemLayer);
         },
 
-        fire: function () {
-            var shuriken = this.shurikens.getFirstDead();
-
-            if (!shuriken || this.shurikenTimer) return false;
-
-            this.game.physics.enable(shuriken, Phaser.Physics.ARCADE);
-
-            shuriken.reset(this.player.x + this.player.width, this.player.y);
-            shuriken.body.velocity.x = (this.player.scale.x > 0) ? 1000 : -1000;
-            shuriken.scale.set(0.8, 0.8);
-            shuriken.checkWorldBounds = true;
-            shuriken.outOfBoundsKill = true;
-
-            this.shurikenAudio.play();
-
-            this.startShurikenTimer();
-
-            return true;
-        },
-
         die: function (player, obj) {
 
             var self = this;
@@ -162,9 +122,7 @@
                 obj.kill();
             }
 
-            player.body.velocity.x = 0;
-            player.dead = true;
-            player.animations.play('death');
+            this.player.die();
 
             this.hud.updateLifes(-1);
 
@@ -178,15 +136,9 @@
             } else {
 
                 setTimeout(function(){
-                    self.revive();
+                    self.player.revive();
                 }, 1200);
-            }            
-
-        },
-
-        revive: function() {
-            this.player.dead = false;
-            this.player.animations.play('idle');
+            }
         },
 
         createEnemy: function (x, y) {
@@ -228,12 +180,12 @@
 
         updateEnemies: function (enemy) {
             if (enemy.type == 'idle') {
-                if ((this.player.x < enemy.x && enemy.scale.x > 0) || (this.player.x > enemy.x && enemy.scale.x < 0)) {
+                if ((this.player.sprite.x < enemy.x && enemy.scale.x > 0) || (this.player.sprite.x > enemy.x && enemy.scale.x < 0)) {
                     enemy.scale.x *= -1; //move enemy to always front the player
                 }
 
                 //fire if player is near
-                if ((Math.abs(this.player.x - enemy.x) < 400) && (Math.abs(this.player.y - enemy.y) < 300)) {
+                if ((Math.abs(this.player.sprite.x - enemy.x) < 400) && (Math.abs(this.player.sprite.y - enemy.y) < 300)) {
                     if (this.game.time.now > this.enemyFireTimer + 1500) {
                         this.enemyFire(enemy);
                         this.enemyFireTimer = this.game.time.now;
@@ -278,84 +230,11 @@
             this.hud.updateScore(1);
         },
 
-        startShurikenTimer: function () {
-            var self = this;
-            this.shurikenTimer = setTimeout(function () {
-                clearTimeout(self.shurikenTimer);
-                self.shurikenTimer = null;
-            }, this.shurikenDelay);
-        },
-
         shurikenCollision: function (shuriken, layer) {
             shuriken.kill();
         },
 
-        turnLeft: function() {
-            if (this.player.scale.x > 0) {
-                this.player.scale.x *= -1;
-            }
-        },
-
-        turnRight: function() {
-            if (this.player.scale.x < 0) {
-                this.player.scale.x *= -1;
-            }
-        },
-
         handleKeyDown: function () {
-            if (this.player.dead) return;
-
-            var shiftPressed = this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT);
-
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
-                this.player.body.velocity.x = 250 * (shiftPressed ? 2 : 1);
-                this.turnRight();
-
-                if (this.player.body.onFloor()) {
-                    if (shiftPressed) {
-                        this.player.animations.play('dash');
-                    } else {
-                        this.player.animations.play('walk');
-                    }
-                } else if (this.player.animations.currentAnim.name != 'jump') {
-                    this.player.animations.play('jump');
-                }
-            }
-
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-                this.player.body.velocity.x = -250 * (shiftPressed ? 2 : 1);
-                this.turnLeft();
-
-                if (this.player.body.onFloor()) {
-                    if (shiftPressed) {
-                        this.player.animations.play('dash');
-                    } else {
-                        this.player.animations.play('walk');
-                    }
-                } else if (this.player.animations.currentAnim.name != 'jump') {
-                    this.player.animations.play('jump');
-                }
-            }
-
-            if (!this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT) && !this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-                if (this.player.body.onFloor()) {
-                    this.player.body.velocity.x = 0;
-                    this.player.animations.play('idle');
-                } else if (this.player.animations.currentAnim.name != 'jump') {
-                    this.player.animations.play('jump');
-                }
-            }
-
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-                this.fire();
-            }
-
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-                if (this.player.body.onFloor()) {
-                    this.player.animations.play('jump');
-                    this.player.body.velocity.y = -650;
-                }
-            }
         }
     };
 
