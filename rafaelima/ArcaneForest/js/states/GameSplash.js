@@ -55,8 +55,10 @@ State.GameSplash.prototype = {
 		this.game.load.image('red', Config.game.red.dir);
 		this.game.load.image('pink', Config.game.pink.dir);
 		this.game.load.image('key', Config.game.key.dir);
-		this.game.load.image('life', Config.game.life.dir);
-		this.game.load.image('nolife', Config.game.nolife.dir);
+		
+		// lifes
+		this.game.load.image(Config.game.life.full.key, Config.game.life.full.dir);
+		this.game.load.image(Config.game.life.empty.key, Config.game.life.empty.dir);
 		
 		// PLAYER
 		this.game.load.spritesheet(Config.game.player.sword.key, Config.game.player.sword.dir, Config.game.player.sword.width, Config.game.player.sword.height);

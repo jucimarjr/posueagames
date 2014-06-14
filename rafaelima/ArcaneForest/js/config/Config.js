@@ -67,7 +67,7 @@ Config.story = {
 	y: 0,
 	alphaTime: 500,
 	alphaWait: 4500,
-	nextStateWait: 5000
+	nextStateWait: 1000
 };
 
 
@@ -105,6 +105,7 @@ Config.game = {
 		height: 48,
 		x: 60,
 		y: 3300,
+		lifes: 3,
 		sword:{
 			key: 'emmasword_spritesheet',
 			dir: Config.spriteSheets + 'emmasword-112_113_11.png',
@@ -177,6 +178,7 @@ Config.game = {
 				loop: false
 			},
 		},
+		damageCooldown: 2000,
 		attackCooldown: 200,
 		gravityY: 2000,
 		forceY: 1000,
@@ -245,10 +247,16 @@ Config.game = {
 		dir: 'assets/images/keytopbar_13-25.png'
 	},
 	life:{
-		dir: 'assets/images/life_28-22.png'
-	},
-	nolife:{
-		dir: 'assets/images/emptylife_28-22.png'
+		full: {
+			key: 'player_life',
+			dir: Config.images + 'life_28-22.png'
+		},
+		empty: {
+			key: 'player_nolife',
+			dir: Config.images + 'emptylife_28-22.png'
+		},
+		x: 40,
+		y: 8,
 	},
 	audio:{
 		dir: 'assets/audio/arcane_forest_soundtrack.mp3'
