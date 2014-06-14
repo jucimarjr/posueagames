@@ -539,10 +539,10 @@ State.Game.prototype = {
     },
 
     hitBar: function () {
-        if (checkIfConered() === false) {
-            beInGround = checkIfCanJump();
-            isJumping = false;
-        }
+//        if (checkIfConered() === false) {
+//            beInGround = checkIfCanJump();
+//            isJumping = false;
+//        }
     },
 
     //internet magic...player is over something
@@ -575,9 +575,9 @@ State.Game.prototype = {
         for (var i = 0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++) {
             var c = game.physics.p2.world.narrowphase.contactEquations[i];
 
-            if (c.bodyA === player.body.data || c.bodyB === player.body.data) {
+            if (c.bodyA === this.playerCollider.body.data || c.bodyB === this.playerCollider.body.data) {
                 var d = p2.vec2.dot(c.normalA, xAxis); // Normal dot Y-axis
-                if (c.bodyA === player.body.data)
+                if (c.bodyA === this.playerCollider.body.data)
                     d *= -1;
                 if (d > 0.5)
                     result = true;
@@ -594,8 +594,8 @@ State.Game.prototype = {
     putBar: function () {
         //bar 1
         bar = this.game.add.sprite(Config.game.bar.startX,
-				Config.game.bar.startY, 'bar');
-	this.game.physics.p2.enable(bar, false);
+Config.game.bar.startY, 'bar');
+        this.game.physics.p2.enable(bar, false);
         bar.body.kinematic = true;
         this.game.add.tween(bar.body.velocity).to({
             x: '+200'
@@ -607,7 +607,7 @@ State.Game.prototype = {
 
         //bar 2
         bar2 = this.game.add.sprite(3850, 3334, 'bar');
-	this.game.physics.p2.enable(bar2, false);
+        this.game.physics.p2.enable(bar2, false);
         bar2.body.kinematic = true;
         this.game.add.tween(bar2.body.velocity).to({
             x: '+200'
