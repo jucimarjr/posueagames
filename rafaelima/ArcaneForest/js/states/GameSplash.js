@@ -43,9 +43,9 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('bigbossattackcompose', Config.game.bigbossattackcompose.dir, Config.game.bigbossattackcompose.width, Config.game.bigbossattackcompose.height);
 		this.game.load.spritesheet('bigbossattackfire', Config.game.bigbossattackfire.dir, Config.game.bigbossattackfire.width, Config.game.bigbossattackfire.height);
 		this.game.load.spritesheet('bluemonster', Config.game.bluemonster.dir, Config.game.bluemonster.width, Config.game.bluemonster.height);
-		this.game.load.spritesheet('emmaattack', Config.game.emmaattack.dir, Config.game.emmaattack.width, Config.game.emmaattack.height);
-		this.game.load.spritesheet('emmajumping', Config.game.emmajumping.dir, Config.game.emmajumping.width, Config.game.emmajumping.height);
-		this.game.load.spritesheet('emmarun', Config.game.emmarun.dir, Config.game.emmarun.width, Config.game.emmarun.height);
+//		this.game.load.spritesheet('emmaattack', Config.game.emmaattack.dir, Config.game.emmaattack.width, Config.game.emmaattack.height);
+//		this.game.load.spritesheet('emmajumping', Config.game.emmajumping.dir, Config.game.emmajumping.width, Config.game.emmajumping.height);
+//		this.game.load.spritesheet('emmarun', Config.game.emmarun.dir, Config.game.emmarun.width, Config.game.emmarun.height);
 		this.game.load.spritesheet('greenmonsterleft', Config.game.greenmonsterleft.dir, Config.game.greenmonsterleft.width, Config.game.greenmonsterleft.height);
 		this.game.load.spritesheet('greenmonsterright', Config.game.greenmonsterright.dir, Config.game.greenmonsterright.width, Config.game.greenmonsterright.height);
 		this.game.load.image('blue', Config.game.blue.dir);
