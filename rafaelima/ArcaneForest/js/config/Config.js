@@ -24,11 +24,13 @@ var Config = {
 
 //LudusSplash
 Config.ludusSplash = {
-	dir: 'assets/images/LudusSplash_960-600.png',
+	key: 'ludus-splash',
+	dir: Config.images+'LudusSplash_960-600.png',
 	x: 0,
 	y: 0,
-	millis: 2000,
-	nextState: 4000
+	alphaTime: 500,
+	alphaWait: 1500,
+	nextStateWait: 2000
 };
 
 //SponsorSplash
