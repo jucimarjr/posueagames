@@ -195,11 +195,14 @@ State.Game.prototype = {
         
         //		this.showHealth();
         //				Config.global.screen.resize(this.game);
+        
+        var intVelY = Math.floor( this.playerCollider.body.velocity.y );
+        
         if (cursors.left.isDown) {
         	this.playerCollider.body.moveLeft(500);
             player.scale.x = -1;
             //player.animations.play('left');
-            if(!this.attacking) {
+            if(!this.attacking && this.canJump && intVelY == 0) {
             	player.animations.play(Config.game.player.anim.walk.key);
             }
             
@@ -214,7 +217,7 @@ State.Game.prototype = {
         	this.playerCollider.body.moveRight(500);
             player.scale.x = 1;
             //player.animations.play('right');
-            if(!this.attacking) {
+            if(!this.attacking && this.canJump && intVelY == 0) {
             	player.animations.play(Config.game.player.anim.walk.key);
             }
             
@@ -391,6 +394,8 @@ State.Game.prototype = {
         	
         	this.canJump = false;
         	
+        	player.animations.play(Config.game.player.anim.jump.key);
+        	
         	this.playerCollider.body.moveUp(500);
 //            if (isJumping === false && beInGround === true) {
 ////                if (player.key != 'emmajumping') {
@@ -510,15 +515,19 @@ State.Game.prototype = {
     hitObstacles: function () {
         beInGround = this.checkIfCanJump();
         isJumping = false;
-        if (player.key != 'emmarun') {
-            this.resetPlayer();
-        }
+//        if (player.key != 'emmarun') {
+//            this.resetPlayer();
+//        }
     },
 
     hitMonsters: function () {
     	
     	// lose life
     	player.kill();
+    	this.playerCollider.kill();
+    	
+    	// TODO: game over screen
+    	
     	
 //        if (player.key === 'emmaattack' && (this.checkIfConered() === true || Math.abs(player.x - monster.x) <= 104)) {
 //            monster.kill();
