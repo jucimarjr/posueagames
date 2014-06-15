@@ -155,7 +155,7 @@ State.GamePlay.prototype = {
         this.urchins.physicsBodyType = Phaser.Physics.P2JS;
         this.urchins.create(3000, this.game.height - 80 - 20, 'urchin');
         this.urchins.create(3300, this.game.height - 80 - 20, 'urchin');
-        for (var i = 0; i < this.crabs.length; i++) {
+        for (var i = 0; i < this.urchins.length; i++) {
             this.urchins.getAt(i).body.setCollisionGroup(this.urchinsCG);
             this.urchins.getAt(i).body.static = true;
             this.urchins.getAt(i).animations.add('nohit', [0], 10, true);
