@@ -46,7 +46,8 @@ State.GamePlay.prototype = {
         this.drop.preload();
         
         // Straw physics
-        this.game.load.physics('strawPhysics', 'assets/straw-polygon.json');
+        this.game.load.physics('strawPhysics',
+                'assets/polygon/straw-polygon.json');
 
         this.game.load.physics('seashellPhysics',
                 'assets/polygon/seashell-polygon.json');
