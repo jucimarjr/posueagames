@@ -29,7 +29,7 @@
         },
         create: function () {},
         update: function() {
-            this.game.state.start('Menu');
+            this.game.state.start('StoryPresentation');
         }
     };
 
