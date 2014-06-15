@@ -7,6 +7,9 @@ State.GamePlay = function (game) {
     this.layer = null;
     this.player = null;
     this.crabs = null;
+    this.shell = null;
+    this.crabMaterial = null;
+    this.groundMaterial = null;
     
     this.dropCollisionGroup = null;
     this.crabCollisionGroup = null;
@@ -91,12 +94,17 @@ State.GamePlay.prototype = {
 		this.lifeDropCG = game.physics.p2.createCollisionGroup();
 		this.seashellCG = game.physics.p2.createCollisionGroup();
 		
+		// Create and Setup Material
+        this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
+        this.slidingMaterial = game.physics.p2.createMaterial('slidingMaterial');            
+        this.crabMaterial = game.physics.p2.createMaterial('crabMaterial');           
+        this.groundMaterial = game.physics.p2.createMaterial('groundMaterial');
+		
         //setup all tiles with collisiongroups or materials
 		for (var i=0; i<this.layermain.length; i++){
-			console.log("Entrou no loooooooooooooooop");
 			this.layermain[i].setCollisionGroup(this.groundCG);
 			this.layermain[i].collides([this.playerCG, this.crabCG, this.lifeDropCG]);
-			//layermain_tiles[i].setMaterial(groundMaterial);
+			this.layermain[i].setMaterial(this.groundMaterial);
 		}
 		
         // create player
@@ -108,6 +116,7 @@ State.GamePlay.prototype = {
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
                 this.lifeDropCG, this.seashellCG]);
+        dropSprite.body.setMaterial(this.characterMaterial);
         
         // Create sea shell
         this.seashell = this.game.add.sprite(450, this.game.world.height - 106,
@@ -129,21 +138,15 @@ State.GamePlay.prototype = {
         this.crabs.create(this.game.width, this.game.height-80-69, 'crab');				
 		for (var i = 0; i < this.crabs.length; i++) {				
 			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);				
+			this.crabs.getAt(i).body.fixedRotation = true;			
+			this.crabs.getAt(i).body.setMaterial(this.crabMaterial);
+
 			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG,
                     this.groundCG, this.seashellCG]);
 		}
-		this.crabs.getAt(0).body.moveLeft(1000);
-		this.crabs.getAt(1).body.moveRight(1000);
-		
-		// Material
-        this.characterMaterial =
-            game.physics.p2.createMaterial('characterMaterial');
-        this.slidingMaterial =
-            game.physics.p2.createMaterial('slidingMaterial');
-
-        this.game.physics.p2.createContactMaterial(this.characterMaterial,
-        		this.slidingzMaterial, {friction: 0.1, restitution: 0});        
-        
+		this.crabs.getAt(0).body.moveLeft(500);
+		this.crabs.getAt(1).body.moveRight(500);
+		      
 		// canudo
 		this.diagonalStraw = this.game.add.sprite(2640, 270, 'straw2');
 		this.game.physics.p2.enableBody(this.diagonalStraw, false);
@@ -168,7 +171,10 @@ State.GamePlay.prototype = {
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
 		this.lifeDrop.body.createGroupCallback(this.playerCG, this.checkOverlapWithLifeDrop, this);
-				
+		
+        this.game.physics.p2.createContactMaterial(this.characterMaterial, this.slidingzMaterial, {friction: 0.1, restitution: 0});         
+        this.game.physics.p2.createContactMaterial(this.groundMaterial, this.crabMaterial, {friction: 0.0, restitution: 0.0});
+        				
         this.hud.create();
         
 		//this.userDead();
@@ -311,16 +317,16 @@ State.GamePlay.prototype = {
 	moveCrab: function (crab) {
 		if (crab.name == "crab1") {
 			if (this.touchingLeft(crab.body)) {
-				crab.body.moveRight(1000);
+				crab.body.moveRight(500);
 			} else if (this.touchingRight(crab.body)) {
-				crab.body.moveLeft(1000);
+				crab.body.moveLeft(500);
 			} else {
 			}								
 		} else {
 			if (this.touchingRight(crab.body)) {
-				crab.body.moveLeft(1000);
+				crab.body.moveLeft(500);
 			} else if (this.touchingLeft(crab.body)) {
-				crab.body.moveRight(1000);
+				crab.body.moveRight(500);
 			} else {
 				//this.crab.body.velocity.x = -100;
 			}			
