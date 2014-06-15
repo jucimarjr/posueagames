@@ -20,9 +20,13 @@ State.Fase1= function (game) {
 	this.enemies;
 	this.nameEnemy = 'Enemies';
 	this.nameSheets = 'Sheet';
+	this.nameKeys = 'Keys';
 	this.sheets;
+	this.keys;
 	this.txtScore;
 	this.txtPause;
+	this.contKeys = 0;
+	this.TOTAL_KEYS = 4;
 };
 
 var folha;
@@ -37,6 +41,7 @@ State.Fase1.prototype = {
 		game.load.spritesheet('jacare', "assets/1aFase/jacare_spritesheet_240-80.png",40,40);
 		game.load.image('bg',Config.game.fase1.background);
 		game.load.image('tilesetPlataforma','assets/1aFase/assets_1.png');
+		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
 	},
 
 	create: function () {
@@ -65,9 +70,9 @@ State.Fase1.prototype = {
 		
 		this.tracajet.body.acceleration.y = 20;
 		this.tracajet.body.collideWorldBounds = true;
-	    this.tracajet.body.drag.x = 700;
+	    this.tracajet.body.drag.x = 200;
 		this.tracajet.anchor.setTo(.5,.5);
-	    this.tracajet.body.gravity.y = 100;
+	    this.tracajet.body.gravity.y = 50;
 		this.tracajet.body.setSize(38, 80);
 	    game.camera.follow(this.tracajet);
 
@@ -82,6 +87,12 @@ State.Fase1.prototype = {
 		this.sheets = this.game.add.group();
 		this.sheets.enableBody  = true;
 		this.map.createFromObjects(this.nameSheets,2,'folhas',0,true,false,this.sheets);
+
+		//Grupo chaves
+		this.keys = this.game.add.group();
+		this.keys.enableBody = true;
+		this.map.createFromObjects(this.nameKeys,1,'key_8080',0,true,false,this.keys);		
+		
 
 		//Cursor
 		this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -104,11 +115,28 @@ State.Fase1.prototype = {
 		game.physics.arcade.collide(this.tracajet, this.layer)
 	    game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
 	    game.physics.arcade.overlap(this.sheets,this.tracajet,this.increaseScore,null,this);
+	    game.physics.arcade.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
 	    this.updateTracajet();
 	    this.updateEnemies();
 	    this.updateScorePosition
 		
 	},
+	increaseContKeys : function(tracajet,key){
+		key.kill();
+		this.contKeys ++;
+		if(this.contKeys === this.TOTAL_KEYS){
+			var moduloPositionX = Math.abs(game.world.position.x);
+			var moduloPositionY = Math.abs(game.world.position.y); 
+			this.game.paused = true;
+			var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
+				font: "48px Arial",
+				fill: "#ff0044",
+				align: "left"
+			});
+			dieText.setText("YOU WIN");
+		}
+	}
+	,
 	updateScorePosition : function(){
 		var moduloPositionX = Math.abs(this.game.world.position.x) +  this.game.width -100;
 		var moduloPositionY = Math.abs(this.game.world.position.y) + 20; 
