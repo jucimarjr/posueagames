@@ -1,6 +1,6 @@
 
 
-Player = function(game, coins, layer1, powerlifes, powerstars, thorns) {
+Player = function(game, coins, layer1, powerlifes, powerstars, thorns, enemy) {
 
 	this.game = game;
 	this.coins = coins;
@@ -12,6 +12,7 @@ Player = function(game, coins, layer1, powerlifes, powerstars, thorns) {
 	this.life = 3;
 	this.spritePlayer = null;
 	this.cursors = null;
+	this.enemy = enemy;
 	
 };
 
@@ -88,5 +89,19 @@ Player.prototype = {
 	    {
 	        this.spritePlayer.body.velocity.y = -Config.player.jump;
 	    }
+	},
+	
+	die: function (){
+		if(this.life > 0){
+			this.life--;
+		}
+		else{
+			this.spritePlayer.animations.play('dead');
+			//this.gameOver();
+		}
+	},
+	
+	gameOver: function (){
+	
 	}
 };

@@ -262,7 +262,7 @@ Config.game = {
 		dir: 'assets/audio/arcane_forest_soundtrack.mp3'
 	},
 	bar:{
-		dir: 'assets/images/bar.png',
+		dir: 'assets/images/horizontalbar_139-32.png',
 		startX: 3770,
 		startY: 3470,
 		startRotateX: 1270,

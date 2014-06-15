@@ -33,6 +33,7 @@ State.GamePlay.prototype = {
 	    this.game.load.image('bucket', 'assets/images/balde_384-497.png');
 	    this.game.load.image('straw1', 'assets/images/straw1_375-72.png');
 	    this.game.load.image('straw2', 'assets/images/straw2_236-276.png');
+	    this.game.load.image('seashell', 'assets/images/seashell_220-68.png');
 	    this.game.load.spritesheet('life_drop',
 	            'assets/spritesheets/molecula_110-48.png', 55, 48);
 	    
@@ -45,9 +46,11 @@ State.GamePlay.prototype = {
         this.drop.preload();
         
         // Straw physics
+        this.game.load.physics('strawPhysics',
+                'assets/polygon/straw-polygon.json');
 
-        this.game.load.physics('strawPhysics', 'assets/straw-polygon.json');
-
+        this.game.load.physics('seashellPhysics',
+                'assets/polygon/seashell-polygon.json');
 	},
 		
 	create: function () {
@@ -86,6 +89,7 @@ State.GamePlay.prototype = {
 		this.crabCG = game.physics.p2.createCollisionGroup();
 		this.strawCG = game.physics.p2.createCollisionGroup();
 		this.lifeDropCG = game.physics.p2.createCollisionGroup();
+		this.seashellCG = game.physics.p2.createCollisionGroup();
 		
         //setup all tiles with collisiongroups or materials
 		for (var i=0; i<this.layermain.length; i++){
@@ -102,8 +106,21 @@ State.GamePlay.prototype = {
         this.game.camera.follow(dropSprite);
         this.drop.configureCharacter(this.setCharacterInicialValues);
         dropSprite.body.setCollisionGroup(this.playerCG);
-        dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG, this.lifeDropCG]);
+        dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
+                this.lifeDropCG, this.seashellCG]);
         
+        // Create sea shell
+        this.seashell = this.game.add.sprite(450, this.game.world.height - 106,
+                'seashell');
+        this.game.physics.p2.enableBody(this.seashell);
+        this.seashell.body.clearShapes();
+        this.seashell.body.loadPolygon('seashellPhysics', 'seashell_220-68');
+        this.seashell.body.fixedRotation = true;
+        this.seashell.body.static = true;
+        this.seashell.body.setCollisionGroup(this.seashellCG);
+        this.seashell.body.collides([this.groundCG, this.crabCG,
+                this.playerCG]);
+
         // create crabs
         this.crabs = game.add.group();
 		this.crabs.enableBody = true;
@@ -112,7 +129,8 @@ State.GamePlay.prototype = {
         this.crabs.create(this.game.width, this.game.height-80-69, 'crab');				
 		for (var i = 0; i < this.crabs.length; i++) {				
 			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);				
-			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG, this.groundCG]);
+			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG,
+                    this.groundCG, this.seashellCG]);
 		}
 		this.crabs.getAt(0).body.moveLeft(1000);
 		this.crabs.getAt(1).body.moveRight(1000);
