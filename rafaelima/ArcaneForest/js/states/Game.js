@@ -29,6 +29,7 @@ var isJumping, beInGround, yBeforeJump;
 var monster_speed = 5;
 var health;
 var music;
+var verticalBar1, verticalBar2, verticalBar3;
 
 var STATE_PLAY = 0;
 var STATE_PAUSED = 1;
@@ -88,6 +89,8 @@ State.Game.prototype = {
         bg2 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg2');
         bg3 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg3');
         this.game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
+        
+        this.putVerticalBar();
 
         //Map
         map = this.game.add.tilemap('stage');
@@ -308,7 +311,7 @@ State.Game.prototype = {
     render: function () {
         "use strict";
         //DEBUG
-//		this.game.debug.spriteInfo(player, 32, 32);
+		this.game.debug.spriteInfo(player, 32, 32);
     },
 
     //collect item (diamond and key)
@@ -626,7 +629,7 @@ State.Game.prototype = {
     //Create Bars
     putBar: function () {
         //bar 1
-        bar = this.game.add.sprite(4000, 3434, 'bar');
+        bar = this.game.add.sprite(3850, 3434, 'bar');
         this.game.physics.p2.enable(bar, false);
         bar.body.kinematic = true;
         this.game.add.tween(bar.body.velocity).to({
@@ -749,6 +752,42 @@ State.Game.prototype = {
             monster.body.velocity.y = monster_speed;
         }
 
+    },
+    putVerticalBar: function () {
+        //bar 1
+    	verticalBar1 = this.game.add.sprite(3500, 2300, 'verticalbar');
+        this.game.physics.p2.enable(verticalBar1, false);
+        verticalBar1.body.kinematic = true;
+        this.game.add.tween(verticalBar1.body.velocity).to({
+        	y: '+200'
+        }, 4000).to({
+            y: '-200'
+        }, 4000).yoyo().loop().start();
+        verticalBar1.body.setCollisionGroup(barCollisionGroup);
+        verticalBar1.body.collides([barCollisionGroup, playerCollisionGroup]);
+        
+      //bar 1
+//        verticalBar2 = this.game.add.sprite(3650, 2300, 'verticalbar');
+//        this.game.physics.p2.enable(verticalBar2, false);
+//        verticalBar2.body.kinematic = true;
+//        this.game.add.tween(verticalBar2.body.velocity).to({
+//            y: '+200'
+//        }, 4000).to({
+//            y: '-200'
+//        }, 4000).yoyo().loop().start();
+//        verticalBar2.body.setCollisionGroup(barCollisionGroup);
+//        verticalBar2.body.collides([barCollisionGroup, playerCollisionGroup]);
+        
+      //bar 1
+    	verticalBar3 = this.game.add.sprite(3800, 2300, 'verticalbar');
+        this.game.physics.p2.enable(verticalBar3, false);
+        verticalBar3.body.kinematic = true;
+        this.game.add.tween(verticalBar3.body.velocity).to({
+        	y: '+200'
+        }, 4000).to({
+            y: '-200'
+        }, 4000).yoyo().loop().start();
+        verticalBar3.body.setCollisionGroup(barCollisionGroup);
+        verticalBar3.body.collides([barCollisionGroup, playerCollisionGroup]);
     }
-    
 };

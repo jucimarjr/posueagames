@@ -104,7 +104,7 @@ Config.game = {
 		width: 32,
 		height: 48,
 		x: 60,
-		y: 3300,
+		y: 3481,
 		lifes: 3,
 		sword:{
 			key: 'emmasword_spritesheet',
@@ -269,6 +269,9 @@ Config.game = {
 		startRotateY: 444,
 		widthAreaRotate: 1725,
 		widthArea: 3650,
+	},
+	verticalbar:{
+		dir: 'assets/images/verticalbar_72-252.png',
 	}
 };
 
