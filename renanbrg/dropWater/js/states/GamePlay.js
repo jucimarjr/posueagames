@@ -32,6 +32,8 @@ State.GamePlay.prototype = {
 	    this.game.load.image('plataforma','assets/images/barra_160-80.png');
 	    this.game.load.image('areia','assets/images/areiaSeca_40-40.png');
 	    this.game.load.spritesheet('crab','assets/images/crab_150-69.png', 150, 69);
+        this.game.load.spritesheet('urchin',
+                'assets/spritesheets/seaurchin_80-40.png', 40, 40);
 	    this.game.load.image('wetSand', 'assets/images/areiaMolhada_330-75.png');
 	    this.game.load.image('bucket', 'assets/images/balde_384-497.png');
 	    this.game.load.image('straw1', 'assets/images/straw1_375-72.png');
@@ -91,6 +93,7 @@ State.GamePlay.prototype = {
 		this.strawCG = game.physics.p2.createCollisionGroup();
 		this.lifeDropCG = game.physics.p2.createCollisionGroup();
 		this.seashellCG = game.physics.p2.createCollisionGroup();
+		this.urchinsCG = game.physics.p2.createCollisionGroup();
 		
 		// Create and Setup Material
         this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
@@ -106,14 +109,14 @@ State.GamePlay.prototype = {
 		}
 		
         // create player
-        this.drop.create(200, this.game.world.height-200);
+        this.drop.create(2800, this.game.world.height-200);
         var dropSprite = this.drop.getSpriteObject();   
         this.game.physics.p2.enableBody(dropSprite, false);        
         this.game.camera.follow(dropSprite);
         this.drop.configureCharacter(this.setCharacterInicialValues);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
-                this.lifeDropCG, this.seashellCG]);
+                this.lifeDropCG, this.seashellCG, this.urchinsCG]);
         dropSprite.body.setMaterial(this.characterMaterial);
         
         // Create sea shell
@@ -145,6 +148,21 @@ State.GamePlay.prototype = {
 		}
 		this.crabs.getAt(0).body.moveLeft(500);
 		this.crabs.getAt(1).body.moveRight(500);
+
+        // Create the sea urchins
+        this.urchins = game.add.group();
+        this.urchins.enableBody = true;
+        this.urchins.physicsBodyType = Phaser.Physics.P2JS;
+        this.urchins.create(3000, this.game.height - 80 - 20, 'urchin');
+        this.urchins.create(3300, this.game.height - 80 - 20, 'urchin');
+        for (var i = 0; i < this.crabs.length; i++) {
+            this.urchins.getAt(i).body.setCollisionGroup(this.urchinsCG);
+            this.urchins.getAt(i).body.static = true;
+            this.urchins.getAt(i).animations.add('nohit', [0], 10, true);
+            this.urchins.getAt(i).animations.add('hit', [1], 10, true);
+            this.urchins.getAt(i).animations.play('nohit');
+            this.urchins.getAt(i).body.collides([this.playerCG, this.groundCG]);
+        }
 		      
 		// canudo
 		this.diagonalStraw = this.game.add.sprite(2640, 270, 'straw2');
@@ -169,6 +187,8 @@ State.GamePlay.prototype = {
 
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
+        dropSprite.body.createGroupCallback(this.urchinsCG,
+                this.checkCollisionUrchins, this);
 		this.lifeDrop.body.createGroupCallback(this.playerCG, this.checkOverlapWithLifeDrop, this);
 		
 		// create contact material
@@ -302,6 +322,13 @@ State.GamePlay.prototype = {
 			return true;
 		}
 		return false;
+    },
+    checkCollisionUrchins: function(body1, body2) {
+        // body1 is the drop, body2 is the sea urchin.
+        var urchinSprite = body2.sprite;
+        urchinSprite.animations.play('hit');
+        this.drop.getSpriteObject().kill();
+        return true;
     },
     checkOverlapWithLifeDrop: function (body1, body2) {
         // body1 is the drop; body2 is the life drop.
