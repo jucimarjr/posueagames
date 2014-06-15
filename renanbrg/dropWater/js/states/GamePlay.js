@@ -39,8 +39,8 @@ State.GamePlay.prototype = {
 	    this.game.load.image('straw1', 'assets/images/straw1_375-72.png');
 	    this.game.load.image('straw2', 'assets/images/straw2_236-276.png');
 	    this.game.load.image('seashell', 'assets/images/seashell_220-68.png');
-	    this.game.load.spritesheet('life_drop',
-	            'assets/spritesheets/molecula_110-48.png', 55, 48);
+        this.game.load.spritesheet('life_drop',
+                'assets/spritesheets/water_200-40.png', 40, 40);
 	    
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
 	    this.game.load.audio('main','assets/gotaMain.wav');
@@ -109,7 +109,7 @@ State.GamePlay.prototype = {
 		}
 		
         // create player
-        this.drop.create(2800, this.game.world.height-200);
+        this.drop.create(200, this.game.world.height-200);
         var dropSprite = this.drop.getSpriteObject();   
         this.game.physics.p2.enableBody(dropSprite, false);        
         this.game.camera.follow(dropSprite);
@@ -175,21 +175,26 @@ State.GamePlay.prototype = {
         this.diagonalStraw.body.collides([this.groundCG, this.playerCG]);
 
         // Add a "life drop"
-        this.lifeDrop = this.game.add.sprite(280, 220, 'life_drop');
-        this.game.physics.p2.enableBody(this.lifeDrop);
-        this.lifeDrop.body.setRectangle(40, 40, 0, 0);
-        this.lifeDrop.body.fixedRotation = true;
-        this.lifeDrop.name = 'lifeDrop';
-        this.lifeDrop.animations.add('move_molecule', [0, 1, 2, 3], 10, true);
-        this.lifeDrop.animations.play('move_molecule');        
-   		this.lifeDrop.body.setCollisionGroup(this.lifeDropCG);
-        this.lifeDrop.body.collides([this.groundCG, this.playerCG]);
+        this.lifeDrop = game.add.group();
+        this.lifeDrop.enableBody = true;
+        this.lifeDrop.physicsBodyType = Phaser.Physics.P2JS;
+        this.lifeDrop.create(280, 268, 'life_drop');
+        for (var i = 0; i < this.lifeDrop.length; i++) {
+            this.lifeDrop.getAt(i).body.setCollisionGroup(this.lifeDropCG);
+            this.lifeDrop.getAt(i).body.fixedRotation = true;
+            this.lifeDrop.getAt(i).body.static = true;
+            this.lifeDrop.getAt(i).animations.add('dropAnimation',
+                    [0, 1, 2, 3, 4], 10, true);
+            this.lifeDrop.getAt(i).animations.play('dropAnimation');
+            this.lifeDrop.getAt(i).body.collides([this.playerCG, this.groundCG]);
+        }
 
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
         dropSprite.body.createGroupCallback(this.urchinsCG,
                 this.checkCollisionUrchins, this);
-		this.lifeDrop.body.createGroupCallback(this.playerCG, this.checkOverlapWithLifeDrop, this);
+        dropSprite.body.createGroupCallback(this.lifeDropCG,
+                this.checkOverlapWithLifeDrop, this);
 		
 		// create contact material
         this.game.physics.p2.createContactMaterial(this.characterMaterial, this.slidingzMaterial, {friction: 0.1, restitution: 0});         
@@ -336,7 +341,7 @@ State.GamePlay.prototype = {
             console.log('Player get the life drop!!!!');
             this.powUpSound.play();
             this.hud.increaseDropBar();
-            this.lifeDrop.kill();
+            body2.sprite.kill();
             return true;
         }
         return false;
