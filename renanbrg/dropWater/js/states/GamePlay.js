@@ -76,9 +76,7 @@ State.GamePlay.prototype = {
 		this.game.add.image(0, this.game.height-80, 'wetSand');
 		this.game.add.image(2008, 23, 'bucket');
 		this.game.add.image(2008, 508, 'straw1');
-		
-
-        
+		        
         //  Set the tiles for collision.
         //  Do this BEFORE generating the p2 bodies below.
 		//this.map.setCollisionByExclusion([0],true, this.layer);
@@ -140,7 +138,8 @@ State.GamePlay.prototype = {
 			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);				
 			this.crabs.getAt(i).body.fixedRotation = true;			
 			this.crabs.getAt(i).body.setMaterial(this.crabMaterial);
-
+			this.crabs.getAt(i).animations.add('walkL', [0, 1, 2], 14, true);
+			this.crabs.getAt(i).animations.add('walkR', [0, 1, 2], 14, true);			
 			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG,
                     this.groundCG, this.seashellCG]);
 		}
@@ -172,6 +171,7 @@ State.GamePlay.prototype = {
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
 		this.lifeDrop.body.createGroupCallback(this.playerCG, this.checkOverlapWithLifeDrop, this);
 		
+		// create contact material
         this.game.physics.p2.createContactMaterial(this.characterMaterial, this.slidingzMaterial, {friction: 0.1, restitution: 0});         
         this.game.physics.p2.createContactMaterial(this.groundMaterial, this.crabMaterial, {friction: 0.0, restitution: 0.0});
         				
@@ -318,15 +318,19 @@ State.GamePlay.prototype = {
 		if (crab.name == "crab1") {
 			if (this.touchingLeft(crab.body)) {
 				crab.body.moveRight(500);
+				crab.animations.play('walkR');
 			} else if (this.touchingRight(crab.body)) {
 				crab.body.moveLeft(500);
+				crab.animations.play('walkL');
 			} else {
 			}								
 		} else {
 			if (this.touchingRight(crab.body)) {
 				crab.body.moveLeft(500);
+				crab.animations.play('walkL');
 			} else if (this.touchingLeft(crab.body)) {
 				crab.body.moveRight(500);
+				crab.animations.play('walkR');
 			} else {
 				//this.crab.body.velocity.x = -100;
 			}			
