@@ -33,7 +33,7 @@ State.GamePlay.prototype = {
 	    this.game.load.image('bucket', 'assets/images/balde_384-497.png');
 	    this.game.load.image('straw1', 'assets/images/straw1_375-72.png');
 	    this.game.load.image('straw2', 'assets/images/straw2_236-276.png');
-	    this.game.load.image('seashell', 'assets/images/seashell_160-50.png');
+	    this.game.load.image('seashell', 'assets/images/seashell_220-68.png');
 	    this.game.load.spritesheet('life_drop',
 	            'assets/spritesheets/molecula_110-48.png', 55, 48);
 	    
@@ -110,11 +110,11 @@ State.GamePlay.prototype = {
                 this.lifeDropCG, this.seashellCG]);
         
         // Create sea shell
-        this.seashell = this.game.add.sprite(450, this.game.world.height - 100,
+        this.seashell = this.game.add.sprite(450, this.game.world.height - 106,
                 'seashell');
         this.game.physics.p2.enableBody(this.seashell);
         this.seashell.body.clearShapes();
-        this.seashell.body.loadPolygon('seashellPhysics', 'seashell_160-50');
+        this.seashell.body.loadPolygon('seashellPhysics', 'seashell_220-68');
         this.seashell.body.fixedRotation = true;
         this.seashell.body.static = true;
         this.seashell.body.setCollisionGroup(this.seashellCG);
