@@ -187,6 +187,7 @@ State.GamePlay.prototype = {
                     [0, 1, 2, 3, 4], 10, true);
             this.lifeDrop.getAt(i).animations.play('dropAnimation');
             this.lifeDrop.getAt(i).body.collides([this.playerCG, this.groundCG]);
+            this.lifeDrop.hasCollided = false;
         }
 
         // collide callbacks
@@ -337,11 +338,12 @@ State.GamePlay.prototype = {
     },
     checkOverlapWithLifeDrop: function (body1, body2) {
         // body1 is the drop; body2 is the life drop.
-        if (!this.touchingUp(body2)) {
+        if (!body2.hasCollided) {
             console.log('Player get the life drop!!!!');
             this.powUpSound.play();
             this.hud.increaseDropBar();
             body2.sprite.kill();
+            body2.hasCollided = true;
             return true;
         }
         return false;
