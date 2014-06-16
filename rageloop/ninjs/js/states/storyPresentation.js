@@ -6,10 +6,10 @@
         "A história se passa em um castelo onde o herói \nse encontra aprisionado no calabouço.", 
         "Ele foi aprisionado por ser considerado uma ameaça \naos planos do vilão (sem nome).", 
         "Ao vasculhar a área, encontra uma mensagem num computador, \nde seu mentor informando o que deve ser feito para ele \nconseguir sair daquele local:",
-        "1) deve procurar por artefatos espalhados e monta-los \npara encaixar na porta de acesso.", 
-        "Nesse calabouço também existem instrumentos úteis \npara a batalha contra o chefão, esses itens tornaram\n o vilão mais vulneráveis aos ataques do herói.",
-        "No final da história o herói consegue \nvencer/derrotar o vilão e sai do Ryokan,",
-        "onde ele terá que enfrentar um exército de ninjas \n(mas o jogo não mostra essa batalha, só fica subentendido)."
+        "deve procurar por artefatos espalhados e monta-los \npara encaixar na porta de acesso.", 
+        "Nesse calabouço também existem instrumentos úteis \npara a batalha contra o chefão, esses itens tornarão\no vilão mais vulneráveis aos ataques do herói.",
+        //"No final da história o herói consegue \nvencer/derrotar o vilão e sai do Ryokan,",
+        //"onde ele terá que enfrentar um exército de ninjas \n(mas o jogo não mostra essa batalha, só fica subentendido)."
     ];
     
     function StoryPresentation() {
