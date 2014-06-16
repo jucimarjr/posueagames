@@ -27,13 +27,15 @@ Player.prototype = {
 	    this.spritePlayer.animations.add('jump-gold', [14], 1, true);
 	    this.spritePlayer.animations.add('fall', [3], 1, true);
 	    this.spritePlayer.animations.add('fall-gold', [13], 1, true);
-	    this.spritePlayer.animations.add('dead',[8,9],1,false);
+	    this.spritePlayer.animations.add('loss-life',[8],1,false);
+	    this.spritePlayer.animations.add('dead',[9],1,false);
 		
 	    this.game.physics.enable(this.spritePlayer);
 	    this.spritePlayer.body.collideWorldBounds = true;
 		this.spritePlayer.anchor.setTo(Config.player.anchor.x, Config.player.anchor.y);
+		this.spritePlayer.dead = false;
 	    
-	    this.game.camera.follow(this.spritePlayer, Phaser.Camera.FOLLOW_PLATFORMER);
+		this.game.camera.follow(this.spritePlayer, Phaser.Camera.FOLLOW_PLATFORMER);
 
 	    this.cursors = this.game.input.keyboard.createCursorKeys();
 		this.jump = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -44,7 +46,7 @@ Player.prototype = {
 
 		this.spritePlayer.body.velocity.x = 0;
 
-	    if(this.cursors.left.isDown)
+	    if(this.cursors.left.isDown && !this.spritePlayer.dead)
 	    {
 	    	this.spritePlayer.body.velocity.x = -Config.player.speed;
 	    	this.spritePlayer.scale.x = -1;
@@ -54,7 +56,7 @@ Player.prototype = {
 		    	this.spritePlayer.animations.play('walk');
 	    	}
 	    }
-	    else if(this.cursors.right.isDown)
+	    else if(this.cursors.right.isDown && !this.spritePlayer.dead)
 	    {
 	    	this.spritePlayer.body.velocity.x = Config.player.speed;
 	    	this.spritePlayer.scale.x = 1;
@@ -94,14 +96,22 @@ Player.prototype = {
 	die: function (){
 		if(this.life > 0){
 			this.life--;
-		}
-		else{
+			
+			this.spritePlayer.animations.play('loss-life');
+			this.spritePlayer.dead = true;
+			
+			setTimeout(function () {
+				this.spritePlayer.dead = false;
+			}, 500);
+		} else{
 			this.spritePlayer.animations.play('dead');
-			//this.gameOver();
+			this.spritePlayer.kill();
+			this.spritePlayer.dead = true;
+			setTimeout(function () {
+				this.spritePlayer.dead = false;
+				this.spritePlayer.revive();
+				this.life = 3;
+			}, 1000);
 		}
-	},
-	
-	gameOver: function (){
-	
 	}
 };
