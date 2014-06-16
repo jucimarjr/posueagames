@@ -45,10 +45,9 @@ State.Fase1.prototype = {
 	},
 
 	create: function () {
-		game.world.setBounds(0, 0, 2880, 1200);
 		var bg = game.add.tileSprite(0, 0, game.cache.getImage('bg').width,game.cache.getImage('bg').height, 'bg');
 
-		
+		game.world.setBounds(0, 0, 2880, 1200);
 		game.physics.startSystem(Phaser.Physics.P2JS);
 		game.physics.p2.setImpactEvents(true);
 		game.physics.p2.gravity.y = 800;
@@ -74,8 +73,6 @@ State.Fase1.prototype = {
 		this.tracajet.animations.add('startSwim',[3,4],4,true);
 		game.physics.p2.enable(this.tracajet); // permite que a sprite tenha um corpo fisico
 		this.tracajet.body.fixedRotation = true;
-		this.tracajet.body.collideWorldBounds = true;
-		this.tracajet.scale.set(2);
 		this.tracajet.smoothed = false;
 		this.tracajet.anchor.setTo(.5,.5);
 	    game.camera.follow(this.tracajet);
@@ -109,9 +106,11 @@ State.Fase1.prototype = {
 		//this.txtScore.setText("Score : " + Config.game.score.score);
 		
 		//this.game.input.keyboard.addCallbacks(this,this.changeGameState);
-
+		
 		//Cursor
 		this.cursors = this.game.input.keyboard.createCursorKeys();
+		game.physics.p2.setBoundsToWorld(true, true, true, true, false);
+		
 	},
 
 	update: function () {
