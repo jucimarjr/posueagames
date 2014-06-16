@@ -13,29 +13,6 @@ Enemy = function(game, layer1, tilemap){
 	this.jasonsJumper = null;
 	this.jokersWalker = null;
 	this.jokersJumper = null;
-	
-	this.freddys = null;
-	this.jasons = null;
-	this.jokers = null;
-	this.vaders = null;
-	this.freddyWalk1 = 0;
-	this.freddyIsLeft1 = true;
-	this.freddyWalk2 = 0;
-	this.freddyIsLeft2 = true;
-	this.hannibalWalk1 = 0;
-	this.hannibalIsLeft1 = true;
-	this.hannibalWalk2 = 0;
-	this.hannibalIsLeft2 = true;
-	this.jasonWalk1 = 0;
-	this.jasonIsLeft1 = true;
-	this.jasonWalk2 = 0;
-	this.jasonIsLeft2 = true;
-	this.jokerWalk1 = 0;
-	this.jokerIsLeft1 = true;
-	this.jokerWalk2 = 0;
-	this.jokerIsLeft2 = true;
-	this.vaderWalk = 0;
-	this.vaderIsLeft = true;
 };
 
 Enemy.prototype = {

@@ -5,14 +5,19 @@
  </tileset>
  <layer name="TileWorld" width="72" height="30">
   <data encoding="base64" compression="zlib">
-   eJztmcsKwjAQRWfrqyqKWvsgPnHp/3+dN2gghGRoXQgy98DZTAsNh1mlIoR8zxpu4BbulPcquDDocmBH36eGR9jAFnaw/8zDs9QmMv5uPG8Vu5H2A6wL5s4/po9F9oX5JKNFSvvjdyvdP4vMEmNWcPrzE/0PB2EfDSfso+GEfTScsI+GE/bReAj7aLCPDvvoPIV9Aid4hhd4hTd4F/YJVAXZhxBCCCEWSO9cS/evVmEfHd9hnpF93vgOuX+tFvu8ACXyD0k=
+   eJztmdtOwzAMhn0LgzEEgo5uIxLHO7jb+78ZjtRIlmXnnBRof+nXpHRp429OmngAq1bl6xZ9h75HP3i+t0VfL9A3kRwtnz36CT2iD+gj+jS1u2vcIzF9Lm0/eHxM9CnCe8XS+FP4lGiH3hBfop8L79lDj0r7heAS/VU+Wv7Y3OL5V6IQn00H58h3j90URw3F8BkbeRBiq6EBZD7bBJ9JP7pGSny0uV6qVnwMyHy09Z+b83FyedmbT+05aSB/flkGtfjUiCnmvS/ZJwPlfLRrqXzomCkLHk+LeaTJQDkfaX+Qw4dK+31L3lM5+oTfM79itPLxS1uPriKco958NEYpOdFiHdb0DXX50LVIOl/U4NNTJfvn1Pyx8vEJudXeySdt/xyjmnxCmouPAT23XwJ9U9/vAO35pJyLnKlszK+T39DvIPOx8dl4tbP/APL5i/afg49U/wqZPydmvx7LR2Lj+mt8cuoSc80vTTX42P6cj6uP8s8Qs//Ch9cjc+uHPfnk1E6XxMfl60dCn6XzCdVWStcfTaH/ouj4eAwrH38Mrfl8sTbpjLtkPmfWJo1viXx+AEjBNIA=
   </data>
  </layer>
  <objectgroup name="Enemies" width="72" height="30">
   <object gid="42" x="-5" y="398"/>
-  <object gid="42" x="286" y="1039"/>
-  <object gid="42" x="565" y="1185"/>
-  <object gid="42" x="373" y="1046"/>
+  <object gid="42" x="501" y="1149"/>
+  <object gid="42" x="842" y="430"/>
+  <object gid="42" x="1846" y="1164"/>
+  <object gid="42" x="2726" y="938"/>
+  <object gid="42" x="2122" y="1166"/>
+  <object gid="42" x="2830" y="452"/>
+  <object gid="42" x="2826" y="186"/>
+  <object gid="42" x="1404" y="344"/>
  </objectgroup>
  <objectgroup name="Sheet" width="72" height="30">
   <object gid="2" x="203" y="111"/>
@@ -23,5 +28,72 @@
   <object gid="2" x="163" y="325"/>
   <object gid="2" x="209" y="358"/>
   <object gid="2" x="159" y="413"/>
+  <object gid="2" x="82" y="493"/>
+  <object gid="2" x="63" y="623"/>
+  <object gid="2" x="40" y="714"/>
+  <object gid="2" x="15" y="864"/>
+  <object gid="2" x="99" y="948"/>
+  <object gid="2" x="137" y="1042"/>
+  <object gid="2" x="158" y="1190"/>
+  <object gid="2" x="250" y="973"/>
+  <object gid="2" x="440" y="961"/>
+  <object gid="2" x="436" y="740"/>
+  <object gid="2" x="442" y="594"/>
+  <object gid="2" x="460" y="476"/>
+  <object gid="2" x="666" y="476"/>
+  <object gid="2" x="706" y="634"/>
+  <object gid="2" x="704" y="890"/>
+  <object gid="2" x="640" y="1156"/>
+  <object gid="2" x="688" y="1176"/>
+  <object gid="2" x="736" y="1158"/>
+  <object gid="2" x="752" y="1094"/>
+  <object gid="2" x="548" y="210"/>
+  <object gid="2" x="786" y="250"/>
+  <object gid="2" x="662" y="292"/>
+  <object gid="2" x="1002" y="438"/>
+  <object gid="2" x="1126" y="616"/>
+  <object gid="2" x="994" y="732"/>
+  <object gid="2" x="1116" y="902"/>
+  <object gid="2" x="1030" y="1166"/>
+  <object gid="2" x="1100" y="1158"/>
+  <object gid="2" x="1180" y="1150"/>
+  <object gid="2" x="1286" y="1150"/>
+  <object gid="2" x="1476" y="996"/>
+  <object gid="2" x="1316" y="880"/>
+  <object gid="2" x="1280" y="578"/>
+  <object gid="2" x="1278" y="276"/>
+  <object gid="2" x="1506" y="202"/>
+  <object gid="2" x="1694" y="200"/>
+  <object gid="2" x="1932" y="210"/>
+  <object gid="2" x="2214" y="190"/>
+  <object gid="2" x="2418" y="208"/>
+  <object gid="2" x="2502" y="292"/>
+  <object gid="2" x="2710" y="282"/>
+  <object gid="2" x="1872" y="972"/>
+  <object gid="2" x="1710" y="796"/>
+  <object gid="2" x="1524" y="772"/>
+  <object gid="2" x="1484" y="554"/>
+  <object gid="2" x="1536" y="380"/>
+  <object gid="2" x="1738" y="386"/>
+  <object gid="2" x="1988" y="396"/>
+  <object gid="2" x="2166" y="428"/>
+  <object gid="2" x="2190" y="508"/>
+  <object gid="2" x="2450" y="512"/>
+  <object gid="2" x="2794" y="670"/>
+  <object gid="2" x="2598" y="712"/>
+  <object gid="2" x="2322" y="728"/>
+  <object gid="2" x="1720" y="596"/>
+  <object gid="2" x="1940" y="538"/>
+  <object gid="2" x="2142" y="808"/>
+  <object gid="2" x="2284" y="1114"/>
+  <object gid="2" x="2412" y="1114"/>
+  <object gid="2" x="2578" y="1118"/>
+ </objectgroup>
+ <objectgroup name="Keys" width="72" height="30" visible="0">
+  <object gid="1" x="2818" y="326"/>
+  <object gid="1" x="1808" y="584"/>
+  <object gid="1" x="2810" y="1134"/>
+  <object gid="1" x="336" y="952"/>
+  <object gid="1" x="2780" y="40"/>
  </objectgroup>
 </map>

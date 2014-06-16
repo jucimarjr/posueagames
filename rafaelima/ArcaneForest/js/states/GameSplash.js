@@ -26,6 +26,9 @@ State.GameSplash.prototype = {
 		this.game.load.image('button-credits', Config.menu.buttonCredits.dir);
 		this.game.load.image('button-credits-selector', Config.menu.buttonCredits.selector);
 		
+		// STORY
+		this.game.load.image(Config.story.key, Config.story.dir);
+		
 		//Game
 		game.load.audio('music_game', Config.game.audio.dir);
 		this.game.load.image('bg1', Config.game.dirBg1);
@@ -43,17 +46,19 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('bigbossattackcompose', Config.game.bigbossattackcompose.dir, Config.game.bigbossattackcompose.width, Config.game.bigbossattackcompose.height);
 		this.game.load.spritesheet('bigbossattackfire', Config.game.bigbossattackfire.dir, Config.game.bigbossattackfire.width, Config.game.bigbossattackfire.height);
 		this.game.load.spritesheet('bluemonster', Config.game.bluemonster.dir, Config.game.bluemonster.width, Config.game.bluemonster.height);
-		this.game.load.spritesheet('emmaattack', Config.game.emmaattack.dir, Config.game.emmaattack.width, Config.game.emmaattack.height);
-		this.game.load.spritesheet('emmajumping', Config.game.emmajumping.dir, Config.game.emmajumping.width, Config.game.emmajumping.height);
-		this.game.load.spritesheet('emmarun', Config.game.emmarun.dir, Config.game.emmarun.width, Config.game.emmarun.height);
+//		this.game.load.spritesheet('emmaattack', Config.game.emmaattack.dir, Config.game.emmaattack.width, Config.game.emmaattack.height);
+//		this.game.load.spritesheet('emmajumping', Config.game.emmajumping.dir, Config.game.emmajumping.width, Config.game.emmajumping.height);
+//		this.game.load.spritesheet('emmarun', Config.game.emmarun.dir, Config.game.emmarun.width, Config.game.emmarun.height);
 		this.game.load.spritesheet('greenmonsterleft', Config.game.greenmonsterleft.dir, Config.game.greenmonsterleft.width, Config.game.greenmonsterleft.height);
 		this.game.load.spritesheet('greenmonsterright', Config.game.greenmonsterright.dir, Config.game.greenmonsterright.width, Config.game.greenmonsterright.height);
 		this.game.load.image('blue', Config.game.blue.dir);
 		this.game.load.image('red', Config.game.red.dir);
 		this.game.load.image('pink', Config.game.pink.dir);
 		this.game.load.image('key', Config.game.key.dir);
-		this.game.load.image('life', Config.game.life.dir);
-		this.game.load.image('nolife', Config.game.nolife.dir);
+		
+		// lifes
+		this.game.load.image(Config.game.life.full.key, Config.game.life.full.dir);
+		this.game.load.image(Config.game.life.empty.key, Config.game.life.empty.dir);
 		
 		// PLAYER
 		this.game.load.spritesheet(Config.game.player.sword.key, Config.game.player.sword.dir, Config.game.player.sword.width, Config.game.player.sword.height);
@@ -87,6 +92,7 @@ State.GameSplash.prototype = {
 		Config.global.screen.resize(this.game);
 	},
 	loadComplete: function() {
+		
 		game.state.start('Menu');
 	}
 };
