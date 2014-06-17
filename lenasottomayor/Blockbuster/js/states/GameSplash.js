@@ -65,5 +65,8 @@ State.GameSplash.prototype = {
 		
 		//Background
 		this.game.load.image('game-background', Config.background.game.dir);
+
+		//Game Over
+		this.game.load.image('game-over', Config.gameOver.dir);
 	}
 };

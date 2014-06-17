@@ -5,6 +5,13 @@
     Preload.prototype = {
         preload: function () {
 
+            this.progressBar = this.add.sprite(0, 300, 'progressBar_bar');
+            this.load.setPreloadSprite(this.progressBar);
+
+            var style = { font: "36px pixelFont", fill: "#ffffff"};
+            var loadingText = this.game.add.text(this.game.world.width/2, this.game.world.height/2 + 100, 'Loading...', style);
+            loadingText.anchor.set(0.5, 0.5);
+
             /* audios */
             this.game.load.audio('bgsound','assets/sounds/gameplay_audio.ogg');
             this.game.load.audio('gameoversound','assets/sounds/game_over.ogg');            
@@ -29,7 +36,7 @@
         },
         create: function () {},
         update: function() {
-            this.game.state.start('Menu');
+            this.game.state.start('StoryPresentation');
         }
     };
 

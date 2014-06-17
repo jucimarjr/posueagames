@@ -24,11 +24,13 @@ var Config = {
 
 //LudusSplash
 Config.ludusSplash = {
-	dir: 'assets/images/LudusSplash_960-600.png',
+	key: 'ludus-splash',
+	dir: Config.images+'LudusSplash_960-600.png',
 	x: 0,
 	y: 0,
-	millis: 2000,
-	nextState: 4000
+	alphaTime: 500,
+	alphaWait: 1500,
+	nextStateWait: 2000
 };
 
 //SponsorSplash
@@ -57,6 +59,17 @@ Config.gameSplash = {
 		y: 390
 	}
 };
+
+Config.story = {
+	key: 'story_image',
+	dir: Config.images+'story_screen-960_540.png',
+	x: 0,
+	y: 0,
+	alphaTime: 500,
+	alphaWait: 4500,
+	nextStateWait: 1000
+};
+
 
 //Animation fall
 Config.animationFall = {
@@ -92,6 +105,9 @@ Config.game = {
 		height: 48,
 		x: 60,
 		y: 3300,
+		lifes: 3,
+		xRotate: 2389,
+		yRotate: 385,
 		sword:{
 			key: 'emmasword_spritesheet',
 			dir: Config.spriteSheets + 'emmasword-112_113_11.png',
@@ -164,17 +180,19 @@ Config.game = {
 				loop: false
 			},
 		},
+		damageCooldown: 2000,
 		attackCooldown: 200,
 		gravityY: 2000,
 		forceY: 1000,
+		jumpForce: 700,
 	},
 	monstercat:{
-		dir: 'assets/spritesheets/monstercat_38_18_3.png',
+		dir: 'assets/spritesheets/monstercat_40_18_3.png',
 		width: 38,
 		height: 18
 	},
 	bigbosjumping:{
-		dir: 'assets/spritesheets/bigbosjumping_114_208_6_.png',
+		dir: 'assets/spritesheets/bigbosjumping_104_214_4_.png',
 		width: 114,
 		height: 208
 	},
@@ -189,7 +207,7 @@ Config.game = {
 		height: 42
 	},
 	bluemonster:{
-		dir: 'assets/spritesheets/bluemonster_60_50_3.png',
+		dir: 'assets/spritesheets/bluemonster_62_50_3.png',
 		width: 60,
 		height: 50
 	},
@@ -209,7 +227,7 @@ Config.game = {
 		height:104
 	},
 	greenmonsterleft:{
-		dir: 'assets/spritesheets/greenmonsterleft_74_62_5.png',
+		dir: 'assets/spritesheets/greenmonsterleft_76_62_5.png',
 		width: 74,
 		height:62
 	},
@@ -231,22 +249,32 @@ Config.game = {
 		dir: 'assets/images/keytopbar_13-25.png'
 	},
 	life:{
-		dir: 'assets/images/life_28-22.png'
-	},
-	nolife:{
-		dir: 'assets/images/emptylife_28-22.png'
+		full: {
+			key: 'player_life',
+			dir: Config.images + 'life_28-22.png'
+		},
+		empty: {
+			key: 'player_nolife',
+			dir: Config.images + 'emptylife_28-22.png'
+		},
+		x: 40,
+		y: 8,
 	},
 	audio:{
 		dir: 'assets/audio/arcane_forest_soundtrack.mp3'
 	},
 	bar:{
-		dir: 'assets/images/bar.png',
+		dir: 'assets/images/horizontalbar_139-32.png',
 		startX: 3770,
 		startY: 3470,
 		startRotateX: 1270,
 		startRotateY: 444,
 		widthAreaRotate: 1725,
 		widthArea: 3650,
+	},
+	barRotate:{
+		x: 1793, 
+		y: 400
 	}
 };
 

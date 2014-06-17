@@ -5,6 +5,8 @@ State.Game = function(game) {
 
 var layer;
 var player;
+var isGameRotate;
+var imgPlayerFall, contFrameGif;
 var cursors;
 var attackButton;
 var pauseButton;
@@ -30,6 +32,10 @@ var monster_speed = 5;
 var health;
 var music;
 
+var STATE_PLAY = 0;
+var STATE_PAUSED = 1;
+var STATE_GAMEOVER = 2;
+
 State.Game.prototype = {
     preload: function () {
         "use strict";
@@ -43,10 +49,16 @@ State.Game.prototype = {
         previousX = 0;
         previousY = 0;
         flagMove = false;
+        isGameRotate = false;
+        contFrameGif = 0;
     },
     create: function () {
         "use strict";
-
+        
+        this.gameState = STATE_PLAY;
+        
+        this.healthBar = [];
+        this.timeImune = 0;
         this.timeToAttack = 0;
         this.attacking = false;
         this.canJump = true;
@@ -106,7 +118,7 @@ State.Game.prototype = {
         this.offsetX = Config.game.player.collider.emma.offset.right.x;
         this.offsetY = Config.game.player.collider.emma.offset.right.y;
         
-        var playerX = Config.game.player.x + this.offsetX;
+        var playerX =Config.game.player.x  + this.offsetX;
         var playerY = Config.game.player.y + this.offsetY;
         
         // player
@@ -125,7 +137,7 @@ State.Game.prototype = {
         
         this.playerCollider.body.setCollisionGroup(playerCollisionGroup);
         
-//        player = this.game.add.sprite(60, 3300, 'emmarun');
+//        player = this.game.add.sprite(60, 3300, 'emmarun'); 
 //        player.animations.add('right', [0, 1, 2, 3, 4], 10, true);
 //        player.animations.add('turn', [4], 20, true);
 //        player.animations.add('left', [4, 3, 2, 1, 0], 10, true);
@@ -164,13 +176,17 @@ State.Game.prototype = {
         //add 'things' to the world
         this.putObstacles();
         this.putMonsters();
+        this.putMonstersBar();
         this.putBar();
         this.putCollect();
         
         beInGround = false;
         isJumping = false;
         yBeforeJump = 3504;
-
+        
+        this.playerLifes = Config.game.player.lifes;
+        this.updateHealth();
+        
         //DEBUG LAYER - deletar
         layer.debug = true;
 
@@ -186,111 +202,185 @@ State.Game.prototype = {
 
     pauseGame: function () {
         this.game.paused = !this.game.paused;
+        
+        //this.gameState = STATE_PAUSED;
     },
 
     update: function () {
         "use strict";
         
-        this.playerCollider.body.force.y = Config.game.player.forceY;
+        if(this.gameState == STATE_PLAY) {
+        	
+	        this.playerCollider.body.force.y = Config.game.player.forceY;
+	        
+	        //this.showHealth();
+	        //				Config.global.screen.resize(this.game);
+	        
+	        var intVelY = Math.floor( this.playerCollider.body.velocity.y );
+	        
+	        if (cursors.left.isDown) {
+	        	this.playerCollider.body.moveLeft(500);
+	            player.scale.x = -1;
+	            //player.animations.play('left');
+	            if(!this.attacking && this.canJump && intVelY == 0) {
+	            	player.animations.play(Config.game.player.anim.walk.key);
+	            }
+	            
+	            this.offsetX = Config.game.player.collider.emma.offset.left.x;
+	            this.offsetY = Config.game.player.collider.emma.offset.left.y;
+	            
+	            // set sword offset
+	            this.swordOffsetX = Config.game.player.collider.sword.offset.left.x;
+	            this.swordOffsetY = Config.game.player.collider.sword.offset.left.y;
+	            
+	        } else if (cursors.right.isDown) {
+	        	this.playerCollider.body.moveRight(500);
+	            player.scale.x = 1;
+	            //player.animations.play('right');
+	            if(!this.attacking && this.canJump && intVelY == 0) {
+	            	player.animations.play(Config.game.player.anim.walk.key);
+	            }
+	            
+	            this.offsetX = Config.game.player.collider.emma.offset.right.x;
+	            this.offsetY = Config.game.player.collider.emma.offset.right.y;
+	            
+	            // set sword offset
+	            this.swordOffsetX = Config.game.player.collider.sword.offset.right.x;
+	            this.swordOffsetY = Config.game.player.collider.sword.offset.right.y;
+	            
+	        } else {
+	        	this.playerCollider.body.velocity.x = 0;
+	            //player.animations.play('turn');
+	            
+	            if(!this.attacking) {
+		            player.animations.play(Config.game.player.anim.stop.key);
+		            player.animations.stop();
+	        	}
+	            
+	        }
+	        
+	        this.doJump();
+	        this.doAttack();
+	        this.followPlayer();
+	        
+	        player.body.x = this.playerCollider.body.x + this.offsetX;
+	        player.body.y = this.playerCollider.body.y + this.offsetY;
+	        
+	        if (parseInt(player.x) > (Config.global.screen.width / 2) && previousX != parseInt(player.x)) {
+	            if (previousX > player.x) {
+	                bg2.tilePosition.x += 0.2;
+	                bg3.tilePosition.x += 0.3;
+	            } else {
+	                bg2.tilePosition.x -= 0.2;
+	                bg3.tilePosition.x -= 0.3;
+	            }
+	        }
+	
+	        previousX = parseInt(player.x);
+	        
+	        
+	        if (player.x < 2863 && player.y <= 2461 && !isGameRotate) {
+	            this.fallPlayer();
+	        }
+	        
+	        // to player attack do not fall down
+	        if(this.swordCollider != null) {
+	        	this.swordCollider.body.velocity.x = 0;
+	        	this.swordCollider.body.velocity.y = 0;
+	        }
         
-        //		this.showHealth();
-        //				Config.global.screen.resize(this.game);
-        if (cursors.left.isDown) {
-        	this.playerCollider.body.moveLeft(500);
-            player.scale.x = -1;
-            //player.animations.play('left');
-            if(!this.attacking) {
-            	player.animations.play(Config.game.player.anim.walk.key);
-            }
-            
-            this.offsetX = Config.game.player.collider.emma.offset.left.x;
-            this.offsetY = Config.game.player.collider.emma.offset.left.y;
-            
-            // set sword offset
-            this.swordOffsetX = Config.game.player.collider.sword.offset.left.x;
-            this.swordOffsetY = Config.game.player.collider.sword.offset.left.y;
-            
-        } else if (cursors.right.isDown) {
-        	this.playerCollider.body.moveRight(500);
-            player.scale.x = 1;
-            //player.animations.play('right');
-            if(!this.attacking) {
-            	player.animations.play(Config.game.player.anim.walk.key);
-            }
-            
-            this.offsetX = Config.game.player.collider.emma.offset.right.x;
-            this.offsetY = Config.game.player.collider.emma.offset.right.y;
-            
-            // set sword offset
-            this.swordOffsetX = Config.game.player.collider.sword.offset.right.x;
-            this.swordOffsetY = Config.game.player.collider.sword.offset.right.y;
-            
-        } else if (cursors.up.isDown) {
-            //					layer.rotation -=0.05;
-            //					layer.resizeWorld();
-            //					map.setCollisionBetween(1, 12);
-            //					this.game.physics.p2.enable(layer);
-        } else if (cursors.down.isDown) {
-            //					layer.rotation +=0.05;
-            //					layer.resizeWorld();
-        } else {
-        	this.playerCollider.body.velocity.x = 0;
-            //player.animations.play('turn');
-            
-            if(!this.attacking) {
-	            player.animations.play(Config.game.player.anim.stop.key);
-	            player.animations.stop();
-        	}
-            
-        }
-        
-        this.doJump();
-        this.doAttack();
-        this.followPlayer();
-        
-        player.body.x = this.playerCollider.body.x + this.offsetX;
-        player.body.y = this.playerCollider.body.y + this.offsetY;
-        
-        if (parseInt(player.x) > (Config.global.screen.width / 2) && previousX != parseInt(player.x)) {
-            if (previousX > player.x) {
-                bg2.tilePosition.x += 0.2;
-                bg3.tilePosition.x += 0.3;
-            } else {
-                bg2.tilePosition.x -= 0.2;
-                bg3.tilePosition.x -= 0.3;
-            }
-        }
-
-        previousX = parseInt(player.x);
-        
-        
-        if (player.x < 2863 && player.y <= 2461) {
-            this.gameRotate();
-        }
-        
-        // to player attack do not fall down
-        if(this.swordCollider != null) {
-        	this.swordCollider.body.velocity.x = 0;
-        	this.swordCollider.body.velocity.y = 0;
-        }
+        } // end if gamestate == play
         
     },
 
     onClick: function () {
         "use strict";
     },
+    
+    putMonstersBar: function () {
+        "use strict";
+		
+    },
 
     gameRotate: function () {
         "use strict";
 		 music.pause();
-        this.game.state.start('GifFall');
-		
+		 isGameRotate = true;
+//        this.game.state.start('GifFall');
+		 
+		 bar.kill();
+		 bar2.kill();
+		 monster.kill();
+		 collects.removeAll();
+		 obstacles.removeAll();
+		 
+		 layer.destroy();
+		 this.playerCollider.body.clearCollision();
+		 
+		 tileCollisionGroup = this.game.physics.p2.createCollisionGroup();
+		 
+		 map = this.game.add.tilemap('stageRotate');
+		 map.addTilesetImage('tileset_arcane_forest', 'tileset');
+		 layer = map.createLayer('Camada de Tiles 1');
+		 map.setCollisionBetween(1, 5);
+		 map.setCollisionBetween(8, 22);
+		 map.setCollisionBetween(25, 32);
+		 map.setCollisionBetween(34, 37);
+		 this.game.physics.p2.enable(layer);
+
+        var tileObjects = this.game.physics.p2.convertTilemap(map, layer);
+
+        //Tile collision
+        for (var tile in tileObjects) {
+        	tileObjects[tile].setCollisionGroup(tileCollisionGroup);
+        	tileObjects[tile].collides(playerCollisionGroup, this.hitTiles,
+        			this);
+        }
+
+        this.playerCollider = this.game.add.sprite(Config.game.player.xRotate, Config.game.player.yRotate, Config.game.player.collider.emma.key);
+        this.game.physics.p2.enable(this.playerCollider, false);
+        this.playerCollider.body.collideWorldBounds = true;
+        this.playerCollider.body.fixedRotation = true;
+        this.game.camera.follow(this.playerCollider);
+        
+        this.playerCollider.body.setCollisionGroup(playerCollisionGroup);
+        this.playerCollider.body.collides(tileCollisionGroup);
+        this.playerCollider.body.collides(barCollisionGroup);
+        this.playerCollider.body.collides(collectCollisionGroup, this.collectItems, this);
+        
+		 layer.resizeWorld();
+		 
+		 bar = this.game.add.sprite(Config.game.barRotate.x, Config.game.barRotate.y, 'bar');
+		 this.game.physics.p2.enable(bar, true);
+		 bar.body.kinematic = true;
+		 this.game.add.tween(bar.body.velocity).to({x: '-100'}, 15000).to({x: '+100'}, 15000).yoyo().loop().start();
+		 bar.body.setCollisionGroup(barCollisionGroup);
+		 bar.body.collides([barCollisionGroup, playerCollisionGroup]);
+		 
+    },
+    
+    fallPlayer: function(){
+    	if (contFrameGif < 30){
+    		if(this.imgPlayerFall!=null){
+    			this.imgPlayerFall.kill();
+    		}
+    		
+    		this.imgPlayerFall = this.game.add.sprite(0, 0, Config.animationFall.fallGif[contFrameGif]);
+    		contFrameGif ++;
+    		this.game.camera.follow(this.imgPlayerFall);
+    	}else{
+    		this.imgPlayerFall.kill();
+    		this.gameRotate();
+    	}
+    		
     },
 
     render: function () {
         "use strict";
         //DEBUG
 //		this.game.debug.spriteInfo(player, 32, 32);
+		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
+//		this.game.debug.text( " + " + contFrameGif , 100, 380 );
     },
 
     //collect item (diamond and key)
@@ -317,19 +407,26 @@ State.Game.prototype = {
     },
 
     //health
-    showHealth: function () {
+    updateHealth: function () {
         "use strict";
-        //hit once
-        var healthNumber = player.health;
-        for (var totalHealth = 3; totalHealth > 0; totalHealth--, healthNumber--) {
-            if (healthNumber > 0) {
-                var fixedItem = this.game.add.sprite(40 * (totalHealth), 8,
-						'life');
-            } else {
-                var fixedItem = this.game.add.sprite(40 * (totalHealth), 8,
-						'nolife');
+        
+        var count;
+        for (var countHealth = 1; countHealth <= Config.game.player.lifes; countHealth++) {
+        	
+        	count = countHealth - 1;
+        	
+        	if(this.healthBar[count] != null && this.healthBar[count] != 'undefined') {
+        		this.healthBar[count].kill();
+        	}
+            
+        	if (this.playerLifes >= countHealth) {
+        		this.healthBar[count] = this.game.add.sprite(Config.game.life.x * countHealth, Config.game.life.y, Config.game.life.full.key);
             }
-            fixedItem.fixedToCamera = true;
+            else {
+            	this.healthBar[count] = this.game.add.sprite(Config.game.life.x * countHealth, Config.game.life.y, Config.game.life.empty.key);
+            }
+            
+        	this.healthBar[count].fixedToCamera = true;
         }
     },
 
@@ -391,7 +488,9 @@ State.Game.prototype = {
         	
         	this.canJump = false;
         	
-        	this.playerCollider.body.moveUp(500);
+        	player.animations.play(Config.game.player.anim.jump.key);
+        	
+        	this.playerCollider.body.moveUp(Config.game.player.jumpForce);
 //            if (isJumping === false && beInGround === true) {
 ////                if (player.key != 'emmajumping') {
 ////                    this.resetPlayerJumpUp();
@@ -425,7 +524,7 @@ State.Game.prototype = {
 
     doAttack: function () {
     	
-    	timeNow = new Date().getTime();
+    	var timeNow = new Date().getTime();
     	
         if (attackButton.isDown) {
         	
@@ -510,15 +609,34 @@ State.Game.prototype = {
     hitObstacles: function () {
         beInGround = this.checkIfCanJump();
         isJumping = false;
-        if (player.key != 'emmarun') {
-            this.resetPlayer();
-        }
+//        if (player.key != 'emmarun') {
+//            this.resetPlayer();
+//        }
     },
 
     hitMonsters: function () {
     	
-    	// lose life
-    	player.kill();
+    	var timeNow = new Date().getTime();
+    	
+    	if(timeNow >= this.timeImune) { // check if player is time immune
+	    	// lose life
+	    	this.playerLifes--;
+	    	
+	    	this.updateHealth();
+	    	
+	    	this.timeImune = timeNow + Config.game.player.damageCooldown;
+	    	
+	    	if(this.playerLifes == 0) {
+	    		
+	    		this.gameState = STATE_GAMEOVER;
+	    		
+	        	player.kill();
+	        	this.playerCollider.kill();
+	        	
+	        	// TODO: game over screen
+	    	}
+    	}
+    	
     	
 //        if (player.key === 'emmaattack' && (this.checkIfConered() === true || Math.abs(player.x - monster.x) <= 104)) {
 //            monster.kill();
@@ -530,10 +648,6 @@ State.Game.prototype = {
     },
 
     hitBar: function () {
-        if (checkIfConered() === false) {
-            beInGround = checkIfCanJump();
-            isJumping = false;
-        }
     },
 
     //internet magic...player is over something
@@ -566,9 +680,9 @@ State.Game.prototype = {
         for (var i = 0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++) {
             var c = game.physics.p2.world.narrowphase.contactEquations[i];
 
-            if (c.bodyA === player.body.data || c.bodyB === player.body.data) {
+            if (c.bodyA === this.playerCollider.body.data || c.bodyB === this.playerCollider.body.data) {
                 var d = p2.vec2.dot(c.normalA, xAxis); // Normal dot Y-axis
-                if (c.bodyA === player.body.data)
+                if (c.bodyA === this.playerCollider.body.data)
                     d *= -1;
                 if (d > 0.5)
                     result = true;
@@ -584,41 +698,41 @@ State.Game.prototype = {
     //Create Bars
     putBar: function () {
         //bar 1
-        bar = this.game.add.sprite(Config.game.bar.startX,
-				Config.game.bar.startY, 'bar');
-	this.game.physics.p2.enable(bar, false);
+        bar = this.game.add.sprite(4000, 3434, 'bar');
+        this.game.physics.p2.enable(bar, false);
         bar.body.kinematic = true;
         this.game.add.tween(bar.body.velocity).to({
             x: '+200'
-        }, 15000).to({
+        }, 3000).to({
             x: '-200'
-        }, 15000).yoyo().loop().start();
+        }, 3000).yoyo().loop().start();
         bar.body.setCollisionGroup(barCollisionGroup);
         bar.body.collides([barCollisionGroup, playerCollisionGroup]);
 
         //bar 2
-        bar2 = this.game.add.sprite(3850, 3334, 'bar');
-	this.game.physics.p2.enable(bar2, false);
+        bar2 = this.game.add.sprite(4250, 3334, 'bar');
+        this.game.physics.p2.enable(bar2, false);
         bar2.body.kinematic = true;
         this.game.add.tween(bar2.body.velocity).to({
-            x: '+200'
-        }, 15000).to({
-            x: '-200'
-        }, 15000).yoyo().loop().start();
+            x: '+100'
+        }, 3000).to({
+            x: '-100'
+        }, 3000).yoyo().loop().start();
         bar2.body.setCollisionGroup(barCollisionGroup);
         bar2.body.collides([barCollisionGroup, playerCollisionGroup]);
 
         //bar 3
-        bar3 = this.game.add.sprite(4250, 3234, 'bar');
-		this.game.physics.p2.enable(bar3, false);
-        bar3.body.kinematic = true;
-        this.game.add.tween(bar3.body.velocity).to({
-            x: '+200'
-        }, 15000).to({
-            x: '-200'
-        }, 15000).yoyo().loop().start();
-        bar3.body.setCollisionGroup(barCollisionGroup);
-        bar3.body.collides([barCollisionGroup, playerCollisionGroup]);
+//        bar3 = this.game.add.sprite(4400, 3434, 'bar');
+//		this.game.physics.p2.enable(bar3, false);
+//        bar3.body.kinematic = true;
+//        this.game.add.tween(bar3.body.velocity).to({
+//            x: '+200'
+//        }, 3000).to({
+//            x: '-200'
+//        }, 3000).yoyo().loop().start();
+//        bar3.body.setCollisionGroup(barCollisionGroup);
+//        bar3.body.collides([barCollisionGroup, playerCollisionGroup]);
+        
     },
     //Create Obstacles
     putObstacles: function () {
@@ -639,7 +753,7 @@ State.Game.prototype = {
     //create monsters
     putMonsters: function () {
         //monster;
-        if (this.playerCollider.x === 60) {
+    	if (this.playerCollider.x === 60) {
             monster = this.game.add.sprite(940, 3440, 'monstercat');
         } else if (this.playerCollider.x === 1500) {
             monster = this.game.add.sprite(2200, 3440, 'monstercat');

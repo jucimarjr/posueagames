@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="72" height="45" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="background" tilewidth="40" tileheight="40">
+  <image source="../sprites/tileset.png" trans="ff00ff" width="400" height="40"/>
+ </tileset>
+ <layer name="layer" width="72" height="45">
+  <data encoding="base64" compression="zlib">
+   eJztm0sOwyAMBWkU0fvfuO2OBX3ByPgDbyQvY8zEMmGRu5RyO8dV+lwBansFiR7eNaHatLDIv2IN+hnLSz847yl+pDNllZ+Z+Va/8e5EFaynDapf053le9BcYySnth+NPVidyZZ+MjDjOsP31Sra+kfmoEUttQlvt5He87+1JeewNif7mZ0tXmTpH8/QrFGDCH2jgUX/ZGZVz9BPPw/9yPJG8JPt/p4Jnl+Y2Znh8c3gwWz9T8+c6md0zzu4+SHZg6QnTvTT8nQ20s9YXvrBeXfxszIyQz8Y3i8w9IOhHwz9YOjHB/rB0A+GfjD0g6EfDP1gLO51O4T3/w3R4wO7AgS6
+  </data>
+ </layer>
+ <layer name="items" width="72" height="45">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAAAAADgNzKgAAE=
+  </data>
+ </layer>
+ <layer name="spines" width="72" height="45">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAAAAADgNzKgAAE=
+  </data>
+ </layer>
+ <layer name="screen" width="72" height="45">
+  <data encoding="base64" compression="zlib">
+   eJzt2EENAAAIxDBe+JeMCQi5pBUwAasCAAAAyNb6L20AAABgT/J/uO77GwAAAJBhANcMADE=
+  </data>
+ </layer>
+</map>
