@@ -198,7 +198,7 @@ Config.level = {
 		if(level == 1)
 			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 18, 19, 'coin', 0,0,27);
 		else if(level == 2)
-		    Config.update.updateLevel(65, 600, true, 13, 0, 18, 0, 22, 23, 'coinIara', 31,0,0);
+		    Config.update.updateLevel(65, 600, true, 13, 0, 18, 0, 22, 23, 'coinIara', 31,0,35);
 		else if(level == 3)
 		    Config.update.updateLevel(65, 600, true, 13, 18, 19, 23, 24, 25, 'coin', 33,0,0);
 		else if (level == 4)
