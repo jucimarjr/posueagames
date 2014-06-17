@@ -3,6 +3,7 @@ State.Game = function(game) {
 	this.game = game;
 	this.heroes = new Heroes(game);
 	this.enemies = new Enemies(game);
+	this.rocks = new Rocks(game);
 };
 
 var dino, layer, group, map, posicao, score;
@@ -29,6 +30,7 @@ State.Game.prototype = {
 
 		this.heroes.preload();
 		this.enemies.preload();
+		this.rocks.preload();
 	},
 	create : function() {
 		"use strict";
@@ -48,7 +50,7 @@ State.Game.prototype = {
 		layer.resizeWorld(); // seta o mundo com as altera��es feitas
 		map.setCollisionBetween(1, 1, true, 0); // 0 espaco
 
-		var layer2 = map.createLayer('Movable objects');
+//		var layer2 = map.createLayer('Movable objects');
 		
 		// entrada
 		this.entrada = this.game.add.image(GOAL_X, GOAL_Y, 'entrada');
@@ -67,6 +69,8 @@ State.Game.prototype = {
 		this.game.camera.follow(this.heroes.getCurrent());
 
 		this.enemies.create();
+		this.rocks.create();
+		this.rocks.pop(500, 1000);
 
 		startTimer();
 	},
@@ -74,6 +78,9 @@ State.Game.prototype = {
 		"use strict";
 		this.heroes.update(layer, this.enemies);
 		this.enemies.update(layer);
+		this.rocks.update();
+		this.rocks.checkCollision(this.heroes.getCurrent());
+		
 		if (!this.heroes.isAlive()) {
 			this.game.state.start('GameOver');
 
