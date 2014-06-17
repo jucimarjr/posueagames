@@ -180,8 +180,8 @@ Config.player = {
 	height: 95,
 	width: 50,
 	anchor: {
-		x: .5,
-		y: .5
+		x: 0.5,
+		y: 0.5
 	},
 	position: {
 		x: 50,
@@ -198,8 +198,8 @@ Config.enemy = {
 		frames: 5,
 		name: 'Cruella',
 		anchor: {
-			x: .5,
-			y: .5
+			x: 0.5,
+			y: 0.5
 		},
 		walk: {
 			x: 50,
@@ -221,8 +221,8 @@ Config.enemy = {
 		frames: 8,
 		name: 'Freddy',
 		anchor: {
-			x: .5,
-			y: .5
+			x: 0.5,
+			y: 0.5
 		},
 		walk: {
 			x: 100,
@@ -243,8 +243,8 @@ Config.enemy = {
 		frames: 8,
 		name: 'Hannibal',
 		anchor: {
-			x: .5,
-			y: .5
+			x: 0.5,
+			y: 0.5
 		},
 		walk: {
 			x: 100,
@@ -266,8 +266,8 @@ Config.enemy = {
 		frames: 8,
 		name: 'Jason',
 		anchor: {
-			x: .5,
-			y: .5
+			x: 0.5,
+			y: 0.5
 		},
 		walk: {
 			x: 100,
@@ -289,8 +289,8 @@ Config.enemy = {
 		frames: 8,
 		name: 'Joker',
 		anchor: {
-			x: .5,
-			y: .5
+			x: 0.5,
+			y: 0.5
 		},
 		walk: {
 			x: 100,
@@ -312,8 +312,8 @@ Config.enemy = {
 		frames: 10,
 		name: 'Vader',
 		anchor: {
-			x: .5,
-			y: .5
+			x: 0.5,
+			y: 0.5
 		},
 		gid: 104,
 		frame: 0
@@ -332,4 +332,11 @@ Config.credits = {
 	dir: 'assets/images/Credits_960-600.png',
 	x: 0,
 	y: 0
+};
+
+//Game Over
+Config.gameOver = {
+	dir: 'assets/images/GameOver_960-600.png',
+	x: 0,
+	y: 0	
 };

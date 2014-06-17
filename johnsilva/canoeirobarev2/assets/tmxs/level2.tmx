@@ -15,7 +15,10 @@
  <tileset firstgid="31" name="check" tilewidth="20" tileheight="37">
   <image source="../spritesheets/check_20-37-3.png" width="80" height="37"/>
  </tileset>
- <tileset firstgid="35" name="branches" tilewidth="40" tileheight="40">
+ <tileset firstgid="35" name="gamewin" tilewidth="40" tileheight="40">
+  <image source="../spritesheets/gamewin_40-40-8.png" width="320" height="40"/>
+ </tileset>
+ <tileset firstgid="43" name="branches" tilewidth="40" tileheight="40">
   <image source="../level/branches_360-283.png" width="360" height="284"/>
  </tileset>
  <objectgroup name="thorns" width="30" height="20">
@@ -37,7 +40,7 @@
  </objectgroup>
  <layer name="Camada de Tiles 1" width="30" height="20">
   <data encoding="base64" compression="zlib">
-   eJzN1OdOwzAUhmEXQgptf9D7YO9Ny957DwH3fxO8R8TCsk5SW60FR3qUSj7yZ7tOMmPM6B/IMYkpTGMGs5jDPBYwkaBHcpewjBWsYg3r2MAmFhP0SO42OuhiB7vYwz4OsJWgR3KPcIwTnOIM57jAJQ4T9EjuNW5wizvc4wGPeMJVgh7JreEVb3g3P9VEC194xkvRM1T0i2F8ej3++IfXY+fNjV4jypjMmXnqnpDxPDJ3zAzm3W2Y33MOyXWrWay/VdFTVXZuP7tXroxnPXpCcrV5/2Ou/a+1uxNy9tqdrZnwvZTdtZg1SNnz6+cM3fU0SsbH0XaeWq79DgyibI59H7T3vp/9auVmufvzabn++dhnO3INsbn+3XXFVNW3r+xOVFU94LfUN7C2MHk=
+   eJzN1OdOwzAUhmEXQgptf9B7Ye9Ny957DwH3fwO8R8TCsk5SW60FR3qUSj7yZ7tOMmPM6B/IMYkpTGMGs5jDPBYwkaBHcpewjBWsYg3r2MAmFhP0SO42OuhiB7vYwz4OsJWgR3KPcIwTnOIM57jAJQ4T9EjuNW5wizvc4wGPeMJVgh7JreEVb3g3P9VEC194xkvRM1T0i2F8ej3++IfXY+fNjV4jypjMmXnqnpDxPDJ3zAzm3W2Y33MOyXWrWay/VdFTVXZuP7tXroxnPXpCcrV5/2Ou/a+1uxNy9tqdrZnwvZTdtZg1SNnz6+cM3fU0SsbH0XaeWq79DgyibI59H7T3vp/9auVmufvzabn++dhnO3INsbn+3XXFVNW3r+xOVFU94LfUN7bwNXk=
   </data>
  </layer>
  <objectgroup name="bees" width="30" height="20">
@@ -51,7 +54,6 @@
  </objectgroup>
  <objectgroup name="coin" width="30" height="20">
   <object gid="23" x="1118" y="216"/>
-  <object gid="23" x="696" y="420"/>
  </objectgroup>
  <objectgroup name="bushes" width="30" height="20">
   <object gid="13" x="320" y="800"/>
@@ -90,5 +92,8 @@
  </objectgroup>
  <objectgroup name="checkPoint" width="30" height="20">
   <object gid="31" x="453" y="278"/>
+ </objectgroup>
+ <objectgroup name="flag" width="30" height="20">
+  <object gid="35" x="680" y="480"/>
  </objectgroup>
 </map>

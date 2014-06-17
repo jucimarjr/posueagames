@@ -106,6 +106,8 @@ Config.game = {
 		x: 60,
 		y: 3481,
 		lifes: 3,
+		xRotate: 2389,
+		yRotate: 385,
 		sword:{
 			key: 'emmasword_spritesheet',
 			dir: Config.spriteSheets + 'emmasword-112_113_11.png',
@@ -185,12 +187,12 @@ Config.game = {
 		jumpForce: 700,
 	},
 	monstercat:{
-		dir: 'assets/spritesheets/monstercat_38_18_3.png',
+		dir: 'assets/spritesheets/monstercat_40_18_3.png',
 		width: 38,
 		height: 18
 	},
 	bigbosjumping:{
-		dir: 'assets/spritesheets/bigbosjumping_114_208_6_.png',
+		dir: 'assets/spritesheets/bigbosjumping_104_214_4_.png',
 		width: 114,
 		height: 208
 	},
@@ -205,7 +207,7 @@ Config.game = {
 		height: 42
 	},
 	bluemonster:{
-		dir: 'assets/spritesheets/bluemonster_60_50_3.png',
+		dir: 'assets/spritesheets/bluemonster_62_50_3.png',
 		width: 60,
 		height: 50
 	},
@@ -225,7 +227,7 @@ Config.game = {
 		height:104
 	},
 	greenmonsterleft:{
-		dir: 'assets/spritesheets/greenmonsterleft_74_62_5.png',
+		dir: 'assets/spritesheets/greenmonsterleft_76_62_5.png',
 		width: 74,
 		height:62
 	},
@@ -272,6 +274,10 @@ Config.game = {
 	},
 	verticalbar:{
 		dir: 'assets/images/verticalbar_72-252.png',
+	},
+	barRotate:{
+		x: 1793, 
+		y: 400
 	}
 };
 
