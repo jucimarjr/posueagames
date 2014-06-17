@@ -127,7 +127,7 @@ Config.climbing = {
 };
 
 Config.levelId = {
-	level: 4
+	level: 5
 };
 
 Config.finalPhase = {
@@ -204,7 +204,7 @@ Config.level = {
 		else if (level == 4)
 		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara', 33,0,37);
 		else if (level == 5)
-		    Config.update.updateLevel(75, 2050, true, 13, 18, 19, 23, 24, 25, 'coin', 33,0,0);
+		    Config.update.updateLevel(75, 2050, true, 13, 18, 19, 23, 24, 25, 'coin', 33,0,37);
 		else if (level == 9)
 		    Config.update.updateLevel(2000, 2000, true, 0, 19, 0, 20, 0, 0, 'coin', 0, 18,0);
 		return Config.levelConfig;

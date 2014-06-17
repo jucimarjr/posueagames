@@ -21,7 +21,10 @@
  <tileset firstgid="33" name="check" tilewidth="20" tileheight="37">
   <image source="../spritesheets/check_20-37-3.png" width="80" height="37"/>
  </tileset>
- <tileset firstgid="37" name="branches" tilewidth="40" tileheight="40">
+ <tileset firstgid="37" name="gamewin_40-40-8" tilewidth="40" tileheight="40">
+  <image source="../spritesheets/gamewin_40-40-8.png" width="320" height="40"/>
+ </tileset>
+ <tileset firstgid="45" name="branches" tilewidth="40" tileheight="40">
   <image source="../level/branches_360-283.png" width="360" height="284"/>
  </tileset>
  <objectgroup name="thorns" width="60" height="60">
@@ -54,7 +57,7 @@
  </objectgroup>
  <layer name="Camada de Tiles 1" width="60" height="60">
   <data encoding="base64" compression="zlib">
-   eJzlWttuwyAMpWu7mzZp37TbUzdpe9zbtv//h4FUJIQwOPaBmMySpbYhrg82J8bh4Jy7NqyHs6JsXTrbcnQ4H5G2avJwVon0wvvo9cnrs9cLr7sVdZ/4E3wMeXgl0LsK3iAnr2+V+Unn5MXrKzEuHcOxU5OIV6J5XkRbu8Z/luQ9+fyRXTsJ7JXsBIk+SvjpNrGzczi++vL6CRhTEmt89cMc81u5/l0Zo/UxzV3Kloav9grfSoKOb2n9IjkC4SPCZm39bhEvZSvOAwJvWBfa/B7BV9biK31mBknnfBa8lM2cV1u5NDtfHbPvrf+2EN97V99P1PKZwkvxxpp4qWd87mfv+CL5GSGj8tlK/6DkY8yNEt4ab2m5nuNbKpI6FTmH6P5Gy56GFxAxGYU3xnVtThidz9L4/td81u5Lo3/S3iFlr3Zd86zT5kSaz6U5KdUp1G8cLr1x8n47guNG57PUZvBd06vr5V+0h+zrWOnXlfK6V3x793OkYhlvamsUP69tM+VnzXrj8rNENHiX8jO1b6bqsRnii16/klqIUxOh/ZPkc76/61UTWeFndH3YEy/CVk+8PThQm89rxHdJTY+uhyi80vMzvWveWi+MO1+cGKF9XMMWxcfW3h/lttD5vNX4xvu3jjd/vzgarzV+njm+rffzGryjYhKlVLssPX+wtfhy7p8Rr/T86gx4S/wqPS/Gxas5v4beL4zIZ+2+Yja8kvcKrX1ETZae34j3tHJ8xPpFygz8zBHuc1SKN/K5FbxcWYqX25/rcS4490Paj9lCPnPlP+LN642ltQCVzxYV1VecSf8A1cAfEw==
+   eJzlWstuAyEMJE3Sl1qp39XXKa3UHntr+//3ghQkhDB47YE1W0uWkizreLCZNV4Ozrlrw3o4K8rWpbMtR4fzEWmrJg9nlUgvvI9en7w+e73wultR94k/wceQh1cCvavgDXLy+laZn3ROXry+EuPSMRw7NYl4JZrnRbS1a/xnSd6Tzx/ZtZPAXslOkOijhJ9uEzs7h+OrL6+fgDElscZXP8wxv5Xr35UxWh/T3KVsafhqr/CtJOj4ltYvkiMQPiJs1tbvFvFStuI8IPCGdaHN7xF8ZS2+0mdmkHTOZ8FL2cx5tZVLs/PVMfve+m8L8b139f1ELZ8pvBRvrImXesbnfvaOL5KfETIqn630D0o+xtwo4a3xlpbrOb6lIqlTkXOI7m+07Gl4ARGTUXhjXNfmhNH5LI3vf81n7b40+iftHVL2atc1zzptTqT5XJqTUp1C/cbh0hsn77cjOG50PkttBt81vbpe/kV7yL6OlX5dKa97xbd3P0cqlvGmtkbx89o2U37WrDcuP0tEg3cpP1P7ZqoemyG+6PUrqYU4NRHaP0k+5/u7XjWRFX5G14c98SJs9cTbgwO1+bxGfJfU9Oh6iMIrPT/Tu+at9cK488WJEdrHNWxRfGzt/VFuC53PW41vvH/rePP3i6PxWuPnmePbej+vwTsqJlFKtcvS8wdbiy/n/hnxSs+vzoC3xK/S82JcvJrza+j9woh81u4rZsMrea/Q2kfUZOn5jXhPK8dHrF+kzMDPHOE+R6V4I59bwcuVpXi5/bke54JzP6T9mC3kM1f+I9683lhaC1D5bFFRfcWZ9A/rGyAb
   </data>
  </layer>
  <objectgroup name="bees" width="60" height="60">
@@ -186,9 +189,15 @@
   <object gid="13" x="1362" y="2323"/>
  </objectgroup>
  <objectgroup name="coin" width="60" height="60">
-  <object gid="25" x="1704" y="102"/>
+  <object gid="25" x="1560" y="80"/>
  </objectgroup>
  <objectgroup name="checkPoint" width="60" height="60">
   <object gid="33" x="1012" y="840"/>
+  <object gid="33" x="320" y="1280"/>
+  <object gid="33" x="240" y="320"/>
+  <object gid="33" x="2160" y="920"/>
+ </objectgroup>
+ <objectgroup name="flag" width="60" height="60">
+  <object gid="37" x="1680" y="120"/>
  </objectgroup>
 </map>
