@@ -43,6 +43,7 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('coin', 'assets/spritesheets/coins/coins_40-40-8.png',40,40,8);
 		this.game.load.spritesheet('coinIara', 'assets/spritesheets/coins/coinsIara_40-40-8.png',40,40,8);
 		this.game.load.spritesheet('checkP', 'assets/spritesheets/check_20-37-3.png',20,37,3);
+		this.game.load.spritesheet('flag', 'assets/spritesheets/gamewin_40-40-8.png',40,40,8);
 
 		this.game.load.image('bg1', 'assets/level/bg1_462-800.jpg');
 		this.game.load.image('bg2', 'assets/level/bg2_462-800.jpg');

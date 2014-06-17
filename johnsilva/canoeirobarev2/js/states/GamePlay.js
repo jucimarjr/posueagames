@@ -82,7 +82,8 @@ State.GamePlay.prototype = {
 			if(levelConfig.cipo.id>0){
 				this.game.physics.arcade.overlap(this.player, this.cipo, this.runCipo, null,this);
 			}		
-			this.game.physics.arcade.overlap(this.player, this.coin, function () {
+			//this.game.physics.arcade.overlap(this.player, this.coin, function () {
+			this.game.physics.arcade.overlap(this.player, this.flag, function () {
 				levelConfig.checkPoint.x = 0;
 				levelConfig.checkPoint.y = 0;
 				Config.levelId.level = ++this.level;
@@ -155,7 +156,7 @@ State.GamePlay.prototype = {
 		this.player.body.gravity.y = 1000;
 
 		if (this.layer) this.layer.destroy();
-		//if (this.flag) this.flag.destroy();
+		if (this.flag) this.flag.destroy();
 		if (this.branches) this.branches.destroy();
 		if (this.waters) this.waters.destroy();
 		if (this.bees) this.bees.destroy();
@@ -193,9 +194,23 @@ State.GamePlay.prototype = {
 		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
 		if(levelConfig.checkPoint.id>0) this.addCheckPoint(levelConfig.checkPoint.id);
 
+		this.addFlag(levelConfig.flag.id)
 		
 		if(this.level == 3)
 			this.initShadow();
+	},
+
+	addFlag: function(id){
+		this.flag = game.add.group();
+		this.flag.enableBody = true;
+		this.flag.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('flag',id,'flag', 0,true,false,this.flag);
+		this.flag.callAll('animations.add', 'animations', 'spin', [0,1,2,3,4,5,6,7], 7, true);
+		this.flag.callAll('animations.play', 'animations', 'spin');
+		this.flag.forEach(function (f){ 
+			f.body.allowGravity = false;
+			f.body.immovable = true;
+		}, this);
 	},
 
 	addCipo: function(id){
