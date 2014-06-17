@@ -48,7 +48,7 @@ State.Game.prototype = {
 		layer.resizeWorld(); // seta o mundo com as altera��es feitas
 		map.setCollisionBetween(1, 1, true, 0); // 0 espaco
 
-		var layer2 = map.createLayer('Movable objects');
+		this.layer2 = map.createLayer('Movable objects');
 		
 		// entrada
 		this.entrada = this.game.add.image(GOAL_X, GOAL_Y, 'entrada');

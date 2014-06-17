@@ -11,7 +11,7 @@ function HeroOfRope(game) {
 	that.maxJump = 2;
 	that.initX = 200;
 	that.initY = 1000;
-	
+
 	that.create = function() {
 		"use strict";
 
@@ -36,12 +36,18 @@ function HeroOfRope(game) {
 
 		this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 		this.jumpKey.onDown.add(this.jumpCheck, this);
+
+		this.rope = this.game.add.sprite(this.hero.x, this.hero.y, this.ropeTipKey);
+		this.rope.kill();
+		this.ropeKey = game.input.keyboard.addKey(Phaser.Keyboard.X);
+		this.ropeKey.onDown.add(this.useRope, this);
 	};
 
 	that.update = function(layer, enemies) {
 		"use strict";
 		this.game.physics.arcade.collide(layer, this.hero);
 		enemies.checkCollision(this.hero);
+		this.game.physics.arcade.collide(this.rope, this.layer2, this.collisionRopeObject);
 
 		// PEGA A ENTRADA (tecla pressionada):
 		var keyPressed = false;
@@ -76,6 +82,32 @@ function HeroOfRope(game) {
 			this.hero.frame = 0;
 		}
 	};
+
+	that.useRope = function(){
+		// TODO: draw "body" of rope
+		if(!this.active || this.ropeActive) return;
+		this.ropeActive = true;
+		console.log("using rope");
+		this.rope.x = this.hero.x;
+		this.rope.y = this.hero.y;
+		this.rope.revive();
+		// can't chain directly because of onComplete(); must use verbose mode
+		var ropeAnimP1 = this.game.add.tween(this.rope).to({x: this.hero.x + 350}, 500);
+		var ropeAnimP2 = this.game.add.tween(this.rope).to({x: this.hero.x}, 500);
+		ropeAnimP1.chain(ropeAnimP2);
+		ropeAnimP2.onComplete.add(this.killRope, this);
+		ropeAnimP1.start();
+	};
+
+	that.collisionRopeObject = function(rope, object){
+		console.log("rope collided with something");
+	}
+
+	that.killRope = function(){
+		console.log("killing rope");
+		this.rope.kill();
+		this.ropeActive = false;
+	}
 
 	return that;
 }
