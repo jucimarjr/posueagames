@@ -6,6 +6,7 @@
 		app_container.game = new Phaser.Game(960, 600, Phaser.AUTO, 'game_container');
 
 		// add phaser states
+		app_container.game.state.add('LudusSplash', app_container.LudusSplash);
 		app_container.game.state.add('Preload', app_container.Preload);
 		app_container.game.state.add('Menu', app_container.Menu);
 		app_container.game.state.add('Gameplay', app_container.Gameplay);
@@ -16,7 +17,7 @@
 
 
 		// start preload
-		app_container.game.state.start('Preload');
+		app_container.game.state.start('LudusSplash');
 	};
 
 	window.onload = function() {

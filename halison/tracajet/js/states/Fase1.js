@@ -45,14 +45,14 @@ State.Fase1.prototype = {
 	},
 
 	create: function () {
-		game.world.setBounds(0, 0, 2880, 1200);
 		var bg = game.add.tileSprite(0, 0, game.cache.getImage('bg').width,game.cache.getImage('bg').height, 'bg');
 
-		
+		game.world.setBounds(0, 0, 2880, 1200);
 		game.physics.startSystem(Phaser.Physics.P2JS);
 		game.physics.p2.setImpactEvents(true);
+		game.physics.p2.gravity.y = 800;
 		game.physics.p2.restitution = 0.5;
-		game.physics.p2.gravity.y = 500;
+		var tracajetCollisionGroup = game.physics.p2.createCollisionGroup();
 
 		this.map = game.add.tilemap('mapa'); //adicionando o map
 		this.map.addTilesetImage('assets_1','tilesetPlataforma' );// primeiro vem nome do arquivo, depois o apelido
@@ -63,7 +63,6 @@ State.Fase1.prototype = {
 
 		//Colide com esses tilesets
 		this.map.setCollision([9,10,11,12,13,14,17,18,19,20,21,22], true,'TileWorld'); // 0 espaco vazio 1 em diante os tiles do tileset
-		this.map.setTileSize(36, 40);
 		//Se tocar em algun desses tilesets morre
 		this.map.setTileIndexCallback([15,16,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,47,48,55,56],this.gameOver,this);
 
@@ -73,9 +72,8 @@ State.Fase1.prototype = {
 		this.tracajet.animations.add('swim',[5,6,7],6,false);
 		this.tracajet.animations.add('startSwim',[3,4],4,true);
 		game.physics.p2.enable(this.tracajet); // permite que a sprite tenha um corpo fisico
-		this.tracajet.body.setCircle(40);
 		this.tracajet.body.fixedRotation = true;
-		this.tracajet.body.collideWorldBounds = true;
+		this.tracajet.smoothed = false;
 		this.tracajet.anchor.setTo(.5,.5);
 	    game.camera.follow(this.tracajet);
 
@@ -108,9 +106,11 @@ State.Fase1.prototype = {
 		//this.txtScore.setText("Score : " + Config.game.score.score);
 		
 		//this.game.input.keyboard.addCallbacks(this,this.changeGameState);
-
+		
 		//Cursor
 		this.cursors = this.game.input.keyboard.createCursorKeys();
+		game.physics.p2.setBoundsToWorld(true, true, true, true, false);
+		
 	},
 
 	update: function () {
@@ -119,7 +119,7 @@ State.Fase1.prototype = {
 	   // game.physics.p2.overlap(this.sheets,this.tracajet,this.increaseScore,null,this);
 	   // game.physics.p2.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
 	   	this.updateTracajet();
-	    //this.updateEnemies();
+	    this.updateEnemies();
 	    //this.updateScorePosition
 		
 	},
@@ -151,7 +151,8 @@ State.Fase1.prototype = {
 		jacare.animations.add('left',[0,1,2,3,4,5],10,true);
 		jacare.animations.add('right',[6,7,8,9,10,11],10,true);
 		game.physics.p2.enable(jacare); // permite que a sprite tenha um corpo fisico
-		
+		jacare.body.fixedRotation = true;
+		jacare.body.collideWorldBounds = true;
 		
 		jacare_tween = this.add.tween(jacare);
 		
@@ -160,11 +161,7 @@ State.Fase1.prototype = {
 				.to({x: jacare.body.x-40, y: jacare.body.y}, 1000 /*duration of the tween (in ms)*/, 
 				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 100 /*delay*/, false /*yoyo?*/)
 				.loop()
-				.start()
-				; 
-		
-		
-		jacare.body.collideWorldBounds = true;
+				.start();
 	},
 	updateEnemies : function(){
 		this.enemies.forEachExists(function(jacare){
@@ -210,6 +207,7 @@ State.Fase1.prototype = {
 	},
 	
 	gameOver: function(){
+		console.log("funciona");
 		this.tracajet.kill();
 		var moduloPositionX = Math.abs(game.world.position.x);
 		var moduloPositionY = Math.abs(game.world.position.y); 

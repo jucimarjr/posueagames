@@ -1,6 +1,6 @@
 
 
-Player = function(game, coins, layer1, powerlifes, powerstars, thorns, enemy) {
+Player = function(game, coins, layer1, powerlifes, powerstars, thorns) {
 
 	this.game = game;
 	this.coins = coins;
@@ -9,11 +9,10 @@ Player = function(game, coins, layer1, powerlifes, powerstars, thorns, enemy) {
 	this.powerstars = powerstars;
 	this.thorns = thorns;
 	this.gold = false;
+	this.lose = false;
 	this.life = 3;
 	this.spritePlayer = null;
 	this.cursors = null;
-	this.enemy = enemy;
-	
 };
 
 Player.prototype = {
@@ -34,6 +33,7 @@ Player.prototype = {
 	    this.spritePlayer.body.collideWorldBounds = true;
 		this.spritePlayer.anchor.setTo(Config.player.anchor.x, Config.player.anchor.y);
 		this.spritePlayer.dead = false;
+		this.spritePlayer.smoothed = false;
 	    
 		this.game.camera.follow(this.spritePlayer, Phaser.Camera.FOLLOW_PLATFORMER);
 
@@ -46,7 +46,7 @@ Player.prototype = {
 
 		this.spritePlayer.body.velocity.x = 0;
 
-	    if(this.cursors.left.isDown && !this.spritePlayer.dead)
+	    if(this.cursors.left.isDown && !this.lose)
 	    {
 	    	this.spritePlayer.body.velocity.x = -Config.player.speed;
 	    	this.spritePlayer.scale.x = -1;
@@ -56,7 +56,7 @@ Player.prototype = {
 		    	this.spritePlayer.animations.play('walk');
 	    	}
 	    }
-	    else if(this.cursors.right.isDown && !this.spritePlayer.dead)
+	    else if(this.cursors.right.isDown && !this.lose)
 	    {
 	    	this.spritePlayer.body.velocity.x = Config.player.speed;
 	    	this.spritePlayer.scale.x = 1;
@@ -66,7 +66,7 @@ Player.prototype = {
 		    	this.spritePlayer.animations.play('walk');
 	    	}
 	    }
-	    else
+	    else if(!this.lose) 
 	    {
 	    	this.spritePlayer.animations.stop();
 	    	if(this.gold){
@@ -87,31 +87,31 @@ Player.prototype = {
 	    	this.spritePlayer.animations.play('fall');
     	}
 	    //  Allow the player to jump if they are touching the ground.
-	    if (this.jump.isDown && this.spritePlayer.body.onFloor())
+	    if (this.jump.isDown && this.spritePlayer.body.onFloor() && !this.lose)
 	    {
 	        this.spritePlayer.body.velocity.y = -Config.player.jump;
 	    }
 	},
 	
-	die: function (){
-		if(this.life > 0){
-			this.life--;
-			
+	die: function (enemy){
+		if(this.life >= 1 && enemy.alive){
+			this.lose = true;
 			this.spritePlayer.animations.play('loss-life');
-			this.spritePlayer.dead = true;
+			this.spritePlayer.alpha= 0;
 			
-			setTimeout(function () {
-				this.spritePlayer.dead = false;
-			}, 500);
-		} else{
+			var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 20, true);
+			safetyTween.onComplete.add(function(){this.lose = false;},this);
+			
+			this.life--;
+		}
+		
+		if(this.life == 0 && this.spritePlayer.alive) {
+			this.spritePlayer.alive = false;
 			this.spritePlayer.animations.play('dead');
-			this.spritePlayer.kill();
-			this.spritePlayer.dead = true;
-			setTimeout(function () {
-				this.spritePlayer.dead = false;
-				this.spritePlayer.revive();
-				this.life = 3;
-			}, 1000);
+			this.spritePlayer.alpha= 0;
+			
+			var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 20, true);
+			safetyTween.onComplete.add(function(){this.game.state.start('GameOver');},this);
 		}
 	}
 };
