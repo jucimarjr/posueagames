@@ -4,6 +4,9 @@ var Level1 = function (game) {
 	"use strict";
 	this.game = game;
 	this.background = null;
+	this.coins = Config.level1.coins;
+	this.lifes = Config.level1.life;
+	this.score = Config.level1.score;
 };
 Level1.prototype = {
 	create: function () {

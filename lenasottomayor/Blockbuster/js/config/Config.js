@@ -160,15 +160,35 @@ Config.tilemap = {
 	}
 };
 
-//Level
+//Level 1
 Config.level1 = {
 	x: 0,
 	y: 0,
+	coins: 0,
+	life: 3,
+	score: 0,
+	text: 'Level 1-1',
 	worldBounds: {
 		xi: 0,
 		yi: 0,
 		xf: 12800,
 		yf: 800
+	}
+};
+
+//Fonts
+Config.fonts = {
+	coins: {
+		dir: 'assets/fonts/font_gray.fnt',
+		image: 'assets/fonts/font_gray.png'
+	},
+	life: {
+		dir: 'assets/fonts/font_white.fnt',
+		image: 'assets/fonts/font_white.png'
+	},
+	score: {
+		dir: 'assets/fonts/font_yellow.fnt',
+		image: 'assets/fonts/font_yellow.png'
 	}
 };
 

@@ -1,6 +1,6 @@
 
 
-Player = function(game, coins, layer1, powerlifes, powerstars, thorns) {
+Player = function(game, coins, layer1, powerlifes, powerstars, thorns, HUD) {
 
 	this.game = game;
 	this.coins = coins;
@@ -8,6 +8,7 @@ Player = function(game, coins, layer1, powerlifes, powerstars, thorns) {
 	this.powerlifes = powerlifes;
 	this.powerstars = powerstars;
 	this.thorns = thorns;
+	this.HUD = HUD;
 	this.gold = false;
 	this.lose = false;
 	this.life = 3;
@@ -94,7 +95,7 @@ Player.prototype = {
 	},
 	
 	die: function (enemy){
-		if(this.life >= 1 && enemy.alive){
+		if(this.HUD.lifes >= 1 && enemy.alive){
 			this.lose = true;
 			this.spritePlayer.animations.play('loss-life');
 			this.spritePlayer.alpha= 0;
@@ -102,10 +103,10 @@ Player.prototype = {
 			var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 20, true);
 			safetyTween.onComplete.add(function(){this.lose = false;},this);
 			
-			this.life--;
+			this.HUD.lifes--;
 		}
 		
-		if(this.life == 0 && this.spritePlayer.alive) {
+		if(this.HUD.lifes == 0 && this.spritePlayer.alive) {
 			this.spritePlayer.alive = false;
 			this.spritePlayer.animations.play('dead');
 			this.spritePlayer.alpha= 0;

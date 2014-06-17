@@ -68,5 +68,10 @@ State.GameSplash.prototype = {
 
 		//Game Over
 		this.game.load.image('game-over', Config.gameOver.dir);
+		
+		//Fonts
+		this.game.load.bitmapFont('font-coins', Config.fonts.coins.image, Config.fonts.coins.dir);
+		this.game.load.bitmapFont('font-life', Config.fonts.life.image, Config.fonts.life.dir);
+		this.game.load.bitmapFont('font-score', Config.fonts.score.image, Config.fonts.score.dir);
 	}
 };

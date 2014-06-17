@@ -14,7 +14,8 @@ State.GamePlay.prototype = {
 		this.powerlifes = new PowerLifes(game, this.tilemap);
 		this.powerstars = new PowerStars(game, this.tilemap);
 		this.enemies = new Enemy(game, this.layer1, this.tilemap);
-		this.player = new Player(game, this.coins, this.layer1, this.powerlifes, this.powerstars, this.thorns);
+		this.HUD =  new HUD(game, this.level1.lifes, this.level1.score, this.level1.coins);
+		this.player = new Player(game, this.coins, this.layer1, this.powerlifes, this.powerstars, this.thorns, this.HUD);
 	},
 	create: function () {
 		"use strict";
@@ -25,6 +26,7 @@ State.GamePlay.prototype = {
 		this.powerlifes.create();
 		this.powerstars.create();
 		this.enemies.create();
+		this.HUD.create();
 		this.player.create();
 	},
 	update: function () {
@@ -32,6 +34,8 @@ State.GamePlay.prototype = {
 		this.game.physics.arcade.collide(this.player.spritePlayer, this.layer1.platform);
 		this.game.physics.arcade.collide(this.player.spritePlayer, this.layer1.thorn);
 
+		this.HUD.update();
+		
 		if(!this.player.lose) {
 			this.game.physics.arcade.overlap(this.player.spritePlayer, this.coins.group, this.collectCoins, null, this);
 			this.game.physics.arcade.overlap(this.player.spritePlayer, this.powerlifes.group, this.collectPowerLifes, null, this);
@@ -54,6 +58,8 @@ State.GamePlay.prototype = {
 	
 	collectCoins: function(spritePlayer, coins) {
 		coins.kill();
+		
+		this.HUD.updateCoins(1);
 	},
 	
 	collectPowerLifes: function(spritePlayer, powerlifes) {
