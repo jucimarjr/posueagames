@@ -11,6 +11,7 @@ function HeroOfRope(game) {
 	that.maxJump = 2;
 	that.initX = 200;
 	that.initY = 1000;
+	that.numSegmentsRope = 19;
 
 	that.create = function() {
 		"use strict";
@@ -37,8 +38,12 @@ function HeroOfRope(game) {
 		this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 		this.jumpKey.onDown.add(this.jumpCheck, this);
 
-		this.rope = this.game.add.sprite(this.hero.x, this.hero.y, this.ropeTipKey);
-		this.rope.kill();
+		this.ropeSegments = [];
+		for(var i = 0; i < this.numSegmentsRope; i++){
+			var ropeSegment = this.game.add.sprite(0, 0, this.ropeTipKey);
+			this.ropeSegments.push(ropeSegment);
+			ropeSegment.kill();
+		}
 		this.ropeKey = game.input.keyboard.addKey(Phaser.Keyboard.X);
 		this.ropeKey.onDown.add(this.useRope, this);
 	};
@@ -47,12 +52,12 @@ function HeroOfRope(game) {
 		"use strict";
 		this.game.physics.arcade.collide(layer, this.hero);
 		enemies.checkCollision(this.hero);
-		this.game.physics.arcade.collide(this.rope, this.layer2, this.collisionRopeObject);
+		this.game.physics.arcade.collide(this.ropeSegments[0], this.layer2, this.collisionRopeObject);
 
 		// PEGA A ENTRADA (tecla pressionada):
 		var keyPressed = false;
 		// apenas processar movimento se estiver ativo
-		if (this.active) {
+		if (this.active && !this.ropeActive) {
 			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 				// vai para esquerda
 				this.hero.body.velocity.x = -this.walk;
@@ -81,19 +86,28 @@ function HeroOfRope(game) {
 			this.hero.animations.stop();
 			this.hero.frame = 0;
 		}
+
+		if(this.ropeActive){
+			for(var i = 1; i < this.numSegmentsRope; i++){
+				this.ropeSegments[i].x = this.ropeSegments[i-1].x - 30;
+				if(this.ropeSegments[i].x < this.ropeStartX)
+					this.ropeSegments[i].x = this.ropeStartX;
+			}
+		}
 	};
 
 	that.useRope = function(){
-		// TODO: draw "body" of rope
-		if(!this.active || this.ropeActive) return;
+		if(!this.active || this.ropeActive || !this.hero.body.onFloor()) return;
 		this.ropeActive = true;
-		console.log("using rope");
-		this.rope.x = this.hero.x;
-		this.rope.y = this.hero.y;
-		this.rope.revive();
+		this.ropeStartX = this.hero.x + Math.abs(this.hero.width/2) - this.ropeSegments[0].width;
+		for(var i = 0; i < this.numSegmentsRope; i++){
+			this.ropeSegments[i].revive();
+			this.ropeSegments[i].y = this.hero.y;
+		}
+		this.ropeSegments[0].x = this.ropeStartX;
 		// can't chain directly because of onComplete(); must use verbose mode
-		var ropeAnimP1 = this.game.add.tween(this.rope).to({x: this.hero.x + 350}, 500);
-		var ropeAnimP2 = this.game.add.tween(this.rope).to({x: this.hero.x}, 500);
+		var ropeAnimP1 = this.game.add.tween(this.ropeSegments[0]).to({x: this.ropeStartX + 350}, 700);
+		var ropeAnimP2 = this.game.add.tween(this.ropeSegments[0]).to({x: this.ropeStartX}, 700);
 		ropeAnimP1.chain(ropeAnimP2);
 		ropeAnimP2.onComplete.add(this.killRope, this);
 		ropeAnimP1.start();
@@ -104,10 +118,19 @@ function HeroOfRope(game) {
 	}
 
 	that.killRope = function(){
-		console.log("killing rope");
-		this.rope.kill();
+		for(var i = 0; i < this.numSegmentsRope; i++){
+			this.ropeSegments[i].kill();
+		}
 		this.ropeActive = false;
 	}
+
+	that.jumpCheck = function() {
+	// apenas processar pulo se estiver ativo e não estiver usando a corda
+	if (this.active && this.jumpCount < this.maxJump && !this.ropeActive) {
+		this.hero.body.velocity.y = -this.jump;
+		this.jumpCount++;
+	}
+}
 
 	return that;
 }
