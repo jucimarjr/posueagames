@@ -755,26 +755,32 @@ State.Game.prototype = {
 
     //create monsters
     putMonsters: function () {
-        //monster;
-    	if (this.playerCollider.x === 60) {
-            monster = this.game.add.sprite(940, 3440, 'monstercat');
-        } else if (this.playerCollider.x === 1500) {
-            monster = this.game.add.sprite(2200, 3440, 'monstercat');
-        } else if (this.playerCollider.x === 3000) {
-            monster = this.game.add.sprite(3500, 3440, 'bluemonster');
-        }
-        
-        monster.name = 'monster';
-        
-        monster.animations.add('walk', [0, 1, 2], 10, true);
-        monster.play('walk');
-		game.physics.p2.enable(monster, false);
-        monster.body.fixedRotation = true; //no circle movement 
-        monster.body.kinematic = true;
-        monster.body.collideWorldBounds = true;
-        monster.body.setCollisionGroup(monsterCollisionGroup);
-        monster.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
-    },
+			//group
+			monsters = this.game.add.group();
+
+			//monsters
+			var monster = monsters.create(940, 3440, 'monstercat');
+			this.createMonster(monster);
+
+			monster =  monsters.create(1836, 3440, 'monstercat');
+			this.createMonster(monster);
+
+			monster =  monsters.create(3068, 3440, 'bluemonster');
+			this.createMonster(monster);
+		},
+
+		createMonster: function (monster) {
+			monster.name = 'monster';
+
+			monster.animations.add('walk', [0, 1, 2], 10, true);
+			monster.play('walk');
+			this.game.physics.p2.enable(monster, false);
+			monster.body.fixedRotation = true; //no circle movement 
+			monster.body.kinematic = true;
+			monster.body.collideWorldBounds = true;
+			monster.body.setCollisionGroup(monsterCollisionGroup);
+			monster.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
+		},
 
     //Create Collects
     putCollect: function () {
@@ -813,19 +819,17 @@ State.Game.prototype = {
         collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
     },
 
-    followPlayer: function () {
-        if (player.body.x < monster.body.x) {
-            monster.body.velocity.x = monster_speed * -1;
-        } else {
-            monster.body.velocity.x = monster_speed;
-        }
-        if (player.body.y < monster.body.y) {
-            monster.body.velocity.y = monster_speed * -1;
-        } else {
-            monster.body.velocity.y = monster_speed;
-        }
-
-    },
+		followPlayer: function () {
+			monsters.forEach(function(mon){
+				if (player.body.x < mon.body.x) {
+					mon.body.moveLeft(monster_speed);
+					mon.scale.x = 1;
+				} else {
+					mon.body.moveRight(monster_speed);
+					mon.scale.x = -1;
+				}
+			},this, true);
+		},
     putVerticalBar: function () {
         //bar 1
     	verticalBar1 = this.game.add.sprite(3500, 2300, 'verticalbar');
