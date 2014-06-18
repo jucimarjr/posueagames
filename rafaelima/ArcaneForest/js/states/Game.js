@@ -110,6 +110,7 @@ State.Game.prototype = {
         // player collider
         this.playerCollider = this.game.add.sprite(Config.game.player.x, Config.game.player.y, Config.game.player.collider.emma.key);
         this.playerCollider.anchor.setTo(Config.game.player.anchor.x, Config.game.player.anchor.y);
+        this.playerCollider.name = "player";
         
         this.offsetX = Config.game.player.collider.emma.offset.right.x;
         this.offsetY = Config.game.player.collider.emma.offset.right.y;
@@ -138,7 +139,7 @@ State.Game.prototype = {
 //        player.animations.add('turn', [4], 20, true);
 //        player.animations.add('left', [4, 3, 2, 1, 0], 10, true);
 //        player.smoothed = false;
-        player.health = 3;
+        //player.health = 3;
         this.game.physics.p2.enable(player, false);
         //this.game.camera.follow(player);
 //        player.body.collideWorldBounds = true;
@@ -203,6 +204,8 @@ State.Game.prototype = {
 
     update: function () {
         "use strict";
+        
+        //console.log("--"+ this.playerCollider.body.x +","+ this.playerCollider.body.y);
         
         if(this.gameState == STATE_PLAY) {
         	
@@ -544,7 +547,15 @@ State.Game.prototype = {
 //        }
     },
 
-    hitMonsters: function () {
+    hitMonsters: function (body1, body2) {
+    	
+    	var monster;
+    	if(body1.sprite.name == "monster") {
+    		monster = body1.sprite;
+    	}
+    	else {
+    		monster = body2.sprite;
+    	}
     	
     	var timeNow = new Date().getTime();
     	
@@ -555,6 +566,19 @@ State.Game.prototype = {
 	    	this.updateHealth();
 	    	
 	    	this.timeImune = timeNow + Config.game.player.damageCooldown;
+	    	
+	    	// move player away
+	    	if(this.playerCollider.body.x < monster.body.x) {
+	    		this.playerCollider.body.force.x = -2000;
+	    		//this.playerCollider.body.moveLeft(2000);
+	    		//this.playerCollider.body.moveForward(2000);
+	    	}
+	    	else {
+	    		this.playerCollider.body.force.x = 2000;
+//	    		this.playerCollider.body.moveUp(200);
+//	    		this.playerCollider.body.moveRight(2000);
+	    		//this.playerCollider.body.moveBackward(2000);
+	    	}
 	    	
 	    	if(this.playerLifes == 0) {
 	    		
@@ -686,13 +710,13 @@ State.Game.prototype = {
     //create monsters
     putMonsters: function () {
         //monster;
-        if (this.playerCollider.x === 60) {
+        //if (this.playerCollider.x === 60) {
             monster = this.game.add.sprite(940, 3440, 'monstercat');
-        } else if (this.playerCollider.x === 1500) {
-            monster = this.game.add.sprite(2200, 3440, 'monstercat');
-        } else if (this.playerCollider.x === 3000) {
-            monster = this.game.add.sprite(3500, 3440, 'bluemonster');
-        }
+//        } else if (this.playerCollider.x === 1500) {
+//            monster = this.game.add.sprite(2200, 3440, 'monstercat');
+//        } else if (this.playerCollider.x === 3000) {
+//            monster = this.game.add.sprite(3500, 3440, 'bluemonster');
+//        }
         
         monster.name = 'monster';
         
