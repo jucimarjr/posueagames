@@ -282,7 +282,7 @@ State.Game.prototype = {
 	        previousX = parseInt(player.x);
 	        
 	        
-	        if (player.x < 2863 && player.y <= 2461 && !isGameRotate) {
+	        if (player.x < 3044 && player.y <= 349 && !isGameRotate) {
 	            this.fallPlayer();
 	        }
 	        
@@ -381,7 +381,7 @@ State.Game.prototype = {
     render: function () {
         "use strict";
         //DEBUG
-		this.game.debug.spriteInfo(player, 32, 32);
+//		this.game.debug.spriteInfo(player, 32, 32);
 		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
 //		this.game.debug.text( " + " + contFrameGif , 100, 380 );
     },
@@ -701,7 +701,7 @@ State.Game.prototype = {
     //Create Bars
     putBar: function () {
         //bar 1
-        bar = this.game.add.sprite(3850, 3434, 'bar');
+        bar = this.game.add.sprite(3850, 1415, 'bar');
         this.game.physics.p2.enable(bar, false);
         bar.body.kinematic = true;
         this.game.add.tween(bar.body.velocity).to({
@@ -713,7 +713,7 @@ State.Game.prototype = {
         bar.body.collides([barCollisionGroup, playerCollisionGroup]);
 
         //bar 2
-        bar2 = this.game.add.sprite(4250, 3334, 'bar');
+        bar2 = this.game.add.sprite(4250, 1315, 'bar');
         this.game.physics.p2.enable(bar2, false);
         bar2.body.kinematic = true;
         this.game.add.tween(bar2.body.velocity).to({

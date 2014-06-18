@@ -104,7 +104,7 @@ Config.game = {
 		width: 32,
 		height: 48,
 		x: 60,
-		y: 3300,
+		y: 1393,
 		xRotate: 2346,
 		yRotate: 385,
 		lifes: 3,
@@ -277,7 +277,7 @@ Config.game = {
 	},
 	barRotate:{
 		x: 1793, 
-		y: 400
+		y: 500
 	}
 
 };
