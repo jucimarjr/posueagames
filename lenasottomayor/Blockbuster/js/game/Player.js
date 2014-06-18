@@ -30,11 +30,10 @@ Player.prototype = {
 	    this.spritePlayer.animations.add('loss-life',[8],1,false);
 	    this.spritePlayer.animations.add('dead',[9],1,false);
 		
-	    this.game.physics.enable(this.spritePlayer);
+	    this.game.physics.enable(this.spritePlayer, Phaser.Physics.ARCADE);
 	    this.spritePlayer.body.collideWorldBounds = true;
 		this.spritePlayer.anchor.setTo(Config.player.anchor.x, Config.player.anchor.y);
 		this.spritePlayer.dead = false;
-		this.spritePlayer.smoothed = false;
 	    
 		this.game.camera.follow(this.spritePlayer, Phaser.Camera.FOLLOW_PLATFORMER);
 
@@ -95,6 +94,14 @@ Player.prototype = {
 				this.spritePlayer.body.velocity.y = -Config.player.jump;
 			}
 		}
+	},
+	
+	goldVersion: function (){
+		this.gold = true;
+		this.spritePlayer.alpha= 0;
+		
+		var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 300, true);
+		safetyTween.onComplete.add(function(){this.gold = false;},this);
 	},
 	
 	die: function (enemy){
