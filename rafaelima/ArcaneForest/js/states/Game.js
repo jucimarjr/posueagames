@@ -7,7 +7,7 @@ var layer, player, map, transparentWall, collects, health, music, rotate, monste
 var itemsTaken, flagId, isGameRotate, idPlayer, helper;
 var imgPlayerFall, contFrameGif;
 var cursors, attackButton, pauseButton;
-var bg1, bg2, bg3, bg4, bg5;
+var bg1, bg2, bg3, bg4, bg5, bg6;
 var bar, bar2, bar3;
 var previousX, previousY;
 var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup, barCollisionGroup, swordCollisionGroup;
@@ -68,12 +68,13 @@ State.Game.prototype = {
         swordCollisionGroup = this.game.physics.p2.createCollisionGroup();
 
         //bg
-        bg4 = this.game.add.tileSprite(1700, 1950, 3600, 1200, 'bg4');
-        bg4.tileScale.setTo(4, 4);
-        bg1 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg1');
-        bg2 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg2');
-        bg3 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg3');
-        this.game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
+        bg1 = this.game.add.tileSprite(0, 700, 3000, 720, 'bg1');
+        bg1.tileScale.setTo(1, 1.8);
+        bg2 = this.game.add.tileSprite(0, 970, 3000, 540, 'bg2');
+        bg3 = this.game.add.tileSprite(0, 970, 3000, 540, 'bg3');
+        bg6 = this.game.add.tileSprite(2700, 0, 2464, 1000, 'bg6');
+        bg6.tileScale.setTo(2, 2);
+        bg4 = this.game.add.tileSprite(2560, 970, 3000, 540, 'bg4');
         
         this.putVerticalBar();
 
@@ -112,7 +113,6 @@ State.Game.prototype = {
         player.animations.add(Config.game.player.anim.walk.key, Config.game.player.anim.walk.frames, Config.game.player.anim.walk.speed, Config.game.player.anim.walk.loop);
         player.animations.add(Config.game.player.anim.jump.key, Config.game.player.anim.jump.frames, Config.game.player.anim.jump.speed, Config.game.player.anim.jump.loop);
         player.animations.add(Config.game.player.anim.attack.key, Config.game.player.anim.attack.frames, Config.game.player.anim.attack.speed, Config.game.player.anim.attack.loop);
-        
         
         this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
@@ -175,6 +175,7 @@ State.Game.prototype = {
         layer.debug = true;
 
         layer.resizeWorld();
+        layer.alpha = 2;
 
         cursors = this.game.input.keyboard.createCursorKeys();
         attackButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -297,7 +298,16 @@ State.Game.prototype = {
 		 monsters.removeAll();
 		 collects.removeAll();
 		 obstacles.removeAll();
-		 
+
+		 bg1.y = Config.game.gameRotate.bg1y;
+		 bg2.tilePosition.x -= Config.game.gameRotate.bg2x;
+		 bg2.y = Config.game.gameRotate.bg2y;
+		 bg3.tilePosition.x -= Config.game.gameRotate.bg3x;
+		 bg3.y = Config.game.gameRotate.bg3y;
+		 bg4.x = Config.game.gameRotate.bg4x;
+		 bg4.y = Config.game.gameRotate.bg4y;
+
+
 		 layer.destroy();
 		 this.playerCollider.body.clearCollision();
 		 
@@ -364,7 +374,6 @@ State.Game.prototype = {
         //DEBUG
 //		this.game.debug.spriteInfo(player, 32, 32);
 		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
-//		this.game.debug.text( " + " + contFrameGif , 100, 380 );
     },
 
     //collect item (diamond and key)
