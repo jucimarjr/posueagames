@@ -158,7 +158,7 @@ Config.game = {
 		anim: {
 			stop: {
 				key: 'player_stop',
-				frames: [0],
+				frames: [6],
 				speed: 10,
 				loop: false
 			},
