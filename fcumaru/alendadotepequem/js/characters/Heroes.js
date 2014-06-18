@@ -3,10 +3,15 @@ var GOAL_Y = 400;
 var GOAL_WIDTH = 80;
 var GOAL_HEIGHT = 80;
 
+var HERO_OF_POWER = "HERO_OF_POWER";
+var HERO_OF_ROPE = "HERO_OF_ROPE";
+var HERO_OF_STICK = "HERO_OF_STICK";
+
 Heroes = function(game) {
 	"use strict";
 	this.game = game;
 	this.index = 0;
+	this.type = "";
 	
 	this.heroes = new Array();
 

@@ -3,10 +3,11 @@ function HeroOfPower(game) {
 	var that = new Hero(game);
 
 	// Default parameters
+	this.type = HERO_OF_POWER;
 	that.key = 'hero1';
 	that.asset = 'assets/tmp1.png';
 	that.jump = 450;
-	that.walk = 150;
+	that.walk = 300;
 	that.life = 1;
 	that.maxJump = 3;
 	that.initX = 20;

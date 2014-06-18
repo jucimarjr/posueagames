@@ -21,7 +21,10 @@
  <tileset firstgid="33" name="check" tilewidth="20" tileheight="37">
   <image source="../spritesheets/check_20-37-3.png" width="80" height="37"/>
  </tileset>
- <tileset firstgid="37" name="branches" tilewidth="40" tileheight="40">
+ <tileset firstgid="37" name="gamewin_40-40-8" tilewidth="40" tileheight="40">
+  <image source="../spritesheets/gamewin_40-40-8.png" width="320" height="40"/>
+ </tileset>
+ <tileset firstgid="45" name="branches" tilewidth="40" tileheight="40">
   <image source="../level/branches_360-283.png" width="360" height="284"/>
  </tileset>
  <objectgroup name="thorns" width="30" height="20">
@@ -31,7 +34,7 @@
  </objectgroup>
  <layer name="Camada de Tiles 1" width="30" height="20">
   <data encoding="base64" compression="zlib">
-   eJy91NlOwzAQheFESqoWbuBF2Pe9Zd+Lyip2eP934EfygWHkJg1KO9J3kXri4zpOsiRJmiOWoYFpzGAWc5jHAhaxhKmae/KQu4JVrGEdG9jEFraxXHOPctvoYBd72McBDnGEHaRGrMeOaz/TyDxtk3uCU5zhHBe4RBdX4f7MPJdYTx7Gx5LfysO93XB9HLKU28M1bnCLO9zjwa1fub5n3GTaebSW1KylZ3Kf8IwXvOIN7/jAJx5DTyvM7Xv0u0rzKNdnK1eVOv1q0L7v9TTdmpSrtdhnKMOoPPm7D57OY9H/qVo6J8q15ya2L6oJTPa59mNl1Shv+ami/SkSy6iSq3MyitzY81W+fT72XMT4ecpy6zrXLZftc2P7NOyKvcOZGaurqp7PQfLL3id9y/8jcdf2m1l0X9n4KHwB+0QmPw==
+   eJy91NdOw0AQhWFbsqMEbuBl6L0n9B4Uqujw/vf8SHtgGG3sGDkZ6btwdrxns147S5KkOWIZGpjGDGYxh3ksYBFLmKq5Jw+5K1jFGtaxgU1sYRvLNfcot40OdrGHfRzgEEfYQWrEeuy49jONzNM2uSc4xRnOcYFLdHEV7s/Mc4n15GF8LPmtPNzbDdfHIUu5PVzjBre4wz0e3PqV63vGTaadR2tJzVp6JvcJz3jBK97wjg984jH0tMLcvke/qzSPcn22clWp068G7fteT9OtSblai32GMozKk7/74Ok8Fv2fqqVzolx7bmL7oprAZJ9rP1ZWjfKWnyranyKxjCq5OiejyI09X+Xb52PPRYyfpyy3rnPdctk+N7ZPw67YO5yZsbqq6vkcJL/sfdK3/D8Sd22/mUX3lY2PwhdyxioP
   </data>
  </layer>
  <objectgroup name="bees" width="30" height="20">
@@ -79,5 +82,8 @@
  </objectgroup>
  <objectgroup name="checkPoint" width="30" height="20">
   <object gid="33" x="560" y="440"/>
+ </objectgroup>
+ <objectgroup name="flag" width="30" height="20">
+  <object gid="37" x="860" y="120"/>
  </objectgroup>
 </map>
