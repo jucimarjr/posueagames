@@ -3,37 +3,18 @@ State.Game = function(game) {
 	this.game = game;
 };
 
-var layer;
-var player;
-var isGameRotate;
+var layer, player, map, transparentWall, collects, health, music, rotate, monster;
+var itemsTaken, flagId, isGameRotate, idPlayer, helper;
 var imgPlayerFall, contFrameGif;
-var cursors;
-var attackButton;
-var pauseButton;
-var map;
-var rotate;
-var bg1;
-var bg2;
-var bg3;
-var bg4;
-var bg5;
-var transparentWall;
+var cursors, attackButton, pauseButton;
+var bg1, bg2, bg3, bg4, bg5;
 var bar, bar2, bar3;
-var previousX;
-var previousY;
-var collects;
-var itemsTaken;
-var idPlayer;
-var helper;
-var flagId, flagMove;
-var monster;
+var previousX, previousY;
 var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup, barCollisionGroup, swordCollisionGroup;
 var isJumping, beInGround, yBeforeJump;
-var monster_speed = 5;
-var health;
-var music;
 var verticalBar1, verticalBar2, verticalBar3;
 
+var monster_speed = 5;
 var STATE_PLAY = 0;
 var STATE_PAUSED = 1;
 var STATE_GAMEOVER = 2;
@@ -50,7 +31,6 @@ State.Game.prototype = {
         rotate = 0.05;
         previousX = 0;
         previousY = 0;
-        flagMove = false;
         isGameRotate = false;
         contFrameGif = 0;
     },
