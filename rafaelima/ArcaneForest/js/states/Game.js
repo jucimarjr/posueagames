@@ -313,7 +313,7 @@ State.Game.prototype = {
 		 
 		 bar.kill();
 		 bar2.kill();
-		 monster.kill();
+		 monsters.removeAll();
 		 collects.removeAll();
 		 obstacles.removeAll();
 		 

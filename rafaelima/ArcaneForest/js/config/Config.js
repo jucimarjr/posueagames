@@ -25,7 +25,7 @@ var Config = {
 //LudusSplash
 Config.ludusSplash = {
 	key: 'ludus-splash',
-	dir: Config.images+'LudusSplash_960-600.png',
+	dir: Config.images+'LudusSplash_960-540.png',
 	x: 0,
 	y: 0,
 	alphaTime: 500,
@@ -105,6 +105,8 @@ Config.game = {
 		height: 48,
 		x: 60,
 		y: 3300,
+		xRotate: 2346,
+		yRotate: 385,
 		lifes: 3,
 		sword:{
 			key: 'emmasword_spritesheet',

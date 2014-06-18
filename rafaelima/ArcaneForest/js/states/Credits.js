@@ -14,7 +14,7 @@ State.Credits.prototype = {
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
 		
-		this.game.add.sprite(173, 273, 'credits');
+		this.game.add.sprite(0, 0, 'credits');
 		
 	},
 	update: function () {
