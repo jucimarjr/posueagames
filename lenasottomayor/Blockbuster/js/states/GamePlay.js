@@ -60,23 +60,27 @@ State.GamePlay.prototype = {
 		coins.kill();
 		
 		this.HUD.updateCoins(1);
+		this.HUD.updateScore(Config.scores.coin);
 	},
 	
 	collectPowerLifes: function(spritePlayer, powerlifes) {
 		powerlifes.kill();
+		
+		this.HUD.updateLife(1);
+		this.HUD.updateScore(Config.scores.powerlife);
 	},
 	
 	collectPowerStars: function(spritePlayer, powerstars) {
 		powerstars.kill();
-	},
-	
-	playerDie: function(spritePlayer, enemy){
-		this.player.die();
+		
+		this.HUD.updateScore(Config.scores.powerstar);
 	},
 	
 	collision: function (player, enemy) {
 		if((player.body.y + player.body.height == enemy.body.y) && enemy.alive) {
 			player.body.velocity.y = -Config.player.jump;
+			
+			this.HUD.updateScore(Config.scores.enemy);
 				
 			enemy.alive = false;
 			enemy.body.velocity.x = 0;

@@ -101,11 +101,6 @@ Config.menu = {
 			x: 0.5,
 			y: 0.5
 		}
-	},
-	
-	textStyle: {
-		font: '25px Ms Sans Serif',
-		fill: '#ffffff'
 	}
 };
 
@@ -191,6 +186,20 @@ Config.fonts = {
 		dir: 'assets/fonts/font_yellow.fnt',
 		image: 'assets/fonts/font_yellow.png'
 	}
+};
+
+//Scores
+Config.scores = {
+	powerlife: 5,
+	powerstar: 10,
+	coin: 2,
+	enemy: 25
+};
+
+//Icons
+Config.icon = {
+	coin: 'assets/images/coinscore_25-25.png',
+	life: 'assets/images/lifescore_48-27.png'
 };
 
 //Player
@@ -368,11 +377,3 @@ Config.gameWin = {
 	x: 0,
 	y: 0	
 };
-
-//Font
-Config.font = {
-	gray:{
-		dirPng: 'assets/fonts/font_gray.png' ,
-		dirFnt: 'assets/fonts/font_gray.fnt'
-	}
-}

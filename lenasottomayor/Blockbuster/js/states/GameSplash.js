@@ -76,5 +76,10 @@ State.GameSplash.prototype = {
 		this.game.load.bitmapFont('font-coins', Config.fonts.coins.image, Config.fonts.coins.dir);
 		this.game.load.bitmapFont('font-life', Config.fonts.life.image, Config.fonts.life.dir);
 		this.game.load.bitmapFont('font-score', Config.fonts.score.image, Config.fonts.score.dir);
+		
+		//Icons
+		this.game.load.image('icon-coins', Config.icon.coin);
+		this.game.load.image('icon-life', Config.icon.life);
+		
 	}
 };

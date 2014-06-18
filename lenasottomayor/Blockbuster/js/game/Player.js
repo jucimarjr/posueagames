@@ -106,7 +106,7 @@ Player.prototype = {
 			var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 20, true);
 			safetyTween.onComplete.add(function(){this.lose = false;},this);
 			
-			this.HUD.lifes--;
+			this.HUD.updateLife(-1);
 		}
 		
 		if(this.HUD.lifes == 0 && this.spritePlayer.alive) {
