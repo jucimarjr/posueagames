@@ -188,13 +188,13 @@ Config.game = {
 	},
 	monstercat:{
 		dir: 'assets/spritesheets/monstercat_40_18_3.png',
-		width: 38,
+		width: 40,
 		height: 18
 	},
 	bigbosjumping:{
 		dir: 'assets/spritesheets/bigbosjumping_104_214_4_.png',
-		width: 114,
-		height: 208
+		width: 104,
+		height: 214
 	},
 	bigbossattackcompose:{
 		dir: 'assets/spritesheets/bigbossattack_compose_270_208_6_.png',
@@ -208,7 +208,7 @@ Config.game = {
 	},
 	bluemonster:{
 		dir: 'assets/spritesheets/bluemonster_62_50_3.png',
-		width: 60,
+		width: 62,
 		height: 50
 	},
 	emmaattack:{
@@ -226,15 +226,15 @@ Config.game = {
 		width: 104,
 		height:104
 	},
-	greenmonsterleft:{
+	greenmonster:{
 		dir: 'assets/spritesheets/greenmonsterleft_76_62_5.png',
-		width: 74,
+		width: 76,
 		height:62
 	},
-	greenmonsterright:{
+	raybrother:{
 		dir: 'assets/spritesheets/ray_49_56_2.png',
-		width: 47,
-		height:52
+		width: 49,
+		height:56
 	},
 	blue:{
 		dir: 'assets/images/bluediamond_13-25.png'

@@ -25,7 +25,7 @@ var itemsTaken;
 var idPlayer;
 var helper;
 var flagId, flagMove;
-var monster;
+var monsters;
 var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup, barCollisionGroup, swordCollisionGroup;
 var isJumping, beInGround, yBeforeJump;
 var monster_speed = 5;
@@ -133,6 +133,8 @@ State.Game.prototype = {
         player.animations.add(Config.game.player.anim.attack.key, Config.game.player.anim.attack.frames, Config.game.player.anim.attack.speed, Config.game.player.anim.attack.loop);
         
         
+        //this.playerCollider.reset(3040, 342);
+
         this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
         this.playerCollider.body.fixedRotation = true;
@@ -251,7 +253,7 @@ State.Game.prototype = {
 	            this.swordOffsetX = Config.game.player.collider.sword.offset.right.x;
 	            this.swordOffsetY = Config.game.player.collider.sword.offset.right.y;
 	            
-	        } else {
+    	        } else {
 	        	this.playerCollider.body.velocity.x = 0;
 	            //player.animations.play('turn');
 	            
@@ -264,7 +266,6 @@ State.Game.prototype = {
 	        
 	        this.doJump();
 	        this.doAttack();
-	        this.followPlayer();
 	        
 	        player.body.x = this.playerCollider.body.x + this.offsetX;
 	        player.body.y = this.playerCollider.body.y + this.offsetY;
@@ -759,14 +760,37 @@ State.Game.prototype = {
 			monsters = this.game.add.group();
 
 			//monsters
-			var monster = monsters.create(940, 3440, 'monstercat');
+			var monster = monsters.create(1015, 1360, 'monstercat');
 			this.createMonster(monster);
 
-			monster =  monsters.create(1836, 3440, 'monstercat');
+			monster =  monsters.create(1950, 1397, 'monstercat');
 			this.createMonster(monster);
+            monster.scale.x = -1;
 
-			monster =  monsters.create(3068, 3440, 'bluemonster');
+            monster =  monsters.create(3950, 1152, 'greenmonster');
+            this.createMonster(monster);
+            monster.animations.add('walk', [0, 1, 2, 3, 4], 10, true);
+            monster.play('walk');
+
+            monster =  monsters.create(4250, 1152, 'greenmonster');
+            this.createMonster(monster);
+            monster.animations.add('walk', [0, 1, 2, 3, 4], 10, true);
+            monster.play('walk');
+
+            monster =  monsters.create(4550, 1252, 'greenmonster');
+            this.createMonster(monster);
+            monster.animations.add('walk', [0, 1, 2, 3, 4], 10, true);
+            monster.play('walk');
+
+			monster =  monsters.create(3178, 1368, 'bluemonster');
 			this.createMonster(monster);
+            monster.scale.x = -1;
+
+            monster =  monsters.create(4078, 441, 'bluemonster');
+            this.createMonster(monster);
+
+            monster =  monsters.create(4600, 511, 'bluemonster');
+            this.createMonster(monster);
 		},
 
 		createMonster: function (monster) {
@@ -780,6 +804,10 @@ State.Game.prototype = {
 			monster.body.collideWorldBounds = true;
 			monster.body.setCollisionGroup(monsterCollisionGroup);
 			monster.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
+            this.game.add.tween(monster.body.velocity)
+            .to({x: '+180'}, 2500)
+            .to({x: '-180'}, 2500)
+            .yoyo().loop().start();
 		},
 
     //Create Collects
@@ -819,17 +847,6 @@ State.Game.prototype = {
         collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
     },
 
-		followPlayer: function () {
-			monsters.forEach(function(mon){
-				if (player.body.x < mon.body.x) {
-					mon.body.moveLeft(monster_speed);
-					mon.scale.x = 1;
-				} else {
-					mon.body.moveRight(monster_speed);
-					mon.scale.x = -1;
-				}
-			},this, true);
-		},
     putVerticalBar: function () {
         //bar 1
     	verticalBar1 = this.game.add.sprite(3500, 2300, 'verticalbar');
