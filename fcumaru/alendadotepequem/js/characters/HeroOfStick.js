@@ -3,6 +3,7 @@ function HeroOfStick(game) {
 	var that = new Hero(game);
 
 	// Default parameters
+	that.type = HERO_OF_STICK;
 	that.key = 'hero3';
 	that.asset = 'assets/tmp3.png';
 	that.jump = 400;
