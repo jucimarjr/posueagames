@@ -29,6 +29,9 @@ State.GameSplash.prototype = {
 	},
 	loadAssets: function () {
 		
+		//Font
+		this.game.load.bitmapFont('font', Config.font.gray.dirPng, Config.font.gray.dirFnt);
+			
 		//Credits
 		this.game.load.image('credits', Config.credits.dir);
 		
