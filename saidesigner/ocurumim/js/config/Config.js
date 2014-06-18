@@ -3,7 +3,7 @@
 //Global
 var Config = {
 	global: {
-		debug: false,
+		debug: true,
 		animationVelocity: 6,
 		screen: {
 			width: 960,

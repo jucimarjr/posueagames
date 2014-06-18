@@ -26,6 +26,7 @@ Curumim.Player.prototype =
 		this.sprite.animations.add('run', [1, 2, 3, 4, 5, 6, 7, 0], Config.player.velocity.run_fps, true);
 		this.sprite.animations.add('jump', [8], 0, false);
 		this.sprite.animations.add('fire_jump', [9], 0, false);
+		this.sprite.animations.add('fire_walk', [10], 0, false);
 
 		this.sprite.body.acceleration.y = 50;
 		this.sprite.body.gravity.y = 100;
@@ -122,6 +123,11 @@ Curumim.Player.prototype =
 		}
 		else
 		{
+			if (this.game.input.keyboard.isDown(Config.player.keys.fire)) 
+			{
+				this.sprite.animations.play('fire_walk');	
+			}
+
 			this.jumps = 0;	
 		}
 	},
