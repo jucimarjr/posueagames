@@ -11,6 +11,7 @@ Player = function(game, coins, layer1, powerlifes, powerstars, thorns, HUD) {
 	this.HUD = HUD;
 	this.gold = false;
 	this.lose = false;
+	this.loseInThorn = false;
 	this.life = 3;
 	this.spritePlayer = null;
 	this.cursors = null;
@@ -30,11 +31,10 @@ Player.prototype = {
 	    this.spritePlayer.animations.add('loss-life',[8],1,false);
 	    this.spritePlayer.animations.add('dead',[9],1,false);
 		
-	    this.game.physics.enable(this.spritePlayer);
+	    this.game.physics.enable(this.spritePlayer, Phaser.Physics.ARCADE);
 	    this.spritePlayer.body.collideWorldBounds = true;
 		this.spritePlayer.anchor.setTo(Config.player.anchor.x, Config.player.anchor.y);
 		this.spritePlayer.dead = false;
-		this.spritePlayer.smoothed = false;
 	    
 		this.game.camera.follow(this.spritePlayer, Phaser.Camera.FOLLOW_PLATFORMER);
 
@@ -97,6 +97,14 @@ Player.prototype = {
 		}
 	},
 	
+	goldVersion: function (){
+		this.gold = true;
+		this.spritePlayer.alpha= 0;
+		
+		var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 300, true);
+		safetyTween.onComplete.add(function(){this.gold = false;},this);
+	},
+	
 	die: function (enemy){
 		if(this.HUD.lifes >= 1 && enemy.alive){
 			this.lose = true;
@@ -113,6 +121,29 @@ Player.prototype = {
 			this.spritePlayer.alive = false;
 			this.spritePlayer.animations.play('dead');
 			this.spritePlayer.alpha= 0;
+			
+			var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 20, true);
+			safetyTween.onComplete.add(function(){this.game.state.start('GameOver');},this);
+		}
+	},
+	
+	dieInThorn: function (){
+		if(this.HUD.lifes >= 1){
+			this.loseInThorn = true;
+			this.spritePlayer.animations.play('loss-life');
+			this.spritePlayer.alpha= 0;
+			
+			var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 20, true);
+			safetyTween.onComplete.add(function(){this.loseInThorn = false;},this);
+			
+			this.HUD.updateLife(-1);
+		}
+		
+		if(this.HUD.lifes == 0 && this.spritePlayer.alive) {
+			this.lose = true;
+			this.spritePlayer.alive = false;
+			this.spritePlayer.animations.play('dead');
+			this.spritePlayer.alpha = 0;
 			
 			var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 20, true);
 			safetyTween.onComplete.add(function(){this.game.state.start('GameOver');},this);
