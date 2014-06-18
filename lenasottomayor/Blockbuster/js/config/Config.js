@@ -102,6 +102,7 @@ Config.menu = {
 			y: 0.5
 		}
 	},
+	
 	textStyle: {
 		font: '25px Ms Sans Serif',
 		fill: '#ffffff'
@@ -360,3 +361,11 @@ Config.gameOver = {
 	x: 0,
 	y: 0	
 };
+
+//Font
+Config.font = {
+	gray:{
+		dirPng: 'assets/fonts/font_gray.png' ,
+		dirFnt: 'assets/fonts/font_gray.fnt'
+	}
+}

@@ -17,32 +17,17 @@ State.GamePlay.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;		
-		this.game.world.setBounds(-10, -10, this.game.world.width + 20, this.game.world.height + 20);
+		//this.game.world.setBounds(-10, -10, this.game.world.width + 20, this.game.world.height + 20);
 
 		levelConfig = Config.level.getLevel(Config.levelId.level);
 
-		if(levelConfig.checkPoint.x > 0){
-			//this.player.position.setTo(levelConfig.checkPoint.x, levelConfig.checkPoint.y);
-			this.player = game.add.sprite(levelConfig.checkPoint.x, levelConfig.checkPoint.y ,'playerS');
-		}else{
-			this.player = game.add.sprite(levelConfig.player.posX, levelConfig.player.posY ,'playerS');
-			//this.player.position.setTo(levelConfig.player.posX, levelConfig.player.posY);
-		}		
-		this.game.camera.follow(this.player);
-		
-		this.player.anchor.setTo(.5, 1);		
-		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13,14],20,true);
-		this.player.animations.add('stoped',[0,1],2,true);
-		this.player.animations.add('climbing',[20,21,22,23],5,true);		
-		this.player.animations.add('dead',[24,25,26],10,false);
-		/*deadAnimation.onComplete.add(function() {
-	    								this.loadLevel(this.level);
-									}, this);	*/
-		this.player.animations.add('jump',[15,16,17,18,19],9,false);
-		this.game.physics.enable(this.player);
-		this.player.body.collideWorldBounds = true;
-		this.game.physics.enable(this.player);
-		this.player.body.setSize(25, 60, 0, 0);
+		if(this.player)
+			this.player.destroy();
+
+		if(levelConfig.checkPoint.x > 0)
+			this.addPlayer(levelConfig.checkPoint.x, levelConfig.checkPoint.y);
+		else
+			this.addPlayer(levelConfig.player.posX, levelConfig.player.posY);		
 
 		//this.game.camera.y = 1000;
 		cursors = this.game.input.keyboard.createCursorKeys();
@@ -56,9 +41,9 @@ State.GamePlay.prototype = {
 	},
 	update: function () {
 
-		if (this.game.time.fps !== 0) {
+		/*if (this.game.time.fps !== 0) {
         	this.fpsText.setText(this.game.time.fps + ' FPS');
-    	}
+    	}*/
 
 		this.game.physics.arcade.collide(this.layer, this.player);
 		this.player.body.velocity.x = 0;
@@ -134,6 +119,32 @@ State.GamePlay.prototype = {
 		}
 	},
 
+	addPlayer: function(x,y){
+		this.game.camera.x = x;
+		this.game.camera.y = y;
+		this.player = game.add.sprite(x, y ,'playerS');
+
+		this.player.anchor.setTo(.5, 1);		
+		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13,14],20,true);
+		this.player.animations.add('stoped',[0,1],2,true);
+		this.player.animations.add('climbing',[20,21,22,23],5,true);		
+		this.player.animations.add('dead',[24,25,26],10,false);
+		/*deadAnimation.onComplete.add(function() {
+	    								this.loadLevel(this.level);
+									}, this);	*/
+		this.player.animations.add('jump',[15,16,17,18,19],9,false);
+		this.game.physics.enable(this.player);
+		this.player.body.collideWorldBounds = true;
+		this.player.body.setSize(25, 60, 0, 0);
+		this.player.alpha = 1;
+		this.player.body.velocity.x = 0;
+		this.player.body.velocity.y = 0;
+		this.player.body.gravity.y = 1000;
+
+		this.player.position.setTo(x,y);
+		this.game.camera.follow(this.player);
+	},
+
 	isToJumping: function(){
 		if(onCipo) return false;
 
@@ -150,10 +161,7 @@ State.GamePlay.prototype = {
 		this.level = level;
 		jumping = false;
 		
-		this.player.alpha = 1;
-		this.player.body.velocity.x = 0;
-		this.player.body.velocity.y = 0;
-		this.player.body.gravity.y = 1000;
+		
 
 		if (this.layer) this.layer.destroy();
 		if (this.flag) this.flag.destroy();
@@ -330,8 +338,8 @@ State.GamePlay.prototype = {
 	},
 
 	die: function(player, enemie) {
-        this.game.add.tween(this.game.camera).to({ x: -10 }, 40, 
-        	Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true).start();
+        /*this.game.add.tween(this.game.camera).to({ x: -10 }, 40, 
+        	Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true).start();*/
 		enemie.kill();
 		this.gameOver = true;
 		this.player.animations.stop();
@@ -347,8 +355,8 @@ State.GamePlay.prototype = {
 
     saveCP : function(player, cp) {
     	this.checkPoint.callAll('animations.play', 'animations', 'spin');
-    	levelConfig.checkPoint.x = player.body.x;
-    	levelConfig.checkPoint.y = player.body.y;
+    	levelConfig.checkPoint.x = this.player.body.x;
+    	levelConfig.checkPoint.y = this.player.body.y;
     },
 
     runCipo : function(player, cipo) {
@@ -407,6 +415,10 @@ State.GamePlay.prototype = {
     render: function (){
     	/*game.debug.text(this.game.world.bounds.width,32,32);
     	game.debug.text(this.game.world.bounds.height,32,64);*/
+    	game.debug.text(this.player.body.x,32,32);
+    	game.debug.text(this.player.body.y,32,64);
+    	game.debug.text(levelConfig.checkPoint.x,200,32);
+    	game.debug.text(levelConfig.checkPoint.y,200,64);
     	//game.debug.body(this.player);
     	//game.debug.body(this.thorns);
     	//game.debug.text(frameClimbing,32,32);

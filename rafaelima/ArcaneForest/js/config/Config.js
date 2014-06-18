@@ -9,7 +9,7 @@ var Config = {
 			height: 540,
 			resize: function (game) {
 				"use strict";
-				if (window.innerHeight < 600 || window.innerWidth < 960) {
+				if (window.innerHeight < 540 || window.innerWidth < 960) {
 					game.scale.setExactFit();
 					game.scale.refresh();
 				}
@@ -25,7 +25,7 @@ var Config = {
 //LudusSplash
 Config.ludusSplash = {
 	key: 'ludus-splash',
-	dir: Config.images+'LudusSplash_960-600.png',
+	dir: Config.images+'LudusSplash_960-540.png',
 	x: 0,
 	y: 0,
 	alphaTime: 500,
@@ -105,18 +105,18 @@ Config.game = {
 		height: 48,
 		x: 60,
 		y: 3300,
-		lifes: 3,
-		xRotate: 2389,
+		xRotate: 2346,
 		yRotate: 385,
+		lifes: 3,
 		sword:{
 			key: 'emmasword_spritesheet',
-			dir: Config.spriteSheets + 'emmasword-112_113_11.png',
+			dir: Config.spriteSheets + 'emma_sword_115_113_9.png',
 			width: 112,
 			height: 113,
 		},
 		nosword:{
 			key: 'emma_spritesheet',
-			dir: Config.spriteSheets + 'emmasword-112_113_11.png',
+			dir: Config.spriteSheets + 'emma_nosword_72_101_8.png',
 			width: 112,
 			height: 113,
 		},
@@ -157,7 +157,7 @@ Config.game = {
 		anim: {
 			stop: {
 				key: 'player_stop',
-				frames: [5],
+				frames: [0],
 				speed: 10,
 				loop: false
 			},
@@ -169,13 +169,13 @@ Config.game = {
 			},
 			jump: {
 				key: 'player_jump',
-				frames: [5, 6, 7],
+				frames: [4, 5, 6],
 				speed: 10,
 				loop: false
 			},
 			attack: {
 				key: 'player_attack',
-				frames: [10, 9, 8],
+				frames: [6, 7, 8],
 				speed: 8,
 				loop: false
 			},
@@ -184,7 +184,7 @@ Config.game = {
 		attackCooldown: 200,
 		gravityY: 2000,
 		forceY: 1000,
-		jumpForce: 700,
+		jumpForce: 800,
 	},
 	monstercat:{
 		dir: 'assets/spritesheets/monstercat_40_18_3.png',
@@ -232,7 +232,7 @@ Config.game = {
 		height:62
 	},
 	greenmonsterright:{
-		dir: 'assets/spritesheets/ray_47_56_2.png',
+		dir: 'assets/spritesheets/ray_49_56_2.png',
 		width: 47,
 		height:52
 	},
@@ -272,10 +272,14 @@ Config.game = {
 		widthAreaRotate: 1725,
 		widthArea: 3650,
 	},
+	verticalbar:{
+		dir: 'assets/images/verticalbar_72-252.png',
+	},
 	barRotate:{
 		x: 1793, 
 		y: 400
 	}
+
 };
 
 //Menu
