@@ -37,19 +37,19 @@ State.GamePlay.prototype = {
 		this.HUD.update();
 		
 		if(!this.player.lose) {
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.coins.group, this.collectCoins, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.powerlifes.group, this.collectPowerLifes, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.powerstars.group, this.collectPowerStars, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.enemies.cruellasWalker, this.collision, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.enemies.cruellasJumper, this.collision, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.enemies.freddysWalker, this.collision, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.enemies.freddysJumper, this.collision, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.enemies.hannibalsWalker, this.collision, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.enemies.hannibalsJumper, this.collision, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.enemies.jasonsWalker, this.collision, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.enemies.jasonsJumper, this.collision, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.enemies.jokersWalker, this.collision, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.enemies.jokersJumper, this.collision, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.coins.group, this.collectCoins, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.powerlifes.group, this.collectPowerLifes, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.powerstars.group, this.collectPowerStars, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.cruellasWalker, this.collision, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.cruellasJumper, this.collision, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.freddysWalker, this.collision, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.freddysJumper, this.collision, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.hannibalsWalker, this.collision, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.hannibalsJumper, this.collision, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.jasonsWalker, this.collision, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.jasonsJumper, this.collision, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.jokersWalker, this.collision, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.jokersJumper, this.collision, null, this);
 		}
 		
 		this.enemies.update();
@@ -75,7 +75,7 @@ State.GamePlay.prototype = {
 	},
 	
 	collision: function (player, enemy) {
-		if((player.body.y+5 < enemy.body.y) && enemy.alive) {
+		if((player.body.y + player.body.height == enemy.body.y) && enemy.alive) {
 			player.body.velocity.y = -Config.player.jump;
 				
 			enemy.alive = false;

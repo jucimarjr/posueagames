@@ -47,51 +47,54 @@ Player.prototype = {
 
 		this.spritePlayer.body.velocity.x = 0;
 
-	    if(this.cursors.left.isDown && !this.lose)
+		if(!this.lose) 
 	    {
-	    	this.spritePlayer.body.velocity.x = -Config.player.speed;
-	    	this.spritePlayer.scale.x = -1;
-	    	if(this.gold){
-		    	this.spritePlayer.animations.play('walk-gold');
-	    	} else {
-		    	this.spritePlayer.animations.play('walk');
-	    	}
-	    }
-	    else if(this.cursors.right.isDown && !this.lose)
-	    {
-	    	this.spritePlayer.body.velocity.x = Config.player.speed;
-	    	this.spritePlayer.scale.x = 1;
-	    	if(this.gold){
-		    	this.spritePlayer.animations.play('walk-gold');
-	    	} else {
-		    	this.spritePlayer.animations.play('walk');
-	    	}
-	    }
-	    else if(!this.lose) 
-	    {
-	    	this.spritePlayer.animations.stop();
-	    	if(this.gold){
-	    		this.spritePlayer.frame = 10;
-	    	} else {
-	    		this.spritePlayer.frame = 0;
-	    	}
-	    }
-
-
-    	if(this.gold && (this.spritePlayer.body.velocity.y < 0)){
-	    	this.spritePlayer.animations.play('jump-gold');
-    	} else if (this.spritePlayer.body.velocity.y < 0){
-	    	this.spritePlayer.animations.play('jump');
-    	} else if(this.gold && (this.spritePlayer.body.velocity.y > 0)){
-	    	this.spritePlayer.animations.play('fall-gold');
-    	} else if (this.spritePlayer.body.velocity.y > 0){
-	    	this.spritePlayer.animations.play('fall');
-    	}
-	    //  Allow the player to jump if they are touching the ground.
-	    if (this.jump.isDown && this.spritePlayer.body.onFloor() && !this.lose)
-	    {
-	        this.spritePlayer.body.velocity.y = -Config.player.jump;
-	    }
+			if(this.cursors.left.isDown)
+			{
+				this.spritePlayer.body.velocity.x = -Config.player.speed;
+				this.spritePlayer.scale.x = -1;
+				if(this.gold){
+					this.spritePlayer.animations.play('walk-gold');
+				} else {
+					this.spritePlayer.animations.play('walk');
+				}
+			}
+			else if(this.cursors.right.isDown)
+			{
+				this.spritePlayer.body.velocity.x = Config.player.speed;
+				this.spritePlayer.scale.x = 1;
+				if(this.gold){
+					this.spritePlayer.animations.play('walk-gold');
+				} else {
+					this.spritePlayer.animations.play('walk');
+				}
+			}
+			else  
+			{
+				this.spritePlayer.animations.stop();
+				if(this.gold){
+					this.spritePlayer.frame = 10;
+				} else {
+					this.spritePlayer.frame = 0;
+				}
+			}
+	
+			if(this.gold && (this.spritePlayer.body.velocity.y < 0)){
+				this.spritePlayer.animations.play('jump-gold');
+			} else if (this.spritePlayer.body.velocity.y < 0){
+				this.spritePlayer.animations.play('jump');
+			} else if(this.gold && (this.spritePlayer.body.velocity.y > 0)){
+				this.spritePlayer.animations.play('fall-gold');
+			} else if (this.spritePlayer.body.velocity.y > 0){
+				this.spritePlayer.animations.play('fall');
+			}
+	  
+			//  Allow the player to jump if they are touching the ground.
+			if (this.jump.isDown && this.spritePlayer.body.onFloor())
+			{
+				this.spritePlayer.body.velocity.y = -Config.player.jump;
+			}
+		}
 	},
 	
 	die: function (enemy){

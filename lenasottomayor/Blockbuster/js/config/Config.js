@@ -362,6 +362,13 @@ Config.gameOver = {
 	y: 0	
 };
 
+//Game Win
+Config.gameWin = {
+	dir: 'assets/images/GameWin_960-600.png',
+	x: 0,
+	y: 0	
+};
+
 //Font
 Config.font = {
 	gray:{
