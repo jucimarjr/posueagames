@@ -46,6 +46,9 @@
             this.enemies.create();
             this.createEnemies();
 
+            this.shadow = new ShadowEffect(this.game, this.player.sprite);
+            this.shadow.init();
+
             /*audios*/
 
             this.bgSound = this.game.add.audio('bgsound');
@@ -60,6 +63,9 @@
         },
 
         update: function() {
+
+            this.shadow.update();
+
             this.game.physics.arcade.collide(this.player.sprite, this.layer);
             this.game.physics.arcade.collide(this.enemies.sprites, this.layer);
 
