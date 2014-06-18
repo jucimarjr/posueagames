@@ -39,6 +39,9 @@
             this.shurikenAudio = this.game.add.audio('shuriken_sound');
             this.shurikenAudio.volume = 0.6;
 
+            this.bloodParticles = new Blood(this.game);
+            this.bloodParticles.init();
+
             this.cursors = this.game.input.keyboard.createCursorKeys();
         },
 
@@ -63,6 +66,11 @@
         },
 
         update: function() {
+
+            if (this.bloodParticles){
+                this.bloodParticles.update(this.sprite);
+            }
+
             if (this.dead) return;
 
             var shiftPressed = this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT);
@@ -120,6 +128,8 @@
 
         die: function () {
             this.dead = true;
+
+            this.bloodParticles.start(this.sprite, 300);
 
             this.sprite.body.velocity.x = 0;
             this.sprite.animations.play('death');
