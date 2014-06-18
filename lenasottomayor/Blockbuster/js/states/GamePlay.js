@@ -34,7 +34,7 @@ State.GamePlay.prototype = {
 	update: function () {
 		"use strict";
 		this.game.physics.arcade.collide(this.player.spritePlayer, this.layer1.platform);
-		this.game.physics.arcade.collide(this.player.spritePlayer, this.layer1.thorn);
+		this.game.physics.arcade.collide(this.player.spritePlayer, this.layer1.thorn, this.collisionThorn, null, this);
 
 		this.HUD.update();
 		
@@ -100,5 +100,15 @@ State.GamePlay.prototype = {
 		} else {
 			this.player.die(enemy);
 		}
-	} 
+	},
+	
+	collisionThorn: function (player, thorn) {
+		if((player.body.y + player.body.height == thorn.worldY && !this.player.gold && !this.player.loseInThorn)) {
+			this.player.dieInThorn();
+		}
+		
+		if(!this.player.lose) {
+//			this.game.physics.arcade.collide(this.player.spritePlayer, this.layer1.thorn, this.collisionThorn, null, this);
+		}
+	}
 };
