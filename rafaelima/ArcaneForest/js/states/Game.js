@@ -17,6 +17,7 @@ var bg2;
 var bg3;
 var bg4;
 var bg5;
+var transparentWall;
 var bar, bar2, bar3;
 var previousX;
 var previousY;
@@ -396,11 +397,15 @@ State.Game.prototype = {
             console.log(varPlayer.data.id, collect.data.id);
             collect.sprite.kill();
             itemsTaken++;
-
             if (itemsTaken > 0) {
                 var fixedItem = collect.sprite.reset(0, 0, 1);
                 fixedItem.fixedToCamera = true;
-                fixedItem.cameraOffset.setTo(856 + (24 * itemsTaken), 20);
+                if(varPlayer.sprite.name == 'key' || collect.sprite.name == 'key'){
+                	fixedItem.cameraOffset.setTo(856, 20);
+                	itemsTaken--;
+                }else {
+                	fixedItem.cameraOffset.setTo(856 + (24 * itemsTaken), 20);
+                }
                 flagId = true;
             }
         }
@@ -788,7 +793,7 @@ State.Game.prototype = {
         collects = this.game.add.group();
 
         //Collect Items 1
-        var collect = collects.create(1657, 3260, 'blue');
+        var collect = collects.create(1657, 1160, 'blue');
 		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
@@ -796,7 +801,7 @@ State.Game.prototype = {
         collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
 
         //Collect Items 2
-        var collect = collects.create(3239, 2345, 'pink');
+        var collect = collects.create(3239, 245, 'pink');
 		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
@@ -804,14 +809,15 @@ State.Game.prototype = {
         collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
 
         //Collect Items 3
-        var collect = collects.create(200, 3500, 'red');
+        var collect = collects.create(200, 1400, 'red');
 		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
         collect.body.setCollisionGroup(collectCollisionGroup);
         collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
 
-        var collect = collects.create(300, 3500, 'key');
+        var collect = collects.create(300, 1400, 'key');
+        collect.name = 'key';
 		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
@@ -866,5 +872,12 @@ State.Game.prototype = {
         }, 4000).yoyo().loop().start();
         verticalBar3.body.setCollisionGroup(barCollisionGroup);
         verticalBar3.body.collides([barCollisionGroup, playerCollisionGroup]);
-    }
+    },
+    putTransparentWall: function () {
+    	transparentWall = this.game.add.sprite(0, 800, 'transparentwall');
+        this.game.physics.p2.enable(transparentWall, true);
+        transparentWall.body.kinematic = true;
+        transparentWall.body.setCollisionGroup(barCollisionGroup);
+        transparentWall.body.collides([barCollisionGroup, playerCollisionGroup]);
+	}
 };

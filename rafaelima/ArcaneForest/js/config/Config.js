@@ -278,6 +278,11 @@ Config.game = {
 	barRotate:{
 		x: 1793, 
 		y: 500
+	},
+	transparentwall:{
+		dir: 'assets/images/transparentwall_10-540.png',
+		x: 0, 
+		y: 800
 	}
 
 };
