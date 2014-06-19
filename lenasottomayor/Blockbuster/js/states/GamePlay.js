@@ -18,6 +18,8 @@ State.GamePlay.prototype = {
 		this.player = new Player(game, this.coins, this.layer1, this.powerlifes, this.powerstars, this.thorns, this.HUD);
 		
 		this.enemyCollide = true;
+		//this.musicSound = game.add.audio('musicSound');
+		//this.musicSound.play('',0,0.2,true); 
 		this.jumpSound = game.add.audio('jumpSound');
 		this.coinSound = game.add.audio('coinSound');
 		this.hurtSound = game.add.audio('hurtSound');

@@ -308,6 +308,10 @@ Enemy.prototype = {
 		this.tilemap.map.createFromObjects(Config.enemy.vader.name, Config.enemy.vader.gid, 'vader', Config.enemy.vader.frame,true,false,this.vaders);
 		this.vaders.forEach(
 			function (vader){ 
+				this.game.physics.enable(vader, Phaser.Physics.ARCADE);
+				
+				vader.alive = true;
+				
 				vader.animations.add('walk', [0,1,2,3,4,5,6,7], 5, true);
 				vader.animations.add('dead',[8,9],2,true);
 				vader.scale.x = -1;
