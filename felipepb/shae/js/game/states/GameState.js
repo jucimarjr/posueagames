@@ -8,6 +8,8 @@ Game.GameState = function () {
     this.playerLightSprite;
 	
 	this.hearts = [];
+
+    this.key;
 };
 
 Game.GameState.prototype = {
@@ -17,6 +19,7 @@ Game.GameState.prototype = {
 
         this.setupPhysicsSystem();
         this.createTileMap();
+        this.createKey();
         this.createHearts();
         this.createPlayer();
     },
@@ -31,12 +34,12 @@ Game.GameState.prototype = {
         this.map = this.game.add.tilemap('map');
         
         this.map.addTilesetImage('ground_1x1');
-        // this.map.addTilesetImage('walls_1x2');
+        // this.map.addTilesetImage('key');
         // this.map.addTilesetImage('tiles2');
 
-        this.layer = this.map.createLayer('Tile Layer 1');
+        this.layer = this.map.createLayer('walls');
         this.layer.resizeWorld();
-		this.layer.debug = true;
+		this.layer.debug = PhysicsConsts.debugDraw;
 		this.layer.debugColor = 'red';
 
         this.map.setCollisionBetween(0, 25);
@@ -49,7 +52,7 @@ Game.GameState.prototype = {
         this.game.camera.follow(this.player.sprite, 0);
 
 		this.playerFocusLight = this.game.add.bitmapData(this.game.width, this.game.height);
-		this.playerFocusLight.context.fillStyle = 'rgba(0, 0, 0, 0.6)';
+		this.playerFocusLight.context.fillStyle = 'rgba(0, 0, 0, 1.0)';
 		this.playerLightSprite = this.game.add.image(0, 0, this.playerFocusLight);
     },
 	
@@ -72,6 +75,13 @@ Game.GameState.prototype = {
 		// heart.create(this.game.width - 100, this.game.height / 2.0 + 200, this.game);
 		// this.hearts.push(heart);
 	},
+
+    createKey: function () {
+        this.map.createFromObjects(
+            'spawn_points', 26, 'main_sprite_atlas', 'key_1_42-38.png',
+            true, false, this.game.World, Game.KeyController, false
+            );
+    },
 
     update: function () {
         this.game.physics.arcade.collide(this.layer, this.player.sprite);

@@ -1,4 +1,6 @@
-var Game = {};
+var Game = {
+    globalGame: null
+};
 
 Game.BootState = function () {};
 
@@ -13,6 +15,7 @@ Game.BootState.prototype = {
     },
 
     create: function () {
+        Game.globalGame = this.game;
 
         //  Unless you specifically know your game needs to support multi-touch I would recommend setting this to 1
         this.input.maxPointers = 1;
