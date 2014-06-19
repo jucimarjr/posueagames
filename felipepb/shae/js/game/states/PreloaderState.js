@@ -19,7 +19,8 @@ Game.PreloaderState.prototype = {
         // this.game.load.image('tiles2', 'assets/game/tilemaps/tiles/tiles2.png');
 
         this.game.load.image('walls_1x2', 'assets/game/tilemaps/tiles/walls_1x2.png');
-        this.game.load.image('tiles2', 'assets/game/tilemaps/tiles/tiles2.png');
+        // this.game.load.image('tiles2', 'assets/game/tilemaps/tiles/tiles2.png');
+        // this.game.load.image('key', 'assets/game/tilemaps/tiles/key.png');
         
         this.game.load.image('light', 'assets/game/light.png');
 		this.game.load.image('block', 'assets/game/block.png');
