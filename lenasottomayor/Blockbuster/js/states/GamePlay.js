@@ -17,6 +17,7 @@ State.GamePlay.prototype = {
 		this.HUD =  new HUD(game, this.level1.lifes, this.level1.score, this.level1.coins);
 		this.player = new Player(game, this.coins, this.layer1, this.powerlifes, this.powerstars, this.thorns, this.HUD);
 		
+		this.killJumps = 0;
 		this.enemyCollide = true;
 		//this.musicSound = game.add.audio('musicSound');
 		//this.musicSound.play('',0,0.2,true); 
@@ -58,6 +59,7 @@ State.GamePlay.prototype = {
 			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.jasonsJumper, this.collision, null, this);
 			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.jokersWalker, this.collision, null, this);
 			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.jokersJumper, this.collision, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.vaders, this.collisionVader, null, this);
 		}
 		
 		this.enemies.update();
@@ -97,18 +99,49 @@ State.GamePlay.prototype = {
 			}
 			
 			this.HUD.updateScore(Config.scores.enemy);
-				
-			enemy.alive = false;
-			enemy.body.velocity.x = 0;
-			enemy.alpha = 0;
-			enemy.animations.play('dead');
-				
-			var tween = game.add.tween(enemy).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 10, true);
-			tween.onComplete.add(function() { enemy.kill(); this.enemyCollide = true; },this);
+			
+			this.killEnemy(enemy);
+			
 		} else {
 			this.hurtSound.play();
 			this.player.die(enemy);
 		}
+	},
+	
+	killEnemy: function (enemy){
+		enemy.alive = false;
+		enemy.body.velocity.x = 0;
+		enemy.alpha = 0;
+		enemy.animations.play('dead');
+			
+		var tween = game.add.tween(enemy).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 10, true);
+		tween.onComplete.add(function() { enemy.kill(); this.enemyCollide = true; },this);
+	},
+	
+	collisionVader: function (player, enemy){
+		
+		if((player.body.y + player.body.height == enemy.body.y) && enemy.alive){
+			player.body.velocity.y = -Config.player.jump;
+			
+			if(this.killJumps === 3){
+				this.HUD.updateScore(Config.scores.enemy);
+				this.killEnemy(enemy);
+				this.killJumps = 0;
+			}else
+			{
+				enemy.animations.play('dead');
+				enemy.animations.play('dead');
+				enemy.animations.play('dead');
+			}
+			
+			this.killJumps++;
+			enemy.animations.play('walk');
+		}
+		else {
+			this.hurtSound.play();
+			this.player.die(enemy);
+		}
+	
 	},
 	
 	collisionThorn: function (player, thorn) {
