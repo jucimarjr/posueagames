@@ -1,5 +1,4 @@
 Game.GameState = function () {
-
     this.map;
     this.layer;
     this.keyGroup;
@@ -23,8 +22,9 @@ Game.GameState.prototype = {
         this.createTileMap();
         this.createKey();
         this.createGate();
+		this.createPlayer();
         this.createHearts();
-        this.createPlayer();
+		this.createPlayerLight();
     },
 
     setupPhysicsSystem: function () {
@@ -49,23 +49,24 @@ Game.GameState.prototype = {
     createPlayer: function () {
         this.player = new Game.PlayerController(this);
         this.player.create();
-		
         this.game.camera.follow(this.player.sprite, 0);
-
-		this.playerFocusLight = this.game.add.bitmapData(this.game.width, this.game.height);
-		this.playerFocusLight.context.fillStyle = 'rgba(0, 0, 0, 1.0)';
-		this.playerLightSprite = this.game.add.image(0, 0, this.playerFocusLight);
-
         this.playerHasKey = false;
     },
 	
 	createHearts: function () {		
         var waypoints = this.map.collision.collision;
+		Utils.clearArray(this.hearts);
         for (var i = 0; i < waypoints.length; i++) {
-            var heart = new Game.HeartController(this.game, waypoints[i]);
+            var heart = new Game.HeartController(this.game, this.player, waypoints[i]);
             heart.create();
             this.hearts.push(heart);
         };
+	},
+	
+	createPlayerLight: function () {
+		this.playerFocusLight = this.game.add.bitmapData(this.game.width, this.game.height);
+        this.playerFocusLight.context.fillStyle = 'rgba(0, 0, 0, 1.0)';
+        this.playerLightSprite = this.game.add.image(0, 0, this.playerFocusLight);
 	},
 
     createKey: function () {
@@ -110,6 +111,12 @@ Game.GameState.prototype = {
         
         this.playerLightSprite.x = this.game.camera.x;
         this.playerLightSprite.y = this.game.camera.y;
+		
+		var hearts = this.hearts;
+		var heartsLength = hearts.length;
+		for (var i = 0; i < heartsLength; i++) {
+			hearts[i].update();
+		}
     },
 
     render: function () {

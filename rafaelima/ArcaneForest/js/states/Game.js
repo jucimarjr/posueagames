@@ -8,7 +8,7 @@ var itemsTaken, flagId, isGameRotate, idPlayer, helper;
 var imgPlayerFall, contFrameGif;
 var cursors, attackButton, pauseButton;
 var bg1, bg2, bg3, bg4, bg5, bg6;
-var bar, bar2, bar3;
+var bar, bar2;
 var previousX, previousY;
 var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup, barCollisionGroup, swordCollisionGroup;
 var isJumping, beInGround, yBeforeJump;
@@ -376,6 +376,7 @@ State.Game.prototype = {
     
     putBarRotate: function(){
     	bar = this.game.add.sprite(Config.game.barRotate.x, Config.game.barRotate.y, 'bar');
+    	
 		 this.game.physics.p2.enable(bar, false);
 		 bar.body.kinematic = true;
 		 this.game.add.tween(bar.body.velocity).to({x: '-100'}, 15000).to({x: '+100'}, 15000).yoyo().loop().start();
@@ -396,7 +397,6 @@ State.Game.prototype = {
     		this.imgPlayerFall.kill();
     		this.gameRotate();
     	}
-    		
     },
 
     render: function () {
@@ -694,18 +694,6 @@ State.Game.prototype = {
         }, 3000).yoyo().loop().start();
         bar2.body.setCollisionGroup(barCollisionGroup);
         bar2.body.collides([barCollisionGroup, playerCollisionGroup]);
-
-        //bar 3
-//        bar3 = this.game.add.sprite(4400, 3434, 'bar');
-//		this.game.physics.p2.enable(bar3, false);
-//        bar3.body.kinematic = true;
-//        this.game.add.tween(bar3.body.velocity).to({
-//            x: '+200'
-//        }, 3000).to({
-//            x: '-200'
-//        }, 3000).yoyo().loop().start();
-//        bar3.body.setCollisionGroup(barCollisionGroup);
-//        bar3.body.collides([barCollisionGroup, playerCollisionGroup]);
         
     },
     //Create Obstacles
@@ -768,16 +756,15 @@ State.Game.prototype = {
 
 			monster.animations.add('walk', [0, 1, 2], 10, true);
 			monster.play('walk');
-			this.game.physics.p2.enable(monster, false);
-			monster.body.fixedRotation = true; //no circle movement 
-			monster.body.kinematic = true;
-			monster.body.collideWorldBounds = true;
-			monster.body.setCollisionGroup(monsterCollisionGroup);
-			monster.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
-//            this.game.add.tween(monster.body.velocity)
-//            .to({x: '+180'}, 2500)
-//            .to({x: '-180'}, 2500)
-//            .yoyo().loop().start();
+			this.createKinematicObj(monster, monsterCollisionGroup, [monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
+		},
+
+		createKinematicObj: function (obj, setCollisionGroup, otherCollisionGroup) {
+			this.game.physics.p2.enable(obj, false);
+			obj.body.fixedRotation = true; //no circle movement 
+			obj.body.kinematic = true;
+			obj.body.setCollisionGroup(setCollisionGroup);
+			obj.body.collides(otherCollisionGroup);
 		},
 
     //Create Collects
@@ -788,75 +775,40 @@ State.Game.prototype = {
         //Collect Items 1
         var collect = collects.create(1657, 1160, 'blue');
         collect.name = 'blue';
-        this.createCollect(collect);
+        this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
 
         //Collect Items 2
         var collect = collects.create(3239, 245, 'pink');
         collect.name = 'pink';
-        this.createCollect(collect);
+        this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
 
         //Collect Items 3
         var collect = collects.create(200, 1400, 'red');
         collect.name = 'red';
-        this.createCollect(collect);
+        this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
 
         var collect = collects.create(300, 1400, 'key');
         collect.name = 'key';
-        this.createCollect(collect);
+        this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
     },
-    
-    createCollect: function(collect){
-		this.game.physics.p2.enable(collect, false);
-        collect.body.fixedRotation = true; //no circle movement 
-        collect.body.kinematic = true;
-        collect.body.setCollisionGroup(collectCollisionGroup);
-        collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
-    },
-    
 
     putVerticalBar: function () {
-        //bar 1
+        //vertical bar 1
     	verticalBar1 = this.game.add.sprite(3500, 91, 'verticalbar');
-        this.game.physics.p2.enable(verticalBar1, false);
-        verticalBar1.body.kinematic = true;
-//        this.game.add.tween(verticalBar1.body.velocity).to({
-//        	y: '+200'
-//        }, 4004).to({
-//            y: '-200'
-//        }, 4000).yoyo().loop().start();
-        verticalBar1.body.setCollisionGroup(barCollisionGroup);
-        verticalBar1.body.collides([barCollisionGroup, playerCollisionGroup]);
+    	this.createKinematicObj(verticalBar1, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
         
-      //bar 1
+    	//vertical bar 2
         verticalBar2 = this.game.add.sprite(3650, 91, 'verticalbar');
-        this.game.physics.p2.enable(verticalBar2, false);
-        verticalBar2.body.kinematic = true;
-        this.game.add.tween(verticalBar2.body.velocity).to({
-            y: '+200'
-        }, 4004).to({
-            y: '-200'
-        }, 4000).yoyo().loop().start();
-        verticalBar2.body.setCollisionGroup(barCollisionGroup);
-        verticalBar2.body.collides([barCollisionGroup, playerCollisionGroup]);
+        this.createKinematicObj(verticalBar2, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
         
-      //bar 1
+        //vertical bar 3
     	verticalBar3 = this.game.add.sprite(3800, 91, 'verticalbar');
-        this.game.physics.p2.enable(verticalBar3, false);
-        verticalBar3.body.kinematic = true;
-        this.game.add.tween(verticalBar3.body.velocity).to({
-        	y: '+200'
-        }, 4003).to({
-            y: '-200'
-        }, 4000).yoyo().loop().start();
-        verticalBar3.body.setCollisionGroup(barCollisionGroup);
-        verticalBar3.body.collides([barCollisionGroup, playerCollisionGroup]);
+    	this.createKinematicObj(verticalBar2, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
     },
+    
     putTransparentWall: function () {
     	transparentWall = this.game.add.sprite(48, 1200, 'transparentwall');
-        this.game.physics.p2.enable(transparentWall, false);
-        transparentWall.body.kinematic = true;
-        transparentWall.body.setCollisionGroup(barCollisionGroup);
-        transparentWall.body.collides([barCollisionGroup, playerCollisionGroup]);
+    	this.createKinematicObj(transparentWall, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
 	},
 
     //create monsters
@@ -867,12 +819,7 @@ State.Game.prototype = {
             monster.name = 'monster'; 
             monster.animations.add('walk', [0, 1, 2, 3, 4, 5], 10, true);
             monster.play('walk');
-            this.game.physics.p2.enable(monster, false);
-            monster.body.fixedRotation = true; //no circle movement 
-            monster.body.kinematic = true;
-            monster.body.collideWorldBounds = true;
-            monster.body.setCollisionGroup(monsterCollisionGroup);
-            monster.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
+        	this.createKinematicObj(monster, monsterCollisionGroup, [monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
             
         },
 
