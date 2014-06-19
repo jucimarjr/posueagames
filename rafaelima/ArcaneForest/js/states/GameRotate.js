@@ -213,7 +213,7 @@ State.GameRotate.prototype = {
 		    this.game.debug.text( " + " + player.x +  " - " + player.y, 100, 380 );
 		},
 		
-		moveBar: function (obj, velocity) {
+		moveMonster: function (obj, velocity) {
 			"use strict";
 			obj.timer++;
 			if(obj.timer >= 100 ){

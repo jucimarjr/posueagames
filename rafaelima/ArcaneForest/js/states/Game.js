@@ -124,21 +124,9 @@ State.Game.prototype = {
         
         this.playerCollider.body.setCollisionGroup(playerCollisionGroup);
         
-//        player = this.game.add.sprite(60, 3300, 'emmarun'); 
-//        player.animations.add('right', [0, 1, 2, 3, 4], 10, true);
-//        player.animations.add('turn', [4], 20, true);
-//        player.animations.add('left', [4, 3, 2, 1, 0], 10, true);
-//        player.smoothed = false;
-        //player.health = 3;
         this.game.physics.p2.enable(player, false);
-        //this.game.camera.follow(player);
-//        player.body.collideWorldBounds = true;
-//        player.body.fixedRotation = true;
-        //player.body.setCollisionGroup(playerCollisionGroup);
         player.body.kinematic = true;
         
-        //player.body.gravity.y = Config.game.player.gravityY;
-
         // sword collider
         this.swordOffsetX = Config.game.player.collider.sword.offset.right.x;
         this.swordOffsetY = Config.game.player.collider.sword.offset.right.y;
@@ -152,14 +140,6 @@ State.Game.prototype = {
         this.playerCollider.body.collides(collectCollisionGroup, this.collectItems, this);
         this.playerCollider.body.collides(barCollisionGroup, this.hitBar, this);
         
-        //collide
-//        player.body.collides(monsterCollisionGroup, this.hitMonsters, this);
-//        player.body.collides(obstacleCollisionGroup, this.hitObstacles, this);
-//        //player.body.collides(tileCollisionGroup, this.hitTiles, this);
-//        player.body.collides(tileCollisionGroup);
-//        player.body.collides(collectCollisionGroup, this.collectItems, this);
-//        player.body.collides(barCollisionGroup, this.hitBar, this);
-
         //add 'things' to the world
         this.putObstacles();
         this.putMonsters();
@@ -291,12 +271,18 @@ State.Game.prototype = {
     onClick: function () {
         "use strict";
     },
+	
+	moveMonster: function (obj, velocity) {
+		"use strict";
+		obj.timer++;
+		if(obj.timer >= 100 ){
+			obj.body.moveLeft(velocity);
+			if(obj.timer >= 200){obj.timer = 0;}
+		}else {
+			obj.body.moveRight(velocity);
+		}
+	},
     
-    putMonstersBar: function () {
-        "use strict";
-		
-    },
-
     gameRotate: function () {
         "use strict";
 		 isGameRotate = true;
