@@ -79,6 +79,17 @@
   }(document, 'script', 'facebook-jssdk'));
   </script>
 
+  <!-- Prevent default behavior of arrow up/down and spacebar keys -->
+  <script>
+    document.getElementsByTagName('body')[0].addEventListener("keydown", function(e) {
+        console.log("key: " + e.keyCode);
+        if (e.keyCode === 38 || e.keyCode === 40 || e.keyCode === 32) {
+            e.preventDefault();
+            return false; 
+        }
+    }, false);
+  </script>
+
 </body>
 
 </html>
