@@ -6,7 +6,7 @@ State.GameRotate = function (game) {
 var layer, player, map, rotate, bar; 
 var collects;
 var cursors, jumpButton, pauseButton;
-var bg,1, bg2, bg3, bg4, bg5; 
+var bg1, bg2, bg3, bg4, bg5; 
 var previousX, previousY, result;
 var itemsTaken, idPlayer, helper, flagI, flagNamePlayer;
 

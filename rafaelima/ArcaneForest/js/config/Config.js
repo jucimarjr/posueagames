@@ -105,7 +105,7 @@ Config.game = {
 		items: [],
 		width: 32,
 		height: 48,
-		x: 3500,
+		x: 70,
 		y: 1393,
 		xRotate: 2346,
 		yRotate: 385,
