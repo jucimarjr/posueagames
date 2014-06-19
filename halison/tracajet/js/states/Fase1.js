@@ -45,36 +45,35 @@ State.Fase1.prototype = {
 	},
 
 	create: function () {
+		game.world.setBounds(0, 0, 2880, 1200);
 		var bg = game.add.tileSprite(0, 0, game.cache.getImage('bg').width,game.cache.getImage('bg').height, 'bg');
 
-		game.world.setBounds(0, 0, 2880, 1200);
-		game.physics.startSystem(Phaser.Physics.P2JS);
-		game.physics.p2.setImpactEvents(true);
-		game.physics.p2.gravity.y = 800;
-		game.physics.p2.restitution = 0.5;
-		var tracajetCollisionGroup = game.physics.p2.createCollisionGroup();
-
+		
+		game.physics.startSystem(Phaser.Game.ARCADE);
 		this.map = game.add.tilemap('mapa'); //adicionando o map
 		this.map.addTilesetImage('assets_1','tilesetPlataforma' );// primeiro vem nome do arquivo, depois o apelido
 		
 		this.layer = this.map.createLayer('TileWorld');
 		this.layer.resizeWorld(); //seta o mundo com as alterações feitas
-		game.physics.p2.convertTilemap(this.map, this.layer);
-
 		//Colide com esses tilesets
-		this.map.setCollision([9,10,11,12,13,14,17,18,19,20,21,22], true,'TileWorld'); // 0 espaco vazio 1 em diante os tiles do tileset
+		this.map.setCollision([8,9,10,11,12,13,14,17,18,19,20,21,22], true,'TileWorld'); // 0 espaco vazio 1 em diante os tiles do tileset
+		this.map.setTileSize(36, 40);
 		//Se tocar em algun desses tilesets morre
 		this.map.setTileIndexCallback([15,16,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,47,48,55,56],this.gameOver,this);
 
 		//Sprite do tracajet
-		this.tracajet = game.add.sprite(20, 20, 'tracajet');
+		this.tracajet = game.add.sprite(20, game.cache.getImage('bg').height - 120, 'tracajet');
 		this.tracajet.animations.add('walk',[0,1,2,1],6,false);
 		this.tracajet.animations.add('swim',[5,6,7],6,false);
-		this.tracajet.animations.add('startSwim',[3,4],4,true);
-		game.physics.p2.enable(this.tracajet); // permite que a sprite tenha um corpo fisico
-		this.tracajet.body.fixedRotation = true;
-		this.tracajet.smoothed = false;
+		this.tracajet.animations.add('startSwim',[3,4],2,true);
+		game.physics.enable(this.tracajet, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
+		
+		this.tracajet.body.acceleration.y = 20;
+		this.tracajet.body.collideWorldBounds = true;
+	    this.tracajet.body.drag.x = 200;
 		this.tracajet.anchor.setTo(.5,.5);
+	    this.tracajet.body.gravity.y = 30;
+		this.tracajet.body.setSize(35, 78,0,0);
 	    game.camera.follow(this.tracajet);
 
 	    //Group jacares
@@ -90,39 +89,44 @@ State.Fase1.prototype = {
 		this.map.createFromObjects(this.nameSheets,2,'folhas',0,true,false,this.sheets);
 
 		//Grupo chaves
-		//this.keys = this.game.add.group();
-		//this.keys.enableBody = true;
-		//this.map.createFromObjects(this.nameKeys,1,'key_8080',0,true,false,this.keys);		
+		this.keys = this.game.add.group();
+		this.keys.enableBody = true;
+		this.map.createFromObjects(this.nameKeys,1,'key_8080',0,true,false,this.keys);		
 		
 
-		//Score
-		//var moduloPositionX = Math.abs(this.game.world.position.x);
-		//var moduloPositionY = Math.abs(this.game.world.position.y); 
-		//this.txtScore = this.game.add.text(moduloPositionX  + this.game.width - 100,moduloPositionY + 20, "", {
-		//	font: "20px Arial",
-		//	fill: "#ff0044",
-		//	align: "left"
-		//});
-		//this.txtScore.setText("Score : " + Config.game.score.score);
-		
-		//this.game.input.keyboard.addCallbacks(this,this.changeGameState);
-		
 		//Cursor
 		this.cursors = this.game.input.keyboard.createCursorKeys();
-		game.physics.p2.setBoundsToWorld(true, true, true, true, false);
+
+
+		//Score
+		var moduloPositionX = Math.abs(this.game.world.position.x);
+		var moduloPositionY = Math.abs(this.game.world.position.y); 
+		this.txtScore = this.game.add.text(moduloPositionX  + this.game.width - 100,moduloPositionY + 20, "", {
+			font: "20px Arial",
+			fill: "#ff0044",
+			align: "left"
+		});
+		this.txtScore.setText("Score : " + Config.game.score.score);
 		
+		this.game.input.keyboard.addCallbacks(this,this.changeGameState);
 	},
 
 	update: function () {
-		//game.physics.p2.collide(this.tracajet, this.layer)
-	    //game.physics.p2.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
-	   // game.physics.p2.overlap(this.sheets,this.tracajet,this.increaseScore,null,this);
-	   // game.physics.p2.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
-	   	this.updateTracajet();
+		game.physics.arcade.collide(this.tracajet, this.layer);
+		game.physics.arcade.collide(this.group,this.layer);
+		//this.enemies.forEach(this.collideEnemies,this);
+	    game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
+	    game.physics.arcade.overlap(this.sheets,this.tracajet,this.increaseScore,null,this);
+	    game.physics.arcade.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
+	    this.updateTracajet();
 	    this.updateEnemies();
-	    //this.updateScorePosition
+	    this.updateScorePosition
 		
 	},
+	collideEnemies : function(jacare){
+		game.physics.arcade.collide(jacare,this.layer);
+	}
+	,
 	increaseContKeys : function(tracajet,key){
 		key.kill();
 		this.contKeys ++;
@@ -147,57 +151,89 @@ State.Fase1.prototype = {
 	}
 	,
 	setupEnemies : function(jacare){
-		jacare = game.add.sprite(game.world.randomX, game.world.randomY, 'jacare');
 		jacare.animations.add('left',[0,1,2,3,4,5],10,true);
-		jacare.animations.add('right',[6,7,8,9,10,11],10,true);
-		game.physics.p2.enable(jacare); // permite que a sprite tenha um corpo fisico
-		jacare.body.fixedRotation = true;
+		jacare.animations.add('right',[6,7,8,9,10,11],5,true);
+		game.physics.enable(jacare, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 		jacare.body.collideWorldBounds = true;
+		game.add.tween(jacare).to({x: jacare.body.x, y: jacare.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
+				.to({x: jacare.body.x+320, y: jacare.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/,  50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
+				.loop().start();
+		jacare.animations.play("right");
 		
-		jacare_tween = this.add.tween(jacare);
-		
-		jacare_tween.to({x: jacare.body.x+40, y: jacare.body.y}, 1000 /*duration of the tween (in ms)*/, 
-				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 100 /*delay*/, false /*yoyo?*/)
-				.to({x: jacare.body.x-40, y: jacare.body.y}, 1000 /*duration of the tween (in ms)*/, 
-				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 100 /*delay*/, false /*yoyo?*/)
-				.loop()
-				.start();
-	},
+	}
+	,
 	updateEnemies : function(){
-		this.enemies.forEachExists(function(jacare){
+		/*this.enemies.forEachExists(function(jacare){
 			if(this.tracajet.body.y>=300){
 				this.followTracajet(jacare);
 			}
-		},this);
+		},this);*/
 	}
 	,
 	updateTracajet : function(){
 		this.tracajet.body.velocity.x = 0;
-		this.tracajet.body.velocity.y = 0;
 
 		 if ( this.cursors.left.isDown) { // vai para esquerda
 	    	this.tracajet.body.velocity.x = -this.speed;
 	    	this.tracajet.animations.play('walk');
 	    	this.tracajet.scale.x = -1;
+
+	    	if(!this.tracajet.body.onFloor()){
+	    		this.tracajet.body.setSize(35, 50,0,0);
+	    		this.game.add.tween(this.tracajet).to({
+                                angle : -70
+                        }, 20).start();
+	    	}
+
 	    }
 	    else if (this.cursors.right.isDown ) { // vai para direita
 	    	this.tracajet.body.velocity.x = this.speed;
 	    	this.tracajet.scale.x = +1;  // espelha se antes 1
 	    	this.tracajet.animations.play('walk');
+
+	    	if(!this.tracajet.body.onFloor()){
+	    		this.tracajet.body.setSize(35, 50,0,0);
+	    		
+	    		this.game.add.tween(this.tracajet).to({
+                                angle : 70
+                        }, 20).start();
+	    	}
 	    }
 	    else if (this.cursors.up.isDown ) { // vai para cima
 	    	this.tracajet.body.velocity.y = -this.speed;
-	    	this.tracajet.animations.play('walk');
-			this.tracajet.animations.play('jump');
+			this.tracajet.animations.play('walk');
+			if(!this.tracajet.body.onFloor()){
+				this.tracajet.body.setSize(35, 50,0,0);
+				this.game.add.tween(this.tracajet).to({
+                                angle : 0
+                        }, 20).start();
+			}
 	    }
 	    else if (this.cursors.down.isDown ) { // vai para cima
 	    	this.tracajet.body.velocity.y = this.speed;
 	    	this.tracajet.animations.play('walk');
-			this.tracajet.animations.play('jump');
+			
+			if(!this.tracajet.body.onFloor()){
+				this.tracajet.body.setSize(35, 50,0,0);
+				this.game.add.tween(this.tracajet).to({
+                                angle : -180
+                        }, 20).start();
+			}else{
+				this.game.add.tween(this.tracajet).to({
+                                angle : 0
+                        }, 20).start();
+			}
 	    }
 	    else{
+	    	this.tracajet.body.setSize(35, 78,0,0);
 	    	this.tracajet.animations.stop();
 	    	this.tracajet.frame = 0;
+	    	this.game.add.tween(this.tracajet).to({
+                                angle : 0
+                        }, 20).start();
+
 	    }
 	}
 	,
@@ -206,17 +242,19 @@ State.Fase1.prototype = {
 		this.star.kill();
 	},
 	
-	gameOver: function(){
-		console.log("funciona");
-		this.tracajet.kill();
-		var moduloPositionX = Math.abs(game.world.position.x);
-		var moduloPositionY = Math.abs(game.world.position.y); 
-	    var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
-			font: "48px Arial",
-			fill: "#ff0044",
-			align: "left"
-		});
-		dieText.setText("GAME OVER");
+	gameOver: function(obj){
+		if(obj != undefined && obj.key != 'jacare'){
+			this.tracajet.kill();
+			var moduloPositionX = Math.abs(game.world.position.x);
+			var moduloPositionY = Math.abs(game.world.position.y); 
+		    var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
+				font: "48px Arial",
+				fill: "#ff0044",
+				align: "left"
+			});
+			dieText.setText("GAME OVER");
+		}
+		
 	},
 	
 	followTracajet: function(jacare){
