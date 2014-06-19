@@ -165,13 +165,13 @@ Config.game = {
 			},
 			walk: {
 				key: 'player_walk',
-				frames: [0, 1, 2, 3, 4, 5],
+				frames: [6, 2, 3, 4, 5],
 				speed: 10,
 				loop: true
 			},
 			jump: {
 				key: 'player_jump',
-				frames: [4, 5],
+				frames: [6, 0, 1],
 				speed: 10,
 				loop: false
 			},
@@ -182,6 +182,11 @@ Config.game = {
 				loop: false
 			},
 		},
+		// walk no sword: 3 ~ 8
+		// jump no sword: 3 - 1 - 2
+		// walk sword: 7, 3, 4, 5, 6
+		// jump sword: 7, 1, 2
+		// attack: 7 ~ 9
 		damageCooldown: 2000,
 		attackCooldown: 200,
 		gravityY: 2000,
