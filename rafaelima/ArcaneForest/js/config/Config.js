@@ -105,8 +105,13 @@ Config.game = {
 		items: [],
 		width: 32,
 		height: 48,
-		x: 70,
-		y: 1393,
+		//posicao depois das barras verticais
+//		x: 3146,
+		x: 3360,
+		y: 349,
+		//posicao inicial
+//		x: 70,
+//		y: 1393,
 		xRotate: 2346,
 		yRotate: 385,
 		lifes: 3,
