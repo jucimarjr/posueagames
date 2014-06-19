@@ -50,7 +50,15 @@ Game.GameState.prototype = {
     },
 
     createPlayer: function () {
-        this.player = new Game.PlayerController(this);
+        var point = { x: 0, y: 0 };
+        for (var i = 0; i < this.map.objects.spawn_points.length; i++) {
+            if (this.map.objects.spawn_points[i].name == 'player-sp') {
+                point.x = this.map.objects.spawn_points[i].x;
+                point.y = this.map.objects.spawn_points[i].y;
+            }
+        };
+
+        this.player = new Game.PlayerController(this, point);
         this.player.create();
         this.game.camera.follow(this.player.sprite, 0);
         this.playerHasKey = false;

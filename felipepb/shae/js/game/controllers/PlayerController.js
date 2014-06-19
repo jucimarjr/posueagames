@@ -1,5 +1,6 @@
-Game.PlayerController = function (gameState) {
+Game.PlayerController = function (gameState, spawnPoint) {
     this.gameState = gameState;
+    this.spawnPoint = spawnPoint;
     this.sprite;
     this.emitter;
 
@@ -48,8 +49,8 @@ Game.PlayerController.prototype = {
         this.sprite = this.gameState.game.add.sprite(0, 0, 'main_sprite_atlas');
         this.sprite.frameName = 'shae_idle_1_100-100.png';
         this.sprite.anchor.setTo(0.73, 0.5);
-        this.sprite.x = 140;
-        this.sprite.y = 64;
+        this.sprite.x = this.spawnPoint.x + 20;
+        this.sprite.y = this.spawnPoint.y;
         this.sprite.scale.x = 0;
         this.sprite.scale.y = 0;
         
