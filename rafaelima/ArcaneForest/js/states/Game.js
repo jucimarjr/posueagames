@@ -3,7 +3,7 @@ State.Game = function(game) {
 	this.game = game;
 };
 
-var layer, player, map, transparentWall, collects, health, music, rotate, monster, monsters;
+var layer, player, map, transparentWall, collects, health, rotate, monster, monsters;
 var itemsTaken, flagId, isGameRotate, idPlayer, helper;
 var imgPlayerFall, contFrameGif;
 var cursors, attackButton, pauseButton;
@@ -46,8 +46,7 @@ State.Game.prototype = {
         this.canJump = true;
         this.swordCollider = null;
         
-		music = this.game.add.audio('music_game', 1, true);
-	    music.play('', 0, 1, true);
+		
 		
         //set p2
         this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -77,6 +76,7 @@ State.Game.prototype = {
         bg4 = this.game.add.tileSprite(2560, 970, 3000, 540, 'bg4');
         
         this.putVerticalBar();
+        this.putBar();
 
         //Map
         map = this.game.add.tilemap('stage');
@@ -164,7 +164,6 @@ State.Game.prototype = {
         this.putObstacles();
         this.putMonsters();
         this.putMonstersBar();
-        this.putBar();
         this.putCollect();
         this.putTransparentWall();
         
@@ -300,7 +299,6 @@ State.Game.prototype = {
 
     gameRotate: function () {
         "use strict";
-		 music.pause();
 		 isGameRotate = true;
 //        this.game.state.start('GifFall');
 		 
@@ -310,6 +308,8 @@ State.Game.prototype = {
 		 collects.removeAll();
 		 obstacles.removeAll();
 
+		 this.putBarRotate();
+		 
 		 bg1.y = Config.game.gameRotate.bg1y;
 		 bg2.tilePosition.x -= Config.game.gameRotate.bg2x;
 		 bg2.y = Config.game.gameRotate.bg2y;
@@ -356,18 +356,22 @@ State.Game.prototype = {
         
 		 layer.resizeWorld();
 		 layer.alpha = 2;
-		 layer.debug = true;
+//		 layer.debug = true;
 		 
-		 bar = this.game.add.sprite(Config.game.barRotate.x, Config.game.barRotate.y, 'bar');
-		 this.game.physics.p2.enable(bar, true);
-		 bar.body.kinematic = true;
-		 this.game.add.tween(bar.body.velocity).to({x: '-100'}, 15000).to({x: '+100'}, 15000).yoyo().loop().start();
-		 bar.body.setCollisionGroup(barCollisionGroup);
-		 bar.body.collides([barCollisionGroup, playerCollisionGroup]);
+		 
 		 
 		 this.updateHealth();
 		 this.putBigBoss();
          this.timeCheck();
+    },
+    
+    putBarRotate: function(){
+    	bar = this.game.add.sprite(Config.game.barRotate.x, Config.game.barRotate.y, 'bar');
+		 this.game.physics.p2.enable(bar, false);
+		 bar.body.kinematic = true;
+		 this.game.add.tween(bar.body.velocity).to({x: '-100'}, 15000).to({x: '+100'}, 15000).yoyo().loop().start();
+		 bar.body.setCollisionGroup(barCollisionGroup);
+		 bar.body.collides([barCollisionGroup, playerCollisionGroup]);
     },
     
     fallPlayer: function(){

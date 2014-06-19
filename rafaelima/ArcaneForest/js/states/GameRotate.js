@@ -103,7 +103,7 @@ State.GameRotate.prototype = {
 		    player.body.setCollisionGroup(playerCollisionGroup);
 
 		    //DEBUG LAYER - deletar
-		    layer.debug = true;
+//		    layer.debug = true;
 		    result = 'inicio';
 		    
 		    //Collision tile/player
