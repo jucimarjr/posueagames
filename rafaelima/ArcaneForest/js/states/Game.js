@@ -276,7 +276,7 @@ State.Game.prototype = {
 	        	this.swordCollider.body.velocity.y = 0;
 	        }
 
-            if (game.time.now - timeCheck > 4000 && monster != null && monster.frame === 0 && isGameRotate)
+            if (game.time.now - timeCheck > 4000 && monster != null && monster.frame === 0 && isGameRotate && monster.exists===true)
             {
                 this.bossShoot();
                 this.timeCheck();
