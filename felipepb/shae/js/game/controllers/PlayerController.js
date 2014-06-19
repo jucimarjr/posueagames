@@ -50,7 +50,7 @@ Game.PlayerController.prototype = {
         this.sprite.frameName = 'shae_idle_1_100-100.png';
         this.sprite.anchor.setTo(0.73, 0.5);
         this.sprite.x = this.spawnPoint.x + 20;
-        this.sprite.y = this.spawnPoint.y;
+        this.sprite.y = this.spawnPoint.y - 32;
         this.sprite.scale.x = 0;
         this.sprite.scale.y = 0;
         
