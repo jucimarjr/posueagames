@@ -65,6 +65,8 @@ State.GamePlay.prototype = {
 
         this.game.load.physics('seashellPhysics',
                 'assets/polygon/seashell-polygon.json');
+        this.game.load.physics('bucketPhysics',
+        'assets/polygon/bucket-polygon.json');
 	},
 		
 	create: function () {
@@ -84,7 +86,6 @@ State.GamePlay.prototype = {
 		this.layer = this.map.createLayer('Camada de Tiles 1');
         this.layer.resizeWorld();
 		
-		this.game.add.image(2008, 23, 'bucket');
 		this.game.add.image(2008, 508, 'straw1');
 		        
         //  Set the tiles for collision.
@@ -103,6 +104,7 @@ State.GamePlay.prototype = {
 		this.seashellCG = game.physics.p2.createCollisionGroup();
 		this.urchinsCG = game.physics.p2.createCollisionGroup();
 		this.hotsandCG = game.physics.p2.createCollisionGroup();
+        this.bucketCG = game.physics.p2.createCollisionGroup();
 		
 		// Create and Setup Material
         this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
@@ -130,14 +132,15 @@ State.GamePlay.prototype = {
 		}
 		
         // create player
-        this.drop.create(200, this.game.world.height-200);
+        this.drop.create(1850, 50);
         var dropSprite = this.drop.getSpriteObject();   
         this.game.physics.p2.enableBody(dropSprite, false);        
         this.game.camera.follow(dropSprite);
         this.drop.configureCharacter(this.setCharacterInicialValues);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
-                this.lifeDropCG, this.seashellCG, this.urchinsCG, this.hotsandCG]);
+                this.lifeDropCG, this.seashellCG, this.urchinsCG,
+                this.hotsandCG, this.bucketCG]);
         dropSprite.body.setMaterial(this.characterMaterial);
         
         // Create sea shell
@@ -196,6 +199,16 @@ State.GamePlay.prototype = {
             this.urchins.getAt(i).animations.play('nohit');
             this.urchins.getAt(i).body.collides([this.playerCG, this.groundCG]);
         }
+
+        // Add the bucket
+        this.bucket = this.game.add.sprite(2250, 272, 'bucket');
+        this.game.physics.p2.enableBody(this.bucket, false);
+        this.bucket.body.clearShapes();
+        this.bucket.body.loadPolygon('bucketPhysics', 'bucket_384-497');
+        this.bucket.body.fixedRotation = true;
+        this.bucket.body.static = true;
+        this.bucket.body.setCollisionGroup(this.bucketCG);
+        this.bucket.body.collides([this.groundCG, this.playerCG]);
 		      
 		// canudo
 		this.diagonalStraw = this.game.add.sprite(2640, 270, 'straw2');
