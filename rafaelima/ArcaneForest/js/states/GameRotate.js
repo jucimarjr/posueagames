@@ -3,28 +3,12 @@ State.GameRotate = function (game) {
 	this.game = game;
 };
 
-var layer;
-var player;
-var cursors;
-var jumpButton;
-var pauseButton;
-var map;
-var rotate;
-var bg1;
-var bg2;
-var bg3;
-var bg4;
-var bg5;
-var bar;
-var previousX;
-var previousY;
+var layer, player, map, rotate, bar; 
 var collects;
-var result;
-var itemsTaken;
-var idPlayer;
-var helper;
-var flagId;
-var flagNamePlayer;
+var cursors, jumpButton, pauseButton;
+var bg,1, bg2, bg3, bg4, bg5; 
+var previousX, previousY, result;
+var itemsTaken, idPlayer, helper, flagI, flagNamePlayer;
 
 State.GameRotate.prototype = {
 		preload: function () {
