@@ -3,7 +3,7 @@ Game.KeyController = function (game, x, y) {
 
 	this.anchor.setTo(0.0, 1.0);
 
-	// Create
+	// Create idle animation
     var idleAnimFrames = new Array();
     for (var i = 1; i <= 3; i++) {
         idleAnimFrames.push('key_' + i + '_42-38.png');

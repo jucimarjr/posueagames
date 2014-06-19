@@ -3,6 +3,7 @@ Game.GameState = function () {
     this.map;
     this.layer;
     this.keyGroup;
+    this.gateGroup;
 
     this.player;
 	this.playerFocusLight;
@@ -21,6 +22,7 @@ Game.GameState.prototype = {
         this.setupPhysicsSystem();
         this.createTileMap();
         this.createKey();
+        this.createGate();
         this.createHearts();
         this.createPlayer();
     },
@@ -34,9 +36,7 @@ Game.GameState.prototype = {
     createTileMap: function () {
         this.map = this.game.add.tilemap('map');
         
-        this.map.addTilesetImage('ground_1x1');
-        // this.map.addTilesetImage('key');
-        // this.map.addTilesetImage('tiles2');
+        this.map.addTilesetImage('walls_tileset');
 
         this.layer = this.map.createLayer('walls');
         this.layer.resizeWorld();
@@ -59,24 +59,13 @@ Game.GameState.prototype = {
         this.playerHasKey = false;
     },
 	
-	createHearts: function () {
-		// var collisions = this.map.collision.collision;
-
-		// console.log('collision: ' + collisions);
-		
-		// Game.HeartController.setWalls(collisions);
-		// Game.HeartController.setStageCorners(0, 0, this.game.width, this.game.height);
-		
+	createHearts: function () {		
         var waypoints = this.map.collision.collision;
         for (var i = 0; i < waypoints.length; i++) {
             var heart = new Game.HeartController(this.game, waypoints[i]);
             heart.create();
             this.hearts.push(heart);
         };
-		
-		// heart = new Game.HeartController(this.game);
-		// heart.create(this.game.width - 100, this.game.height / 2.0 + 200, this.game);
-		// this.hearts.push(heart);
 	},
 
     createKey: function () {
@@ -84,7 +73,7 @@ Game.GameState.prototype = {
         this.keyGroup.enableBody = true;
         
         this.map.createFromObjects(
-            'spawn_points', 26, 'main_sprite_atlas', 'key_1_42-38.png',
+            'spawn_points', 1, 'main_sprite_atlas', 'key_1_42-38.png',
             true, false, this.keyGroup, Game.KeyController, false
         );
 
@@ -95,10 +84,30 @@ Game.GameState.prototype = {
             }, this);
     },
 
+    createGate: function () {
+        this.gateGroup = this.game.add.group();
+        this.gateGroup.enableBody = true;
+        
+        this.map.createFromObjects(
+            'gates', 6, 'main_sprite_atlas', 'gate_32-96.png',
+            true, false, this.gateGroup, Game.GateController, false
+        );
+
+        this.gateGroup.forEach(
+            function (gate) { 
+                gate.body.allowGravity = false;
+                gate.body.immovable = true;
+                // gate.body.setSize(10, 30, 16, 0);
+            }, this);
+    },
+
     update: function () {
         this.game.physics.arcade.collide(this.layer, this.player.sprite);
         this.game.physics.arcade.overlap(this.keyGroup, this.player.sprite, this.collideWithKey, null, this);
+        this.game.physics.arcade.collide(this.gateGroup, this.player.sprite, this.collideWithGate, null, this);
+        
         this.player.update();
+        
         this.playerLightSprite.x = this.game.camera.x;
         this.playerLightSprite.y = this.game.camera.y;
     },
@@ -139,5 +148,12 @@ Game.GameState.prototype = {
     collideWithKey: function (playerSprite, keySprite) {
         this.playerHasKey = true;
         keySprite.destroy();
+    },
+
+    collideWithGate: function (playerSprite, gateSprite) {
+        if (this.playerHasKey)
+            console.log('level completed!');
+        else
+            console.log('key needed!');
     }
 };
