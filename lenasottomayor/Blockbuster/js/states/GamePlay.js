@@ -74,7 +74,7 @@ State.GamePlay.prototype = {
 	
 	collectPowerLifes: function(spritePlayer, powerlifes) {
 		powerlifes.kill();
-		
+		this.powerupSound.play();
 		this.HUD.updateLife(1);
 		this.HUD.updateScore(Config.scores.powerlife);
 	},
