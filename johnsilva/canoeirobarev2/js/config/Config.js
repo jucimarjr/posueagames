@@ -107,7 +107,7 @@ Config.credits = {
 };
 
 Config.audio = {
-	menu: 'assets/audio/menu.wav'
+	menu: 'assets/audio/menu.mp3'
 };
 
 Config.player = {
