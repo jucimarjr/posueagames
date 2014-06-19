@@ -179,6 +179,7 @@ State.Game.prototype = {
         
         //console.log("--"+ this.playerCollider.body.x +","+ this.playerCollider.body.y);
         
+//        monsters
         if(this.gameState == STATE_PLAY) {
         	
 	        this.playerCollider.body.force.y = Config.game.player.forceY;
@@ -271,16 +272,28 @@ State.Game.prototype = {
     onClick: function () {
         "use strict";
     },
+    
+    putMonstersBar: function () {
+        "use strict";
+		
+    },
 	
 	moveMonster: function (obj, velocity) {
-		"use strict";
-		obj.timer++;
-		if(obj.timer >= 100 ){
-			obj.body.moveLeft(velocity);
-			if(obj.timer >= 200){obj.timer = 0;}
-		}else {
-			obj.body.moveRight(velocity);
-		}
+//		"use strict";
+//		obj.timer++;
+//		if(obj.timer >= 100 ){
+//			obj.forEach(function(objIntern){
+//				objIntern.body.velocity.x = 180;
+//				objIntern.scale.x = -1;
+//			});
+//			if(obj.timer >= 200){obj.timer = 0;}
+//		}else {
+//			obj.forEach(function(item){
+//				objIntern.body.velocity.x = -180;
+//				objIntern.scale.x = 1;
+//			}
+//			obj.body.moveRight(velocity);
+//		}
 	},
     
     gameRotate: function () {
@@ -674,7 +687,7 @@ State.Game.prototype = {
 
 			monster =  monsters.create(1950, 1397, 'monstercat');
 			this.createMonster(monster);
-            monster.scale.x = -1;
+//            monster.scale.x = -1;
 
             monster =  monsters.create(3950, 1152, 'greenmonster');
             this.createMonster(monster);
@@ -693,7 +706,7 @@ State.Game.prototype = {
 
 			monster =  monsters.create(3178, 1343, 'bluemonster');
 			this.createMonster(monster);
-            monster.scale.x = -1;
+//            monster.scale.x = -1;
 
             monster =  monsters.create(4078, 442.5, 'bluemonster');
             this.createMonster(monster);
@@ -713,10 +726,10 @@ State.Game.prototype = {
 			monster.body.collideWorldBounds = true;
 			monster.body.setCollisionGroup(monsterCollisionGroup);
 			monster.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
-            this.game.add.tween(monster.body.velocity)
-            .to({x: '+180'}, 2500)
-            .to({x: '-180'}, 2500)
-            .yoyo().loop().start();
+//            this.game.add.tween(monster.body.velocity)
+//            .to({x: '+180'}, 2500)
+//            .to({x: '-180'}, 2500)
+//            .yoyo().loop().start();
 		},
 
     //Create Collects
@@ -771,16 +784,16 @@ State.Game.prototype = {
         verticalBar1.body.collides([barCollisionGroup, playerCollisionGroup]);
         
       //bar 1
-//        verticalBar2 = this.game.add.sprite(3650, 200, 'verticalbar');
-//        this.game.physics.p2.enable(verticalBar2, false);
-//        verticalBar2.body.kinematic = true;
-//        this.game.add.tween(verticalBar2.body.velocity).to({
-//            y: '+200'
-//        }, 4000).to({
-//            y: '-200'
-//        }, 4000).yoyo().loop().start();
-//        verticalBar2.body.setCollisionGroup(barCollisionGroup);
-//        verticalBar2.body.collides([barCollisionGroup, playerCollisionGroup]);
+        verticalBar2 = this.game.add.sprite(3650, 200, 'verticalbar');
+        this.game.physics.p2.enable(verticalBar2, false);
+        verticalBar2.body.kinematic = true;
+        this.game.add.tween(verticalBar2.body.velocity).to({
+            y: '+200'
+        }, 4000).to({
+            y: '-200'
+        }, 4000).yoyo().loop().start();
+        verticalBar2.body.setCollisionGroup(barCollisionGroup);
+        verticalBar2.body.collides([barCollisionGroup, playerCollisionGroup]);
         
       //bar 1
     	verticalBar3 = this.game.add.sprite(3800, 200, 'verticalbar');
