@@ -102,6 +102,7 @@ Config.game = {
 	},
 	player:{
 		dir: 'assets/spritesheets/dude.png',
+		items: [],
 		width: 32,
 		height: 48,
 		x: 60,
@@ -289,7 +290,7 @@ Config.game = {
 		bg1y: 0,
 		bg2x: 100,
 		bg2y: 0,
-		bg3x: 100,
+		bg3x: 200,
 		bg3y: 0,
 		bg4x: 180,
 		bg4y: 0

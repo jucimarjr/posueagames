@@ -345,6 +345,8 @@ State.Game.prototype = {
         this.playerCollider.body.collides(collectCollisionGroup, this.collectItems, this);
         
 		 layer.resizeWorld();
+		 layer.alpha = 2;
+		 layer.debug = true;
 		 
 		 bar = this.game.add.sprite(Config.game.barRotate.x, Config.game.barRotate.y, 'bar');
 		 this.game.physics.p2.enable(bar, true);
@@ -352,6 +354,8 @@ State.Game.prototype = {
 		 this.game.add.tween(bar.body.velocity).to({x: '-100'}, 15000).to({x: '+100'}, 15000).yoyo().loop().start();
 		 bar.body.setCollisionGroup(barCollisionGroup);
 		 bar.body.collides([barCollisionGroup, playerCollisionGroup]);
+		 
+		 this.updateHealth();
 		 
     },
     
