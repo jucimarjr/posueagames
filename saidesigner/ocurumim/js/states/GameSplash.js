@@ -46,6 +46,9 @@ State.GameSplash.prototype = {
 		this.game.load.image('forest', 'assets/images/forest.png');
 		this.game.load.image('platform', 'assets/images/platform.png');
 		this.game.load.image('clouds', 'assets/images/clouds.png');
+
+		this.game.load.spritesheet('fruits', Config.fruit.small.src, Config.fruit.small.width, Config.fruit.small.height);
+		this.game.load.spritesheet('fruitsBig', Config.fruit.big.src, Config.fruit.big.width, Config.fruit.big.height);
 	},
 	create: function () {
 		"use strict";
