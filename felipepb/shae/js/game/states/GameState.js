@@ -2,6 +2,7 @@ Game.GameState = function () {
 
     this.map;
     this.layer;
+    this.keyGroup;
 
     this.player;
 	this.playerFocusLight;
@@ -9,7 +10,7 @@ Game.GameState = function () {
 	
 	this.hearts = [];
 
-    this.key;
+    this.playerHasKey;
 };
 
 Game.GameState.prototype = {
@@ -54,6 +55,8 @@ Game.GameState.prototype = {
 		this.playerFocusLight = this.game.add.bitmapData(this.game.width, this.game.height);
 		this.playerFocusLight.context.fillStyle = 'rgba(0, 0, 0, 1.0)';
 		this.playerLightSprite = this.game.add.image(0, 0, this.playerFocusLight);
+
+        this.playerHasKey = false;
     },
 	
 	createHearts: function () {
@@ -77,25 +80,27 @@ Game.GameState.prototype = {
 	},
 
     createKey: function () {
+        this.keyGroup = this.game.add.group();
+        this.keyGroup.enableBody = true;
+        
         this.map.createFromObjects(
             'spawn_points', 26, 'main_sprite_atlas', 'key_1_42-38.png',
-            true, false, this.game.World, Game.KeyController, false
-            );
+            true, false, this.keyGroup, Game.KeyController, false
+        );
+
+        this.keyGroup.forEach(
+            function (key) { 
+                key.body.allowGravity = false;
+                key.body.setSize(10, 30, 16, 0);
+            }, this);
     },
 
     update: function () {
         this.game.physics.arcade.collide(this.layer, this.player.sprite);
+        this.game.physics.arcade.overlap(this.keyGroup, this.player.sprite, this.collideWithKey, null, this);
         this.player.update();
         this.playerLightSprite.x = this.game.camera.x;
         this.playerLightSprite.y = this.game.camera.y;
-		
-		// var hearts = this.hearts;
-        // var length = hearts.length;
-		// for (var i = 0; i < length; i++) {
-            // console.log(Math.sin(this.game.time.elapsed / 10.0));
-            // hearts[i].x += Math.sin(this.game.time.elapsed / 1000.0) * 2.0;
-            // hearts[i].update();
-        // }
     },
 
     render: function () {
@@ -129,5 +134,10 @@ Game.GameState.prototype = {
 
     unregisterBody: function (body) {
         body.destroy();
+    },
+
+    collideWithKey: function (playerSprite, keySprite) {
+        this.playerHasKey = true;
+        keySprite.destroy();
     }
 };

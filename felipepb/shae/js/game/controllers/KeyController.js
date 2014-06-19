@@ -1,5 +1,5 @@
 Game.KeyController = function (game, x, y) {
-	Phaser.Sprite.call(this, game, x, y, 'main_sprite_atlas', 'key_1_42-38.png');
+	Phaser.Sprite.call(this, game, x, y + 2, 'main_sprite_atlas', 'key_1_42-38.png');
 
 	this.anchor.setTo(0.0, 1.0);
 
@@ -15,8 +15,13 @@ Game.KeyController = function (game, x, y) {
     this.y = y;
 
     var flyTween = game.add.tween(this);
-    flyTween.to({ y: this.y + 2 }, 1000, Phaser.Easing.Linear.None, true, 0, Number.MAX_VALUE, true);
+    flyTween.to({ y: this.y - 4 }, 500, Phaser.Easing.Cubic.Out, true, 0, Number.MAX_VALUE, true);
 };
 
 Game.KeyController.prototype = Object.create(Phaser.Sprite.prototype);
 Game.KeyController.prototype.constructor = Game.KeyController;
+
+Game.KeyController.prototype.update = function () {
+	if (PhysicsConsts.debugDraw && this.body)
+        this.game.debug.body(this);
+};
