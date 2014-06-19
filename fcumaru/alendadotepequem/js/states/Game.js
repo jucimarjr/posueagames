@@ -4,9 +4,10 @@ State.Game = function(game) {
 	this.heroes = new Heroes(game);
 	this.enemies = new Enemies(game);
 	this.rocks = new Rocks(game);
+	this.trees = new Trees(game);
 };
 
-var dino, layer, group, map, posicao, score;
+var map;
 
 var now = 0;
 var nowSecond = 0;
@@ -31,6 +32,7 @@ State.Game.prototype = {
 		this.heroes.preload();
 		this.enemies.preload();
 		this.rocks.preload();
+		this.trees.preload();
 	},
 	create : function() {
 		"use strict";
@@ -46,11 +48,11 @@ State.Game.prototype = {
 		map.addTilesetImage('black', 'black');
 		map.addTilesetImage('white', 'white');
 
-		layer = map.createLayer('Stage');
-		layer.resizeWorld(); // seta o mundo com as altera��es feitas
+		this.layer = map.createLayer('Stage');
+		this.layer.resizeWorld(); // seta o mundo com as altera��es feitas
 		map.setCollisionBetween(1, 1, true, 0); // 0 espaco
 
-		// var layer2 = map.createLayer('Movable objects');
+		// var this.layer2 = map.createLayer('Movable objects');
 
 		// entrada
 		this.entrada = this.game.add.image(GOAL_X, GOAL_Y, 'entrada');
@@ -71,16 +73,21 @@ State.Game.prototype = {
 		this.enemies.create();
 		this.rocks.create();
 		this.rocks.pop(500, 1000);
+		this.trees.create();
+		this.trees.pop(800, 1500);
 
 		startTimer();
 	},
 	update : function() {
 		"use strict";
-		this.heroes.update(layer, this.enemies);
-		this.enemies.update(layer);
+		this.heroes.update(this.layer, this.enemies);
+		this.enemies.update(this.layer);
+		this.trees.update(this.layer);
 		this.rocks.update();
 		this.rocks.checkCollision(this.heroes.getCurrent());
-
+		if(this.heroes.heroes[this.heroes.index].type === HERO_OF_ROPE){
+			this.trees.checkCollision(this.heroes.heroes[this.heroes.index].getRope());
+		}
 		if (!this.heroes.isAlive()) {
 			this.game.state.start('GameOver');
 

@@ -3,6 +3,7 @@ function HeroOfRope(game) {
 	var that = new Hero(game);
 
 	// Default parameters
+	that.type = HERO_OF_ROPE;
 	that.key = 'hero2';
 	that.asset = 'assets/tmp2.png';
 	that.jump = 500;
@@ -10,8 +11,9 @@ function HeroOfRope(game) {
 	that.life = 1;
 	that.maxJump = 2;
 	that.initX = 200;
-	that.initY = 1000;
+	that.initY = 1500;
 	that.numSegmentsRope = 19;
+	this.facingLeft = false;
 
 	that.create = function() {
 		"use strict";
@@ -64,12 +66,14 @@ function HeroOfRope(game) {
 				this.hero.animations.play('walk');
 				this.hero.scale.x = -1; // espelha se antes -1
 				keyPressed = true;
+				this.facingLeft = true;
 			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
 				// vai para direita
 				this.hero.body.velocity.x = this.walk;
 				this.hero.scale.x = +1; // espelha se antes 1
 				this.hero.animations.play('walk');
 				keyPressed = true;
+				this.facingLeft = false;
 			}
 		}
 		// executar a animacao para para cima
@@ -88,10 +92,19 @@ function HeroOfRope(game) {
 		}
 
 		if(this.ropeActive){
-			for(var i = 1; i < this.numSegmentsRope; i++){
-				this.ropeSegments[i].x = this.ropeSegments[i-1].x - 30;
-				if(this.ropeSegments[i].x < this.ropeStartX)
-					this.ropeSegments[i].x = this.ropeStartX;
+			if(this.facingLeft){
+				for(var i = 1; i < this.numSegmentsRope; i++){
+					this.ropeSegments[i].x = this.ropeSegments[i-1].x + 30;
+					if(this.ropeSegments[i].x > this.ropeStartX + this.ropeSegments[i].width)
+						this.ropeSegments[i].x = this.ropeStartX + this.ropeSegments[i].width;
+				}
+			}
+			else {
+				for(var i = 1; i < this.numSegmentsRope; i++){
+					this.ropeSegments[i].x = this.ropeSegments[i-1].x - 30;
+					if(this.ropeSegments[i].x < this.ropeStartX)
+						this.ropeSegments[i].x = this.ropeStartX;
+				}
 			}
 		}
 	};
@@ -99,14 +112,21 @@ function HeroOfRope(game) {
 	that.useRope = function(){
 		if(!this.active || this.ropeActive || !this.hero.body.onFloor()) return;
 		this.ropeActive = true;
-		this.ropeStartX = this.hero.x + Math.abs(this.hero.width/2) - this.ropeSegments[0].width;
+		if(this.facingLeft) {
+			this.ropeStartX = this.hero.x - Math.abs(this.hero.width/2) - this.ropeSegments[0].width;
+			this.ropeDisplacement = -350;
+		}
+		else {
+			this.ropeStartX = this.hero.x + Math.abs(this.hero.width/2) - this.ropeSegments[0].width;
+			this.ropeDisplacement = 350;
+		}
 		for(var i = 0; i < this.numSegmentsRope; i++){
 			this.ropeSegments[i].revive();
 			this.ropeSegments[i].y = this.hero.y;
 		}
 		this.ropeSegments[0].x = this.ropeStartX;
 		// can't chain directly because of onComplete(); must use verbose mode
-		var ropeAnimP1 = this.game.add.tween(this.ropeSegments[0]).to({x: this.ropeStartX + 350}, 700);
+		var ropeAnimP1 = this.game.add.tween(this.ropeSegments[0]).to({x: this.ropeStartX + this.ropeDisplacement}, 700);
 		var ropeAnimP2 = this.game.add.tween(this.ropeSegments[0]).to({x: this.ropeStartX}, 700);
 		ropeAnimP1.chain(ropeAnimP2);
 		ropeAnimP2.onComplete.add(this.killRope, this);
@@ -125,12 +145,16 @@ function HeroOfRope(game) {
 	}
 
 	that.jumpCheck = function() {
-	// apenas processar pulo se estiver ativo e não estiver usando a corda
-	if (this.active && this.jumpCount < this.maxJump && !this.ropeActive) {
-		this.hero.body.velocity.y = -this.jump;
-		this.jumpCount++;
+		// apenas processar pulo se estiver ativo e não estiver usando a corda
+		if (this.active && this.jumpCount < this.maxJump && !this.ropeActive) {
+			this.hero.body.velocity.y = -this.jump;
+			this.jumpCount++;
+		}
 	}
-}
+
+	that.getRope = function() {
+		return this.ropeSegments[0];
+	}
 
 	return that;
 }

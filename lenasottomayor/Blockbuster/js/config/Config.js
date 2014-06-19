@@ -101,10 +101,6 @@ Config.menu = {
 			x: 0.5,
 			y: 0.5
 		}
-	},
-	textStyle: {
-		font: '25px Ms Sans Serif',
-		fill: '#ffffff'
 	}
 };
 
@@ -160,16 +156,50 @@ Config.tilemap = {
 	}
 };
 
-//Level
+//Level 1
 Config.level1 = {
 	x: 0,
 	y: 0,
+	coins: 0,
+	life: 3,
+	score: 0,
+	text: 'Level 1-1',
 	worldBounds: {
 		xi: 0,
 		yi: 0,
 		xf: 12800,
 		yf: 800
 	}
+};
+
+//Fonts
+Config.fonts = {
+	coins: {
+		dir: 'assets/fonts/font_gray.fnt',
+		image: 'assets/fonts/font_gray.png'
+	},
+	life: {
+		dir: 'assets/fonts/font_white.fnt',
+		image: 'assets/fonts/font_white.png'
+	},
+	score: {
+		dir: 'assets/fonts/font_yellow.fnt',
+		image: 'assets/fonts/font_yellow.png'
+	}
+};
+
+//Scores
+Config.scores = {
+	powerlife: 5,
+	powerstar: 10,
+	coin: 2,
+	enemy: 25
+};
+
+//Icons
+Config.icon = {
+	coin: 'assets/images/coinscore_25-25.png',
+	life: 'assets/images/lifescore_48-27.png'
 };
 
 //Player
@@ -337,6 +367,13 @@ Config.credits = {
 //Game Over
 Config.gameOver = {
 	dir: 'assets/images/GameOver_960-600.png',
+	x: 0,
+	y: 0	
+};
+
+//Game Win
+Config.gameWin = {
+	dir: 'assets/images/GameWin_960-600.png',
 	x: 0,
 	y: 0	
 };
