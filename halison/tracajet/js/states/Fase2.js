@@ -3,7 +3,7 @@
 // Utilize sempre 'this.' para declarar as vari�veis globais do estado
 // Utilize sempre 'this.' para executar os metodos do estado
 
-State.Fase1= function (game) {
+State.Fase2= function (game) {
     "use strict";
     this.game = game;
     this.tracajet;
@@ -11,17 +11,21 @@ State.Fase1= function (game) {
     this.plataform;
     this.map;
     this.layer;
-
+    this.enemies;
+    this.nameEnemy = 'Enemies';
+    
 };
 
-State.Fase1.prototype = {
+State.Fase2.prototype = {
 
     preload: function () {
-        game.load.tilemap('mapa','assets/2_Fase/mapaFase2.json',null,Phaser.Tilemap.TILED_JSON);
+        //game.load.tilemap('mapa','assets/2_Fase/mapaFase2.json',null,Phaser.Tilemap.TILED_JSON);
+    	game.load.tilemap('mapa','assets/2_Fase/mapa_fase2b.json',null,Phaser.Tilemap.TILED_JSON);
         game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height); // 200x160 eh o tamanho do frame da sprite
+        game.load.spritesheet('monkey', "assets/2_Fase/monkey_spritesheet_240-80.png",40,40);
         //game.load.image('star',  Config.game.star.dir);
         //game.load.image('block', Config.game.tileset.dir);
-        game.load.image('bg',"assets/2_Fase/bg2_600-1920.png");
+        game.load.image('bg',"assets/2_Fase/bg2_2880-1200.png");
         game.load.image('tilesetPlataforma','assets/2_Fase/assets_2.png');
 
     },
@@ -48,7 +52,7 @@ State.Fase1.prototype = {
 //        group.forEach(function (coxa){ coxa.body.allowGravity = false}, this); // faz com que as coxas nao caiam
 
 
-        this.tracajet = game.add.sprite(100, 100, 'tracajet');
+        this.tracajet = game.add.sprite(100, game.world.height, 'tracajet');
         this.tracajet.animations.add('walk',[0,1,2,1],6,false);
         this.tracajet.animations.add('swim',[5,6,7],6,false);
         this.tracajet.animations.add('startSwim',[3,4],4,true);
@@ -71,6 +75,14 @@ State.Fase1.prototype = {
         //    //cria um bloco para o dino ficar em cima
         //    var block = plataform.create(350, 250, 'bloco');
         //    block.body.immovable = true;
+        
+        //Group jacares
+	    this.enemies =  this.game.add.group();
+		this.enemies.enableBody = true;
+		this.map.createFromObjects(this.nameEnemy, 42, 'monkey', 0, true, false, this.enemies);
+		//Configura jacares
+		this.enemies.forEach(this.setupEnemies,this);
+        
 
     },
 
@@ -107,6 +119,20 @@ State.Fase1.prototype = {
 
     tracajetEatStar: function (dino, star)	{
         this.star.kill();
-    }
+    },
+    
+    setupEnemies : function(jacare){
+		jacare.animations.add('left',[0,1,2,3,4,5],10,true);
+		jacare.animations.add('right',[6,7,8,9,10,11],5,true);
+		game.physics.enable(jacare, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
+		jacare.body.collideWorldBounds = true;
+		game.add.tween(jacare).to({x: jacare.body.x, y: jacare.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
+				.to({x: jacare.body.x+320, y: jacare.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/,  50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
+				.loop().start();
+		jacare.animations.play("right");
+		
+	}
 
 };

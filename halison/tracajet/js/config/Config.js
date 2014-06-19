@@ -169,6 +169,9 @@ Config.game = {
 			background: "assets/images/bg1_2880-1200.png",
 			
 		},
+		fase2: {
+			background: "assets/2_fase/images/bg2_600-1920.png",
+		},
 		fase3: {
 			background: "assets/images/bg3_tmp_2880-1200.png",
 			nuvens: { 

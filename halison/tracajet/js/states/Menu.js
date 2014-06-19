@@ -25,14 +25,14 @@ State.Menu.prototype = {
 	},
 	clickPlay: function () {
 		"use strict";
-		this.game.state.start('Fase1');
+		this.game.state.start('Fase2');
 	},
 	clickHowToPlay: function () {
 		"use strict";
 		this.game.state.start('HowToPlay');
 	},
 	clickCredits: function () {
-		"use strict";7
+		"use strict";
 		this.game.state.start('Credits');
 	}
 };
