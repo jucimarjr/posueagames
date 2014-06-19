@@ -158,6 +158,9 @@ Game.PlayerController.prototype = {
     },
 
     update: function () {
+        if (this.blockInput)
+            return;
+
         // console.log(this.animState);
 
         if (this.animState == Game.PlayerController.AnimState.Respawning ||
@@ -406,6 +409,12 @@ Game.PlayerController.prototype = {
         this.sprite.scale.y = 0;
         
         this.playRespawnAnimation();
+    },
+
+    stopAndBlockInput: function () {
+        this.blockInput = true;
+        this.sprite.body.immovable = true;
+        this.sprite.animations.stop();
     }
 
     // onBeginContact: function (otherBody, otherShape, shape, contactDataArray) {

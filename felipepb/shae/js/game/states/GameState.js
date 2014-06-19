@@ -11,6 +11,7 @@ Game.GameState = function () {
 	this.hearts = [];
 
     this.playerHasKey;
+    this.stageComplete;
 };
 
 Game.GameState.prototype = {
@@ -44,6 +45,8 @@ Game.GameState.prototype = {
 		this.layer.debugColor = 'red';
 
         this.map.setCollisionBetween(0, 25);
+
+        this.stageComplete = false;
     },
 
     createPlayer: function () {
@@ -158,9 +161,22 @@ Game.GameState.prototype = {
     },
 
     collideWithGate: function (playerSprite, gateSprite) {
-        if (this.playerHasKey)
+        if (this.stageComplete)
+            return;
+
+        if (this.playerHasKey) {
             console.log('level completed!');
-        else
+            this.stageComplete = true;
+            var tween = this.game.add.tween(gateSprite);
+            tween.to({ alpha: 0.0 }, 1000, Phaser.Easing.Cubic.In, true, 1000);
+            tween.onComplete.add(this.onStageComplete, this);
+            this.player.stopAndBlockInput();
+        } else {
             console.log('key needed!');
+        }
+    },
+
+    onStageComplete: function () {
+        console.log('onStageComplete!');
     }
 };
