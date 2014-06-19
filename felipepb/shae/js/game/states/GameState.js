@@ -24,6 +24,7 @@ Game.GameState.prototype = {
         this.createGate();
 		this.createPlayer();
         this.createHearts();
+		this.createPlayerLight();
     },
 
     setupPhysicsSystem: function () {
@@ -48,13 +49,7 @@ Game.GameState.prototype = {
     createPlayer: function () {
         this.player = new Game.PlayerController(this);
         this.player.create();
-		
         this.game.camera.follow(this.player.sprite, 0);
-
-		this.playerFocusLight = this.game.add.bitmapData(this.game.width, this.game.height);
-		this.playerFocusLight.context.fillStyle = 'rgba(0, 0, 0, 1.0)';
-		this.playerLightSprite = this.game.add.image(0, 0, this.playerFocusLight);
-
         this.playerHasKey = false;
     },
 	
@@ -66,6 +61,12 @@ Game.GameState.prototype = {
             heart.create();
             this.hearts.push(heart);
         };
+	},
+	
+	createPlayerLight: function () {
+		this.playerFocusLight = this.game.add.bitmapData(this.game.width, this.game.height);
+        this.playerFocusLight.context.fillStyle = 'rgba(0, 0, 0, 1.0)';
+        this.playerLightSprite = this.game.add.image(0, 0, this.playerFocusLight);
 	},
 
     createKey: function () {
