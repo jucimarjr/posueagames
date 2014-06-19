@@ -200,7 +200,7 @@ Config.game = {
 	},
 	bigbossattack:{
 		dir: 'assets/spritesheets/bigbossattack_114_208_6_.png',
-		width: 270,
+		width: 114,
 		height: 208
 	},
 	bigbossattackfire:{
