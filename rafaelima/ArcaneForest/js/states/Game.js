@@ -3,36 +3,18 @@ State.Game = function(game) {
 	this.game = game;
 };
 
-var layer;
-var player;
-var isGameRotate;
+var layer, player, map, transparentWall, collects, health, music, rotate, monster;
+var itemsTaken, flagId, isGameRotate, idPlayer, helper;
 var imgPlayerFall, contFrameGif;
-var cursors;
-var attackButton;
-var pauseButton;
-var map;
-var rotate;
-var bg1;
-var bg2;
-var bg3;
-var bg4;
-var bg5;
+var cursors, attackButton, pauseButton;
+var bg1, bg2, bg3, bg4, bg5, bg6;
 var bar, bar2, bar3;
-var previousX;
-var previousY;
-var collects;
-var itemsTaken;
-var idPlayer;
-var helper;
-var flagId, flagMove;
-var monsters;
+var previousX, previousY;
 var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup, barCollisionGroup, swordCollisionGroup;
 var isJumping, beInGround, yBeforeJump;
-var monster_speed = 5;
-var health;
-var music;
 var verticalBar1, verticalBar2, verticalBar3;
 
+var monster_speed = 5;
 var STATE_PLAY = 0;
 var STATE_PAUSED = 1;
 var STATE_GAMEOVER = 2;
@@ -49,7 +31,6 @@ State.Game.prototype = {
         rotate = 0.05;
         previousX = 0;
         previousY = 0;
-        flagMove = false;
         isGameRotate = false;
         contFrameGif = 0;
     },
@@ -87,12 +68,13 @@ State.Game.prototype = {
         swordCollisionGroup = this.game.physics.p2.createCollisionGroup();
 
         //bg
-        bg4 = this.game.add.tileSprite(1700, 1950, 3600, 1200, 'bg4');
-        bg4.tileScale.setTo(4, 4);
-        bg1 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg1');
-        bg2 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg2');
-        bg3 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg3');
-        this.game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
+        bg1 = this.game.add.tileSprite(0, 700, 3000, 720, 'bg1');
+        bg1.tileScale.setTo(1, 1.8);
+        bg2 = this.game.add.tileSprite(0, 970, 3000, 540, 'bg2');
+        bg3 = this.game.add.tileSprite(0, 970, 3000, 540, 'bg3');
+        bg6 = this.game.add.tileSprite(2700, 0, 2464, 1000, 'bg6');
+        bg6.tileScale.setTo(2, 2);
+        bg4 = this.game.add.tileSprite(2560, 970, 3000, 540, 'bg4');
         
         this.putVerticalBar();
 
@@ -131,7 +113,6 @@ State.Game.prototype = {
         player.animations.add(Config.game.player.anim.walk.key, Config.game.player.anim.walk.frames, Config.game.player.anim.walk.speed, Config.game.player.anim.walk.loop);
         player.animations.add(Config.game.player.anim.jump.key, Config.game.player.anim.jump.frames, Config.game.player.anim.jump.speed, Config.game.player.anim.jump.loop);
         player.animations.add(Config.game.player.anim.attack.key, Config.game.player.anim.attack.frames, Config.game.player.anim.attack.speed, Config.game.player.anim.attack.loop);
-        
         
         //this.playerCollider.reset(3040, 342);
 
@@ -196,6 +177,7 @@ State.Game.prototype = {
         layer.debug = true;
 
         layer.resizeWorld();
+        layer.alpha = 2;
 
         cursors = this.game.input.keyboard.createCursorKeys();
         attackButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -317,7 +299,16 @@ State.Game.prototype = {
 		 monsters.removeAll();
 		 collects.removeAll();
 		 obstacles.removeAll();
-		 
+
+		 bg1.y = Config.game.gameRotate.bg1y;
+		 bg2.tilePosition.x -= Config.game.gameRotate.bg2x;
+		 bg2.y = Config.game.gameRotate.bg2y;
+		 bg3.tilePosition.x -= Config.game.gameRotate.bg3x;
+		 bg3.y = Config.game.gameRotate.bg3y;
+		 bg4.x = Config.game.gameRotate.bg4x;
+		 bg4.y = Config.game.gameRotate.bg4y;
+
+
 		 layer.destroy();
 		 this.playerCollider.body.clearCollision();
 		 
@@ -384,7 +375,6 @@ State.Game.prototype = {
         //DEBUG
 //		this.game.debug.spriteInfo(player, 32, 32);
 		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
-//		this.game.debug.text( " + " + contFrameGif , 100, 380 );
     },
 
     //collect item (diamond and key)
@@ -397,11 +387,15 @@ State.Game.prototype = {
             console.log(varPlayer.data.id, collect.data.id);
             collect.sprite.kill();
             itemsTaken++;
-
             if (itemsTaken > 0) {
                 var fixedItem = collect.sprite.reset(0, 0, 1);
                 fixedItem.fixedToCamera = true;
-                fixedItem.cameraOffset.setTo(856 + (24 * itemsTaken), 20);
+                if(varPlayer.sprite.name == 'key' || collect.sprite.name == 'key'){
+                	fixedItem.cameraOffset.setTo(856, 20);
+                	itemsTaken--;
+                }else {
+                	fixedItem.cameraOffset.setTo(856 + (24 * itemsTaken), 20);
+                }
                 flagId = true;
             }
         }
@@ -816,7 +810,7 @@ State.Game.prototype = {
         collects = this.game.add.group();
 
         //Collect Items 1
-        var collect = collects.create(1657, 3260, 'blue');
+        var collect = collects.create(1657, 1160, 'blue');
 		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
@@ -824,7 +818,7 @@ State.Game.prototype = {
         collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
 
         //Collect Items 2
-        var collect = collects.create(3239, 2345, 'pink');
+        var collect = collects.create(3239, 245, 'pink');
 		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
@@ -832,14 +826,15 @@ State.Game.prototype = {
         collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
 
         //Collect Items 3
-        var collect = collects.create(200, 3500, 'red');
+        var collect = collects.create(200, 1400, 'red');
 		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
         collect.body.setCollisionGroup(collectCollisionGroup);
         collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
 
-        var collect = collects.create(300, 3500, 'key');
+        var collect = collects.create(300, 1400, 'key');
+        collect.name = 'key';
 		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
@@ -883,5 +878,12 @@ State.Game.prototype = {
         }, 4000).yoyo().loop().start();
         verticalBar3.body.setCollisionGroup(barCollisionGroup);
         verticalBar3.body.collides([barCollisionGroup, playerCollisionGroup]);
-    }
+    },
+    putTransparentWall: function () {
+    	transparentWall = this.game.add.sprite(0, 800, 'transparentwall');
+        this.game.physics.p2.enable(transparentWall, true);
+        transparentWall.body.kinematic = true;
+        transparentWall.body.setCollisionGroup(barCollisionGroup);
+        transparentWall.body.collides([barCollisionGroup, playerCollisionGroup]);
+	}
 };

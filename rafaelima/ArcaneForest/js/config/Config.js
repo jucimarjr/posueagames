@@ -84,6 +84,7 @@ Config.game = {
 	dirBg3: 'assets/images/BgForest03_3000-540.png',
 	dirBg4: 'assets/images/BgCave01_3955-540.png',
 	dirBg5: 'assets/images/Glow_3905-540.png',
+	dirBg6: 'assets/images/bg_cave01-part2_2364-540.png',
 	x: 0,
 	y: 0,
 	tilemap:{
@@ -278,8 +279,21 @@ Config.game = {
 	barRotate:{
 		x: 1793, 
 		y: 500
+	},
+	transparentwall:{
+		dir: 'assets/images/transparentwall_10-540.png',
+		x: 0, 
+		y: 800
+	},
+	gameRotate:{
+		bg1y: 0,
+		bg2x: 100,
+		bg2y: 0,
+		bg3x: 100,
+		bg3y: 0,
+		bg4x: 180,
+		bg4y: 0
 	}
-
 };
 
 //Menu
