@@ -16,7 +16,9 @@ var PlayerConsts = {
 
 var HeartConsts = {
 	delayToNextWaypoint: 1000.0, // milliseconds
-	flightSpeed: 2.5 * PhysicsConsts.pixelsToUnit
+	flightSpeed: 2.5 * PhysicsConsts.pixelsToUnit,
+	attackDistance: 1.3 * PhysicsConsts.pixelsToUnit,
+	pursuitVelocity: PhysicsConsts.pixelsToUnit * 0.02
 };
 
 var JoystickConsts = {
@@ -91,5 +93,9 @@ var Utils = {
 			if (typeof(callback) === 'function')
                 callback();
 		});
-    }
+    },
+	
+	clearArray: function(array){
+		array.splice(0, array.length + 1);
+	}
 };

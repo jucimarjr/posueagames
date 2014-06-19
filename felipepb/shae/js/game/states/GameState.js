@@ -1,5 +1,4 @@
 Game.GameState = function () {
-
     this.map;
     this.layer;
     this.keyGroup;
@@ -23,8 +22,8 @@ Game.GameState.prototype = {
         this.createTileMap();
         this.createKey();
         this.createGate();
+		this.createPlayer();
         this.createHearts();
-        this.createPlayer();
     },
 
     setupPhysicsSystem: function () {
@@ -61,8 +60,9 @@ Game.GameState.prototype = {
 	
 	createHearts: function () {		
         var waypoints = this.map.collision.collision;
+		Utils.clearArray(this.hearts);
         for (var i = 0; i < waypoints.length; i++) {
-            var heart = new Game.HeartController(this.game, waypoints[i]);
+            var heart = new Game.HeartController(this.game, this.player, waypoints[i]);
             heart.create();
             this.hearts.push(heart);
         };
@@ -110,6 +110,12 @@ Game.GameState.prototype = {
         
         this.playerLightSprite.x = this.game.camera.x;
         this.playerLightSprite.y = this.game.camera.y;
+		
+		var hearts = this.hearts;
+		var heartsLength = hearts.length;
+		for (var i = 0; i < heartsLength; i++) {
+			hearts[i].update();
+		}
     },
 
     render: function () {
