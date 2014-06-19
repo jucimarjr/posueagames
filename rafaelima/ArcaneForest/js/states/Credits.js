@@ -10,9 +10,12 @@ State.Credits.prototype = {
 	},
 	create: function () {
 		"use strict";
-		var background = this.game.add.sprite(Config.credits.x, Config.credits.y, 'credits');
+		var background = this.game.add.sprite(Config.credits.x, Config.credits.y, 'bg_splash_load');
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
+		
+		this.game.add.sprite(0, 0, 'credits');
+		
 	},
 	update: function () {
 		"use strict";

@@ -133,6 +133,7 @@ Character.prototype = {
         	this.character.animations.stop();
         }
         this.character.frame = 4;
+        this.character.body.velocity.x = 0;
     },
 
     /**

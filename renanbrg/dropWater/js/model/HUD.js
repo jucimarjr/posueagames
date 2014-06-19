@@ -51,11 +51,12 @@ HUD.prototype = {
         this.lifeAsset.fixedToCamera = true;
         
         var styleForX = { font: "26px Helvetica", fill: "#ffffff" };
-        this.xLabel = game.add.text(70, 26, "x", styleForX);
+        this.xLabel = this.game.add.text(70, 26, "x", styleForX);
         this.xLabel.fixedToCamera = true;
         
         var styleForLife = { font: "40px Helvetica", fill: "#ffffff" };
-        this.lifeLabel = game.add.text(90, 22, this.lifeCounter, styleForLife);
+        this.lifeLabel = this.game.add.text(90, 22, this.lifeCounter,
+                styleForLife);
         this.lifeLabel.fixedToCamera = true;
 
         this.dropAttemps = this.game.add.sprite(Config.global.screen.width - 60,
@@ -83,6 +84,12 @@ HUD.prototype = {
                 [24, 23, 22, 21, 20, 19], 10, false);
         this.dropAttemps.animations.add('attempt0', [0], 10, false);
         this.dropAttemps.fixedToCamera = true;
+
+        this.game.time.advancedTiming = true;
+        var styleFPS = {font: '16px Arial', fill: '#ffffff'};
+        this.fpsText = this.game.add.text(this.game.camera.width / 2, 10, '',
+                styleFPS);
+        this.fpsText.fixedToCamera = true;
     },
     decreaseLife: function() {
     	this.lifeCounter--;
@@ -102,4 +109,9 @@ HUD.prototype = {
                     'Down');
         }
     },
+    updateFPS: function() {
+        if (this.game.time.fps !== 0) {
+            this.fpsText.setText('FPS: ' + this.game.time.fps);
+        }
+    }
 };

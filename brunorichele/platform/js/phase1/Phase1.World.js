@@ -15,11 +15,15 @@ Phase1.World = {
 		this.game.load.image('bgphase1', this.bgImage);
 		this.game.load.image('bgphase1-alpha', this.bgImageAlpha);
 		this.game.load.audio('bgmusic', this.bgAudio);
+		this.game.load.physics('physicsDataTraps', 'assets/phase1/map/traps.json');
+		this.game.load.physics('physicsDataRocks', 'assets/phase1/map/rocks.json');		
 	},
 	createBg : function(){
 		this.game.world.setBounds(0, 0, this.weith, this.height);
-		this.game.physics.startSystem(Phaser.Physics.NINJA);
-		
+		this.game.physics.startSystem(Phaser.Physics.P2JS);
+		this.game.physics.p2.gravity.y = 850;
+		this.game.physics.p2.restitution = 0;
+
 		this.background = this.game.add.tileSprite(this.x, this.y, this.weith, this.height, 'bgphase1');
 		
 		return this.background;	

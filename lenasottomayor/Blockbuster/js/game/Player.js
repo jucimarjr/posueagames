@@ -1,6 +1,6 @@
 
 
-Player = function(game, coins, layer1, powerlifes, powerstars, thorns) {
+Player = function(game, coins, layer1, powerlifes, powerstars, thorns, HUD) {
 
 	this.game = game;
 	this.coins = coins;
@@ -8,11 +8,13 @@ Player = function(game, coins, layer1, powerlifes, powerstars, thorns) {
 	this.powerlifes = powerlifes;
 	this.powerstars = powerstars;
 	this.thorns = thorns;
+	this.HUD = HUD;
 	this.gold = false;
+	this.lose = false;
+	this.loseInThorn = false;
 	this.life = 3;
 	this.spritePlayer = null;
 	this.cursors = null;
-	
 };
 
 Player.prototype = {
@@ -26,13 +28,15 @@ Player.prototype = {
 	    this.spritePlayer.animations.add('jump-gold', [14], 1, true);
 	    this.spritePlayer.animations.add('fall', [3], 1, true);
 	    this.spritePlayer.animations.add('fall-gold', [13], 1, true);
-	    this.spritePlayer.animations.add('dead',[8,9],1,false);
+	    this.spritePlayer.animations.add('loss-life',[8],1,false);
+	    this.spritePlayer.animations.add('dead',[9],1,false);
 		
-	    this.game.physics.enable(this.spritePlayer);
+	    this.game.physics.enable(this.spritePlayer, Phaser.Physics.ARCADE);
 	    this.spritePlayer.body.collideWorldBounds = true;
 		this.spritePlayer.anchor.setTo(Config.player.anchor.x, Config.player.anchor.y);
+		this.spritePlayer.dead = false;
 	    
-	    this.game.camera.follow(this.spritePlayer);
+		this.game.camera.follow(this.spritePlayer, Phaser.Camera.FOLLOW_PLATFORMER);
 
 	    this.cursors = this.game.input.keyboard.createCursorKeys();
 		this.jump = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -41,73 +45,108 @@ Player.prototype = {
 	update: function() {
 		"use strict";
 
-		this.game.physics.arcade.collide(this.spritePlayer, this.layer1.platform);
-		this.game.physics.arcade.collide(this.spritePlayer, this.layer1.thorn);
-
-    	this.game.physics.arcade.overlap(this.spritePlayer, this.coins.group, this.collectCoins, null, this);
-
-    	this.game.physics.arcade.overlap(this.spritePlayer, this.powerlifes.group, this.collectPowerLifes, null, this);
-
-    	this.game.physics.arcade.overlap(this.spritePlayer, this.powerstars.group, this.collectPowerStars, null, this);
-
 		this.spritePlayer.body.velocity.x = 0;
 
-	    if(this.cursors.left.isDown)
+		if(!this.lose) 
 	    {
-	    	this.spritePlayer.body.velocity.x = -Config.player.speed;
-	    	this.spritePlayer.scale.x = -1;
-	    	if(this.gold){
-		    	this.spritePlayer.animations.play('walk-gold');
-	    	} else {
-		    	this.spritePlayer.animations.play('walk');
-	    	}
-	    }
-	    else if(this.cursors.right.isDown)
-	    {
-	    	this.spritePlayer.body.velocity.x = Config.player.speed;
-	    	this.spritePlayer.scale.x = 1;
-	    	if(this.gold){
-		    	this.spritePlayer.animations.play('walk-gold');
-	    	} else {
-		    	this.spritePlayer.animations.play('walk');
-	    	}
-	    }
-	    else
-	    {
-	    	this.spritePlayer.animations.stop();
-	    	if(this.gold){
-	    		this.spritePlayer.frame = 10;
-	    	} else {
-	    		this.spritePlayer.frame = 0;
-	    	}
-	    }
-
-
-    	if(this.gold && (this.spritePlayer.body.velocity.y < 0)){
-	    	this.spritePlayer.animations.play('jump-gold');
-    	} else if (this.spritePlayer.body.velocity.y < 0){
-	    	this.spritePlayer.animations.play('jump');
-    	} else if(this.gold && (this.spritePlayer.body.velocity.y > 0)){
-	    	this.spritePlayer.animations.play('fall-gold');
-    	} else if (this.spritePlayer.body.velocity.y > 0){
-	    	this.spritePlayer.animations.play('fall');
-    	}
-	    //  Allow the player to jump if they are touching the ground.
-	    if (this.jump.isDown && this.spritePlayer.body.onFloor())
-	    {
-	        this.spritePlayer.body.velocity.y = -Config.player.jump;
-	    }
+			if(this.cursors.left.isDown)
+			{
+				this.spritePlayer.body.velocity.x = -Config.player.speed;
+				this.spritePlayer.scale.x = -1;
+				if(this.gold){
+					this.spritePlayer.animations.play('walk-gold');
+				} else {
+					this.spritePlayer.animations.play('walk');
+				}
+			}
+			else if(this.cursors.right.isDown)
+			{
+				this.spritePlayer.body.velocity.x = Config.player.speed;
+				this.spritePlayer.scale.x = 1;
+				if(this.gold){
+					this.spritePlayer.animations.play('walk-gold');
+				} else {
+					this.spritePlayer.animations.play('walk');
+				}
+			}
+			else  
+			{
+				this.spritePlayer.animations.stop();
+				if(this.gold){
+					this.spritePlayer.frame = 10;
+				} else {
+					this.spritePlayer.frame = 0;
+				}
+			}
+	
+			if(this.gold && (this.spritePlayer.body.velocity.y < 0)){
+				this.spritePlayer.animations.play('jump-gold');
+			} else if (this.spritePlayer.body.velocity.y < 0){
+				this.spritePlayer.animations.play('jump');
+			} else if(this.gold && (this.spritePlayer.body.velocity.y > 0)){
+				this.spritePlayer.animations.play('fall-gold');
+			} else if (this.spritePlayer.body.velocity.y > 0){
+				this.spritePlayer.animations.play('fall');
+			}
+	  
+			//  Allow the player to jump if they are touching the ground.
+			if (this.jump.isDown && this.spritePlayer.body.onFloor())
+			{
+				this.spritePlayer.body.velocity.y = -Config.player.jump;
+			}
+		}
 	},
 	
-	collectCoins: function(spritePlayer, coins) {
-		coins.kill();
+	goldVersion: function (){
+		this.gold = true;
+		this.spritePlayer.alpha= 0;
+		
+		var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 300, true);
+		safetyTween.onComplete.add(function(){this.gold = false;},this);
 	},
 	
-	collectPowerLifes: function(spritePlayer, powerlifes) {
-		powerlifes.kill();
+	die: function (enemy){
+		if(this.HUD.lifes >= 1 && enemy.alive){
+			this.lose = true;
+			this.spritePlayer.animations.play('loss-life');
+			this.spritePlayer.alpha= 0;
+			
+			var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 20, true);
+			safetyTween.onComplete.add(function(){this.lose = false;},this);
+			
+			this.HUD.updateLife(-1);
+		}
+		
+		if(this.HUD.lifes == 0 && this.spritePlayer.alive) {
+			this.spritePlayer.alive = false;
+			this.spritePlayer.animations.play('dead');
+			this.spritePlayer.alpha= 0;
+			
+			var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 20, true);
+			safetyTween.onComplete.add(function(){this.game.state.start('GameOver');},this);
+		}
 	},
 	
-	collectPowerStars: function(spritePlayer, powerstars) {
-		powerstars.kill();
+	dieInThorn: function (){
+		if(this.HUD.lifes >= 1){
+			this.loseInThorn = true;
+			this.spritePlayer.animations.play('loss-life');
+			this.spritePlayer.alpha= 0;
+			
+			var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 20, true);
+			safetyTween.onComplete.add(function(){this.loseInThorn = false;},this);
+			
+			this.HUD.updateLife(-1);
+		}
+		
+		if(this.HUD.lifes == 0 && this.spritePlayer.alive) {
+			this.lose = true;
+			this.spritePlayer.alive = false;
+			this.spritePlayer.animations.play('dead');
+			this.spritePlayer.alpha = 0;
+			
+			var safetyTween = game.add.tween(this.spritePlayer).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 20, true);
+			safetyTween.onComplete.add(function(){this.game.state.start('GameOver');},this);
+		}
 	}
 };

@@ -14,6 +14,9 @@ var Config = {
 					game.scale.refresh();
 				}
 			}
+		},
+		key: {
+			nextScreen: Phaser.Keyboard.ENTER
 		}
 	}
 };
@@ -30,6 +33,15 @@ Config.ludusSplash = {
 //SponsorSplash
 Config.sponsorSplash = {
 	dir: 'assets/images/SponsorSplash_960-600.png',
+	x: 0,
+	y: 0,
+	millis: 2000,
+	nextState: 4000
+};
+
+//Story
+Config.story = {
+	dir: 'assets/images/Story_960-600.png',
 	x: 0,
 	y: 0,
 	millis: 2000,
@@ -89,10 +101,6 @@ Config.menu = {
 			x: 0.5,
 			y: 0.5
 		}
-	},
-	textStyle: {
-		font: '25px Ms Sans Serif',
-		fill: '#ffffff'
 	}
 };
 
@@ -148,10 +156,14 @@ Config.tilemap = {
 	}
 };
 
-//Level
+//Level 1
 Config.level1 = {
 	x: 0,
 	y: 0,
+	coins: 0,
+	life: 3,
+	score: 0,
+	text: 'Level 1-1',
 	worldBounds: {
 		xi: 0,
 		yi: 0,
@@ -160,16 +172,46 @@ Config.level1 = {
 	}
 };
 
+//Fonts
+Config.fonts = {
+	coins: {
+		dir: 'assets/fonts/font_gray.fnt',
+		image: 'assets/fonts/font_gray.png'
+	},
+	life: {
+		dir: 'assets/fonts/font_white.fnt',
+		image: 'assets/fonts/font_white.png'
+	},
+	score: {
+		dir: 'assets/fonts/font_yellow.fnt',
+		image: 'assets/fonts/font_yellow.png'
+	}
+};
+
+//Scores
+Config.scores = {
+	powerlife: 5,
+	powerstar: 10,
+	coin: 2,
+	enemy: 25
+};
+
+//Icons
+Config.icon = {
+	coin: 'assets/images/coinscore_25-25.png',
+	life: 'assets/images/lifescore_48-27.png'
+};
+
 //Player
 Config.player = {
 	dir: 'assets/spritesheets/Oscar_spritesheet_900-95-18.png',
-	jump: 550,
+	jump: 575,
 	speed: 175,
 	height: 95,
 	width: 50,
 	anchor: {
-		x: .5,
-		y: .5
+		x: 0.5,
+		y: 0.5
 	},
 	position: {
 		x: 50,
@@ -185,11 +227,19 @@ Config.enemy = {
 		width: 61,
 		frames: 5,
 		name: 'Cruella',
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		},
 		walk: {
+			x: 50,
+			y: 0,
 			gid: 67,
 			frame: 0
 		},
 		jump: {
+			x: 0,
+			y: 200,
 			gid: 68,
 			frame: 1
 		}
@@ -200,11 +250,18 @@ Config.enemy = {
 		width: 59,
 		frames: 8,
 		name: 'Freddy',
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		},
 		walk: {
+			x: 100,
+			y: 0,
 			gid: 72,
 			frame: 0
 		},
 		jump: {
+			y:350,
 			gid: 75,
 			frame: 3
 		}
@@ -215,11 +272,19 @@ Config.enemy = {
 		width: 54,
 		frames: 8,
 		name: 'Hannibal',
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		},
 		walk: {
+			x: 100,
+			y: 0,
 			gid: 80,
 			frame: 0
 		},
 		jump: {
+			x: 0,
+			y: 300,
 			gid: 83,
 			frame: 3
 		}
@@ -230,11 +295,19 @@ Config.enemy = {
 		width: 50,
 		frames: 8,
 		name: 'Jason',
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		},
 		walk: {
+			x: 100,
+			y: 0,
 			gid: 88,
 			frame: 0
 		},
 		jump: {
+			x: 0,
+			y:400,
 			gid: 91,
 			frame: 3
 		}
@@ -245,11 +318,19 @@ Config.enemy = {
 		width: 56,
 		frames: 8,
 		name: 'Joker',
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		},
 		walk: {
+			x: 100,
+			y: 0,
 			gid: 96,
 			frame: 0
 		},
 		jump: {
+			x: 0,
+			y: 450,
 			gid: 99,
 			frame: 3
 		}
@@ -260,21 +341,18 @@ Config.enemy = {
 		width: 150,
 		frames: 10,
 		name: 'Vader',
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		},
+		walk: {
+			x: 80,
+			y: 0,
+			gid: 96,
+			frame: 0
+		},
 		gid: 104,
 		frame: 0
-	},
-	dir: 'assets/images/regularenemy_95-55.png',
-	gravity: 800,
-	speed: 250,
-	height: 95,
-	width: 55,
-	anchor: {
-		x: 0.5,
-		y: 0.5
-	},
-	position: {
-		x: 321,
-		y: 272
 	}	
 };
 
@@ -290,4 +368,18 @@ Config.credits = {
 	dir: 'assets/images/Credits_960-600.png',
 	x: 0,
 	y: 0
+};
+
+//Game Over
+Config.gameOver = {
+	dir: 'assets/images/GameOver_960-600.png',
+	x: 0,
+	y: 0	
+};
+
+//Game Win
+Config.gameWin = {
+	dir: 'assets/images/GameWin_960-600.png',
+	x: 0,
+	y: 0	
 };

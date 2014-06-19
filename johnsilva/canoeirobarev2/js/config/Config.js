@@ -54,33 +54,33 @@ Config.menu = {
 	x: 0,
 	y: 0,
 	buttonPlay: {
-		dir: 'assets/spritesheets/ButtonPlay_600-95.png',
+		dir: 'assets/spritesheets/buttons/Play_350-120.png',
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.4,
-		width: 150,
-		height: 95,
+		width: 350,
+		height: 120,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonHowToPlay: {
-		dir: 'assets/spritesheets/ButtonHowToPlay_600-95.png',
+		dir: 'assets/spritesheets/buttons/HowToPlay_350-120.png',
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.6,
-		width: 150,
-		height: 95,
+		width: 350,
+		height: 120,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonCredits: {
-		dir: 'assets/spritesheets/ButtonCredits_600-95.png',
+		dir: 'assets/spritesheets/buttons/Creditis_350-120.png',
 		x: Config.global.screen.width * 0.5,
 		y: Config.global.screen.height * 0.8,
-		width: 150,
-		height: 95,
+		width: 350,
+		height: 120,
 		anchor: {
 			x: 0.5,
 			y: 0.5
@@ -104,6 +104,34 @@ Config.credits = {
 	dir: 'assets/images/Credits_960-600.png',
 	x: 0,
 	y: 0
+};
+
+Config.audio = {
+	menu: 'assets/audio/menu.mp3'
+};
+
+Config.player = {
+	velocity:{
+		run: 150,
+		jump: 550,
+		climbing: 100,
+		down: 4
+	}
+};
+
+Config.climbing = {
+	frames: {
+		min: 20,
+		max: 23
+	}
+};
+
+Config.levelId = {
+	level: 1
+};
+
+Config.finalPhase = {
+	lightRadius: 100
 };
 
 Config.levelConfig = {
@@ -138,10 +166,16 @@ Config.levelConfig = {
 		x: 0,
 		y: 0
 	},
+	cipo:{
+		id:0
+	},
+	flag:{
+		id:0
+	}
 };
 
 Config.update = {
-	updateLevel: function(x,y,branchesE,bushId,watersId,beesId,tubesId,thornsId,coinId,coinImage,ccpId){
+	updateLevel: function(x,y,branchesE,bushId,watersId,beesId,tubesId,thornsId,coinId,coinImage,ccpId,cipoId,flagId){
 		Config.levelConfig.player.posX = x;
 		Config.levelConfig.player.posY = y;
 		Config.levelConfig.branches.exists = branchesE;
@@ -153,20 +187,26 @@ Config.update = {
 		Config.levelConfig.coin.id = coinId;		
 		Config.levelConfig.coin.image = coinImage;
 		Config.levelConfig.checkPoint.id = ccpId;
+		Config.levelConfig.cipo.id = cipoId;
+		Config.levelConfig.flag.id = flagId;
 	}
 }
 
 Config.level = {
 	getLevel: function(level){
-		//x,y,branches-exists,bush-id,waters-id,bees-id,tubes-id,thorns-id,coin-id,coin-image
+		//x,y,branches-exists,bush-id,waters-id,bees-id,tubes-id,thorns-id,coin-id,coin-image,checkPoint-Id,cipo-id,win-id
 		if(level == 1)
-			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 18, 19, 'coin', 0);
+			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 18, 19, 'coin', 0,0,27);
+		else if(level == 2)
+		    Config.update.updateLevel(65, 600, true, 13, 0, 18, 0, 22, 23, 'coinIara', 31,0,35);
 		else if(level == 3)
-		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara', 33);
+		    Config.update.updateLevel(65, 600, true, 13, 18, 19, 23, 24, 25, 'coin', 33,0,37);
 		else if (level == 4)
-		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara', 0);
+		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara', 33,0,37);
 		else if (level == 5)
-		    Config.update.updateLevel(75, 2050, true, 13, 18, 19, 23, 24, 25, 'coinIara', 0);
+		    Config.update.updateLevel(75, 2050, true, 13, 18, 19, 23, 24, 25, 'coin', 33,0,37);
+		else if (level == 9)
+		    Config.update.updateLevel(2000, 2000, true, 0, 19, 0, 20, 0, 0, 'coin', 0, 18,0);
 		return Config.levelConfig;
 	}
 };

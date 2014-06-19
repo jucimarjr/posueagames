@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="72" height="30" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="assets_fase2" tilewidth="40" tileheight="40">
+  <image source="2_fase/assets_2.png" width="360" height="160"/>
+ </tileset>
+ <tileset firstgid="37" name="tabuas" tilewidth="40" tileheight="40">
+  <image source="2_fase/p1_480-40.png" width="480" height="40"/>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="72" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwzENAAAMA6CaqX+LdbBvHyQkAAAAAAAAAAC/6nkRagpp
+  </data>
+ </layer>
+</map>

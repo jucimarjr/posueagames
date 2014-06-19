@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="20" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
+  <image source="../tile_40-40-17.png" width="680" height="40"/>
+ </tileset>
+ <tileset firstgid="18" name="bees" tilewidth="40" tileheight="70">
+  <image source="../enemies/casacaba_40-70-4.png" width="160" height="70"/>
+ </tileset>
+ <tileset firstgid="22" name="thorns" tilewidth="80" tileheight="40">
+  <image source="../enemies/thorns_80-40.png" width="80" height="40"/>
+ </tileset>
+ <tileset firstgid="23" name="coins" tilewidth="40" tileheight="40">
+  <image source="../spritesheets/coins/coinsIara_40-40-8.png" width="320" height="40"/>
+ </tileset>
+ <tileset firstgid="31" name="check" tilewidth="20" tileheight="37">
+  <image source="../spritesheets/check_20-37-3.png" width="80" height="37"/>
+ </tileset>
+ <tileset firstgid="35" name="gamewin" tilewidth="40" tileheight="40">
+  <image source="../spritesheets/gamewin_40-40-8.png" width="320" height="40"/>
+ </tileset>
+ <tileset firstgid="43" name="branches" tilewidth="40" tileheight="40">
+  <image source="../level/branches_360-283.png" width="360" height="284"/>
+ </tileset>
+ <objectgroup name="thorns" width="30" height="20">
+  <object gid="22" x="640" y="280"/>
+  <object gid="22" x="720" y="280"/>
+  <object gid="22" x="960" y="280"/>
+  <object gid="22" x="1040" y="280"/>
+  <object gid="22" x="320" y="800"/>
+  <object gid="22" x="400" y="800"/>
+  <object gid="22" x="480" y="800"/>
+  <object gid="22" x="560" y="800"/>
+  <object gid="22" x="640" y="800"/>
+  <object gid="22" x="720" y="800"/>
+  <object gid="22" x="840" y="800"/>
+  <object gid="22" x="960" y="800"/>
+  <object gid="22" x="1080" y="800"/>
+  <object gid="22" x="1160" y="800"/>
+  <object gid="22" x="1160" y="640"/>
+ </objectgroup>
+ <layer name="Camada de Tiles 1" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzN1OdOwzAUhmEXQgptf9B7Ye9Ny957DwH3fwO8R8TCsk5SW60FR3qUSj7yZ7tOMmPM6B/IMYkpTGMGs5jDPBYwkaBHcpewjBWsYg3r2MAmFhP0SO42OuhiB7vYwz4OsJWgR3KPcIwTnOIM57jAJQ4T9EjuNW5wizvc4wGPeMJVgh7JreEVb3g3P9VEC194xkvRM1T0i2F8ej3++IfXY+fNjV4jypjMmXnqnpDxPDJ3zAzm3W2Y33MOyXWrWay/VdFTVXZuP7tXroxnPXpCcrV5/2Ou/a+1uxNy9tqdrZnwvZTdtZg1SNnz6+cM3fU0SsbH0XaeWq79DgyibI59H7T3vp/9auVmufvzabn++dhnO3INsbn+3XXFVNW3r+xOVFU94LfUN7bwNXk=
+  </data>
+ </layer>
+ <objectgroup name="bees" width="30" height="20">
+  <object gid="18" x="218" y="548"/>
+  <object gid="18" x="71" y="506"/>
+  <object gid="18" x="1176" y="260"/>
+  <object gid="18" x="424" y="424"/>
+  <object gid="18" x="320" y="330"/>
+  <object gid="18" x="1061" y="425"/>
+  <object gid="18" x="546" y="559"/>
+ </objectgroup>
+ <objectgroup name="coin" width="30" height="20">
+  <object gid="23" x="1118" y="216"/>
+ </objectgroup>
+ <objectgroup name="bushes" width="30" height="20">
+  <object gid="13" x="320" y="800"/>
+  <object gid="13" x="360" y="800"/>
+  <object gid="13" x="400" y="800"/>
+  <object gid="13" x="440" y="800"/>
+  <object gid="13" x="480" y="800"/>
+  <object gid="13" x="520" y="800"/>
+  <object gid="13" x="560" y="800"/>
+  <object gid="13" x="600" y="800"/>
+  <object gid="13" x="640" y="800"/>
+  <object gid="13" x="680" y="800"/>
+  <object gid="13" x="720" y="800"/>
+  <object gid="13" x="760" y="800"/>
+  <object gid="13" x="840" y="800"/>
+  <object gid="13" x="880" y="800"/>
+  <object gid="13" x="960" y="800"/>
+  <object gid="13" x="1000" y="800"/>
+  <object gid="13" x="1080" y="800"/>
+  <object gid="13" x="1120" y="800"/>
+  <object gid="13" x="1160" y="800"/>
+  <object gid="13" x="360" y="600"/>
+  <object gid="13" x="400" y="600"/>
+  <object gid="13" x="640" y="280"/>
+  <object gid="13" x="680" y="280"/>
+  <object gid="13" x="720" y="280"/>
+  <object gid="13" x="760" y="280"/>
+  <object gid="13" x="960" y="280"/>
+  <object gid="13" x="1000" y="280"/>
+  <object gid="13" x="1040" y="280"/>
+  <object gid="13" x="1080" y="280"/>
+  <object gid="13" x="160" y="520"/>
+  <object gid="13" x="200" y="520"/>
+  <object gid="13" x="1160" y="240"/>
+  <object gid="13" x="1080" y="640"/>
+ </objectgroup>
+ <objectgroup name="checkPoint" width="30" height="20">
+  <object gid="31" x="453" y="278"/>
+ </objectgroup>
+ <objectgroup name="flag" width="30" height="20">
+  <object gid="35" x="680" y="480"/>
+ </objectgroup>
+</map>
