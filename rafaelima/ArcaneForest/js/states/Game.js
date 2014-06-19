@@ -7,7 +7,7 @@ var layer, player, map, transparentWall, collects, health, music, rotate, monste
 var itemsTaken, flagId, isGameRotate, idPlayer, helper;
 var imgPlayerFall, contFrameGif;
 var cursors, attackButton, pauseButton;
-var bg1, bg2, bg3, bg4, bg5;
+var bg1, bg2, bg3, bg4, bg5, bg6;
 var bar, bar2, bar3;
 var previousX, previousY;
 var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup, barCollisionGroup, swordCollisionGroup;
@@ -68,12 +68,13 @@ State.Game.prototype = {
         swordCollisionGroup = this.game.physics.p2.createCollisionGroup();
 
         //bg
-        bg4 = this.game.add.tileSprite(1700, 1950, 3600, 1200, 'bg4');
-        bg4.tileScale.setTo(4, 4);
-        bg1 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg1');
-        bg2 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg2');
-        bg3 = this.game.add.tileSprite(0, 3060, 3000, 540, 'bg3');
-        this.game.add.tileSprite(2560, 3060, 3000, 540, 'bg4');
+        bg1 = this.game.add.tileSprite(0, 700, 3000, 720, 'bg1');
+        bg1.tileScale.setTo(1, 1.8);
+        bg2 = this.game.add.tileSprite(0, 970, 3000, 540, 'bg2');
+        bg3 = this.game.add.tileSprite(0, 970, 3000, 540, 'bg3');
+        bg6 = this.game.add.tileSprite(2700, 0, 2464, 1000, 'bg6');
+        bg6.tileScale.setTo(2, 2);
+        bg4 = this.game.add.tileSprite(2560, 970, 3000, 540, 'bg4');
         
         this.putVerticalBar();
 
@@ -113,7 +114,8 @@ State.Game.prototype = {
         player.animations.add(Config.game.player.anim.jump.key, Config.game.player.anim.jump.frames, Config.game.player.anim.jump.speed, Config.game.player.anim.jump.loop);
         player.animations.add(Config.game.player.anim.attack.key, Config.game.player.anim.attack.frames, Config.game.player.anim.attack.speed, Config.game.player.anim.attack.loop);
         
-        
+        //this.playerCollider.reset(3040, 342);
+
         this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
         this.playerCollider.body.fixedRotation = true;
@@ -176,6 +178,7 @@ State.Game.prototype = {
         layer.debug = true;
 
         layer.resizeWorld();
+        layer.alpha = 2;
 
         cursors = this.game.input.keyboard.createCursorKeys();
         attackButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -233,7 +236,7 @@ State.Game.prototype = {
 	            this.swordOffsetX = Config.game.player.collider.sword.offset.right.x;
 	            this.swordOffsetY = Config.game.player.collider.sword.offset.right.y;
 	            
-	        } else {
+    	        } else {
 	        	this.playerCollider.body.velocity.x = 0;
 	            //player.animations.play('turn');
 	            
@@ -246,7 +249,6 @@ State.Game.prototype = {
 	        
 	        this.doJump();
 	        this.doAttack();
-	        this.followPlayer();
 	        
 	        player.body.x = this.playerCollider.body.x + this.offsetX;
 	        player.body.y = this.playerCollider.body.y + this.offsetY;
@@ -298,7 +300,16 @@ State.Game.prototype = {
 		 monsters.removeAll();
 		 collects.removeAll();
 		 obstacles.removeAll();
-		 
+
+		 bg1.y = Config.game.gameRotate.bg1y;
+		 bg2.tilePosition.x -= Config.game.gameRotate.bg2x;
+		 bg2.y = Config.game.gameRotate.bg2y;
+		 bg3.tilePosition.x -= Config.game.gameRotate.bg3x;
+		 bg3.y = Config.game.gameRotate.bg3y;
+		 bg4.x = Config.game.gameRotate.bg4x;
+		 bg4.y = Config.game.gameRotate.bg4y;
+
+
 		 layer.destroy();
 		 this.playerCollider.body.clearCollision();
 		 
@@ -365,7 +376,6 @@ State.Game.prototype = {
         //DEBUG
 //		this.game.debug.spriteInfo(player, 32, 32);
 		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
-//		this.game.debug.text( " + " + contFrameGif , 100, 380 );
     },
 
     //collect item (diamond and key)
@@ -745,14 +755,37 @@ State.Game.prototype = {
 			monsters = this.game.add.group();
 
 			//monsters
-			var monster = monsters.create(940, 3440, 'monstercat');
+			var monster = monsters.create(1015, 1360, 'monstercat');
 			this.createMonster(monster);
 
-			monster =  monsters.create(1836, 3440, 'monstercat');
+			monster =  monsters.create(1950, 1397, 'monstercat');
 			this.createMonster(monster);
+            monster.scale.x = -1;
 
-			monster =  monsters.create(3068, 3440, 'bluemonster');
+            monster =  monsters.create(3950, 1152, 'greenmonster');
+            this.createMonster(monster);
+            monster.animations.add('walk', [0, 1, 2, 3, 4], 10, true);
+            monster.play('walk');
+
+            monster =  monsters.create(4250, 1152, 'greenmonster');
+            this.createMonster(monster);
+            monster.animations.add('walk', [0, 1, 2, 3, 4], 10, true);
+            monster.play('walk');
+
+            monster =  monsters.create(4550, 1252, 'greenmonster');
+            this.createMonster(monster);
+            monster.animations.add('walk', [0, 1, 2, 3, 4], 10, true);
+            monster.play('walk');
+
+			monster =  monsters.create(3178, 1368, 'bluemonster');
 			this.createMonster(monster);
+            monster.scale.x = -1;
+
+            monster =  monsters.create(4078, 441, 'bluemonster');
+            this.createMonster(monster);
+
+            monster =  monsters.create(4600, 511, 'bluemonster');
+            this.createMonster(monster);
 		},
 
 		createMonster: function (monster) {
@@ -766,6 +799,10 @@ State.Game.prototype = {
 			monster.body.collideWorldBounds = true;
 			monster.body.setCollisionGroup(monsterCollisionGroup);
 			monster.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
+            this.game.add.tween(monster.body.velocity)
+            .to({x: '+180'}, 2500)
+            .to({x: '-180'}, 2500)
+            .yoyo().loop().start();
 		},
 
     //Create Collects
@@ -806,17 +843,6 @@ State.Game.prototype = {
         collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
     },
 
-		followPlayer: function () {
-			monsters.forEach(function(mon){
-				if (player.body.x < mon.body.x) {
-					mon.body.moveLeft(monster_speed);
-					mon.scale.x = 1;
-				} else {
-					mon.body.moveRight(monster_speed);
-					mon.scale.x = -1;
-				}
-			},this, true);
-		},
     putVerticalBar: function () {
         //bar 1
     	verticalBar1 = this.game.add.sprite(3500, 200, 'verticalbar');

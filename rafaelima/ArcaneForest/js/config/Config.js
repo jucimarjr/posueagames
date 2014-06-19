@@ -84,6 +84,7 @@ Config.game = {
 	dirBg3: 'assets/images/BgForest03_3000-540.png',
 	dirBg4: 'assets/images/BgCave01_3955-540.png',
 	dirBg5: 'assets/images/Glow_3905-540.png',
+	dirBg6: 'assets/images/bg_cave01-part2_2364-540.png',
 	x: 0,
 	y: 0,
 	tilemap:{
@@ -157,7 +158,7 @@ Config.game = {
 		anim: {
 			stop: {
 				key: 'player_stop',
-				frames: [0],
+				frames: [6],
 				speed: 10,
 				loop: false
 			},
@@ -188,13 +189,13 @@ Config.game = {
 	},
 	monstercat:{
 		dir: 'assets/spritesheets/monstercat_40_18_3.png',
-		width: 38,
+		width: 40,
 		height: 18
 	},
 	bigbosjumping:{
 		dir: 'assets/spritesheets/bigbosjumping_104_214_4_.png',
-		width: 114,
-		height: 208
+		width: 104,
+		height: 214
 	},
 	bigbossattackcompose:{
 		dir: 'assets/spritesheets/bigbossattack_compose_270_208_6_.png',
@@ -208,7 +209,7 @@ Config.game = {
 	},
 	bluemonster:{
 		dir: 'assets/spritesheets/bluemonster_62_50_3.png',
-		width: 60,
+		width: 62,
 		height: 50
 	},
 	emmaattack:{
@@ -226,15 +227,15 @@ Config.game = {
 		width: 104,
 		height:104
 	},
-	greenmonsterleft:{
+	greenmonster:{
 		dir: 'assets/spritesheets/greenmonsterleft_76_62_5.png',
-		width: 74,
+		width: 76,
 		height:62
 	},
-	greenmonsterright:{
+	raybrother:{
 		dir: 'assets/spritesheets/ray_49_56_2.png',
-		width: 47,
-		height:52
+		width: 49,
+		height:56
 	},
 	blue:{
 		dir: 'assets/images/bluediamond_13-25.png'
@@ -283,8 +284,16 @@ Config.game = {
 		dir: 'assets/images/transparentwall_10-540.png',
 		x: 0, 
 		y: 800
+	},
+	gameRotate:{
+		bg1y: 0,
+		bg2x: 100,
+		bg2y: 0,
+		bg3x: 100,
+		bg3y: 0,
+		bg4x: 180,
+		bg4y: 0
 	}
-
 };
 
 //Menu
