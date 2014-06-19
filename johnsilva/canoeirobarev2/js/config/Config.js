@@ -127,7 +127,7 @@ Config.climbing = {
 };
 
 Config.levelId = {
-	level: 5
+	level: 1
 };
 
 Config.finalPhase = {
