@@ -9,6 +9,8 @@ Game.HeartController = function (game, player, waypoints) {
 	this.pursuitPositions = new Array();
 	this.backwards = false;
 	this.currentWaypointIndex;
+	
+	this.beatSprite;
 }; 
 
 Game.HeartController.prototype = {
@@ -41,13 +43,61 @@ Game.HeartController.prototype = {
 
         this.flyToNextWaypoint(HeartConsts.delayToNextWaypoint);
 	},
+	
+	playBeat: function () {
+		if (this.pursuitPositions.length != 0) {
+			return;
+		}
+		
+		var mySprite = this.sprite;
+        var beatSprite = this.beatSprite;
+
+		if (!beatSprite) {
+			beatSprite = this.game.add.sprite(mySprite.x, mySprite.y, 'main_sprite_atlas');
+			beatSprite.anchor.setTo(0.5, 0.5);
+			this.beatSprite = beatSprite;
+		} else {
+			beatSprite.revive();
+		}
+
+		beatSprite.frameName = mySprite.frameName;
+		beatSprite.x = mySprite.x;
+		beatSprite.y = mySprite.y;
+		beatSprite.alpha = 0.5;
+		
+		var beatAnimation = this.game.add.tween(beatSprite);
+        beatAnimation.to({ alpha: 1.0 }, 250, Phaser.Easing.Quadratic.Out, true, 0);
+
+		beatAnimation.onComplete.add(function () {
+			beatSprite.alpha = 0.5;
+			beatAnimation = this.game.add.tween(beatSprite);
+			beatAnimation.to({ alpha: 1.0 }, 250, Phaser.Easing.Quadratic.Out, true, 0);
+
+	        beatAnimation.onComplete.add(function () {
+	            beatSprite.alpha = 1.0;
+	            beatAnimation = this.game.add.tween(beatSprite);
+	            beatAnimation.to({ alpha: 0.0 }, 500, Phaser.Easing.Quadratic.Out, true, 0);
+
+				beatAnimation.onComplete.add(function () {
+					beatSprite.kill();
+				});
+	        });
+		});
+	},
 
 	update: function () {
 		var mySprite = this.sprite;
+		var beatSprite = this.beatSprite;
 		var player = this.player;
 		var playerSprite = player.sprite;
 		var playerDistance = Phaser.Point.distance(playerSprite, mySprite);
 		var pursuitPositions = this.pursuitPositions;
+
+		if (beatSprite) {
+			beatSprite.x = mySprite.x;
+            beatSprite.y = mySprite.y;
+			beatSprite.frameName = mySprite.frameName;
+		}
 
 		if (playerDistance <= HeartConsts.attackDistance) {
 			this.pauseTweens();
@@ -77,6 +127,12 @@ Game.HeartController.prototype = {
 			} else {
 				this.resumeTweens();
 			}
+		}
+		
+		if (playerSprite.overlap(mySprite) &&
+		    playerDistance <= HeartConsts.playerDeathDistance) {
+			console.log('die!');
+			player.playDeathAnimation();
 		}
 	},
 	

@@ -9,6 +9,7 @@ Game.GameState = function () {
     this.playerLightSprite;
 	
 	this.hearts = [];
+	this.heartBeatController;
 
     this.playerHasKey;
     this.stageComplete;
@@ -26,6 +27,7 @@ Game.GameState.prototype = {
 		this.createPlayer();
         this.createHearts();
 		this.createPlayerLight();
+		this.createHeartBeatController();
     },
 
     setupPhysicsSystem: function () {
@@ -72,6 +74,11 @@ Game.GameState.prototype = {
             heart.create();
             this.hearts.push(heart);
         };
+	},
+	
+	createHeartBeatController: function () {
+		this.heartBeatController = new Game.HeartBeatController(this.game);
+		this.heartBeatController.setHearts(this.hearts);
 	},
 	
 	createPlayerLight: function () {
@@ -128,6 +135,8 @@ Game.GameState.prototype = {
 		for (var i = 0; i < heartsLength; i++) {
 			hearts[i].update();
 		}
+		
+		this.heartBeatController.update();
     },
 
     render: function () {
