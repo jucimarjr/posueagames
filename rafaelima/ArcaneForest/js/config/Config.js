@@ -105,7 +105,7 @@ Config.game = {
 		items: [],
 		width: 32,
 		height: 48,
-		x: 60,
+		x: 3500,
 		y: 1393,
 		xRotate: 2346,
 		yRotate: 385,
@@ -113,7 +113,7 @@ Config.game = {
 		sword:{
 			key: 'emmasword_spritesheet',
 			dir: Config.spriteSheets + 'emma_sword_115_113_9.png',
-			width: 112,
+			width: 115,
 			height: 113,
 		},
 		nosword:{
@@ -165,13 +165,13 @@ Config.game = {
 			},
 			walk: {
 				key: 'player_walk',
-				frames: [0, 1, 2, 3, 4],
+				frames: [0, 1, 2, 3, 4, 5],
 				speed: 10,
 				loop: true
 			},
 			jump: {
 				key: 'player_jump',
-				frames: [4, 5, 6],
+				frames: [4, 5],
 				speed: 10,
 				loop: false
 			},

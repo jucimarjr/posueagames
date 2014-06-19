@@ -99,6 +99,7 @@ State.Game.prototype = {
         // player collider
         this.playerCollider = this.game.add.sprite(Config.game.player.x, Config.game.player.y, Config.game.player.collider.emma.key);
         this.playerCollider.anchor.setTo(Config.game.player.anchor.x, Config.game.player.anchor.y);
+        this.playerCollider.name = "player";
         
         this.offsetX = Config.game.player.collider.emma.offset.right.x;
         this.offsetY = Config.game.player.collider.emma.offset.right.y;
@@ -114,7 +115,7 @@ State.Game.prototype = {
         player.animations.add(Config.game.player.anim.jump.key, Config.game.player.anim.jump.frames, Config.game.player.anim.jump.speed, Config.game.player.anim.jump.loop);
         player.animations.add(Config.game.player.anim.attack.key, Config.game.player.anim.attack.frames, Config.game.player.anim.attack.speed, Config.game.player.anim.attack.loop);
         
-        //this.playerCollider.reset(3040, 342);
+        this.playerCollider.reset(3040, 342);
 
         this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
@@ -128,7 +129,7 @@ State.Game.prototype = {
 //        player.animations.add('turn', [4], 20, true);
 //        player.animations.add('left', [4, 3, 2, 1, 0], 10, true);
 //        player.smoothed = false;
-        player.health = 3;
+        //player.health = 3;
         this.game.physics.p2.enable(player, false);
         //this.game.camera.follow(player);
 //        player.body.collideWorldBounds = true;
@@ -196,6 +197,8 @@ State.Game.prototype = {
 
     update: function () {
         "use strict";
+        
+        //console.log("--"+ this.playerCollider.body.x +","+ this.playerCollider.body.y);
         
         if(this.gameState == STATE_PLAY) {
         	
@@ -276,7 +279,7 @@ State.Game.prototype = {
 	        	this.swordCollider.body.velocity.y = 0;
 	        }
 
-            if (game.time.now - timeCheck > 4000 && monster != null && monster.frame === 0 && isGameRotate)
+            if (game.time.now - timeCheck > 4000 && monster != null && monster.frame === 0 && isGameRotate && monster.exists===true)
             {
                 this.bossShoot();
                 this.timeCheck();
@@ -349,6 +352,7 @@ State.Game.prototype = {
         this.playerCollider.body.collides(tileCollisionGroup);
         this.playerCollider.body.collides(barCollisionGroup);
         this.playerCollider.body.collides(collectCollisionGroup, this.collectItems, this);
+        this.playerCollider.body.collides(monsterCollisionGroup, this.hitMonsters, this);
         
 		 layer.resizeWorld();
 		 layer.alpha = 2;
@@ -542,7 +546,15 @@ State.Game.prototype = {
 
     },
 
-    hitMonsters: function () {
+    hitMonsters: function (body1, body2) {
+    	
+    	var monster;
+    	if(body1.sprite.name == "monster") {
+    		monster = body1.sprite;
+    	}
+    	else {
+    		monster = body2.sprite;
+    	}
     	
     	var timeNow = new Date().getTime();
     	
@@ -553,6 +565,19 @@ State.Game.prototype = {
 	    	this.updateHealth();
 	    	
 	    	this.timeImune = timeNow + Config.game.player.damageCooldown;
+	    	
+	    	// move player away
+	    	if(this.playerCollider.body.x < monster.body.x) {
+	    		this.playerCollider.body.force.x = -2000;
+	    		//this.playerCollider.body.moveLeft(2000);
+	    		//this.playerCollider.body.moveForward(2000);
+	    	}
+	    	else {
+	    		this.playerCollider.body.force.x = 2000;
+//	    		this.playerCollider.body.moveUp(200);
+//	    		this.playerCollider.body.moveRight(2000);
+	    		//this.playerCollider.body.moveBackward(2000);
+	    	}
 	    	
 	    	if(this.playerLifes == 0) {
 	    		
@@ -810,7 +835,7 @@ State.Game.prototype = {
         },
 
         bossShoot: function () {
-            var fire = monsters.create(720, 340, 'bigbossattackfire');
+            var fire = monsters.create(720, 350, 'bigbossattackfire');
             fire.name = 'monster'; 
             fire.animations.add('walk', [0, 1, 2, 3], 10, true);
             fire.play('walk');
@@ -819,7 +844,17 @@ State.Game.prototype = {
             fire.body.kinematic = true;
             fire.body.collideWorldBounds = true;
             fire.body.setCollisionGroup(monsterCollisionGroup);
-            fire.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
+            fire.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup], this.hitLight, this);
             fire.body.moveRight(300);
         },
+
+        hitLight: function (body1, body2) {
+        
+            if(body1.sprite.name == 'monster') {
+                body1.sprite.kill();
+            }
+            else if(body2.sprite.name == 'monster') {
+                body2.sprite.kill();
+            }
+        }
 };
