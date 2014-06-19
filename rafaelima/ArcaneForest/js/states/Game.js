@@ -180,7 +180,7 @@ State.Game.prototype = {
         "use strict";
         
         //console.log("--"+ this.playerCollider.body.x +","+ this.playerCollider.body.y);
-        this.moveMonster(monsters, 320);
+        this.moveMonster(monsters, 380);
         this.moveBarVertical(verticalBar1, 200);
 //        monsters
         if(this.gameState == STATE_PLAY) {
@@ -284,16 +284,16 @@ State.Game.prototype = {
 	moveMonster: function (obj, velocity) {
 		"use strict";
 		timer++;
-		if(timer >= 51 ){
+		if(timer >= 26 ){
 			obj.forEach(function(objIntern){
-				objIntern.body.velocity.x = 180;
-				objIntern.scale.x = 1;
+				objIntern.body.velocity.x = velocity;
+				objIntern.scale.x = -1;
 			});
-			if(timer >= 100){timer = 0;}
+			if(timer >= 50){timer = 0;}
 		}else {
 			obj.forEach(function(objIntern){
-				objIntern.body.velocity.x = -180;
-				objIntern.scale.x = -1;
+				objIntern.body.velocity.x = -velocity;
+				objIntern.scale.x = 1;
 			});
 		}
 	},
@@ -402,8 +402,8 @@ State.Game.prototype = {
     render: function () {
         "use strict";
         //DEBUG
-		this.game.debug.text(timerBV, 32, 32);
-//		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
+//		this.game.debug.text(timerBV, 32, 32);
+		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
     },
 
     //collect item (diamond and key)
@@ -730,10 +730,10 @@ State.Game.prototype = {
 			monsters = this.game.add.group();
 
 			//monsters
-			var monster = monsters.create(1015, 1360, 'monstercat');
+			var monster = monsters.create(1090, 1359, 'monstercat');
 			this.createMonster(monster);
 
-			monster =  monsters.create(1950, 1397, 'monstercat');
+			monster =  monsters.create(2050, 1395, 'monstercat');
 			this.createMonster(monster);
 //            monster.scale.x = -1;
 
@@ -787,44 +787,21 @@ State.Game.prototype = {
 
         //Collect Items 1
         var collect = collects.create(1657, 1160, 'blue');
-<<<<<<< HEAD
-        this.createCollect(collect);
-
-        //Collect Items 2
-        var collect = collects.create(3239, 245, 'pink');
-        this.createCollect(collect);
-
-        //Collect Items 3
-        var collect = collects.create(200, 1400, 'red');
-        this.createCollect(collect);
-=======
         collect.name = 'blue';
-		this.game.physics.p2.enable(collect, false);
-        collect.body.fixedRotation = true; //no circle movement 
-        collect.body.kinematic = true;
-        collect.body.setCollisionGroup(collectCollisionGroup);
-        collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
+        this.createCollect(collect);
 
         //Collect Items 2
         var collect = collects.create(3239, 245, 'pink');
         collect.name = 'pink';
-		this.game.physics.p2.enable(collect, false);
-        collect.body.fixedRotation = true; //no circle movement 
-        collect.body.kinematic = true;
-        collect.body.setCollisionGroup(collectCollisionGroup);
-        collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
+        this.createCollect(collect);
 
         //Collect Items 3
         var collect = collects.create(200, 1400, 'red');
         collect.name = 'red';
-		this.game.physics.p2.enable(collect, false);
-        collect.body.fixedRotation = true; //no circle movement 
-        collect.body.kinematic = true;
-        collect.body.setCollisionGroup(collectCollisionGroup);
-        collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
->>>>>>> 30cbe0779aee0a4f34ab762279a81474fd6289b9
+        this.createCollect(collect);
 
         var collect = collects.create(300, 1400, 'key');
+        collect.name = 'key';
         this.createCollect(collect);
     },
     
