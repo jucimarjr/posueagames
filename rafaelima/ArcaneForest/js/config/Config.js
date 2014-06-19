@@ -198,8 +198,8 @@ Config.game = {
 		width: 104,
 		height: 214
 	},
-	bigbossattackcompose:{
-		dir: 'assets/spritesheets/bigbossattack_compose_270_208_6_.png',
+	bigbossattack:{
+		dir: 'assets/spritesheets/bigbossattack_114_208_6_.png',
 		width: 270,
 		height: 208
 	},
