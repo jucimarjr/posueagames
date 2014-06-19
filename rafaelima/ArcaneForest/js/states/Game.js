@@ -3,7 +3,7 @@ State.Game = function(game) {
 	this.game = game;
 };
 
-var layer, player, map, transparentWall, collects, health, rotate, monster, monsters;
+var layer, player, map, transparentWall, collects, health, rotate, monster, monsters, timer, timerBV;
 var itemsTaken, flagId, isGameRotate, idPlayer, helper;
 var imgPlayerFall, contFrameGif;
 var cursors, attackButton, pauseButton;
@@ -33,6 +33,8 @@ State.Game.prototype = {
         previousY = 0;
         isGameRotate = false;
         contFrameGif = 0;
+        timer = 0;
+        timerBV = 0;
     },
     create: function () {
         "use strict";
@@ -178,7 +180,8 @@ State.Game.prototype = {
         "use strict";
         
         //console.log("--"+ this.playerCollider.body.x +","+ this.playerCollider.body.y);
-        
+        this.moveMonster(monsters, 320);
+        this.moveBarVertical(verticalBar1, 200);
 //        monsters
         if(this.gameState == STATE_PLAY) {
         	
@@ -279,21 +282,30 @@ State.Game.prototype = {
     },
 	
 	moveMonster: function (obj, velocity) {
-//		"use strict";
-//		obj.timer++;
-//		if(obj.timer >= 100 ){
-//			obj.forEach(function(objIntern){
-//				objIntern.body.velocity.x = 180;
-//				objIntern.scale.x = -1;
-//			});
-//			if(obj.timer >= 200){obj.timer = 0;}
-//		}else {
-//			obj.forEach(function(item){
-//				objIntern.body.velocity.x = -180;
-//				objIntern.scale.x = 1;
-//			}
-//			obj.body.moveRight(velocity);
-//		}
+		"use strict";
+		timer++;
+		if(timer >= 51 ){
+			obj.forEach(function(objIntern){
+				objIntern.body.velocity.x = 180;
+				objIntern.scale.x = 1;
+			});
+			if(timer >= 100){timer = 0;}
+		}else {
+			obj.forEach(function(objIntern){
+				objIntern.body.velocity.x = -180;
+				objIntern.scale.x = -1;
+			});
+		}
+	},
+	moveBarVertical: function (obj, velocity) {
+		"use strict";
+		timerBV++;
+		if(timerBV >= 77 ){
+			obj.body.velocity.y = -velocity;
+			if(timerBV >= 152){timerBV = 0;}
+		}else {
+			obj.body.velocity.y = velocity;
+		}
 	},
     
     gameRotate: function () {
@@ -390,8 +402,8 @@ State.Game.prototype = {
     render: function () {
         "use strict";
         //DEBUG
-//		this.game.debug.spriteInfo(player, 32, 32);
-		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
+		this.game.debug.text(timerBV, 32, 32);
+//		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
     },
 
     //collect item (diamond and key)
@@ -775,6 +787,17 @@ State.Game.prototype = {
 
         //Collect Items 1
         var collect = collects.create(1657, 1160, 'blue');
+<<<<<<< HEAD
+        this.createCollect(collect);
+
+        //Collect Items 2
+        var collect = collects.create(3239, 245, 'pink');
+        this.createCollect(collect);
+
+        //Collect Items 3
+        var collect = collects.create(200, 1400, 'red');
+        this.createCollect(collect);
+=======
         collect.name = 'blue';
 		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
@@ -799,48 +822,53 @@ State.Game.prototype = {
         collect.body.kinematic = true;
         collect.body.setCollisionGroup(collectCollisionGroup);
         collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
+>>>>>>> 30cbe0779aee0a4f34ab762279a81474fd6289b9
 
         var collect = collects.create(300, 1400, 'key');
-        collect.name = 'key';
+        this.createCollect(collect);
+    },
+    
+    createCollect: function(collect){
 		this.game.physics.p2.enable(collect, false);
         collect.body.fixedRotation = true; //no circle movement 
         collect.body.kinematic = true;
         collect.body.setCollisionGroup(collectCollisionGroup);
         collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
     },
+    
 
     putVerticalBar: function () {
         //bar 1
-    	verticalBar1 = this.game.add.sprite(3500, 200, 'verticalbar');
+    	verticalBar1 = this.game.add.sprite(3500, 91, 'verticalbar');
         this.game.physics.p2.enable(verticalBar1, false);
         verticalBar1.body.kinematic = true;
-        this.game.add.tween(verticalBar1.body.velocity).to({
-        	y: '+200'
-        }, 4000).to({
-            y: '-200'
-        }, 4000).yoyo().loop().start();
+//        this.game.add.tween(verticalBar1.body.velocity).to({
+//        	y: '+200'
+//        }, 4004).to({
+//            y: '-200'
+//        }, 4000).yoyo().loop().start();
         verticalBar1.body.setCollisionGroup(barCollisionGroup);
         verticalBar1.body.collides([barCollisionGroup, playerCollisionGroup]);
         
       //bar 1
-        verticalBar2 = this.game.add.sprite(3650, 200, 'verticalbar');
+        verticalBar2 = this.game.add.sprite(3650, 91, 'verticalbar');
         this.game.physics.p2.enable(verticalBar2, false);
         verticalBar2.body.kinematic = true;
         this.game.add.tween(verticalBar2.body.velocity).to({
             y: '+200'
-        }, 4000).to({
+        }, 4004).to({
             y: '-200'
         }, 4000).yoyo().loop().start();
         verticalBar2.body.setCollisionGroup(barCollisionGroup);
         verticalBar2.body.collides([barCollisionGroup, playerCollisionGroup]);
         
       //bar 1
-    	verticalBar3 = this.game.add.sprite(3800, 200, 'verticalbar');
+    	verticalBar3 = this.game.add.sprite(3800, 91, 'verticalbar');
         this.game.physics.p2.enable(verticalBar3, false);
         verticalBar3.body.kinematic = true;
         this.game.add.tween(verticalBar3.body.velocity).to({
         	y: '+200'
-        }, 4000).to({
+        }, 4003).to({
             y: '-200'
         }, 4000).yoyo().loop().start();
         verticalBar3.body.setCollisionGroup(barCollisionGroup);
