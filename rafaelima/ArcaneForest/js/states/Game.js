@@ -397,7 +397,6 @@ State.Game.prototype = {
     		this.imgPlayerFall.kill();
     		this.gameRotate();
     	}
-    		
     },
 
     render: function () {

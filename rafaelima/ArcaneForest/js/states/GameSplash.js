@@ -79,6 +79,17 @@ State.GameSplash.prototype = {
             this.game.load.spritesheet(name, name + ".png", 0, 0);
             Config.animationFall.fallGif[i] = name;
         }
+        
+      //gif ray help
+        for (var i = 8; i < 77; i++) {
+            var zeros = "";
+            if (i < 10){
+                zeros = "0";
+            }
+            var name = Config.story.rayHelp.dir + zeros + i;
+            this.game.load.spritesheet(name, name + ".png", 0, 0);
+            Config.story.rayHelp.ray[i-8] = name;
+        }
 		
 		//Credits
 		this.game.load.image('credits', Config.credits.dir);
