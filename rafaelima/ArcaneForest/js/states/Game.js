@@ -835,7 +835,7 @@ State.Game.prototype = {
         },
 
         bossShoot: function () {
-            var fire = monsters.create(720, 340, 'bigbossattackfire');
+            var fire = monsters.create(720, 350, 'bigbossattackfire');
             fire.name = 'monster'; 
             fire.animations.add('walk', [0, 1, 2, 3], 10, true);
             fire.play('walk');
