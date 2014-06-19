@@ -1,10 +1,8 @@
 Phase1.Trap = {
-	spearTrap : "assets/phase1/images/armadilha1_30-305-3.png",
 	greatSpearTrap : "assets/phase1/images/armadilha2_330-535.png",
 	fireTrap : "assets/phase1/images/armadilha3_360-390-6.png",
 	trapGroup : null,
 	init : function(){
-		this.game.load.spritesheet('spearTrap', this.spearTrap, 10, 305);
 		this.game.load.image('greatspeartrap', this.greatSpearTrap);
 		this.game.load.spritesheet('fireTrap', this.fireTrap, 60, 390);
 	},
@@ -14,21 +12,12 @@ Phase1.Trap = {
         this.createGreatSpear(1500, 0);
         this.createGreatSpear(1000, 550);
 		this.createGreatSpear(1800, 550);
-		
-		this.createSpear(900, 1350);
-		this.createSpear(1100, 1350);
 
 		this.createFire(1270, 1500);		
 		this.createFire(1470, 1500);
 		this.createFire(1670, 1500);
 		this.createFire(1870, 1500);
 	},
-	
-	createSpear : function(x, y){
-		this.spear = this.game.add.sprite(x, y, 'spearTrap');
-        this.spear.animations.add('impales', [0, 1, 2], 5, true);
-        this.spear.animations.play('impales');		
-	},	
     createGreatSpear : function (x, y){
         "use strict";
         var greatSpear = this.trapGroup.create(x, y, 'greatspeartrap');
