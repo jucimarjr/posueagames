@@ -13,7 +13,7 @@ function HeroOfRope(game) {
 	that.initX = 200;
 	that.initY = 1500;
 	that.numSegmentsRope = 19;
-	this.facingLeft = false;
+	that.facingLeft = false;
 
 	that.create = function() {
 		"use strict";

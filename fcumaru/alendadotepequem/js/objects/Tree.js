@@ -23,22 +23,28 @@ Tree.prototype = {
         // permite que a sprite tenha um corpo fisico
         this.game.physics.enable(this.tree, Phaser.Physics.ARCADE);
         this.tree.body.collideWorldBounds = true;
+        this.tree.anchor.setTo(0.5, 1);
+
     },
     update : function(layer) {
         "use strict";
         this.game.physics.arcade.collide(layer, this.tree);
         // Do nothing
     },
-    checkCollision : function(rope) {
+    checkCollision : function(rope, facingLeft) {
         if(this.checkOverlap(this.tree, rope)){
-            this.ropeCollision();
+            this.ropeCollision(facingLeft);
         }
     },
-    ropeCollision : function(){
+    ropeCollision : function(facingLeft){
         if(this.hasRope) return;
         console.log("rope collided");
         this.hasRope = true;
-        //TODO: start rope animation
+        var angle = -90;
+        if(facingLeft) angle *= -1;
+        this.game.add.tween(this.tree)
+            .to({angle: angle}, 2000, Phaser.Easing.Exponential.In)
+            .start();
     },
 
     checkOverlap : function(spriteA, spriteB) {
@@ -78,9 +84,9 @@ Trees.prototype = {
 
         tree.create();
     },
-    checkCollision : function(rope) {
+    checkCollision : function(rope, facingLeft) {
         for (var i = 0; i < this.values.length; i++) {
-            this.values[i].checkCollision(rope);
+            this.values[i].checkCollision(rope, facingLeft);
         }
     }
 };
