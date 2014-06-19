@@ -7,6 +7,12 @@ State.GamePlay = function (game) {
 State.GamePlay.prototype = {
 	preload: function () {
 		"use strict";
+		
+		this.jumpSound = game.add.audio('jumpSound');
+		this.coinSound = game.add.audio('coinSound');
+		this.hurtSound = game.add.audio('hurtSound');
+		this.powerupSound = game.add.audio('powerupSound');
+		
 		this.tilemap = new Tilemap(game);
 		this.level1 = new Level1(game);
 		this.layer1 = new Layer1(game, this.tilemap);
@@ -15,16 +21,9 @@ State.GamePlay.prototype = {
 		this.powerstars = new PowerStars(game, this.tilemap);
 		this.enemies = new Enemy(game, this.layer1, this.tilemap);
 		this.HUD =  new HUD(game, this.level1.lifes, this.level1.score, this.level1.coins);
-		this.player = new Player(game, this.coins, this.layer1, this.powerlifes, this.powerstars, this.thorns, this.HUD);
+		this.player = new Player(game, this.coins, this.layer1, this.powerlifes, this.powerstars, this.thorns, this.HUD, this.jumpSound);
 		
-		this.killJumps = 0;
 		this.enemyCollide = true;
-		//this.musicSound = game.add.audio('musicSound');
-		//this.musicSound.play('',0,0.2,true); 
-		this.jumpSound = game.add.audio('jumpSound');
-		this.coinSound = game.add.audio('coinSound');
-		this.hurtSound = game.add.audio('hurtSound');
-		this.powerupSound = game.add.audio('powerupSound');
 	},
 	create: function () {
 		"use strict";
@@ -46,9 +45,9 @@ State.GamePlay.prototype = {
 		this.HUD.update();
 		
 		if(!this.player.lose && this.enemyCollide) {
-			this.game.physics.arcade.collide(this.player.spritePlayer, this.coins.group, this.collectCoins, null, this);
-			this.game.physics.arcade.collide(this.player.spritePlayer, this.powerlifes.group, this.collectPowerLifes, null, this);
-			this.game.physics.arcade.collide(this.player.spritePlayer, this.powerstars.group, this.collectPowerStars, null, this);
+			this.game.physics.arcade.overlap(this.player.spritePlayer, this.coins.group, this.collectCoins, null, this);
+			this.game.physics.arcade.overlap(this.player.spritePlayer, this.powerlifes.group, this.collectPowerLifes, null, this);
+			this.game.physics.arcade.overlap(this.player.spritePlayer, this.powerstars.group, this.collectPowerStars, null, this);
 			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.cruellasWalker, this.collision, null, this);
 			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.cruellasJumper, this.collision, null, this);
 			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.freddysWalker, this.collision, null, this);
@@ -59,8 +58,25 @@ State.GamePlay.prototype = {
 			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.jasonsJumper, this.collision, null, this);
 			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.jokersWalker, this.collision, null, this);
 			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.jokersJumper, this.collision, null, this);
-			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.vaders, this.collisionVader, null, this);
+			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.vaders, this.collisionBoss, null, this);
 		}
+		
+		this.enemies.vaders.forEachAlive(
+			function (vader){
+
+				if (Phaser.Point.distance(vader, this.player.spritePlayer) < Config.enemy.vader.distancePlayer) {
+					this.game.physics.arcade.moveToObject(vader, this.player.spritePlayer, Config.enemy.vader.velocity);
+				} else {
+					vader.body.velocity.setTo(0, 0);
+				}
+				if (vader.body.x > this.player.spritePlayer.body.x) {
+					vader.scale.x = -1;
+				} else {
+					vader.scale.x = 1;
+				}
+				
+			}, this
+		);
 		
 		this.enemies.update();
 		this.player.update();
@@ -77,6 +93,7 @@ State.GamePlay.prototype = {
 	collectPowerLifes: function(spritePlayer, powerlifes) {
 		powerlifes.kill();
 		this.powerupSound.play();
+		
 		this.HUD.updateLife(1);
 		this.HUD.updateScore(Config.scores.powerlife);
 	},
@@ -93,6 +110,7 @@ State.GamePlay.prototype = {
 		if((player.body.y + player.body.height == enemy.body.y) && enemy.alive || this.player.gold) {
 			
 			if (!this.player.gold) {
+				this.jumpSound.play();
 				player.body.velocity.y = -Config.player.jump;
 			} else {
 				this.enemyCollide = false;
@@ -118,39 +136,41 @@ State.GamePlay.prototype = {
 		tween.onComplete.add(function() { enemy.kill(); this.enemyCollide = true; },this);
 	},
 	
-	collisionVader: function (player, enemy){
-		
-		if((player.body.y + player.body.height == enemy.body.y) && enemy.alive){
-			player.body.velocity.y = -Config.player.jump;
-			
-			if(this.killJumps === 3){
-				this.HUD.updateScore(Config.scores.enemy);
-				this.killEnemy(enemy);
-				this.killJumps = 0;
-			}else
-			{
-				enemy.animations.play('dead');
-				enemy.animations.play('dead');
-				enemy.animations.play('dead');
-			}
-			
-			this.killJumps++;
-			enemy.animations.play('walk');
-		}
-		else {
-			this.hurtSound.play();
-			this.player.die(enemy);
-		}
-	
-	},
-	
 	collisionThorn: function (player, thorn) {
 		if((player.body.y + player.body.height == thorn.worldY && !this.player.gold && !this.player.loseInThorn)) {
+			this.hurtSound.play();
 			this.player.dieInThorn();
 		}
+	},
+	
+	collisionBoss: function (player, boss) {
 		
-		if(!this.player.lose) {
-//			this.game.physics.arcade.collide(this.player.spritePlayer, this.layer1.thorn, this.collisionThorn, null, this);
+		if((player.body.y + player.body.height == boss.body.y) && boss.alive) {
+			this.jumpSound.play();
+			player.body.velocity.y = -Config.player.jump;
+			
+			this.enemyCollide = false;
+			
+			this.HUD.updateScore(Config.scores.enemy);
+			boss.hp--;
+			
+			if(boss.hp == 0 && boss.alive) {
+				boss.body.velocity.x = 0;
+				boss.body.velocity.y = 0;
+				boss.alive = false;
+				boss.animations.play('dead');
+				
+				setTimeout(function () {
+					this.game.state.start('GameWin');
+				}, Config.enemy.vader.timeDie);
+			} else {
+				boss.alpha = 0;
+				var tween = game.add.tween(boss).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 40, true);
+				tween.onComplete.add(function() { this.enemyCollide = true; },this);
+			}
+		} else {
+			this.hurtSound.play();
+			this.player.die(boss);
 		}
 	}
 };

@@ -69,6 +69,9 @@ State.GameSplash.prototype = {
 		//Game Over
 		this.game.load.image('game-over', Config.gameOver.dir);
 		
+		//Game Win
+		this.game.load.image('game-win', Config.gameWin.dir);
+		
 		//Fonts
 		this.game.load.bitmapFont('font-coins', Config.fonts.coins.image, Config.fonts.coins.dir);
 		this.game.load.bitmapFont('font-life', Config.fonts.life.image, Config.fonts.life.dir);

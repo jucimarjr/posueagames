@@ -1,6 +1,6 @@
 
 
-Player = function(game, coins, layer1, powerlifes, powerstars, thorns, HUD) {
+Player = function(game, coins, layer1, powerlifes, powerstars, thorns, HUD, jumpSound) {
 
 	this.game = game;
 	this.coins = coins;
@@ -9,6 +9,7 @@ Player = function(game, coins, layer1, powerlifes, powerstars, thorns, HUD) {
 	this.powerstars = powerstars;
 	this.thorns = thorns;
 	this.HUD = HUD;
+	this.jumpSound = jumpSound;
 	this.gold = false;
 	this.lose = false;
 	this.loseInThorn = false;
@@ -92,6 +93,7 @@ Player.prototype = {
 			//  Allow the player to jump if they are touching the ground.
 			if (this.jump.isDown && this.spritePlayer.body.onFloor())
 			{
+				this.jumpSound.play();
 				this.spritePlayer.body.velocity.y = -Config.player.jump;
 			}
 		}
