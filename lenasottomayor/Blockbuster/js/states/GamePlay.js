@@ -18,6 +18,10 @@ State.GamePlay.prototype = {
 		this.player = new Player(game, this.coins, this.layer1, this.powerlifes, this.powerstars, this.thorns, this.HUD);
 		
 		this.enemyCollide = true;
+		this.jumpSound = game.add.audio('jumpSound');
+		this.coinSound = game.add.audio('coinSound');
+		this.hurtSound = game.add.audio('hurtSound');
+		this.powerupSound = game.add.audio('powerupSound');
 	},
 	create: function () {
 		"use strict";
@@ -60,6 +64,7 @@ State.GamePlay.prototype = {
 	
 	collectCoins: function(spritePlayer, coins) {
 		coins.kill();
+		this.coinSound.play();
 		
 		this.HUD.updateCoins(1);
 		this.HUD.updateScore(Config.scores.coin);
@@ -74,6 +79,7 @@ State.GamePlay.prototype = {
 	
 	collectPowerStars: function(spritePlayer, powerstars) {
 		powerstars.kill();
+		this.powerupSound.play();
 		
 		this.player.goldVersion();
 		this.HUD.updateScore(Config.scores.powerstar);
@@ -98,6 +104,7 @@ State.GamePlay.prototype = {
 			var tween = game.add.tween(enemy).to( { alpha: 1 }, 50, Phaser.Easing.Linear.None, true, 0, 10, true);
 			tween.onComplete.add(function() { enemy.kill(); this.enemyCollide = true; },this);
 		} else {
+			this.hurtSound.play();
 			this.player.die(enemy);
 		}
 	},

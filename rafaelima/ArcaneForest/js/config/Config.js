@@ -102,6 +102,7 @@ Config.game = {
 	},
 	player:{
 		dir: 'assets/spritesheets/dude.png',
+		items: [],
 		width: 32,
 		height: 48,
 		x: 60,
@@ -197,9 +198,9 @@ Config.game = {
 		width: 104,
 		height: 214
 	},
-	bigbossattackcompose:{
-		dir: 'assets/spritesheets/bigbossattack_compose_270_208_6_.png',
-		width: 270,
+	bigbossattack:{
+		dir: 'assets/spritesheets/bigbossattack_114_208_6_.png',
+		width: 114,
 		height: 208
 	},
 	bigbossattackfire:{
@@ -289,7 +290,7 @@ Config.game = {
 		bg1y: 0,
 		bg2x: 100,
 		bg2y: 0,
-		bg3x: 100,
+		bg3x: 200,
 		bg3y: 0,
 		bg4x: 180,
 		bg4y: 0

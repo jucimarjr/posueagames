@@ -78,5 +78,12 @@ State.GameSplash.prototype = {
 		this.game.load.image('icon-coins', Config.icon.coin);
 		this.game.load.image('icon-life', Config.icon.life);
 		
+		//Audio
+		//this.game.load.audio('music', 'assets/audios/AirDucts.wav');
+		this.game.load.audio('jumpSound', 'assets/audios/jump.wav');
+		this.game.load.audio('coinSound', 'assets/audios/coin.wav');
+		this.game.load.audio('hurtSound', 'assets/audios/hurt.wav');
+		this.game.load.audio('powerupSound', 'assets/audios/powerup.wav');
+		
 	}
 };

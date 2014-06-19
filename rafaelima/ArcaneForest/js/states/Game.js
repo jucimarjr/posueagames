@@ -3,7 +3,7 @@ State.Game = function(game) {
 	this.game = game;
 };
 
-var layer, player, map, transparentWall, collects, health, music, rotate, monster;
+var layer, player, map, transparentWall, collects, health, music, rotate, monster, monsters;
 var itemsTaken, flagId, isGameRotate, idPlayer, helper;
 var imgPlayerFall, contFrameGif;
 var cursors, attackButton, pauseButton;
@@ -13,7 +13,7 @@ var previousX, previousY;
 var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup, barCollisionGroup, swordCollisionGroup;
 var isJumping, beInGround, yBeforeJump;
 var verticalBar1, verticalBar2, verticalBar3;
-
+var timeCheck;
 var monster_speed = 5;
 var STATE_PLAY = 0;
 var STATE_PAUSED = 1;
@@ -114,7 +114,7 @@ State.Game.prototype = {
         player.animations.add(Config.game.player.anim.jump.key, Config.game.player.anim.jump.frames, Config.game.player.anim.jump.speed, Config.game.player.anim.jump.loop);
         player.animations.add(Config.game.player.anim.attack.key, Config.game.player.anim.attack.frames, Config.game.player.anim.attack.speed, Config.game.player.anim.attack.loop);
         
-        //this.playerCollider.reset(3040, 342);
+        this.playerCollider.reset(3040, 342);
 
         this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
@@ -275,6 +275,12 @@ State.Game.prototype = {
 	        	this.swordCollider.body.velocity.x = 0;
 	        	this.swordCollider.body.velocity.y = 0;
 	        }
+
+            if (game.time.now - timeCheck > 4000 && monster != null && monster.frame === 0 && isGameRotate)
+            {
+                this.bossShoot();
+                this.timeCheck();
+            }
         
         } // end if gamestate == play
         
@@ -345,6 +351,8 @@ State.Game.prototype = {
         this.playerCollider.body.collides(collectCollisionGroup, this.collectItems, this);
         
 		 layer.resizeWorld();
+		 layer.alpha = 2;
+		 layer.debug = true;
 		 
 		 bar = this.game.add.sprite(Config.game.barRotate.x, Config.game.barRotate.y, 'bar');
 		 this.game.physics.p2.enable(bar, true);
@@ -353,6 +361,9 @@ State.Game.prototype = {
 		 bar.body.setCollisionGroup(barCollisionGroup);
 		 bar.body.collides([barCollisionGroup, playerCollisionGroup]);
 		 
+		 this.updateHealth();
+		 this.putBigBoss();
+         this.timeCheck();
     },
     
     fallPlayer: function(){
@@ -429,55 +440,7 @@ State.Game.prototype = {
         }
     },
 
-    resetPlayerBasic: function () {
-        player.smoothed = false;
-        this.game.physics.p2.enable(player, false);
-        this.game.camera.follow(player);
-        player.body.collideWorldBounds = true;
-        player.body.fixedRotation = true;
-        player.body.setCollisionGroup(playerCollisionGroup);
 
-        //collide
-        player.body.collides(monsterCollisionGroup, this.hitMonsters, this);
-        player.body.collides(obstacleCollisionGroup, this.hitObstacles, this);
-        player.body.collides(tileCollisionGroup, this.hitTiles, this);
-        player.body.collides(collectCollisionGroup, this.collectItems, this);
-        player.body.collides(barCollisionGroup);
-    },
-
-    resetPlayerJumpUp: function () {
-        var x = player.x;
-        var y = player.y;
-        player.kill();
-        player = this.game.add.sprite(x, y, 'emmajumping');
-        player.animations.add('right', [1, 0], 5, true);
-        player.animations.add('turn', [1], 5, true);
-        player.animations.add('left', [1, 0], 5, true);
-        this.resetPlayerBasic()
-    },
-
-    resetPlayerJumpDown: function () {
-        var x = player.x;
-        var y = player.y;
-        player.kill();
-        player = this.game.add.sprite(x, y, 'emmajumping');
-        player.animations.add('right', [1, 2], 3, true);
-        player.animations.add('turn', [2], 3, true);
-        player.animations.add('left', [1, 2], 3, true);
-        this.resetPlayerBasic();
-
-    },
-
-    resetPlayer: function () {
-        var x = player.x;
-        var y = player.y;
-        player.kill();
-        player = this.game.add.sprite(x, y, 'emmarun');
-        player.animations.add('right', [0, 1, 2, 3, 4], 10, true);
-        player.animations.add('turn', [4], 20, true);
-        player.animations.add('left', [4, 3, 2, 1, 0], 10, true);
-        this.resetPlayerBasic();
-    },
     
     doJump: function () {
     	
@@ -490,15 +453,6 @@ State.Game.prototype = {
         	player.animations.play(Config.game.player.anim.jump.key);
         	
         	this.playerCollider.body.moveUp(Config.game.player.jumpForce);
-//            if (isJumping === false && beInGround === true) {
-////                if (player.key != 'emmajumping') {
-////                    this.resetPlayerJumpUp();
-////                }
-//                yBeforeJump = player.body.y;
-//                player.body.moveUp(500);
-//                isJumping = true;
-//                beInGround = false;
-//            }
         }
         
         if(!this.canJump) {
@@ -508,17 +462,7 @@ State.Game.prototype = {
         	}
         	
         }
-        
-//        if (isJumping === true) {
-//            player.body.moveUp(500);
-//            if (player.body.y <= (yBeforeJump - 100)) {
-//                //this.resetPlayerJumpDown();
-//                isJumping = false;
-//                player.body.moveDown(500);
-//            }
-//        } else if (beInGround != true) {
-//            player.body.moveDown(500);
-//        }
+
     },
 
     doAttack: function () {
@@ -561,16 +505,6 @@ State.Game.prototype = {
         		
         	}
         	
-//            if (player.key != 'emmaattack') {
-//                var x = player.x;
-//                var y = player.y - 10;
-//                player.kill();
-//                player = this.game.add.sprite(x, y, 'emmaattack');
-//                player.animations.add('right', [0, 2, 1], 10, true);
-//                player.animations.add('turn', [0, 2, 1], 10, true);
-//                player.animations.add('left', [0, 2, 1], 10, true);
-//                this.resetPlayerBasic();
-//            }
         }
         
         if(this.attacking && timeNow >= this.timeToAttack) {
@@ -600,17 +534,12 @@ State.Game.prototype = {
     hitTiles: function () {
         beInGround = this.checkIfCanJump();
         isJumping = false;
-//        if (player.key != 'emmarun') {
-//            this.resetPlayer();
-//        }
     },
 
     hitObstacles: function () {
         beInGround = this.checkIfCanJump();
         isJumping = false;
-//        if (player.key != 'emmarun') {
-//            this.resetPlayer();
-//        }
+
     },
 
     hitMonsters: function () {
@@ -636,14 +565,7 @@ State.Game.prototype = {
 	    	}
     	}
     	
-    	
-//        if (player.key === 'emmaattack' && (this.checkIfConered() === true || Math.abs(player.x - monster.x) <= 104)) {
-//            monster.kill();
-//            player.body.moveLeft(500);
-//        } else {
-//            player.kill();
-//            monster.body.moveRight(500);
-//        }
+
     },
 
     hitBar: function () {
@@ -663,29 +585,6 @@ State.Game.prototype = {
                 if (c.bodyA === player.body.data)
                     d *= -1;
                 if (d > 0.5)
-                    result = true;
-            }
-        }
-
-        return result;
-
-    },
-    //internet magic...player has something beside her rightside
-    checkIfConered: function () {
-
-        var xAxis = p2.vec2.fromValues(1, 0);
-        var result = false;
-
-        for (var i = 0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++) {
-            var c = game.physics.p2.world.narrowphase.contactEquations[i];
-
-            if (c.bodyA === this.playerCollider.body.data || c.bodyB === this.playerCollider.body.data) {
-                var d = p2.vec2.dot(c.normalA, xAxis); // Normal dot Y-axis
-                if (c.bodyA === this.playerCollider.body.data)
-                    d *= -1;
-                if (d > 0.5)
-                    result = true;
-                else if (d < -0.5)
                     result = true;
             }
         }
@@ -886,5 +785,41 @@ State.Game.prototype = {
         transparentWall.body.kinematic = true;
         transparentWall.body.setCollisionGroup(barCollisionGroup);
         transparentWall.body.collides([barCollisionGroup, playerCollisionGroup]);
-	}
+	},
+
+    //create monsters
+        putBigBoss: function () {
+
+            //big boss
+            monster = monsters.create(720, 330, 'bigbossattack');
+            monster.name = 'monster'; 
+            monster.animations.add('walk', [0, 1, 2, 3, 4, 5], 10, true);
+            monster.play('walk');
+            this.game.physics.p2.enable(monster, false);
+            monster.body.fixedRotation = true; //no circle movement 
+            monster.body.kinematic = true;
+            monster.body.collideWorldBounds = true;
+            monster.body.setCollisionGroup(monsterCollisionGroup);
+            monster.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
+            
+        },
+
+        timeCheck: function (){
+
+            timeCheck = this.game.time.now;
+        },
+
+        bossShoot: function () {
+            var fire = monsters.create(720, 300, 'bigbossattackfire');
+            fire.name = 'monster'; 
+            fire.animations.add('walk', [0, 1, 2, 3], 10, true);
+            fire.play('walk');
+            this.game.physics.p2.enable(fire, false);
+            fire.body.fixedRotation = true; //no circle movement 
+            fire.body.kinematic = true;
+            fire.body.collideWorldBounds = true;
+            fire.body.setCollisionGroup(monsterCollisionGroup);
+            fire.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
+            fire.body.moveRight(300);
+        },
 };
