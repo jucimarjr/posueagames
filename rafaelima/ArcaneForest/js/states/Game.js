@@ -881,7 +881,7 @@ State.Game.prototype = {
         verticalBar3.body.collides([barCollisionGroup, playerCollisionGroup]);
     },
     putTransparentWall: function () {
-    	transparentWall = this.game.add.sprite(20, 1200, 'transparentwall');
+    	transparentWall = this.game.add.sprite(48, 1200, 'transparentwall');
         this.game.physics.p2.enable(transparentWall, false);
         transparentWall.body.kinematic = true;
         transparentWall.body.setCollisionGroup(barCollisionGroup);
