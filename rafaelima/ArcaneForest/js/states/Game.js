@@ -114,7 +114,7 @@ State.Game.prototype = {
         player.animations.add(Config.game.player.anim.jump.key, Config.game.player.anim.jump.frames, Config.game.player.anim.jump.speed, Config.game.player.anim.jump.loop);
         player.animations.add(Config.game.player.anim.attack.key, Config.game.player.anim.attack.frames, Config.game.player.anim.attack.speed, Config.game.player.anim.attack.loop);
         
-        this.playerCollider.reset(3040, 342);
+        //this.playerCollider.reset(3040, 342);
 
         this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
@@ -810,7 +810,7 @@ State.Game.prototype = {
         },
 
         bossShoot: function () {
-            var fire = monsters.create(720, 300, 'bigbossattackfire');
+            var fire = monsters.create(720, 340, 'bigbossattackfire');
             fire.name = 'monster'; 
             fire.animations.add('walk', [0, 1, 2, 3], 10, true);
             fire.play('walk');
