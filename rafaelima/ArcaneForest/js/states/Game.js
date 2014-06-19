@@ -175,7 +175,7 @@ State.Game.prototype = {
         this.updateHealth();
         
         //DEBUG LAYER - deletar
-        layer.debug = true;
+//        layer.debug = true;
 
         layer.resizeWorld();
         layer.alpha = 2;
@@ -777,14 +777,14 @@ State.Game.prototype = {
             monster.animations.add('walk', [0, 1, 2, 3, 4], 10, true);
             monster.play('walk');
 
-			monster =  monsters.create(3178, 1368, 'bluemonster');
+			monster =  monsters.create(3178, 1343, 'bluemonster');
 			this.createMonster(monster);
             monster.scale.x = -1;
 
-            monster =  monsters.create(4078, 441, 'bluemonster');
+            monster =  monsters.create(4078, 442.5, 'bluemonster');
             this.createMonster(monster);
 
-            monster =  monsters.create(4600, 511, 'bluemonster');
+            monster =  monsters.create(4600, 514.5, 'bluemonster');
             this.createMonster(monster);
 		},
 
