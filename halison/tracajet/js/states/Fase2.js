@@ -25,7 +25,7 @@ State.Fase2.prototype = {
         game.load.spritesheet('monkey', "assets/2_Fase/monkey_spritesheet_240-80.png",40,40);
         //game.load.image('star',  Config.game.star.dir);
         //game.load.image('block', Config.game.tileset.dir);
-        game.load.image('bg',"assets/2_Fase/bg2_2880-1200.png");
+        game.load.image('bg',Config.game.fase2.background);
         game.load.image('tilesetPlataforma','assets/2_Fase/assets_2.png');
 
     },

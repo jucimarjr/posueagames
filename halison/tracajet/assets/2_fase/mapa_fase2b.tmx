@@ -8,7 +8,7 @@
  </tileset>
  <layer name="Camada de Tiles 1" width="72" height="30">
   <data encoding="base64" compression="zlib">
-   eJztwzENAAAMA6CaqX+LdbBvHyQkAAAAAAAAAAC/6nkRagpp
+   eJztmUsKwCAMBb1MN/X+9ytSCsHm19SNyRsIXQiCg/qq9tZad9RZtMbYgQz86MCPDufnWXtA33sB1peFx4+Wf9mBHx1tf45UNlbkV1Y3A+onOheq+IkCPzfS3MruhxufdX6nZPcjlZfsflb0AT9v6B1SRT/WWqvox7pnlfqo4mdum/OLo+r+7M33r3m3E518ve8XXB/Z/UhtnrHDDw/Nr8x+pIyCn9j84d4Yq/nR/ns4N5X8eN7j/5xnd+JAqXUBHZA5Kw==
   </data>
  </layer>
  <imagelayer name="Camada de Imagem 1" width="72" height="30"/>

@@ -170,7 +170,7 @@ Config.game = {
 			
 		},
 		fase2: {
-			background: "assets/2_fase/images/bg2_600-1920.png",
+			background: "assets/2_fase/images/bg2_2880-1200.png",
 		},
 		fase3: {
 			background: "assets/images/bg3_tmp_2880-1200.png",
