@@ -66,8 +66,12 @@ Config.story = {
 	x: 0,
 	y: 0,
 	alphaTime: 500,
-	alphaWait: 4500,
-	nextStateWait: 1000
+	alphaWait: 4000,
+	nextStateWait: 4500,
+	rayHelp: {
+		ray: [],
+		dir: Config.images+'/ray_help/ray_help_000'
+	}
 };
 
 
