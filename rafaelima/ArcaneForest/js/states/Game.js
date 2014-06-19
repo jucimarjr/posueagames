@@ -114,7 +114,7 @@ State.Game.prototype = {
         player.animations.add(Config.game.player.anim.jump.key, Config.game.player.anim.jump.frames, Config.game.player.anim.jump.speed, Config.game.player.anim.jump.loop);
         player.animations.add(Config.game.player.anim.attack.key, Config.game.player.anim.attack.frames, Config.game.player.anim.attack.speed, Config.game.player.anim.attack.loop);
         
-        //this.playerCollider.reset(3040, 342);
+        this.playerCollider.reset(3040, 342);
 
         this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
@@ -349,6 +349,7 @@ State.Game.prototype = {
         this.playerCollider.body.collides(tileCollisionGroup);
         this.playerCollider.body.collides(barCollisionGroup);
         this.playerCollider.body.collides(collectCollisionGroup, this.collectItems, this);
+        this.playerCollider.body.collides(monsterCollisionGroup, this.hitMonsters, this);
         
 		 layer.resizeWorld();
 		 layer.alpha = 2;
@@ -819,7 +820,17 @@ State.Game.prototype = {
             fire.body.kinematic = true;
             fire.body.collideWorldBounds = true;
             fire.body.setCollisionGroup(monsterCollisionGroup);
-            fire.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
+            fire.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup], this.hitLight, this);
             fire.body.moveRight(300);
         },
+
+        hitLight: function (body1, body2) {
+        
+            if(body1.sprite.name == 'monster') {
+                body1.sprite.kill();
+            }
+            else if(body2.sprite.name == 'monster') {
+                body2.sprite.kill();
+            }
+        }
 };
