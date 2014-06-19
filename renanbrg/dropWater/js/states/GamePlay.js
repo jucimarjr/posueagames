@@ -132,7 +132,7 @@ State.GamePlay.prototype = {
 		}
 		
         // create player
-        this.drop.create(1850, 50);
+        this.drop.create(2000, 50);
         var dropSprite = this.drop.getSpriteObject();   
         this.game.physics.p2.enableBody(dropSprite, false);        
         this.game.camera.follow(dropSprite);
@@ -211,7 +211,7 @@ State.GamePlay.prototype = {
         this.bucket.body.collides([this.groundCG, this.playerCG]);
 		      
 		// canudo
-		this.diagonalStraw = this.game.add.sprite(2640, 270, 'straw2');
+		this.diagonalStraw = this.game.add.sprite(2720, 270, 'straw2');
 		this.game.physics.p2.enableBody(this.diagonalStraw, false);
 		this.diagonalStraw.body.clearShapes();
 		this.diagonalStraw.body.loadPolygon('strawPhysics', 'straw2_236-276');
