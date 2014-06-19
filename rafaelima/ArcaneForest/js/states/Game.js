@@ -3,7 +3,7 @@ State.Game = function(game) {
 	this.game = game;
 };
 
-var layer, player, map, transparentWall, collects, health, music, rotate, monster;
+var layer, player, map, transparentWall, collects, health, music, rotate, monster, monsters;
 var itemsTaken, flagId, isGameRotate, idPlayer, helper;
 var imgPlayerFall, contFrameGif;
 var cursors, attackButton, pauseButton;
@@ -13,7 +13,7 @@ var previousX, previousY;
 var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup, barCollisionGroup, swordCollisionGroup;
 var isJumping, beInGround, yBeforeJump;
 var verticalBar1, verticalBar2, verticalBar3;
-
+var timeCheck;
 var monster_speed = 5;
 var STATE_PLAY = 0;
 var STATE_PAUSED = 1;
@@ -175,7 +175,7 @@ State.Game.prototype = {
         this.updateHealth();
         
         //DEBUG LAYER - deletar
-        layer.debug = true;
+//        layer.debug = true;
 
         layer.resizeWorld();
         layer.alpha = 2;
@@ -275,6 +275,12 @@ State.Game.prototype = {
 	        	this.swordCollider.body.velocity.x = 0;
 	        	this.swordCollider.body.velocity.y = 0;
 	        }
+
+            if (game.time.now - timeCheck > 4000 && monster != null && monster.frame === 0 && isGameRotate)
+            {
+                this.bossShoot();
+                this.timeCheck();
+            }
         
         } // end if gamestate == play
         
@@ -356,7 +362,8 @@ State.Game.prototype = {
 		 bar.body.collides([barCollisionGroup, playerCollisionGroup]);
 		 
 		 this.updateHealth();
-		 
+		 this.putBigBoss();
+         this.timeCheck();
     },
     
     fallPlayer: function(){
@@ -673,10 +680,10 @@ State.Game.prototype = {
 			this.createMonster(monster);
             monster.scale.x = -1;
 
-            monster =  monsters.create(4078, 441, 'bluemonster');
+            monster =  monsters.create(4078, 442.5, 'bluemonster');
             this.createMonster(monster);
 
-            monster =  monsters.create(4600, 511, 'bluemonster');
+            monster =  monsters.create(4600, 514.5, 'bluemonster');
             this.createMonster(monster);
 		},
 
@@ -778,5 +785,41 @@ State.Game.prototype = {
         transparentWall.body.kinematic = true;
         transparentWall.body.setCollisionGroup(barCollisionGroup);
         transparentWall.body.collides([barCollisionGroup, playerCollisionGroup]);
-	}
+	},
+
+    //create monsters
+        putBigBoss: function () {
+
+            //big boss
+            monster = monsters.create(720, 330, 'bigbossattack');
+            monster.name = 'monster'; 
+            monster.animations.add('walk', [0, 1, 2, 3, 4, 5], 10, true);
+            monster.play('walk');
+            this.game.physics.p2.enable(monster, false);
+            monster.body.fixedRotation = true; //no circle movement 
+            monster.body.kinematic = true;
+            monster.body.collideWorldBounds = true;
+            monster.body.setCollisionGroup(monsterCollisionGroup);
+            monster.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
+            
+        },
+
+        timeCheck: function (){
+
+            timeCheck = this.game.time.now;
+        },
+
+        bossShoot: function () {
+            var fire = monsters.create(720, 340, 'bigbossattackfire');
+            fire.name = 'monster'; 
+            fire.animations.add('walk', [0, 1, 2, 3], 10, true);
+            fire.play('walk');
+            this.game.physics.p2.enable(fire, false);
+            fire.body.fixedRotation = true; //no circle movement 
+            fire.body.kinematic = true;
+            fire.body.collideWorldBounds = true;
+            fire.body.setCollisionGroup(monsterCollisionGroup);
+            fire.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
+            fire.body.moveRight(300);
+        },
 };
