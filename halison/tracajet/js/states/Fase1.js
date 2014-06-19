@@ -26,7 +26,7 @@ State.Fase1= function (game) {
 	this.txtScore;
 	this.txtPause;
 	this.contKeys = 0;
-	this.TOTAL_KEYS = 4;
+	this.TOTAL_KEYS = 8;
 };
 
 var folha;
@@ -86,7 +86,7 @@ State.Fase1.prototype = {
 		//Groups folhas
 		this.sheets = this.game.add.group();
 		this.sheets.enableBody  = true;
-		this.map.createFromObjects(this.nameSheets,2,'folhas',0,true,false,this.sheets);
+		this.map.createFromObjects(this.nameSheets,7,'folhas',0,true,false,this.sheets);
 
 		//Grupo chaves
 		this.keys = this.game.add.group();
@@ -113,18 +113,14 @@ State.Fase1.prototype = {
 
 	update: function () {
 		game.physics.arcade.collide(this.tracajet, this.layer);
-		game.physics.arcade.collide(this.group,this.layer);
-		//this.enemies.forEach(this.collideEnemies,this);
+		game.physics.arcade.collide(this.enemies,this.layer);
 	    game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
 	    game.physics.arcade.overlap(this.sheets,this.tracajet,this.increaseScore,null,this);
 	    game.physics.arcade.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
 	    this.updateTracajet();
 	    this.updateEnemies();
-	    this.updateScorePosition
+	    this.updateScorePosition();
 		
-	},
-	collideEnemies : function(jacare){
-		game.physics.arcade.collide(jacare,this.layer);
 	}
 	,
 	increaseContKeys : function(tracajet,key){
@@ -140,6 +136,7 @@ State.Fase1.prototype = {
 				align: "left"
 			});
 			dieText.setText("YOU WIN");
+			this.game.state.start('Fase2');
 		}
 	}
 	,
@@ -155,9 +152,9 @@ State.Fase1.prototype = {
 		jacare.animations.add('right',[6,7,8,9,10,11],5,true);
 		game.physics.enable(jacare, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 		jacare.body.collideWorldBounds = true;
-		game.add.tween(jacare).to({x: jacare.body.x, y: jacare.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+		game.add.tween(jacare).to({x: jacare.body.x, y: jacare.body.y}, 2000 + Math.random()*3000 /*duration of the tween (in ms)*/, 
 				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
-				.to({x: jacare.body.x+320, y: jacare.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+				.to({x: jacare.body.x+320, y: jacare.body.y}, 2000 + Math.random()*3000 /*duration of the tween (in ms)*/, 
 				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/,  50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
 				.loop().start();
 		jacare.animations.play("right");

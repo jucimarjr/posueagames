@@ -9,7 +9,5 @@ game.state.add('Story', State.Story);
 game.state.add('HowToPlay', State.HowToPlay);
 game.state.add('Credits', State.Credits);
 game.state.add('Game', State.Game);
-game.state.add('GameRotate', State.GameRotate);
-game.state.add('GifFall', State.GifFall);
 //game.state.start('GameSplash');
 game.state.start('LudusSplash');

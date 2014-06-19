@@ -117,7 +117,7 @@ State.Game.prototype = {
         player.animations.add(Config.game.player.anim.jump.key, Config.game.player.anim.jump.frames, Config.game.player.anim.jump.speed, Config.game.player.anim.jump.loop);
         player.animations.add(Config.game.player.anim.attack.key, Config.game.player.anim.attack.frames, Config.game.player.anim.attack.speed, Config.game.player.anim.attack.loop);
         
-        this.playerCollider.reset(3040, 342);
+//        this.playerCollider.reset(3040, 342);
 
         this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
@@ -328,8 +328,7 @@ State.Game.prototype = {
 		 bg3.y = Config.game.gameRotate.bg3y;
 		 bg4.x = Config.game.gameRotate.bg4x;
 		 bg4.y = Config.game.gameRotate.bg4y;
-
-
+		 
 		 layer.destroy();
 		 this.playerCollider.body.clearCollision();
 		 
@@ -367,13 +366,12 @@ State.Game.prototype = {
         
 		 layer.resizeWorld();
 		 layer.alpha = 2;
-//		 layer.debug = true;
-		 
-		 
 		 
 		 this.updateHealth();
+		 this.updateItems();
 		 this.putBigBoss();
          this.timeCheck();
+         
     },
     
     putBarRotate: function(){
@@ -415,6 +413,8 @@ State.Game.prototype = {
         if ((collect.data.id != idPlayer) && !flagId) {
             idPlayer = collect.data.id;
 
+        	Config.game.player.items[Config.game.player.items.length] = collect.sprite.name;
+            
             console.log(varPlayer.data.id, collect.data.id);
             collect.sprite.kill();
             itemsTaken++;
@@ -432,6 +432,42 @@ State.Game.prototype = {
         }
         if ((collect.data.id == idPlayer) && flagId) {
             flagId = false;
+        }
+    },
+    
+    updateItems: function () {
+    	
+    	if (Config.game.player.items.length > 0) {
+    		collects = this.game.add.group();
+    		
+            for(var i = 0; i < Config.game.player.items.length; i++){
+            	
+            	var nameSprite = Config.game.player.items[i];
+            	var fixedItem;
+
+            	if(nameSprite == 'key'){
+            		fixedItem = collects.create(0, 0, 'key');
+            	} else if (nameSprite == 'pink'){
+            		fixedItem = collects.create(0, 0, 'pink');
+            	}else if (nameSprite == 'red'){
+            		fixedItem = collects.create(0, 0, 'red');
+            	}else if (nameSprite == 'blue'){
+            		fixedItem = collects.create(0, 0, 'blue');
+            	}
+            	
+            	if(fixedItem!=null){
+            		fixedItem.name = nameSprite;
+            		fixedItem.fixedToCamera = true;
+            		if(fixedItem.name == 'key'){
+            			fixedItem.cameraOffset.setTo(856, 20);
+            		}else if(i==0){
+            			fixedItem.cameraOffset.setTo(880, 20);
+            		}else{
+            			fixedItem.cameraOffset.setTo(856 + (24 * i), 20);
+            		}
+            	}
+            }
+            
         }
     },
 
@@ -751,6 +787,7 @@ State.Game.prototype = {
 
         //Collect Items 1
         var collect = collects.create(1657, 1160, 'blue');
+<<<<<<< HEAD
         this.createCollect(collect);
 
         //Collect Items 2
@@ -760,6 +797,32 @@ State.Game.prototype = {
         //Collect Items 3
         var collect = collects.create(200, 1400, 'red');
         this.createCollect(collect);
+=======
+        collect.name = 'blue';
+		this.game.physics.p2.enable(collect, false);
+        collect.body.fixedRotation = true; //no circle movement 
+        collect.body.kinematic = true;
+        collect.body.setCollisionGroup(collectCollisionGroup);
+        collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
+
+        //Collect Items 2
+        var collect = collects.create(3239, 245, 'pink');
+        collect.name = 'pink';
+		this.game.physics.p2.enable(collect, false);
+        collect.body.fixedRotation = true; //no circle movement 
+        collect.body.kinematic = true;
+        collect.body.setCollisionGroup(collectCollisionGroup);
+        collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
+
+        //Collect Items 3
+        var collect = collects.create(200, 1400, 'red');
+        collect.name = 'red';
+		this.game.physics.p2.enable(collect, false);
+        collect.body.fixedRotation = true; //no circle movement 
+        collect.body.kinematic = true;
+        collect.body.setCollisionGroup(collectCollisionGroup);
+        collect.body.collides([collectCollisionGroup, playerCollisionGroup]);
+>>>>>>> 30cbe0779aee0a4f34ab762279a81474fd6289b9
 
         var collect = collects.create(300, 1400, 'key');
         this.createCollect(collect);
