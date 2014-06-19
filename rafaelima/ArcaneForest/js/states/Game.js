@@ -163,6 +163,7 @@ State.Game.prototype = {
         this.putMonstersBar();
         this.putBar();
         this.putCollect();
+        this.putTransparentWall();
         
         beInGround = false;
         isJumping = false;
@@ -818,7 +819,7 @@ State.Game.prototype = {
 		},
     putVerticalBar: function () {
         //bar 1
-    	verticalBar1 = this.game.add.sprite(3500, 2300, 'verticalbar');
+    	verticalBar1 = this.game.add.sprite(3500, 200, 'verticalbar');
         this.game.physics.p2.enable(verticalBar1, false);
         verticalBar1.body.kinematic = true;
         this.game.add.tween(verticalBar1.body.velocity).to({
@@ -830,7 +831,7 @@ State.Game.prototype = {
         verticalBar1.body.collides([barCollisionGroup, playerCollisionGroup]);
         
       //bar 1
-//        verticalBar2 = this.game.add.sprite(3650, 2300, 'verticalbar');
+//        verticalBar2 = this.game.add.sprite(3650, 200, 'verticalbar');
 //        this.game.physics.p2.enable(verticalBar2, false);
 //        verticalBar2.body.kinematic = true;
 //        this.game.add.tween(verticalBar2.body.velocity).to({
@@ -842,7 +843,7 @@ State.Game.prototype = {
 //        verticalBar2.body.collides([barCollisionGroup, playerCollisionGroup]);
         
       //bar 1
-    	verticalBar3 = this.game.add.sprite(3800, 2300, 'verticalbar');
+    	verticalBar3 = this.game.add.sprite(3800, 200, 'verticalbar');
         this.game.physics.p2.enable(verticalBar3, false);
         verticalBar3.body.kinematic = true;
         this.game.add.tween(verticalBar3.body.velocity).to({
@@ -854,8 +855,8 @@ State.Game.prototype = {
         verticalBar3.body.collides([barCollisionGroup, playerCollisionGroup]);
     },
     putTransparentWall: function () {
-    	transparentWall = this.game.add.sprite(0, 800, 'transparentwall');
-        this.game.physics.p2.enable(transparentWall, true);
+    	transparentWall = this.game.add.sprite(20, 1200, 'transparentwall');
+        this.game.physics.p2.enable(transparentWall, false);
         transparentWall.body.kinematic = true;
         transparentWall.body.setCollisionGroup(barCollisionGroup);
         transparentWall.body.collides([barCollisionGroup, playerCollisionGroup]);
