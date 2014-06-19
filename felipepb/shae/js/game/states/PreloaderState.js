@@ -24,6 +24,7 @@ Game.PreloaderState.prototype = {
         this.game.load.image('walls_tileset', 'assets/game/tilemaps/tiles/walls_tileset.png');
         
         // Images
+        this.game.load.image('smoke_particle_small', 'assets/game/smoke_particle_8-8.png');
         this.game.load.image('light', 'assets/game/light.png');
 		this.game.load.image('block', 'assets/game/block.png');
 
