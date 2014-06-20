@@ -8,7 +8,7 @@ Tree = function(game, index, x, y) {
 
     this.index = index;
     this.key = 'tree';
-    this.asset = 'assets/arvore_120-180.png';
+    this.asset = 'assets/tree_118-241.png';
     this.walk = 150;
     this.hasRope = false;
 };
@@ -64,7 +64,7 @@ Trees = function(game) {
 
 Trees.prototype = {
     preload : function() {
-        this.game.load.image('tree', 'assets/arvore_120-180.png', 120, 180);
+        this.game.load.image('tree', 'assets/tree_118-241.png', 118, 241);
     },
     create : function() {
         "use strict";

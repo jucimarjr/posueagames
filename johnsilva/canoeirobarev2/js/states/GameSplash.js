@@ -31,8 +31,8 @@ State.GameSplash.prototype = {
 		this.game.load.tilemap('level3', 'assets/level/3.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level4', 'assets/level/4.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level5', 'assets/level/5.json', null, Phaser.Tilemap.TILED_JSON);
-		/*this.game.load.tilemap('level6', 'assets/level/6.json', null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.tilemap('level7', 'assets/level/7.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.tilemap('level6', 'assets/level/6.json', null, Phaser.Tilemap.TILED_JSON);
+	    /*this.game.load.tilemap('level7', 'assets/level/7.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('level8', 'assets/level/8.json', null, Phaser.Tilemap.TILED_JSON);*/
 	    this.game.load.tilemap('level9', 'assets/level/9.json', null, Phaser.Tilemap.TILED_JSON);
 	    //this.game.load.tilemap('level10', 'assets/level/10.json', null, Phaser.Tilemap.TILED_JSON);
@@ -50,6 +50,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('bg3', 'assets/level/bg6_462-800.jpg');
 		this.game.load.image('bg4', 'assets/level/bg4_462-800.jpg');
 		this.game.load.image('bg5', 'assets/level/bg5_462-800.jpg');
+		this.game.load.image('bg6', 'assets/level/bg6_462-800.jpg');
 		this.game.load.image('bg9', 'assets/level/bg6_462-800.jpg');
 		this.game.load.image('cipo', 'assets/level/cipo_10-80.png');
 		this.game.load.image('branches', 'assets/level/branches_360-283.png');
@@ -66,6 +67,7 @@ State.GameSplash.prototype = {
 		this.game.load.audio('phase3', Config.audio.phase1);
 		this.game.load.audio('phase4', Config.audio.phase2);
 		this.game.load.audio('phase5', Config.audio.phase1);
+		this.game.load.audio('phase6', Config.audio.phase1);
 	},
 	create: function () {
 		"use strict";

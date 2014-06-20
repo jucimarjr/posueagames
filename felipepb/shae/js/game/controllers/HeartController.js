@@ -1,5 +1,6 @@
-Game.HeartController = function (game, player, waypoints) {
-	this.game = game;
+Game.HeartController = function (gameState, player, waypoints) {
+	this.gameState = gameState;
+	this.game = this.gameState.game;
 	this.player = player;
 	this.waypoints = waypoints;
 	this.sprite;
@@ -152,9 +153,13 @@ Game.HeartController.prototype = {
 			}
 		}
 		
-		if (playerSprite.overlap(mySprite) && playerDistance <= HeartConsts.playerDeathDistance) {
+		if (player.currentAnim != 'dying' && playerSprite.overlap(mySprite) && 
+			playerDistance <= HeartConsts.playerDeathDistance) {
+			
+			// console.log('call onPlayerLostLife');
 			player.playDeathAnimation();
             player.destroyBody();
+            this.gameState.onPlayerLostLife();
 		}
 	},
 	

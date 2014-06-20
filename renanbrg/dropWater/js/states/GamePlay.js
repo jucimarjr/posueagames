@@ -16,6 +16,7 @@ State.GamePlay = function (game) {
     this.haveEnergy = false;
     this.smokeTimer = null;
     this.redSand = null;
+    this.userDead = false;
     
     this.dropCollisionGroup = null;
     this.crabCollisionGroup = null;
@@ -309,7 +310,6 @@ State.GamePlay.prototype = {
         				
         this.hud.create();
         
-		//this.userDead();
 		
         // Sounds
         this.jumpSound = this.game.add.audio("jump"); 
@@ -362,6 +362,11 @@ State.GamePlay.prototype = {
     },
 	update: function () {
 		"use strict";
+		
+		if(this.userDead){ 
+		      this.restGame();  
+		   }
+		
 		this.hud.updateFPS();
 		this.handleKeyDown();
 		this.isOnAir();
@@ -383,9 +388,6 @@ State.GamePlay.prototype = {
             this.game.camera.setPosition(this.game.camera.x - 8,
                     this.game.camera.y);
         }
-//		if(this.userDead()){ 
-//		      this.restart();  
-//		   }
     },
     playerOverDiagonalStraw: function() {
         var characterSprite = this.drop.getSpriteObject();
@@ -511,7 +513,7 @@ State.GamePlay.prototype = {
 		if (!this.touchingUp(body2)) { 
 			console.log('Matou o Player!!!!');
 			this.drop.getSpriteObject().kill();
-			//this.userDead = true;
+			this.userDead = true;
 			return true;
 		}
 		return false;
@@ -521,6 +523,7 @@ State.GamePlay.prototype = {
         var urchinSprite = body2.sprite;
         urchinSprite.animations.play('hit');
         this.drop.getSpriteObject().kill();
+        this.userDead = true;
         return true;
     },
     checkOverlapWithLifeDrop: function (body1, body2) {
@@ -545,6 +548,7 @@ State.GamePlay.prototype = {
 		if (this.countCall == 1) {
 
 			this.energy.kill();
+			this.powUpSound.play();
 			//this.drop.getSpriteObject().body.x = 1890; 
 			//this.drop.getSpriteObject().body.y = 50;
 			this.drop.getSpriteObject().body.moveUp(1500);		
@@ -576,7 +580,8 @@ State.GamePlay.prototype = {
 				}, 2000);
 				this.playersize = 'small';			
 			} else if (this.playersize == 'small') {
-				this.drop.getSpriteObject().kill();
+				this.drop.getSpriteObject().kill(); 
+				this.userDead=true;
 			} 		
 		}
 		if (this.countCall == 2) {
@@ -605,6 +610,7 @@ State.GamePlay.prototype = {
 	},
 	timeOverKill: function () {
 		this.drop.getSpriteObject().kill();
+		this.userDead = true;
 	},
 	moveCrab: function (crab) {
 		if (crab.name == "crab1") {
@@ -629,7 +635,8 @@ State.GamePlay.prototype = {
 		}		
 	},
 	crabKillDrop: function () {
-		this.drop.getSpriteObject().kill();		
+		this.drop.getSpriteObject().kill();
+		this.userDead = true;
 	},
     insideStraw: function() {
         var dropSprite = this.drop.getSpriteObject();
@@ -669,12 +676,10 @@ State.GamePlay.prototype = {
 	clickCredits: function () {
 		"use strict";
 		this.game.state.start('Credits');
-	}
-//	restart: function(){
-//		player.resetPosition(); 
-//        if (lifeCounter==0){
-//        	this.game.state.start('GameOver');
-//        }	
-//		this.game.state.restart();
-//	}
+	},
+	restGame: function () {
+		"use strict";
+		this.game.state.start('GamePlay');
+		this.userDead=false;
+	},
 };

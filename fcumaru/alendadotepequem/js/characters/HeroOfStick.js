@@ -5,13 +5,19 @@ function HeroOfStick(game) {
 	// Default parameters
 	that.type = HERO_OF_STICK;
 	that.key = 'hero3';
-	that.asset = 'assets/tmp3.png';
+	that.asset = 'assets/heroofstick_120-120-34.png';
 	that.jump = 400;
 	that.walk = 100;
 	that.life = 2;
 	that.maxJump = 2;
 	that.initX = 400;
 	that.initY = 1000;
+	
+	that.preload = function() {
+		"use strict";
+
+		this.game.load.spritesheet(this.key, this.asset, 120, 120, 34);
+	};
 	
 	that.create = function() {
 		"use strict";

@@ -7,8 +7,8 @@ Rock = function(game, index, x, y) {
 	this.y = y;
 
 	this.index = index;
-	this.key = 'rock' + index;
-	this.asset = 'assets/bola_de_fogo.png';
+	this.key = 'rock';
+	this.asset = 'assets/rock_120-120.png';
 	this.walk = 150;
 };
 
@@ -66,7 +66,7 @@ Rocks = function(game) {
 
 Rocks.prototype = {
 	preload : function() {
-		this.game.load.spritesheet('rock', 'assets/bola_de_fogo.png', 40, 40, 6);
+		this.game.load.image('rock', 'assets/rock_120-120.png', 120, 120);
 	},
 	create : function() {
 		"use strict";

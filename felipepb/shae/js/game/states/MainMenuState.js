@@ -12,8 +12,6 @@ Game.MainMenuState = function () {
 	this.regularCreditsTextBoundingBox;
 };
 
-Game.MainMenuState.fontSize = 60;
-
 Game.MainMenuState.prototype = {
     preload: function () {
 		this.game.add.image(0, 0, 'gameStart');
@@ -25,7 +23,7 @@ Game.MainMenuState.prototype = {
 	},
 	
 	create: function () {
-		var fontSize = Game.MainMenuState.fontSize;
+		var fontSize = ScreensConsts.fontSize;
 		var cameraWidth = this.game.camera.width;
 		var cameraHeight = this.game.camera.height;
 		var buttonMargin = 10;

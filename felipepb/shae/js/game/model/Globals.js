@@ -11,7 +11,8 @@ var PlayerConsts = {
 	walkDamping: 5.0,
 	jumpVelocity: 3.0 * PhysicsConsts.pixelsToUnit,
 	runModifier: 1.5,
-	runModifierDamping: 0.05
+	runModifierDamping: 0.05,
+	startingLifeTotal: 3
 };
 
 var HeartConsts = {
@@ -31,6 +32,10 @@ var TweensConsts = {
 	fadeFillStyle: 'black',
 	fadeInDuration: 200,
 	fadeOutDuration: 200
+};
+
+var ScreensConsts = {
+	fontSize: 60
 };
 
 var Utils = {

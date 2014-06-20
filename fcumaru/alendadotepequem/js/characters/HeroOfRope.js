@@ -5,7 +5,7 @@ function HeroOfRope(game) {
 	// Default parameters
 	that.type = HERO_OF_ROPE;
 	that.key = 'hero2';
-	that.asset = 'assets/tmp2.png';
+	that.asset = 'assets/heroofrope_120-120-34.png';
 	that.jump = 500;
 	that.walk = 200;
 	that.life = 1;
@@ -14,6 +14,17 @@ function HeroOfRope(game) {
 	that.initY = 1500;
 	that.numSegmentsRope = 19;
 	that.facingLeft = false;
+
+	//TODO: "body" of the rope
+	that.ropeTipKey = 'ropeTip';
+	that.ropeTipAsset = 'assets/rope_20-10.png';
+	
+	that.preload = function() {
+		"use strict";
+
+		this.game.load.spritesheet(this.key, this.asset, 120, 120, 34);
+		this.game.load.image(this.ropeTipKey, this.ropeTipAsset, 20, 10); // for HeroOfRope
+	};
 
 	that.create = function() {
 		"use strict";
@@ -94,14 +105,14 @@ function HeroOfRope(game) {
 		if(this.ropeActive){
 			if(this.facingLeft){
 				for(var i = 1; i < this.numSegmentsRope; i++){
-					this.ropeSegments[i].x = this.ropeSegments[i-1].x + 30;
+					this.ropeSegments[i].x = this.ropeSegments[i-1].x + 20;
 					if(this.ropeSegments[i].x > this.ropeStartX + this.ropeSegments[i].width)
 						this.ropeSegments[i].x = this.ropeStartX + this.ropeSegments[i].width;
 				}
 			}
 			else {
 				for(var i = 1; i < this.numSegmentsRope; i++){
-					this.ropeSegments[i].x = this.ropeSegments[i-1].x - 30;
+					this.ropeSegments[i].x = this.ropeSegments[i-1].x - 20;
 					if(this.ropeSegments[i].x < this.ropeStartX)
 						this.ropeSegments[i].x = this.ropeStartX;
 				}
@@ -135,14 +146,14 @@ function HeroOfRope(game) {
 
 	that.collisionRopeObject = function(rope, object){
 		console.log("rope collided with something");
-	}
+	};
 
 	that.killRope = function(){
 		for(var i = 0; i < this.numSegmentsRope; i++){
 			this.ropeSegments[i].kill();
 		}
 		this.ropeActive = false;
-	}
+	};
 
 	that.jumpCheck = function() {
 		// apenas processar pulo se estiver ativo e não estiver usando a corda
@@ -150,11 +161,11 @@ function HeroOfRope(game) {
 			this.hero.body.velocity.y = -this.jump;
 			this.jumpCount++;
 		}
-	}
+	};
 
 	that.getRope = function() {
 		return this.ropeSegments[0];
-	}
+	};
 
 	return that;
 }

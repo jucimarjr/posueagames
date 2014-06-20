@@ -19,11 +19,10 @@ var timerSecond = 0;
 
 State.Game.prototype = {
 	preload : function() {
-		this.game.load.tilemap('mapa', 'assets/mapa2.json', null,
+		this.game.load.tilemap('mapa', 'assets/mapa.json', null,
 				Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('fundo', 'assets/bg_tepequem_960x1800.png');
-		this.game.load.image('black', 'assets/black.png');
-		this.game.load.image('white', 'assets/white.png');
+		this.game.load.image('map', 'assets/map.png');
 
 		this.game.load.image('clouds', 'assets/nuvem.png');
 		this.game.load.image('faiscas', 'assets/efeito-faisca.png');
@@ -45,14 +44,11 @@ State.Game.prototype = {
 
 		map = this.game.add.tilemap('mapa');
 
-		map.addTilesetImage('black', 'black');
-		map.addTilesetImage('white', 'white');
+		map.addTilesetImage('map', 'map');
 
-		this.layer = map.createLayer('Stage');
+		this.layer = map.createLayer('map');
 		this.layer.resizeWorld(); // seta o mundo com as altera��es feitas
-		map.setCollisionBetween(1, 1, true, 0); // 0 espaco
-
-		// var this.layer2 = map.createLayer('Movable objects');
+		map.setCollisionBetween(1, 22, true, 0); // 0 espaco
 
 		// entrada
 		this.entrada = this.game.add.image(GOAL_X, GOAL_Y, 'entrada');

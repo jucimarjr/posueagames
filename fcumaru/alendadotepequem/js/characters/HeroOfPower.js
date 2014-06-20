@@ -5,7 +5,7 @@ function HeroOfPower(game) {
 	// Default parameters
 	that.type = HERO_OF_POWER;
 	that.key = 'hero1';
-	that.asset = 'assets/tmp1.png';
+	that.asset = 'assets/heroofpower_120-120-34.png';
 	that.jump = 450;
 	that.walk = 300;
 	that.life = 1;
@@ -13,11 +13,17 @@ function HeroOfPower(game) {
 	that.initX = 20;
 	that.initY = 1000;
 	
+	that.preload = function() {
+		"use strict";
+
+		this.game.load.spritesheet(this.key, this.asset, 120, 120, 34);
+	};
+	
 	that.create = function() {
 		"use strict";
 
-		this.hero = this.game.add.sprite(this.initX, this.initY, this.key, 3);
-		this.hero.animations.add('walk', [ 1, 0 ], 6, true);
+		this.hero = this.game.add.sprite(this.initX, this.initY, this.key, 34);
+		this.hero.animations.add('walk', [ 0, 1, 2, 3 ], 6, true);
 		this.hero.animations.add('jump', [ 2 ], 4, true);
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
