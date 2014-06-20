@@ -532,11 +532,11 @@ Game.PlayerController.prototype = {
 				    return;
 				positionTweenCompleted = true;
 				
-				var fadeOutAnimationLength = 3;
+				var fadeOutAnimationLength = 2;
 				var fadeOutAnimationIndex = 0;
 				var fadeOutTween = self.gameState.game.add.tween(self.sprite);
 				fadeOutTween.to(null, 400, Phaser.Easing.Linear.None, true, 0)
-				            .to({ alpha: 0 }, 500, Phaser.Easing.Quadratic.Out, true, 0)
+//				            .to({ alpha: 0 }, 500, Phaser.Easing.Quadratic.Out, true, 0)
 							.to({ alpha: 1 }, 0, Phaser.Easing.Linear.None, true, 0);
                 fadeOutTween.onComplete.add(function () {
 					if (++fadeOutAnimationIndex != fadeOutAnimationLength) {

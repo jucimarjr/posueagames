@@ -59,7 +59,9 @@ Game.HeartController.prototype = {
 	},
 	
 	playBeat: function () {
-		if (!this._enabled || this.pursuitPositions.length != 0) {
+		if (!this._enabled ||
+		    this.pursuitPositions.length != 0 ||
+			Phaser.Point.distance(this.player.sprite, this.sprite) > HeartConsts.minimumBeatDistance) {
 			return;
 		}
 		
