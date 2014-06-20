@@ -157,8 +157,8 @@ Game.HeartController.prototype = {
 	        }
 			
 			if (playerSprite.overlap(mySprite) && playerDistance <= HeartConsts.playerDeathDistance) {
-	            // console.log('call onPlayerLostLife');
 //				pursuitPositions.splice(pursuitPositions.length - 1, 1);
+				beatSprite.kill();
 	            player.playDeathAnimation();
 	            player.destroyBody();
 	            this.gameState.onPlayerLostLife();
