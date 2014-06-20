@@ -146,14 +146,14 @@ function HeroOfRope(game) {
 
 	that.collisionRopeObject = function(rope, object){
 		console.log("rope collided with something");
-	}
+	};
 
 	that.killRope = function(){
 		for(var i = 0; i < this.numSegmentsRope; i++){
 			this.ropeSegments[i].kill();
 		}
 		this.ropeActive = false;
-	}
+	};
 
 	that.jumpCheck = function() {
 		// apenas processar pulo se estiver ativo e não estiver usando a corda
@@ -161,11 +161,11 @@ function HeroOfRope(game) {
 			this.hero.body.velocity.y = -this.jump;
 			this.jumpCount++;
 		}
-	}
+	};
 
 	that.getRope = function() {
 		return this.ropeSegments[0];
-	}
+	};
 
 	return that;
 }
