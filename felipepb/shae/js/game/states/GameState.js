@@ -206,6 +206,9 @@ Game.GameState.prototype = {
             this.stageComplete = true;
             gateSprite.onGateOpenned(this.onStageComplete, this);
             this.player.stopAndBlockInput();
+			for (var i = 0; i < this.hearts.length; i++) {
+				this.hearts[i].setEnabled(false);
+			}
         } else {
             console.log('Key needed!');
         }

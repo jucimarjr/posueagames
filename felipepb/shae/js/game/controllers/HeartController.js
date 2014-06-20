@@ -11,6 +11,9 @@ Game.HeartController = function (game, player, waypoints) {
 	this.currentWaypointIndex;
 	
 	this.beatSprite;
+	this.beatSpriteTween;
+	
+	this._enabled = true;
 }; 
 
 Game.HeartController.prototype = {
@@ -44,8 +47,18 @@ Game.HeartController.prototype = {
         this.flyToNextWaypoint(HeartConsts.delayToNextWaypoint);
 	},
 	
+	setEnabled: function (value) {
+		this._enabled = value;
+		
+		if (value) {
+			this.resumeTweens();
+		} else {
+			this.pauseTweens();
+		}
+	},
+	
 	playBeat: function () {
-		if (this.pursuitPositions.length != 0) {
+		if (!this._enabled || this.pursuitPositions.length != 0) {
 			return;
 		}
 		
@@ -66,26 +79,36 @@ Game.HeartController.prototype = {
 		beatSprite.alpha = 0.5;
 		
 		var beatAnimation = this.game.add.tween(beatSprite);
+		this.beatSpriteTween = beatAnimation;
         beatAnimation.to({ alpha: 1.0 }, 250, Phaser.Easing.Quadratic.Out, true, 0);
+		
+		var self = this;
 
 		beatAnimation.onComplete.add(function () {
 			beatSprite.alpha = 0.5;
-			beatAnimation = this.game.add.tween(beatSprite);
+			beatAnimation = self.game.add.tween(beatSprite);
+			self.beatSpriteTween = beatAnimation;
 			beatAnimation.to({ alpha: 1.0 }, 250, Phaser.Easing.Quadratic.Out, true, 0);
 
 	        beatAnimation.onComplete.add(function () {
 	            beatSprite.alpha = 1.0;
-	            beatAnimation = this.game.add.tween(beatSprite);
+	            beatAnimation = self.game.add.tween(beatSprite);
+				self.beatSpriteTween = beatAnimation;
 	            beatAnimation.to({ alpha: 0.0 }, 500, Phaser.Easing.Quadratic.Out, true, 0);
 
 				beatAnimation.onComplete.add(function () {
 					beatSprite.kill();
+					self.beatSpriteTween = null;
 				});
 	        });
 		});
 	},
 
 	update: function () {
+		if (!this._enabled) {
+			return;
+		}
+		
 		var mySprite = this.sprite;
 		var beatSprite = this.beatSprite;
 		var player = this.player;
@@ -164,6 +187,10 @@ Game.HeartController.prototype = {
 				tweens[i].resume();
 			}
 		}
+		
+		if (this.beatSpriteTween && !this.beatSpriteTween.isRunning) {
+			this.beatSpriteTween.resume();
+		}
 	},
 	
 	pauseTweens: function () {
@@ -175,6 +202,11 @@ Game.HeartController.prototype = {
 				tweens[i].isRunning = false;
 			}
         }
+
+		if (this.beatSpriteTween && this.beatSpriteTween.isRunning) {
+			this.beatSpriteTween.pause();
+			this.beatSpriteTween.isRunning = false;
+		}
 	},
 
 	getNextWaypoint: function (previousWaypoint) {
