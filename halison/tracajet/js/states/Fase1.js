@@ -29,6 +29,7 @@ State.Fase1= function (game) {
 	this.TOTAL_KEYS = 8;
 	this.imgLife;
 	this.txLife;
+	this.twenLife;
 };
 
 var folha;
@@ -76,6 +77,7 @@ State.Fase1.prototype = {
 		this.tracajet.anchor.setTo(.5,.5);
 	    this.tracajet.body.gravity.y = 30;
 		this.tracajet.body.setSize(35, 78,0,0);
+		this.tracajet.isImmortal = false;
 	    game.camera.follow(this.tracajet);
 
 	    //Group jacares
@@ -270,20 +272,34 @@ State.Fase1.prototype = {
 	},
 	
 	gameOver: function(obj){
-		if(obj != undefined && obj.key != 'jacare'){
-			this.tracajet.kill();
-			var moduloPositionX = Math.abs(game.world.position.x);
-			var moduloPositionY = Math.abs(game.world.position.y); 
-		    var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
-				font: "48px Arial",
-				fill: "#ff0044",
-				align: "left"
-			});
-			dieText.setText("GAME OVER");
+		if(obj != undefined && obj.key != 'jacare' && !this.tracajet.isImmortal){
+			if(Config.game.score.lifes == 0){
+				this.tracajet.kill();
+				var moduloPositionX = Math.abs(game.world.position.x);
+				var moduloPositionY = Math.abs(game.world.position.y); 
+				var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
+					font: "48px Arial",
+					fill: "#ff0044",
+					align: "left"
+				});
+				dieText.setText("GAME OVER");
+			}else{
+				this.tracajet.isImmortal = true;
+				Config.game.score.lifes--;
+				this.txLife.setText("x " + Config.game.score.lifes);
+				this.tracajet.alpha = 0;
+				this.twenLife = this.game.add.tween(this.tracajet).to( { alpha: 1 }, 100, Phaser.Easing.Linear.None, true, 0, 50, true);
+				this.twenLife.start()
+				this.game.time.events.add(Phaser.Timer.SECOND * 5, this.updateIsImmortal, this);
+			}
 		}
-		
 	},
-	
+	updateIsImmortal : function(){
+			this.twenLife.stop();
+			this.tracajet.alpha = 1;
+			this.tracajet.isImmortal = false;
+	}
+	,
 	followTracajet: function(jacare){
 		
 		var distance = this.game.math.distance(jacare.x, jacare.y, this.tracajet.x, this.tracajet.y);
