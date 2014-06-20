@@ -28,7 +28,25 @@ Game.GameState.prototype = {
         this.createHearts();
 		this.createPlayerLight();
 		this.createHeartBeatController();
+		
+		var self = this;
+		Utils.fadeOutScreen(this.game,
+		                    TweensConsts.fadeFillStyle,
+							TweensConsts.fadeOutDuration * 3,
+							function () {
+								self.onFadeOutScreenAnimationCompleted();
+							});
     },
+	
+	onFadeOutScreenAnimationCompleted: function () {
+		var self = this;
+        var tween = this.game.add.tween(this.player.sprite);
+
+        tween.to(null, 1000, Phaser.Easing.Linear.None, true, 0);
+        tween.onComplete.add(function () {
+            self.player.playRespawnAnimation();
+		});
+	},
 
     setupPhysicsSystem: function () {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);

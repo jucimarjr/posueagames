@@ -132,8 +132,6 @@ Game.PlayerController.prototype = {
         this.jumpButton = this.gameState.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		this.joystick = new Joystick();
 
-        this.playRespawnAnimation();
-
         // Create emitter
         this.emitter = this.gameState.game.add.emitter(this.sprite.x,
                                                        this.sprite.y,
@@ -170,7 +168,8 @@ Game.PlayerController.prototype = {
             this.animState == Game.PlayerController.AnimState.Dying)
             return;
 
-        this.isGrounded = this.sprite.body.onFloor();
+        if (this.sprite.body)
+            this.isGrounded = this.sprite.body.onFloor();
         
         this.handleInput();
         this.handleAnimation();
@@ -185,7 +184,7 @@ Game.PlayerController.prototype = {
     },
 
     handleInput: function () {
-        if (this.blockInput)
+        if (this.blockInput || !this.sprite.body)
             return;
 
         // Handle Movement
