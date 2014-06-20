@@ -38,7 +38,7 @@ var folhas;
 State.Fase1.prototype = {
 
 	preload: function () {
-		
+		//Agora carrega no GameSplash para não gerar delay
 		/* game.load.tilemap('mapaFase1','assets/1aFase/mapaFase1a.json',null,Phaser.Tilemap.TILED_JSON);
 		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height);
 		game.load.spritesheet('folhas', "assets/1aFase/folhas_120-40.png",40,40);
@@ -204,9 +204,10 @@ State.Fase1.prototype = {
 	,
 	updateTracajet : function(){
 		this.tracajet.body.velocity.x = 0;
-
+		var orientation = 0;
 		 if ( this.cursors.left.isDown) { // vai para esquerda
-	    	this.tracajet.body.velocity.x = -this.speed;
+	    	orientation = 1;
+			this.tracajet.body.velocity.x = -this.speed;
 	    	this.tracajet.animations.play('walk');
 	    	this.tracajet.scale.x = -1;
 
@@ -219,6 +220,7 @@ State.Fase1.prototype = {
 
 	    }
 	    else if (this.cursors.right.isDown ) { // vai para direita
+			
 	    	this.tracajet.body.velocity.x = this.speed;
 	    	this.tracajet.scale.x = +1;  // espelha se antes 1
 	    	this.tracajet.animations.play('walk');
@@ -260,9 +262,11 @@ State.Fase1.prototype = {
 	    	this.tracajet.body.setSize(35, 78,0,0);
 	    	this.tracajet.animations.stop();
 	    	this.tracajet.frame = 0;
-	    	this.game.add.tween(this.tracajet).to({
+			if(this.tracajet.body.onFloor()){
+				this.game.add.tween(this.tracajet).to({
                                 angle : 0
                         }, 20).start();
+			}
 
 	    }
 	}
