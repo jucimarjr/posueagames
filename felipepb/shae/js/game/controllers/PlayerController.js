@@ -24,8 +24,13 @@ Game.PlayerController = function (gameState, spawnPoint) {
 
     this.jumpSFX = new Array();
     this.touchdownSFX = new Array();
+    this.footstepSFX = new Array();
+
+    this.deathSFX;
+    this.spawnSFX;
 
     this._actualRunModifier;
+    this._footstepSFXPlayed;
 };
 
 Game.PlayerController.Direction = {
@@ -44,7 +49,8 @@ Game.PlayerController.AnimState = {
     JumpDescend: 'jump descend',
     JumpTouchdown: 'jump touchdown',
     Respawning: 'respawning',
-    Dying: 'dying'
+    Dying: 'dying',
+	FlyingSoul: 'soul flying'
 };
 
 Game.PlayerController.prototype = {
@@ -110,6 +116,11 @@ Game.PlayerController.prototype = {
         for (var i = 7; i >= 1; i--) {
             respawnAnimFrames.push('shae_dying_'+ i + '_100-100.png');
         };
+		
+		var soulFlyingFrames = new Array();
+		for (var i = 1; i <= 2; i++) {
+			soulFlyingFrames.push('shae_soul_' + i + '_100-100.png'); 
+		}
 
         var jumpStartAnim, jumpApexAnim, jumpTouchdownAnim, respawnAnim, deathAnim;
 
@@ -118,6 +129,7 @@ Game.PlayerController.prototype = {
         this.sprite.animations.add('run', runAnimFrames, 10, true);
         this.sprite.animations.add('jump-ascend', jumpAscendAnimFrames, 10, true);
         this.sprite.animations.add('jump-descend', jumpDescendAnimFrames, 10, true);
+		this.sprite.animations.add(Game.PlayerController.AnimState.FlyingSoul, soulFlyingFrames, 10, true);
 
         jumpStartAnim = this.sprite.animations.add('jump-start', jumpStartAnimFrames, 7.5, false);
         jumpStartAnim.onComplete.add(this.onJumpStartFinished, this);
@@ -128,10 +140,10 @@ Game.PlayerController.prototype = {
         jumpTouchdownAnim = this.sprite.animations.add('jump-touchdown', jumpTouchDownAnimFrames, 7.5, false);
         jumpTouchdownAnim.onComplete.add(this.onJumpTouchdownFinished, this);
 
-        respawnAnim = this.sprite.animations.add('respawn', respawnAnimFrames, 10, false);
+        respawnAnim = this.sprite.animations.add('respawn', respawnAnimFrames, 15, false);
         respawnAnim.onComplete.add(this.onRespawnAnimFinished, this);
 
-        deathAnim = this.sprite.animations.add('dying', deathAnimFrames, 10, false);
+        deathAnim = this.sprite.animations.add('dying', deathAnimFrames, 15, false);
         deathAnim.onComplete.add(this.onDeathAnimFinished, this);
     },
 
@@ -173,6 +185,15 @@ Game.PlayerController.prototype = {
         for (var i = 1; i <= 3; i++) {
             this.touchdownSFX.push(this.game.add.audio('touchdown_0' + i));
         };
+
+        for (var i = 1; i <= 3; i++) {
+            this.footstepSFX.push(this.game.add.audio('footstep_0' + i));
+        };
+
+        this._footstepSFXPlayed = false;
+
+        this.deathSFX = this.game.add.audio('death_sfx');
+        this.spawnSFX = this.game.add.audio('spawn_sfx');
     },
 
     createBody: function () {
@@ -191,11 +212,11 @@ Game.PlayerController.prototype = {
         if (this.blockInput)
             return;
 
-        // console.log(this.animState);
-
-        if (this.animState == Game.PlayerController.AnimState.Respawning ||
-            this.animState == Game.PlayerController.AnimState.Dying)
+		if (this.animState == Game.PlayerController.AnimState.Respawning ||
+            this.animState == Game.PlayerController.AnimState.Dying ||
+            this.animState == Game.PlayerController.AnimState.FlyingSoul) {
             return;
+		}
 
         if (this.sprite.body)
             this.isGrounded = this.sprite.body.onFloor();
@@ -205,6 +226,24 @@ Game.PlayerController.prototype = {
 
         this.emitter.x = this.sprite.x - 4;
         this.emitter.y = this.sprite.y + 34;
+
+        if (this.sprite.frameName == 'shae_walk_1_100-100.png' ||
+            this.sprite.frameName == 'shae_walk_3_100-100.png') {
+            
+            if (!this._footstepSFXPlayed) {
+                this.footstepSFX[Utils.random(0, 2)].play('', 0, 0.5);
+                this._footstepSFXPlayed = true;
+            }
+        } else if (this.sprite.frameName == 'shae_run_1_100-100.png' ||
+                   this.sprite.frameName == 'shae_run_3_100-100.png') {
+            
+            if (!this._footstepSFXPlayed) {
+                this.footstepSFX[Utils.random(0, 2)].play('', 0, 1.0);
+                this._footstepSFXPlayed = true;
+            }
+        } else if (this._footstepSFXPlayed) {
+            this._footstepSFXPlayed = false;
+        }
     },
 
     render: function (game) {
@@ -362,7 +401,11 @@ Game.PlayerController.prototype = {
             this.emitter.start(true, 500, null, numParticles);
             // Play touchdown sound effects.
             this.touchdownSFX[Utils.random(0, 2)].play();
-        }
+        } else if (this.animState == Game.PlayerController.AnimState.FlyingSoul &&
+		           this.currentAnim != Game.PlayerController.AnimState.FlyingSoul) {
+			this.sprite.animations.play(Game.PlayerController.AnimState.FlyingSoul);
+			this.currentAnim = Game.PlayerController.AnimState.FlyingSoul;
+		}
     },
 
     applyVelocity: function () {
@@ -421,16 +464,26 @@ Game.PlayerController.prototype = {
         this.sprite.animations.play('respawn');
         this.currentAnim = 'respawn';
         this.animState = Game.PlayerController.AnimState.Respawning;
-        
+
         this.sprite.scale.x = 1;
         this.sprite.scale.y = 1;
+
+        this.spawnSFX.play();
     },
 
     playDeathAnimation: function () {
         this.sprite.animations.play('dying');
         this.currentAnim = 'dying';
         this.animState = Game.PlayerController.AnimState.Dying;
+
+        this.deathSFX.play();
     },
+	
+	playFlyingSoulAnimation: function () {
+		this.sprite.animations.play(Game.PlayerController.AnimState.FlyingSoul);
+        this.currentAnim = Game.PlayerController.AnimState.FlyingSoul;
+        this.animState = Game.PlayerController.AnimState.FlyingSoul;
+	},
 
     onRespawnAnimFinished: function () {
         // console.log('onRespawnAnimFinished');
@@ -445,13 +498,57 @@ Game.PlayerController.prototype = {
     },
 
     onDeathAnimFinished: function () {
-        // console.log('onDeathAnimFinished');
-        this.sprite.scale.x = 0;
-        this.sprite.scale.y = 0;
-        
-        this.playRespawnAnimation();
-		this.sprite.x = this.spawnPoint.x + 20;
-        this.sprite.y = this.spawnPoint.y - 32;
+		var self = this;
+
+		this.sprite.alpha = 0.0;
+		this.playFlyingSoulAnimation();
+		
+		var fadeInTweenCompleted = false;
+		var positionTweenCompleted = false;
+
+		if (self.sprite.x < self.spawnPoint.x) {
+            this.direction = Game.PlayerController.Direction.Right;
+		} else {
+			this.direction = Game.PlayerController.Direction.Left;
+		}
+		this.handleAnimation();
+
+		var fadeInTween = this.gameState.game.add.tween(this.sprite);
+		fadeInTween.to(null, 800, Phaser.Easing.Linear.None, true, 0)
+		           .to({ alpha: 1.0 }, 1000, Phaser.Easing.Quadratic.Out, true, 0);
+		fadeInTween.onComplete.add(function () {
+			if (fadeInTweenCompleted)
+                return;
+			fadeInTweenCompleted = true;
+
+			var positionTween = self.gameState.game.add.tween(self.sprite);
+			positionTween.to({ x: self.spawnPoint.x + 20, y: self.spawnPoint.y - 32 },
+			                 5 * Phaser.Point.distance(self.sprite, self.spawnPoint),
+							 Phaser.Easing.Linear.None,
+							 true,
+							 0);
+            positionTween.onComplete.add(function () {
+				if (positionTweenCompleted)
+				    return;
+				positionTweenCompleted = true;
+				
+				var fadeOutAnimationLength = 3;
+				var fadeOutAnimationIndex = 0;
+				var fadeOutTween = self.gameState.game.add.tween(self.sprite);
+				fadeOutTween.to(null, 400, Phaser.Easing.Linear.None, true, 0)
+				            .to({ alpha: 0 }, 500, Phaser.Easing.Quadratic.Out, true, 0)
+							.to({ alpha: 1 }, 0, Phaser.Easing.Linear.None, true, 0);
+                fadeOutTween.onComplete.add(function () {
+					if (++fadeOutAnimationIndex != fadeOutAnimationLength) {
+						return;
+					}
+                    self.playRespawnAnimation();
+					self.handleAnimation();
+				});
+			});
+		});
+//		  this.sprite.x = this.spawnPoint.x + 20;
+//        this.sprite.y = this.spawnPoint.y - 32;
     },
 
     stopAndBlockInput: function () {
@@ -461,26 +558,4 @@ Game.PlayerController.prototype = {
         this.sprite.body.velocity.y = 0;
         this.sprite.animations.stop();
     }
-
-    // onBeginContact: function (otherBody, otherShape, shape, contactDataArray) {
-    //     var item1 = contactDataArray[0];
-    //     var item2 = contactDataArray[1];
-
-    //     // console.log("item 1: " + item1.contactPointA[0] + "," + item1.contactPointA[1] + " | "  +
-    //     //                          item1.contactPointB[0] + "," + item1.contactPointB[1] );
-
-    //     // console.log("item 2: " + item2.contactPointA[0] + "," + item2.contactPointA[1] + " | "  +
-    //     //                          item2.contactPointB[0] + "," + item2.contactPointB[1] );
-
-    //     // console.log("--------------------------------------------");
-
-    //     var zeroCounts = 0;
-
-    //     zeroCounts = item1.contactPointA[1] == 0 ? zeroCounts + 1 : zeroCounts;
-    //     zeroCounts = item1.contactPointB[1] == 0 ? zeroCounts + 1 : zeroCounts;
-    //     zeroCounts = item2.contactPointA[1] == 0 ? zeroCounts + 1 : zeroCounts;
-    //     zeroCounts = item2.contactPointB[1] == 0 ? zeroCounts + 1 : zeroCounts;
-
-    //     this.isGrounded = zeroCounts >= 2;
-    // }
 };
