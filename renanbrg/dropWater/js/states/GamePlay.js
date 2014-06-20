@@ -21,10 +21,16 @@ State.GamePlay = function (game) {
     this.layerBody = null;
     this.hud = new HUD(this.game);
     this.forceSlidingStraw = false;
+    this.animestate = 'stop';  //stores if player is walk, jump, die
+    this.playersize = 'small'; //stores if player is small or big
+    this.playerstate = 'normal'; //stores if player is normal, with sunscreen, with energy
+    this.onAir = false;
+    
+    this.countCall = 0; //count how many times the collision function is called. 
 
     try {
-        this.drop = new Character(this.game, 'dude',
-                'assets/images/Dude_32-48.png', [32, 48]);
+        this.drop = new Character(this.game, 'drop',
+                'assets/spritesheets/drop_4590-60.png', [51, 60]);
     } catch(exception) {
         console.log(exception.toString());
     }
@@ -126,16 +132,17 @@ State.GamePlay.prototype = {
 		this.game.add.image(0, this.game.height-80, 'wetSand');
 		
         //setup all tiles with collisiongroups or materials
-		for (var i=0; i<this.layermain.length; i++){
+		for (var i=0; i<this.layermain.length; i++) {
 			this.layermain[i].setCollisionGroup(this.groundCG);
 			this.layermain[i].collides([this.playerCG, this.crabCG, this.lifeDropCG, this.groundCG]);
 			this.layermain[i].setMaterial(this.groundMaterial);
 		}
 		
         // create player
-        this.drop.create(2000, 50);
-        var dropSprite = this.drop.getSpriteObject();   
+        this.drop.create(200, this.game.world.height-500);
+        var dropSprite = this.drop.getSpriteObject();           
         this.game.physics.p2.enableBody(dropSprite, false);        
+        dropSprite.body.setRectangle(40, 45, 0, 0);
         this.game.camera.follow(dropSprite);
         this.drop.configureCharacter(this.setCharacterInicialValues);
         dropSprite.body.setCollisionGroup(this.playerCG);
@@ -307,16 +314,53 @@ State.GamePlay.prototype = {
         this.mainSound.loop = true;
         this.mainSound.play();
     },
-    setCharacterInicialValues: function(character) {    	
+    setCharacterInicialValues: function(character) {
     	character.smoothed = false;
     	character.body.fixedRotation = true;
-        character.animations.add('left', [0, 1, 2, 3], 10, true);
-        character.animations.add('right', [5, 6, 7, 8], 10, true);
+    	
+    	// normal state
+        character.animations.add('leftsmallnormal', [4,5,6], 10, true);
+        character.animations.add('rightsmallnormal', [8,9,10], 10, true);                                
+        character.animations.add('jumpleftsmallnormal', [3], 10, false);                
+        character.animations.add('jumprightsmallnormal', [11], 10, false);
+        character.animations.add('stopsmallnormal', [7], 10, true);         
+        character.animations.add('leftbignormal', [19,20,21], 10, true);
+        character.animations.add('rightbignormal', [23,24,25], 10, true);
+        character.animations.add('jumpleftbignormal', [18], 10, true);                
+        character.animations.add('jumprightbignormal', [26], 10, true);
+        character.animations.add('stopbignormal', [22], 10, true);
+
+		// energy state
+        character.animations.add('leftsmallenergy', [34,35,36], 10, true);
+        character.animations.add('rightsmallenergy', [38,39,40], 10, true);                                
+        character.animations.add('jumpleftsmallenergy', [33], 10, false);                
+        character.animations.add('jumprightsmallenergy', [41], 10, false);
+        character.animations.add('stopsmallenergy', [37], 10, true);                 
+        character.animations.add('leftbigenergy', [49,50,51], 10, true);
+        character.animations.add('rightbigenergy', [53,54,55], 10, true);
+        character.animations.add('jumpleftbigenergy', [48], 10, true);                
+        character.animations.add('jumprightbigenergy', [56], 10, true);
+        character.animations.add('stopbigenergy', [52], 10, true);
+        
+        // sunscreen state
+        character.animations.add('leftsmallsunscreen', [64,65,66], 10, true);
+        character.animations.add('rightsmallsunscreen', [68,69,70], 10, true);                                
+        character.animations.add('jumpleftsmallsunscreen', [63], 10, false);                
+        character.animations.add('jumprightsmallsunscreen', [71], 10, false);
+        character.animations.add('stopsmallsunscreen', [67], 10, true);                 
+        character.animations.add('leftbisunscreen', [79,80,81], 10, true);
+        character.animations.add('rightbigsunscreen', [83,84,85], 10, true);
+        character.animations.add('jumpleftbigsunscreen', [78], 10, true);                
+        character.animations.add('jumprightbigsunscreen', [86], 10, true);
+        character.animations.add('stopbigsunscreen', [82], 10, true);
+		
     },
 	update: function () {
 		"use strict";
 		this.hud.updateFPS();
 		this.handleKeyDown();
+		this.isOnAir();
+		this.playerAnimations(this.drop.getSpriteObject());
 		this.playerOverDiagonalStraw();
 
 		this.moveCrab(this.crabs.getAt(0));
@@ -357,22 +401,46 @@ State.GamePlay.prototype = {
                 this.drop.getSpriteObject().body.moveLeft(1);
                 this.drop.getSpriteObject().body.data.force[0] = -1;
             } else {
-                this.drop.moveRight(4);
-                this.drop.getSpriteObject().body.moveRight(300);
+				if (!this.onAir) {
+					this.drop.moveRight(4);
+					this.animestate = 'right';
+				} else {
+					this.animestate = 'jumpright';
+				}
+				this.drop.getSpriteObject().body.moveRight(300);
             }
         } else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
-            this.drop.moveLeft(4);
-            this.drop.getSpriteObject().body.moveLeft(300);
-		} else {
-            this.drop.stop();
+			if (!this.onAir) {
+				this.drop.moveLeft(4);
+				this.animestate = 'left';
+			} else {
+				this.animestate = 'jumpleft';
+			}
+			this.drop.getSpriteObject().body.moveLeft(300);
+		}  else {
+			this.drop.stop();
+			this.animestate = 'stop';
 		}
-		// Jump
+		
 		if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) {
 			if (this.touchingDown(this.drop.getSpriteObject().body)) { 
 				this.drop.getSpriteObject().body.moveUp(700);
 				this.jumpSound.play();
 			}
 		}
+	},
+	
+	playerAnimations: function (player) {
+		if (this.animestate === 'jumpTop') { player.animations.stop(); player.frame = 2;}
+			else if (this.animestate === 'jumpright')  { player.animations.play('jumpright'+this.playersize+this.playerstate);}
+			else if (this.animestate === 'jumpleft')  { player.animations.play('jumpleft'+this.playersize+this.playerstate);}
+			else if (this.animestate === 'die')  { player.animations.stop(); player.frame = 6;}
+			else if (this.animestate === 'win')  { player.animations.stop(); player.frame = 7;}
+			else if (this.animestate === 'powerup') { player.animations.stop(); player.frame = 8;}
+			else if (this.animestate === 'fall') { player.animations.stop(); player.frame = 9;}
+			else if (this.animestate === 'left') { player.animations.play('left'+this.playersize+this.playerstate);}
+			else if (this.animestate === 'right') { player.animations.play('right'+this.playersize+this.playerstate);}
+		else { player.animations.stop(); player.animations.play('stop'+this.playersize+this.playerstate);}
 	},
 	// Funcao Magica!!! Deve existir outro jeito!
 	touchingDown: function (someone) {
@@ -423,6 +491,16 @@ State.GamePlay.prototype = {
 			}
 		} return result;
 	},	
+	isOnAir: function () {
+		if( this.touchingDown(this.drop.getSpriteObject().body) ||
+			this.touchingUp(this.drop.getSpriteObject().body)   ||
+			this.touchingLeft(this.drop.getSpriteObject().body) ||
+			this.touchingRight(this.drop.getSpriteObject().body)) {
+				this.onAir = false;
+		} else {
+			this.onAir = true;
+		}
+	},
 	checkOverlapCrabDrop: function (body1, body2) {
 		// body1 is the drop, body2 is the crab.
 		if (!this.touchingUp(body2)) { 
@@ -448,39 +526,80 @@ State.GamePlay.prototype = {
             this.hud.increaseDropBar();
             body2.sprite.kill();
             body2.hasCollided = true;
-			this.drop.getSpriteObject().scale.setTo(1.5, 1.5);
+			this.playersize = 'big';
+			this.drop.getSpriteObject().body.setRectangle(51, 55, 0, 0);
+			// after setRectangle, we need to setCollision again
+			this.updateCollisionSetup();
+
             return true;
         }
         return false;
     },
     drinkEnergy: function() {
-		this.energy.kill();
-		//this.drop.getSpriteObject().body.x = 1890; 
-		//this.drop.getSpriteObject().body.y = 50;
-		this.drop.getSpriteObject().body.moveUp(1500);		
-		this.jumpSound.play();		
-		this.smokeEmitter.start(false, 3000, 50);
-        this.haveEnergy = true;		
-        var self = this;
-        this.smokeTimer = setTimeout(function() {
-                self.stopSmoke();
-        }, 2000);		
+		this.countCall++;
+		if (this.countCall == 1) {
+
+			this.energy.kill();
+			//this.drop.getSpriteObject().body.x = 1890; 
+			//this.drop.getSpriteObject().body.y = 50;
+			this.drop.getSpriteObject().body.moveUp(1500);		
+			this.jumpSound.play();		
+			this.smokeEmitter.start(false, 3000, 50);
+			this.haveEnergy = true;		
+			var self = this;
+			this.smokeTimer = setTimeout(function() {
+					self.stopSmoke();
+			}, 2000);
+			
+			this.playerstate = 'energy';
+		} 				
+		if (this.countCall == 2) {
+			this.countCall = 0;
+		} 			
 	},
 	killDrop: function (body1, body2) {
-		console.log("aaaaaaaaaaaaaaaaaaa");
-		this.haveEnergy = true;
-		this.smokeEmitter.on = true;
-		this.smokeEmitter.start(false, 3000, 50);
-		this.drop.getSpriteObject().scale.setTo(this.drop.getSpriteObject().scale.x-0.2, this.drop.getSpriteObject().scale.y-0.2);
-		if (this.drop.getSpriteObject().scale.x < 1) {
+		this.countCall++;
+		if (this.countCall == 1) {
+			console.log('moreeeeeeeeeeeeeeeeeu!!! killlDrop');
+			this.haveEnergy = true;
+			this.smokeEmitter.on = true;
+			this.smokeEmitter.start(false, 3000, 50);
+			if (this.playersize == 'big') {
+				var self = this;
+				var time = setTimeout(function(time) {
+					self.stopKillTime();
+				}, 2000);
+				this.playersize = 'small';			
+			} else if (this.playersize == 'small') {
 				this.drop.getSpriteObject().kill();
+			} 		
 		}
-		
+		if (this.countCall == 2) {
+			this.countCall = 0;
+		} 		
+	},
+	updateCollisionSetup: function () {
+		this.drop.getSpriteObject().body.setCollisionGroup(this.playerCG);
+		this.drop.getSpriteObject().body.collides([this.groundCG, this.crabCG, this.strawCG,
+						this.lifeDropCG, this.seashellCG, this.urchinsCG, this.hotsandCG]);
+		this.drop.getSpriteObject().body.setMaterial(this.characterMaterial);
+		this.game.physics.p2.createContactMaterial(this.characterMaterial, this.groundMaterial, {friction: 0.0, restitution: 0.0});		
 	},
 	stopSmoke: function() {
 		this.haveEnergy = false;
 		this.smokeEmitter.on = false;
 		clearTimeout(this.smokeTimer);
+		this.playerstate = 'normal';
+	},
+	stopKillTime: function(time) {		
+		this.drop.getSpriteObject().body.createGroupCallback(this.hotsandCG, this.timeOverKill, this);
+		this.drop.getSpriteObject().body.setRectangle(40, 45, 0, 0);
+		// after setRectangle, we need to setCollision again
+		this.updateCollisionSetup();
+		clearTimeout(time);
+	},
+	timeOverKill: function () {
+		this.drop.getSpriteObject().kill();
 	},
 	moveCrab: function (crab) {
 		if (crab.name == "crab1") {
