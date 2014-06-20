@@ -129,10 +129,9 @@ Game.HeartController.prototype = {
 			}
 		}
 		
-		if (playerSprite.overlap(mySprite) &&
-		    playerDistance <= HeartConsts.playerDeathDistance) {
-			console.log('die!');
+		if (playerSprite.overlap(mySprite) && playerDistance <= HeartConsts.playerDeathDistance) {
 			player.playDeathAnimation();
+            player.destroyBody();
 		}
 	},
 	
