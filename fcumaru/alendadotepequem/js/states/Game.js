@@ -39,9 +39,12 @@ State.Game.prototype = {
 		this.game.physics.arcade.gravity.y = 800;
 
 		// var bg = this.game.add.tileSprite(0, 1000, 960, 1800, 'fundo');
+		  //tilesprite = game.add.tileSprite(0, 0, 800, 600, 'starfield');
 		// bg.fixedToCamera = false;
-		this.game.stage.backgroundColor = "#ffff99";
-
+		//this.game.stage.backgroundColor = "#ffff99";
+		//bgGrd = game.add.tileSprite(0, 584, game.stage.bounds.width, 16, 'ground');
+		var bg = this.game.add.tileSprite(0, 900, game.stage.bounds.width, 1800, 'fundo');
+		//this.bg.body.immovable = true;
 		map = this.game.add.tilemap('mapa');
 
 		map.addTilesetImage('map', 'map');
@@ -80,6 +83,7 @@ State.Game.prototype = {
 		this.enemies.update(this.layer);
 		this.trees.update(this.layer);
 		this.rocks.update();
+		//this.faisca.update();
 		this.rocks.checkCollision(this.heroes.getCurrent());
 		if(this.heroes.heroes[this.heroes.index].type === HERO_OF_ROPE){
 			this.trees.checkCollision(
@@ -90,6 +94,7 @@ State.Game.prototype = {
 			this.game.state.start('GameOver');
 
 		}
+		
 	},
 
 	render : function() {
