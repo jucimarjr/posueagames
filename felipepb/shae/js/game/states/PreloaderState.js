@@ -25,6 +25,7 @@ Game.PreloaderState.prototype = {
         
         // Images
         this.game.load.image('smoke_particle_small', 'assets/game/smoke_particle_8-8.png');
+        this.game.load.image('spark_particle_medium', 'assets/game/particle_spark_16-16.png');
         this.game.load.image('light', 'assets/game/light.png');
 		this.game.load.image('block', 'assets/game/block.png');
 
@@ -41,6 +42,12 @@ Game.PreloaderState.prototype = {
 		
 		// Credits
 		this.game.load.image('credits', 'assets/screens/creditsnicks_960-600.png');
+		
+		// Game Win
+		this.game.load.image('gameWin', 'assets/screens/gamewin_960-600.png');
+		
+		// Game Loose
+		this.game.load.image('gameLoose', 'assets/screens/gameloose_960-600.png');
 		
 		// Fonts
 		this.game.load.bitmapFont('silkscreenRed', 'assets/fonts/silkscreen_red.png', 'assets/fonts/silkscreen_red.fnt');
