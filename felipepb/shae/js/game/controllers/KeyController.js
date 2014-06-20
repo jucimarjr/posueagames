@@ -31,6 +31,8 @@ Game.KeyController = function (game, x, y) {
     this.emitter.gravity = -PhysicsConsts.gravity;
     this.emitter.setScale(0.0, 1.0, 0.0, 1.0, 1000, Phaser.Easing.Cubic.In, true);
     this.emitter.start(false, 1000, 250);
+
+    this.collectedSFX = game.add.audio('key_collected');
 };
 
 Game.KeyController.prototype = Object.create(Phaser.Sprite.prototype);
@@ -49,6 +51,7 @@ Game.KeyController.prototype.onCollected = function (playerSprite) {
 	var collectedAnim = this.game.add.tween(this.scale);
 	collectedAnim.to({ x: 0, y: 0 }, 500, Phaser.Easing.Cubic.Out, true);
 	collectedAnim.onComplete.add(this.onCollectedAnimComplete, this);
+    this.collectedSFX.play('', 0, 0.25);
 }
 
 Game.KeyController.prototype.onCollectedAnimComplete = function () {

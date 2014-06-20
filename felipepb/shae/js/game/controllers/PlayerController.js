@@ -1,5 +1,6 @@
 Game.PlayerController = function (gameState, spawnPoint) {
     this.gameState = gameState;
+    this.game = this.gameState.game;
     this.spawnPoint = spawnPoint;
     this.sprite;
     this.emitter;
@@ -20,6 +21,9 @@ Game.PlayerController = function (gameState, spawnPoint) {
 
     this.currentAnim;
     this.animState;
+
+    this.jumpSFX = new Array();
+    this.touchdownSFX = new Array();
 
     this._actualRunModifier;
 };
@@ -45,6 +49,14 @@ Game.PlayerController.AnimState = {
 
 Game.PlayerController.prototype = {
     create: function () {
+        this.createSprite();
+        this.createAnimations();
+        this.setupInput();
+        this.createParticles();
+        this.createSoundEffects();
+    },
+
+    createSprite: function () {
         // Setup sprites
         this.sprite = this.gameState.game.add.sprite(0, 0, 'main_sprite_atlas');
         this.sprite.frameName = 'shae_idle_1_100-100.png';
@@ -53,7 +65,9 @@ Game.PlayerController.prototype = {
         this.sprite.y = this.spawnPoint.y - 32;
         this.sprite.scale.x = 0;
         this.sprite.scale.y = 0;
-        
+    },
+
+    createAnimations: function () {
         // Create animations
         var idleAnimFrames = new Array();
         for (var i = 1; i <= 5; i++) {
@@ -119,19 +133,9 @@ Game.PlayerController.prototype = {
 
         deathAnim = this.sprite.animations.add('dying', deathAnimFrames, 10, false);
         deathAnim.onComplete.add(this.onDeathAnimFinished, this);
+    },
 
-        // Setup input
-        this.canJump = true;
-        this.isJumping = false;
-        this.blockInput = false;
-
-        this._actualRunModifier = 0.0;
-
-        this.cursorKeys = this.gameState.game.input.keyboard.createCursorKeys();
-        this.runButton = this.gameState.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
-        this.jumpButton = this.gameState.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		this.joystick = new Joystick();
-
+    createParticles: function () {
         // Create emitter
         this.emitter = this.gameState.game.add.emitter(this.sprite.x,
                                                        this.sprite.y,
@@ -146,12 +150,37 @@ Game.PlayerController.prototype = {
         this.emitter.width = 5;
     },
 
-    createBody: function() {
+    setupInput: function () {
+        // Setup input
+        this.canJump = true;
+        this.isJumping = false;
+        this.blockInput = false;
+
+        this._actualRunModifier = 0.0;
+
+        this.cursorKeys = this.gameState.game.input.keyboard.createCursorKeys();
+        this.runButton = this.gameState.game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
+        this.jumpButton = this.gameState.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.joystick = new Joystick();
+    },
+
+    createSoundEffects: function () {
+        // Create sound effects
+        for (var i = 1; i <= 3; i++) {
+            this.jumpSFX.push(this.game.add.audio('jump_0' + i));
+        };
+
+        for (var i = 1; i <= 3; i++) {
+            this.touchdownSFX.push(this.game.add.audio('touchdown_0' + i));
+        };
+    },
+
+    createBody: function () {
         this.gameState.registerBody(this.sprite);
         this.sprite.body.setSize(26, 64, 0, 0);
     },
 
-    destroyBody: function() {
+    destroyBody: function () {
         if (this.sprite && this.sprite.body) {
 			this.sprite.body.destroy();
 			this.sprite.body = null;
@@ -300,16 +329,18 @@ Game.PlayerController.prototype = {
             // Run animation when player is grounded.
             this.sprite.animations.play('run');
             this.currentAnim = 'run';
-
+            // Emit particles.
             var numParticles = Utils.random(6, 10);
             this.emitter.start(true, 400, null, numParticles);
         } else if (this.animState == Game.PlayerController.AnimState.JumpStart && this.currentAnim != 'jump-start') {
             // Jump start animation, run when player is starting to jump, duh.
             this.sprite.animations.play('jump-start');
             this.currentAnim = 'jump-start';
-            
+            // Emit particles.
             var numParticles = Utils.random(12, 18);
             this.emitter.start(true, 500, null, numParticles);
+            // Play jump sound effect.
+            this.jumpSFX[Utils.random(0, 2)].play();
         } else if (this.animState == Game.PlayerController.AnimState.JumpAscend && this.currentAnim != 'jump-ascend') {
             // Jump ascend animation, run when player is going up.
             this.sprite.animations.play('jump-ascend');
@@ -326,9 +357,11 @@ Game.PlayerController.prototype = {
             // Jump touchdown animation, run when player touched the ground coming from a jump/fall.
             this.sprite.animations.play('jump-touchdown');
             this.currentAnim = 'jump-touchdown';
-            
+            // Emit particles.
             var numParticles = Utils.random(8, 12);
             this.emitter.start(true, 500, null, numParticles);
+            // Play touchdown sound effects.
+            this.touchdownSFX[Utils.random(0, 2)].play();
         }
     },
 
