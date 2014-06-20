@@ -203,18 +203,15 @@ Game.GameState.prototype = {
             return;
 
         if (this.playerHasKey) {
-            console.log('level completed!');
             this.stageComplete = true;
-            var tween = this.game.add.tween(gateSprite);
-            tween.to({ alpha: 0.0 }, 1000, Phaser.Easing.Cubic.In, true, 1000);
-            tween.onComplete.add(this.onStageComplete, this);
+            gateSprite.onGateOpenned(this.onStageComplete, this);
             this.player.stopAndBlockInput();
         } else {
-            console.log('key needed!');
+            console.log('Key needed!');
         }
     },
 
     onStageComplete: function () {
-        console.log('onStageComplete!');
+        console.log('Stage complete! Load next level...');
     }
 };
