@@ -34,6 +34,10 @@ var TweensConsts = {
 	fadeOutDuration: 200
 };
 
+var ScreensConsts = {
+	fontSize: 60
+};
+
 var Utils = {
 	bitmapFadeLayer: null,
 	

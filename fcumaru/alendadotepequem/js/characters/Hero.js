@@ -14,10 +14,13 @@ function Hero(game, type) {
 
 	this.jumpCount = 0;
 	this.active = false;
+<<<<<<< HEAD
+=======
 
 	//TODO: "body" of the rope
 	this.ropeTipKey = 'ropeTip';
 	this.ropeTipAsset = 'assets/ropeTip_30-10.png';
+>>>>>>> f0250efccf3a1fdf030df5e8227b1e80ce5853e4
 }
 
 Hero.method('getSprite', function() {
@@ -34,7 +37,10 @@ Hero.method('isAlive', function() {
 
 Hero.method('preload', function() {
 	this.game.load.image(this.key, this.asset, 120, 120);
+<<<<<<< HEAD
+=======
 	this.game.load.image(this.ropeTipKey, this.ropeTipAsset, 30, 10); // for HeroOfRope
+>>>>>>> f0250efccf3a1fdf030df5e8227b1e80ce5853e4
 });
 
 Hero.method('create', function() {
