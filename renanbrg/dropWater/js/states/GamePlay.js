@@ -10,6 +10,7 @@ State.GamePlay = function (game) {
     this.shell = null;
     this.crabMaterial = null;
     this.groundMaterial = null;
+    this.hotsandMaterial = null;
     this.energy = null;
     this.smokeEmitter = null;
     this.haveEnergy = false;
@@ -40,9 +41,10 @@ State.GamePlay.prototype = {
 		"use strict";
 		this.game.load.image('gameplay-bg',  Config.gamePlay.dir);
 		this.game.load.tilemap('map', 'assets/mapaLevel1_4800-600.json', null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('redsand','assets/images/redsand_1480-80.png');
+		this.game.load.image('redsand','assets/images/redsand_4440-80.png');
 	    this.game.load.image('plataforma','assets/images/barra_160-80.png');
-	    this.game.load.image('areia','assets/images/areiaSeca_40-40.png');	    
+        this.game.load.image('areia','assets/images/areiaSeca_40-40.png');
+        this.game.load.image('areia_quente','assets/images/red_40-40.png');
 	    this.game.load.spritesheet('crab','assets/spritesheets/crab_150-69.png', 150, 69);
 	    this.game.load.spritesheet('energy','assets/spritesheets/energy_200-40.png', 40, 40);
         this.game.load.spritesheet('dropInStraw',
@@ -91,6 +93,7 @@ State.GamePlay.prototype = {
 		this.map = this.game.add.tilemap('map');
 		this.map.addTilesetImage('barra_160-80', 'plataforma');
 		this.map.addTilesetImage('areiaSeca_40-40', 'areia');
+		this.map.addTilesetImage('red', 'areia_quente');
 		this.layer = this.map.createLayer('Camada de Tiles 1');
         this.layer.resizeWorld();
 		        
@@ -118,15 +121,7 @@ State.GamePlay.prototype = {
         this.slidingMaterial = game.physics.p2.createMaterial('slidingMaterial');            
         this.crabMaterial = game.physics.p2.createMaterial('crabMaterial');           
         this.groundMaterial = game.physics.p2.createMaterial('groundMaterial');
-        
-        // red and hot sand
-   		this.redSand = this.game.add.sprite(1060, this.game.height-40, 'redsand');
-        this.game.physics.p2.enableBody(this.redSand, false);        
-		this.redSand.body.fixedRotation = true;
-        this.redSand.body.setRectangle(1480, 80, 0, 0);
-		this.redSand.body.static = true;
-        this.redSand.body.setCollisionGroup(this.hotsandCG);	
-        this.redSand.body.collides([this.playerCG]);
+        this.hotsandMaterial = game.physics.p2.createMaterial('hotsandMaterial');
 
 		// wet sand
 		this.game.add.image(0, this.game.height-80, 'wetSand');
@@ -137,10 +132,19 @@ State.GamePlay.prototype = {
 			this.layermain[i].collides([this.playerCG, this.crabCG, this.lifeDropCG, this.groundCG]);
 			this.layermain[i].setMaterial(this.groundMaterial);
 		}
-		
+
+        // red and hot sand
+        this.redSand = this.game.add.sprite(2780, this.game.height-40, 'redsand');
+        this.game.physics.p2.enableBody(this.redSand, false);
+        this.redSand.body.fixedRotation = true;
+        this.redSand.body.static = true;
+        this.redSand.body.setCollisionGroup(this.hotsandCG);
+        this.redSand.body.collides([this.playerCG, this.crabCG, this.groundCG]);
+        this.redSand.body.setMaterial(this.hotsandMaterial);
+
         // create player
         this.drop.create(200, this.game.world.height-500);
-        var dropSprite = this.drop.getSpriteObject();           
+        var dropSprite = this.drop.getSpriteObject();
         this.game.physics.p2.enableBody(dropSprite, false);        
         dropSprite.body.setRectangle(40, 45, 0, 0);
         this.game.camera.follow(dropSprite);
@@ -169,7 +173,7 @@ State.GamePlay.prototype = {
 		this.crabs.enableBody = true;
 		this.crabs.physicsBodyType = Phaser.Physics.P2JS;		
 		this.crabs.create(this.game.width-180, this.game.height-80-69, 'crab');
-        this.crabs.create(this.game.width, this.game.height-80-69, 'crab');				
+        this.crabs.create(this.game.width, this.game.height-80-69, 'crab');
 		for (var i = 0; i < this.crabs.length; i++) {				
 			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);				
 			this.crabs.getAt(i).body.fixedRotation = true;	
@@ -177,7 +181,7 @@ State.GamePlay.prototype = {
 			this.crabs.getAt(i).animations.add('walkL', [0, 1, 2], 10, true);
 			this.crabs.getAt(i).animations.add('walkR', [0, 1, 2], 10, true);			
 			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG,
-                    this.groundCG, this.seashellCG]);
+                    this.groundCG, this.seashellCG, this.hotsandCG]);
 		}
 		this.crabs.getAt(0).body.moveLeft(400);
 		this.crabs.getAt(1).body.moveRight(400);
@@ -190,7 +194,8 @@ State.GamePlay.prototype = {
 		this.energy.animations.add('energyMove', [0, 1, 2, 3, 4], 7, true);
 		this.energy.animations.play('energyMove');
         this.energy.body.setCollisionGroup(this.groundCG);	
-        this.energy.body.collides([this.groundCG, this.crabCG, this.playerCG]);
+        this.energy.body.collides([this.groundCG, this.crabCG, this.playerCG,
+                this.hotsandCG]);
 
 
         // Create the sea urchins
@@ -283,14 +288,14 @@ State.GamePlay.prototype = {
                 this.checkOverlapWithLifeDrop, this);
 		this.energy.body.createGroupCallback(this.playerCG, this.drinkEnergy, this);
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
-		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
         dropSprite.body.createGroupCallback(this.coveredStrawCG,
                 this.insideStraw, this);
 		
 		// create contact material
-        this.game.physics.p2.createContactMaterial(this.characterMaterial, this.slidingzMaterial, {friction: 0.1, restitution: 0});         
+        this.game.physics.p2.createContactMaterial(this.characterMaterial, this.slidingMaterial, {friction: 0.1, restitution: 0});         
         this.game.physics.p2.createContactMaterial(this.groundMaterial, this.crabMaterial, {friction: 0.0, restitution: 0.0});
-		this.game.physics.p2.createContactMaterial(this.characterMaterial, this.groundMaterial, {friction: 0.0, restitution: 0.0});        				          				
+        this.game.physics.p2.createContactMaterial(this.characterMaterial, this.groundMaterial, {friction: 0.0, restitution: 0.0});
+        this.game.physics.p2.createContactMaterial(this.crabMaterial, this.hotsandMaterial, {friction: 0.0, restitution: 0.0});
 		
 		// smoke animation
 		// add smoke particles
@@ -647,7 +652,7 @@ State.GamePlay.prototype = {
     strawAnimationComplete: function(sprite, animation) {
         var dropSprite = this.drop.getSpriteObject();
         if (this.playerEnteredLeftStraw) {
-            dropSprite.reset(2490, this.game.world.height - 140);
+            dropSprite.reset(2483, this.game.world.height - 140);
             this.playerEnteredLeftStraw = false;
         } else {
             dropSprite.reset(2019, this.game.world.height - 140);
