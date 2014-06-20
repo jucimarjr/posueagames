@@ -28,9 +28,11 @@ Game.TutorialState.prototype = {
         var keyCode = args.keyCode;
         var letter = String.fromCharCode(keyCode);
         
-        if (letter == 'B' || keyCode == Phaser.Keyboard.BACKSPACE) {
-			this.navigateToMainMenu();
-		}
+        if (letter == 'B' ||
+            keyCode == Phaser.Keyboard.BACKSPACE ||
+            keyCode == Phaser.Keyboard.SPACEBAR) {
+            this.navigateToMainMenu();
+        }
     },
 	
 	navigateToMainMenu: function () {
