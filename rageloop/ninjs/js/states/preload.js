@@ -13,7 +13,7 @@
             loadingText.anchor.set(0.5, 0.5);
 
             /* audios */
-            this.game.load.audio('bgsound','assets/sounds/gameplay_audio.ogg');
+            this.game.load.audio('bgsound','assets/sounds/bgsound.mp3');
             this.game.load.audio('gameoversound','assets/sounds/game_over.ogg');            
             this.game.load.audio('shuriken_sound','assets/sounds/thrown_shuriken.mp3');
             this.game.load.audio('click','assets/sounds/click.mp3');
@@ -21,7 +21,11 @@
             /*Menu assets*/
             this.game.load.image('menu_bg','assets/images/menuBg_960-600.png');
             this.game.load.spritesheet('start_btn','assets/sprites/start_btn_199-114.png', 199, 57);
-            this.game.load.spritesheet('reset_btn','assets/sprites/reset_btn_199-114.png', 199, 57);
+            this.game.load.spritesheet('credits_btn','assets/sprites/credits_btn_199-114.png', 199, 57);
+            this.game.load.spritesheet('back_btn','assets/sprites/back_btn_199-114.png', 199, 57);
+            this.game.load.spritesheet('howto_btn','assets/sprites/howto_btn_199-114.png', 199, 57);
+            this.game.load.spritesheet('menu_btn','assets/sprites/menu_btn_199-114.png', 199, 57);
+
 
             this.game.load.spritesheet('restart_btn','assets/sprites/start_btn_199-114.png', 199, 57);
 
@@ -35,6 +39,12 @@
             this.game.load.image('ninja_life', 'assets/images/vida-hud-27-26.png');
             this.game.load.image('blood_particle', 'assets/sprites/red_particle_5-5.png');
             
+            /*GameOver assets*/
+            this.game.load.image('gameover_bg','assets/images/gameOverBg_960-600.png');
+
+            /*How to Play*/
+            this.game.load.image('howto_bg','assets/images/HowToPlay_960-600.png');
+
         },
         create: function () {},
         update: function() {

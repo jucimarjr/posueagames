@@ -11,6 +11,8 @@ Game.GameState = function () {
 	this.hearts = [];
 	this.heartBeatController;
 
+    this.hud;
+
     this.playerHasKey;
     this.stageComplete;
 };
@@ -28,6 +30,7 @@ Game.GameState.prototype = {
         this.createHearts();
 		this.createPlayerLight();
 		this.createHeartBeatController();
+        this.createHUD();
 		
 		var self = this;
 		Utils.fadeOutScreen(this.game,
@@ -88,7 +91,7 @@ Game.GameState.prototype = {
         var waypoints = this.map.collision.collision;
 		Utils.clearArray(this.hearts);
         for (var i = 0; i < waypoints.length; i++) {
-            var heart = new Game.HeartController(this.game, this.player, waypoints[i]);
+            var heart = new Game.HeartController(this, this.player, waypoints[i]);
             heart.create();
             this.hearts.push(heart);
         };
@@ -136,6 +139,11 @@ Game.GameState.prototype = {
                 gate.body.immovable = true;
                 // gate.body.setSize(10, 30, 16, 0);
             }, this);
+    },
+
+    createHUD: function () {
+        this.hud = new Game.HUDController(this);
+        this.hud.create();
     },
 
     update: function () {
@@ -196,6 +204,7 @@ Game.GameState.prototype = {
         
         this.playerHasKey = true;
         keySprite.onCollected(playerSprite);
+        this.hud.showKeyIcon();
     },
 
     collideWithGate: function (playerSprite, gateSprite) {
@@ -203,18 +212,43 @@ Game.GameState.prototype = {
             return;
 
         if (this.playerHasKey) {
-            console.log('level completed!');
             this.stageComplete = true;
-            var tween = this.game.add.tween(gateSprite);
-            tween.to({ alpha: 0.0 }, 1000, Phaser.Easing.Cubic.In, true, 1000);
-            tween.onComplete.add(this.onStageComplete, this);
+            gateSprite.onGateOpenned(this.onStageComplete, this);
             this.player.stopAndBlockInput();
+			for (var i = 0; i < this.hearts.length; i++) {
+				this.hearts[i].setEnabled(false);
+			}
         } else {
-            console.log('key needed!');
+            console.log('Key needed!');
         }
     },
 
     onStageComplete: function () {
-        console.log('onStageComplete!');
+        console.log('Stage complete! Load next level...');
+    },
+	
+	navigateToGameWin: function () {
+        this.navigate('GameWinState');
+    },
+	
+	navigateToGameLoose: function () {
+		this.navigate('GameLooseState');
+	},
+	
+	navigate: function (stateName) {
+		var self = this;
+        self.game.input.keyboard.onDownCallback = null;
+        Utils.fadeInScreen(this.game, TweensConsts.fadeFillStyle, TweensConsts.fadeInDuration, function () {
+            self.state.start(stateName);
+        });
+	},
+
+    onPlayerLostLife: function () {
+        var self = this;
+        this.hud.decreaseLife(function () { self.onGameOver(); });
+    },
+
+    onGameOver: function () {
+        this.navigateToGameLoose();
     }
 };
