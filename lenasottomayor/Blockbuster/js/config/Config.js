@@ -341,6 +341,10 @@ Config.enemy = {
 		width: 150,
 		frames: 10,
 		name: 'Vader',
+		distancePlayer: 900,
+		velocity: 100,
+		hp: 5,
+		timeDie: 2000,
 		anchor: {
 			x: 0.5,
 			y: 0.5

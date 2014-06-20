@@ -35,7 +35,7 @@ Config.ludusSplash = {
 
 //SponsorSplash
 Config.sponsorSplash = {
-	dir: 'assets/images/SponsorSplash_960-600.png',
+	dir: Config.images+'/SponsorSplash_960-600.png',
 	x: 0,
 	y: 0,
 	millis: 2000,
@@ -45,16 +45,16 @@ Config.sponsorSplash = {
 //GameSplash
 Config.gameSplash = {
 	dir: {
-		background: 'assets/images/GameSplash_960-600.png',
-		bar: 'assets/images/ProgressBar_960-30.png',
-		bg: 'assets/images/Splash_screen_bg_960-540.png',
+		background: Config.images+'/GameSplash_960-600.png',
+		bar: Config.images+'/ProgressBar_960-30.png',
+		bg: Config.images+'/Splash_screen_bg_960-540.png',
 	},
 	x: 0,
 	y: 0,
 	millis: 2000,
 	nextState: 4000,
 	text: {
-		dir: 'assets/images/Loading_342_399.png',
+		dir: Config.images+'/Loading_342_399.png',
 		x: 387, 
 		y: 390
 	}
@@ -66,47 +66,56 @@ Config.story = {
 	x: 0,
 	y: 0,
 	alphaTime: 500,
-	alphaWait: 4500,
-	nextStateWait: 1000
+	alphaWait: 4000,
+	nextStateWait: 4500,
+	rayHelp: {
+		ray: [],
+		dir: Config.images+'/ray_help/ray_help_000'
+	}
 };
 
 
 //Animation fall
 Config.animationFall = {
 	fallGif: [],
-	dir: 'assets/images/gif_fall/screen_rotate_000'
+	dir: Config.images+'/gif_fall/screen_rotate_000'
 };
 
 //Play
 Config.game = {
-	dirBg1: 'assets/images/BgForest01_3000-540.png',
-	dirBg2: 'assets/images/BgForest02_3000-540.png',
-	dirBg3: 'assets/images/BgForest03_3000-540.png',
-	dirBg4: 'assets/images/BgCave01_3955-540.png',
-	dirBg5: 'assets/images/Glow_3905-540.png',
-	dirBg6: 'assets/images/bg_cave01-part2_2364-540.png',
+	dirBg1: Config.images+'/BgForest01_3000-540.png',
+	dirBg2: Config.images+'/BgForest02_3000-540.png',
+	dirBg3: Config.images+'/BgForest03_3000-540.png',
+	dirBg4: Config.images+'/BgCave01_3955-540.png',
+	dirBg5: Config.images+'/Glow_3905-540.png',
+	dirBg6: Config.images+'/bg_cave01-part2_2364-540.png',
 	x: 0,
 	y: 0,
 	tilemap:{
-		dir: 'assets/images/arcane_forest_level_01_map.json',
+		dir: Config.images+'/arcane_forest_level_01_map.json',
 		x: 0,
 		y: 0
 	},
 	tilemapRotate:{
-		dir: 'assets/images/arcane_forest_level_01_rotate_map.json',
+		dir: Config.images+'/arcane_forest_level_01_rotate_map.json',
 		x: 0,
 		y: 0
 	},
 	tileset:{
-		dir: 'assets/spritesheets/tileset_arcane_forest_1404-36.png'
+		dir: Config.spriteSheets+'tileset_arcane_forest_1404-36.png'
 	},
 	player:{
-		dir: 'assets/spritesheets/dude.png',
+		dir: Config.spriteSheets+'dude.png',
 		items: [],
 		width: 32,
 		height: 48,
-		x: 3500,
-		y: 1393,
+		//posicao depois das barras verticais
+//		x: 3146,
+		x: 3360,
+		y: 349,
+		//posicao inicial
+//		x: 70,
+//		y: 1393,
 		xRotate: 2346,
 		yRotate: 385,
 		lifes: 3,
@@ -194,66 +203,66 @@ Config.game = {
 		jumpForce: 800,
 	},
 	monstercat:{
-		dir: 'assets/spritesheets/monstercat_40_18_3.png',
+		dir: Config.spriteSheets+'monstercat_40_18_3.png',
 		width: 40,
 		height: 18
 	},
 	bigbosjumping:{
-		dir: 'assets/spritesheets/bigbosjumping_104_214_4_.png',
+		dir: Config.spriteSheets+'bigbosjumping_104_214_4_.png',
 		width: 104,
 		height: 214
 	},
 	bigbossattack:{
-		dir: 'assets/spritesheets/bigbossattack_114_208_6_.png',
+		dir: Config.spriteSheets+'bigbossattack_114_208_6_.png',
 		width: 114,
 		height: 208
 	},
 	bigbossattackfire:{
-		dir: 'assets/spritesheets/bigbossattack_fire_50_42_4_.png',
+		dir: Config.spriteSheets+'bigbossattack_fire_50_42_4_.png',
 		width: 50,
 		height: 42
 	},
 	bluemonster:{
-		dir: 'assets/spritesheets/bluemonster_62_50_3.png',
+		dir: Config.spriteSheets+'bluemonster_62_50_3.png',
 		width: 62,
 		height: 50
 	},
 	emmaattack:{
-		dir: 'assets/spritesheets/emmaattack_110_113_3.png',
+		dir: Config.spriteSheets+'emmaattack_110_113_3.png',
 		width: 110,
 		height: 113
 	},
 	emmajumping:{
-		dir: 'assets/spritesheets/emmajumping_104_97_3.png',
+		dir: Config.spriteSheets+'emmajumping_104_97_3.png',
 		width: 104,
 		height:97
 	},
 	emmarun:{
-		dir: 'assets/spritesheets/emmarun_104_104_5.png',
+		dir: Config.spriteSheets+'emmarun_104_104_5.png',
 		width: 104,
 		height:104
 	},
 	greenmonster:{
-		dir: 'assets/spritesheets/greenmonsterleft_76_62_5.png',
+		dir: Config.spriteSheets+'greenmonsterleft_76_62_5.png',
 		width: 76,
 		height:62
 	},
 	raybrother:{
-		dir: 'assets/spritesheets/ray_49_56_2.png',
+		dir: Config.spriteSheets+'ray_49_56_2.png',
 		width: 49,
 		height:56
 	},
 	blue:{
-		dir: 'assets/images/bluediamond_13-25.png'
+		dir: Config.images+'/bluediamond_13-25.png'
 	},
 	red:{
-		dir: 'assets/images/reddiamond_13-25.png'
+		dir: Config.images+'/reddiamond_13-25.png'
 	},
 	pink:{
-		dir: 'assets/images/pinkdiamond_13-25.png'
+		dir: Config.images+'/pinkdiamond_13-25.png'
 	},
 	key:{
-		dir: 'assets/images/keytopbar_13-25.png'
+		dir: Config.images+'/keytopbar_13-25.png'
 	},
 	life:{
 		full: {
@@ -271,7 +280,7 @@ Config.game = {
 		dir: 'assets/audio/arcane_forest_soundtrack.mp3'
 	},
 	bar:{
-		dir: 'assets/images/horizontalbar_139-32.png',
+		dir: Config.images+'/horizontalbar_139-32.png',
 		startX: 3770,
 		startY: 3470,
 		startRotateX: 1270,
@@ -280,14 +289,14 @@ Config.game = {
 		widthArea: 3650,
 	},
 	verticalbar:{
-		dir: 'assets/images/verticalbar_72-252.png',
+		dir: Config.images+'/verticalbar_72-252.png',
 	},
 	barRotate:{
-		x: 1793, 
-		y: 500
+		x: 1693, 
+		y: 475
 	},
 	transparentwall:{
-		dir: 'assets/images/transparentwall_10-540.png',
+		dir: Config.images+'/transparentwall_10-540.png',
 		x: 0, 
 		y: 800
 	},
@@ -304,18 +313,18 @@ Config.game = {
 
 //Menu
 Config.menu = {
-		dir: 'assets/images/Splash_screen_bg_960-540.png',
+		dir: Config.images+'/Splash_screen_bg_960-540.png',
 		x: 0,
 		y: 0,
 		buttonPlay: {
-			dir: 'assets/images/Play_416_334.png',
-			selector: 'assets/images/Play_selector_337_335.png',
+			dir: Config.images+'/Play_416_334.png',
+			selector: Config.images+'/Play_selector_337_335.png',
 			x: 415,
 			y: 320
 		},
 		buttonCredits: {
-			dir: 'assets/images/Credits_372_432.png',
-			selector: 'assets/images/Credits_selector_293_431.png',
+			dir: Config.images+'/Credits_372_432.png',
+			selector: Config.images+'/Credits_selector_293_431.png',
 			x: 370,
 			y: 430
 		}
@@ -323,14 +332,14 @@ Config.menu = {
 
 //HowToPlay
 Config.howToPlay = {
-	dir: 'assets/images/HowToPlay_960-600.png',
+	dir: Config.images+'/HowToPlay_960-600.png',
 	x: 0,
 	y: 0
 };
 
 //Credits
 Config.credits = {
-	dir: 'assets/images/Gamecredits_170_261.png',
+	dir: Config.images+'/Gamecredits_170_261.png',
 	x: 0,
 	y: 0
 };

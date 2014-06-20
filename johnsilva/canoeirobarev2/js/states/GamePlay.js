@@ -11,8 +11,11 @@ State.GamePlay.prototype = {
 		var cursors;
 		var levelConfig;
 		var onCipo;
+		var jumpSound, dieSound, phaseSound;
 	},
 	create: function () {
+		jumpSound = game.add.audio('jumpSound');
+		dieSound = game.add.audio('dieSound');
 		this.game.time.deltaCap = 0.016;		
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
@@ -24,10 +27,9 @@ State.GamePlay.prototype = {
 		if(this.player)
 			this.player.destroy();
 
-		if(levelConfig.checkPoint.x > 0)
-			this.addPlayer(levelConfig.checkPoint.x, levelConfig.checkPoint.y);
-		else
-			this.addPlayer(levelConfig.player.posX, levelConfig.player.posY);		
+		this.addPlayer();
+
+			
 
 		//this.game.camera.y = 1000;
 		cursors = this.game.input.keyboard.createCursorKeys();
@@ -58,8 +60,8 @@ State.GamePlay.prototype = {
 			if(levelConfig.thorns.id>0) 
 				this.game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
 			if(levelConfig.waters.id>0){
-				this.game.physics.arcade.overlap(this.player, this.waters, this.die, null,this);
 				this.game.physics.arcade.overlap(this.waters, this.layer, this.renew, null,this);
+				this.game.physics.arcade.overlap(this.player, this.waters, this.die, null,this);
 			}
 			if(levelConfig.checkPoint.id>0){
 				this.game.physics.arcade.overlap(this.player, this.checkPoint, this.saveCP, null,this);
@@ -71,6 +73,7 @@ State.GamePlay.prototype = {
 			this.game.physics.arcade.overlap(this.player, this.flag, function () {
 				levelConfig.checkPoint.x = 0;
 				levelConfig.checkPoint.y = 0;
+				phaseSound.stop();
 				Config.levelId.level = ++this.level;
 				this.game.state.start('GamePlay');
 			}, null, this);		
@@ -102,6 +105,7 @@ State.GamePlay.prototype = {
 			}
 			if ( this.isToJumping() && (!jumping) ){
 			/*if (this.jump && this.player.body.onFloor()){	*/
+				jumpSound.play();
 				jumping = true;
 				this.player.animations.play('jump');
 				this.player.body.velocity.y = -Config.player.velocity.jump;
@@ -119,11 +123,9 @@ State.GamePlay.prototype = {
 		}
 	},
 
-	addPlayer: function(x,y){
-		this.game.camera.x = x;
-		this.game.camera.y = y;
-		this.player = game.add.sprite(x, y ,'playerS');
-
+	addPlayer: function(){
+		
+		this.player = game.add.sprite(0, 0 ,'playerS');
 		this.player.anchor.setTo(.5, 1);		
 		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13,14],20,true);
 		this.player.animations.add('stoped',[0,1],2,true);
@@ -141,8 +143,24 @@ State.GamePlay.prototype = {
 		this.player.body.velocity.y = 0;
 		this.player.body.gravity.y = 1000;
 
+		this.setPlayerPosition();
+	},
+
+	setPlayerPosition: function(){
+		var x, y;
+		if(levelConfig.checkPoint.x > 0){
+			x = levelConfig.checkPoint.x;
+			y = levelConfig.checkPoint.y;
+		}
+		else{
+			x = levelConfig.player.posX;
+			y = levelConfig.player.posY;
+		}
+
+		/*this.game.camera.x = x;
+		this.game.camera.y = y;*/
 		this.player.position.setTo(x,y);
-		this.game.camera.follow(this.player);
+		this.game.camera.follow(this.player);	
 	},
 
 	isToJumping: function(){
@@ -161,7 +179,8 @@ State.GamePlay.prototype = {
 		this.level = level;
 		jumping = false;
 		
-		
+		phaseSound = game.add.audio('phase'+level,1,true);
+		phaseSound.play('',0,1,true);
 
 		if (this.layer) this.layer.destroy();
 		if (this.flag) this.flag.destroy();
@@ -283,6 +302,7 @@ State.GamePlay.prototype = {
 			water.initX = water.body.x;
 			water.initY = water.body.y;
 			water.anchor.setTo(.3, 1);
+			water.name = "water";
 		}, this);
 	},
 
@@ -297,6 +317,7 @@ State.GamePlay.prototype = {
 			bee.body.setSize(34, 53, 3, 8);
 			bee.body.allowGravity = false;
 			bee.body.immovable = true;
+			bee.name = "bee";
 		}, this);
 	},
 
@@ -334,23 +355,38 @@ State.GamePlay.prototype = {
 		emitter.makeParticles('caba');
 		emitter.gravity = 0;
 		emitter.start(false, 1800, 15);
-		this.die(player, enemie)
+		this.die(player, enemie, emitter)
 	},
-
-	die: function(player, enemie) {
+	die: function(player, enemie, emitter) {
         /*this.game.add.tween(this.game.camera).to({ x: -10 }, 40, 
         	Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true).start();*/
-		enemie.kill();
+		//enemie.kill();
+		dieSound.play();
 		this.gameOver = true;
+		if(enemie.name == "bee")
+			enemie.alpha = 0;
 		this.player.animations.stop();
-		this.player.body.gravity.y = 0;
+		//this.player.body.gravity.y = 0;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 		this.player.animations.play('dead');
-		this.game.add.tween(this.player).to({alpha:0}, 500).start().onComplete.add(function() {
+		this.game.add.tween(this.player).to({alpha:0}, 200).start().onComplete.add(function() {
 		    	//this.loadLevel(this.level);
-		    	this.game.state.start('GamePlay');
+		    	//this.game.state.start('GamePlay');
+		    	this.restartPhase(enemie, emitter);
 			}, this);		
+    },
+
+    restartPhase: function(enemie, emitter){
+    	this.setPlayerPosition();
+		this.player.alpha = 1;
+		if(enemie.name == "bee")
+			enemie.alpha = 1;
+		//enemie.alpha = 1;
+		if(emitter)
+			emitter.destroy();
+		this.gameOver = false;
+		//enemie.revive()
     },
 
     saveCP : function(player, cp) {
@@ -415,10 +451,10 @@ State.GamePlay.prototype = {
     render: function (){
     	/*game.debug.text(this.game.world.bounds.width,32,32);
     	game.debug.text(this.game.world.bounds.height,32,64);*/
-    	game.debug.text(this.player.body.x,32,32);
+    	/*game.debug.text(this.player.body.x,32,32);
     	game.debug.text(this.player.body.y,32,64);
     	game.debug.text(levelConfig.checkPoint.x,200,32);
-    	game.debug.text(levelConfig.checkPoint.y,200,64);
+    	game.debug.text(levelConfig.checkPoint.y,200,64);*/
     	//game.debug.body(this.player);
     	//game.debug.body(this.thorns);
     	//game.debug.text(frameClimbing,32,32);

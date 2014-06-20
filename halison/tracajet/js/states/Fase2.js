@@ -3,7 +3,7 @@
 // Utilize sempre 'this.' para declarar as vari�veis globais do estado
 // Utilize sempre 'this.' para executar os metodos do estado
 
-State.Fase1= function (game) {
+State.Fase2= function (game) {
     "use strict";
     this.game = game;
     this.tracajet;
@@ -11,44 +11,59 @@ State.Fase1= function (game) {
     this.plataform;
     this.map;
     this.layer;
-
+    this.enemies;
+    this.nameEnemy = 'Enemies';
+	this.nameFruits = 'frutas';
+	this.fruits;
+    
 };
 
-State.Fase1.prototype = {
+State.Fase2.prototype = {
 
     preload: function () {
-        game.load.tilemap('mapa','assets/2_Fase/mapaFase2.json',null,Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('mapa','assets/2_Fase/2aFaseJson.json',null,Phaser.Tilemap.TILED_JSON);
+    	//game.load.tilemap('mapa','assets/2_Fase/mapa_fase2b.json',null,Phaser.Tilemap.TILED_JSON);
         game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height); // 200x160 eh o tamanho do frame da sprite
+        game.load.spritesheet('monkey', "assets/2_Fase/monkey_spritesheet_240-80.png",40,40);
+		game.load.spritesheet('assets2', "assets/2_Fase/assets_2.png",40,40);
         //game.load.image('star',  Config.game.star.dir);
         //game.load.image('block', Config.game.tileset.dir);
-        game.load.image('bg',"assets/2_Fase/bg2_600-1920.png");
-        game.load.image('tilesetPlataforma','assets/2_Fase/assets_2.png');
+        game.load.image('bg',Config.game.fase2.background);
+        game.load.image('tilesetPlataforma','assets/2_Fase/p1_480-40.png');
+		game.load.image('tilesetPlataforma2','assets/2_Fase/p2_480-40.png');
+		game.load.image('tilesetPlataforma3','assets/2_Fase/p3_40-480.png');
+		game.load.image('tilesetPlataforma4','assets/2_Fase/p4_40-480.png');
+		
 
     },
 
     create: function () {
 
-        var bg = game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('bg').height, 'bg');
+        var bg = game.add.tileSprite(0, 0, game.cache.getImage('bg').width,game.cache.getImage('bg').height, 'bg');
 
 
         game.physics.startSystem(Phaser.Game.ARCADE);
 
         this.map = game.add.tilemap('mapa'); //adicionando o map
-        this.map.addTilesetImage('assets_2','tilesetPlataforma' );// primeiro vem nome do arquivo, depois o apelido
-
-
+        this.map.addTilesetImage('p1_480-40','tilesetPlataforma' );// primeiro vem nome do arquivo, depois o apelido
+		this.map.addTilesetImage('p2_480-40','tilesetPlataforma2' );
+		this.map.addTilesetImage('p3_40-480','tilesetPlataforma3' );
+		this.map.addTilesetImage('p4_40-480','tilesetPlataforma4' );
+		
+		this.map.addTilesetImage('monkeys','monkey' );
+		this.map.addTilesetImage('frutas','assets2' );
         this.layer = this.map.createLayer('Camada de Tiles 1');
         this.layer.resizeWorld(); //seta o mundo com as alterações feitas
-        this.map.setCollisionBetween(1,12, true,'Camada de Tiles 1'); // 0 espaco vazio 1 em diante os tiles do tileset
+        this.map.setCollisionBetween(1,48, true,'Camada de Tiles 1'); // 0 espaco vazio 1 em diante os tiles do tileset
 
         //funcao que cria os objetos
-//        group = game.add.group();
-//        group.enableBody = true;
-//        map.createFromObjects('Camada de Objetos 1',4, 'tilesetPlataforma', 0,true,false, group);
-//        group.forEach(function (coxa){ coxa.body.allowGravity = false}, this); // faz com que as coxas nao caiam
+        //group = game.add.group();
+       /*  group.enableBody = true;
+        this.map.createFromObjects('Enemies',1, 'monkey', 0,true,false, group);
+        group.forEach(function (coxa){ coxa.body.allowGravity = false}, this); // faz com que as coxas nao caiam */
 
 
-        this.tracajet = game.add.sprite(100, 100, 'tracajet');
+        this.tracajet = game.add.sprite(100, game.world.height-100, 'tracajet');
         this.tracajet.animations.add('walk',[0,1,2,1],6,false);
         this.tracajet.animations.add('swim',[5,6,7],6,false);
         this.tracajet.animations.add('startSwim',[3,4],4,true);
@@ -71,6 +86,21 @@ State.Fase1.prototype = {
         //    //cria um bloco para o dino ficar em cima
         //    var block = plataform.create(350, 250, 'bloco');
         //    block.body.immovable = true;
+        
+        //Group monkeys
+		console.log('entro aki!');
+	    this.enemies =  this.game.add.group();
+		this.enemies.enableBody = true;
+		this.map.createFromObjects(this.nameEnemy,49, 'monkey', 0, true, false, this.enemies);
+		//Configura monkeys
+		console.log(this.enemies);
+		
+		this.enemies.forEach(this.setupEnemies,this);
+        
+		//Groups folhas
+		this.fruits = this.game.add.group();
+		this.fruits.enableBody  = true;
+		this.map.createFromObjects(this.nameFruits,62,'assets2',1,true,false,this.fruits);
 
     },
 
@@ -107,6 +137,21 @@ State.Fase1.prototype = {
 
     tracajetEatStar: function (dino, star)	{
         this.star.kill();
-    }
+    },
+    
+    setupEnemies : function(monkey){
+		console.log('entro');
+		monkey.animations.add('left',[0,1,2,3,4,5],10,true);
+		monkey.animations.add('right',[6,7,8,9,10,11],5,true);
+		game.physics.enable(monkey, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
+		monkey.body.collideWorldBounds = true;
+		//game.add.tween(monkey).to({x: monkey.body.x, y: monkey.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+			//	Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
+			//	.to({x: monkey.body.x+320, y: monkey.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+				//Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/,  50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
+				//.loop().start();
+		monkey.animations.play("right");
+		
+	}
 
 };

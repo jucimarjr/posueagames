@@ -37,8 +37,8 @@ State.GameSplash.prototype = {
 		Phase1.Door.init();
 		Phase1.Trap.game = this.game;
 		Phase1.Trap.init();
-		Phase1.Player.game = this.game;
-		Phase1.Player.init();
+		Phase1.Enemy.game = this.game;
+		Phase1.Enemy.init();		
 	},
 	create: function () {
 		"use strict";

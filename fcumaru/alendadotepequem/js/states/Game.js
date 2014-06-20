@@ -86,7 +86,9 @@ State.Game.prototype = {
 		this.rocks.update();
 		this.rocks.checkCollision(this.heroes.getCurrent());
 		if(this.heroes.heroes[this.heroes.index].type === HERO_OF_ROPE){
-			this.trees.checkCollision(this.heroes.heroes[this.heroes.index].getRope());
+			this.trees.checkCollision(
+				this.heroes.heroes[this.heroes.index].getRope(),
+				this.heroes.heroes[this.heroes.index].facingLeft);
 		}
 		if (!this.heroes.isAlive()) {
 			this.game.state.start('GameOver');

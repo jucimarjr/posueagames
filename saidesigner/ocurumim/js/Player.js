@@ -1,13 +1,15 @@
 var Curumim = {}
 
-Curumim.Player = function(game) 
+Curumim.Player = function(game, score) 
 {
 	this.game = game;
+	this.score = score;
 	this.sprite;
 	this.jumpButtonPressed = false;
 	this.jumps = 0;
 	this.bullets;
 	this.nextBullet = 0;
+	this.powerUp = false;
 };
 
 Curumim.Player.prototype = 
@@ -26,6 +28,7 @@ Curumim.Player.prototype =
 		this.sprite.animations.add('run', [1, 2, 3, 4, 5, 6, 7, 0], Config.player.velocity.run_fps, true);
 		this.sprite.animations.add('jump', [8], 0, false);
 		this.sprite.animations.add('fire_jump', [9], 0, false);
+		this.sprite.animations.add('fire_walk', [10], 0, false);
 
 		this.sprite.body.acceleration.y = 50;
 		this.sprite.body.gravity.y = 100;
@@ -58,7 +61,7 @@ Curumim.Player.prototype =
 		var animation = 'walk';
 		var jumpForce = Config.player.jump.walking_force;
 
-		if (this.game.input.keyboard.isDown(Config.player.keys.run)) 
+		if (this.powerUp) 
 		{			
 			velocity = Config.player.velocity.run;
 			animation = 'run';
@@ -122,6 +125,11 @@ Curumim.Player.prototype =
 		}
 		else
 		{
+			if (this.game.input.keyboard.isDown(Config.player.keys.fire)) 
+			{
+				this.sprite.animations.play('fire_walk');	
+			}
+
 			this.jumps = 0;	
 		}
 	},
@@ -129,13 +137,15 @@ Curumim.Player.prototype =
 
 	fireBullets: function() 
 	{
-		if (this.game.time.now > this.nextBullet && this.bullets.countDead() > 0) {
+		if (this.game.time.now > this.nextBullet && this.bullets.countDead() > 0 && this.score.numBullets > 0) {
 
+			this.score.numBullets--;
 			var bullet = this.bullets.getFirstDead();
-	        bullet.reset(this.sprite.x + (20 * this.sprite.scale.x), this.sprite.y - 50);
-	        bullet.body.allowGravity = false;
+	        bullet.reset(this.sprite.x + (20 * this.sprite.scale.x), this.sprite.y - 50);	        
 	        bullet.body.acceleration.x = Config.bullet.acceleration;
-	        bullet.body.velocity.x = this.sprite.body.velocity.x + Config.bullet.velocity * this.sprite.scale.x;
+	        bullet.body.velocity.x = this.sprite.body.velocity.x + Config.bullet.velocity.x * this.sprite.scale.x;
+	        bullet.body.velocity.y = this.sprite.body.velocity.y + Config.bullet.velocity.y;
+	        
 	        bullet.anchor.setTo(.5, .5);	        
 
 	        this.nextBullet = this.game.time.now + Config.bullet.interval;
@@ -144,5 +154,11 @@ Curumim.Player.prototype =
 
 	getCollider: function() {		
 		return this.sprite;
+	},
+
+	startPowerUp : function() {
+		this.powerUp = true;
+		var self = this;
+		setTimeout(function(){ self.powerUp = false; }, 15000);
 	}
 };

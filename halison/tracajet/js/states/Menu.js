@@ -32,7 +32,7 @@ State.Menu.prototype = {
 		this.game.state.start('HowToPlay');
 	},
 	clickCredits: function () {
-		"use strict";7
+		"use strict";
 		this.game.state.start('Credits');
 	}
 };

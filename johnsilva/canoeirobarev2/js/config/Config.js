@@ -107,7 +107,11 @@ Config.credits = {
 };
 
 Config.audio = {
-	menu: 'assets/audio/menu.wav'
+	menu: 'assets/audio/menu.mp3',
+	phase1: 'assets/audio/phase1.mp3',
+	phase2: 'assets/audio/phase2.mp3',
+	jump: 'assets/audio/jump.mp3',
+	die: 'assets/audio/die.mp3'
 };
 
 Config.player = {
@@ -127,7 +131,7 @@ Config.climbing = {
 };
 
 Config.levelId = {
-	level: 5
+	level: 1
 };
 
 Config.finalPhase = {

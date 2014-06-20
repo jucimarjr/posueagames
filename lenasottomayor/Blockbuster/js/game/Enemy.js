@@ -310,15 +310,18 @@ Enemy.prototype = {
 			function (vader){ 
 				this.game.physics.enable(vader, Phaser.Physics.ARCADE);
 				
-				vader.alive = true;
+				vader.anchor.setTo(Config.enemy.vader.anchor.x, Config.enemy.vader.anchor.y);
+				vader.body.collideWorldBounds = true;
+				vader.scale.x = -1;
 				
 				vader.animations.add('walk', [0,1,2,3,4,5,6,7], 5, true);
 				vader.animations.add('dead',[8,9],2,true);
-				vader.scale.x = -1;
+				vader.animations.play('walk');
+				
+				vader.alive = true;
+				vader.hp = Config.enemy.vader.hp;
+				
 				vader.frame = Config.enemy.vader.frame;
-				this.game.physics.enable(vader);
-				vader.body.collideWorldBounds = true;
-				vader.anchor.setTo(Config.enemy.vader.anchor.x, Config.enemy.vader.anchor.y);
 			},
 			this
 		);
@@ -338,6 +341,7 @@ Enemy.prototype = {
 		this.game.physics.arcade.collide(this.jasonsJumper, this.layer1.platform);
 		this.game.physics.arcade.collide(this.jokersWalker, this.layer1.platform);
 		this.game.physics.arcade.collide(this.jokersJumper, this.layer1.platform);
+		this.game.physics.arcade.collide(this.vaders, this.layer1.platform);
 		
 		this.cruellasWalker.forEachAlive(
 			function (cruella) {
@@ -497,13 +501,6 @@ Enemy.prototype = {
 		    	}
 			}, 
 			this
-		);
-		
-		this.vaders.forEach(
-			function (vader){
-				this.game.physics.arcade.collide(vader, this.layer1.platform);
-				
-			}, this
 		);
 	}
 };

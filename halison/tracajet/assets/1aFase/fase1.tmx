@@ -5,14 +5,14 @@
  </tileset>
  <layer name="TileWorld" width="72" height="30">
   <data encoding="base64" compression="zlib">
-   eJztWMlOQzEM9JWWFm7sJezc4Eb//8uaSLXqGsdv4pcIDh3JqgSp40xtjxOiE074W1xmO6vYhbN+me3csaXjQ/taO2uvwbhGwdqf7cpZvwSs5kP7WjtrExjXSNxmu8t2n+0h22Yfx6OxNlGdT8ssH9rX2ln72ehTYiWshpdsr9neQJ8FnPcflf/f0G9Orb9tJvbhszM/1n7fFK8vGZOFcs6FMNQv5/0XuD4KPjvzY+23pXH1VfiR/QDlJ+3j+OkURw18dubH2o9jidTXFEoeSH5Q3jnva/XVC4h+Wf2nV1yJjvlBeee8H11fiH5Z/adXXIV7yQ/KO+f96PpKNK1fVv/pFVfhXvKD8s55X+tXLfru9TxEvwq0NvZC4V7yg/LOeV/rVzUt5085k3s9D9GvXlgpK3qu59mFsc4Cny+qE3Im93wg+tUL8jfd0OF3jPDD54vqRCJMaxD9Ggmt7yg/ieblu9RkzweiXyOR6PiuKHPMm//5fNF8l5rs+Ug0rV8jofUdzV9r5mjRpS24DtWvUdD63pK/lj7xvX6qFrbgutH6hehQZH6uQeq25+u/6NfU/V3357n5K8/t+Urguhb9esr2TMfvNe9g3F6ckfnZ84foUm/9su4YrW9BtTgj87PnD9Gl3vrF/CyUzZ0JdH+2uNbz0IrqvQM9d2/94jxjXniWmzsT6PuXxbXHj45XntvTBtnHPX5Q/Up04EfOui31hdy/LK71XVPyY8WLvDHLPo7OAV5Ocp5Z+YPWl3X/irz/SH6i/SpRvUYj4DzrXV+R9x+vvlDIPt5jJtb9WfIzx3/k/WeqvhDIPt5jJvb48fxrvePv6F4m76gtFq0vb16ZYxY/Xow72AI4Og==
+   eJztWMlOQzEM9LG0tHBjL2HnBjf6/19GItWqaxy/iV8icehIViVIHWdqe5wsiGhxsqqdMB6X2c4qduGsX2U7d2zl+NC+Ns7aazCuUbD2Z7ty1q8Aq/nQvjbO2gTGNRK32e6y3Wd7yLbdx/ForE1U59Myy4f2tXHWfjb6lFgLq+El22u2N9BnAef9R+X/N/SXU+tv24l9+OzMj7XfN8XrS8ZkoZxzKQzNS877L3B9FHx25sfab0fj6qvwI/sBynvax/HTKY4a+OzMj7UfxxKprymUPJD8oLxz3tfqqxcQ/bL6T6+4Eh3zg/LOeT+6vhD9svpPr7gK95IflHfO+9H1lWhav6z+0yuuwr3kB+Wd877Wr1r03et5iH4VaG3shcK95AflnfO+1q9qWs6fcib3eh6iX72wVlb0XM+zS2OdBT5fVCfkTO75QPSrF+RvuqXD7xjhh88X1YlEmNYg+jUSWt9RfhLNy3epyZ4PRL9GItHxXVHmmDf/8/mi+S412fORaFq/RkLrO5q/1szRoks7cB2qX6Og9b0lfy194nv9VC3swHWj9QvRocj8XIPUbc/Xf9Gvqfu77s9z81ee2/OVwHUt+vWU7ZmO32vewbi9OCPzs+cP0aXe+mXdMVrfgmpxRuZnzx+iS731i/lZKps7E+j+bHGt56E11XsHeu7e+sV5xrzwLDd3JtD3L4trjx8drzy3pw2yj3v8oPqV6MCPnHVb6gu5f1lc67um5MeKF3ljln0cnQO8nOQ8s/IHrS/r/hV5/5H8RPtVonqNRsB51ru+Iu8/Xn2hkH28x0ys+7PkZ47/yPvPVH0hkH28x0zs8eP513rH39G9TN5RWyxaX968MscsfrwYfwFjdjqC
   </data>
  </layer>
  <objectgroup name="Enemies" width="72" height="30">
   <object gid="42" x="-4" y="918"/>
   <object gid="42" x="1" y="672"/>
   <object gid="42" x="2" y="403"/>
-  <object gid="42" x="121" y="114"/>
+  <object gid="42" x="6" y="107"/>
   <object gid="42" x="522" y="398"/>
   <object gid="42" x="528" y="837"/>
   <object gid="42" x="1001" y="1109"/>
@@ -23,6 +23,47 @@
   <object gid="42" x="2161" y="961"/>
   <object gid="42" x="2159" y="644"/>
  </objectgroup>
- <objectgroup name="Sheet" width="72" height="30"/>
- <objectgroup name="Keys" width="72" height="30"/>
+ <objectgroup name="Sheet" width="72" height="30">
+  <object gid="7" x="237" y="1121"/>
+  <object gid="7" x="246" y="998"/>
+  <object gid="7" x="0" y="756"/>
+  <object gid="7" x="247" y="524"/>
+  <object gid="7" x="-12" y="192"/>
+  <object gid="7" x="570" y="122"/>
+  <object gid="7" x="601" y="523"/>
+  <object gid="7" x="769" y="924"/>
+  <object gid="7" x="561" y="1161"/>
+  <object gid="7" x="640" y="1165"/>
+  <object gid="6" x="1118" y="1201"/>
+  <object gid="6" x="1322" y="1202"/>
+  <object gid="6" x="1282" y="962"/>
+  <object gid="6" x="1280" y="401"/>
+  <object gid="6" x="1413" y="406"/>
+  <object gid="6" x="1721" y="161"/>
+  <object gid="6" x="1827" y="160"/>
+  <object gid="6" x="1799" y="485"/>
+  <object gid="6" x="1720" y="845"/>
+  <object gid="6" x="1841" y="842"/>
+  <object gid="6" x="1764" y="1124"/>
+  <object gid="6" x="1993" y="1121"/>
+  <object gid="6" x="2200" y="1115"/>
+  <object gid="6" x="2161" y="758"/>
+  <object gid="6" x="2159" y="195"/>
+  <object gid="6" x="2603" y="364"/>
+  <object gid="6" x="2715" y="365"/>
+  <object gid="6" x="2804" y="366"/>
+  <object gid="42" x="2520" y="275"/>
+  <object gid="42" x="2647" y="843"/>
+  <object gid="42" x="2556" y="602"/>
+ </objectgroup>
+ <objectgroup name="Keys" width="72" height="30">
+  <object gid="1" x="1040" y="124"/>
+  <object gid="1" x="1765" y="111"/>
+  <object gid="1" x="2209" y="123"/>
+  <object gid="1" x="2630" y="122"/>
+  <object gid="1" x="2725" y="1043"/>
+  <object gid="1" x="1476" y="356"/>
+  <object gid="1" x="768" y="1118"/>
+  <object gid="1" x="50" y="176"/>
+ </objectgroup>
 </map>

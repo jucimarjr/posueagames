@@ -156,7 +156,93 @@ Config.player = {
 Config.bullet = {
 	src: 'assets/spritesheets/bullet.png',
 	number: 5,
-	velocity: 250,
-	acceleration: 50,
+	velocity: {
+		x: 450,
+		y: -200
+	},
+	acceleration: 100,
 	interval: 200
+};
+
+// Score
+
+Config.score = {
+
+	lifes : {
+		img : {
+			x : 10,
+			y : 5
+		},
+
+		txt : {
+			x : 70,
+			y : 10,
+			style : { font: "30px Arial", fill: "yellow", align: "center" },
+			styleBig : { font: "40px Verdana", fill: "orange", align: "center" }
+		}
+	},
+
+	points : {
+		img : {
+			x : 300,
+			y : 5
+		},
+
+		txt : {
+			x : 360,
+			y : 10,
+			style : { font: "30px Arial", fill: "yellow", align: "center" },
+			styleBig : { font: "40px Verdana", fill: "orange", align: "center" }
+		}
+	},
+
+	bullets : {
+		img : {
+			x : 600,
+			y : 5
+		},
+
+		txt : {
+			x : 660,
+			y : 10,
+			style : { font: "30px Arial", fill: "yellow", align: "center" },
+			styleBig : { font: "40px Verdana", fill: "orange", align: "center" }
+		}
+	}
+};
+
+// Fruits
+
+Config.fruit = {	
+
+	small : {
+		src: 'assets/spritesheets/fruits.png',
+		width: 30,
+		height: 30
+	},
+
+	big : {
+		src: 'assets/spritesheets/fruitsBig.png',
+		width: 60,
+		height: 60
+	},
+
+	life : {
+		gid: 3,
+		frame :	1
+	},
+
+	energy : {
+		gid: 2,
+		frame: 0
+	},
+
+	bullet : {
+		gid : 5,
+		frame : 3
+	},
+	point : {
+		gid : 4,
+		frame : 2
+	}
 };
