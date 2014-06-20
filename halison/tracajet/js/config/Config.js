@@ -134,7 +134,8 @@ Config.credits = {
 //Global
 Config.game = {
 		score :{
-			score : 0
+			score : 0,
+			lifes : 3
 		},
 		ad: {
 			dir: 'assets/images/ad_600-600.png',

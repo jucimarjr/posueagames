@@ -27,6 +27,8 @@ State.Fase1= function (game) {
 	this.txtPause;
 	this.contKeys = 0;
 	this.TOTAL_KEYS = 8;
+	this.imgLife;
+	this.txLife;
 };
 
 var folha;
@@ -42,6 +44,7 @@ State.Fase1.prototype = {
 		game.load.image('bg',Config.game.fase1.background);
 		game.load.image('tilesetPlataforma','assets/1aFase/assets_1.png');
 		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
+		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
 	},
 
 	create: function () {
@@ -107,6 +110,14 @@ State.Fase1.prototype = {
 		});
 		this.txtScore.setText("Score : " + Config.game.score.score);
 		
+		//Life
+		this.imgLife = game.add.image(moduloPositionX  + 100,moduloPositionY,'imgLife');
+		this.txLife = this.game.add.text(moduloPositionX + 130,moduloPositionY + 20, "", {
+			font: "20px Arial",
+			fill: "#ff0044",
+			align: "left"
+		});
+		this.txLife.setText("x " + Config.game.score.lifes);
 		this.game.input.keyboard.addCallbacks(this,this.changeGameState);
 	},
 
@@ -144,6 +155,12 @@ State.Fase1.prototype = {
 		var moduloPositionY = Math.abs(this.game.world.position.y) + 20; 
 		this.txtScore.x = moduloPositionX;
 		this.txtScore.y = moduloPositionY;
+		
+		this.imgLife.x = moduloPositionX - this.game.width + 105;
+		this.imgLife.y = moduloPositionY - 18;
+		
+		this.txLife.x =  moduloPositionX - this.game.width + 125;
+		this.txLife.y = moduloPositionY;
 	}
 	,
 	setupEnemies : function(jacare){
