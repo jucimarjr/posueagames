@@ -1,5 +1,7 @@
 Game.CreditsState = function () {
-	
+	this.redBackText;
+    this.regularBackText;
+    this.regularBackTextBoundingBox;
 };
 
 Game.CreditsState.prototype = {
@@ -15,11 +17,35 @@ Game.CreditsState.prototype = {
 	},
 	
 	create: function() {
-		
+		var fontSize = ScreensConsts.fontSize * 0.6;
+        var cameraWidth = this.game.camera.width;
+        var cameraHeight = this.game.camera.height;
+        // back button
+        this.redBackText = this.game.add.bitmapText(cameraWidth - 160,
+                                                    25,
+                                                    'silkscreenGray',
+                                                    '( )ack',
+                                                    fontSize);
+        this.regularBackTextBoundingBox = new Phaser.Rectangle(this.redBackText.x, this.redBackText.y,
+                                                               this.redBackText.textWidth, this.redBackText.textHeight);
+															   
+        this.redBackText = this.game.add.bitmapText(this.redBackText.x,
+                                                    this.redBackText.y,
+                                                    'silkscreenRed',
+                                                    'b',
+                                                    fontSize);
+        this.redBackText.x += (this.redBackText.textWidth / 2.0) * 1.1;
 	},
 	
 	update: function () {
-		
+		var pointer = this.game.input.activePointer;
+        var regularBackTextBoundingBox = this.regularBackTextBoundingBox;
+        
+        if (pointer.isDown) {
+            if (regularBackTextBoundingBox.contains(pointer.x, pointer.y)) {
+                this.navigateToMainMenu();
+            }
+        }
 	},
 	
 	handleInput: function (args) {
