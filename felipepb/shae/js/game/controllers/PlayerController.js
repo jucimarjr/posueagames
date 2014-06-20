@@ -1,6 +1,8 @@
-Game.PlayerController = function (gameState) {
+Game.PlayerController = function (gameState, spawnPoint) {
     this.gameState = gameState;
+    this.spawnPoint = spawnPoint;
     this.sprite;
+    this.emitter;
 
     this.blockInput;
     this.cursorKeys;
@@ -47,8 +49,8 @@ Game.PlayerController.prototype = {
         this.sprite = this.gameState.game.add.sprite(0, 0, 'main_sprite_atlas');
         this.sprite.frameName = 'shae_idle_1_100-100.png';
         this.sprite.anchor.setTo(0.73, 0.5);
-        this.sprite.x = 140;
-        this.sprite.y = 64;
+        this.sprite.x = this.spawnPoint.x + 20;
+        this.sprite.y = this.spawnPoint.y - 32;
         this.sprite.scale.x = 0;
         this.sprite.scale.y = 0;
         
@@ -131,6 +133,19 @@ Game.PlayerController.prototype = {
 		this.joystick = new Joystick();
 
         this.playRespawnAnimation();
+
+        // Create emitter
+        this.emitter = this.gameState.game.add.emitter(this.sprite.x,
+                                                       this.sprite.y,
+                                                       100);
+        this.emitter.makeParticles('smoke_particle_small');
+        this.emitter.setYSpeed(-0, -50);
+        // this.emitter.setXSpeed(-50, 50);
+        this.emitter.gravity = -750;
+        this.emitter.setAlpha(1.0, 0.0, 500, Phaser.Easing.Cubic.In);
+        this.emitter.setScale(0.8, 2.5, 0.8, 2.5, 500, Phaser.Easing.Cubic.In);
+        this.emitter.setRotation(5, 20);
+        this.emitter.width = 5;
     },
 
     createBody: function() {
@@ -144,6 +159,9 @@ Game.PlayerController.prototype = {
     },
 
     update: function () {
+        if (this.blockInput)
+            return;
+
         // console.log(this.animState);
 
         if (this.animState == Game.PlayerController.AnimState.Respawning ||
@@ -154,6 +172,9 @@ Game.PlayerController.prototype = {
         
         this.handleInput();
         this.handleAnimation();
+
+        this.emitter.x = this.sprite.x - 4;
+        this.emitter.y = this.sprite.y + 34;
     },
 
     render: function (game) {
@@ -278,10 +299,16 @@ Game.PlayerController.prototype = {
             // Run animation when player is grounded.
             this.sprite.animations.play('run');
             this.currentAnim = 'run';
+
+            var numParticles = Utils.random(6, 10);
+            this.emitter.start(true, 400, null, numParticles);
         } else if (this.animState == Game.PlayerController.AnimState.JumpStart && this.currentAnim != 'jump-start') {
             // Jump start animation, run when player is starting to jump, duh.
             this.sprite.animations.play('jump-start');
             this.currentAnim = 'jump-start';
+            
+            var numParticles = Utils.random(12, 18);
+            this.emitter.start(true, 500, null, numParticles);
         } else if (this.animState == Game.PlayerController.AnimState.JumpAscend && this.currentAnim != 'jump-ascend') {
             // Jump ascend animation, run when player is going up.
             this.sprite.animations.play('jump-ascend');
@@ -298,6 +325,9 @@ Game.PlayerController.prototype = {
             // Jump touchdown animation, run when player touched the ground coming from a jump/fall.
             this.sprite.animations.play('jump-touchdown');
             this.currentAnim = 'jump-touchdown';
+            
+            var numParticles = Utils.random(8, 12);
+            this.emitter.start(true, 500, null, numParticles);
         }
     },
 
@@ -380,6 +410,12 @@ Game.PlayerController.prototype = {
         this.sprite.scale.y = 0;
         
         this.playRespawnAnimation();
+    },
+
+    stopAndBlockInput: function () {
+        this.blockInput = true;
+        this.sprite.body.immovable = true;
+        this.sprite.animations.stop();
     }
 
     // onBeginContact: function (otherBody, otherShape, shape, contactDataArray) {

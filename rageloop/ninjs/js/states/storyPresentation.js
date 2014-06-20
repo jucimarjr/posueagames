@@ -31,7 +31,10 @@
 
             var style = { font: "22px pixelFont", fill: "#ffffff"};
 
-            this.storyText = this.game.add.text(10, 500, '', style);            
+            this.storyText = this.game.add.text(10, 450, '', style);
+
+            var skipText = this.game.add.text(this.game.width, this.game.height, 'press "S" to skip.', style); 
+            skipText.anchor.setTo(1, 1);
 
             this.nextLine();
         },

@@ -11,8 +11,11 @@ State.GamePlay.prototype = {
 		var cursors;
 		var levelConfig;
 		var onCipo;
+		var jumpSound, dieSound, phaseSound;
 	},
 	create: function () {
+		jumpSound = game.add.audio('jumpSound');
+		dieSound = game.add.audio('dieSound');
 		this.game.time.deltaCap = 0.016;		
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
@@ -70,6 +73,7 @@ State.GamePlay.prototype = {
 			this.game.physics.arcade.overlap(this.player, this.flag, function () {
 				levelConfig.checkPoint.x = 0;
 				levelConfig.checkPoint.y = 0;
+				phaseSound.stop();
 				Config.levelId.level = ++this.level;
 				this.game.state.start('GamePlay');
 			}, null, this);		
@@ -101,6 +105,7 @@ State.GamePlay.prototype = {
 			}
 			if ( this.isToJumping() && (!jumping) ){
 			/*if (this.jump && this.player.body.onFloor()){	*/
+				jumpSound.play();
 				jumping = true;
 				this.player.animations.play('jump');
 				this.player.body.velocity.y = -Config.player.velocity.jump;
@@ -173,6 +178,9 @@ State.GamePlay.prototype = {
 		this.gameOver = false;
 		this.level = level;
 		jumping = false;
+		
+		phaseSound = game.add.audio('phase'+level,1,true);
+		phaseSound.play('',0,1,true);
 
 		if (this.layer) this.layer.destroy();
 		if (this.flag) this.flag.destroy();
@@ -353,6 +361,7 @@ State.GamePlay.prototype = {
         /*this.game.add.tween(this.game.camera).to({ x: -10 }, 40, 
         	Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true).start();*/
 		//enemie.kill();
+		dieSound.play();
 		this.gameOver = true;
 		if(enemie.name == "bee")
 			enemie.alpha = 0;

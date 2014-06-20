@@ -10,6 +10,143 @@
          "width":72,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":30,
+         "name":"Enemies",
+         "objects":[
+                {
+                 "gid":49,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":321,
+                 "y":996
+                }, 
+                {
+                 "gid":49,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":5,
+                 "y":841
+                }, 
+                {
+                 "gid":49,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":717,
+                 "y":847
+                }, 
+                {
+                 "gid":49,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1123,
+                 "y":1159
+                }, 
+                {
+                 "gid":49,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":205,
+                 "y":1156
+                }, 
+                {
+                 "gid":49,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":511,
+                 "y":681
+                }, 
+                {
+                 "gid":49,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1240,
+                 "y":680
+                }, 
+                {
+                 "gid":49,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":279,
+                 "y":355
+                }, 
+                {
+                 "gid":49,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":721,
+                 "y":523
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":72,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":
@@ -70,6 +207,21 @@
          "imagewidth":40,
          "margin":0,
          "name":"p4_40-480",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":40,
+         "tilewidth":40
+        }, 
+        {
+         "firstgid":49,
+         "image":"monkey_spritesheet_240-80.png",
+         "imageheight":80,
+         "imagewidth":240,
+         "margin":0,
+         "name":"monkeys",
          "properties":
             {
 

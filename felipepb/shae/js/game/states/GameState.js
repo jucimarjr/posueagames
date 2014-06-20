@@ -9,8 +9,10 @@ Game.GameState = function () {
     this.playerLightSprite;
 	
 	this.hearts = [];
+	this.heartBeatController;
 
     this.playerHasKey;
+    this.stageComplete;
 };
 
 Game.GameState.prototype = {
@@ -25,6 +27,7 @@ Game.GameState.prototype = {
 		this.createPlayer();
         this.createHearts();
 		this.createPlayerLight();
+		this.createHeartBeatController();
     },
 
     setupPhysicsSystem: function () {
@@ -44,10 +47,20 @@ Game.GameState.prototype = {
 		this.layer.debugColor = 'red';
 
         this.map.setCollisionBetween(0, 25);
+
+        this.stageComplete = false;
     },
 
     createPlayer: function () {
-        this.player = new Game.PlayerController(this);
+        var point = { x: 0, y: 0 };
+        for (var i = 0; i < this.map.objects.spawn_points.length; i++) {
+            if (this.map.objects.spawn_points[i].name == 'player-sp') {
+                point.x = this.map.objects.spawn_points[i].x;
+                point.y = this.map.objects.spawn_points[i].y;
+            }
+        };
+
+        this.player = new Game.PlayerController(this, point);
         this.player.create();
         this.game.camera.follow(this.player.sprite, 0);
         this.playerHasKey = false;
@@ -61,6 +74,11 @@ Game.GameState.prototype = {
             heart.create();
             this.hearts.push(heart);
         };
+	},
+	
+	createHeartBeatController: function () {
+		this.heartBeatController = new Game.HeartBeatController(this.game);
+		this.heartBeatController.setHearts(this.hearts);
 	},
 	
 	createPlayerLight: function () {
@@ -117,6 +135,8 @@ Game.GameState.prototype = {
 		for (var i = 0; i < heartsLength; i++) {
 			hearts[i].update();
 		}
+		
+		this.heartBeatController.update();
     },
 
     render: function () {
@@ -158,9 +178,22 @@ Game.GameState.prototype = {
     },
 
     collideWithGate: function (playerSprite, gateSprite) {
-        if (this.playerHasKey)
+        if (this.stageComplete)
+            return;
+
+        if (this.playerHasKey) {
             console.log('level completed!');
-        else
+            this.stageComplete = true;
+            var tween = this.game.add.tween(gateSprite);
+            tween.to({ alpha: 0.0 }, 1000, Phaser.Easing.Cubic.In, true, 1000);
+            tween.onComplete.add(this.onStageComplete, this);
+            this.player.stopAndBlockInput();
+        } else {
             console.log('key needed!');
+        }
+    },
+
+    onStageComplete: function () {
+        console.log('onStageComplete!');
     }
 };
