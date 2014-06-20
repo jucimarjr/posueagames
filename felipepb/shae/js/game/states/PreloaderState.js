@@ -63,6 +63,9 @@ Game.PreloaderState.prototype = {
 		this.game.load.audio('touchdown_02', ['audio/wav/touchdown_02.wav', 'audio/mp3/touchdown_02.mp3']);
 		this.game.load.audio('touchdown_03', ['audio/wav/touchdown_03.wav', 'audio/mp3/touchdown_03.mp3']);
 		this.game.load.audio('key_collected', ['audio/wav/key_collected.wav', 'audio/mp3/key_collected.mp3']);
+		this.game.load.audio('footstep_01', ['audio/wav/footstep_01.wav', 'audio/mp3/footstep_01.mp3']);
+		this.game.load.audio('footstep_02', ['audio/wav/footstep_02.wav', 'audio/mp3/footstep_02.mp3']);
+		this.game.load.audio('footstep_03', ['audio/wav/footstep_03.wav', 'audio/mp3/footstep_03.mp3']);
     },
 
     create: function () {

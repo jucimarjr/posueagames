@@ -24,8 +24,10 @@ Game.PlayerController = function (gameState, spawnPoint) {
 
     this.jumpSFX = new Array();
     this.touchdownSFX = new Array();
+    this.footstepSFX = new Array();
 
     this._actualRunModifier;
+    this._footstepSFXPlayed;
 };
 
 Game.PlayerController.Direction = {
@@ -173,6 +175,12 @@ Game.PlayerController.prototype = {
         for (var i = 1; i <= 3; i++) {
             this.touchdownSFX.push(this.game.add.audio('touchdown_0' + i));
         };
+
+        for (var i = 1; i <= 3; i++) {
+            this.footstepSFX.push(this.game.add.audio('footstep_0' + i));
+        };
+
+        this._footstepSFXPlayed = false;
     },
 
     createBody: function () {
@@ -205,6 +213,24 @@ Game.PlayerController.prototype = {
 
         this.emitter.x = this.sprite.x - 4;
         this.emitter.y = this.sprite.y + 34;
+
+        if (this.sprite.frameName == 'shae_walk_1_100-100.png' ||
+            this.sprite.frameName == 'shae_walk_3_100-100.png') {
+            
+            if (!this._footstepSFXPlayed) {
+                this.footstepSFX[Utils.random(0, 2)].play('', 0, 0.5);
+                this._footstepSFXPlayed = true;
+            }
+        } else if (this.sprite.frameName == 'shae_run_1_100-100.png' ||
+                   this.sprite.frameName == 'shae_run_3_100-100.png') {
+            
+            if (!this._footstepSFXPlayed) {
+                this.footstepSFX[Utils.random(0, 2)].play('', 0, 1.0);
+                this._footstepSFXPlayed = true;
+            }
+        } else if (this._footstepSFXPlayed) {
+            this._footstepSFXPlayed = false;
+        }
     },
 
     render: function (game) {

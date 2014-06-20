@@ -32,5 +32,5 @@ Game.GateController.prototype.onGateOpenned = function (callback, ctxt) {
     tween.to({ alpha: 0.0 }, 1000, Phaser.Easing.Cubic.In, true, 1000);
     tween.onComplete.add(callback, ctxt);
 
-    this.gateSFX.play('', 0, 0.25);
+    this.gateSFX.play('', 0, 0.5);
 };
