@@ -37,19 +37,18 @@ State.Game.prototype = {
 		"use strict";
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 800;
-
-		// var bg = this.game.add.tileSprite(0, 1000, 960, 1800, 'fundo');
-		  //tilesprite = game.add.tileSprite(0, 0, 800, 600, 'starfield');
-		// bg.fixedToCamera = false;
-		//this.game.stage.backgroundColor = "#ffff99";
-		//bgGrd = game.add.tileSprite(0, 584, game.stage.bounds.width, 16, 'ground');
-		var bg = this.game.add.tileSprite(0, 900, game.stage.bounds.width, 1800, 'fundo');
-		//this.bg.body.immovable = true;
+		
+		this.bg = game.add.tileSprite(0,-600,2000,1800,'fundo');
+		this.bg.fixedToCamera = true;
+		
 		map = this.game.add.tilemap('mapa');
 
 		map.addTilesetImage('map', 'map');
 
+		
+
 		this.layer = map.createLayer('map');
+
 		this.layer.resizeWorld(); // seta o mundo com as altera��es feitas
 		map.setCollisionBetween(1, 22, true, 0); // 0 espaco
 
@@ -60,7 +59,7 @@ State.Game.prototype = {
 		this.clouds = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
 				game.cache.getImage('clouds').height, 'clouds');
 		this.clouds.autoScroll(-30, 0);
-
+		
 		// faisca
 		this.faisca = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
 				game.cache.getImage('faiscas').height, 'faiscas');
@@ -83,7 +82,6 @@ State.Game.prototype = {
 		this.enemies.update(this.layer);
 		this.trees.update(this.layer);
 		this.rocks.update();
-		//this.faisca.update();
 		this.rocks.checkCollision(this.heroes.getCurrent());
 		if(this.heroes.heroes[this.heroes.index].type === HERO_OF_ROPE){
 			this.trees.checkCollision(
