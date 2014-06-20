@@ -227,21 +227,21 @@ Config.game = {
 		width: 62,
 		height: 50
 	},
-	emmaattack:{
-		dir: Config.spriteSheets+'emmaattack_110_113_3.png',
-		width: 110,
-		height: 113
-	},
-	emmajumping:{
-		dir: Config.spriteSheets+'emmajumping_104_97_3.png',
-		width: 104,
-		height:97
-	},
-	emmarun:{
-		dir: Config.spriteSheets+'emmarun_104_104_5.png',
-		width: 104,
-		height:104
-	},
+//	emmaattack:{
+//		dir: Config.spriteSheets+'emmaattack_110_113_3.png',
+//		width: 110,
+//		height: 113
+//	},
+//	emmajumping:{
+//		dir: Config.spriteSheets+'emmajumping_104_97_3.png',
+//		width: 104,
+//		height:97
+//	},
+//	emmarun:{
+//		dir: Config.spriteSheets+'emmarun_104_104_5.png',
+//		width: 104,
+//		height:104
+//	},
 	greenmonster:{
 		dir: Config.spriteSheets+'greenmonsterleft_76_62_5.png',
 		width: 76,
@@ -289,7 +289,16 @@ Config.game = {
 		widthArea: 3650,
 	},
 	verticalbar:{
+		key: 'verticalBar',
 		dir: Config.images+'/verticalbar_72-252.png',
+		x: [3500, 3650, 3750, 3855],
+		y: [91, 91, 91, 91],
+		collider: {
+			key: 'verticalBarCollider',
+			dir: Config.images+'/verticalBarDieCollider-144_20.png',
+			x: [3428, 3578, 3678, 3783],
+			y: [490, 490, 490, 490],
+		}
 	},
 	barRotate:{
 		x: 1693, 

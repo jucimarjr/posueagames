@@ -56,7 +56,8 @@ State.GameSplash.prototype = {
 		this.game.load.image('red', Config.game.red.dir);
 		this.game.load.image('pink', Config.game.pink.dir);
 		this.game.load.image('key', Config.game.key.dir);
-		this.game.load.image('verticalbar', Config.game.verticalbar.dir);
+		this.game.load.image(Config.game.verticalbar.key, Config.game.verticalbar.dir);
+		this.game.load.image(Config.game.verticalbar.collider.key, Config.game.verticalbar.collider.dir);
 		this.game.load.image('transparentwall', Config.game.transparentwall.dir);
 		
 		// lifes
