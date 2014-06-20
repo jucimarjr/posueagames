@@ -47,8 +47,8 @@ State.Game.prototype = {
         this.attacking = false;
         this.canJump = true;
         this.swordCollider = null;
-        
-		
+        this.playerMoving = false;
+        this.getPlayBarOffset = true;
 		
         //set p2
         this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -206,7 +206,7 @@ State.Game.prototype = {
 //	        Config.global.screen.resize(this.game);
 	        
 	        var intVelY = Math.floor( this.playerCollider.body.velocity.y );
-	        
+	        this.playerMoving = false;
 	        if (cursors.left.isDown) {
 	        	this.playerCollider.body.moveLeft(500);
 	            player.scale.x = -1;
@@ -221,6 +221,8 @@ State.Game.prototype = {
 	            // set sword offset
 	            this.swordOffsetX = Config.game.player.collider.sword.offset.left.x;
 	            this.swordOffsetY = Config.game.player.collider.sword.offset.left.y;
+	            
+	            this.playerMoving = true;
 	            
 	        } else if (cursors.right.isDown) {
 	        	this.playerCollider.body.moveRight(500);
@@ -237,7 +239,9 @@ State.Game.prototype = {
 	            this.swordOffsetX = Config.game.player.collider.sword.offset.right.x;
 	            this.swordOffsetY = Config.game.player.collider.sword.offset.right.y;
 	            
-    	        } else {
+	            this.playerMoving = true;
+    	    }
+	        else {
 	        	this.playerCollider.body.velocity.x = 0;
 	            //player.animations.play('turn');
 	            
@@ -282,9 +286,43 @@ State.Game.prototype = {
                 this.bossShoot();
                 this.timeCheck();
             }
+            
+            
+            // handle bars
+            this.updateHandleBars();
+            
         
         } // end if gamestate == play
         
+    },
+    
+    updateHandleBars: function() {
+    	
+    	var limitBarLeft = bar2.body.x - game.cache.getImage('bar').width / 2 - 113 / 2;
+    	var limitBarRight = bar2.body.x + game.cache.getImage('bar').width / 2 + 113 / 2;
+    	
+    	if(!this.playerMoving) { // if player not moving
+    		
+	    	if(this.playerCollider.body.x > limitBarLeft && this.playerCollider.body.x < limitBarRight
+	    			&& Math.round(this.playerCollider.body.y) == 1253) {
+	    		
+	    		if(this.getPlayBarOffset) {
+	    			this.playBarOffset = this.playerCollider.body.x - bar2.body.x;
+	    			
+	    			this.getPlayBarOffset = false;
+	    		}
+	    		
+	    		this.playerCollider.body.x = bar2.body.x + this.playBarOffset;
+	    		
+	    	}
+	    	else {
+	    		this.getPlayBarOffset = true;
+	    	}
+	    	
+    	}
+    	else {
+    		this.getPlayBarOffset = true;
+    	}
     },
 
     onClick: function () {
@@ -528,6 +566,8 @@ State.Game.prototype = {
         	player.animations.play(Config.game.player.anim.jump.key);
         	
         	this.playerCollider.body.moveUp(Config.game.player.jumpForce);
+        	
+        	this.playerMoving = true;
         }
         
         if(!this.canJump) {
@@ -724,6 +764,7 @@ State.Game.prototype = {
         }, 3000).yoyo().loop().start();
         
     },
+    
     //Create Obstacles
     putObstacles: function () {
         obstacles = this.game.add.group();

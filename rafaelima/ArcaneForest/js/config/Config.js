@@ -111,8 +111,8 @@ Config.game = {
 		height: 48,
 		//posicao depois das barras verticais
 //		x: 3146,
-		x: 3360,
-		y: 349,
+		x: 4550,
+		y: 1350,
 		//posicao inicial
 //		x: 70,
 //		y: 1393,
