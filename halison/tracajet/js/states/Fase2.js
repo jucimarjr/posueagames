@@ -13,6 +13,8 @@ State.Fase2= function (game) {
     this.layer;
     this.enemies;
     this.nameEnemy = 'Enemies';
+	this.nameFruits = 'frutas';
+	this.fruits;
     
 };
 
@@ -23,6 +25,7 @@ State.Fase2.prototype = {
     	//game.load.tilemap('mapa','assets/2_Fase/mapa_fase2b.json',null,Phaser.Tilemap.TILED_JSON);
         game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height); // 200x160 eh o tamanho do frame da sprite
         game.load.spritesheet('monkey', "assets/2_Fase/monkey_spritesheet_240-80.png",40,40);
+		game.load.spritesheet('assets2', "assets/2_Fase/assets_2.png",40,40);
         //game.load.image('star',  Config.game.star.dir);
         //game.load.image('block', Config.game.tileset.dir);
         game.load.image('bg',Config.game.fase2.background);
@@ -30,6 +33,7 @@ State.Fase2.prototype = {
 		game.load.image('tilesetPlataforma2','assets/2_Fase/p2_480-40.png');
 		game.load.image('tilesetPlataforma3','assets/2_Fase/p3_40-480.png');
 		game.load.image('tilesetPlataforma4','assets/2_Fase/p4_40-480.png');
+		
 
     },
 
@@ -47,7 +51,7 @@ State.Fase2.prototype = {
 		this.map.addTilesetImage('p4_40-480','tilesetPlataforma4' );
 		
 		this.map.addTilesetImage('monkeys','monkey' );
-
+		this.map.addTilesetImage('frutas','assets2' );
         this.layer = this.map.createLayer('Camada de Tiles 1');
         this.layer.resizeWorld(); //seta o mundo com as alterações feitas
         this.map.setCollisionBetween(1,48, true,'Camada de Tiles 1'); // 0 espaco vazio 1 em diante os tiles do tileset
@@ -59,7 +63,7 @@ State.Fase2.prototype = {
         group.forEach(function (coxa){ coxa.body.allowGravity = false}, this); // faz com que as coxas nao caiam */
 
 
-        this.tracajet = game.add.sprite(100, game.world.height, 'tracajet');
+        this.tracajet = game.add.sprite(100, game.world.height-100, 'tracajet');
         this.tracajet.animations.add('walk',[0,1,2,1],6,false);
         this.tracajet.animations.add('swim',[5,6,7],6,false);
         this.tracajet.animations.add('startSwim',[3,4],4,true);
@@ -93,7 +97,10 @@ State.Fase2.prototype = {
 		
 		this.enemies.forEach(this.setupEnemies,this);
         
-		
+		//Groups folhas
+		this.fruits = this.game.add.group();
+		this.fruits.enableBody  = true;
+		this.map.createFromObjects(this.nameFruits,62,'assets2',1,true,false,this.fruits);
 
     },
 
