@@ -122,14 +122,14 @@ State.Game.prototype = {
         
 //        this.playerCollider.reset(3040, 342);
 
-        this.game.physics.p2.enable(this.playerCollider, true);
+        this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
         this.playerCollider.body.fixedRotation = true;
         this.game.camera.follow(this.playerCollider);
         
         this.playerCollider.body.setCollisionGroup(playerCollisionGroup);
         
-        this.game.physics.p2.enable(player, true);
+        this.game.physics.p2.enable(player, false);
         player.body.kinematic = true;
         
         // sword collider
@@ -401,7 +401,7 @@ State.Game.prototype = {
         }
 
         this.playerCollider = this.game.add.sprite(Config.game.player.xRotate, Config.game.player.yRotate, Config.game.player.collider.emma.key);
-        this.game.physics.p2.enable(this.playerCollider, true);
+        this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
         this.playerCollider.body.fixedRotation = true;
         
@@ -595,7 +595,7 @@ State.Game.prototype = {
                 
                 this.swordCollider.name = "sword";
                 
-                this.game.physics.p2.enable(this.swordCollider, true);
+                this.game.physics.p2.enable(this.swordCollider, false);
                 this.swordCollider.body.fixedRotation = true;
                 //this.swordCollider.body.kinematic = true;
                 
@@ -819,7 +819,7 @@ State.Game.prototype = {
 	},
 
 	createKinematicObj: function (obj, setCollisionGroup, otherCollisionGroup) {
-		this.game.physics.p2.enable(obj, true);
+		this.game.physics.p2.enable(obj, false);
 		obj.body.fixedRotation = true; //no circle movement 
 		obj.body.kinematic = true;
 		obj.body.setCollisionGroup(setCollisionGroup);
@@ -881,7 +881,7 @@ State.Game.prototype = {
     	for(var count = 0; count < 4; count++) {
     		
     		spriteVerBarCol = this.game.add.sprite(Config.game.verticalbar.collider.x[count], Config.game.verticalbar.collider.y[count], Config.game.verticalbar.collider.key);
-    		this.game.physics.p2.enable(spriteVerBarCol, true);
+    		this.game.physics.p2.enable(spriteVerBarCol, false);
     		spriteVerBarCol.body.fixedRotation = true; // no circle movement 
     		spriteVerBarCol.body.kinematic = true;
     		spriteVerBarCol.body.setCollisionGroup(verticalBarDieCollisionGroup);
@@ -966,7 +966,7 @@ State.Game.prototype = {
         fire.name = 'monsterBoss'; 
         fire.animations.add('walk', [0, 1, 2, 3], 10, true);
         fire.play('walk');
-        this.game.physics.p2.enable(fire, true);
+        this.game.physics.p2.enable(fire, false);
         fire.body.fixedRotation = true; //no circle movement 
         fire.body.kinematic = true;
         fire.body.collideWorldBounds = true;
