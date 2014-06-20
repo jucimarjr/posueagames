@@ -17,6 +17,8 @@ Game.GameState = function () {
     this.stageComplete;
 };
 
+Game.GameState.tileMapName = 'map';
+
 Game.GameState.prototype = {
 
     create: function () {
@@ -58,7 +60,7 @@ Game.GameState.prototype = {
     },
 
     createTileMap: function () {
-        this.map = this.game.add.tilemap('map');
+        this.map = this.game.add.tilemap(Game.GameState.tileMapName);
         
         this.map.addTilesetImage('walls_tileset');
 
@@ -106,6 +108,7 @@ Game.GameState.prototype = {
 		this.playerFocusLight = this.game.add.bitmapData(this.game.width, this.game.height);
         this.playerFocusLight.context.fillStyle = 'rgba(0, 0, 0, 1.0)';
         this.playerLightSprite = this.game.add.image(0, 0, this.playerFocusLight);
+		this.playerLightSprite.fixedToCamera = true;
 	},
 
     createKey: function () {
@@ -152,9 +155,6 @@ Game.GameState.prototype = {
         this.game.physics.arcade.collide(this.gateGroup, this.player.sprite, this.collideWithGate, null, this);
         
         this.player.update();
-        
-        this.playerLightSprite.x = this.game.camera.x;
-        this.playerLightSprite.y = this.game.camera.y;
 		
 		var hearts = this.hearts;
 		var heartsLength = hearts.length;
@@ -182,8 +182,8 @@ Game.GameState.prototype = {
         context.shadowColor = 'black';
         context.shadowBlur = 200;
         
-        context.arc(this.player.sprite.x - this.playerLightSprite.x,
-                    this.player.sprite.y - this.playerLightSprite.y,
+        context.arc(this.player.sprite.x - this.game.camera.x,
+                    this.player.sprite.y - this.game.camera.y,
                     100, 0, Math.PI * 2, true);
         
         context.fill();
@@ -225,6 +225,8 @@ Game.GameState.prototype = {
 
     onStageComplete: function () {
         console.log('Stage complete! Load next level...');
+		Game.GameState.tileMapName = 'map';           // set next tilemap here
+		this.navigate('GameState');
     },
 	
 	navigateToGameWin: function () {
