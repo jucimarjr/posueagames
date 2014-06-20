@@ -14,6 +14,8 @@ Curumim.Scene = function(game, player, score)
 	this.energy;
 	this.bullets;
 	this.points;
+	this.ounce;
+	this.ant;
 };
 
 Curumim.Scene.prototype = 
@@ -57,6 +59,50 @@ Curumim.Scene.prototype =
 		this.points.enableBody = true;
 		this.map.createFromObjects('ObjScene1', Config.fruit.point.gid, 'fruits', Config.fruit.point.frame, true, false, this.points);
 		this.points.forEach(function (fruit){ fruit.body.allowGravity = false; fruit.anchor.setTo(.5, .5);}, this.game);
+
+		this.ounce = this.game.add.group();
+		this.ounce.enableBody = true;
+		this.map.createFromObjects('ObjScene1', 6, 'ounce', 0, true, false, this.ounce);
+		this.ounce.forEach(function (ounce) { 
+			ounce.body.allowGravity = false;			
+			ounce.animations.add('walk', [0, 1, 2, 3, 4], 10, true);
+			ounce.animations.play('walk');			
+			ounce.anchor.setTo(.5, 0);
+
+			var tween = this.add.tween(ounce);
+
+			tween.onLoop.add(function() {				
+				ounce.scale.x *= -1;
+	 		}, this);
+
+			tween.to({ x: ounce.x - 300 }, 3000, null, true, 0, Number.MAX_VALUE, true);
+
+		}, this.game);
+
+		this.ant = this.game.add.group();
+		this.ant.enableBody = true;
+		this.map.createFromObjects('ObjScene1', 14, 'ant', 0, true, false, this.ant);
+
+		this.ant.forEach(function (ant) { 
+			ant.body.allowGravity = false;			
+			ant.animations.add('walk', [0, 1, 2, 3, 4, 5], 10, true);
+			ant.animations.add('dead', [6]);
+			ant.animations.play('walk');			
+			ant.anchor.setTo(.5, 0);
+
+			var tween = this.add.tween(ant);
+
+			ant.t = tween;
+			ant.alive = true;
+
+			tween.onLoop.add(function() {				
+				ant.scale.x *= -1;
+	 		}, this);
+
+			tween.to({ x: ant.x - 300 }, 3000, null, true, 0, Number.MAX_VALUE, true);
+
+		}, this.game);
+
 	},
 
 	update: function()
@@ -95,12 +141,13 @@ Curumim.Scene.prototype =
 		this.game.physics.arcade.overlap(this.energy, this.player.getCollider(), this.energyCollision, null, this);
 		this.game.physics.arcade.overlap(this.bullets, this.player.getCollider(), this.bulletCollision, null, this);
 		this.game.physics.arcade.overlap(this.points, this.player.getCollider(), this.pointCollision, null, this);
+		this.game.physics.arcade.overlap(this.ant, this.player.getCollider(), this.antCollision, null, this);
 	},
 
 	lifeCollision: function(player, life)
 	{
 		life.kill();	
-		this.score.addLife();
+		this.score.updateLife(1);
 	},
 
 	energyCollision: function(player, energy)
@@ -119,5 +166,23 @@ Curumim.Scene.prototype =
 	{
 		point.kill();
 		this.score.addPoints();
+	},
+
+	antCollision: function(player, ant)
+	{
+		if (player.body.y + player.body.height - 30 >= ant.body.y) 
+		{			
+			if (ant.alive) 
+			{
+				ant.animations.play('dead');
+				ant.t.stop();
+				ant.body.y += 10;
+				player.body.velocity.y = -200;
+				ant.alive = false;
+			}
+
+		} else {
+			this.score.updateLife(-1);
+		}
 	}
-}
+};

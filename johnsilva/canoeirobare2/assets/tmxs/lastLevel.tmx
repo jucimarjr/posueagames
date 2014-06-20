@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="30" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
+  <image source="../level/cenario 3/tile3.png" width="600" height="40"/>
+ </tileset>
+ <tileset firstgid="16" name="bush_40-35-3" tilewidth="40" tileheight="35">
+  <image source="../spritesheets/bush_40-35-3.png" width="120" height="35"/>
+ </tileset>
+ <tileset firstgid="19" name="thorns_80-40" tilewidth="80" tileheight="40">
+  <image source="../enemies/thorns_80-40.png" width="80" height="40"/>
+ </tileset>
+ <tileset firstgid="20" name="cipo_10-80" tilewidth="10" tileheight="80">
+  <image source="../level/cipo_10-80.png" width="10" height="80"/>
+ </tileset>
+ <tileset firstgid="21" name="triplecannon4_32-40" tilewidth="32" tileheight="40">
+  <image source="../level/cenario 3/triplecannon4_32-40.png" width="32" height="40"/>
+ </tileset>
+ <tileset firstgid="22" name="dartH4_33-7" tilewidth="33" tileheight="7">
+  <image source="../level/cenario 3/dartH4_33-7.png" width="33" height="7"/>
+ </tileset>
+ <objectgroup name="thorns" width="30" height="30">
+  <object gid="19" x="200" y="1010"/>
+  <object gid="19" x="280" y="1008"/>
+  <object gid="19" x="326" y="977"/>
+  <object gid="19" x="363" y="931"/>
+  <object gid="19" x="433" y="937"/>
+  <object gid="19" x="520" y="1000"/>
+  <object gid="19" x="600" y="1040"/>
+  <object gid="19" x="640" y="1080"/>
+  <object gid="19" x="680" y="1120"/>
+  <object gid="19" x="640" y="1160"/>
+  <object gid="19" x="560" y="1160"/>
+  <object gid="19" x="560" y="1160"/>
+  <object gid="19" x="560" y="1160"/>
+  <object gid="19" x="559" y="1148"/>
+  <object gid="19" x="559" y="1137"/>
+  <object gid="19" x="559" y="1124"/>
+  <object gid="19" x="557" y="1112"/>
+  <object gid="19" x="607" y="1113"/>
+  <object gid="19" x="609" y="1131"/>
+  <object gid="19" x="615" y="1149"/>
+  <object gid="19" x="649" y="1168"/>
+  <object gid="19" x="657" y="1152"/>
+  <object gid="19" x="571" y="1173"/>
+  <object gid="19" x="563" y="1103"/>
+  <object gid="19" x="491" y="1165"/>
+  <object gid="19" x="452" y="1153"/>
+  <object gid="19" x="436" y="1171"/>
+  <object gid="19" x="497" y="1141"/>
+  <object gid="19" x="485" y="1129"/>
+  <object gid="19" x="120" y="400"/>
+  <object gid="19" x="160" y="400"/>
+  <object gid="19" x="840" y="720"/>
+  <object gid="19" x="920" y="720"/>
+ </objectgroup>
+ <layer name="Camada de Tiles 1" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlYEKgzAMRLPhpp3V/f/fboKB25m00Q4Gw4Mg2jYvqWkqcurU/+j+RV/T22bjyeobuQ/DX6pYK3dhjgY3Io/LeSyaDOYIY3MDl/dDaGxamYm4uuYol/MQ+cwTeTxP/e3lIhP9JRgfDnCt2uokVlca0xGu5Svyf5WZDC7XQY2rvpTLOYw0r2RRLvoqcTFPztGrA4/L8bf2K5b2K5R1BqLn1zrPHnepgQ7MqonWfPfWldbmEW4p9xJXmTqvxI3ub42LzAhXlVfT/v904vP61UDfItyn+Pcoi7kWs8TNYLr2RpYNRk/vFtPjKgvNiq2H2PBbjelxL7LN7SrbnojzlF2rZ7ynvfs30o8xhlzhDmCl+3cvuy9wdd+R2/3IXnoMCwE=
+  </data>
+ </layer>
+ <objectgroup name="cipo" width="30" height="30">
+  <object gid="20" x="80" y="960"/>
+  <object gid="20" x="80" y="880"/>
+  <object gid="20" x="80" y="800"/>
+  <object gid="20" x="80" y="720"/>
+  <object gid="20" x="80" y="640"/>
+  <object gid="20" x="80" y="560"/>
+  <object gid="20" x="80" y="480"/>
+  <object gid="20" x="80" y="400"/>
+ </objectgroup>
+ <objectgroup name="bushes" width="30" height="30">
+  <object gid="16" x="40" y="1160"/>
+  <object gid="16" x="80" y="1160"/>
+  <object gid="16" x="120" y="1160"/>
+  <object gid="16" x="160" y="1160"/>
+  <object gid="16" x="200" y="1160"/>
+  <object gid="16" x="240" y="1160"/>
+  <object gid="16" x="280" y="1160"/>
+  <object gid="16" x="320" y="1160"/>
+  <object gid="16" x="360" y="1160"/>
+  <object gid="16" x="400" y="1160"/>
+  <object gid="16" x="440" y="1160"/>
+  <object gid="16" x="480" y="1160"/>
+  <object gid="16" x="520" y="1160"/>
+  <object gid="16" x="560" y="1160"/>
+  <object gid="16" x="600" y="1160"/>
+  <object gid="16" x="640" y="1160"/>
+  <object gid="16" x="680" y="1160"/>
+  <object gid="16" x="120" y="400"/>
+  <object gid="16" x="160" y="400"/>
+  <object gid="16" x="200" y="400"/>
+  <object gid="16" x="120" y="560"/>
+  <object gid="16" x="160" y="560"/>
+  <object gid="16" x="200" y="560"/>
+  <object gid="16" x="120" y="720"/>
+  <object gid="16" x="160" y="720"/>
+  <object gid="16" x="200" y="720"/>
+  <object gid="16" x="1000" y="280"/>
+  <object gid="16" x="1040" y="280"/>
+  <object gid="16" x="1080" y="280"/>
+  <object gid="16" x="840" y="720"/>
+  <object gid="16" x="880" y="720"/>
+  <object gid="16" x="920" y="720"/>
+  <object gid="16" x="1120" y="720"/>
+  <object gid="16" x="1080" y="760"/>
+  <object gid="16" x="1040" y="800"/>
+  <object gid="16" x="1000" y="840"/>
+  <object gid="16" x="960" y="880"/>
+  <object gid="16" x="920" y="920"/>
+  <object gid="16" x="880" y="960"/>
+  <object gid="16" x="840" y="1000"/>
+  <object gid="16" x="880" y="1160"/>
+  <object gid="16" x="800" y="1160"/>
+  <object gid="16" x="840" y="1160"/>
+  <object gid="16" x="920" y="1160"/>
+  <object gid="16" x="960" y="1160"/>
+  <object gid="16" x="1000" y="1160"/>
+  <object gid="16" x="1040" y="1160"/>
+  <object gid="16" x="1080" y="1160"/>
+  <object gid="16" x="1120" y="1160"/>
+ </objectgroup>
+ <objectgroup name="cannons" width="30" height="30">
+  <object gid="21" x="25" y="721"/>
+  <object gid="21" x="25" y="557"/>
+  <object gid="21" x="25" y="400"/>
+  <object gid="21" x="25" y="881"/>
+  <object gid="21" x="24" y="1035"/>
+  <object gid="21" x="23" y="281"/>
+  <object gid="21" x="787" y="359"/>
+  <object gid="21" x="787" y="477"/>
+  <object gid="21" x="786" y="802"/>
+  <object gid="21" x="786" y="842"/>
+  <object gid="21" x="786" y="882"/>
+  <object gid="21" x="786" y="922"/>
+  <object gid="21" x="786" y="962"/>
+  <object gid="21" x="786" y="1002"/>
+ </objectgroup>
+ <objectgroup name="dardos" width="30" height="30">
+  <object gid="22" x="8" y="266"/>
+  <object gid="22" x="9" y="384"/>
+  <object gid="22" x="10" y="542"/>
+  <object gid="22" x="10" y="706"/>
+  <object gid="22" x="9" y="866"/>
+  <object gid="22" x="9" y="1019"/>
+  <object gid="22" x="773" y="343"/>
+  <object gid="22" x="785" y="461"/>
+  <object gid="22" x="786" y="786"/>
+  <object gid="22" x="783" y="825"/>
+  <object gid="22" x="782" y="865"/>
+  <object gid="22" x="779" y="906"/>
+  <object gid="22" x="774" y="946"/>
+  <object gid="22" x="770" y="987"/>
+ </objectgroup>
+</map>

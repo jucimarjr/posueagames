@@ -50,7 +50,7 @@ State.GamePlay.prototype = {
 		this.game.physics.arcade.collide(this.layer, this.player);
 		this.player.body.velocity.x = 0;
 		onCipo = false;
-		if(this.level == 3)
+		if(this.level == Config.finalPhase.id)
 			this.updateShadowTexture(this.player.body.x, this.player.body.y);
 
 		if(!this.gameOver){		
@@ -61,6 +61,7 @@ State.GamePlay.prototype = {
 				this.game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
 			if(levelConfig.waters.id>0){
 				this.game.physics.arcade.overlap(this.waters, this.layer, this.renew, null,this);
+				this.shootWater();
 				this.game.physics.arcade.overlap(this.player, this.waters, this.die, null,this);
 			}
 			if(levelConfig.checkPoint.id>0){
@@ -68,8 +69,15 @@ State.GamePlay.prototype = {
 			}
 			if(levelConfig.cipo.id>0){
 				this.game.physics.arcade.overlap(this.player, this.cipo, this.runCipo, null,this);
-			}		
-			//this.game.physics.arcade.overlap(this.player, this.coin, function () {
+			}
+			if(this.level == Config.finalPhase.id){
+				this.shootDardo();
+				this.game.physics.arcade.overlap(this.player, this.dardos, this.die, null,this);
+			}
+			this.game.physics.arcade.overlap(this.player, this.coin, function (player,coin) {
+				coin.kill();
+				Config.finalPhase.lightRadius += 25;
+			}, null, this);
 			this.game.physics.arcade.overlap(this.player, this.flag, function () {
 				levelConfig.checkPoint.x = 0;
 				levelConfig.checkPoint.y = 0;
@@ -193,21 +201,30 @@ State.GamePlay.prototype = {
 		if (this.bushes) this.bushes.destroy();
 		if (this.acidicWater) this.acidicWater.destroy();
 		if (this.checkPoint) this.checkPoint.destroy();
-		if (this.cipo) this.cipo.destroy();
+		if (this.cipo) this.cipo.destroy();		
+		if (this.dardos) this.dardos.destroy();
+		if (this.cannons) this.cannons.destroy();
 
 		this.bg = this.game.add.tileSprite(0,0,1200,800,'bg'+level);
 		this.bg.fixedToCamera = true;		
 
 		this.map = game.add.tilemap('level'+level);
-		this.map.addTilesetImage('tileset','tileset');
-		this.map.setCollisionBetween(1,12, true,'Camada de Tiles 1');
+
+		if(level == Config.finalPhase.id){
+			this.map.addTilesetImage('tileset','finalTileset');
+			this.map.setCollisionBetween(1,9, true,'Camada de Tiles 1');
+			//this.initShadow();
+		}else{
+			this.map.addTilesetImage('tileset','tileset');
+			this.map.setCollisionBetween(1,12, true,'Camada de Tiles 1');
+		}		
 
 		if(levelConfig.branches.exists) this.map.addTilesetImage('branches','branches');
 		if(levelConfig.waters.id>0) this.addWaters(levelConfig.waters.id);
-		
 		if(levelConfig.thorns.id>0) this.addThorns(levelConfig.thorns.id);
 		if(levelConfig.coin.id>0) this.addCoin(levelConfig.coin.id, levelConfig.coin.image);
 		if(levelConfig.cipo.id>0) this.addCipo(levelConfig.cipo.id);
+		if(levelConfig.dardos.id>0) this.addDardos(levelConfig.dardos.id);
 
 		this.player.bringToTop();
 
@@ -220,11 +237,34 @@ State.GamePlay.prototype = {
 		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);
 		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
 		if(levelConfig.checkPoint.id>0) this.addCheckPoint(levelConfig.checkPoint.id);
+		if(levelConfig.cannons.id>0) this.addCannons(levelConfig.cannons.id);
 
 		this.addFlag(levelConfig.flag.id)
 		
-		if(this.level == 3)
+		if(this.level == Config.finalPhase.id)
 			this.initShadow();
+	},
+
+	shootWater: function(){
+		var water = this.waters.getFirstDead();
+		if (water === null || water === undefined) return;
+		water.revive();
+		water.checkWorldBounds = true;
+		water.outOfBoundsKill = true;
+		water.reset(water.initX, water.initY);
+		//water.body.velocity.x = 0;
+		//water.body.velocity.y = 0;
+	},
+
+	shootDardo: function(){
+		var dardo = this.dardos.getFirstDead();
+		if (dardo === null || dardo === undefined) return;
+		dardo.revive();
+		dardo.checkWorldBounds = true;
+		dardo.outOfBoundsKill = true;
+		dardo.reset(dardo.initX, dardo.initY);
+		dardo.body.velocity.x = 100;
+		dardo.body.velocity.y = 0;
 	},
 
 	addFlag: function(id){
@@ -290,7 +330,8 @@ State.GamePlay.prototype = {
 	},
 
 	renew: function(water, bloco){
-		water.position.setTo(water.initX, water.initY);
+		//water.position.setTo(water.initX, water.initY);
+		water.kill();
 	},
 
 	addWaters: function(id){
@@ -303,6 +344,20 @@ State.GamePlay.prototype = {
 			water.initY = water.body.y;
 			water.anchor.setTo(.3, 1);
 			water.name = "water";
+			water.kill();
+		}, this);
+	},
+
+	addDardos: function(id){
+		this.dardos = game.add.group();
+		this.dardos.enableBody = true;
+		this.dardos.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('dardos',id,'dardo', 0,true,false,this.dardos);
+		this.dardos.forEach(function (dardo){
+			dardo.initX = dardo.body.x;
+			dardo.initY = dardo.body.y;
+			dardo.body.allowGravity = false;
+			dardo.kill();
 		}, this);
 	},
 
@@ -329,6 +384,17 @@ State.GamePlay.prototype = {
 		this.tubes.forEach(function (tube){ 
 			tube.body.allowGravity = false;
 			tube.body.immovable = true;
+		}, this);
+	},
+
+	addCannons: function(id){
+		this.cannons = game.add.group();
+		this.cannons.enableBody = true;
+		this.cannons.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('cannons',id,'cannon', 0,true,false,this.cannons);
+		this.cannons.forEach(function (cannon){ 
+			cannon.body.allowGravity = false;
+			cannon.body.immovable = true;
 		}, this);
 	},
 
@@ -370,7 +436,7 @@ State.GamePlay.prototype = {
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 		this.player.animations.play('dead');
-		this.game.add.tween(this.player).to({alpha:0}, 200).start().onComplete.add(function() {
+		this.game.add.tween(this.player).to({alpha:0}, 300).start().onComplete.add(function() {
 		    	//this.loadLevel(this.level);
 		    	//this.game.state.start('GamePlay');
 		    	this.restartPhase(enemie, emitter);

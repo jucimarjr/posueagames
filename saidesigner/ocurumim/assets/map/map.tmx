@@ -6,6 +6,12 @@
  <tileset firstgid="2" name="fruits" tilewidth="30" tileheight="30">
   <image source="../spritesheets/fruits.png" width="120" height="30"/>
  </tileset>
+ <tileset firstgid="6" name="ounce" tilewidth="225" tileheight="122">
+  <image source="../spritesheets/ounce.png" width="1831" height="122"/>
+ </tileset>
+ <tileset firstgid="14" name="ant" tilewidth="72" tileheight="48">
+  <image source="../spritesheets/ant.png" width="504" height="48"/>
+ </tileset>
  <layer name="TileScene1" width="400" height="100">
   <data encoding="base64" compression="zlib">
    eJzt3UsKgDAMBUB7/0t7AIVWMaQmM/D2UqGfpOhxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAECekf0AAAAAAAAAAPAD+usAvVkHAMhkHQKAOGMSAAAAANapswDQjT7DM8YLAAAAAAAAAACAamZ343YOQJSI+cd8BgAAsMZZCQAAAIAdqVkBAAAAAAAV6HkAAACRnDngG75VBABwZT8EAAAAAADQT/Z/Et3feS/7PYlI71Rm3AAAAADgntoYAAAAAAAAAADUdwIB0AHc
@@ -29,5 +35,10 @@
   <object gid="4" x="1870" y="780"/>
   <object gid="5" x="2050" y="580"/>
   <object gid="2" x="1830" y="540"/>
+  <object gid="6" x="3570" y="700"/>
+  <object gid="6" x="1550" y="890"/>
+  <object gid="2" x="270" y="870"/>
+  <object gid="14" x="2670" y="910"/>
+  <object gid="14" x="2170" y="910"/>
  </objectgroup>
 </map>

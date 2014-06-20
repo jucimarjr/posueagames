@@ -221,6 +221,76 @@
                  "width":0,
                  "x":1830,
                  "y":540
+                }, 
+                {
+                 "gid":6,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3570,
+                 "y":700
+                }, 
+                {
+                 "gid":6,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1550,
+                 "y":890
+                }, 
+                {
+                 "gid":2,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":270,
+                 "y":870
+                }, 
+                {
+                 "gid":14,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2670,
+                 "y":910
+                }, 
+                {
+                 "gid":14,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2170,
+                 "y":910
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -265,6 +335,36 @@
          "spacing":0,
          "tileheight":30,
          "tilewidth":30
+        }, 
+        {
+         "firstgid":6,
+         "image":"..\/spritesheets\/ounce.png",
+         "imageheight":122,
+         "imagewidth":1831,
+         "margin":0,
+         "name":"ounce",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":122,
+         "tilewidth":225
+        }, 
+        {
+         "firstgid":14,
+         "image":"..\/spritesheets\/ant.png",
+         "imageheight":48,
+         "imagewidth":504,
+         "margin":0,
+         "name":"ant",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":48,
+         "tilewidth":72
         }],
  "tilewidth":10,
  "version":1,
