@@ -28,6 +28,7 @@ Game.PlayerController = function (gameState, spawnPoint) {
 
     this.deathSFX;
     this.spawnSFX;
+    this.runSFX;
 
     this._actualRunModifier;
     this._footstepSFXPlayed;
@@ -194,6 +195,7 @@ Game.PlayerController.prototype = {
 
         this.deathSFX = this.game.add.audio('death_sfx');
         this.spawnSFX = this.game.add.audio('spawn_sfx');
+        this.runSFX = this.game.add.audio('run_sfx');
     },
 
     createBody: function () {
@@ -371,6 +373,8 @@ Game.PlayerController.prototype = {
             // Emit particles.
             var numParticles = Utils.random(6, 10);
             this.emitter.start(true, 400, null, numParticles);
+            // Play run sound.
+            this.runSFX.play();
         } else if (this.animState == Game.PlayerController.AnimState.JumpStart && this.currentAnim != 'jump-start') {
             // Jump start animation, run when player is starting to jump, duh.
             this.sprite.animations.play('jump-start');
