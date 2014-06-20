@@ -147,17 +147,31 @@ State.Fase1.prototype = {
 	}
 	,
 	setupEnemies : function(jacare){
-		jacare.animations.add('left',[0,1,2,3,4,5],10,true);
+		jacare.animations.add('left',[0,1,2,3,4,5],5,true);
 		jacare.animations.add('right',[6,7,8,9,10,11],5,true);
 		game.physics.enable(jacare, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 		jacare.body.collideWorldBounds = true;
-		game.add.tween(jacare).to({x: jacare.body.x, y: jacare.body.y}, 2000 + Math.random()*3000 /*duration of the tween (in ms)*/, 
-				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
-				.to({x: jacare.body.x+320, y: jacare.body.y}, 2000 + Math.random()*3000 /*duration of the tween (in ms)*/, 
-				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/,  50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
-				.loop().start();
-		jacare.animations.play("right");
+		this.twinEsquerda(jacare);
 		
+	},
+	twinDireita : function(jacare) {
+		jacare.animations.stop();
+		jacare.animations.play("left");
+		var t = game.add.tween(jacare);
+		t.to({x: jacare.body.x - 320, y: jacare.body.y}, 2000 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 50 + Math.random()*50 /*delay*/, false /*yoyo?*/);
+		t.onComplete.addOnce(this.twinEsquerda, this);
+		t.start();
+		
+	},
+	twinEsquerda : function(jacare){
+		jacare.animations.stop();
+		jacare.animations.play("right");
+		var t = game.add.tween(jacare);
+		t.to({x: jacare.body.x+320, y: jacare.body.y}, 2000 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/,  50 + Math.random()*50 /*delay*/, false /*yoyo?*/);
+		t.onComplete.addOnce(this.twinDireita, this);
+		t.start();
 	}
 	,
 	updateEnemies : function(){
