@@ -2,6 +2,8 @@ Game.GateController = function (game, x, y) {
 	Phaser.Sprite.call(this, game, x, y + 2, 'main_sprite_atlas', 'gate_32-96.png');
 
 	this.anchor.setTo(0.0, 1.0);
+
+    this.gateSFX = game.add.audio('gate_openned');
 };
 
 Game.GateController.prototype = Object.create(Phaser.Sprite.prototype);
@@ -29,4 +31,6 @@ Game.GateController.prototype.onGateOpenned = function (callback, ctxt) {
 	var tween = this.game.add.tween(this);
     tween.to({ alpha: 0.0 }, 1000, Phaser.Easing.Cubic.In, true, 1000);
     tween.onComplete.add(callback, ctxt);
+
+    this.gateSFX.play('', 0, 0.5);
 };

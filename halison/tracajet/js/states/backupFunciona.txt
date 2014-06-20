@@ -1,0 +1,32 @@
+this.game.physics.startSystem(Phaser.Physics.P2JS);
+		this.game.physics.p2.setImpactEvents(true);
+		this.game.physics.p2.restitution = 0.8;
+		var tracajetCollisionGroup = this.game.physics.p2.createCollisionGroup();
+		var jacareCollisionGroup = this.game.physics.p2.createCollisionGroup();
+		this.game.physics.p2.updateBoundsCollisionGroup();
+		
+		var bg = this.game.add.tileSprite(0, 0, game.cache.getImage('bg').width,game.cache.getImage('bg').height, 'bg');
+		bg.fixedToCamera = true;
+		
+		this.enemies = this.game.add.group();
+		this.enemies.enableBody = true;
+		this.enemies.physicsBodyType = Phaser.Physics.P2JS;
+		
+		for (var i = 0; i < 4; i++)
+		{
+			var jacare = this.enemies.create(game.world.randomX, game.world.randomY, 'jacare');
+			jacare.body.setRectangle(40, 40);
+			jacare.body.setCollisionGroup(jacareCollisionGroup);
+			jacare.body.collides([jacareCollisionGroup, tracajetCollisionGroup]);
+		}
+		this.tracajet = this.game.add.sprite(80, 80, 'tracajet');
+		this.tracajet.smoothed = false;
+		this.tracajet.animations.add('walk',[0,1,2,1],6,true);
+		this.game.physics.p2.enable(this.tracajet, false);
+		this.tracajet.body.setCircle(35);
+		this.tracajet.body.fixedRotation = true;
+		this.tracajet.body.setCollisionGroup(tracajetCollisionGroup);
+		this.tracajet.body.collides(jacareCollisionGroup, this.gameOver, this);
+		this.game.camera.follow(this.tracajet);
+		
+		this.cursors = this.game.input.keyboard.createCursorKeys();
