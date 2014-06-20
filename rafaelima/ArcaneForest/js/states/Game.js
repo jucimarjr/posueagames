@@ -15,6 +15,7 @@ var isJumping, beInGround, yBeforeJump;
 var verticalBar1, verticalBar2, verticalBar3, verticalBar4;
 var timeCheck;
 var monster_speed = 5;
+var isMoveCamera;
 var STATE_PLAY = 0;
 var STATE_PAUSED = 1;
 var STATE_GAMEOVER = 2;
@@ -32,6 +33,7 @@ State.Game.prototype = {
         previousX = 0;
         previousY = 0;
         isGameRotate = false;
+        isMoveCamera = false;
         contFrameGif = 0;
         timerMonst = 0;
         timerBV = 0;
@@ -47,8 +49,8 @@ State.Game.prototype = {
         this.attacking = false;
         this.canJump = true;
         this.swordCollider = null;
-        
-		
+        this.playerMoving = false;
+        this.getPlayBarOffset = true;
 		
         //set p2
         this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -61,7 +63,7 @@ State.Game.prototype = {
         //collision groups
         //start collision groups
         playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
-        obstacleCollisionGroup = this.game.physics.p2.createCollisionGroup();
+//        obstacleCollisionGroup = this.game.physics.p2.createCollisionGroup();
         monsterCollisionGroup = this.game.physics.p2.createCollisionGroup();
         tileCollisionGroup = this.game.physics.p2.createCollisionGroup();
         collectCollisionGroup = this.game.physics.p2.createCollisionGroup();
@@ -137,7 +139,7 @@ State.Game.prototype = {
         
         //collide
         this.playerCollider.body.collides(monsterCollisionGroup, this.hitMonsters, this);
-        this.playerCollider.body.collides(obstacleCollisionGroup, this.hitObstacles, this);
+//        this.playerCollider.body.collides(obstacleCollisionGroup, this.hitObstacles, this);
         //player.body.collides(tileCollisionGroup, this.hitTiles, this);
         this.playerCollider.body.collides(tileCollisionGroup);
         this.playerCollider.body.collides(collectCollisionGroup, this.collectItems, this);
@@ -146,7 +148,7 @@ State.Game.prototype = {
         
         
         //add 'things' to the world
-        this.putObstacles();
+//        this.putObstacles();
         this.putMonsters();
         this.putMonstersBar();
         this.putCollect();
@@ -163,7 +165,7 @@ State.Game.prototype = {
 //        layer.debug = true;
 
         layer.resizeWorld();
-        layer.alpha = 2;
+//        layer.alpha = 2;
 
         cursors = this.game.input.keyboard.createCursorKeys();
         attackButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -178,11 +180,6 @@ State.Game.prototype = {
         
     },
 
-    beginMoving: function (obj) {
-    	obj.flag = true;
-	},
-	
-	
     pauseGame: function () {
         this.game.paused = !this.game.paused;
         
@@ -206,7 +203,7 @@ State.Game.prototype = {
 //	        Config.global.screen.resize(this.game);
 	        
 	        var intVelY = Math.floor( this.playerCollider.body.velocity.y );
-	        
+	        this.playerMoving = false;
 	        if (cursors.left.isDown) {
 	        	this.playerCollider.body.moveLeft(500);
 	            player.scale.x = -1;
@@ -222,32 +219,35 @@ State.Game.prototype = {
 	            this.swordOffsetX = Config.game.player.collider.sword.offset.left.x;
 	            this.swordOffsetY = Config.game.player.collider.sword.offset.left.y;
 	            
+	            this.playerMoving = true;
+	            
 	        } else if (cursors.right.isDown) {
 	        	this.playerCollider.body.moveRight(500);
-	            player.scale.x = 1;
-	            //player.animations.play('right');
-	            if(!this.attacking && this.canJump && intVelY == 0) {
-	            	player.animations.play(Config.game.player.anim.walk.key);
-	            }
-	            
-	            this.offsetX = Config.game.player.collider.emma.offset.right.x;
-	            this.offsetY = Config.game.player.collider.emma.offset.right.y;
-	            
-	            // set sword offset
-	            this.swordOffsetX = Config.game.player.collider.sword.offset.right.x;
-	            this.swordOffsetY = Config.game.player.collider.sword.offset.right.y;
-	            
-    	        } else {
-	        	this.playerCollider.body.velocity.x = 0;
-	            //player.animations.play('turn');
-	            
-	            if(!this.attacking) {
-		            player.animations.play(Config.game.player.anim.stop.key);
-		            player.animations.stop();
+	        	player.scale.x = 1;
+	        	//player.animations.play('right');
+	        	if(!this.attacking && this.canJump && intVelY == 0) {
+	        		player.animations.play(Config.game.player.anim.walk.key);
 	        	}
-	            
+
+	        	this.offsetX = Config.game.player.collider.emma.offset.right.x;
+	        	this.offsetY = Config.game.player.collider.emma.offset.right.y;
+
+	        	// set sword offset
+	        	this.swordOffsetX = Config.game.player.collider.sword.offset.right.x;
+	        	this.swordOffsetY = Config.game.player.collider.sword.offset.right.y;
+
+	            this.playerMoving = true;
+    	    }
+	        else {
+	        	this.playerCollider.body.velocity.x = 0;
+	        	//player.animations.play('turn');
+
+	        	if(!this.attacking) {
+	        		player.animations.play(Config.game.player.anim.stop.key);
+	        		player.animations.stop();
+	        	}
 	        }
-	        
+
 	        this.doJump();
 	        this.doAttack();
 	        
@@ -266,9 +266,10 @@ State.Game.prototype = {
 	
 	        previousX = parseInt(player.x);
 	        
-	        
-	        if (player.x < 3044 && player.y <= 349 && !isGameRotate) {
-	            this.fallPlayer();
+	        if (player.x < 3044 && player.y <= 349 && !isGameRotate && !isMoveCamera) {
+	        	isMoveCamera = true;
+	        	this.gameState = STATE_PAUSED;
+//	            this.fallPlayer();
 	        }
 	        
 	        // to player attack do not fall down
@@ -282,66 +283,89 @@ State.Game.prototype = {
                 this.bossShoot();
                 this.timeCheck();
             }
+            
+            
+            // handle bars
+            this.updateHandleBars();
+            
         
-        } // end if gamestate == play
+        }else if(this.gameState == STATE_PAUSED) {
+        	this.checkCamera();
+        }else{// end if gamestate == play
+        	
+        }
         
+    },
+    
+    checkCamera: function(){
+    	if(isMoveCamera){
+    		if(!isGameRotate){
+    			player.animations.stop();
+    			player.frame = 6;
+    			if(this.game.camera.x > Config.animationFall.xCameraFirstWorld){
+    				if(player.body.y < Config.animationFall.yCameraFirstWorld){
+    					player.body.y +=Config.animationFall.speedCamera;
+    				}else{
+    					player.body.y = Config.animationFall.yCameraFirstWorld;
+    				}
+    				this.game.camera.follow(null);
+    				this.game.camera.x -= Config.animationFall.speedCamera;
+    			}else{
+    				this.fallPlayer();
+    			}
+    		}
+    	}else{
+    		if(this.game.camera.x < 1854){
+    			this.game.camera.x += 4;
+    		}else{
+    			this.gameState = STATE_PLAY;
+    			this.game.camera.follow(this.playerCollider);
+    		}
+    	}
+    },
+    
+    updateHandleBars: function() {
+    	
+    	var limitBarLeft = bar2.body.x - game.cache.getImage('bar').width / 2 - 113 / 2;
+    	var limitBarRight = bar2.body.x + game.cache.getImage('bar').width / 2 + 113 / 2;
+    	
+    	if(!this.playerMoving) { // if player not moving
+    		
+	    	if(this.playerCollider.body.x > limitBarLeft && this.playerCollider.body.x < limitBarRight
+	    			&& Math.round(this.playerCollider.body.y) == 1253) {
+	    		
+	    		if(this.getPlayBarOffset) {
+	    			this.playBarOffset = this.playerCollider.body.x - bar2.body.x;
+	    			
+	    			this.getPlayBarOffset = false;
+	    		}
+	    		
+	    		this.playerCollider.body.x = bar2.body.x + this.playBarOffset;
+	    		
+	    	}
+	    	else {
+	    		this.getPlayBarOffset = true;
+	    	}
+	    	
+    	}
+    	else {
+    		this.getPlayBarOffset = true;
+    	}
     },
 
     onClick: function () {
         "use strict";
     },
     
-    putMonstersBar: function () {
-        "use strict";
-		
-    },
-	
-	moveMonster: function (obj, velocity) {
-		"use strict";
-			timerMonst++;
-			if(timerMonst >= 26 ){
-				obj.forEach(function(objIntern){
-					objIntern.body.velocity.x = velocity;
-					objIntern.scale.x = -1;
-				});
-				if(timerMonst >= 50){timerMonst = 0;}
-			}else {
-				obj.forEach(function(objIntern){
-					objIntern.body.velocity.x = -velocity;
-					objIntern.scale.x = 1;
-				});
-			}
-	},
-	moveBarVertical: function (obj, velocity) {
-		"use strict";
-		if(obj.flag) {
-			
-			obj.timerBV++;
-			
-			if(obj.timerBV >= 21) {
-				
-				obj.body.velocity.y = -velocity;
-				
-				if(obj.timerBV >= 40) {
-					obj.timerBV = 0;
-				}
-			}
-			else {
-				obj.body.velocity.y = velocity;
-			}
-		}
-	},
-    
     gameRotate: function () {
         "use strict";
 		 isGameRotate = true;
-//        this.game.state.start('GifFall');
 		 
 		 bar.kill();
 		 bar2.kill();
 		 monsters.removeAll();
 		 collects.removeAll();
-		 obstacles.removeAll();
+//		 obstacles.removeAll();
 
 		 this.putBarRotate();
 		 
@@ -380,7 +404,6 @@ State.Game.prototype = {
         this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
         this.playerCollider.body.fixedRotation = true;
-        this.game.camera.follow(this.playerCollider);
         
         this.playerCollider.body.setCollisionGroup(playerCollisionGroup);
         this.playerCollider.body.collides(tileCollisionGroup);
@@ -389,13 +412,17 @@ State.Game.prototype = {
         this.playerCollider.body.collides(monsterCollisionGroup, this.hitMonsters, this);
         
 		 layer.resizeWorld();
-		 layer.alpha = 2;
 		 
 		 this.updateHealth();
 		 this.updateItems();
 		 this.putBigBoss();
          this.timeCheck();
          
+         player.body.x = this.playerCollider.body.x + this.offsetX;
+         player.body.y = this.playerCollider.body.y + this.offsetY;
+         this.game.camera.follow(null);
+         this.game.camera.x = Config.animationFall.xCamera;
+         isMoveCamera = false;
     },
     
     putBarRotate: function(){
@@ -424,6 +451,7 @@ State.Game.prototype = {
         //DEBUG
 //		this.game.debug.text(timerBV, 32, 32);
 		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
+//		this.game.debug.cameraInfo(game.camera, 32, 32);
     },
 
     //collect item (diamond and key)
@@ -528,6 +556,8 @@ State.Game.prototype = {
         	player.animations.play(Config.game.player.anim.jump.key);
         	
         	this.playerCollider.body.moveUp(Config.game.player.jumpForce);
+        	
+        	this.playerMoving = true;
         }
         
         if(!this.canJump) {
@@ -594,10 +624,10 @@ State.Game.prototype = {
     
     killMonster: function(body1, body2) {
     	
-    	if(body1.sprite.name == 'monster') {
+    	if(body1.sprite.name == 'monster'|| body1.sprite.name == 'monsterBoss') {
     		body1.sprite.kill();
     	}
-    	else if(body2.sprite.name == 'monster') {
+    	else if(body2.sprite.name == 'monster'|| body2.sprite.name == 'monsterBoss') {
     		body2.sprite.kill();
     	}
     	
@@ -611,16 +641,16 @@ State.Game.prototype = {
         isJumping = false;
     },
 
-    hitObstacles: function () {
-        beInGround = this.checkIfCanJump();
-        isJumping = false;
-
-    },
+//    hitObstacles: function () {
+//        beInGround = this.checkIfCanJump();
+//        isJumping = false;
+//
+//    },
 
     hitMonsters: function (body1, body2) {
     	
     	var monster;
-    	if(body1.sprite.name == "monster") {
+    	if(body1.sprite.name == "monster" || body1.sprite.name == "monsterBoss") {
     		monster = body1.sprite;
     	}
     	else {
@@ -710,35 +740,36 @@ State.Game.prototype = {
         this.createKinematicObj(bar, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
         this.game.add.tween(bar.body.velocity).to({
             x: '+200'
-        }, 3000).to({
+        }, 6000).to({
             x: '-200'
-        }, 3000).yoyo().loop().start();
+        }, 6000).yoyo().loop().start();
 
         //bar 2
         bar2 = this.game.add.sprite(4250, 1315, 'bar');
         this.createKinematicObj(bar2, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
         this.game.add.tween(bar2.body.velocity).to({
-            x: '+100'
+            x: '+200'
         }, 3000).to({
-            x: '-100'
+            x: '-200'
         }, 3000).yoyo().loop().start();
         
     },
+    
     //Create Obstacles
-    putObstacles: function () {
-        obstacles = this.game.add.group();
-
-        for (var i = 1; i <= 4; i++) {
-            var obstacle = obstacles.create(game.world.randomX,
-					game.world.randomY, 'obstacle' + i);
-			game.physics.p2.enable(obstacle, false);
-            obstacle.body.fixedRotation = true; //no circle movement 
-            obstacle.body.kinematic = true;
-            obstacle.body.setCollisionGroup(obstacleCollisionGroup);
-            obstacle.body.collides([obstacleCollisionGroup,
-					playerCollisionGroup]);
-        }
-    },
+//    putObstacles: function () {
+//        obstacles = this.game.add.group();
+//
+//        for (var i = 1; i <= 4; i++) {
+//            var obstacle = obstacles.create(game.world.randomX,
+//					game.world.randomY, 'obstacle' + i);
+//			game.physics.p2.enable(obstacle, true);
+//            obstacle.body.fixedRotation = true; //no circle movement 
+//            obstacle.body.kinematic = true;
+//            obstacle.body.setCollisionGroup(obstacleCollisionGroup);
+//            obstacle.body.collides([obstacleCollisionGroup,
+//					playerCollisionGroup]);
+//        }
+//    },
 
     //create monsters
     putMonsters: function () {
@@ -865,43 +896,92 @@ State.Game.prototype = {
 	},
 
     //create monsters
-        putBigBoss: function () {
+    putBigBoss: function () {
 
-            //big boss
-            monster = monsters.create(720, 330, 'bigbossattack');
-            monster.name = 'monsterBoss'; 
-            monster.animations.add('walk', [0, 1, 2, 3, 4, 5], 10, true);
-            monster.play('walk');
-        	this.createKinematicObj(monster, monsterCollisionGroup, [monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
-            
-        },
-
-        timeCheck: function (){
-
-            timeCheck = this.game.time.now;
-        },
-
-        bossShoot: function () {
-            var fire = monsters.create(720, 350, 'bigbossattackfire');
-            fire.name = 'monsterBoss'; 
-            fire.animations.add('walk', [0, 1, 2, 3], 10, true);
-            fire.play('walk');
-            this.game.physics.p2.enable(fire, false);
-            fire.body.fixedRotation = true; //no circle movement 
-            fire.body.kinematic = true;
-            fire.body.collideWorldBounds = true;
-            fire.body.setCollisionGroup(monsterCollisionGroup);
-            fire.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup], this.hitLight, this);
-            fire.body.moveRight(300);
-        },
-
-        hitLight: function (body1, body2) {
+        //big boss
+        monster = monsters.create(720, 330, 'bigbossattack');
+        monster.name = 'monsterBoss'; 
+        monster.animations.add('walk', [0, 1, 2, 3, 4, 5], 10, true);
+        monster.play('walk');
+    	this.createKinematicObj(monster, monsterCollisionGroup, [monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
         
-            if(body1.sprite.name == 'monster') {
-                body1.sprite.kill();
-            }
-            else if(body2.sprite.name == 'monster') {
-                body2.sprite.kill();
-            }
+    },
+    
+    putMonstersBar: function () {
+        "use strict";
+		
+    },
+	
+	moveMonster: function (obj, velocity) {
+		"use strict";
+			timerMonst++;
+			if(timerMonst >= 26 ){
+				obj.forEach(function(objIntern){
+					if(objIntern.name == 'monster'){
+						objIntern.body.velocity.x = velocity;
+						objIntern.scale.x = -1;
+					}
+				});
+				if(timerMonst >= 50){timerMonst = 0;}
+			}else {
+				obj.forEach(function(objIntern){
+					if(objIntern.name == 'monster'){
+						objIntern.body.velocity.x = -velocity;
+						objIntern.scale.x = 1;
+					}
+				});
+			}
+	},
+	moveBarVertical: function (obj, velocity) {
+		"use strict";
+		if(obj.flag) {
+			
+			obj.timerBV++;
+			
+			if(obj.timerBV >= 21) {
+				
+				obj.body.velocity.y = -velocity;
+				
+				if(obj.timerBV >= 40) {
+					obj.timerBV = 0;
+				}
+			}
+			else {
+				obj.body.velocity.y = velocity;
+			}
+		}
+	},
+	
+    beginMoving: function (obj) {
+    	obj.flag = true;
+	},
+
+    timeCheck: function (){
+
+        timeCheck = this.game.time.now;
+    },
+
+    bossShoot: function () {
+        var fire = monsters.create(720, 350, 'bigbossattackfire');
+        fire.name = 'monsterBoss'; 
+        fire.animations.add('walk', [0, 1, 2, 3], 10, true);
+        fire.play('walk');
+        this.game.physics.p2.enable(fire, false);
+        fire.body.fixedRotation = true; //no circle movement 
+        fire.body.kinematic = true;
+        fire.body.collideWorldBounds = true;
+        fire.body.setCollisionGroup(monsterCollisionGroup);
+        fire.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup], this.hitLight, this);
+        fire.body.moveRight(300);
+    },
+
+    hitLight: function (body1, body2) {
+    
+        if(body1.sprite.name == 'monsterBoss') {
+            body1.sprite.kill();
         }
+        else if(body2.sprite.name == 'monsterBoss') {
+            body2.sprite.kill();
+        }
+    }
 };

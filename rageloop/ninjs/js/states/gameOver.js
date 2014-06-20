@@ -6,12 +6,12 @@
 
         create: function () {
 
-            this.game.add.sprite(0, 0, 'menu_bg');
+            this.game.add.sprite(0, 0, 'gameover_bg');
 
             this.restartbutton = this.game.add.button(360,  460, 'start_btn', this.onPlayClick, this, 0, 1, 0);
             this.restartbutton.anchor.set(0.5, 0.5);
 
-            this.menubutton = this.game.add.button(610, 460, 'reset_btn', this.onResetClick, this, 1, 0, 1);
+            this.menubutton = this.game.add.button(610, 460, 'menu_btn', this.onMenuClick, this, 1, 0, 1);
             this.menubutton.anchor.set(0.5, 0.5);
 
             this.clickAudio = this.game.add.audio('click');
@@ -29,7 +29,7 @@
             this.game.state.start('Gameplay');
         },
 
-        onResetClick: function() {
+        onMenuClick: function() {
             this.bgSound.stop();
             this.clickAudio.play();
             this.game.state.start('Menu');

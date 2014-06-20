@@ -28,7 +28,7 @@ Game.PlayerController.Direction = {
     Left: -1,
     Right: 1,
     None: 0
-}
+};
 
 Game.PlayerController.AnimState = {
     Idle: 'idle',
@@ -41,7 +41,7 @@ Game.PlayerController.AnimState = {
     JumpTouchdown: 'jump touchdown',
     Respawning: 'respawning',
     Dying: 'dying'
-}
+};
 
 Game.PlayerController.prototype = {
     create: function () {
@@ -424,6 +424,8 @@ Game.PlayerController.prototype = {
     stopAndBlockInput: function () {
         this.blockInput = true;
         this.sprite.body.immovable = true;
+        this.sprite.body.velocity.x = 0;
+        this.sprite.body.velocity.y = 0;
         this.sprite.animations.stop();
     }
 
