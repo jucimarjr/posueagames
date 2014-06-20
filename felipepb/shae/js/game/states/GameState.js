@@ -213,5 +213,21 @@ Game.GameState.prototype = {
 
     onStageComplete: function () {
         console.log('Stage complete! Load next level...');
-    }
+    },
+	
+	navigateToGameWin: function () {
+        this.navigate('GameWinState');
+    },
+	
+	navigateToGameLoose: function () {
+		this.navigate('GameLooseState');
+	},
+	
+	navigate: function (stateName) {
+		var self = this;
+        self.game.input.keyboard.onDownCallback = null;
+        Utils.fadeInScreen(this.game, TweensConsts.fadeFillStyle, TweensConsts.fadeInDuration, function () {
+            self.state.start(stateName);
+        });
+	}
 };
