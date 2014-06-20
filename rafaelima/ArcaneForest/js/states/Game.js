@@ -15,6 +15,7 @@ var isJumping, beInGround, yBeforeJump;
 var verticalBar1, verticalBar2, verticalBar3, verticalBar4;
 var timeCheck;
 var monster_speed = 5;
+var isMoveCamera;
 var STATE_PLAY = 0;
 var STATE_PAUSED = 1;
 var STATE_GAMEOVER = 2;
@@ -32,6 +33,7 @@ State.Game.prototype = {
         previousX = 0;
         previousY = 0;
         isGameRotate = false;
+        isMoveCamera = false;
         contFrameGif = 0;
         timerMonst = 0;
         timerBV = 0;
@@ -163,7 +165,7 @@ State.Game.prototype = {
 //        layer.debug = true;
 
         layer.resizeWorld();
-        layer.alpha = 2;
+//        layer.alpha = 2;
 
         cursors = this.game.input.keyboard.createCursorKeys();
         attackButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -224,30 +226,29 @@ State.Game.prototype = {
 	            
 	        } else if (cursors.right.isDown) {
 	        	this.playerCollider.body.moveRight(500);
-	            player.scale.x = 1;
-	            //player.animations.play('right');
-	            if(!this.attacking && this.canJump && intVelY == 0) {
-	            	player.animations.play(Config.game.player.anim.walk.key);
-	            }
-	            
-	            this.offsetX = Config.game.player.collider.emma.offset.right.x;
-	            this.offsetY = Config.game.player.collider.emma.offset.right.y;
-	            
-	            // set sword offset
-	            this.swordOffsetX = Config.game.player.collider.sword.offset.right.x;
-	            this.swordOffsetY = Config.game.player.collider.sword.offset.right.y;
-	            
-    	        } else {
-	        	this.playerCollider.body.velocity.x = 0;
-	            //player.animations.play('turn');
-	            
-	            if(!this.attacking) {
-		            player.animations.play(Config.game.player.anim.stop.key);
-		            player.animations.stop();
+	        	player.scale.x = 1;
+	        	//player.animations.play('right');
+	        	if(!this.attacking && this.canJump && intVelY == 0) {
+	        		player.animations.play(Config.game.player.anim.walk.key);
 	        	}
-	            
+
+	        	this.offsetX = Config.game.player.collider.emma.offset.right.x;
+	        	this.offsetY = Config.game.player.collider.emma.offset.right.y;
+
+	        	// set sword offset
+	        	this.swordOffsetX = Config.game.player.collider.sword.offset.right.x;
+	        	this.swordOffsetY = Config.game.player.collider.sword.offset.right.y;
+
+	        } else {
+	        	this.playerCollider.body.velocity.x = 0;
+	        	//player.animations.play('turn');
+
+	        	if(!this.attacking) {
+	        		player.animations.play(Config.game.player.anim.stop.key);
+	        		player.animations.stop();
+	        	}
 	        }
-	        
+
 	        this.doJump();
 	        this.doAttack();
 	        
@@ -266,9 +267,10 @@ State.Game.prototype = {
 	
 	        previousX = parseInt(player.x);
 	        
-	        
-	        if (player.x < 3044 && player.y <= 349 && !isGameRotate) {
-	            this.fallPlayer();
+	        if (player.x < 3044 && player.y <= 349 && !isGameRotate && !isMoveCamera) {
+	        	isMoveCamera = true;
+	        	this.gameState = STATE_PAUSED;
+//	            this.fallPlayer();
 	        }
 	        
 	        // to player attack do not fall down
@@ -283,7 +285,35 @@ State.Game.prototype = {
                 this.timeCheck();
             }
         
-        } // end if gamestate == play
+        }else if(this.gameState == STATE_PAUSED) {
+            if(isMoveCamera){
+            	if(!isGameRotate){
+            		player.animations.stop();
+            		player.frame = 6;
+            		if(this.game.camera.x>2120){
+            			
+            			if(player.body.y < 342.2){
+            				player.body.y +=10;
+            			}else{
+            				player.body.y = 342.2;
+            			}
+            			this.game.camera.follow(null);
+            			this.game.camera.x -= 10;
+            		}else{
+            			this.fallPlayer();
+            		}
+            	}
+//            	else{
+//            		this.game.camera.follow(null);
+//        			this.game.camera.x = 1700;
+//        			this.game.camera.y = 50;
+//        			
+//            	}
+	        		
+	        }
+        }else{// end if gamestate == play
+        	
+        }
         
     },
 
@@ -335,7 +365,6 @@ State.Game.prototype = {
     gameRotate: function () {
         "use strict";
 		 isGameRotate = true;
-//        this.game.state.start('GifFall');
 		 
 		 bar.kill();
 		 bar2.kill();
@@ -389,13 +418,17 @@ State.Game.prototype = {
         this.playerCollider.body.collides(monsterCollisionGroup, this.hitMonsters, this);
         
 		 layer.resizeWorld();
-		 layer.alpha = 2;
+//		 layer.alpha = 2;
 		 
 		 this.updateHealth();
 		 this.updateItems();
 		 this.putBigBoss();
          this.timeCheck();
          
+         this.playerCollider.body.force.y = Config.game.player.forceY;
+         player.body.x = this.playerCollider.body.x + this.offsetX;
+         player.body.y = this.playerCollider.body.y + this.offsetY;
+         this.gameState = STATE_PLAY;
     },
     
     putBarRotate: function(){
@@ -424,6 +457,7 @@ State.Game.prototype = {
         //DEBUG
 //		this.game.debug.text(timerBV, 32, 32);
 		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
+//        this.game.debug.cameraInfo(game.camera, 32, 32);
     },
 
     //collect item (diamond and key)
