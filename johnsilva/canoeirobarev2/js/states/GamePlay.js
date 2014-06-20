@@ -3,141 +3,169 @@
 State.GamePlay = function (game) {
 	"use strict";
 	this.game = game;
-	var deadAnimation;
-	var jumping;
-	var cursors;
-	var levelConfig;
-	/*var player;
-	var level;
-	var map;
-	var bees;
-	var layer;*/
 };
 State.GamePlay.prototype = {
 	preload: function () {
-		
+		//var deadAnimation;
+		var jumping;
+		var cursors;
+		var levelConfig;
+		var onCipo;
+		var jumpSound, dieSound, phaseSound;
 	},
 	create: function () {
-
+		jumpSound = game.add.audio('jumpSound');
+		dieSound = game.add.audio('dieSound');
+		this.game.time.deltaCap = 0.016;		
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
-		this.game.stage.smoothed = false;
-		this.level = 4;
-		//this.game.world.setBounds(0, -600, 1600, 1200);
+		this.game.stage.smoothed = false;		
+		//this.game.world.setBounds(-10, -10, this.game.world.width + 20, this.game.world.height + 20);
 
-		this.player = game.add.sprite(10,1000 ,'playerS');
-		this.player.anchor.setTo(.5, 1);
+		levelConfig = Config.level.getLevel(Config.levelId.level);
 
+		if(this.player)
+			this.player.destroy();
+
+		this.addPlayer();
+
+			
+
+		//this.game.camera.y = 1000;
+		cursors = this.game.input.keyboard.createCursorKeys();
+		this.loadLevel(Config.levelId.level);
+
+		// Show FPS
+    	this.game.time.advancedTiming = true;
+    	this.fpsText = this.game.add.text(
+        	20, 20, '', { font: '16px Arial', fill: '#ffffff' }
+    	);
+	},
+	update: function () {
+
+		/*if (this.game.time.fps !== 0) {
+        	this.fpsText.setText(this.game.time.fps + ' FPS');
+    	}*/
+
+		this.game.physics.arcade.collide(this.layer, this.player);
+		this.player.body.velocity.x = 0;
+		onCipo = false;
+		if(this.level == 3)
+			this.updateShadowTexture(this.player.body.x, this.player.body.y);
+
+		if(!this.gameOver){		
+			//Config.global.screen.resize(this.game);
+			if(levelConfig.bees.id>0) 
+				this.game.physics.arcade.overlap(this.player, this.bees, this.collideWithBees, null,this);
+			if(levelConfig.thorns.id>0) 
+				this.game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
+			if(levelConfig.waters.id>0){
+				this.game.physics.arcade.overlap(this.waters, this.layer, this.renew, null,this);
+				this.game.physics.arcade.overlap(this.player, this.waters, this.die, null,this);
+			}
+			if(levelConfig.checkPoint.id>0){
+				this.game.physics.arcade.overlap(this.player, this.checkPoint, this.saveCP, null,this);
+			}
+			if(levelConfig.cipo.id>0){
+				this.game.physics.arcade.overlap(this.player, this.cipo, this.runCipo, null,this);
+			}		
+			//this.game.physics.arcade.overlap(this.player, this.coin, function () {
+			this.game.physics.arcade.overlap(this.player, this.flag, function () {
+				levelConfig.checkPoint.x = 0;
+				levelConfig.checkPoint.y = 0;
+				phaseSound.stop();
+				Config.levelId.level = ++this.level;
+				this.game.state.start('GamePlay');
+			}, null, this);		
 		
-		//player.smoothed = false;
-		//player.body.checkCollision.up = false;
-		//player.body.checkCollision.left = false;
-		//player.body.checkCollision.right = false;
-		//player.animations.add('walk',[1,2,1,3],12,true);
+        	if (cursors.left.isDown ) {
+				this.player.scale.x = 1; 
+				this.player.scale.x = -1;			
+				this.player.body.velocity.x = -Config.player.velocity.run;
+				this.crouched = false;
+				if(this.player.body.onFloor()){
+					this.player.animations.play('walk');
+				}
+			}
+			else if(cursors.right.isDown){
+				this.player.scale.x = -1; 
+				this.player.scale.x = 1;
+				this.player.body.velocity.x = Config.player.velocity.run;
+				this.crouched = false;
+				if(this.player.body.onFloor()){
+					this.player.animations.play('walk');
+				}
+			}
+			else if(this.player.body.blocked.down)
+				this.player.animations.play('stoped');
+
+			if(this.player.body.velocity.y !== 0 && !onCipo){
+				//this.player.animations.play('jump');
+				this.player.frame = 19;
+			}
+			if ( this.isToJumping() && (!jumping) ){
+			/*if (this.jump && this.player.body.onFloor()){	*/
+				jumpSound.play();
+				jumping = true;
+				this.player.animations.play('jump');
+				this.player.body.velocity.y = -Config.player.velocity.jump;
+			}else if(onCipo){
+				if(cursors.up.isDown) 
+					this.climb(-Config.player.velocity.climbing);
+				else if(cursors.down.isDown) 
+					this.climb(Config.player.velocity.climbing);
+				else 
+					this.player.frame = Config.climbing.frames.max;
+			}
+			if(!cursors.up.isDown){
+				jumping = false;
+			}
+		}
+	},
+
+	addPlayer: function(){
+		
+		this.player = game.add.sprite(0, 0 ,'playerS');
+		this.player.anchor.setTo(.5, 1);		
 		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13,14],20,true);
 		this.player.animations.add('stoped',[0,1],2,true);
-		this.player.animations.add('down',[3,4],12,true);		
+		this.player.animations.add('climbing',[20,21,22,23],5,true);		
 		this.player.animations.add('dead',[24,25,26],10,false);
 		/*deadAnimation.onComplete.add(function() {
 	    								this.loadLevel(this.level);
 									}, this);	*/
-		this.player.animations.add('jump',[15,16,17,18,19],4,false);
-
+		this.player.animations.add('jump',[15,16,17,18,19],9,false);
 		this.game.physics.enable(this.player);
 		this.player.body.collideWorldBounds = true;
-		this.game.physics.enable(this.player);
 		this.player.body.setSize(25, 60, 0, 0);
-		//this.player.body.bounce.set(0.5);
-		this.game.camera.y = 1000;
-
-		this.loadLevel(this.level);
-		
-		
-		
-		//jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-		/*this.right = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-		this.left = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-		this.down = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-		this.up = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
-		this.spaceBar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-		this.right.onDown.add(function() {this.run=true;}, this);
-		this.right.onUp.add(function() {this.run=false;}, this);
-		this.left.onDown.add(function() {this.back=true;}, this);
-		this.left.onUp.add(function() {this.back=false;}, this);
-		this.down.onDown.add(function() {this.crouch=true;}, this);
-		this.down.onUp.add(function() {this.crouch=false;}, this);
-		this.up.onDown.add(function() {this.jump=true;}, this);
-		this.up.onUp.add(function() {this.jump=false;}, this);
-		this.spaceBar.onDown.add(function() {this.jump=true;}, this);
-		this.spaceBar.onUp.add(function() {this.jump=false;}, this);*/
-	},
-	update: function () {
-
-		this.game.physics.arcade.collide(this.layer, this.player);
+		this.player.alpha = 1;
 		this.player.body.velocity.x = 0;
+		this.player.body.velocity.y = 0;
+		this.player.body.gravity.y = 1000;
 
-	if(!this.gameOver){
-		
-		//Config.global.screen.resize(this.game);
-		//player.animations.play('walk');
+		this.setPlayerPosition();
+	},
 
-		
+	setPlayerPosition: function(){
+		var x, y;
+		if(levelConfig.checkPoint.x > 0){
+			x = levelConfig.checkPoint.x;
+			y = levelConfig.checkPoint.y;
+		}
+		else{
+			x = levelConfig.player.posX;
+			y = levelConfig.player.posY;
+		}
 
-		if(levelConfig.bees.id>0) this.game.physics.arcade.overlap(this.player, this.bees, this.die, null,this);
-		if(levelConfig.thorns.id>0) this.game.physics.arcade.overlap(this.player, this.thorns, this.die, null,this);
-		this.game.physics.arcade.overlap(this.player, this.coin,
-			function () {
-			//this.loadLevel(this.level + 1);
-			this.loadLevel(3);
-		}, null, this);
-		
-		
-		//this.branches.tilePosition.x = this.player.body.x;
-        if (cursors.left.isDown ) {
-        //if (this.back){
-			this.player.scale.x = 1; 
-			this.player.scale.x = -1;			
-			this.player.body.velocity.x = -150;
-			this.crouched = false;
-			if(this.player.body.onFloor()){
-				this.player.animations.play('walk');
-			}
-			//this.bg.tilePosition.x+=1;
-		}
-		else if(cursors.right.isDown){
-		//else if(this.run){
-			this.player.scale.x = -1; 
-			this.player.scale.x = 1;
-			this.player.body.velocity.x = 150;
-			this.crouched = false;
-			if(this.player.body.onFloor()){
-				this.player.animations.play('walk');
-			}
-			//this.bg.tilePosition.x-=1;
-		}
-		else if(this.player.body.blocked.down){
-			//this.player.animations.stop();
-			//this.player.frame = 0;
-			this.player.animations.play('stoped');
-		}
-		if(this.player.body.velocity.y !== 0){
-			this.player.animations.play('jump');
-		}
-		if ( this.isToJumping() && (!jumping) ){
-		/*if (this.jump && this.player.body.onFloor()){	*/
-			jumping = true;
-			this.player.animations.play('jump');
-			this.player.body.velocity.y = -550;
-		}
-		if(!cursors.up.isDown){
-			jumping = false;
-		}
-	}
+		/*this.game.camera.x = x;
+		this.game.camera.y = y;*/
+		this.player.position.setTo(x,y);
+		this.game.camera.follow(this.player);	
 	},
 
 	isToJumping: function(){
+		if(onCipo) return false;
+
 		if( cursors.up.isDown || this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) ){
 			if(this.player.body.onFloor()){
 				return true;
@@ -147,22 +175,15 @@ State.GamePlay.prototype = {
 	},
 
 	loadLevel: function (level) {
-		cursors = this.game.input.keyboard.createCursorKeys();
 		this.gameOver = false;
 		this.level = level;
-		levelConfig = Config.level.getLevel(level);
-
 		jumping = false;
 		
-		this.player.alpha = 1;
-		this.player.body.velocity.x = 0;
-		this.player.body.velocity.y = 0;
-		this.player.body.gravity.y = 1000;
-		this.player.position.setTo(levelConfig.player.posX, levelConfig.player.posY);
-		this.game.camera.follow(this.player);
+		phaseSound = game.add.audio('phase'+level,1,true);
+		phaseSound.play('',0,1,true);
 
 		if (this.layer) this.layer.destroy();
-		//if (this.flag) this.flag.destroy();
+		if (this.flag) this.flag.destroy();
 		if (this.branches) this.branches.destroy();
 		if (this.waters) this.waters.destroy();
 		if (this.bees) this.bees.destroy();
@@ -170,6 +191,9 @@ State.GamePlay.prototype = {
 		if (this.thorns) this.thorns.destroy();
 		if (this.coin) this.coin.destroy();
 		if (this.bushes) this.bushes.destroy();
+		if (this.acidicWater) this.acidicWater.destroy();
+		if (this.checkPoint) this.checkPoint.destroy();
+		if (this.cipo) this.cipo.destroy();
 
 		this.bg = this.game.add.tileSprite(0,0,1200,800,'bg'+level);
 		this.bg.fixedToCamera = true;		
@@ -183,6 +207,7 @@ State.GamePlay.prototype = {
 		
 		if(levelConfig.thorns.id>0) this.addThorns(levelConfig.thorns.id);
 		if(levelConfig.coin.id>0) this.addCoin(levelConfig.coin.id, levelConfig.coin.image);
+		if(levelConfig.cipo.id>0) this.addCipo(levelConfig.cipo.id);
 
 		this.player.bringToTop();
 
@@ -194,6 +219,48 @@ State.GamePlay.prototype = {
 
 		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);
 		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
+		if(levelConfig.checkPoint.id>0) this.addCheckPoint(levelConfig.checkPoint.id);
+
+		this.addFlag(levelConfig.flag.id)
+		
+		if(this.level == 3)
+			this.initShadow();
+	},
+
+	addFlag: function(id){
+		this.flag = game.add.group();
+		this.flag.enableBody = true;
+		this.flag.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('flag',id,'flag', 0,true,false,this.flag);
+		this.flag.callAll('animations.add', 'animations', 'spin', [0,1,2,3,4,5,6,7], 7, true);
+		this.flag.callAll('animations.play', 'animations', 'spin');
+		this.flag.forEach(function (f){ 
+			f.body.allowGravity = false;
+			f.body.immovable = true;
+		}, this);
+	},
+
+	addCipo: function(id){
+		this.cipo = game.add.group();
+		this.cipo.enableBody = true;
+		this.cipo.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('cipo',id,'cipo', 0,true,false,this.cipo);
+		this.cipo.forEach(function (c){ 
+			c.body.allowGravity = false;
+			c.body.immovable = true;
+		}, this);
+	},
+
+	addCheckPoint: function(id){
+		this.checkPoint = game.add.group();
+		this.checkPoint.enableBody = true;
+		this.checkPoint.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('checkPoint',id,'checkP', 0,true,false,this.checkPoint);
+		this.checkPoint.callAll('animations.add', 'animations', 'spin', [0,1,2], 5, false);
+		this.checkPoint.forEach(function (c){ 
+			c.body.allowGravity = false;
+			c.body.immovable = true;
+		}, this);
 	},
 
 	addCoin: function(id, image){
@@ -222,16 +289,20 @@ State.GamePlay.prototype = {
 		}, this);
 	},
 
+	renew: function(water, bloco){
+		water.position.setTo(water.initX, water.initY);
+	},
+
 	addWaters: function(id){
 		this.waters = game.add.group();
 		this.waters.enableBody = true;
 		this.waters.physicsBodyType = Phaser.Physics.ARCADE;
 		this.map.createFromObjects('waters',id,'acidicWater', 0,true,false,this.waters);
-		this.waters.forEach(function (water){ 
-			water.body.allowGravity = false;
-			water.body.immovable = true;
-			//water.anchor.setTo(.5, 1);
-			this.addEmmiter(water.body.x, water.body.y);
+		this.waters.forEach(function (water){
+			water.initX = water.body.x;
+			water.initY = water.body.y;
+			water.anchor.setTo(.3, 1);
+			water.name = "water";
 		}, this);
 	},
 
@@ -246,6 +317,7 @@ State.GamePlay.prototype = {
 			bee.body.setSize(34, 53, 3, 8);
 			bee.body.allowGravity = false;
 			bee.body.immovable = true;
+			bee.name = "bee";
 		}, this);
 	},
 
@@ -272,59 +344,136 @@ State.GamePlay.prototype = {
 		}, this);
 	},
 
-	addEmmiter: function(x,y){
-		var emitter = game.add.emitter(x,y,1);
-		//var emitter = game.add.emitter(game.world.centerX, game.world.centerY);
-
-		//emitter.width = game.world.width;
-		// emitter.angle = 30; // uncomment to set an angle for the rain.
-
-		emitter.makeParticles('acidicWater');
-
-		/*emitter.minParticleScale = 0.1;
-		emitter.maxParticleScale = 0.5;*/
-		emitter.setYSpeed(80);
-		emitter.setXSpeed(0);
-		//emitter.setYSpeed(300, 500);
-		//emitter.setXSpeed(-5, 5);
-
-		/*emitter.minParticleSpeed.setTo(-300, -300);
-    	emitter.maxParticleSpeed.setTo(300, 300);*/
-
+	collideWithBees: function(player, enemie){
+		var emitter = game.add.emitter(enemie.body.x, enemie.body.y, 250);
+		emitter.minParticleSpeed.setTo(-500, -500);
+		emitter.maxParticleSpeed.setTo(500, 500);
+		emitter.minParticleScale = 0.5;
+		emitter.maxParticleScale = 2;
 		emitter.minRotation = 0;
 		emitter.maxRotation = 0;
-
-		emitter.start(false, 1800, 1,0);
+		emitter.makeParticles('caba');
+		emitter.gravity = 0;
+		emitter.start(false, 1800, 15);
+		this.die(player, enemie, emitter)
 	},
-
-	die : function(player, enemie) {
+	die: function(player, enemie, emitter) {
+        /*this.game.add.tween(this.game.camera).to({ x: -10 }, 40, 
+        	Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true).start();*/
+		//enemie.kill();
+		dieSound.play();
 		this.gameOver = true;
+		if(enemie.name == "bee")
+			enemie.alpha = 0;
 		this.player.animations.stop();
-		this.player.body.gravity.y = 0;
+		//this.player.body.gravity.y = 0;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
-		//this.player.anchor.setTo(0.5, 0.5);
 		this.player.animations.play('dead');
-		var t = this.game.add.tween(this.player).to({alpha:0}, 500).start();
-		enemie.kill();	
-	
-		t.onComplete.add(function() {
-		    this.loadLevel(this.level);
-		}, this);
+		this.game.add.tween(this.player).to({alpha:0}, 200).start().onComplete.add(function() {
+		    	//this.loadLevel(this.level);
+		    	//this.game.state.start('GamePlay');
+		    	this.restartPhase(enemie, emitter);
+			}, this);		
     },
 
-    //game
+    restartPhase: function(enemie, emitter){
+    	this.setPlayerPosition();
+		this.player.alpha = 1;
+		if(enemie.name == "bee")
+			enemie.alpha = 1;
+		//enemie.alpha = 1;
+		if(emitter)
+			emitter.destroy();
+		this.gameOver = false;
+		//enemie.revive()
+    },
+
+    saveCP : function(player, cp) {
+    	this.checkPoint.callAll('animations.play', 'animations', 'spin');
+    	levelConfig.checkPoint.x = this.player.body.x;
+    	levelConfig.checkPoint.y = this.player.body.y;
+    },
+
+    runCipo : function(player, cipo) {
+    	onCipo = true;
+    	player.body.velocity.y = Config.player.velocity.down;
+    	//player.frame = Config.climbing.frames.min;
+    },
+
+    climb : function(velocity) {
+    	this.player.animations.play('climbing');
+    	this.player.body.velocity.y = velocity;
+    	/*frameClimbing++;
+    	this.player.frame  = frameClimbing;
+    	if(frameClimbing > Config.climbing.frames.max){
+    		frameClimbing = Config.climbing.frames.min;
+    		this.player.frame = frameClimbing;
+    	}*/
+
+    },   
+
+    initShadow: function(){
+    	// Create the shadow texture
+    	this.shadowTexture = this.game.add.bitmapData(this.game.world.bounds.width, this.game.world.bounds.height);
+
+    	// Create an object that will use the bitmap as a texture
+    	var lightSprite = this.game.add.image(0, 0, this.shadowTexture);
+
+    	// Set the blend mode to MULTIPLY. This will darken the colors of
+    	// everything below this sprite.
+    	lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
+    },
+
+    updateShadowTexture: function(x, y) {
+    	// Draw shadow
+    	this.shadowTexture.context.fillStyle = 'rgb(9, 9, 9)';
+    	//this.shadowTexture.context.fillRect(0, 0, this.game.width, this.game.height);
+    	this.shadowTexture.context.fillRect(0, 0, this.game.world.bounds.width, this.game.world.bounds.height);
+    	
+    	// Draw circle of light with a soft edge
+    	var gradient = this.shadowTexture.context.createRadialGradient(
+    		x, y, Config.finalPhase.lightRadius * 0.75,
+    		x, y, Config.finalPhase.lightRadius);
+
+    	gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+    	gradient.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+
+    	this.shadowTexture.context.beginPath();
+    	this.shadowTexture.context.fillStyle = gradient;
+    	this.shadowTexture.context.arc(x, y, Config.finalPhase.lightRadius, 0, Math.PI*2);
+    	this.shadowTexture.context.fill();
+
+    	// This just tells the engine it should update the texture cache
+    	this.shadowTexture.dirty = true;
+	},
 
     render: function (){
+    	/*game.debug.text(this.game.world.bounds.width,32,32);
+    	game.debug.text(this.game.world.bounds.height,32,64);*/
+    	/*game.debug.text(this.player.body.x,32,32);
+    	game.debug.text(this.player.body.y,32,64);
+    	game.debug.text(levelConfig.checkPoint.x,200,32);
+    	game.debug.text(levelConfig.checkPoint.y,200,64);*/
     	//game.debug.body(this.player);
     	//game.debug.body(this.thorns);
+    	//game.debug.text(frameClimbing,32,32);
+    	//game.debug.text(levelConfig.checkPoint.x,32,32);
 
-		this.thorns.forEach(function (thorn){ 
+		/*this.thorns.forEach(function (thorn){ 
 			game.debug.body(thorn);
-		}, this);
+		}, this);*/
 
-		this.bees.forEach(function (bees){ 
+		/*this.waters.forEach(function (w){ 
+			game.debug.body(w);
+		}, this);*/
+
+		/*this.bees.forEach(function (bees){ 
 			game.debug.body(bees);
-		}, this);
+		}, this);*/
+
+		/*this.cipo.forEach(function (c){ 
+			game.debug.body(c);
+		}, this);*/
     },
 };

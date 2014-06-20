@@ -23,22 +23,11 @@ State.Play.prototype = {
         game.physics.startSystem(Phaser.Game.ARCADE);
         game.physics.arcade.gravity.y=800;
 
-        // level
         this.level.create();
-
-        // panel
         this.panel.create();
-
-        // heroi
         this.hero.create();
-
-        // arma
         this.weapon.create();
-
-        //pause menu
         this.pause.create()
-
-        //inimigos
         this.enemy.create(this.level.map);
 		
         cursors = this.game.input.keyboard.createCursorKeys();
@@ -47,6 +36,8 @@ State.Play.prototype = {
     update:function(){
         game.physics.arcade.collide(this.level.layer, this.hero.hero);
 		game.physics.arcade.collide(this.level.layer,this.enemy.enemies);
+		game.physics.arcade.overlap(this.weapon.pistol.bulletGroup,this.enemy.enemies, this.killEnemy, null, this);
+		game.physics.arcade.overlap(this.weapon.machineGun.bulletGroup,this.enemy.enemies, this.killEnemy, null, this);
 		game.physics.arcade.overlap(this.level.weapons, this.hero.hero, this.grabsGun, null, this);
 		
         this.level.update(this.hero);
@@ -59,7 +50,14 @@ State.Play.prototype = {
 
     grabsGun : function(hero, weapon) {
         this.weapon.change(weapon);
+        this.hero.change(weapon);
         this.panel.change(weapon);
         weapon.kill();
     },
+
+    killEnemy : function(enemy, bullet) {
+        this.enemy.kill(enemy);
+//        enemy.kill();
+        bullet.kill();
+    }
 }

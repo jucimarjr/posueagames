@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="400" height="100" tilewidth="10" tileheight="10">
+ <tileset firstgid="1" name="tileset" tilewidth="10" tileheight="10">
+  <image source="../images/tileset_debug.png" width="10" height="10"/>
+ </tileset>
+ <tileset firstgid="2" name="fruits" tilewidth="30" tileheight="30">
+  <image source="../spritesheets/fruits.png" width="120" height="30"/>
+ </tileset>
+ <layer name="TileScene1" width="400" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt3UsKgDAMBUB7/0t7AIVWMaQmM/D2UqGfpOhxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAECekf0AAAAAAAAAAPAD+usAvVkHAMhkHQKAOGMSAAAAANapswDQjT7DM8YLAAAAAAAAAACAamZ343YOQJSI+cd8BgAAsMZZCQAAAIAdqVkBAAAAAAAV6HkAAACRnDngG75VBABwZT8EAAAAAADQT/Z/Et3feS/7PYlI71Rm3AAAAADgntoYAAAAAAAAAADUdwIB0AHc
+  </data>
+ </layer>
+ <imagelayer name="ImgScene1" width="400" height="100">
+  <image source="../images/platform.png"/>
+ </imagelayer>
+ <objectgroup name="ObjScene1" width="400" height="100">
+  <object gid="3" x="1170" y="260"/>
+  <object gid="4" x="420" y="800"/>
+  <object gid="4" x="420" y="750"/>
+  <object gid="4" x="420" y="700"/>
+  <object gid="4" x="420" y="640"/>
+  <object gid="4" x="910" y="830"/>
+  <object gid="5" x="1140" y="510"/>
+  <object gid="4" x="2240" y="560"/>
+  <object gid="2" x="3530" y="600"/>
+  <object gid="5" x="3880" y="900"/>
+  <object gid="5" x="2970" y="800"/>
+  <object gid="4" x="1870" y="780"/>
+  <object gid="5" x="2050" y="580"/>
+  <object gid="2" x="1830" y="540"/>
+ </objectgroup>
+</map>

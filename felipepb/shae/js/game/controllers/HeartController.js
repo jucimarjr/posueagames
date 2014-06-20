@@ -1,292 +1,284 @@
-Game.HeartController = function (game) {
-	this.x;
-	this.y;
-	this.light;
-	this.input = game.input;
-	this.math = game.math;
+Game.HeartController = function (gameState, player, waypoints) {
+	this.gameState = gameState;
+	this.game = this.gameState.game;
+	this.player = player;
+	this.waypoints = waypoints;
+	this.sprite;
+
+	this.currentAnimation;
+	this.tweens = new Array();
+	this.pursuitPositions = new Array();
+	this.backwards = false;
+	this.currentWaypointIndex;
 	
-	if (!Game.HeartController._bitmap) {
-		// Create a bitmap texture for drawing light cones
-	    var bitmap = game.add.bitmapData(game.width, game.height);
-	    bitmap.context.fillStyle = 'rgb(255, 255, 255)';
-	    bitmap.context.strokeStyle = 'rgb(255, 255, 255)';
-	    var lightBitmap = game.add.image(0, 0, bitmap);
-	    lightBitmap.blendMode = Phaser.blendModes.MULTIPLY;
-		
-		Game.HeartController._bitmap = bitmap;
-	}
-};
-
-Game.HeartController._bitmap = null;
-
-Game.HeartController.clearBitmap = function(game) {
-	var bitmap = Game.HeartController._bitmap;
-	if (bitmap) {
-		// Next, fill the entire light bitmap with a dark shadow color.
-	    bitmap.context.fillStyle = 'rgb(100, 100, 100)';
-	    bitmap.context.fillRect(0, 0, bitmap.width, bitmap.height);
-	}
-};
-
-Game.HeartController.renderBitmap = function () {
-	var bitmap = Game.HeartController._bitmap;
-	if (bitmap) {
-		// This just tells the engine it should update the texture cache
-        bitmap.dirty = true;
-	}
-};
-
-Game.HeartController._stageCorners;
-
-Game.HeartController.setStageCorners = function (x, y, width, height) {
-	// An array of the stage corners that we'll use later
-    Game.HeartController._stageCorners = [
-        new Phaser.Point(x, y),
-        new Phaser.Point(width, y),
-        new Phaser.Point(width, height),
-        new Phaser.Point(x, height)
-    ];
-};
-
-Game.HeartController._walls;
-
-Game.HeartController.setWalls = function (tiles) {
-	// Build some walls. These will block line of sight.
-    var NUMBER_OF_WALLS = tiles.length;
-    var walls = [];
-
-    for(var i = 0; i < NUMBER_OF_WALLS; i++) {
-        walls.push(tiles[i]);
-    }
-
-    for (var w = 0; w < walls.length; w++) {
-        var wall = walls[w];
-        wall.corners = [];
-        var polyline = wall.polyline;
-        for (var k = 0; k < polyline.length; k++) {
-            wall.corners.push(new Phaser.Point(wall.x+0.1 + polyline[k][0], wall.y+0.1 + polyline[k][1]));
-            wall.corners.push(new Phaser.Point(wall.x-0.1 + polyline[k][0], wall.y-0.1 + polyline[k][1]));
-        }
-    }
+	this.beatSprite;
+	this.beatSpriteTween;
 	
-	Game.HeartController._walls = walls;
-}
+	this._enabled = true;
+}; 
 
 Game.HeartController.prototype = {
-	create: function (x, y, game) {
-		this.light = game.add.sprite(x, y, 'light');
-		this.light.anchor.setTo(0.5, 0.5);
-		this.x = x;
-		this.y = y;
+	create: function () {
+		this.sprite = this.game.add.sprite(0, 0, 'main_sprite_atlas');
+		this.sprite.frameName = 'heart_idle_1_100-100.png';
+		this.sprite.anchor.setTo(0.5, 0.5);
+
+		// Create animations
+		var idleAnimFrames = new Array();
+        for (var i = 1; i <= 4; i++) {
+            idleAnimFrames.push('heart_idle_' + i + '_100-100.png');
+        };
+
+        var flyAnimFrames = new Array();
+        for (var i = 1; i <= 10; i++) {
+            flyAnimFrames.push('heart_flying_' + i + '_100-100.png');
+        };
+
+        this.sprite.animations.add('idle', idleAnimFrames, 10, true);
+        this.sprite.animations.add('fly', flyAnimFrames, 10, true);
+
+        this.playIdleAnimation();
+
+        this.currentWaypointIndex = Utils.random(0, this.waypoints.polyline.length - 1);
+        // console.log('currentWaypointIndex: ' + this.currentWaypointIndex);
+
+        this.sprite.x = this.waypoints.x + this.waypoints.polyline[this.currentWaypointIndex][0];
+        this.sprite.y = this.waypoints.y + this.waypoints.polyline[this.currentWaypointIndex][1];
+
+        this.flyToNextWaypoint(HeartConsts.delayToNextWaypoint);
 	},
 	
+	setEnabled: function (value) {
+		this._enabled = value;
+		
+		if (value) {
+			this.resumeTweens();
+		} else {
+			this.pauseTweens();
+		}
+	},
+	
+	playBeat: function () {
+		if (!this._enabled || this.pursuitPositions.length != 0) {
+			return;
+		}
+		
+		var mySprite = this.sprite;
+        var beatSprite = this.beatSprite;
+
+		if (!beatSprite) {
+			beatSprite = this.game.add.sprite(mySprite.x, mySprite.y, 'main_sprite_atlas');
+			beatSprite.anchor.setTo(0.5, 0.5);
+			this.beatSprite = beatSprite;
+		} else {
+			beatSprite.revive();
+		}
+
+		beatSprite.frameName = mySprite.frameName;
+		beatSprite.x = mySprite.x;
+		beatSprite.y = mySprite.y;
+		beatSprite.alpha = 0.5;
+		
+		var beatAnimation = this.game.add.tween(beatSprite);
+		this.beatSpriteTween = beatAnimation;
+        beatAnimation.to({ alpha: 1.0 }, 250, Phaser.Easing.Quadratic.Out, true, 0);
+		
+		var self = this;
+
+		beatAnimation.onComplete.add(function () {
+			beatSprite.alpha = 0.5;
+			beatAnimation = self.game.add.tween(beatSprite);
+			self.beatSpriteTween = beatAnimation;
+			beatAnimation.to({ alpha: 1.0 }, 250, Phaser.Easing.Quadratic.Out, true, 0);
+
+	        beatAnimation.onComplete.add(function () {
+	            beatSprite.alpha = 1.0;
+	            beatAnimation = self.game.add.tween(beatSprite);
+				self.beatSpriteTween = beatAnimation;
+	            beatAnimation.to({ alpha: 0.0 }, 500, Phaser.Easing.Quadratic.Out, true, 0);
+
+				beatAnimation.onComplete.add(function () {
+					beatSprite.kill();
+					self.beatSpriteTween = null;
+				});
+	        });
+		});
+	},
+
 	update: function () {
-		var walls = Game.HeartController._walls;
-		var stageCorners = Game.HeartController._stageCorners;
-		var bitmap = Game.HeartController._bitmap;
+		if (!this._enabled) {
+			return;
+		}
 		
-		// Move the light to the pointer/touch location
-//	    this.light.x = this.input.activePointer.x;
-//	    this.light.y = this.input.activePointer.y;
-        this.light.x = this.x;
-		this.light.y = this.y;
-	
-	    // Ray casting!
-	    // Cast rays through the corners of each wall towards the stage edge.
-	    // Save all of the intersection points or ray end points if there was no intersection.
-	    var points = [];
-	    var ray = null;
-	    var intersect;
-		
-		for (var w = 0; w < walls.length; w++) {
-            var wall = walls[w];
-	        // Create a ray from the light through each corner out to the edge of the stage.
-	        // This array defines points just inside of each corner to make sure we hit each one.
-	        // It also defines points just outside of each corner so we can see to the stage edges.
-            var corners = wall.corners;
-	        // Calculate rays through each point to the edge of the stage
-	        for(var i = 0; i < corners.length; i++) {
-	            var c = corners[i];
-	
-	            // Here comes the linear algebra.
-	            // The equation for a line is y = slope * x + b
-	            // b is where the line crosses the left edge of the stage
-	            var slope = (c.y - this.light.y) / (c.x - this.light.x);
-	            var b = this.light.y - slope * this.light.x;
-	
-	            var end = null;
-	
-	            if (c.x === this.light.x) {
-	                // Vertical lines are a special case
-	                if (c.y <= this.light.y) {
-	                    end = new Phaser.Point(this.light.x, 0);
-	                } else {
-	                    end = new Phaser.Point(this.light.x, bitmap.height);
-	                }
-	            } else if (c.y === this.light.y) {
-	                // Horizontal lines are a special case
-	                if (c.x <= this.light.x) {
-	                    end = new Phaser.Point(0, this.light.y);
-	                } else {
-	                    end = new Phaser.Point(bitmap.width, this.light.y);
-	                }
-	            } else {
-	                // Find the point where the line crosses the stage edge
-	                var left = new Phaser.Point(0, b);
-	                var right = new Phaser.Point(bitmap.width, slope * bitmap.width + b);
-	                var top = new Phaser.Point(-b/slope, 0);
-	                var bottom = new Phaser.Point((bitmap.height-b)/slope, bitmap.height);
-	
-	                // Get the actual intersection point
-	                if (c.y <= this.light.y && c.x >= this.light.x) {
-	                    if (top.x >= 0 && top.x <= bitmap.width) {
-	                        end = top;
-	                    } else {
-	                        end = right;
-	                    }
-	                } else if (c.y <= this.light.y && c.x <= this.light.x) {
-	                    if (top.x >= 0 && top.x <= bitmap.width) {
-	                        end = top;
-	                    } else {
-	                        end = left;
-	                    }
-	                } else if (c.y >= this.light.y && c.x >= this.light.x) {
-	                    if (bottom.x >= 0 && bottom.x <= bitmap.width) {
-	                        end = bottom;
-	                    } else {
-	                        end = right;
-	                    }
-	                } else if (c.y >= this.light.y && c.x <= this.light.x) {
-	                    if (bottom.x >= 0 && bottom.x <= bitmap.width) {
-	                        end = bottom;
-	                    } else {
-	                        end = left;
-	                    }
-	                }
-	            }
-	
-	            // Create a ray
-	            ray = new Phaser.Line(this.light.x, this.light.y, end.x, end.y);
-	
-	            // Check if the ray intersected the wall
-	            intersect = this.getWallIntersection(ray);
-	            if (intersect) {
-	                // This is the front edge of the light blocking object
-	                points.push(intersect);
-	            } else {
-	                // Nothing blocked the ray
-	                points.push(ray.end);
-	            }
-	        }
-        }
+		var mySprite = this.sprite;
+		var beatSprite = this.beatSprite;
+		var player = this.player;
+		var playerSprite = player.sprite;
+		var playerDistance = Phaser.Point.distance(playerSprite, mySprite);
+		var pursuitPositions = this.pursuitPositions;
 
-	    // Shoot rays at each of the stage corners to see if the corner
-	    // of the stage is in shadow. This needs to be done so that
-	    // shadows don't cut the corner.
-	    for(i = 0; i < stageCorners.length; i++) {
-	        ray = new Phaser.Line(this.light.x, this.light.y, stageCorners[i].x, stageCorners[i].y);
-	        intersect = this.getWallIntersection(ray);
-	        if (!intersect) {
-	            // Corner is in light
-	            points.push(stageCorners[i]);
-	        }
-	    }
+		if (beatSprite) {
+			beatSprite.x = mySprite.x;
+            beatSprite.y = mySprite.y;
+			beatSprite.frameName = mySprite.frameName;
+		}
 
-	    // Now sort the points clockwise around the light
-	    // Sorting is required so that the points are connected in the right order.
-	    //
-	    // This sorting algorithm was copied from Stack Overflow:
-	    // http://stackoverflow.com/questions/6989100/sort-points-in-clockwise-order
-	    //
-	    // Here's a pseudo-code implementation if you want to code it yourself:
-	    // http://en.wikipedia.org/wiki/Graham_scan
-	    var center = { x: this.light.x, y: this.light.y };
-	    points = points.sort(function(a, b) {
-	        if (a.x - center.x >= 0 && b.x - center.x < 0)
-	            return 1;
-	        if (a.x - center.x < 0 && b.x - center.x >= 0)
-	            return -1;
-	        if (a.x - center.x === 0 && b.x - center.x === 0) {
-	            if (a.y - center.y >= 0 || b.y - center.y >= 0)
-	                return 1;
-	            return -1;
-	        }
-	
-	        // Compute the cross product of vectors (center -> a) x (center -> b)
-	        var det = (a.x - center.x) * (b.y - center.y) - (b.x - center.x) * (a.y - center.y);
-	        if (det < 0)
-	            return 1;
-	        if (det > 0)
-	            return -1;
-	
-	        // Points a and b are on the same line from the center
-	        // Check which point is closer to the center
-	        var d1 = (a.x - center.x) * (a.x - center.x) + (a.y - center.y) * (a.y - center.y);
-	        var d2 = (b.x - center.x) * (b.x - center.x) + (b.y - center.y) * (b.y - center.y);
-	        return 1;
-	    });
-		
-		this.points = points;
-	},
-	
-	render: function () {
-		var bitmap = Game.HeartController._bitmap;
-		var points = this.points;
+		if (playerDistance <= HeartConsts.attackDistance) {
+			this.pauseTweens();
 
-		// Connect the dots and fill in the shape, which are cones of light,
-        // with a bright white color. When multiplied with the background,
-        // the white color will allow the full color of the background to
-        // shine through.
-        bitmap.context.beginPath();
-        bitmap.context.fillStyle = 'rgb(255, 255, 255)';
-        bitmap.context.moveTo(points[0].x, points[0].y);
-        for (var j = 0; j < points.length; j++) {
-            bitmap.context.lineTo(points[j].x, points[j].y);
-        }
-        bitmap.context.closePath();
-		
-		bitmap.context.fill();
-	},
-	
-	getWallIntersection: function (ray) {
-		var distanceToWall = Number.POSITIVE_INFINITY;
-        var closestIntersection = null;
-
-	    // For each of the walls...
-		var walls = Game.HeartController._walls;
-		var wallsLength = walls.length;
-		
-		for (var w = 0; w < wallsLength; w++) {
-			var wall = walls[w];
-			var polyline = wall.polyline;
-			
-//			console.log('polyline: ' + polyline);
-			var lines = [];
-			var lastPoint = polyline[0];
-			for (var p = 1; p < polyline.length; p++) {
-//				console.log('lastp: ' + lastPoint);
-				lines.push(new Phaser.Line(wall.x + lastPoint[0], wall.y + lastPoint[1],
-                                           wall.x + polyline[p][0], wall.y + polyline[p][1]));
-                lastPoint = polyline[p];
+			if (pursuitPositions.length == 0) {
+//				console.log('length zero');
+				pursuitPositions.push({
+					x: mySprite.x,
+					y: mySprite.y
+				});
 			}
-			lines.push(new Phaser.Line(wall.x + lastPoint[0], wall.y + lastPoint[1],
-                                       wall.x + polyline[0][0], wall.y + polyline[0][1]));
-			
-			// Test each of the edges in this wall against the ray.
-			// If the ray intersects any of the edges then the wall must be in the way.
-			for (var i = 0; i < lines.length; i++) {
-				var intersect = Phaser.Line.intersects(ray, lines[i]);
-				if (intersect) {
-					// Find the closest intersection
-					distance = this.math.distance(ray.start.x, ray.start.y, intersect.x, intersect.y);
-					if (distance < distanceToWall) {
-						distanceToWall = distance;
-						closestIntersection = intersect;
-					}
+
+		    this.advanceSpriteToPosition(mySprite, playerSprite);
+		} else {
+			if (pursuitPositions.length > 0) {
+				var position = pursuitPositions[pursuitPositions.length - 1];
+				this.advanceSpriteToPosition(mySprite, position);
+
+				if (mySprite.x == position.x && mySprite.y == position.y) {
+					pursuitPositions.splice(pursuitPositions.length - 1, 1);
+//					console.log('clear length: ' + pursuitPositions.length);
 				}
+
+//				pursuitPositions.splice(pursuitPositions.length - 1, 1);
+//				mySprite.x = position.x;
+//				mySprite.y = position.y;
+			} else {
+				this.resumeTweens();
+			}
+		}
+		
+		if (player.currentAnim != 'dying' && playerSprite.overlap(mySprite) && 
+			playerDistance <= HeartConsts.playerDeathDistance) {
+			
+			// console.log('call onPlayerLostLife');
+			player.playDeathAnimation();
+            player.destroyBody();
+            this.gameState.onPlayerLostLife();
+		}
+	},
+	
+	advanceSpriteToPosition: function (sprite, position) {
+		if (sprite.x > position.x) {
+            sprite.x = Utils.clamp(sprite.x - HeartConsts.pursuitVelocity,
+                                   position.x,
+                                   sprite.x);
+        } else {
+            sprite.x = Utils.clamp(sprite.x + HeartConsts.pursuitVelocity,
+                                   sprite.x,
+                                   position.x);
+        }
+        if (sprite.y > position.y) {
+            sprite.y = Utils.clamp(sprite.y - HeartConsts.pursuitVelocity,
+                                   position.y,
+                                   sprite.y);
+        } else {
+            sprite.y = Utils.clamp(sprite.y + HeartConsts.pursuitVelocity,
+                                   sprite.y,
+                                   position.y);
+        }
+	},
+	
+	resumeTweens: function () {
+		var tweens = this.tweens;
+		var length = tweens.length;
+		for (var i = 0; i < length; i++) {
+			if (!tweens[i].isRunning) {
+				tweens[i].resume();
+			}
+		}
+		
+		if (this.beatSpriteTween && !this.beatSpriteTween.isRunning) {
+			this.beatSpriteTween.resume();
+		}
+	},
+	
+	pauseTweens: function () {
+		var tweens = this.tweens;
+        var length = tweens.length;
+        for (var i = 0; i < length; i++) {
+            if (tweens[i].isRunning) {
+				tweens[i].pause();
+				tweens[i].isRunning = false;
+			}
+        }
+
+		if (this.beatSpriteTween && this.beatSpriteTween.isRunning) {
+			this.beatSpriteTween.pause();
+			this.beatSpriteTween.isRunning = false;
+		}
+	},
+
+	getNextWaypoint: function (previousWaypoint) {
+		if (typeof(previousWaypoint) !== 'number')
+			return;
+
+		var nextWaypoint;
+
+		if (!this.backwards) {
+			nextWaypoint = previousWaypoint + 1;
+
+			if (nextWaypoint >= this.waypoints.polyline.length) {
+				this.backwards = true;
+				nextWaypoint = previousWaypoint - 1;
+			}
+
+		} else {
+			nextWaypoint = previousWaypoint - 1;
+
+			if (nextWaypoint < 0) {
+				this.backwards = false;
+				nextWaypoint = previousWaypoint + 1;
 			}
 		}
 
-        return closestIntersection;
+		// console.log('getNextWaypoint => prev: ' + previousWaypoint + ', next: ' + nextWaypoint);
+
+		return nextWaypoint;
+	},
+
+	flyToNextWaypoint: function (delay) {
+		var previousWaypoint = this.waypoints.polyline[this.currentWaypointIndex];
+		var targetWaypointIndex = this.getNextWaypoint(this.currentWaypointIndex);
+		var targetWaypoint = this.waypoints.polyline[targetWaypointIndex];
+
+		var distance = Phaser.Point.distance(new Phaser.Point(targetWaypoint[0], targetWaypoint[1]),
+											 new Phaser.Point(previousWaypoint[0], previousWaypoint[1]));
+		var animTime = (HeartConsts.flightSpeed * distance) / 10;
+		
+		Utils.clearArray(this.tweens);
+
+		var flyTween = this.game.add.tween(this.sprite);
+		this.tweens.push(flyTween);
+        flyTween.to({ x: this.waypoints.x + targetWaypoint[0] }, animTime, Phaser.Easing.Linear.None, true, delay);
+        
+        flyTween = this.game.add.tween(this.sprite);
+		this.tweens.push(flyTween);
+		flyTween.to({ y: this.waypoints.y + targetWaypoint[1] }, animTime, Phaser.Easing.Linear.None, true, delay);
+		flyTween.onStart.add(this.playFlyAnimation, this);
+	    flyTween.onComplete.add(this.onWaypointReached, this);
+
+        this.currentWaypointIndex = targetWaypointIndex;
+	},
+
+	onWaypointReached: function () {
+		// console.log('onWaypointReached');
+		this.playIdleAnimation();
+		this.flyToNextWaypoint(HeartConsts.delayToNextWaypoint);
+	},
+
+	playIdleAnimation: function () {
+		this.sprite.animations.play('idle');
+		this.currentAnimation = 'idle';
+	},
+
+	playFlyAnimation: function () {
+		this.sprite.animations.play('fly');
+		this.currentAnimation = 'fly';
 	}
 };

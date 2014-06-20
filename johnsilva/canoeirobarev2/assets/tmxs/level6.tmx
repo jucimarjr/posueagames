@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
+  <image source="../tile_40-40-17.png" width="680" height="40"/>
+ </tileset>
+ <tileset firstgid="18" name="water" tilewidth="14" tileheight="17">
+  <image source="../enemies/acidicWater_14-17.png" width="14" height="17"/>
+ </tileset>
+ <tileset firstgid="19" name="bee" tilewidth="40" tileheight="70">
+  <image source="../enemies/casacaba_40-70-4.png" width="160" height="70"/>
+ </tileset>
+ <tileset firstgid="23" name="tube" tilewidth="25" tileheight="40">
+  <image source="../enemies/cannon_25-40.png" width="25" height="40"/>
+ </tileset>
+ <tileset firstgid="24" name="thorns" tilewidth="80" tileheight="40">
+  <image source="../enemies/thorns_80-40.png" width="80" height="40"/>
+ </tileset>
+ <tileset firstgid="25" name="coins" tilewidth="40" tileheight="40">
+  <image source="../spritesheets/coins/coinsIara_40-40-8.png" width="320" height="40"/>
+ </tileset>
+ <tileset firstgid="33" name="branches" tilewidth="40" tileheight="40">
+  <image source="../level/branches_360-283.png" width="360" height="284"/>
+ </tileset>
+ <objectgroup name="thorns" width="100" height="100"/>
+ <layer name="Camada de Tiles 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztnN1uFCEYhqe1tbXZa1LrUWvioR4Zvf+7cEmX7BSBAb4PeIH3SYiGnTLMPMPvDNxt2/Y4YLgrCL3znHJNH7cxud/yXIxwneaaRsinjxo+et8L18eXc/h6Ds9dcvOezwe/r+DjJeFvrDPDt8hx5piY1737m118yv8NK/hI5fXg95fLMd93cT8KzuPDelnJx+/Lv7fb2/XXCh925/x5Dr8y8v5py+u7PCWkieDDPDvuvXF/r9V/3N+jP+fwN5BP97nw5VUDBB+xPMR8pDxvozGqjxYu3Pa7BSP6mLFcWFB92Pq6pE0cGfdemPtQq63yoTk+r90Xy+mrlebFvRet5y+0zncrzEPJ3GBsfFGa5gw+JC5sHujjer7Y+OMIqYt9HuhDdj4NFzYPGj5MeLgEDac2byP40HJhyJ33aPkuCM1HqB8yI757geZjJegDC/p4o/c40gaU9kPS39XMQ+/23DcftGL5QMhDCPrAgj6woA8serbnPebFbR7o43o+rbmjUeaIcqAPLHr5WKmPnwPbcyzoAwv6wII+sKAPLOgDC/rAgj6woA8s6AML+sACyUfsOwN3ztx3bMoxoe8IUDh6H6H9zUHMR2zu1zdHm3pM6VrLHsS+nazxHLX2gVoOSqhxPfRRDn3oobEOjT70MO2CtM2iDyxm9LHvA4fWY9aKl/x96Hqk9PZxHzm3xV2HVhofy0tuur40NFjBh+/59vnwjYXo4xrvWxNes3ycAsf50vWloQGyD0vL+sp1spoPdz5iH295Soz31Tex+FC6Jye+5XdjpT5MeNji64vZ39VN88jHURjBh3SfD/rQQ2OfD/rAYXUfdqwce88lHXPnsLoP2/eM9ZklfeCS/Kzuw77fPTnxltQxN8uHXvnYtv/ve2gsfzTmlkAfV3LqpdiYW8LqPmJjbUvumHs/J5DL6j7QmMGHie+9b4xW8F2jlJgP6b5t7vybSc+66r1vTK21qVJa1yGz1VmGG8W06AML+sACwQfK/nCSoPVddS8fmnXuTCCUD3KFPrBgfYUFywcW9IEF6yssWD6woA8scufAU9cwx+aoJXPuvfY0b0XuO46U73ZrhtnL1mg+bNnylZNQH8EXj9qfGM3HKuVDsldry/d9qPs4aKHxDc7ozyxS3UUfWNDHe3qXFfrAgj6woA8/7rxDq3kB6fcFK4wJWpKyBnmUMYFvDyVJXA9mrW9GZUQfWuv/EBnRx8zQBxazrckYPbR+d8FwHP4BxV8v8w==
+  </data>
+ </layer>
+ <objectgroup name="bees" width="100" height="100"/>
+ <objectgroup name="tubes" width="100" height="100"/>
+ <objectgroup name="waters" width="100" height="100"/>
+ <objectgroup name="bushes" width="100" height="100"/>
+ <objectgroup name="coin" width="100" height="100"/>
+</map>

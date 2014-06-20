@@ -14,6 +14,9 @@ var Config = {
 					game.scale.refresh();
 				}
 			}
+		},
+		key: {
+			nextScreen: Phaser.Keyboard.ENTER
 		}
 	}
 };
@@ -41,6 +44,10 @@ Config.gameSplash = {
 	dir: {
 		background: 'assets/images/GameSplash_960-600.png',
 		bar: 'assets/images/ProgressBar_960-30.png'
+	},
+	progressBar: {
+		x: 0,
+		y: 500
 	},
 	x: 0,
 	y: 0,
@@ -94,7 +101,7 @@ Config.Menu = {
 
 //GamePlay
 Config.gamePlay = {
-	dir: 'assets/images/GamePlay_960-600.jpg',
+	dir: 'assets/images/background_4800-600.png',
 	x: 0,
 	y: 0
 };
@@ -113,6 +120,12 @@ Config.credits = {
 	y: 0
 };
 
+//GameOver
+//Config.credits = {
+//	dir: 'assets/images/GameOver_960-600.png',
+//	x: 0,
+//	y: 0
+//};
 /*Config.gamePlay = {
 	dir: 'assets/images/GamePlayBg_600-960.png',
 	x: 0,

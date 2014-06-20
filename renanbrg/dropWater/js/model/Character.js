@@ -103,7 +103,7 @@ Character.prototype = {
         //this.character.x += speed;
         //console.log("velocidade: "+this.character.x);
         if (this.isAnimated) {
-            this.character.animations.play('right');
+            //this.character.animations.play('right');
         }
     },
 
@@ -118,7 +118,7 @@ Character.prototype = {
     moveLeft: function(speed) {
         //this.character.x -= speed;
         if (this.isAnimated) {
-        	this.character.animations.play('left');
+        	//this.character.animations.play('left');
         }
     },
 
@@ -132,7 +132,8 @@ Character.prototype = {
         if (this.isAnimated) {
         	this.character.animations.stop();
         }
-        this.character.frame = 4;
+        //this.character.frame = 9;
+        this.character.body.velocity.x = 0;
     },
 
     /**

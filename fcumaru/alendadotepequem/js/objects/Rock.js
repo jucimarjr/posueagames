@@ -7,8 +7,13 @@ Rock = function(game, index, x, y) {
 	this.y = y;
 
 	this.index = index;
+<<<<<<< HEAD
 	this.key = 'rock';
 	this.asset = 'assets/rock_120-120.png';
+=======
+	this.key = 'rock' + index;
+	this.asset = 'assets/bola_de_fogo.png';
+>>>>>>> f0250efccf3a1fdf030df5e8227b1e80ce5853e4
 	this.walk = 150;
 };
 
@@ -66,7 +71,11 @@ Rocks = function(game) {
 
 Rocks.prototype = {
 	preload : function() {
+<<<<<<< HEAD
 		this.game.load.image('rock', 'assets/rock_120-120.png', 120, 120);
+=======
+		this.game.load.spritesheet('rock', 'assets/bola_de_fogo.png', 40, 40, 6);
+>>>>>>> f0250efccf3a1fdf030df5e8227b1e80ce5853e4
 	},
 	create : function() {
 		"use strict";

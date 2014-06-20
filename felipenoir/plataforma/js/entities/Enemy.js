@@ -15,12 +15,14 @@ var Enemy = function(game){
 	this.width = 50;
     this.height  = 50;
     this.animationsQtd = 6;
+    this.blood, this.bloodAnim;
 };
 
 Enemy.prototype = {
 	preload : function(){
 		this.game.load.spritesheet('enemy', this.path[0], this.width, this.height, this.animationsQtd);
 		this.game.load.image('projectile', this.path[1]);
+		game.load.spritesheet('blood', 'assets/images/enemies/blood.png', 32, 32, 3);
 
 	},
 	create : function(map){
@@ -29,7 +31,11 @@ Enemy.prototype = {
 		this.enemies.enableBody = true;
 		this.map.createFromObjects(this.inimigos, 6, 'enemy', 0, true, false, this.enemies);
 		this.enemies.forEach(this.setupEnemies,this);
-		
+
+		this.blood = game.add.sprite(0, 0, 'blood');
+		this.bloodAnim = this.blood.animations.add('xplode', [0, 1, 2], 5);
+		this.bloodAnim.onComplete.add(this.hideBlood, this);
+		this.blood.kill();
 
 		//bolas de fogo do inimigo 2
 		this.projectiles = this.game.add.group();
@@ -52,11 +58,22 @@ Enemy.prototype = {
 	        enemy.scale.setTo(0.5,0.5);
 	        enemy.animations.add('walk', [0,1,2,3,4,3,2,1], 10, true);
 	        enemy.animations.add('attack',[0,1],2,true);
+			enemy.animations.add('rollAtaack',[2,3],2,true);
 			enemy.animations.play('walk');
 	        enemy.health = 100;
 			enemy.TYPE = Math.round(Math.random()*2);
 			enemy.ultimoAtaque = 0;
+			enemy.isAttack = false;
 
 	    }
+	},
+	kill : function(enemy) {
+	    console.log('kill enemy!');
+	    this.blood.reset(enemy.x, enemy.y);
+        this.blood.animations.play('xplode');
+	},
+	hideBlood : function(sprite, animation) {
+	    console.log('sprite kill!!!');
+	    sprite.kill();
 	}
 };

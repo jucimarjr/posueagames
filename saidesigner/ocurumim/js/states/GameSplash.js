@@ -10,8 +10,10 @@ State.GameSplash.prototype = {
 		var progressBar = this.game.add.sprite(0, 500, 'progress-bar');
 		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
 		this.game.load.setPreloadSprite(progressBar);
-		this.game.load.onLoadComplete.add(function () {this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); setTimeout(function () {this.game.state.start('Menu');}, Config.gameSplash.millis);}, this);
-		
+
+		this.game.load.onLoadComplete.add(function () {
+			this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); setTimeout(function () {this.game.state.start('Menu');}, Config.gameSplash.millis);}, this);
+
 		//Menu
 		this.game.load.image('menu-background',  Config.menu.dir);
 		this.game.load.spritesheet('button-play', Config.menu.buttonPlay.dir, Config.menu.buttonPlay.width, Config.menu.buttonPlay.height);
@@ -25,6 +27,28 @@ State.GameSplash.prototype = {
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
 		
 		//Game
+
+		this.game.load.spritesheet('curumim', Config.player.sprite.src, Config.player.sprite.width, Config.player.sprite.height);
+		this.game.load.image('bullet', Config.bullet.src);
+
+		if (Config.global.debug) 
+		{
+			this.game.load.image('tileset','assets/images/tileset_debug.png');	
+		}
+		else 
+		{
+			this.game.load.image('tileset','assets/images/tileset.png');	
+		}
+		
+		this.game.load.tilemap('map','assets/map/map.json', null, Phaser.Tilemap.TILED_JSON);
+
+		this.game.load.image('trees', 'assets/images/trees.png');
+		this.game.load.image('forest', 'assets/images/forest.png');
+		this.game.load.image('platform', 'assets/images/platform.png');
+		this.game.load.image('clouds', 'assets/images/clouds.png');
+
+		this.game.load.spritesheet('fruits', Config.fruit.small.src, Config.fruit.small.width, Config.fruit.small.height);
+		this.game.load.spritesheet('fruitsBig', Config.fruit.big.src, Config.fruit.big.width, Config.fruit.big.height);
 	},
 	create: function () {
 		"use strict";

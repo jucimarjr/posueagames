@@ -1,45 +1,77 @@
 Game.PreloaderState = function () {
-
-    // this.background = null;
-    // this.preloadBar = null;
-
+    this.preloadBar = null;
     this.ready = false;
-
 };
 
 Game.PreloaderState.prototype = {
 
     preload: function () {
+        this.game.add.image(0, 0, 'gameLoading');
+		this.game.add.image(this.game.camera.width / 2.0 - 562 / 2.0,
+                            this.game.camera.height - 60 - 40, 'progressbarEmpty');
+        this.preloadBar = this.game.add.sprite(this.game.camera.width / 2.0 - 562 / 2.0,
+                                               this.game.camera.height - 60 - 40, 'progressbarFilled');
+											   
+        Utils.fadeOutScreen(this.game, TweensConsts.fadeFillStyle, TweensConsts.fadeOutDuration, null);
+
+        //  This sets the preloadBar sprite as a loader sprite.
+        //  What that does is automatically crop the sprite from 0 to full-width
+        //  as the files below are loaded in.
+        this.load.setPreloadSprite(this.preloadBar);
 
         // Tile Maps
         this.game.load.tilemap('map', 'assets/game/tilemaps/maps/collision_test.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.image('ground_1x1', 'assets/game/tilemaps/tiles/ground_1x1.png');
-
-        // this.game.load.image('walls_1x2', 'assets/game/tilemaps/tiles/walls_1x2.png');
-        // this.game.load.image('tiles2', 'assets/game/tilemaps/tiles/tiles2.png');
-
-        this.game.load.image('walls_1x2', 'assets/game/tilemaps/tiles/walls_1x2.png');
-        this.game.load.image('tiles2', 'assets/game/tilemaps/tiles/tiles2.png');
+        this.game.load.image('walls_tileset', 'assets/game/tilemaps/tiles/walls_tileset.png');
         
+        // Images
+        this.game.load.image('smoke_particle_small', 'assets/game/smoke_particle_8-8.png');
+        this.game.load.image('spark_particle_medium', 'assets/game/particle_spark_16-16.png');
         this.game.load.image('light', 'assets/game/light.png');
 		this.game.load.image('block', 'assets/game/block.png');
 
-        // Player
-        this.game.load.atlas('player_atlas', 'assets/game/spritesheets/shae_spritesheet_100-100-20.png', 'assets/game/spritesheets/shae_spritesheet_100-100-20.json');
+        // Game Atlas
+        this.game.load.atlas('main_sprite_atlas', 'assets/game/spriteatlases/main_sprite_atlas.png', 'assets/game/spriteatlases/main_sprite_atlas.json');
 
-        this.ready = true;
+        // Player
+        this.game.load.atlas('main_sprite_atlas',
+		                     'assets/game/spriteatlases/main_sprite_atlas.png',
+							 'assets/game/spriteatlases/main_sprite_atlas.json');
+							 
+        // Main Menu
+		this.game.load.image('gameStart', 'assets/screens/gamestart_960-600.png');
+		
+		// Credits
+		this.game.load.image('credits', 'assets/screens/creditsnicks_960-600.png');
+		
+		// Game Win
+		this.game.load.image('gameWin', 'assets/screens/gamewin_960-600.png');
+		
+		// Game Loose
+		this.game.load.image('gameLoose', 'assets/screens/gameloose_960-600.png');
+		
+		// Fonts
+		this.game.load.bitmapFont('silkscreenRed', 'assets/fonts/silkscreen_red.png', 'assets/fonts/silkscreen_red.fnt');
+		this.game.load.bitmapFont('silkscreenGray', 'assets/fonts/silkscreen_gray.png', 'assets/fonts/silkscreen_gray.fnt');
+		this.game.load.bitmapFont('silkscreenWhite', 'assets/fonts/silkscreen_white.png', 'assets/fonts/silkscreen_white.fnt');
     },
 
     create: function () {
-
-        //	Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
-        // this.preloadBar.cropEnabled = false;
-
+        this.preloadBar.cropEnabled = false;
+		var delayTween = this.game.add.tween(this.preloadBar);
+		delayTween.to(null, 3000, Phaser.Easing.Linear.None, true, 0);
+		delayTween.onComplete.add(this.onReady, this);
     },
+	
+	onReady: function () {
+		this.ready = true;
+	},
 
     update: function () {
-
-        if (this.ready)
-            this.state.start('GameState');
+		var self = this;
+        if (self.ready) {
+			Utils.fadeInScreen(this.game, TweensConsts.fadeFillStyle, TweensConsts.fadeInDuration, function () {
+	            self.state.start('MainMenuState');
+	        });
+		}
     }
 };

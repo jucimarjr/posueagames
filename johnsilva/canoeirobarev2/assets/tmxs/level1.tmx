@@ -9,12 +9,13 @@
  <tileset firstgid="19" name="flag" tilewidth="40" tileheight="40">
   <image source="../level/coins_40-40-8.png" width="320" height="40"/>
  </tileset>
+ <tileset firstgid="27" name="gamewin" tilewidth="40" tileheight="40">
+  <image source="../spritesheets/gamewin_40-40-8.png" width="320" height="40"/>
+ </tileset>
  <objectgroup name="coin" width="24" height="15">
-  <object gid="19" x="879" y="440"/>
+  <object gid="19" x="400" y="520"/>
  </objectgroup>
  <objectgroup name="bushes" width="24" height="15">
-  <object gid="13" x="880" y="280"/>
-  <object gid="13" x="640" y="360"/>
   <object gid="13" x="360" y="400"/>
   <object gid="13" x="360" y="120"/>
   <object gid="13" x="400" y="120"/>
@@ -22,11 +23,10 @@
   <object gid="13" x="160" y="400"/>
   <object gid="13" x="80" y="560"/>
   <object gid="13" x="40" y="520"/>
-  <object gid="13" x="600" y="360"/>
  </objectgroup>
  <layer name="Camada de Tiles 1" width="24" height="15">
   <data encoding="base64" compression="zlib">
-   eJzFk90KgCAMRmfM7O9ivf/LZjDBymVDR4ODMD4OsikCwGQERkawK9/gp8jO1PwpS0IeMxxT6jnBjy/5E83Ml4L/a15bLfP/079GAvR7n9K+7n4S8pIzMLX9pppB91Zq+7eaPzFW/gGuf3AT7pCfmr6H558NHcm9BwODBJo=
+   eJzFk90KwCAIhQ1s7e/Cvf/LrsBAWq6iyQ58CHE4RSoCwGoERhawk5/Ip8jFtPKzlxQ/ChxTO3NKPr74EyN/vlfye/2jmvn/P/OPSID5+czzoPWrzCeupb8mx28M0O5v1gZjs9Lqv2V/yThf7uCp3C9r73mSh+fOhg+RuTc2ywSZ
   </data>
  </layer>
  <objectgroup name="thorns" width="24" height="15">
@@ -37,5 +37,8 @@
   <object gid="18" x="-1" y="522"/>
   <object gid="18" x="21" y="560"/>
   <object gid="18" x="787" y="561"/>
+ </objectgroup>
+ <objectgroup name="flag" width="24" height="15">
+  <object gid="27" x="880" y="440"/>
  </objectgroup>
 </map>
