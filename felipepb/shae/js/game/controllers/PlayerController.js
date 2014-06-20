@@ -26,6 +26,9 @@ Game.PlayerController = function (gameState, spawnPoint) {
     this.touchdownSFX = new Array();
     this.footstepSFX = new Array();
 
+    this.deathSFX;
+    this.spawnSFX;
+
     this._actualRunModifier;
     this._footstepSFXPlayed;
 };
@@ -130,10 +133,10 @@ Game.PlayerController.prototype = {
         jumpTouchdownAnim = this.sprite.animations.add('jump-touchdown', jumpTouchDownAnimFrames, 7.5, false);
         jumpTouchdownAnim.onComplete.add(this.onJumpTouchdownFinished, this);
 
-        respawnAnim = this.sprite.animations.add('respawn', respawnAnimFrames, 10, false);
+        respawnAnim = this.sprite.animations.add('respawn', respawnAnimFrames, 15, false);
         respawnAnim.onComplete.add(this.onRespawnAnimFinished, this);
 
-        deathAnim = this.sprite.animations.add('dying', deathAnimFrames, 10, false);
+        deathAnim = this.sprite.animations.add('dying', deathAnimFrames, 15, false);
         deathAnim.onComplete.add(this.onDeathAnimFinished, this);
     },
 
@@ -181,6 +184,9 @@ Game.PlayerController.prototype = {
         };
 
         this._footstepSFXPlayed = false;
+
+        this.deathSFX = this.game.add.audio('death_sfx');
+        this.spawnSFX = this.game.add.audio('spawn_sfx');
     },
 
     createBody: function () {
@@ -450,12 +456,16 @@ Game.PlayerController.prototype = {
         
         this.sprite.scale.x = 1;
         this.sprite.scale.y = 1;
+
+        this.spawnSFX.play();
     },
 
     playDeathAnimation: function () {
         this.sprite.animations.play('dying');
         this.currentAnim = 'dying';
         this.animState = Game.PlayerController.AnimState.Dying;
+
+        this.deathSFX.play();
     },
 
     onRespawnAnimFinished: function () {
