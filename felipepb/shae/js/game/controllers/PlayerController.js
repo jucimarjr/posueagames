@@ -154,8 +154,10 @@ Game.PlayerController.prototype = {
     },
 
     destroyBody: function() {
-        if (this.sprite && this.sprite.body)
-            this.gameState.game.unregisterBody(this.sprite.body);
+        if (this.sprite && this.sprite.body) {
+			this.sprite.body.destroy();
+			this.sprite.body = null;
+		}
     },
 
     update: function () {
@@ -402,6 +404,12 @@ Game.PlayerController.prototype = {
         // console.log('onRespawnAnimFinished');
         this.createBody();
         this.animState = Game.PlayerController.AnimState.Idle;
+		this.canJump = true;
+        this.isJumping = false;
+        this.blockInput = false;
+		this.sprite.frameName = 'shae_idle_1_100-100.png';
+        this.sprite.anchor.setTo(0.73, 0.5);
+		this._actualRunModifier = 0.0;
     },
 
     onDeathAnimFinished: function () {
@@ -410,6 +418,8 @@ Game.PlayerController.prototype = {
         this.sprite.scale.y = 0;
         
         this.playRespawnAnimation();
+		this.sprite.x = this.spawnPoint.x + 20;
+        this.sprite.y = this.spawnPoint.y - 32;
     },
 
     stopAndBlockInput: function () {
