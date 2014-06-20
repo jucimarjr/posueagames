@@ -46,8 +46,8 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('flag', 'assets/spritesheets/gamewin_40-40-8.png',40,40,8);
 
 		this.game.load.image('bg1', 'assets/level/bg1_462-800.jpg');
-		this.game.load.image('bg2', 'assets/level/bg2_462-800.jpg');
-		this.game.load.image('bg3', 'assets/level/bg3_462-800.jpg');
+		this.game.load.image('bg2', 'assets/level/bg3_462-800.jpg');
+		this.game.load.image('bg3', 'assets/level/bg6_462-800.jpg');
 		this.game.load.image('bg4', 'assets/level/bg4_462-800.jpg');
 		this.game.load.image('bg5', 'assets/level/bg5_462-800.jpg');
 		this.game.load.image('bg9', 'assets/level/bg6_462-800.jpg');
@@ -58,6 +58,14 @@ State.GameSplash.prototype = {
 		this.game.load.image('tube', 'assets/enemies/cannon_25-40.png');
 		this.game.load.image('acidicWater', 'assets/enemies/gota_13-37.png');
 		this.game.load.image('caba', 'assets/enemies/caba_8-8.png');
+
+		this.game.load.audio('jumpSound', Config.audio.jump);
+		this.game.load.audio('dieSound', Config.audio.die);
+		this.game.load.audio('phase1', Config.audio.phase1);
+		this.game.load.audio('phase2', Config.audio.phase2);
+		this.game.load.audio('phase3', Config.audio.phase1);
+		this.game.load.audio('phase4', Config.audio.phase2);
+		this.game.load.audio('phase5', Config.audio.phase1);
 	},
 	create: function () {
 		"use strict";

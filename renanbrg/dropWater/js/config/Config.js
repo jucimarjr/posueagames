@@ -14,6 +14,9 @@ var Config = {
 					game.scale.refresh();
 				}
 			}
+		},
+		key: {
+			nextScreen: Phaser.Keyboard.ENTER
 		}
 	}
 };
@@ -41,6 +44,10 @@ Config.gameSplash = {
 	dir: {
 		background: 'assets/images/GameSplash_960-600.png',
 		bar: 'assets/images/ProgressBar_960-30.png'
+	},
+	progressBar: {
+		x: 0,
+		y: 500
 	},
 	x: 0,
 	y: 0,

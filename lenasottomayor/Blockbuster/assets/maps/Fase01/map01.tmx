@@ -35,7 +35,7 @@
  </tileset>
  <layer name="Platform" width="320" height="20">
   <data encoding="base64" compression="zlib">
-   eJztmVlPxSAQhblq3Pf1wQc1cX8xLol61f//t4RYIiG0DJRh6T1fctLcprcd6HAYqBAAAAAAAAAAAAAAAAAAAAAAAAAAAADUzVLpAAAAoACbUltS2wWefSN1K3VnnX+X+mR43o7UaqdDhvvHoNr6IfztnXXH5YFrnpJEVA6dDx/CnRdDrFi/16U2EscVEg8VrlznpvVcMzkuHQAzyvcOpHalzjrtd+dq8UEfyv9UnT7kf1xQPZrynxrHDVdMob55L/Ug9cgUT61wzgE6D0Pzd0pcSF326Jp4j5L+o8hRp7dai/hIVQdy8yz1IvVaOpAIapzXQDpS+M8YfzkSf3X6iXGOsiaeAjPj6JqDdH1PreWpfpi7HqP636LWiYuMrmPNtYTOA1NcOeHyn9KUrknHri1C54O+OUjX965aXnujls8jzZg46rGhNlOf13cd5Ttmim+dMfshFMzxDG/3o/PAVGtrhzG5FFuTUnxL5WItOXhkHEPnoFOpPUPnAf/NvR4d63/2Pr7y/jXPNbkZyndzPPv6wMxhU1PYv6HWBZz+R4mh9H5Znx+kmJ9V36Ye9yX6y977pe73KlrzPxvV9qvAGFy+kuK7FwVzPL8J1II+plD/9VF6j4fD/yhwra1iqMX/7Fq85e8kQ7jG8xTbmQqK/6nxdNuphjFFQeX7j/ifB0t4oMv/avKmVFDWY2Ytwin9zu1+t98F/A8oplr/2e3KMf5sj42p/+y1U+s+2TceudW6/7m+S4b4v61c809rcvVXSE7EvqcS7So95jgI7f/cdfCU/Y8z90vkL5e+GtO3oDOvIN5aZPfbPLAvYwjtf+54xsaX613Me65roW2t6RexNLNI
+   eJztmtlOwzAQRc0i9r0sDzwAEvsLYpGAAv//W9giFpblJOPE47HTe6SrqlXajp2Z67FbpQAAAAAAAAAAAAAAAAAAAOpmWToAAAAQYEtrW2tHOhAAABDgWDoAAABYAG60brXuvNfftT4Zvm9Xa63REcPnD8GM9UP1j3epeVzpuOYpSURy2Hz4UOG86GLVe76htZk4rph4qHDlOje15ZqtM0qtTQ3je4dae1pnjQ6a10rxwT6M/5mz2S7/44Lq0ZT3lFg3XDHF+ua91oPWI1M8pVLrGlALF1qXLbomfoak/xhynM1ONQ9T9YHcPGu9aL1KBzKA3Oua28+5mmL+lkAK/xnjLzP1dzZ74rxG2RNPgSXnMbQG2f6e2stT/TB3P0b1v0XtExcZ6/fuXsLmgSuunAj5jzTSPenYM5XY9aBtDbL9faiXt95o1eeRbkwc/VjXmKnf13Yd5b9rKf7fNuQ8hIJbz/D2fmweuKpt7zAml4b2pBTfMrlYSg7OnMfYNehUa9/RecR7c+9Hx/qf/98N4/3rPdfkpivf3XqurY5TQu0LOP2PEoP0eVmbH6RYn83cps5Bifnyz36p572G2vzPx4z9KjKG0Llait+9KLj1/KbQC/Yxhf6vDekzHg7/o8C1txpCKf7n9+I1/07SRaiepzjOVFD8z9TTbaMSaoqCyfcf9b8OSnhgyP9K8qZUUPZjbi/CKXvP/Xn37wX8Dxim2v/548pRf77HDun//L1T7T7ZVo/cqt3/Qr9Lxvi/r1zrT20KzVdMTgy9TxLjkq45DmLnP3cfPGX/48x9ifzl0ldl+lZ05gXEW4r8eZtHzuUQYuefO56x8eW6F/OW62oYW236BSdis0g=
   </data>
  </layer>
  <layer name="Thorn" width="320" height="20">
@@ -50,7 +50,6 @@
  <objectgroup name="PowerStar" width="320" height="20">
   <object gid="65" x="7755" y="282"/>
   <object gid="65" x="3555" y="273"/>
-  <object gid="65" x="10480" y="280"/>
  </objectgroup>
  <objectgroup name="Coins" width="320" height="20">
   <object gid="66" x="1120" y="304"/>
@@ -205,11 +204,11 @@
   <object gid="66" x="11360" y="440"/>
   <object gid="66" x="11400" y="440"/>
   <object gid="66" x="11520" y="520"/>
-  <object gid="66" x="11840" y="480"/>
-  <object gid="66" x="11880" y="480"/>
-  <object gid="66" x="11920" y="480"/>
-  <object gid="66" x="11960" y="480"/>
-  <object gid="66" x="12000" y="480"/>
+  <object gid="66" x="11842" y="358"/>
+  <object gid="66" x="11882" y="358"/>
+  <object gid="66" x="11922" y="358"/>
+  <object gid="66" x="11962" y="358"/>
+  <object gid="66" x="12002" y="358"/>
   <object gid="66" x="7400" y="280"/>
   <object gid="66" x="1160" y="520"/>
   <object gid="66" x="680" y="680"/>
@@ -233,8 +232,8 @@
   <object gid="66" x="10880" y="600"/>
   <object gid="66" x="10880" y="560"/>
   <object gid="66" x="10880" y="520"/>
-  <object gid="66" x="11760" y="480"/>
-  <object gid="66" x="11800" y="480"/>
+  <object gid="66" x="11762" y="358"/>
+  <object gid="66" x="11802" y="358"/>
   <object gid="66" x="1660" y="316"/>
   <object gid="66" x="7080" y="400"/>
   <object gid="66" x="7080" y="440"/>

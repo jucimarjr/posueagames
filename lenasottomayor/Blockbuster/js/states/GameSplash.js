@@ -9,7 +9,7 @@ State.GameSplash.prototype = {
 		"use strict";
 		
 		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
-		var progressBar = this.game.add.sprite(Config.gameSplash.progressBar.x, Config.gameSplash.progressBar.y, 'progress-bar');
+		var progressBar = this.game.add.sprite(0, 500, 'progress-bar');
 		this.game.load.setPreloadSprite(progressBar);
 		this.game.load.onLoadComplete.add(this.nextState, this);
 		this.loadAssets();
@@ -68,6 +68,9 @@ State.GameSplash.prototype = {
 
 		//Game Over
 		this.game.load.image('game-over', Config.gameOver.dir);
+		
+		//Game Win
+		this.game.load.image('game-win', Config.gameWin.dir);
 		
 		//Fonts
 		this.game.load.bitmapFont('font-coins', Config.fonts.coins.image, Config.fonts.coins.dir);

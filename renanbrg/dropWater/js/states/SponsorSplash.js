@@ -17,7 +17,7 @@ State.SponsorSplash.prototype = {
 			this.game.add.tween(sprite).to({alpha : 0}, Config.sponsorSplash.millis, Phaser.Easing.Linear.None).start();
 		}, Config.sponsorSplash.millis);
 		setTimeout(function () {
-			this.game.state.start('GameSplash');
+			this.game.state.start('GamePlay');
 		}, Config.sponsorSplash.nextState);
 	},
 	update: function () {

@@ -9,8 +9,10 @@ Game.GameState = function () {
     this.playerLightSprite;
 	
 	this.hearts = [];
+	this.heartBeatController;
 
     this.playerHasKey;
+    this.stageComplete;
 };
 
 Game.GameState.prototype = {
@@ -25,7 +27,26 @@ Game.GameState.prototype = {
 		this.createPlayer();
         this.createHearts();
 		this.createPlayerLight();
+		this.createHeartBeatController();
+		
+		var self = this;
+		Utils.fadeOutScreen(this.game,
+		                    TweensConsts.fadeFillStyle,
+							TweensConsts.fadeOutDuration * 3,
+							function () {
+								self.onFadeOutScreenAnimationCompleted();
+							});
     },
+	
+	onFadeOutScreenAnimationCompleted: function () {
+		var self = this;
+        var tween = this.game.add.tween(this.player.sprite);
+
+        tween.to(null, 1000, Phaser.Easing.Linear.None, true, 0);
+        tween.onComplete.add(function () {
+            self.player.playRespawnAnimation();
+		});
+	},
 
     setupPhysicsSystem: function () {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -44,10 +65,20 @@ Game.GameState.prototype = {
 		this.layer.debugColor = 'red';
 
         this.map.setCollisionBetween(0, 25);
+
+        this.stageComplete = false;
     },
 
     createPlayer: function () {
-        this.player = new Game.PlayerController(this);
+        var point = { x: 0, y: 0 };
+        for (var i = 0; i < this.map.objects.spawn_points.length; i++) {
+            if (this.map.objects.spawn_points[i].name == 'player-sp') {
+                point.x = this.map.objects.spawn_points[i].x;
+                point.y = this.map.objects.spawn_points[i].y;
+            }
+        };
+
+        this.player = new Game.PlayerController(this, point);
         this.player.create();
         this.game.camera.follow(this.player.sprite, 0);
         this.playerHasKey = false;
@@ -61,6 +92,11 @@ Game.GameState.prototype = {
             heart.create();
             this.hearts.push(heart);
         };
+	},
+	
+	createHeartBeatController: function () {
+		this.heartBeatController = new Game.HeartBeatController(this.game);
+		this.heartBeatController.setHearts(this.hearts);
 	},
 	
 	createPlayerLight: function () {
@@ -117,6 +153,8 @@ Game.GameState.prototype = {
 		for (var i = 0; i < heartsLength; i++) {
 			hearts[i].update();
 		}
+		
+		this.heartBeatController.update();
     },
 
     render: function () {
@@ -153,14 +191,43 @@ Game.GameState.prototype = {
     },
 
     collideWithKey: function (playerSprite, keySprite) {
+        if (this.playerHasKey)
+            return;
+        
         this.playerHasKey = true;
-        keySprite.destroy();
+        keySprite.onCollected(playerSprite);
     },
 
     collideWithGate: function (playerSprite, gateSprite) {
-        if (this.playerHasKey)
-            console.log('level completed!');
-        else
-            console.log('key needed!');
-    }
+        if (this.stageComplete)
+            return;
+
+        if (this.playerHasKey) {
+            this.stageComplete = true;
+            gateSprite.onGateOpenned(this.onStageComplete, this);
+            this.player.stopAndBlockInput();
+        } else {
+            console.log('Key needed!');
+        }
+    },
+
+    onStageComplete: function () {
+        console.log('Stage complete! Load next level...');
+    },
+	
+	navigateToGameWin: function () {
+        this.navigate('GameWinState');
+    },
+	
+	navigateToGameLoose: function () {
+		this.navigate('GameLooseState');
+	},
+	
+	navigate: function (stateName) {
+		var self = this;
+        self.game.input.keyboard.onDownCallback = null;
+        Utils.fadeInScreen(this.game, TweensConsts.fadeFillStyle, TweensConsts.fadeInDuration, function () {
+            self.state.start(stateName);
+        });
+	}
 };

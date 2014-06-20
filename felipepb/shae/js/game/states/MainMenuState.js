@@ -104,8 +104,11 @@ Game.MainMenuState.prototype = {
 	},
 
 	navigateToGameplay: function () {
-		this.game.input.keyboard.onDownCallback = null;
-		this.state.start('GameState');
+		var self = this;
+        self.game.input.keyboard.onDownCallback = null;
+        Utils.fadeInScreen(this.game, TweensConsts.fadeFillStyle, TweensConsts.fadeInDuration, function () {
+            self.state.start('GameState');
+        });
 	},
 
 	navigateToTutorial: function () {

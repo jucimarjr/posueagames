@@ -18,7 +18,8 @@ var HeartConsts = {
 	delayToNextWaypoint: 1000.0, // milliseconds
 	flightSpeed: 2.5 * PhysicsConsts.pixelsToUnit,
 	attackDistance: 1.3 * PhysicsConsts.pixelsToUnit,
-	pursuitVelocity: PhysicsConsts.pixelsToUnit * 0.02
+	pursuitVelocity: PhysicsConsts.pixelsToUnit * 0.02,
+	playerDeathDistance: PhysicsConsts.pixelsToUnit * 0.3
 };
 
 var JoystickConsts = {
