@@ -17,6 +17,8 @@
 	<script src="js/game/states/MainMenuState.js"></script>
 	<script src="js/game/states/TutorialState.js"></script>
 	<script src="js/game/states/CreditsState.js"></script>
+	<script src="js/game/states/GameWinState.js"></script>
+	<script src="js/game/states/GameLooseState.js"></script>
     <script src="js/game/controllers/PlayerController.js"></script>
 	<script src="js/game/controllers/HeartController.js"></script>
     <script src="js/game/controllers/KeyController.js"></script>
@@ -97,7 +99,8 @@
 			game.state.add('TutorialState', Game.TutorialState);
 			game.state.add('CreditsState', Game.CreditsState);
             game.state.add('GameState', Game.GameState);
-            // game.state.add('EndGame', Game.EndGame);
+			game.state.add('GameWinState', Game.GameWinState);
+			game.state.add('GameLooseState', Game.GameLooseState);
 
             //  Now start the Boot state.
             game.state.start('BootState');

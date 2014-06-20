@@ -42,6 +42,12 @@ Game.PreloaderState.prototype = {
 		// Credits
 		this.game.load.image('credits', 'assets/screens/creditsnicks_960-600.png');
 		
+		// Game Win
+		this.game.load.image('gameWin', 'assets/screens/gamewin_960-600.png');
+		
+		// Game Loose
+		this.game.load.image('gameLoose', 'assets/screens/gameloose_960-600.png');
+		
 		// Fonts
 		this.game.load.bitmapFont('silkscreenRed', 'assets/fonts/silkscreen_red.png', 'assets/fonts/silkscreen_red.fnt');
 		this.game.load.bitmapFont('silkscreenGray', 'assets/fonts/silkscreen_gray.png', 'assets/fonts/silkscreen_gray.fnt');
