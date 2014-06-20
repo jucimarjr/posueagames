@@ -25,6 +25,7 @@ Game.PreloaderState.prototype = {
         
         // Images
         this.game.load.image('smoke_particle_small', 'assets/game/smoke_particle_8-8.png');
+        this.game.load.image('spark_particle_medium', 'assets/game/particle_spark_16-16.png');
         this.game.load.image('light', 'assets/game/light.png');
 		this.game.load.image('block', 'assets/game/block.png');
 

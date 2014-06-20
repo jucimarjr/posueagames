@@ -191,8 +191,11 @@ Game.GameState.prototype = {
     },
 
     collideWithKey: function (playerSprite, keySprite) {
+        if (this.playerHasKey)
+            return;
+        
         this.playerHasKey = true;
-        keySprite.destroy();
+        keySprite.onCollected(playerSprite);
     },
 
     collideWithGate: function (playerSprite, gateSprite) {
