@@ -110,12 +110,11 @@ Config.game = {
 		width: 32,
 		height: 48,
 		//posicao depois das barras verticais
-//		x: 3146,
-//		x: 3360,
-//		y: 349,
+		x: 3146,
+		y: 349,
 		//posicao inicial
-		x: 70,
-		y: 1393,
+//		x: 70,
+//		y: 1393,
 		xRotate: 2334,
 		yRotate: 385,
 		lifes: 3,
@@ -291,12 +290,12 @@ Config.game = {
 	verticalbar:{
 		key: 'verticalBar',
 		dir: Config.images+'/verticalbar_72-252.png',
-		x: [3500, 3650, 3750, 3855],
+		x: [3460, 3610, 3750, 3855],
 		y: [91, 91, 91, 91],
 		collider: {
 			key: 'verticalBarCollider',
 			dir: Config.images+'/verticalBarDieCollider-144_20.png',
-			x: [3428, 3578, 3678, 3783],
+			x: [3388, 3538, 3678, 3783],
 			y: [490, 490, 490, 490],
 		}
 	},
