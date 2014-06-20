@@ -59,7 +59,9 @@ Game.HeartController.prototype = {
 	},
 	
 	playBeat: function () {
-		if (!this._enabled || this.pursuitPositions.length != 0) {
+		if (!this._enabled ||
+		    this.pursuitPositions.length != 0 ||
+			Phaser.Point.distance(this.player.sprite, this.sprite) > HeartConsts.minimumBeatDistance) {
 			return;
 		}
 		
@@ -156,7 +158,7 @@ Game.HeartController.prototype = {
 			
 			if (playerSprite.overlap(mySprite) && playerDistance <= HeartConsts.playerDeathDistance) {
 	            // console.log('call onPlayerLostLife');
-				pursuitPositions.splice(pursuitPositions.length - 1, 1);
+//				pursuitPositions.splice(pursuitPositions.length - 1, 1);
 	            player.playDeathAnimation();
 	            player.destroyBody();
 	            this.gameState.onPlayerLostLife();

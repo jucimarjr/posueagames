@@ -20,7 +20,8 @@ var HeartConsts = {
 	flightSpeed: 2.5 * PhysicsConsts.pixelsToUnit,
 	attackDistance: 1.3 * PhysicsConsts.pixelsToUnit,
 	pursuitVelocity: PhysicsConsts.pixelsToUnit * 0.02,
-	playerDeathDistance: PhysicsConsts.pixelsToUnit * 0.2
+	playerDeathDistance: PhysicsConsts.pixelsToUnit * 0.2,
+	minimumBeatDistance: PhysicsConsts.pixelsToUnit * 2.5
 };
 
 var JoystickConsts = {
@@ -78,6 +79,7 @@ var Utils = {
 
         var image = game.add.image(0, 0, Utils.bitmapFadeLayer);
 		image.alpha = 0.0;
+		image.fixedToCamera = true;
 
 		var fadeInTween = game.add.tween(image);
         fadeInTween.to({ alpha: 1 }, duration, Phaser.Easing.Linear.None, true, 0);
@@ -91,6 +93,7 @@ var Utils = {
         Utils.bitmapFadeLayer.context.fillRect(0, 0, Utils.bitmapFadeLayer.width, Utils.bitmapFadeLayer.height);
 
         var image = game.add.image(0, 0, Utils.bitmapFadeLayer);
+		image.fixedToCamera = true;
 
         var fadeOutTween = game.add.tween(image);
         fadeOutTween.to({ alpha: 0 }, duration, Phaser.Easing.Linear.None, true, 0);
