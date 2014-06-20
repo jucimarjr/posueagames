@@ -7,6 +7,14 @@ State.Menu = function (game) {
 State.Menu.prototype = {
 	preload: function () {
 		"use strict";
+		game.load.tilemap('mapa','assets/1aFase/mapaFase1a.json',null,Phaser.Tilemap.TILED_JSON);
+		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height);
+		game.load.spritesheet('folhas', "assets/1aFase/folhas_120-40.png",40,40);
+		game.load.spritesheet('jacare', "assets/1aFase/jacare_spritesheet_240-80.png",40,40);
+		game.load.image('bg',Config.game.fase1.background);
+		game.load.image('tilesetPlataforma','assets/1aFase/assets_1.png');
+		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
+		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
 	},
 	create: function () {
 		"use strict";

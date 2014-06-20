@@ -38,24 +38,25 @@ var folhas;
 State.Fase1.prototype = {
 
 	preload: function () {
-		game.load.tilemap('mapa','assets/1aFase/mapaFase1a.json',null,Phaser.Tilemap.TILED_JSON);
+		
+		/* game.load.tilemap('mapaFase1','assets/1aFase/mapaFase1a.json',null,Phaser.Tilemap.TILED_JSON);
 		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height);
 		game.load.spritesheet('folhas', "assets/1aFase/folhas_120-40.png",40,40);
 		game.load.spritesheet('jacare', "assets/1aFase/jacare_spritesheet_240-80.png",40,40);
-		game.load.image('bg',Config.game.fase1.background);
-		game.load.image('tilesetPlataforma','assets/1aFase/assets_1.png');
+		game.load.image('bgF1',Config.game.fase1.background);
+		game.load.image('tilesetPlataformaF1','assets/1aFase/assets_1.png');
 		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
-		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
+		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40); */
 	},
 
 	create: function () {
 		game.world.setBounds(0, 0, 2880, 1200);
-		var bg = game.add.tileSprite(0, 0, game.cache.getImage('bg').width,game.cache.getImage('bg').height, 'bg');
-		bg.fixedToCamera = true;
+		var bgF1 = game.add.tileSprite(0, 0, game.cache.getImage('bgF1').width,game.cache.getImage('bgF1').height, 'bgF1');
+		bgF1.fixedToCamera = true;
 		
 		game.physics.startSystem(Phaser.Game.ARCADE);
-		this.map = game.add.tilemap('mapa'); //adicionando o map
-		this.map.addTilesetImage('assets_1','tilesetPlataforma' );// primeiro vem nome do arquivo, depois o apelido
+		this.map = game.add.tilemap('mapaFase1'); //adicionando o map
+		this.map.addTilesetImage('assets_1','tilesetPlataformaF1' );// primeiro vem nome do arquivo, depois o apelido
 		
 		this.layer = this.map.createLayer('TileWorld');
 		
@@ -65,7 +66,7 @@ State.Fase1.prototype = {
 		this.map.setTileIndexCallback([15,16,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,47,48,55,56],this.gameOver,this);
 		this.layer.resizeWorld(); //seta o mundo com as alterações feitas
 		//Sprite do tracajet
-		this.tracajet = game.add.sprite(20, game.cache.getImage('bg').height - 120, 'tracajet');
+		this.tracajet = game.add.sprite(20, game.cache.getImage('bgF1').height - 120, 'tracajet');
 		this.tracajet.animations.add('walk',[0,1,2,1],6,false);
 		this.tracajet.animations.add('swim',[5,6,7],6,false);
 		this.tracajet.animations.add('startSwim',[3,4],2,true);
@@ -139,7 +140,7 @@ State.Fase1.prototype = {
 		key.kill();
 		this.contKeys ++;
 		if(this.contKeys === this.TOTAL_KEYS){
-			var moduloPositionX = Math.abs(game.world.position.x);
+			/* var moduloPositionX = Math.abs(game.world.position.x);
 			var moduloPositionY = Math.abs(game.world.position.y); 
 			this.game.paused = true;
 			var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
@@ -147,7 +148,7 @@ State.Fase1.prototype = {
 				fill: "#ff0044",
 				align: "left"
 			});
-			dieText.setText("YOU WIN");
+			dieText.setText("YOU WIN");  */
 			this.game.state.start('Fase2');
 		}
 	}
