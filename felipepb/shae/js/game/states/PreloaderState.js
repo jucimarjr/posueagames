@@ -53,6 +53,16 @@ Game.PreloaderState.prototype = {
 		this.game.load.bitmapFont('silkscreenRed', 'assets/fonts/silkscreen_red.png', 'assets/fonts/silkscreen_red.fnt');
 		this.game.load.bitmapFont('silkscreenGray', 'assets/fonts/silkscreen_gray.png', 'assets/fonts/silkscreen_gray.fnt');
 		this.game.load.bitmapFont('silkscreenWhite', 'assets/fonts/silkscreen_white.png', 'assets/fonts/silkscreen_white.fnt');
+
+		// Audio
+		this.game.load.audio('gate_openned', ['audio/wav/gate_openned.wav', 'audio/mp3/gate_openned.mp3']);
+		this.game.load.audio('jump_01', ['audio/wav/jump_01.wav', 'audio/mp3/jump_01.mp3']);
+		this.game.load.audio('jump_02', ['audio/wav/jump_02.wav', 'audio/mp3/jump_02.mp3']);
+		this.game.load.audio('jump_03', ['audio/wav/jump_03.wav', 'audio/mp3/jump_03.mp3']);
+		this.game.load.audio('touchdown_01', ['audio/wav/touchdown_01.wav', 'audio/mp3/touchdown_01.mp3']);
+		this.game.load.audio('touchdown_02', ['audio/wav/touchdown_02.wav', 'audio/mp3/touchdown_02.mp3']);
+		this.game.load.audio('touchdown_03', ['audio/wav/touchdown_03.wav', 'audio/mp3/touchdown_03.mp3']);
+		this.game.load.audio('key_collected', ['audio/wav/key_collected.wav', 'audio/mp3/key_collected.mp3']);
     },
 
     create: function () {
