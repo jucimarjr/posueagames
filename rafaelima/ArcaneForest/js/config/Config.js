@@ -78,7 +78,11 @@ Config.story = {
 //Animation fall
 Config.animationFall = {
 	fallGif: [],
-	dir: Config.images+'/gif_fall/screen_rotate_000'
+	dir: Config.images+'/gif_fall/giro_da_tela_000',
+	xCameraFirstWorld: 2120,
+	yCameraFirstWorld: 342.2,
+	speedCamera: 10,
+	xCamera: 1700
 };
 
 //Play

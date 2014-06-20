@@ -290,35 +290,38 @@ State.Game.prototype = {
             
         
         }else if(this.gameState == STATE_PAUSED) {
-            if(isMoveCamera){
-            	if(!isGameRotate){
-            		player.animations.stop();
-            		player.frame = 6;
-            		if(this.game.camera.x>2120){
-            			
-            			if(player.body.y < 342.2){
-            				player.body.y +=10;
-            			}else{
-            				player.body.y = 342.2;
-            			}
-            			this.game.camera.follow(null);
-            			this.game.camera.x -= 10;
-            		}else{
-            			this.fallPlayer();
-            		}
-            	}
-//            	else{
-//            		this.game.camera.follow(null);
-//        			this.game.camera.x = 1700;
-//        			this.game.camera.y = 50;
-//        			
-//            	}
-	        		
-	        }
+        	this.checkCamera();
         }else{// end if gamestate == play
         	
         }
         
+    },
+    
+    checkCamera: function(){
+    	if(isMoveCamera){
+    		if(!isGameRotate){
+    			player.animations.stop();
+    			player.frame = 6;
+    			if(this.game.camera.x > Config.animationFall.xCameraFirstWorld){
+    				if(player.body.y < Config.animationFall.yCameraFirstWorld){
+    					player.body.y +=Config.animationFall.speedCamera;
+    				}else{
+    					player.body.y = Config.animationFall.yCameraFirstWorld;
+    				}
+    				this.game.camera.follow(null);
+    				this.game.camera.x -= Config.animationFall.speedCamera;
+    			}else{
+    				this.fallPlayer();
+    			}
+    		}
+    	}else{
+    		if(this.game.camera.x < 1854){
+    			this.game.camera.x += 4;
+    		}else{
+    			this.gameState = STATE_PLAY;
+    			this.game.camera.follow(this.playerCollider);
+    		}
+    	}
     },
     
     updateHandleBars: function() {
@@ -401,7 +404,6 @@ State.Game.prototype = {
         this.game.physics.p2.enable(this.playerCollider, true);
         this.playerCollider.body.collideWorldBounds = true;
         this.playerCollider.body.fixedRotation = true;
-        this.game.camera.follow(this.playerCollider);
         
         this.playerCollider.body.setCollisionGroup(playerCollisionGroup);
         this.playerCollider.body.collides(tileCollisionGroup);
@@ -410,17 +412,17 @@ State.Game.prototype = {
         this.playerCollider.body.collides(monsterCollisionGroup, this.hitMonsters, this);
         
 		 layer.resizeWorld();
-//		 layer.alpha = 2;
 		 
 		 this.updateHealth();
 		 this.updateItems();
 		 this.putBigBoss();
          this.timeCheck();
          
-         this.playerCollider.body.force.y = Config.game.player.forceY;
          player.body.x = this.playerCollider.body.x + this.offsetX;
          player.body.y = this.playerCollider.body.y + this.offsetY;
-         this.gameState = STATE_PLAY;
+         this.game.camera.follow(null);
+         this.game.camera.x = Config.animationFall.xCamera;
+         isMoveCamera = false;
     },
     
     putBarRotate: function(){
@@ -449,7 +451,7 @@ State.Game.prototype = {
         //DEBUG
 //		this.game.debug.text(timerBV, 32, 32);
 		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
-//        this.game.debug.cameraInfo(game.camera, 32, 32);
+//		this.game.debug.cameraInfo(game.camera, 32, 32);
     },
 
     //collect item (diamond and key)
