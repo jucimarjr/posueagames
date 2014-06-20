@@ -20,7 +20,7 @@ var HeartConsts = {
 	flightSpeed: 2.5 * PhysicsConsts.pixelsToUnit,
 	attackDistance: 1.3 * PhysicsConsts.pixelsToUnit,
 	pursuitVelocity: PhysicsConsts.pixelsToUnit * 0.02,
-	playerDeathDistance: PhysicsConsts.pixelsToUnit * 0.3
+	playerDeathDistance: PhysicsConsts.pixelsToUnit * 0.2
 };
 
 var JoystickConsts = {
@@ -103,5 +103,18 @@ var Utils = {
 	
 	clearArray: function(array){
 		array.splice(0, array.length + 1);
-	}
+	},
+	
+	advanceSpriteToPosition: function (sprite, position, velocity) {
+        if (sprite.x > position.x) {
+            sprite.x = Utils.clamp(sprite.x - velocity, position.x, sprite.x);
+        } else {
+            sprite.x = Utils.clamp(sprite.x + velocity, sprite.x, position.x);
+        }
+        if (sprite.y > position.y) {
+            sprite.y = Utils.clamp(sprite.y - velocity, position.y, sprite.y);
+        } else {
+            sprite.y = Utils.clamp(sprite.y + velocity, sprite.y, position.y);
+        }
+    },
 };
