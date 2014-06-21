@@ -171,7 +171,7 @@ State.Game.prototype = {
         
         game.time.events.add(Phaser.Timer.SECOND * 1, this.beginMoving , this, verticalBar3);
         game.time.events.add(Phaser.Timer.SECOND * 2, this.beginMoving , this, verticalBar2);
-        game.time.events.add(Phaser.Timer.SECOND * 4, this.beginMoving , this, verticalBar4);
+        game.time.events.add(Phaser.Timer.SECOND * 3, this.beginMoving , this, verticalBar4);
 
         
     },
@@ -187,10 +187,10 @@ State.Game.prototype = {
         
         //console.log("--"+ this.playerCollider.body.x +","+ this.playerCollider.body.y);
         this.moveMonster(monsters, 380);
-        this.moveBarVertical(verticalBar1, 630);
-        this.moveBarVertical(verticalBar2, 630);
-        this.moveBarVertical(verticalBar3, 630);
-        this.moveBarVertical(verticalBar4, 630);
+        this.moveBarVertical(verticalBar1, 680);
+        this.moveBarVertical(verticalBar2, 680);
+        this.moveBarVertical(verticalBar3, 680);
+        this.moveBarVertical(verticalBar4, 680);
 
         if(this.gameState == STATE_PLAY) {
         	
@@ -920,11 +920,11 @@ State.Game.prototype = {
 			
 			obj.timerBV++;
 			
-			if(obj.timerBV >= 25) {
+			if(obj.timerBV >= 23) {
 				
 				obj.body.velocity.y = -velocity;
 				
-				if(obj.timerBV >= 48) {
+				if(obj.timerBV >= 44) {
 					obj.timerBV = 0;
 				}
 			}
