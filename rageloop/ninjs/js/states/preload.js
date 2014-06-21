@@ -14,7 +14,7 @@
 
             /* audios */
             this.game.load.audio('bgsound','assets/sounds/bgsound.mp3');
-            this.game.load.audio('gameoversound','assets/sounds/game_over.ogg');            
+            this.game.load.audio('gameoversound','assets/sounds/gameover.mp3');
             this.game.load.audio('shuriken_sound','assets/sounds/thrown_shuriken.mp3');
             this.game.load.audio('click','assets/sounds/click.mp3');
 
