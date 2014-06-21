@@ -466,7 +466,7 @@ State.Game.prototype = {
         "use strict";
         //DEBUG
 //		this.game.debug.text(timerBV, 32, 32);
-		this.game.debug.spriteInfo(player, 32, 32);
+//		this.game.debug.spriteInfo(player, 32, 32);
 //		this.game.debug.cameraInfo(game.camera, 32, 32);
     },
 
