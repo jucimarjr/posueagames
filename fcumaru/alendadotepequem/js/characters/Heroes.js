@@ -11,7 +11,6 @@ Heroes = function(game) {
 	"use strict";
 	this.game = game;
 	this.index = 0;
-	this.type = "";
 	
 	this.heroes = new Array();
 

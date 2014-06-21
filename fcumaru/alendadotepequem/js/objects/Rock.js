@@ -34,26 +34,25 @@ Rock.prototype = {
 	update : function() {
 		"use strict";
 
-		// Do nothing
+		if (!this.rock.body.touching.right && !this.rock.body.touching.left) {
+			this.rock.body.velocity.x = 0;
+		}
 	},
 	checkCollision : function(hero) {
 		this.game.physics.arcade.collide(this.rock, hero, this.heroCollision);
 	},
 	heroCollision : function(rock, hero) {
-		rock.body.velocity.x = 0;
-		
+		rock.body.moves = false;
+
 		// Only hero of power can move the rock
-		if (hero.type != HERO_OF_POWER) {
-			return;
-		}
-
+		if (hero.heroType == HERO_OF_POWER &&
 		// Only can move the rock when the hero on floor
-		if (!hero.body.onFloor()) {
-			return;
-		}
-
-		if (this.rock.body.blocked.right || this.rock.body.blocked.left) {
-			rock.body.velocity.x = hero.body.velocity.x;
+		hero.body.onFloor() &&
+		// Only can move the rock when collide by side
+		(rock.body.touching.right || rock.body.touching.left)) {
+			rock.body.moves = true;
+			rock.body.velocity.x = hero.body.velocity.x * (-1 / 6);
+			hero.animations.play('power');
 		}
 	}
 };

@@ -28,9 +28,10 @@ function HeroOfPower(game) {
 		this.hero.animations.add('power', [ 9, 10, 11, 12 ], 4, true);
 		this.hero.animations.add('down', [ 13, 14 ], 2, true);
 		this.hero.animations.add('died', [ 15, 16, 17 ], 3, true);
+		
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
-
+		this.hero.body.setSize(60, 120, -30, 0);
 		this.hero.body.acceleration.y = 100;
 
 		// para no limite inferio da tela
@@ -43,6 +44,8 @@ function HeroOfPower(game) {
 		this.hero.body.gravity.y = 150;
 
 		this.hero.health = this.life;
+		
+		this.hero.heroType = this.type;
 
 		this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 		this.jumpKey.onDown.add(this.jumpCheck, this);
@@ -57,17 +60,19 @@ function HeroOfPower(game) {
 		var keyPressed = false;
 		// apenas processar movimento se estiver ativo
 		if (this.active) {
-			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {				
 				// vai para esquerda
 				this.hero.body.velocity.x = -this.walk;
 				this.hero.animations.play('walk');
 				this.hero.scale.x = -1; // espelha se antes -1
+				this.hero.body.setSize(60, 120, 30, 0);
 				keyPressed = true;
-			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {				
 				// vai para direita
 				this.hero.body.velocity.x = this.walk;
 				this.hero.scale.x = +1; // espelha se antes 1
 				this.hero.animations.play('walk');
+				this.hero.body.setSize(60, 120, -30, 0);
 				keyPressed = true;
 			}
 		}
