@@ -411,6 +411,7 @@ State.Game.prototype = {
 		 
 		 this.updateHealth();
 		 this.updateItems();
+		 this.putCollectRotate();
 		 this.putBigBoss();
          this.timeCheck();
          
@@ -462,20 +463,25 @@ State.Game.prototype = {
             console.log(varPlayer.data.id, collect.data.id);
             collect.sprite.kill();
             itemsTaken++;
-            if (itemsTaken > 0) {
-                var fixedItem = collect.sprite.reset(0, 0, 1);
-                fixedItem.fixedToCamera = true;
-                if(varPlayer.sprite.name == 'key' || collect.sprite.name == 'key'){
-                	fixedItem.cameraOffset.setTo(856, 20);
-                	itemsTaken--;
-                }else {
-                	fixedItem.cameraOffset.setTo(856 + (24 * itemsTaken), 20);
-                }
-                flagId = true;
+            if(!isGameRotate){
+	            if (itemsTaken > 0) {
+	                var fixedItem = collect.sprite.reset(0, 0, 1);
+	                fixedItem.fixedToCamera = true;
+	                if(varPlayer.sprite.name == 'key' || collect.sprite.name == 'key'){
+	                	fixedItem.cameraOffset.setTo(856, 20);
+	                	itemsTaken--;
+	                }else {
+	                		fixedItem.cameraOffset.setTo(856 + (24 * itemsTaken), 20);
+	                }
+	                flagId = true;
+	            }
             }
         }
         if ((collect.data.id == idPlayer) && flagId) {
             flagId = false;
+        }
+        if(isGameRotate){
+        	this.updateItems();
         }
     },
     
@@ -504,8 +510,8 @@ State.Game.prototype = {
             		fixedItem.fixedToCamera = true;
             		if(fixedItem.name == 'key'){
             			fixedItem.cameraOffset.setTo(856, 20);
-            		}else if(i==0){
-            			fixedItem.cameraOffset.setTo(880, 20);
+//            		}else if(i==0){
+//            			fixedItem.cameraOffset.setTo(880, 15);
             		}else{
             			fixedItem.cameraOffset.setTo(856 + (24 * i), 20);
             		}
@@ -822,14 +828,9 @@ State.Game.prototype = {
         collect.name = 'pink';
         this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
 
-        //Collect Items 3
-        var collect = collects.create(200, 1400, 'red');
-        collect.name = 'red';
-        this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
-
-        var collect = collects.create(300, 1400, 'key');
-        collect.name = 'key';
-        this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
+//        var collect = collects.create(300, 1400, 'key');
+//        collect.name = 'key';
+//        this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
     },
 
     putVerticalBar: function () {
@@ -964,6 +965,12 @@ State.Game.prototype = {
         else if(body2.sprite.name == 'monsterBoss') {
             body2.sprite.kill();
         }
-    }
+    },
+    putCollectRotate: function () {
+        //Collect Items 3
+        var collect = collects.create(1494, 330, 'red');
+        collect.name = 'red';
+        this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
+    },
 
 };
