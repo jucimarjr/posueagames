@@ -502,6 +502,12 @@ Game.PlayerController.prototype = {
     },
 
     onDeathAnimFinished: function () {
+		if (this.gameState.playerLife() < 0) {
+			this.sprite.scale.x = 0;
+			this.sprite.scale.y = 0;
+			return;
+		}
+		
 		var self = this;
 
 		this.sprite.alpha = 0.0;
@@ -551,8 +557,6 @@ Game.PlayerController.prototype = {
 				});
 			});
 		});
-//		  this.sprite.x = this.spawnPoint.x + 20;
-//        this.sprite.y = this.spawnPoint.y - 32;
     },
 
     stopAndBlockInput: function () {
