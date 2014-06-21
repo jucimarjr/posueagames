@@ -7,7 +7,7 @@ function HeroOfPower(game) {
 	that.key = 'hero1';
 	that.asset = 'assets/heroofpower_120-120-34.png';
 	that.jump = 450;
-	that.walk = 300;
+	that.walk = 200;
 	that.life = 1;
 	that.maxJump = 3;
 	that.initX = 20;
@@ -23,12 +23,12 @@ function HeroOfPower(game) {
 		"use strict";
 
 		this.hero = this.game.add.sprite(this.initX, this.initY, this.key, 34);
-		this.hero.animations.add('walk', [ 0, 1, 2, 3 ], 4, true);
-		this.hero.animations.add('jump', [ 4, 5, 6, 8 ], 4, true);
-		this.hero.animations.add('power', [ 9, 10, 11, 12 ], 4, true);
-		this.hero.animations.add('down', [ 13, 14 ], 2, true);
-		this.hero.animations.add('died', [ 15, 16, 17 ], 3, true);
-		
+		this.hero.animations.add('walk', [ 0, 1, 2, 3 ], 10, true);
+		this.hero.animations.add('jump', [ 4, 5, 6, 8 ], 10, false);
+		this.hero.animations.add('power', [ 9, 10, 11 ], 6, true);
+		this.hero.animations.add('down', [ 12, 13, 14 ], 6, false);
+		this.hero.animations.add('died', [ 15, 16, 17 ], 10, true);
+
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
 		this.hero.body.setSize(60, 120, -15, 0);
@@ -41,12 +41,14 @@ function HeroOfPower(game) {
 		this.hero.body.drag.x = 600;
 		// diminui o espaco do deslocamento do espelhamento
 		this.hero.anchor.setTo(.25, .5);
-		
+
 		this.hero.body.gravity.y = 150;
 
 		this.hero.health = this.life;
-		
+
+		// Add extra params
 		this.hero.heroType = this.type;
+		this.hero.isPushing = false;
 
 		this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 		this.jumpKey.onDown.add(this.jumpCheck, this);
@@ -61,17 +63,25 @@ function HeroOfPower(game) {
 		var keyPressed = false;
 		// apenas processar movimento se estiver ativo
 		if (this.active) {
-			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {				
+			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 				// vai para esquerda
 				this.hero.body.velocity.x = -this.walk;
-				this.hero.animations.play('walk');
+				if (this.hero.isPushing) {
+					this.hero.animations.play('power');
+				} else {
+					this.hero.animations.play('walk');
+				}
 				this.hero.scale.x = -1; // espelha se antes -1
 				keyPressed = true;
-			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {				
+			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
 				// vai para direita
 				this.hero.body.velocity.x = this.walk;
+				if (this.hero.isPushing) {
+					this.hero.animations.play('power');
+				} else {
+					this.hero.animations.play('walk');
+				}
 				this.hero.scale.x = +1; // espelha se antes 1
-				this.hero.animations.play('walk');
 				keyPressed = true;
 			}
 		}
@@ -85,9 +95,12 @@ function HeroOfPower(game) {
 			}
 			keyPressed = true;
 		}
+		
 		if (!keyPressed) {
 			this.hero.animations.stop();
 			this.hero.frame = 0;
+
+			this.hero.isPushing = false;
 		}
 	};
 
