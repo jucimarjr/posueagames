@@ -37,7 +37,8 @@ State.GameSplash.prototype = {
 	    this.game.load.tilemap('level9', 'assets/level/9.json', null, Phaser.Tilemap.TILED_JSON);*/
 	    //this.game.load.tilemap('level10', 'assets/level/10.json', null, Phaser.Tilemap.TILED_JSON);
 
-		this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_39-60-27.png', 39,60,27);
+		this.game.load.spritesheet('playerS', 'assets/spritesheets/canoeiro_39-60-27.png', 39,60,27);		
+		this.game.load.spritesheet('playerFinal', 'assets/spritesheets/canoeiroFinal_39-60-27.png', 39,60,27);
 		this.game.load.spritesheet('bee', 'assets/enemies/casacaba_40-70-4.png',40,70,4);
 		this.game.load.spritesheet('bush', 'assets/spritesheets/bush_40-35-3.png',40,35,3);
 		this.game.load.spritesheet('coin', 'assets/spritesheets/coins/coins_40-40-8.png',40,40,8);

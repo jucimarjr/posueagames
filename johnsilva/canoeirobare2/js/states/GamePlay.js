@@ -23,13 +23,12 @@ State.GamePlay.prototype = {
 		//this.game.world.setBounds(-10, -10, this.game.world.width + 20, this.game.world.height + 20);
 
 		levelConfig = Config.level.getLevel(Config.levelId.level);
+		this.level = Config.levelId.level;
 
 		if(this.player)
 			this.player.destroy();
 
-		this.addPlayer();
-
-			
+		this.addPlayer();		
 
 		//this.game.camera.y = 1000;
 		cursors = this.game.input.keyboard.createCursorKeys();
@@ -132,8 +131,11 @@ State.GamePlay.prototype = {
 	},
 
 	addPlayer: function(){
+		if(this.level == Config.finalPhase.id)
+			this.player = game.add.sprite(0, 0 ,'playerFinal');
+		else 
+			this.player = game.add.sprite(0, 0 ,'playerS');
 		
-		this.player = game.add.sprite(0, 0 ,'playerS');
 		this.player.anchor.setTo(.5, 1);		
 		this.player.animations.add('walk',[3,4,5,6,7,8,9,10,11,12,13,14],20,true);
 		this.player.animations.add('stoped',[0,1],2,true);
