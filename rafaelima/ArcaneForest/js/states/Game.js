@@ -186,7 +186,7 @@ State.Game.prototype = {
         "use strict";
         
         //console.log("--"+ this.playerCollider.body.x +","+ this.playerCollider.body.y);
-        this.moveMonster(monsters, 380);
+        this.moveMonster(monsters, 280);
         this.moveBarVertical(verticalBar1, 680);
         this.moveBarVertical(verticalBar2, 680);
         this.moveBarVertical(verticalBar3, 680);
@@ -425,7 +425,11 @@ State.Game.prototype = {
     putBarRotate: function(){
     	bar = this.game.add.sprite(Config.game.barRotate.x, Config.game.barRotate.y, 'bar');
     	this.createKinematicObj(bar, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
-    	this.game.add.tween(bar.body.velocity).to({x: '-100'}, 15000).to({x: '+100'}, 15000).yoyo().loop().start();
+    	this.game.add.tween(bar.body.velocity).to({x: '-100'}, 7000).to({x: '+100'}, 7000).yoyo().loop().start();
+    	
+    	bar2 = this.game.add.sprite(Config.game.barRotate2.x, Config.game.barRotate2.y, 'bar');
+    	this.createKinematicObj(bar2, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
+    	this.game.add.tween(bar2.body.velocity).to({x: '-200'}, 3000).to({x: '+200'}, 3000).yoyo().loop().start();
     },
     
     fallPlayer: function(){
@@ -447,7 +451,7 @@ State.Game.prototype = {
         "use strict";
         //DEBUG
 //		this.game.debug.text(timerBV, 32, 32);
-		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
+//		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
 //		this.game.debug.cameraInfo(game.camera, 32, 32);
     },
 
@@ -897,14 +901,14 @@ State.Game.prototype = {
 	moveMonster: function (obj, velocity) {
 		"use strict";
 			timerMonst++;
-			if(timerMonst >= 26 ){
+			if(timerMonst >= 35 ){
 				obj.forEach(function(objIntern){
 					if(objIntern.name == 'monster'){
 						objIntern.body.velocity.x = velocity;
 						objIntern.scale.x = -1;
 					}
 				});
-				if(timerMonst >= 50){timerMonst = 0;}
+				if(timerMonst >= 68){timerMonst = 0;}
 			}else {
 				obj.forEach(function(objIntern){
 					if(objIntern.name == 'monster'){
