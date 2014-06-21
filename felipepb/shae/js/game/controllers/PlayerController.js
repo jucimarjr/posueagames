@@ -29,6 +29,7 @@ Game.PlayerController = function (gameState, spawnPoint) {
     this.deathSFX;
     this.spawnSFX;
     this.runSFX;
+    this.ghostSFX;
 
     this._actualRunModifier;
     this._footstepSFXPlayed;
@@ -196,6 +197,7 @@ Game.PlayerController.prototype = {
         this.deathSFX = this.game.add.audio('death_new_sfx');
         this.spawnSFX = this.game.add.audio('spawn_new_sfx');
         this.runSFX = this.game.add.audio('run_sfx');
+        this.ghostSFX = this.game.add.audio('ghost_sfx', 1, true);
     },
 
     createBody: function () {
@@ -473,6 +475,9 @@ Game.PlayerController.prototype = {
         this.sprite.scale.y = 1;
 
         this.spawnSFX.play();
+
+        if (this.ghostSFX.isPlaying)
+            this.ghostSFX.stop();
     },
 
     playDeathAnimation: function () {
@@ -487,6 +492,11 @@ Game.PlayerController.prototype = {
 		this.sprite.animations.play(Game.PlayerController.AnimState.FlyingSoul);
         this.currentAnim = Game.PlayerController.AnimState.FlyingSoul;
         this.animState = Game.PlayerController.AnimState.FlyingSoul;
+
+        this.ghostSFX.play('', 0, 0.1);
+        var tween = this.game.add.tween(this.ghostSFX);
+        tween.to({ volume: 1.0 }, 1000);
+        tween.start();
 	},
 
     onRespawnAnimFinished: function () {
