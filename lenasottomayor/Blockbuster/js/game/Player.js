@@ -20,7 +20,7 @@ Player = function(game, coins, layer1, powerlifes, powerstars, thorns, HUD, jump
 
 Player.prototype = {
 	create: function () {
-		this.spritePlayer = game.add.sprite(Config.player.position.x+11500, Config.player.position.y-200, 'oscar');
+		this.spritePlayer = game.add.sprite(Config.player.position.x, Config.player.position.y, 'oscar');
 		
 	    //  Animations. When not moving, spritePlayer = 0.
 	    this.spritePlayer.animations.add('walk', [1,2,3,4,5,6,7], 8, true);
