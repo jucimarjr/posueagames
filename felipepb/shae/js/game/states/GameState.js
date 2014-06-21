@@ -19,6 +19,7 @@ Game.GameState = function () {
 };
 
 Game.GameState.tileMapName = 'map';
+Game.GameState.currentLevel = 0;
 
 Game.GameState.prototype = {
 
@@ -110,7 +111,7 @@ Game.GameState.prototype = {
 	},
 	
 	createHeartBeatController: function () {
-		this.heartBeatController = new Game.HeartBeatController(this.game);
+		this.heartBeatController = new Game.HeartBeatController(this.game, this.player.sprite);
 		this.heartBeatController.setHearts(this.hearts);
 	},
 	
