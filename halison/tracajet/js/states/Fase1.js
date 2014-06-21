@@ -167,8 +167,8 @@ State.Fase1.prototype = {
 	}
 	,
 	setupEnemies : function(jacare){
-		jacare.animations.add('left',[0,1,2,3,4,5],5,true);
-		jacare.animations.add('right',[6,7,8,9,10,11],5,true);
+		jacare.animations.add('left',[0,1,2,3,4,5,6,7,8,9],10,true);
+		jacare.animations.add('right',[10,11,12,13,14,15,16,17,18,19],10,true);
 		game.physics.enable(jacare, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 		jacare.body.collideWorldBounds = true;
 		this.twinEsquerda(jacare);
