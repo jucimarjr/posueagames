@@ -314,8 +314,8 @@ Enemy.prototype = {
 				vader.body.collideWorldBounds = true;
 				vader.scale.x = -1;
 				
-				vader.animations.add('walk', [0,1,2,3,4,5,6,7], 5, true);
-				vader.animations.add('dead',[8,9],2,true);
+				vader.animations.add('walk', [0,1,2,3,4,5,6,7], 8, true);
+				vader.animations.add('dead',[8,9],4,true);
 				vader.animations.play('walk');
 				
 				vader.alive = true;

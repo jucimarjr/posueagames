@@ -59,14 +59,14 @@
  </objectgroup>
  <objectgroup name="waters" width="48" height="20">
   <object gid="18" x="178" y="112"/>
-  <object gid="18" x="699" y="270"/>
+  <object gid="18" x="698" y="270"/>
   <object gid="18" x="978" y="272"/>
-  <object gid="18" x="1259" y="311"/>
-  <object gid="18" x="1577" y="107"/>
-  <object gid="18" x="1620" y="105"/>
-  <object gid="18" x="1737" y="350"/>
-  <object gid="18" x="1777" y="549"/>
-  <object gid="18" x="1815" y="547"/>
+  <object gid="18" x="1258" y="311"/>
+  <object gid="18" x="1578" y="107"/>
+  <object gid="18" x="1618" y="105"/>
+  <object gid="18" x="1738" y="350"/>
+  <object gid="18" x="1778" y="549"/>
+  <object gid="18" x="1818" y="547"/>
  </objectgroup>
  <objectgroup name="tubes" width="48" height="20">
   <object gid="23" x="168" y="73"/>
@@ -76,7 +76,7 @@
   <object gid="23" x="1568" y="72"/>
   <object gid="23" x="1728" y="313"/>
   <object gid="23" x="1767" y="514"/>
-  <object gid="23" x="1807" y="513"/>
+  <object gid="23" x="1808" y="513"/>
   <object gid="23" x="1611" y="72"/>
  </objectgroup>
  <objectgroup name="bushes" width="48" height="20">

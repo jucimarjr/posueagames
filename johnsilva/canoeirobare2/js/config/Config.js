@@ -211,13 +211,13 @@ Config.level = {
 		if(level == 1)
 			Config.update.updateLevel(75, 150, false, 13, 0, 0, 0, 18, 19, 'coin', 0,0,27,0,0);
 		else if(level == 2)
-		    Config.update.updateLevel(65, 600, true, 13, 0, 18, 0, 22, 23, 'coinIara', 31,0,35,0,0);
+		    Config.update.updateLevel(60, 600, true, 13, 0, 18, 0, 22, 23, 'coinIara', 31,0,35,0,0);
 		else if(level == 3)
-		    Config.update.updateLevel(65, 600, true, 13, 18, 19, 23, 24, 25, 'coin', 33,0,37,0,0);
+		    Config.update.updateLevel(60, 600, true, 13, 18, 19, 23, 24, 25, 'coin', 33,0,37,0,0);
 		else if (level == 4)
 		    Config.update.updateLevel(75, 650, true, 13, 18, 19, 23, 24, 25, 'coinIara', 33,0,37,0,0);
 		else if (level == 5)
-		    Config.update.updateLevel(75, 2050, true, 13, 18, 19, 23, 24, 25, 'coin', 33, 0, 37,0,0);
+		    Config.update.updateLevel(75, 2200, true, 13, 18, 19, 23, 24, 25, 'coin', 33, 37, 38,0,0);
 		else if (level == 6)
 		    Config.update.updateLevel(2400, 400, true, 13, 18, 19, 23, 24, 25, 'coin', 42, 33, 34,0,0);
 		else if (level == 7)

@@ -68,8 +68,11 @@ Game.PreloaderState.prototype = {
 		this.game.load.audio('footstep_03', ['audio/wav/footstep_03.wav', 'audio/mp3/footstep_03.mp3']);
 		this.game.load.audio('death_sfx', ['audio/wav/death.wav', 'audio/mp3/death.mp3']);
 		this.game.load.audio('spawn_sfx', ['audio/wav/spawn.wav', 'audio/mp3/spawn.mp3']);
+		this.game.load.audio('death_new_sfx', ['audio/wav/death_new.wav', 'audio/mp3/death_new.mp3']);
+		this.game.load.audio('spawn_new_sfx', ['audio/wav/spawn_new.wav', 'audio/mp3/spawn_new.mp3']);
 		this.game.load.audio('run_sfx', ['audio/wav/run.wav', 'audio/mp3/run.mp3']);
 		this.game.load.audio('heartbeat_sfx', ['audio/wav/heartbeat.wav', 'audio/mp3/heartbeat.mp3']);
+		this.game.load.audio('ghost_sfx', ['audio/wav/ghost_flying.wav', 'audio/mp3/ghost_flying.mp3']);
     },
 
     create: function () {
