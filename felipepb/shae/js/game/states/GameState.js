@@ -7,7 +7,14 @@ Game.GameState = function () {
     this.player;
 	this.playerFocusLight;
     this.playerLightSprite;
-	
+	this.playerLightRadius;
+	this.playerLightAlpha;
+    this.playerLightAnimationTime;
+	this.playerLightRadiusFrom;
+	this.playerLightRadiusTo;
+	this.playerLightAlphaFrom;
+	this.playerLightAlphaTo;
+
 	this.hearts = [];
 	this.heartBeatController;
 
@@ -15,11 +22,13 @@ Game.GameState = function () {
 
     this.playerHasKey;
     this.stageComplete;
-	this.playerLightRadius;
 };
 
 Game.GameState.tileMapName = 'map';
 Game.GameState.currentLevel = 0;
+Game.GameState.lightIndex;
+Game.GameState.lightAnimation = [0, 0, 0, 0, 1, 0, 1, 0, 1];
+
 
 Game.GameState.prototype = {
 
@@ -35,6 +44,12 @@ Game.GameState.prototype = {
 		this.createPlayerLight();
 		this.createHeartBeatController();
 		this.playerLightRadius = 0;
+		this.playerLightAlpha = 0.0;
+		this.playerLightAnimationTime = 0;
+		this.playerLightRadiusFrom = PlayerConsts.lightFocusRadius;
+		this.playerLightRadiusTo = PlayerConsts.lightFocusRadius - 15;
+		this.playerLightAlphaFrom = 0.0;
+        this.playerLightAlphaTo = 0.3;
 		
 		var self = this;
 		Utils.fadeOutScreen(this.game,
@@ -53,7 +68,7 @@ Game.GameState.prototype = {
         
 		pauseTween.to(null, 500, Phaser.Easing.Linear.None, true, 0);
 		pauseTween.onComplete.add(function () {
-			playerLightTween.to({ playerLightRadius: 100 }, 500, Phaser.Easing.Quadratic.Out, true, 0);
+			playerLightTween.to({ playerLightRadius: PlayerConsts.lightFocusRadius }, 500, Phaser.Easing.Quadratic.Out, true, 0);
 	        playerLightTween.onComplete.add(function () {
 	            playerRespawnTween.to(null, 1000, Phaser.Easing.Linear.None, true, 0);
 	            playerRespawnTween.onComplete.add(function () {
@@ -117,7 +132,6 @@ Game.GameState.prototype = {
 	
 	createPlayerLight: function () {
 		this.playerFocusLight = this.game.add.bitmapData(this.game.width, this.game.height);
-        this.playerFocusLight.context.fillStyle = 'rgba(0, 0, 0, 1.0)';
         this.playerLightSprite = this.game.add.image(0, 0, this.playerFocusLight);
 		this.playerLightSprite.fixedToCamera = true;
 	},
@@ -172,8 +186,10 @@ Game.GameState.prototype = {
 		for (var i = 0; i < heartsLength; i++) {
 			hearts[i].update();
 		}
-		
-		this.heartBeatController.update();
+		if (this.player.sprite.body && !this.stageComplete) {
+			this.heartBeatController.update();
+            this.updatePlayerLight();
+		}
     },
 
     render: function () {
@@ -181,23 +197,79 @@ Game.GameState.prototype = {
 		this.renderPlayerLight();
     },
 	
+	updatePlayerLight: function () {
+		var duration = this.heartBeatController.frequence;
+		var fromRadius = this.playerLightRadiusFrom;
+		var toRadius = this.playerLightRadiusTo;
+		var fromAlpha = this.playerLightAlphaFrom;
+		var toAlpha = this.playerLightAlphaTo;
+
+		if (this.playerLightRadius == toRadius) {
+			var copyRadius = fromRadius;
+			fromRadius = toRadius;
+			toRadius = copyRadius;
+			
+			var copyAlpha = fromAlpha;
+			fromAlpha = toAlpha;
+			toAlpha = copyAlpha;
+		}
+
+        var progress = Phaser.Easing.Bounce.InOut(this.playerLightAnimationTime / duration);
+		this.playerLightAnimationTime += this.game.time.elapsed;
+
+		this.playerLightRadius = fromRadius + (toRadius - fromRadius) * progress;
+		this.playerLightAlpha = fromAlpha + (toAlpha - fromAlpha) * progress;
+
+		if (this.playerLightAnimationTime >= duration) {
+            this.playerLightAnimationTime = 0;
+			this.playerLightRadius = toRadius;
+			this.playerLightAlpha = toAlpha;
+        }
+		
+		this.playerLightRadiusFrom = fromRadius;
+        this.playerLightRadiusTo = toRadius;
+		this.playerLightAlphaFrom = fromAlpha;
+		this.playerLightAlphaTo = toAlpha;
+    },
+
 	renderPlayerLight: function () {
 		var context = this.playerFocusLight.context;
-        var screenWidth = this.game.camera.width;
-        var screenHeight = this.game.camera.height;
-		
-		context.clearRect(0, 0, screenWidth, screenHeight);
+        var camera = this.game.camera;
+		var playerSprite = this.player.sprite;
+
+		context.clearRect(0, 0, camera.width, camera.height);
+
         context.beginPath();
-        context.rect(0, 0, screenWidth, screenHeight);
-        
-        context.shadowColor = 'black';
-        context.shadowBlur = 200;
-        
-        context.arc(this.player.sprite.x - this.game.camera.x,
-                    this.player.sprite.y - this.game.camera.y,
+        context.rect(0, 0, camera.width, camera.height);
+        context.arc(playerSprite.x - camera.x,
+                    playerSprite.y - camera.y,
                     this.playerLightRadius, 0, Math.PI * 2, true);
-        
+        context.fillStyle = 'rgba(0, 0, 0, 1.0)';
+		context.shadowColor = 'black';
+        context.shadowBlur = 200;
         context.fill();
+		context.closePath();
+
+        if (!this.stageComplete) {
+            context.arc(playerSprite.x - camera.x,
+                        playerSprite.y - camera.y,
+                        this.playerLightRadius, 0, Math.PI * 2);
+	        context.fillStyle = 'rgba(0, 0, 0, ' + this.playerLightAlpha + ')';
+	        context.shadowColor = 'transparent';
+	        context.shadowBlur = 0;
+	        context.fill(); 
+		}
+
+		if (PhysicsConsts.debugDraw) {
+			context.beginPath();
+	        context.arc(playerSprite.x - camera.x,
+	                    playerSprite.y - camera.y,
+	                    5, 0, Math.PI * 2);
+	        context.fillStyle = 'red';
+	        context.fill();
+	        context.closePath();
+		}
+
         this.playerFocusLight.dirty = true;
 	},
 

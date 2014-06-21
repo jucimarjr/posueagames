@@ -12,13 +12,14 @@ var PlayerConsts = {
 	jumpVelocity: 3.0 * PhysicsConsts.pixelsToUnit,
 	runModifier: 1.5,
 	runModifierDamping: 0.05,
-	startingLifeTotal: 3
+	startingLifeTotal: 3,
+	lightFocusRadius: 100
 };
 
 var HeartConsts = {
 	delayToNextWaypoint: 1000.0, // milliseconds
 	flightSpeed: 2.5 * PhysicsConsts.pixelsToUnit,
-	attackDistance: 1.3 * PhysicsConsts.pixelsToUnit,
+	attackDistance: 1.6 * PhysicsConsts.pixelsToUnit,
 	pursuitVelocity: PhysicsConsts.pixelsToUnit * 0.02,
 	playerDeathDistance: PhysicsConsts.pixelsToUnit * 0.2,
 	minimumBeatDistance: PhysicsConsts.pixelsToUnit * 2.5

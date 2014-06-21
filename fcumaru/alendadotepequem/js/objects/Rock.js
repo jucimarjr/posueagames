@@ -52,7 +52,7 @@ Rock.prototype = {
 		(rock.body.touching.right || rock.body.touching.left)) {
 			rock.body.moves = true;
 			rock.body.velocity.x = hero.body.velocity.x * (-1 / 6);
-			hero.animations.play('power');
+			hero.isPushing = true;
 		}
 	}
 };

@@ -140,16 +140,16 @@ State.Fase2.prototype = {
     },
     
     setupEnemies : function(monkey){
-		console.log('entro');
+		
 		monkey.animations.add('left',[0,1,2,3,4,5],10,true);
 		monkey.animations.add('right',[6,7,8,9,10,11],5,true);
 		game.physics.enable(monkey, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 		monkey.body.collideWorldBounds = true;
-		//game.add.tween(monkey).to({x: monkey.body.x, y: monkey.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
-			//	Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
-			//	.to({x: monkey.body.x+320, y: monkey.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
-				//Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/,  50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
-				//.loop().start();
+		game.add.tween(monkey).to({x: monkey.body.x, y: monkey.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
+				.to({x: monkey.body.x+120, y: monkey.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/,  50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
+				.loop().start();
 		monkey.animations.play("right");
 		
 	}
