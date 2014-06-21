@@ -170,8 +170,8 @@ State.Game.prototype = {
         pauseButton.onDown.add(this.pauseGame, this);
         
         game.time.events.add(Phaser.Timer.SECOND * 1, this.beginMoving , this, verticalBar3);
-        game.time.events.add(Phaser.Timer.SECOND * 5, this.beginMoving , this, verticalBar2);
-        game.time.events.add(Phaser.Timer.SECOND * 7, this.beginMoving , this, verticalBar4);
+        game.time.events.add(Phaser.Timer.SECOND * 2, this.beginMoving , this, verticalBar2);
+        game.time.events.add(Phaser.Timer.SECOND * 4, this.beginMoving , this, verticalBar4);
 
         
     },
@@ -187,10 +187,10 @@ State.Game.prototype = {
         
         //console.log("--"+ this.playerCollider.body.x +","+ this.playerCollider.body.y);
         this.moveMonster(monsters, 380);
-        this.moveBarVertical(verticalBar1, 750);
-        this.moveBarVertical(verticalBar2, 750);
-        this.moveBarVertical(verticalBar3, 750);
-        this.moveBarVertical(verticalBar4, 750);
+        this.moveBarVertical(verticalBar1, 630);
+        this.moveBarVertical(verticalBar2, 630);
+        this.moveBarVertical(verticalBar3, 630);
+        this.moveBarVertical(verticalBar4, 630);
 
         if(this.gameState == STATE_PLAY) {
         	
@@ -806,7 +806,7 @@ State.Game.prototype = {
 	},
 
 	createKinematicObj: function (obj, setCollisionGroup, otherCollisionGroup) {
-		this.game.physics.p2.enable(obj, true);
+		this.game.physics.p2.enable(obj, false);
 		obj.body.fixedRotation = true; //no circle movement 
 		obj.body.kinematic = true;
 		obj.body.setCollisionGroup(setCollisionGroup);
@@ -920,11 +920,11 @@ State.Game.prototype = {
 			
 			obj.timerBV++;
 			
-			if(obj.timerBV >= 21) {
+			if(obj.timerBV >= 25) {
 				
 				obj.body.velocity.y = -velocity;
 				
-				if(obj.timerBV >= 40) {
+				if(obj.timerBV >= 48) {
 					obj.timerBV = 0;
 				}
 			}

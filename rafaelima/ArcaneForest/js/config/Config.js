@@ -294,12 +294,12 @@ Config.game = {
 	verticalbar:{
 		key: 'verticalBar',
 		dir: Config.images+'/verticalbar_72-252.png',
-		x: [3460, 3610, 3750, 3855],
+		x: [3460, 3610, 3750, 3835],
 		y: [91, 91, 91, 91],
 		collider: {
 			key: 'verticalBarCollider',
 			dir: Config.images+'/verticalBarDieCollider-144_20.png',
-			x: [3388, 3538, 3678, 3783],
+			x: [3388, 3538, 3678, 3763],
 			y: [490, 490, 490, 490],
 		}
 	},
