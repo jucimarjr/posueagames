@@ -193,8 +193,8 @@ Game.PlayerController.prototype = {
 
         this._footstepSFXPlayed = false;
 
-        this.deathSFX = this.game.add.audio('death_sfx');
-        this.spawnSFX = this.game.add.audio('spawn_sfx');
+        this.deathSFX = this.game.add.audio('death_new_sfx');
+        this.spawnSFX = this.game.add.audio('spawn_new_sfx');
         this.runSFX = this.game.add.audio('run_sfx');
     },
 
