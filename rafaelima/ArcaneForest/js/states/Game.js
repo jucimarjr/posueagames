@@ -132,6 +132,9 @@ State.Game.prototype = {
         
         this.game.physics.p2.enable(player, false);
         player.body.kinematic = true;
+        player.events.onOutOfBounds.add(this.playerOut, this);
+        player.checkWorldBounds = true;
+        player.body.collideWorldBounds  = false;
         
         // sword collider
         this.swordOffsetX = Config.game.player.collider.sword.offset.right.x;
@@ -174,6 +177,18 @@ State.Game.prototype = {
         game.time.events.add(Phaser.Timer.SECOND * 3, this.beginMoving , this, verticalBar4);
 
         
+    },
+    
+    playerOut: function (player) {
+    	// lose all lifes 
+    	this.playerLifes = 0;
+    	
+    	this.updateHealth();
+    	
+    	this.gameState = STATE_GAMEOVER;
+		
+    	this.playerCollider.kill();
+    	player.kill();
     },
 
     pauseGame: function () {
@@ -451,7 +466,7 @@ State.Game.prototype = {
         "use strict";
         //DEBUG
 //		this.game.debug.text(timerBV, 32, 32);
-//		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
+//		this.game.debug.spriteInfo(player, 32, 32);
 //		this.game.debug.cameraInfo(game.camera, 32, 32);
     },
 

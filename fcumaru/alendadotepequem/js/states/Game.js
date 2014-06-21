@@ -44,9 +44,6 @@ State.Game.prototype = {
 		map = this.game.add.tilemap('mapa');
 
 		map.addTilesetImage('map', 'map');
-
-		
-
 		this.layer = map.createLayer('map');
 
 		this.layer.resizeWorld(); // seta o mundo com as altera��es feitas
@@ -83,8 +80,9 @@ State.Game.prototype = {
 		this.trees.update(this.layer);
 		this.rocks.update();
 		this.rocks.checkCollision(this.heroes.getCurrent());
+		this.trees.checkCollision(this.heroes.getCurrent());
 		if(this.heroes.heroes[this.heroes.index].type === HERO_OF_ROPE){
-			this.trees.checkCollision(
+			this.trees.ropeCollision(
 				this.heroes.heroes[this.heroes.index].getRope(),
 				this.heroes.heroes[this.heroes.index].facingLeft);
 		}
@@ -97,7 +95,9 @@ State.Game.prototype = {
 
 	render : function() {
 		// debug settings
-		this.game.debug.spriteBounds(this.heroes.getCurrent());
+		//this.game.debug.spriteBounds(this.heroes.getCurrent());
+		this.game.debug.body(this.heroes.getCurrent());
+		this.game.debug.body(this.trees.values[0].tree);
 		game.debug.spriteInfo(this.heroes.getCurrent(), 32, 32);
 		game.debug.inputInfo(400, 32);
 	}

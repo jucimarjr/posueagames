@@ -11,30 +11,30 @@ function HeroOfRope(game) {
 	that.life = 1;
 	that.maxJump = 2;
 	that.initX = 200;
-	that.initY = 1500;
+	that.initY = 1600;
 	that.numSegmentsRope = 19;
 	that.facingLeft = false;
 
-	//TODO: "body" of the rope
 	that.ropeTipKey = 'ropeTip';
 	that.ropeTipAsset = 'assets/rope_20-10.png';
 	
 	that.preload = function() {
 		"use strict";
-
 		this.game.load.spritesheet(this.key, this.asset, 120, 120, 34);
 		this.game.load.image(this.ropeTipKey, this.ropeTipAsset, 20, 10); // for HeroOfRope
 	};
 
 	that.create = function() {
 		"use strict";
-
 		this.hero = this.game.add.sprite(this.initX, this.initY, this.key, 3);
-		this.hero.animations.add('walk', [ 1, 0 ], 6, true);
-		this.hero.animations.add('jump', [ 2 ], 4, true);
+		this.hero.animations.add('walk', [ 0, 1, 2, 3 ], 10, true);
+		this.hero.animations.add('jump', [ 4 ], 4, true);
+		this.hero.animations.add('down', [ 4, 5, 6, 7 ], 10, true);
+		this.hero.animations.add('died', [ 15, 16, 17 ], 3, true);
+
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
-
+		this.hero.body.setSize(60, 120, -30, 0);
 		this.hero.body.acceleration.y = 100;
 
 		// para no limite inferio da tela
@@ -44,6 +44,7 @@ function HeroOfRope(game) {
 		this.hero.body.drag.x = 600;
 		// diminui o espaco do deslocamento do espelhamento
 		this.hero.anchor.setTo(.5, .5);
+
 		this.hero.body.gravity.y = 150;
 
 		this.hero.health = this.life;
@@ -65,7 +66,6 @@ function HeroOfRope(game) {
 		"use strict";
 		this.game.physics.arcade.collide(layer, this.hero);
 		enemies.checkCollision(this.hero);
-		this.game.physics.arcade.collide(this.ropeSegments[0], this.layer2, this.collisionRopeObject);
 
 		// PEGA A ENTRADA (tecla pressionada):
 		var keyPressed = false;
@@ -97,12 +97,18 @@ function HeroOfRope(game) {
 			}
 			keyPressed = true;
 		}
+
 		if (!keyPressed) {
 			this.hero.animations.stop();
 			this.hero.frame = 0;
 		}
 
+		if(this.hero.body.velocity.y > 0){
+			this.hero.animations.play('down');
+		}
+
 		if(this.ropeActive){
+			this.hero.frame = 9;
 			if(this.facingLeft){
 				for(var i = 1; i < this.numSegmentsRope; i++){
 					this.ropeSegments[i].x = this.ropeSegments[i-1].x + 20;
@@ -133,7 +139,7 @@ function HeroOfRope(game) {
 		}
 		for(var i = 0; i < this.numSegmentsRope; i++){
 			this.ropeSegments[i].revive();
-			this.ropeSegments[i].y = this.hero.y;
+			this.ropeSegments[i].y = this.hero.y - 10;
 		}
 		this.ropeSegments[0].x = this.ropeStartX;
 		// can't chain directly because of onComplete(); must use verbose mode
@@ -142,10 +148,6 @@ function HeroOfRope(game) {
 		ropeAnimP1.chain(ropeAnimP2);
 		ropeAnimP2.onComplete.add(this.killRope, this);
 		ropeAnimP1.start();
-	};
-
-	that.collisionRopeObject = function(rope, object){
-		console.log("rope collided with something");
 	};
 
 	that.killRope = function(){
