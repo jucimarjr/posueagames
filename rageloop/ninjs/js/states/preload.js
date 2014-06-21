@@ -31,13 +31,16 @@
 
             /*Gameplay assets*/
             this.game.load.spritesheet('ninjas', 'assets/sprites/sheetninjas_2879-587_2.png', 89, 84);
-            this.game.load.tilemap('map', 'assets/maps/level.json', null, Phaser.Tilemap.TILED_JSON);
             this.game.load.image('background','assets/sprites/background3_960-600.png');
             this.game.load.image('tileset','assets/sprites/tileset.png');
             this.game.load.image('shuriken', 'assets/sprites/shuriken-ninjs_32-31.png');
             this.game.load.image('shuriken_enemy', 'assets/sprites/shuriken-enemy_28-27.png');
             this.game.load.image('ninja_life', 'assets/images/vida-hud-27-26.png');
             this.game.load.image('blood_particle', 'assets/sprites/red_particle_5-5.png');
+
+            /*Maps*/
+            this.game.load.tilemap('map1', 'assets/maps/level1.json', null, Phaser.Tilemap.TILED_JSON);
+            this.game.load.tilemap('map2', 'assets/maps/level2.json', null, Phaser.Tilemap.TILED_JSON);
             
             /*GameOver assets*/
             this.game.load.image('gameover_bg','assets/images/gameOverBg_960-600.png');

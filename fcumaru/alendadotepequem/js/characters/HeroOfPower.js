@@ -31,7 +31,7 @@ function HeroOfPower(game) {
 		
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
-		this.hero.body.setSize(60, 120, -30, 0);
+		this.hero.body.setSize(60, 120, -15, 0);
 		this.hero.body.acceleration.y = 100;
 
 		// para no limite inferio da tela
@@ -40,7 +40,7 @@ function HeroOfPower(game) {
 		// quanto maior for seu valor, menos desloca
 		this.hero.body.drag.x = 600;
 		// diminui o espaco do deslocamento do espelhamento
-		this.hero.anchor.setTo(.5, .5);
+		this.hero.anchor.setTo(.25, .5);
 		this.hero.body.gravity.y = 150;
 
 		this.hero.health = this.life;

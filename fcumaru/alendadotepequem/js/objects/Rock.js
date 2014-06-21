@@ -31,7 +31,7 @@ Rock.prototype = {
 		this.rock.anchor.setTo(.5, .5);
 		this.rock.body.gravity.y = 150;
 	},
-	update : function() {
+	update : function(layer) {
 		"use strict";
 
 		if (!this.rock.body.touching.right && !this.rock.body.touching.left) {
@@ -72,11 +72,11 @@ Rocks.prototype = {
 
 		// Do nothing
 	},
-	update : function() {
+	update : function(layer) {
 		"use strict";
 
 		for (var i = 0; i < this.values.length; i++) {
-			this.values[i].update();
+			this.values[i].update(layer);
 		}
 	},
 	pop : function(x, y) {

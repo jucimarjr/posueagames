@@ -26,7 +26,7 @@
         onPlayClick: function() {
             this.bgSound.stop();
             this.clickAudio.play();
-            this.game.state.start('Gameplay');
+            this.game.state.start('Level1');
         },
 
         onMenuClick: function() {
