@@ -21,7 +21,7 @@ State.GameSplash.prototype = {
 	update: function () {
 		"use strict";
 		Config.global.screen.resize(this.game);
-	}
+	},
 	nextState: function () {
 		"use strict";
 		setTimeout(
@@ -47,5 +47,5 @@ loadAssets: function () {
 		this.game.load.spritesheet('button-how-to-play', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
 		
 		
-	};
+	}
 };

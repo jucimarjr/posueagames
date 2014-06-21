@@ -25,8 +25,8 @@ State.Pause.prototype = {
 
 	        unPause.fixedToCamera = true;
 	        unPause.alpha = 0.4;
-	        
-	        teclaIn: function (args) {
+		},
+	    teclaIn: function (args) {
 	            var keyCode = args.keyCode;
 	            var letter = String.fromCharCode(keyCode);
 	    		
