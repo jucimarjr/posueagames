@@ -131,11 +131,11 @@ Config.climbing = {
 };
 
 Config.levelId = {
-	level: 7
+	level: 1
 };
 
 Config.finalPhase = {
-	lightRadius: 150,
+	lightRadius: 0,
 	id: 7
 };
 
