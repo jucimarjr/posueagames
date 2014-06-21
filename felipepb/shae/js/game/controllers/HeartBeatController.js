@@ -35,12 +35,12 @@ Game.HeartBeatController.prototype = {
 				var volume;
 				
 				if (minDistanceToPlayer <= maxVolumeDistance)
-					volume = 1.0;
+					volume = 2.0;
 				else
 					volume = Utils.clamp(1.0 - (minDistanceToPlayer - maxVolumeDistance) / attenuation, 0.0, 1.0);
 				
-				this.heartbeatSFX.play('', 0, volume);
-				console.log('play heartbeat sound with volume = ' + volume);
+				this.heartbeatSFX.play('', 0, volume );
+				// console.log('play heartbeat sound with volume = ' + volume);
 			}
 		}
 	}
