@@ -48,7 +48,8 @@ Game.PreloaderState.prototype = {
 		this.game.load.image('credits', 'assets/screens/creditsnicks_960-600.png');
 		
 		// Game Win
-		this.game.load.image('gameWin', 'assets/screens/gamewin_960-600.png');
+		this.game.load.image('gameWin_1', 'assets/screens/gamewin_1_960-600.png');
+		this.game.load.image('gameWin_2', 'assets/screens/gamewin_2_960-600.png');
 		
 		// Game Loose
 		this.game.load.image('gameLoose', 'assets/screens/gameloose_960-600.png');
