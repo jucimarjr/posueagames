@@ -10,7 +10,8 @@ var cursors, attackButton, pauseButton;
 var bg1, bg2, bg3, bg4, bg5, bg6;
 var bar, bar2;
 var previousX, previousY;
-var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup, barCollisionGroup, swordCollisionGroup, verticalBarDieCollisionGroup;
+var playerCollisionGroup, bossCollisionGroup, monsterCollisionGroup, tileCollisionGroup;
+var collectCollisionGroup, barCollisionGroup, swordCollisionGroup, verticalBarDieCollisionGroup;
 var isJumping, beInGround, yBeforeJump;
 var verticalBar1, verticalBar2, verticalBar3, verticalBar4;
 var timeCheck;
@@ -63,7 +64,7 @@ State.Game.prototype = {
         //collision groups
         //start collision groups
         playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
-//        obstacleCollisionGroup = this.game.physics.p2.createCollisionGroup();
+        bossCollisionGroup = this.game.physics.p2.createCollisionGroup();
         monsterCollisionGroup = this.game.physics.p2.createCollisionGroup();
         tileCollisionGroup = this.game.physics.p2.createCollisionGroup();
         collectCollisionGroup = this.game.physics.p2.createCollisionGroup();
@@ -139,7 +140,6 @@ State.Game.prototype = {
         
         //collide
         this.playerCollider.body.collides(monsterCollisionGroup, this.hitMonsters, this);
-//        this.playerCollider.body.collides(obstacleCollisionGroup, this.hitObstacles, this);
         //player.body.collides(tileCollisionGroup, this.hitTiles, this);
         this.playerCollider.body.collides(tileCollisionGroup);
         this.playerCollider.body.collides(collectCollisionGroup, this.collectItems, this);
@@ -148,7 +148,6 @@ State.Game.prototype = {
         
         
         //add 'things' to the world
-//        this.putObstacles();
         this.putMonsters();
         this.putMonstersBar();
         this.putCollect();
@@ -161,9 +160,6 @@ State.Game.prototype = {
         this.playerLifes = Config.game.player.lifes;
         this.updateHealth();
         
-        //DEBUG LAYER - deletar
-//        layer.debug = true;
-
         layer.resizeWorld();
 //        layer.alpha = 2;
 
@@ -409,7 +405,7 @@ State.Game.prototype = {
         this.playerCollider.body.collides(tileCollisionGroup);
         this.playerCollider.body.collides(barCollisionGroup);
         this.playerCollider.body.collides(collectCollisionGroup, this.collectItems, this);
-        this.playerCollider.body.collides(monsterCollisionGroup, this.hitMonsters, this);
+        this.playerCollider.body.collides(bossCollisionGroup, this.hitMonsters, this);
         
 		 layer.resizeWorld();
 		 
@@ -603,6 +599,7 @@ State.Game.prototype = {
                 this.swordCollider.body.setCollisionGroup(swordCollisionGroup);
                 
                 this.swordCollider.body.collides(monsterCollisionGroup, this.killMonster, this);
+                this.swordCollider.body.collides(bossCollisionGroup, this.killMonster, this);
                 
         		player.animations.play(Config.game.player.anim.attack.key);
         		
@@ -641,20 +638,20 @@ State.Game.prototype = {
         isJumping = false;
     },
 
-//    hitObstacles: function () {
-//        beInGround = this.checkIfCanJump();
-//        isJumping = false;
-//
-//    },
 
     hitMonsters: function (body1, body2) {
     	
     	var monster;
-    	if(body1.sprite.name == "monster" || body1.sprite.name == "monsterBoss") {
-    		monster = body1.sprite;
-    	}
-    	else {
-    		monster = body2.sprite;
+    	if (isGameRotate){
+    		if(body1.sprite.name == "monsterBoss")
+        		monster = body1.sprite;
+        	else
+        		monster = body2.sprite;
+    	} else {
+	    	if(body1.sprite.name == "monster")
+	    		monster = body1.sprite;
+	    	else 
+	    		monster = body2.sprite;
     	}
     	
     	var timeNow = new Date().getTime();
@@ -754,22 +751,6 @@ State.Game.prototype = {
         }, 3000).yoyo().loop().start();
         
     },
-    
-    //Create Obstacles
-//    putObstacles: function () {
-//        obstacles = this.game.add.group();
-//
-//        for (var i = 1; i <= 4; i++) {
-//            var obstacle = obstacles.create(game.world.randomX,
-//					game.world.randomY, 'obstacle' + i);
-//			game.physics.p2.enable(obstacle, true);
-//            obstacle.body.fixedRotation = true; //no circle movement 
-//            obstacle.body.kinematic = true;
-//            obstacle.body.setCollisionGroup(obstacleCollisionGroup);
-//            obstacle.body.collides([obstacleCollisionGroup,
-//					playerCollisionGroup]);
-//        }
-//    },
 
     //create monsters
     putMonsters: function () {
@@ -819,7 +800,7 @@ State.Game.prototype = {
 	},
 
 	createKinematicObj: function (obj, setCollisionGroup, otherCollisionGroup) {
-		this.game.physics.p2.enable(obj, false);
+		this.game.physics.p2.enable(obj, true);
 		obj.body.fixedRotation = true; //no circle movement 
 		obj.body.kinematic = true;
 		obj.body.setCollisionGroup(setCollisionGroup);
@@ -903,7 +884,7 @@ State.Game.prototype = {
         monster.name = 'monsterBoss'; 
         monster.animations.add('walk', [0, 1, 2, 3, 4, 5], 10, true);
         monster.play('walk');
-    	this.createKinematicObj(monster, monsterCollisionGroup, [monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
+    	this.createKinematicObj(monster, bossCollisionGroup, [bossCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
         
     },
     
@@ -969,9 +950,9 @@ State.Game.prototype = {
         this.game.physics.p2.enable(fire, false);
         fire.body.fixedRotation = true; //no circle movement 
         fire.body.kinematic = true;
-        fire.body.collideWorldBounds = true;
-        fire.body.setCollisionGroup(monsterCollisionGroup);
-        fire.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup], this.hitLight, this);
+        fire.body.collideWorldBounds = false;
+        fire.body.setCollisionGroup(bossCollisionGroup);
+        fire.body.collides([bossCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup], this.hitLight, this);
         fire.body.moveRight(300);
     },
 
@@ -984,4 +965,5 @@ State.Game.prototype = {
             body2.sprite.kill();
         }
     }
+
 };
