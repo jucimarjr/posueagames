@@ -374,7 +374,7 @@ Game.PlayerController.prototype = {
             var numParticles = Utils.random(6, 10);
             this.emitter.start(true, 400, null, numParticles);
             // Play run sound.
-            this.runSFX.play();
+            this.runSFX.play('', 0, 0.25);
         } else if (this.animState == Game.PlayerController.AnimState.JumpStart && this.currentAnim != 'jump-start') {
             // Jump start animation, run when player is starting to jump, duh.
             this.sprite.animations.play('jump-start');
