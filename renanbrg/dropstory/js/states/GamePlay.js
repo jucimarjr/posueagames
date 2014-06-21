@@ -4,7 +4,8 @@ State.GamePlay = function (game) {
 	"use strict";
 	this.game = game;
     this.map = null;
-    this.layer = null;
+    this.layer1 = null;
+    this.layer2 = null;
     this.player = null;
     this.crabs = null;
     this.shell = null;
@@ -18,7 +19,6 @@ State.GamePlay = function (game) {
     this.redSand = null;
     this.userDead = false;
     this.playershape = null;
-    
     this.dropCollisionGroup = null;
     this.crabCollisionGroup = null;
     this.layerBody = null;
@@ -28,6 +28,7 @@ State.GamePlay = function (game) {
     this.playersize = 'small'; //stores if player is small or big
     this.playerstate = 'normal'; //stores if player is normal, with sunscreen, with energy
     this.onAir = false;
+    this.hotSandTimerActivated = false;
     
     this.countCall = 0; //count how many times the collision function is called. 
 
@@ -95,14 +96,17 @@ State.GamePlay.prototype = {
 		this.map = this.game.add.tilemap('map');
 		this.map.addTilesetImage('barra_160-80', 'plataforma');
 		this.map.addTilesetImage('areiaSeca_40-40', 'areia');
-		this.map.addTilesetImage('red', 'areia_quente');
-		this.layer = this.map.createLayer('Camada de Tiles 1');
-        this.layer.resizeWorld();
+        this.map.addTilesetImage('red_40-40', 'areia_quente');
+        this.layer1 = this.map.createLayer('Camada de Tiles 1');
+        this.layer2 = this.map.createLayer('Camada de Tiles 2');
+        this.layer1.resizeWorld();
+        this.layer2.resizeWorld();
 		        
         //  Set the tiles for collision.
         //  Do this BEFORE generating the p2 bodies below.
 		//this.map.setCollisionByExclusion([0],true, this.layer);
-		this.layermain = game.physics.p2.convertTilemap(this.map, this.layer);
+        this.layermain1 = game.physics.p2.convertTilemap(this.map, this.layer1);
+        this.layermain2 = game.physics.p2.convertTilemap(this.map, this.layer2);
         this.game.physics.p2.setImpactEvents(true);
         this.game.physics.p2.updateBoundsCollisionGroup();
         
@@ -129,23 +133,21 @@ State.GamePlay.prototype = {
 		this.game.add.image(0, this.game.height-80, 'wetSand');
 		
         //setup all tiles with collisiongroups or materials
-		for (var i=0; i<this.layermain.length; i++) {
-			this.layermain[i].setCollisionGroup(this.groundCG);
-			this.layermain[i].collides([this.playerCG, this.crabCG, this.lifeDropCG, this.groundCG]);
-			this.layermain[i].setMaterial(this.groundMaterial);
+		for (var i=0; i<this.layermain1.length; i++) {
+			this.layermain1[i].setCollisionGroup(this.groundCG);
+			this.layermain1[i].collides([this.playerCG, this.crabCG, this.lifeDropCG, this.groundCG]);
+			this.layermain1[i].setMaterial(this.groundMaterial);
 		}
-
-        // red and hot sand
-        this.redSand = this.game.add.sprite(2780, this.game.height-40, 'redsand');
-        this.game.physics.p2.enableBody(this.redSand, false);
-        this.redSand.body.fixedRotation = true;
-        this.redSand.body.static = true;
-        this.redSand.body.setCollisionGroup(this.hotsandCG);
-        this.redSand.body.collides([this.playerCG, this.crabCG, this.groundCG]);
-        this.redSand.body.setMaterial(this.hotsandMaterial);
+        for (var i=0; i<this.layermain2.length; i++) {
+            this.layermain2[i].setCollisionGroup(this.hotsandCG);
+            this.layermain2[i].collides([this.playerCG, this.crabCG,
+                    this.lifeDropCG, this.seashellCG, this.groundCG,
+                    this.urchinsCG]);
+            this.layermain2[i].setMaterial(this.groundMaterial);
+        }
 
         // create player
-        this.drop.create(200, this.game.world.height-500);
+        this.drop.create(200, this.game.world.heigth-500);
         var dropSprite = this.drop.getSpriteObject();
         this.game.camera.follow(dropSprite);
         this.game.physics.p2.enableBody(dropSprite, false);
@@ -219,7 +221,7 @@ State.GamePlay.prototype = {
             this.urchins.getAt(i).animations.add('nohit', [0], 10, true);
             this.urchins.getAt(i).animations.add('hit', [1], 10, true);
             this.urchins.getAt(i).animations.play('nohit');
-            this.urchins.getAt(i).body.collides([this.playerCG, this.groundCG]);
+            this.urchins.getAt(i).body.collides([this.playerCG, this.hotsandCG]);
         }
 
         // Add the bucket
@@ -233,7 +235,7 @@ State.GamePlay.prototype = {
         this.bucket.body.collides([this.groundCG, this.playerCG]);
 
         // Tip of the straw (in the left of the bucket)
-        this.strawLeft = this.game.add.sprite(2019, 510, 'straw1');
+        this.strawLeft = this.game.add.sprite(2010, 510, 'straw1');
         this.game.physics.p2.enableBody(this.strawLeft, false);
         this.strawLeft.body.fixedRotation = true;
         this.strawLeft.body.static = true;
@@ -242,7 +244,7 @@ State.GamePlay.prototype = {
         this.playerEnteredLeftStraw = false;
 
         // Straw passing under the ground
-        this.strawUnderGround = this.game.add.sprite(2009, 520, 'dropInStraw');
+        this.strawUnderGround = this.game.add.sprite(2000, 520, 'dropInStraw');
         var strawAnimationRight =
             this.strawUnderGround.animations.add('dropInsideRight',
             [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, false);
@@ -255,7 +257,7 @@ State.GamePlay.prototype = {
         this.strawUnderGround.animations.play('strawNormal');
 
         // Tip of the straw (in the right of the bucket)
-        this.strawRight = this.game.add.sprite(2480, 510, 'straw1');
+        this.strawRight = this.game.add.sprite(2470, 510, 'straw1');
         this.game.physics.p2.enableBody(this.strawRight, false);
         this.strawRight.body.fixedRotation = true;
         this.strawRight.body.static = true;
@@ -318,6 +320,7 @@ State.GamePlay.prototype = {
         				
         this.hud.create();
         
+		//this.userDead();
 		
         // Sounds
         this.jumpSound = this.game.add.audio("jump"); 
@@ -370,11 +373,6 @@ State.GamePlay.prototype = {
     },
 	update: function () {
 		"use strict";
-		
-		if(this.userDead){ 
-		      this.restGame();  
-		   }
-		
 		this.hud.updateFPS();
 		this.handleKeyDown();
 		this.isOnAir();
@@ -396,6 +394,9 @@ State.GamePlay.prototype = {
             this.game.camera.setPosition(this.game.camera.x - 8,
                     this.game.camera.y);
         }
+//		if(this.userDead()){
+//		      this.restart();
+//		   }
     },
     playerOverDiagonalStraw: function() {
         var characterSprite = this.drop.getSpriteObject();
@@ -521,7 +522,7 @@ State.GamePlay.prototype = {
 		if (!this.touchingUp(body2)) { 
 			console.log('Matou o Player!!!!');
 			this.drop.getSpriteObject().kill();
-			this.userDead = true;
+			//this.userDead = true;
 			return true;
 		}
 		return false;
@@ -531,7 +532,6 @@ State.GamePlay.prototype = {
         var urchinSprite = body2.sprite;
         urchinSprite.animations.play('hit');
         this.drop.getSpriteObject().kill();
-        this.userDead = true;
         return true;
     },
     checkOverlapWithLifeDrop: function (body1, body2) {
@@ -553,7 +553,6 @@ State.GamePlay.prototype = {
 		if (this.countCall == 1) {
 
 			this.energy.kill();
-			this.powUpSound.play();
 			//this.drop.getSpriteObject().body.x = 1890; 
 			//this.drop.getSpriteObject().body.y = 50;
 			this.drop.getSpriteObject().body.moveUp(1500);		
@@ -572,27 +571,40 @@ State.GamePlay.prototype = {
 		} 			
 	},
 	killDrop: function (body1, body2) {
-		this.countCall++;
-		if (this.countCall == 1) {
-			console.log('moreeeeeeeeeeeeeeeeeu!!! killlDrop');
-			this.haveEnergy = true;
-			this.smokeEmitter.on = true;
-			this.smokeEmitter.start(false, 3000, 50);
-			if (this.playersize == 'big') {
-				var self = this;
-				var time = setTimeout(function(time) {
-					self.stopKillTime();
-				}, 2000);
-				this.playersize = 'small';			
-			} else if (this.playersize == 'small') {
-				this.drop.getSpriteObject().kill(); 
-				this.userDead=true;
-			} 		
-		}
-		if (this.countCall == 2) {
-			this.countCall = 0;
-		} 		
-	},
+        this.countCall++;
+        if (this.countCall == 1 && !this.hotSandTimerActivated) {
+            console.log('moreeeeeeeeeeeeeeeeeu!!! killlDrop');
+            this.hud.decreaseDropBar();
+            this.haveEnergy = true;
+            this.smokeEmitter.on = true;
+            this.smokeEmitter.start(false, 3000, 50);
+            if (this.playersize == 'big') {
+                var self = this;
+                if (this.hud.getDropCounter() == 0) {
+                    setTimeout(function(time) {
+                        self.hotSandTimerActivated = false;
+                        self.stopKillTime(time);
+                    }, 2000);
+                    this.playersize = 'small';
+                    this.hotSandTimerActivated = true;
+                } else {
+                    setTimeout(function(time) {
+                        console.log('* setTimeout called');
+                        self.hotSandTimerActivated = false;
+                        self.countCall = 0;
+                        self.stopDecreaseCounter(time);
+                    }, 2000);
+                    this.hotSandTimerActivated = true;
+                }
+            } else if (this.playersize == 'small') {
+                // TODO: restart game
+                this.drop.getSpriteObject().kill();
+            }
+        }
+        if (this.countCall == 2) {
+            this.countCall = 0;
+        }
+    },
 	updateCollisionSetup: function () {
 		this.drop.getSpriteObject().body.setCollisionGroup(this.playerCG);
 		this.drop.getSpriteObject().body.collides([this.groundCG, this.crabCG, this.strawCG,
@@ -606,14 +618,19 @@ State.GamePlay.prototype = {
 		clearTimeout(this.smokeTimer);
 		this.playerstate = 'normal';
 	},
-	stopKillTime: function(time) {		
+	stopKillTime: function(time) {
 		this.drop.getSpriteObject().body.createGroupCallback(this.hotsandCG, this.timeOverKill, this);
 		this.playershape.radius = game.physics.p2.pxm(18);
 		clearTimeout(time);
 	},
+    stopDecreaseCounter: function(time) {
+		this.drop.getSpriteObject().body.createGroupCallback(this.hotsandCG, this.killDrop, this);
+		this.drop.getSpriteObject().body.setRectangle(50, 55, 0, 0);
+		this.updateCollisionSetup();
+		clearTimeout(time);
+    },
 	timeOverKill: function () {
 		this.drop.getSpriteObject().kill();
-		this.userDead = true;
 	},
 	moveCrab: function (crab) {
 		if (crab.name == "crab1") {
@@ -639,7 +656,6 @@ State.GamePlay.prototype = {
 	},
 	crabKillDrop: function () {
 		this.drop.getSpriteObject().kill();
-		this.userDead = true;
 	},
     insideStraw: function() {
         var dropSprite = this.drop.getSpriteObject();
@@ -679,10 +695,12 @@ State.GamePlay.prototype = {
 	clickCredits: function () {
 		"use strict";
 		this.game.state.start('Credits');
-	},
-	restGame: function () {
-		"use strict";
-		this.game.state.start('GamePlay');
-		this.userDead=false;
-	},
+	}
+//	restart: function(){
+//		player.resetPosition(); 
+//        if (lifeCounter==0){
+//        	this.game.state.start('GameOver');
+//        }	
+//		this.game.state.restart();
+//	}
 };

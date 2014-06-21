@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="120" height="15" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="barra_160-80" tilewidth="40" tileheight="40">
+  <image source="images/barra_160-80.png" width="160" height="80"/>
+ </tileset>
+ <tileset firstgid="9" name="areiaSeca_40-40" tilewidth="40" tileheight="40">
+  <image source="images/areiaSeca_40-40.png" width="40" height="40"/>
+ </tileset>
+ <tileset firstgid="10" name="red_40-40" tilewidth="40" tileheight="40">
+  <image source="images/red_40-40.png" width="40" height="40"/>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="120" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt1MsOgCAMRFF8ov//w3ZL4gLSEsfmnmS2MAK1FAAAYiyW1bJZ9gT7oHVYTku1XAn2QYu5yo258lGfD/V+6tTnQ73fV2a/+5H1PV2Y33ez3/3I+p4uUd+h8k5UeqiIOg+V/7xKDxWcR7+7I/gv7je3B53LAlM=
+  </data>
+ </layer>
+ <layer name="Camada de Tiles 2" width="120" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt0cEJADAIA0Df7j+wO5SiKHeQv4kRAAAAAAAA/+WCXOzUtcv0jf77ngIB0ge9
+  </data>
+ </layer>
+</map>
