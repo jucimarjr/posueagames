@@ -40,9 +40,10 @@ Game.HUDController.prototype = {
 	decreaseLife: function (callback) {
 		this.livesCount -= 1;
 		
-		if (this.livesCount < 0)
+		if (this.livesCount < 0) {
 			callback();
-
-		this.livesLabel.text = 'x' + new String(this.livesCount);
+		} else {
+			this.livesLabel.text = 'x' + new String(this.livesCount);
+		}
 	}
 };

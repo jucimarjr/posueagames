@@ -21,7 +21,7 @@
   </data>
  </layer>
  <objectgroup name="spawn_points" width="50" height="18">
-  <object name="key-sp" gid="1" x="704" y="96"/>
+  <object name="key-sp" gid="1" x="32" y="544"/>
   <object name="player-sp" gid="2" x="672" y="160"/>
  </objectgroup>
  <objectgroup name="collision" width="50" height="18">

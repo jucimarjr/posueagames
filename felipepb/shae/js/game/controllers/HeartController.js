@@ -126,7 +126,8 @@ Game.HeartController.prototype = {
 		}
 
         if (player.currentAnim != 'dying' &&
-            player.currentAnim != Game.PlayerController.AnimState.FlyingSoul) {
+            player.currentAnim != Game.PlayerController.AnimState.FlyingSoul &&
+			this.gameState.playerLife() >= 0) {
 				
 			if (playerDistance <= HeartConsts.attackDistance) {
 	            this.pauseTweens();
@@ -158,10 +159,11 @@ Game.HeartController.prototype = {
 			
 			if (playerSprite.overlap(mySprite) && playerDistance <= HeartConsts.playerDeathDistance) {
 //				pursuitPositions.splice(pursuitPositions.length - 1, 1);
-                if (beatSprite) beatSprite.kill();
-	            player.playDeathAnimation();
-	            player.destroyBody();
-	            this.gameState.onPlayerLostLife();
+                this.gameState.onPlayerLostLife();
+				player.destroyBody();
+				player.playDeathAnimation();
+                if (beatSprite)
+				    beatSprite.kill();
 	        }
 		}
 	},

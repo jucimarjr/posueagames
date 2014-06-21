@@ -15,9 +15,11 @@ Game.GameState = function () {
 
     this.playerHasKey;
     this.stageComplete;
+	this.playerLightRadius;
 };
 
 Game.GameState.tileMapName = 'map';
+Game.GameState.currentLevel = 0;
 
 Game.GameState.prototype = {
 
@@ -32,24 +34,33 @@ Game.GameState.prototype = {
         this.createHearts();
 		this.createPlayerLight();
 		this.createHeartBeatController();
-        this.createHUD();
+		this.playerLightRadius = 0;
 		
 		var self = this;
 		Utils.fadeOutScreen(this.game,
 		                    TweensConsts.fadeFillStyle,
 							TweensConsts.fadeOutDuration * 3,
 							function () {
-								self.onFadeOutScreenAnimationCompleted();
+                                self.onFadeOutScreenAnimationCompleted();
 							});
     },
 	
 	onFadeOutScreenAnimationCompleted: function () {
 		var self = this;
-        var tween = this.game.add.tween(this.player.sprite);
-
-        tween.to(null, 1000, Phaser.Easing.Linear.None, true, 0);
-        tween.onComplete.add(function () {
-            self.player.playRespawnAnimation();
+		var pauseTween = this.game.add.tween(this);
+		var playerLightTween = this.game.add.tween(this);
+        var playerRespawnTween = this.game.add.tween(this);
+        
+		pauseTween.to(null, 500, Phaser.Easing.Linear.None, true, 0);
+		pauseTween.onComplete.add(function () {
+			playerLightTween.to({ playerLightRadius: 100 }, 500, Phaser.Easing.Quadratic.Out, true, 0);
+	        playerLightTween.onComplete.add(function () {
+	            playerRespawnTween.to(null, 1000, Phaser.Easing.Linear.None, true, 0);
+	            playerRespawnTween.onComplete.add(function () {
+					self.createHUD();
+	                self.player.playRespawnAnimation();
+	            });
+	        });
 		});
 	},
 
@@ -100,7 +111,7 @@ Game.GameState.prototype = {
 	},
 	
 	createHeartBeatController: function () {
-		this.heartBeatController = new Game.HeartBeatController(this.game);
+		this.heartBeatController = new Game.HeartBeatController(this.game, this.player.sprite);
 		this.heartBeatController.setHearts(this.hearts);
 	},
 	
@@ -184,7 +195,7 @@ Game.GameState.prototype = {
         
         context.arc(this.player.sprite.x - this.game.camera.x,
                     this.player.sprite.y - this.game.camera.y,
-                    100, 0, Math.PI * 2, true);
+                    this.playerLightRadius, 0, Math.PI * 2, true);
         
         context.fill();
         this.playerFocusLight.dirty = true;
@@ -226,7 +237,13 @@ Game.GameState.prototype = {
     onStageComplete: function () {
         console.log('Stage complete! Load next level...');
 		Game.GameState.tileMapName = 'map';           // set next tilemap here
-		this.navigate('GameState');
+		
+		var self = this;
+        var playerLightTween = this.game.add.tween(this);
+        playerLightTween.to({ playerLightRadius: 0 }, 500, Phaser.Easing.Quadratic.In, true, 0);
+        playerLightTween.onComplete.add(function () {
+            self.navigate('GameState');
+        });
     },
 	
 	navigateToGameWin: function () {
@@ -240,10 +257,15 @@ Game.GameState.prototype = {
 	navigate: function (stateName) {
 		var self = this;
         self.game.input.keyboard.onDownCallback = null;
+		self.game.input.keyboard.reset();
         Utils.fadeInScreen(this.game, TweensConsts.fadeFillStyle, TweensConsts.fadeInDuration, function () {
             self.state.start(stateName);
         });
 	},
+	
+	playerLife: function () {
+        return this.hud ? this.hud.livesCount : PlayerConsts.startingLifeTotal;
+    },
 
     onPlayerLostLife: function () {
         var self = this;
@@ -251,6 +273,12 @@ Game.GameState.prototype = {
     },
 
     onGameOver: function () {
-        this.navigateToGameLoose();
+		var self = this;
+		var pauseTween = this.game.add.tween(this);
+
+		pauseTween.to(null, 1500, Phaser.Easing.Linear.None, true, 0);
+		pauseTween.onComplete.add(function () {
+            self.navigateToGameLoose();
+		});
     }
 };
