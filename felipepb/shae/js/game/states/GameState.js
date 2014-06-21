@@ -32,9 +32,7 @@ Game.GameState.levels = [
     { name: 'level_2' },
     { name: 'level_3' }
     // Add more levels here...
-]
-Game.GameState.lightIndex;
-Game.GameState.lightAnimation = [0, 0, 0, 0, 1, 0, 1, 0, 1];
+];
 
 Game.GameState.prototype = {
 

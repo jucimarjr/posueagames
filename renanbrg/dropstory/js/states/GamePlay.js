@@ -17,6 +17,7 @@ State.GamePlay = function (game) {
     this.smokeTimer = null;
     this.redSand = null;
     this.userDead = false;
+    this.playershape = null;
     
     this.dropCollisionGroup = null;
     this.crabCollisionGroup = null;
@@ -146,15 +147,22 @@ State.GamePlay.prototype = {
         // create player
         this.drop.create(200, this.game.world.height-500);
         var dropSprite = this.drop.getSpriteObject();
-        this.game.physics.p2.enableBody(dropSprite, false);        
-        dropSprite.body.setRectangle(40, 45, 0, 0);
         this.game.camera.follow(dropSprite);
+        this.game.physics.p2.enableBody(dropSprite, false);
+		
         this.drop.configureCharacter(this.setCharacterInicialValues);
+		if (this.playersize == 'small') {
+			this.playershape = dropSprite.body.setCircle(18,0,4);
+		} else {
+			this.playershape = dropSprite.body.setCircle(26,0,4);
+		}
+        
+        dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
                 this.lifeDropCG, this.seashellCG, this.urchinsCG,
                 this.hotsandCG, this.bucketCG, this.coveredStrawCG]);
-        dropSprite.body.setMaterial(this.characterMaterial);
+        
         
         // Create sea shell
         this.seashell = this.game.add.sprite(450, this.game.world.height - 106,
@@ -535,10 +543,7 @@ State.GamePlay.prototype = {
             body2.sprite.kill();
             body2.hasCollided = true;
 			this.playersize = 'big';
-			this.drop.getSpriteObject().body.setRectangle(51, 55, 0, 0);
-			// after setRectangle, we need to setCollision again
-			this.updateCollisionSetup();
-
+			this.playershape.radius = game.physics.p2.pxm(26);
             return true;
         }
         return false;
@@ -603,9 +608,7 @@ State.GamePlay.prototype = {
 	},
 	stopKillTime: function(time) {		
 		this.drop.getSpriteObject().body.createGroupCallback(this.hotsandCG, this.timeOverKill, this);
-		this.drop.getSpriteObject().body.setRectangle(40, 45, 0, 0);
-		// after setRectangle, we need to setCollision again
-		this.updateCollisionSetup();
+		this.playershape.radius = game.physics.p2.pxm(18);
 		clearTimeout(time);
 	},
 	timeOverKill: function () {
