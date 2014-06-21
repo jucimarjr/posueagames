@@ -56,20 +56,21 @@ function HeroOfPower(game) {
 		// PEGA A ENTRADA (tecla pressionada):
 		var keyPressed = false;
 		// apenas processar movimento se estiver ativo
-		if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-			// vai para esquerda
-			this.hero.body.velocity.x = -this.walk;
-			this.hero.animations.play('walk');
-			this.hero.scale.x = -1; // espelha se antes -1
-			keyPressed = true;
-		} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-			// vai para direita
-			this.hero.body.velocity.x = this.walk;
-			this.hero.scale.x = +1; // espelha se antes 1
-			this.hero.animations.play('walk');
-			keyPressed = true;
+		if (this.active) {
+			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+				// vai para esquerda
+				this.hero.body.velocity.x = -this.walk;
+				this.hero.animations.play('walk');
+				this.hero.scale.x = -1; // espelha se antes -1
+				keyPressed = true;
+			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+				// vai para direita
+				this.hero.body.velocity.x = this.walk;
+				this.hero.scale.x = +1; // espelha se antes 1
+				this.hero.animations.play('walk');
+				keyPressed = true;
+			}
 		}
-
 		// executar a animacao para para cima
 		if (this.jumpCount > 0) {
 			this.hero.animations.play('jump');
