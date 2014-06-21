@@ -69,7 +69,7 @@ State.GamePlay.prototype = {
 			if(levelConfig.cipo.id>0){
 				this.game.physics.arcade.overlap(this.player, this.cipo, this.runCipo, null,this);
 			}
-			if(this.level == Config.finalPhase.id){
+			if(levelConfig.dardos.id>0){
 				this.shootDardo();
 				this.game.physics.arcade.overlap(this.player, this.dardos, this.die, null,this);
 			}
@@ -78,10 +78,13 @@ State.GamePlay.prototype = {
 				Config.finalPhase.lightRadius += 25;
 			}, null, this);
 			this.game.physics.arcade.overlap(this.player, this.flag, function () {
-				levelConfig.checkPoint.x = 0;
-				levelConfig.checkPoint.y = 0;
+				Config.levelConfig.checkPoint.x = 0;
+				Config.levelConfig.checkPoint.y = 0;
 				phaseSound.stop();
 				Config.levelId.level = ++this.level;
+				this.player.alpha = 0;
+				this.player.body.x = 0;
+				this.player.body.y = 0;
 				this.game.state.start('GamePlay');
 			}, null, this);		
 		
@@ -146,25 +149,24 @@ State.GamePlay.prototype = {
 									}, this);	*/
 		this.player.animations.add('jump',[15,16,17,18,19],9,false);
 		this.game.physics.enable(this.player);
+		this.setPlayerPosition();
 		this.player.body.collideWorldBounds = true;
 		this.player.body.setSize(25, 60, 0, 0);
 		this.player.alpha = 1;
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 		this.player.body.gravity.y = 1000;
-
-		this.setPlayerPosition();
 	},
 
 	setPlayerPosition: function(){
 		var x, y;
-		if(levelConfig.checkPoint.x > 0){
+		if(Config.levelConfig.checkPoint.x > 0){
 			x = levelConfig.checkPoint.x;
 			y = levelConfig.checkPoint.y;
 		}
 		else{
-			x = levelConfig.player.posX;
-			y = levelConfig.player.posY;
+			x = Config.levelConfig.player.posX;
+			y = Config.levelConfig.player.posY;
 		}
 
 		/*this.game.camera.x = x;
@@ -519,10 +521,12 @@ State.GamePlay.prototype = {
     render: function (){
     	/*game.debug.text(this.game.world.bounds.width,32,32);
     	game.debug.text(this.game.world.bounds.height,32,64);*/
-    	/*game.debug.text(this.player.body.x,32,32);
-    	game.debug.text(this.player.body.y,32,64);
+    	game.debug.text(this.player.body.x,32,32);
+    	//game.debug.text(this.player.body.y,32,64);
     	game.debug.text(levelConfig.checkPoint.x,200,32);
-    	game.debug.text(levelConfig.checkPoint.y,200,64);*/
+    	game.debug.text(levelConfig.player.posX,400,32);
+    	//game.debug.text(levelConfig.checkPoint.y,200,64);
+
     	//game.debug.body(this.player);
     	//game.debug.body(this.thorns);
     	//game.debug.text(frameClimbing,32,32);
