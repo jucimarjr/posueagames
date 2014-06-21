@@ -55,7 +55,7 @@ Config.menu = {
 	y: 0,
 	buttonPlay: {
 		dir: 'assets/spritesheets/buttons/Play_220-75.png',
-		x: Config.global.screen.width * 0.25,
+		x: Config.global.screen.width * 0.3,
 		y: Config.global.screen.height * 0.7,
 		width: 220,
 		height: 75,
@@ -77,7 +77,7 @@ Config.menu = {
 	},
 	buttonCredits: {
 		dir: 'assets/spritesheets/buttons/Creditis_220-75.png',
-		x: Config.global.screen.width * 0.75,
+		x: Config.global.screen.width * 0.7,
 		y: Config.global.screen.height * 0.7,
 		width: 220,
 		height: 75,
@@ -135,7 +135,7 @@ Config.levelId = {
 };
 
 Config.finalPhase = {
-	lightRadius: 150,
+	lightRadius: 0,
 	id: 7
 };
 
