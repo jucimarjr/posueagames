@@ -201,6 +201,7 @@ Config.game = {
 		// attack: 7 ~ 9
 		damageCooldown: 2000,
 		attackCooldown: 200,
+		alphaCooldown:400,
 		gravityY: 2000,
 		forceY: 1000,
 		jumpForce: 800,

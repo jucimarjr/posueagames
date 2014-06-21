@@ -20,6 +20,7 @@ var isMoveCamera;
 var STATE_PLAY = 0;
 var STATE_PAUSED = 1;
 var STATE_GAMEOVER = 2;
+var timerShine, isBlinkPlayer;
 
 State.Game.prototype = {
     preload: function () {
@@ -38,6 +39,7 @@ State.Game.prototype = {
         contFrameGif = 0;
         timerMonst = 0;
         timerBV = 0;
+        isBlinkPlayer = false;
     },
     create: function () {
         "use strict";
@@ -199,7 +201,9 @@ State.Game.prototype = {
 
     update: function () {
         "use strict";
-        
+        if(isBlinkPlayer){
+        	player.visible = !player.visible;
+        }
         //console.log("--"+ this.playerCollider.body.x +","+ this.playerCollider.body.y);
         this.moveMonster(monsters, 280);
         this.moveBarVertical(verticalBar1, 680);
@@ -663,7 +667,14 @@ State.Game.prototype = {
         isJumping = false;
     },
 
-
+    shinePlayer: function () {
+    	isBlinkPlayer = true;
+    },
+    
+    normalPlayer: function () {
+    	isBlinkPlayer = false;
+    	player.visible;
+    },
     hitMonsters: function (body1, body2) {
     	
     	var monster;
@@ -679,6 +690,7 @@ State.Game.prototype = {
 	    		monster = body2.sprite;
     	}
     	
+    	
     	var timeNow = new Date().getTime();
     	
     	if(timeNow >= this.timeImune) { // check if player is time immune
@@ -689,6 +701,14 @@ State.Game.prototype = {
 	    	
 	    	this.timeImune = timeNow + Config.game.player.damageCooldown;
 	    	
+	    	if(!isBlinkPlayer && this.playerLifes > 0){
+		    	timerShine = this.game.time.create(false);
+		    	timerShine.start();
+	
+		    	timerShine.onComplete.add(this.normalPlayer, this);
+	
+		    	timerShine.repeat(1, 61, this.shinePlayer, this);
+	    	}
 	    	// move player away
 	    	if(this.playerCollider.body.x < monster.body.x) {
 	    		this.playerCollider.body.force.x = -2000;
