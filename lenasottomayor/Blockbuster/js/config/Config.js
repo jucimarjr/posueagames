@@ -206,6 +206,7 @@ Config.icon = {
 Config.player = {
 	dir: 'assets/spritesheets/Oscar_spritesheet_900-95-18.png',
 	jump: 575,
+	jumpRun: 600,
 	speed: 175,
 	run: 300,
 	height: 95,

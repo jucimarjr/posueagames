@@ -117,29 +117,12 @@ Player.prototype = {
 			if (this.jump.isDown && this.spritePlayer.body.onFloor())
 			{
 				this.jumpSound.play();
-				this.spritePlayer.body.velocity.y = -Config.player.jump;
+				if (this.run.isDown) {
+					this.spritePlayer.body.velocity.y = -Config.player.jumpRun;
+				} else {
+					this.spritePlayer.body.velocity.y = -Config.player.jump;
+				}
 			}
-//			
-//			if (this.run.isDown && this.spritePlayer.body.onFloor())
-//			{
-//				if(this.cursors.left.isDown) {
-//					this.spritePlayer.body.velocity.x = -Config.player.run;
-//					this.spritePlayer.scale.x = -1;
-//					if(this.gold){
-//						this.spritePlayer.animations.play('run-gold');
-//					} else {
-//						this.spritePlayer.animations.play('run');
-//					}
-//				} else if(this.cursors.right.isDown) {
-//					this.spritePlayer.body.velocity.x = Config.player.run;
-//					this.spritePlayer.scale.x = 1;
-//					if(this.gold){
-//						this.spritePlayer.animations.play('run-gold');
-//					} else {
-//						this.spritePlayer.animations.play('run');
-//					}
-//				}
-//			}
 		}
 	},
 	
