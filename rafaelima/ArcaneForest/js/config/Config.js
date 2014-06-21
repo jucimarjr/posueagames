@@ -78,7 +78,11 @@ Config.story = {
 //Animation fall
 Config.animationFall = {
 	fallGif: [],
-	dir: Config.images+'/gif_fall/screen_rotate_000'
+	dir: Config.images+'/gif_fall/giro_da_tela_000',
+	xCameraFirstWorld: 2120,
+	yCameraFirstWorld: 342.2,
+	speedCamera: 10,
+	xCamera: 1700
 };
 
 //Play
@@ -111,7 +115,6 @@ Config.game = {
 		height: 48,
 		//posicao depois das barras verticais
 //		x: 3146,
-//		x: 3360,
 //		y: 349,
 		//posicao inicial
 		x: 70,
@@ -291,18 +294,22 @@ Config.game = {
 	verticalbar:{
 		key: 'verticalBar',
 		dir: Config.images+'/verticalbar_72-252.png',
-		x: [3500, 3650, 3750, 3855],
+		x: [3460, 3610, 3750, 3835],
 		y: [91, 91, 91, 91],
 		collider: {
 			key: 'verticalBarCollider',
 			dir: Config.images+'/verticalBarDieCollider-144_20.png',
-			x: [3428, 3578, 3678, 3783],
+			x: [3388, 3538, 3678, 3763],
 			y: [490, 490, 490, 490],
 		}
 	},
 	barRotate:{
+		x: 1443, 
+		y: 455
+	},
+	barRotate2:{
 		x: 1693, 
-		y: 475
+		y: 415
 	},
 	transparentwall:{
 		dir: Config.images+'/transparentwall_10-540.png',

@@ -246,3 +246,23 @@ Config.fruit = {
 		frame : 2
 	}
 };
+
+// Ounce
+
+Config.ounce = {
+	sprite : {
+		src : 'assets/spritesheets/ounce.png',
+		width : 225,
+		height: 122
+	}
+};
+
+// Ant
+
+Config.ant = {
+	sprite : {
+		src : 'assets/spritesheets/ant.png',
+		width : 72,
+		height: 48
+	}
+};

@@ -44,15 +44,16 @@ Curumim.Score.prototype =
 		this.txtBullets.text = pad(this.numBullets, 2);
 	},
 
-	addLife: function()
+	updateLife: function(value)
 	{
-		var text = this.game.add.text(Config.score.lifes.txt.x + 30, Config.score.lifes.txt.y, '+1', Config.score.lifes.txt.styleBig);		
+		var text = this.game.add.text(Config.score.lifes.txt.x + 30, Config.score.lifes.txt.y, 
+			value > 0 ? '+' + value : value , Config.score.lifes.txt.styleBig);		
 		text.fixedToCamera = true;
 
 		var tween = this.game.add.tween(text);
 
 	 	tween.onComplete.add(function() {
-			this.numLifes++;
+			this.numLifes += value;
 			text.destroy();
 	 	}, this);
 

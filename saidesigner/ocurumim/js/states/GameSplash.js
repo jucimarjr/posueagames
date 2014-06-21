@@ -49,6 +49,10 @@ State.GameSplash.prototype = {
 
 		this.game.load.spritesheet('fruits', Config.fruit.small.src, Config.fruit.small.width, Config.fruit.small.height);
 		this.game.load.spritesheet('fruitsBig', Config.fruit.big.src, Config.fruit.big.width, Config.fruit.big.height);
+
+		this.game.load.spritesheet('ounce', Config.ounce.sprite.src, Config.ounce.sprite.width, Config.ounce.sprite.height);
+
+		this.game.load.spritesheet('ant', Config.ant.sprite.src, Config.ant.sprite.width, Config.ant.sprite.height);
 	},
 	create: function () {
 		"use strict";

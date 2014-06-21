@@ -53,13 +53,17 @@ Game.HeartController.prototype = {
 		
 		if (value) {
 			this.resumeTweens();
+			this.sprite.animations.paused = false;
 		} else {
 			this.pauseTweens();
+			this.sprite.animations.paused = true;
 		}
 	},
 	
 	playBeat: function () {
-		if (!this._enabled || this.pursuitPositions.length != 0) {
+		if (!this._enabled ||
+		    this.pursuitPositions.length != 0 ||
+			Phaser.Point.distance(this.player.sprite, this.sprite) > HeartConsts.minimumBeatDistance) {
 			return;
 		}
 		
@@ -109,7 +113,7 @@ Game.HeartController.prototype = {
 		if (!this._enabled) {
 			return;
 		}
-		
+
 		var mySprite = this.sprite;
 		var beatSprite = this.beatSprite;
 		var player = this.player;
@@ -123,77 +127,59 @@ Game.HeartController.prototype = {
 			beatSprite.frameName = mySprite.frameName;
 		}
 
-		if (playerDistance <= HeartConsts.attackDistance) {
-			this.pauseTweens();
+		var isFlyingSoulAnimationPlaying = player.currentAnim == Game.PlayerController.AnimState.FlyingSoul;
 
-			if (pursuitPositions.length == 0) {
-//				console.log('length zero');
-				pursuitPositions.push({
-					x: mySprite.x,
-					y: mySprite.y
-				});
-			}
+        if (player.currentAnim != 'dying' && this.gameState.playerLife() >= 0) {
+			if (playerDistance <= HeartConsts.attackDistance && !isFlyingSoulAnimationPlaying) {
+	            this.pauseTweens();
+				this.playFlyAnimation();
 
-		    this.advanceSpriteToPosition(mySprite, playerSprite);
-		} else {
-			if (pursuitPositions.length > 0) {
-				var position = pursuitPositions[pursuitPositions.length - 1];
-				this.advanceSpriteToPosition(mySprite, position);
+	            if (pursuitPositions.length == 0) {
+	                pursuitPositions.push({
+	                    x: mySprite.x,
+	                    y: mySprite.y
+	                });
+	            }
 
-				if (mySprite.x == position.x && mySprite.y == position.y) {
-					pursuitPositions.splice(pursuitPositions.length - 1, 1);
-//					console.log('clear length: ' + pursuitPositions.length);
-				}
-
-//				pursuitPositions.splice(pursuitPositions.length - 1, 1);
-//				mySprite.x = position.x;
-//				mySprite.y = position.y;
-			} else {
-				this.resumeTweens();
-			}
-		}
-		
-		if (player.currentAnim != 'dying' && playerSprite.overlap(mySprite) && 
-			playerDistance <= HeartConsts.playerDeathDistance) {
-			
-			// console.log('call onPlayerLostLife');
-			player.playDeathAnimation();
-            player.destroyBody();
-            this.gameState.onPlayerLostLife();
-		}
-	},
+	            Utils.advanceSpriteToPosition(mySprite, playerSprite, HeartConsts.pursuitVelocity);
+	        } else {
+	            if (pursuitPositions.length > 0) {
+	                var position = pursuitPositions[pursuitPositions.length - 1];
+	                Utils.advanceSpriteToPosition(mySprite, position, HeartConsts.pursuitVelocity);
 	
-	advanceSpriteToPosition: function (sprite, position) {
-		if (sprite.x > position.x) {
-            sprite.x = Utils.clamp(sprite.x - HeartConsts.pursuitVelocity,
-                                   position.x,
-                                   sprite.x);
-        } else {
-            sprite.x = Utils.clamp(sprite.x + HeartConsts.pursuitVelocity,
-                                   sprite.x,
-                                   position.x);
-        }
-        if (sprite.y > position.y) {
-            sprite.y = Utils.clamp(sprite.y - HeartConsts.pursuitVelocity,
-                                   position.y,
-                                   sprite.y);
-        } else {
-            sprite.y = Utils.clamp(sprite.y + HeartConsts.pursuitVelocity,
-                                   sprite.y,
-                                   position.y);
-        }
+	                if (mySprite.x == position.x && mySprite.y == position.y) {
+	                    pursuitPositions.splice(pursuitPositions.length - 1, 1);
+	                }
+
+	//              pursuitPositions.splice(pursuitPositions.length - 1, 1);
+	//              mySprite.x = position.x;
+	//              mySprite.y = position.y;
+	            } else {
+	                this.resumeTweens();
+	            }
+	        }
+			
+			if (!isFlyingSoulAnimationPlaying && playerSprite.overlap(mySprite) && playerDistance <= HeartConsts.playerDeathDistance) {
+//				pursuitPositions.splice(pursuitPositions.length - 1, 1);
+                this.gameState.onPlayerLostLife();
+				player.destroyBody();
+				player.playDeathAnimation();
+                if (beatSprite)
+				    beatSprite.kill();
+	        }
+		}
 	},
 	
 	resumeTweens: function () {
 		var tweens = this.tweens;
 		var length = tweens.length;
 		for (var i = 0; i < length; i++) {
-			if (!tweens[i].isRunning) {
+			if (tweens[i]._paused) {
 				tweens[i].resume();
 			}
 		}
 		
-		if (this.beatSpriteTween && !this.beatSpriteTween.isRunning) {
+		if (this.beatSpriteTween && this.beatSpriteTween._paused) {
 			this.beatSpriteTween.resume();
 		}
 	},
@@ -202,15 +188,13 @@ Game.HeartController.prototype = {
 		var tweens = this.tweens;
         var length = tweens.length;
         for (var i = 0; i < length; i++) {
-            if (tweens[i].isRunning) {
+            if (!tweens[i]._paused) {
 				tweens[i].pause();
-				tweens[i].isRunning = false;
 			}
         }
 
-		if (this.beatSpriteTween && this.beatSpriteTween.isRunning) {
+		if (this.beatSpriteTween && !this.beatSpriteTween._paused) {
 			this.beatSpriteTween.pause();
-			this.beatSpriteTween.isRunning = false;
 		}
 	},
 
@@ -251,6 +235,9 @@ Game.HeartController.prototype = {
 											 new Phaser.Point(previousWaypoint[0], previousWaypoint[1]));
 		var animTime = (HeartConsts.flightSpeed * distance) / 10;
 		
+		for (var i = 0; i < this.tweens.length; i++) {
+            this.tweens[i].stop();
+        }
 		Utils.clearArray(this.tweens);
 
 		var flyTween = this.game.add.tween(this.sprite);
@@ -273,12 +260,16 @@ Game.HeartController.prototype = {
 	},
 
 	playIdleAnimation: function () {
-		this.sprite.animations.play('idle');
-		this.currentAnimation = 'idle';
+		if (this.currentAnimation != 'idle') {
+			this.sprite.animations.play('idle');
+            this.currentAnimation = 'idle';
+		}
 	},
 
 	playFlyAnimation: function () {
-		this.sprite.animations.play('fly');
-		this.currentAnimation = 'fly';
+		if (this.currentAnimation != 'fly') {
+			this.sprite.animations.play('fly');
+            this.currentAnimation = 'fly';
+		}
 	}
 };

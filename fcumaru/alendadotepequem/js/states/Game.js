@@ -19,11 +19,10 @@ var timerSecond = 0;
 
 State.Game.prototype = {
 	preload : function() {
-		this.game.load.tilemap('mapa', 'assets/mapa2.json', null,
+		this.game.load.tilemap('mapa', 'assets/mapa.json', null,
 				Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('fundo', 'assets/bg_tepequem_960x1800.png');
-		this.game.load.image('black', 'assets/black.png');
-		this.game.load.image('white', 'assets/white.png');
+		this.game.load.image('map', 'assets/map.png');
 
 		this.game.load.image('clouds', 'assets/nuvem.png');
 		this.game.load.image('faiscas', 'assets/efeito-faisca.png');
@@ -38,21 +37,20 @@ State.Game.prototype = {
 		"use strict";
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 800;
-
-		// var bg = this.game.add.tileSprite(0, 1000, 960, 1800, 'fundo');
-		// bg.fixedToCamera = false;
-		this.game.stage.backgroundColor = "#ffff99";
-
+		
+		this.bg = game.add.tileSprite(0,-600,2000,1800,'fundo');
+		this.bg.fixedToCamera = true;
+		
 		map = this.game.add.tilemap('mapa');
 
-		map.addTilesetImage('black', 'black');
-		map.addTilesetImage('white', 'white');
+		map.addTilesetImage('map', 'map');
 
-		this.layer = map.createLayer('Stage');
+		
+
+		this.layer = map.createLayer('map');
+
 		this.layer.resizeWorld(); // seta o mundo com as altera��es feitas
-		map.setCollisionBetween(1, 1, true, 0); // 0 espaco
-
-		// var this.layer2 = map.createLayer('Movable objects');
+		map.setCollisionBetween(1, 22, true, 0); // 0 espaco
 
 		// entrada
 		this.entrada = this.game.add.image(GOAL_X, GOAL_Y, 'entrada');
@@ -61,7 +59,7 @@ State.Game.prototype = {
 		this.clouds = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
 				game.cache.getImage('clouds').height, 'clouds');
 		this.clouds.autoScroll(-30, 0);
-
+		
 		// faisca
 		this.faisca = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
 				game.cache.getImage('faiscas').height, 'faiscas');
@@ -94,6 +92,7 @@ State.Game.prototype = {
 			this.game.state.start('GameOver');
 
 		}
+		
 	},
 
 	render : function() {

@@ -1,7 +1,5 @@
 Game.KeyController = function (game, x, y) {
-	Phaser.Sprite.call(this, game, x, y + 2, 'main_sprite_atlas', 'key_1_42-38.png');
-
-	this.anchor.setTo(0.0, 1.0);
+	Phaser.Sprite.call(this, game, x, y, 'main_sprite_atlas', 'key_1_42-38.png');
 
 	// Create idle animation
     var idleAnimFrames = new Array();
@@ -12,14 +10,14 @@ Game.KeyController = function (game, x, y) {
     this.animations.add('idle', idleAnimFrames, 10, true);
     this.animations.play('idle');
 
-    this.flyTween = game.add.tween(this);
-    this.flyTween.to({ y: y - 4 }, 500, Phaser.Easing.Cubic.Out, true, 0, Number.MAX_VALUE, true);
-
     this.anchor.setTo(0.5, 0.5);
-    this.x += this.width / 2.0;
-    this.y -= this.width / 2.0;
+    this.position.x += this.width / 2.0;
+    this.position.y -= this.height / 2.0;
 
-    this.emitter = game.add.emitter(x, y, 10);
+    this.flyTween = game.add.tween(this);
+    this.flyTween.to({ y: this.position.y - 4 }, 500, Phaser.Easing.Cubic.Out, true, 0, Number.MAX_VALUE, true);
+
+    this.emitter = game.add.emitter(this.position.x, this.position.y, 10);
     this.emitter.makeParticles('spark_particle_medium');
     this.emitter.width = 20;
     this.emitter.height = 30;
@@ -31,6 +29,8 @@ Game.KeyController = function (game, x, y) {
     this.emitter.gravity = -PhysicsConsts.gravity;
     this.emitter.setScale(0.0, 1.0, 0.0, 1.0, 1000, Phaser.Easing.Cubic.In, true);
     this.emitter.start(false, 1000, 250);
+
+    this.collectedSFX = game.add.audio('key_collected');
 };
 
 Game.KeyController.prototype = Object.create(Phaser.Sprite.prototype);
@@ -40,8 +40,8 @@ Game.KeyController.prototype.update = function () {
 	if (PhysicsConsts.debugDraw && this.body)
         this.game.debug.body(this);
 
-    this.emitter.x = this.x;
-    this.emitter.y = this.y;
+    this.emitter.x = this.position.x;
+    this.emitter.y = this.position.y;
 };
 
 Game.KeyController.prototype.onCollected = function (playerSprite) {
@@ -49,6 +49,7 @@ Game.KeyController.prototype.onCollected = function (playerSprite) {
 	var collectedAnim = this.game.add.tween(this.scale);
 	collectedAnim.to({ x: 0, y: 0 }, 500, Phaser.Easing.Cubic.Out, true);
 	collectedAnim.onComplete.add(this.onCollectedAnimComplete, this);
+    this.collectedSFX.play('', 0, 0.25);
 }
 
 Game.KeyController.prototype.onCollectedAnimComplete = function () {

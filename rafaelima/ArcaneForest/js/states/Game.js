@@ -10,7 +10,8 @@ var cursors, attackButton, pauseButton;
 var bg1, bg2, bg3, bg4, bg5, bg6;
 var bar, bar2;
 var previousX, previousY;
-var playerCollisionGroup, obstacleCollisionGroup, monsterCollisionGroup, tileCollisionGroup, collectCollisionGroup, barCollisionGroup, swordCollisionGroup, verticalBarDieCollisionGroup;
+var playerCollisionGroup, bossCollisionGroup, monsterCollisionGroup, tileCollisionGroup;
+var collectCollisionGroup, barCollisionGroup, swordCollisionGroup, verticalBarDieCollisionGroup;
 var isJumping, beInGround, yBeforeJump;
 var verticalBar1, verticalBar2, verticalBar3, verticalBar4;
 var timeCheck;
@@ -63,7 +64,7 @@ State.Game.prototype = {
         //collision groups
         //start collision groups
         playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
-        obstacleCollisionGroup = this.game.physics.p2.createCollisionGroup();
+        bossCollisionGroup = this.game.physics.p2.createCollisionGroup();
         monsterCollisionGroup = this.game.physics.p2.createCollisionGroup();
         tileCollisionGroup = this.game.physics.p2.createCollisionGroup();
         collectCollisionGroup = this.game.physics.p2.createCollisionGroup();
@@ -139,7 +140,6 @@ State.Game.prototype = {
         
         //collide
         this.playerCollider.body.collides(monsterCollisionGroup, this.hitMonsters, this);
-        this.playerCollider.body.collides(obstacleCollisionGroup, this.hitObstacles, this);
         //player.body.collides(tileCollisionGroup, this.hitTiles, this);
         this.playerCollider.body.collides(tileCollisionGroup);
         this.playerCollider.body.collides(collectCollisionGroup, this.collectItems, this);
@@ -148,7 +148,6 @@ State.Game.prototype = {
         
         
         //add 'things' to the world
-        this.putObstacles();
         this.putMonsters();
         this.putMonstersBar();
         this.putCollect();
@@ -161,9 +160,6 @@ State.Game.prototype = {
         this.playerLifes = Config.game.player.lifes;
         this.updateHealth();
         
-        //DEBUG LAYER - deletar
-//        layer.debug = true;
-
         layer.resizeWorld();
 //        layer.alpha = 2;
 
@@ -174,17 +170,12 @@ State.Game.prototype = {
         pauseButton.onDown.add(this.pauseGame, this);
         
         game.time.events.add(Phaser.Timer.SECOND * 1, this.beginMoving , this, verticalBar3);
-        game.time.events.add(Phaser.Timer.SECOND * 5, this.beginMoving , this, verticalBar2);
-        game.time.events.add(Phaser.Timer.SECOND * 7, this.beginMoving , this, verticalBar4);
+        game.time.events.add(Phaser.Timer.SECOND * 2, this.beginMoving , this, verticalBar2);
+        game.time.events.add(Phaser.Timer.SECOND * 3, this.beginMoving , this, verticalBar4);
 
         
     },
 
-    beginMoving: function (obj) {
-    	obj.flag = true;
-	},
-	
-	
     pauseGame: function () {
         this.game.paused = !this.game.paused;
         
@@ -195,11 +186,11 @@ State.Game.prototype = {
         "use strict";
         
         //console.log("--"+ this.playerCollider.body.x +","+ this.playerCollider.body.y);
-        this.moveMonster(monsters, 380);
-        this.moveBarVertical(verticalBar1, 750);
-        this.moveBarVertical(verticalBar2, 750);
-        this.moveBarVertical(verticalBar3, 750);
-        this.moveBarVertical(verticalBar4, 750);
+        this.moveMonster(monsters, 280);
+        this.moveBarVertical(verticalBar1, 680);
+        this.moveBarVertical(verticalBar2, 680);
+        this.moveBarVertical(verticalBar3, 680);
+        this.moveBarVertical(verticalBar4, 680);
 
         if(this.gameState == STATE_PLAY) {
         	
@@ -295,35 +286,38 @@ State.Game.prototype = {
             
         
         }else if(this.gameState == STATE_PAUSED) {
-            if(isMoveCamera){
-            	if(!isGameRotate){
-            		player.animations.stop();
-            		player.frame = 6;
-            		if(this.game.camera.x>2120){
-            			
-            			if(player.body.y < 342.2){
-            				player.body.y +=10;
-            			}else{
-            				player.body.y = 342.2;
-            			}
-            			this.game.camera.follow(null);
-            			this.game.camera.x -= 10;
-            		}else{
-            			this.fallPlayer();
-            		}
-            	}
-//            	else{
-//            		this.game.camera.follow(null);
-//        			this.game.camera.x = 1700;
-//        			this.game.camera.y = 50;
-//        			
-//            	}
-	        		
-	        }
+        	this.checkCamera();
         }else{// end if gamestate == play
         	
         }
         
+    },
+    
+    checkCamera: function(){
+    	if(isMoveCamera){
+    		if(!isGameRotate){
+    			player.animations.stop();
+    			player.frame = 6;
+    			if(this.game.camera.x > Config.animationFall.xCameraFirstWorld){
+    				if(player.body.y < Config.animationFall.yCameraFirstWorld){
+    					player.body.y +=Config.animationFall.speedCamera;
+    				}else{
+    					player.body.y = Config.animationFall.yCameraFirstWorld;
+    				}
+    				this.game.camera.follow(null);
+    				this.game.camera.x -= Config.animationFall.speedCamera;
+    			}else{
+    				this.fallPlayer();
+    			}
+    		}
+    	}else{
+    		if(this.game.camera.x < 1854){
+    			this.game.camera.x += 4;
+    		}else{
+    			this.gameState = STATE_PLAY;
+    			this.game.camera.follow(this.playerCollider);
+    		}
+    	}
     },
     
     updateHandleBars: function() {
@@ -359,47 +353,6 @@ State.Game.prototype = {
         "use strict";
     },
     
-    putMonstersBar: function () {
-        "use strict";
-		
-    },
-	
-	moveMonster: function (obj, velocity) {
-		"use strict";
-			timerMonst++;
-			if(timerMonst >= 26 ){
-				obj.forEach(function(objIntern){
-					objIntern.body.velocity.x = velocity;
-					objIntern.scale.x = -1;
-				});
-				if(timerMonst >= 50){timerMonst = 0;}
-			}else {
-				obj.forEach(function(objIntern){
-					objIntern.body.velocity.x = -velocity;
-					objIntern.scale.x = 1;
-				});
-			}
-	},
-	moveBarVertical: function (obj, velocity) {
-		"use strict";
-		if(obj.flag) {
-			
-			obj.timerBV++;
-			
-			if(obj.timerBV >= 21) {
-				
-				obj.body.velocity.y = -velocity;
-				
-				if(obj.timerBV >= 40) {
-					obj.timerBV = 0;
-				}
-			}
-			else {
-				obj.body.velocity.y = velocity;
-			}
-		}
-	},
-    
     gameRotate: function () {
         "use strict";
 		 isGameRotate = true;
@@ -408,7 +361,7 @@ State.Game.prototype = {
 		 bar2.kill();
 		 monsters.removeAll();
 		 collects.removeAll();
-		 obstacles.removeAll();
+//		 obstacles.removeAll();
 
 		 this.putBarRotate();
 		 
@@ -447,32 +400,36 @@ State.Game.prototype = {
         this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
         this.playerCollider.body.fixedRotation = true;
-        this.game.camera.follow(this.playerCollider);
         
         this.playerCollider.body.setCollisionGroup(playerCollisionGroup);
         this.playerCollider.body.collides(tileCollisionGroup);
         this.playerCollider.body.collides(barCollisionGroup);
         this.playerCollider.body.collides(collectCollisionGroup, this.collectItems, this);
-        this.playerCollider.body.collides(monsterCollisionGroup, this.hitMonsters, this);
+        this.playerCollider.body.collides(bossCollisionGroup, this.hitMonsters, this);
         
 		 layer.resizeWorld();
-//		 layer.alpha = 2;
 		 
 		 this.updateHealth();
 		 this.updateItems();
+		 this.putCollectRotate();
 		 this.putBigBoss();
          this.timeCheck();
          
-         this.playerCollider.body.force.y = Config.game.player.forceY;
          player.body.x = this.playerCollider.body.x + this.offsetX;
          player.body.y = this.playerCollider.body.y + this.offsetY;
-         this.gameState = STATE_PLAY;
+         this.game.camera.follow(null);
+         this.game.camera.x = Config.animationFall.xCamera;
+         isMoveCamera = false;
     },
     
     putBarRotate: function(){
     	bar = this.game.add.sprite(Config.game.barRotate.x, Config.game.barRotate.y, 'bar');
     	this.createKinematicObj(bar, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
-    	this.game.add.tween(bar.body.velocity).to({x: '-100'}, 15000).to({x: '+100'}, 15000).yoyo().loop().start();
+    	this.game.add.tween(bar.body.velocity).to({x: '-100'}, 7000).to({x: '+100'}, 7000).yoyo().loop().start();
+    	
+    	bar2 = this.game.add.sprite(Config.game.barRotate2.x, Config.game.barRotate2.y, 'bar');
+    	this.createKinematicObj(bar2, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
+    	this.game.add.tween(bar2.body.velocity).to({x: '-200'}, 3000).to({x: '+200'}, 3000).yoyo().loop().start();
     },
     
     fallPlayer: function(){
@@ -494,8 +451,8 @@ State.Game.prototype = {
         "use strict";
         //DEBUG
 //		this.game.debug.text(timerBV, 32, 32);
-		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
-//        this.game.debug.cameraInfo(game.camera, 32, 32);
+//		this.game.debug.spriteInfo(this.playerCollider, 32, 32);
+//		this.game.debug.cameraInfo(game.camera, 32, 32);
     },
 
     //collect item (diamond and key)
@@ -510,20 +467,25 @@ State.Game.prototype = {
             console.log(varPlayer.data.id, collect.data.id);
             collect.sprite.kill();
             itemsTaken++;
-            if (itemsTaken > 0) {
-                var fixedItem = collect.sprite.reset(0, 0, 1);
-                fixedItem.fixedToCamera = true;
-                if(varPlayer.sprite.name == 'key' || collect.sprite.name == 'key'){
-                	fixedItem.cameraOffset.setTo(856, 20);
-                	itemsTaken--;
-                }else {
-                	fixedItem.cameraOffset.setTo(856 + (24 * itemsTaken), 20);
-                }
-                flagId = true;
+            if(!isGameRotate){
+	            if (itemsTaken > 0) {
+	                var fixedItem = collect.sprite.reset(0, 0, 1);
+	                fixedItem.fixedToCamera = true;
+	                if(varPlayer.sprite.name == 'key' || collect.sprite.name == 'key'){
+	                	fixedItem.cameraOffset.setTo(856, 20);
+	                	itemsTaken--;
+	                }else {
+	                		fixedItem.cameraOffset.setTo(856 + (24 * itemsTaken), 20);
+	                }
+	                flagId = true;
+	            }
             }
         }
         if ((collect.data.id == idPlayer) && flagId) {
             flagId = false;
+        }
+        if(isGameRotate){
+        	this.updateItems();
         }
     },
     
@@ -552,8 +514,8 @@ State.Game.prototype = {
             		fixedItem.fixedToCamera = true;
             		if(fixedItem.name == 'key'){
             			fixedItem.cameraOffset.setTo(856, 20);
-            		}else if(i==0){
-            			fixedItem.cameraOffset.setTo(880, 20);
+//            		}else if(i==0){
+//            			fixedItem.cameraOffset.setTo(880, 15);
             		}else{
             			fixedItem.cameraOffset.setTo(856 + (24 * i), 20);
             		}
@@ -647,6 +609,7 @@ State.Game.prototype = {
                 this.swordCollider.body.setCollisionGroup(swordCollisionGroup);
                 
                 this.swordCollider.body.collides(monsterCollisionGroup, this.killMonster, this);
+                this.swordCollider.body.collides(bossCollisionGroup, this.killMonster, this);
                 
         		player.animations.play(Config.game.player.anim.attack.key);
         		
@@ -668,10 +631,10 @@ State.Game.prototype = {
     
     killMonster: function(body1, body2) {
     	
-    	if(body1.sprite.name == 'monster') {
+    	if(body1.sprite.name == 'monster'|| body1.sprite.name == 'monsterBoss') {
     		body1.sprite.kill();
     	}
-    	else if(body2.sprite.name == 'monster') {
+    	else if(body2.sprite.name == 'monster'|| body2.sprite.name == 'monsterBoss') {
     		body2.sprite.kill();
     	}
     	
@@ -685,20 +648,20 @@ State.Game.prototype = {
         isJumping = false;
     },
 
-    hitObstacles: function () {
-        beInGround = this.checkIfCanJump();
-        isJumping = false;
-
-    },
 
     hitMonsters: function (body1, body2) {
     	
     	var monster;
-    	if(body1.sprite.name == "monster") {
-    		monster = body1.sprite;
-    	}
-    	else {
-    		monster = body2.sprite;
+    	if (isGameRotate){
+    		if(body1.sprite.name == "monsterBoss")
+        		monster = body1.sprite;
+        	else
+        		monster = body2.sprite;
+    	} else {
+	    	if(body1.sprite.name == "monster")
+	    		monster = body1.sprite;
+	    	else 
+	    		monster = body2.sprite;
     	}
     	
     	var timeNow = new Date().getTime();
@@ -784,35 +747,19 @@ State.Game.prototype = {
         this.createKinematicObj(bar, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
         this.game.add.tween(bar.body.velocity).to({
             x: '+200'
-        }, 3000).to({
+        }, 6000).to({
             x: '-200'
-        }, 3000).yoyo().loop().start();
+        }, 6000).yoyo().loop().start();
 
         //bar 2
         bar2 = this.game.add.sprite(4250, 1315, 'bar');
         this.createKinematicObj(bar2, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
         this.game.add.tween(bar2.body.velocity).to({
-            x: '+100'
+            x: '+200'
         }, 3000).to({
-            x: '-100'
+            x: '-200'
         }, 3000).yoyo().loop().start();
         
-    },
-    
-    //Create Obstacles
-    putObstacles: function () {
-        obstacles = this.game.add.group();
-
-        for (var i = 1; i <= 4; i++) {
-            var obstacle = obstacles.create(game.world.randomX,
-					game.world.randomY, 'obstacle' + i);
-			game.physics.p2.enable(obstacle, false);
-            obstacle.body.fixedRotation = true; //no circle movement 
-            obstacle.body.kinematic = true;
-            obstacle.body.setCollisionGroup(obstacleCollisionGroup);
-            obstacle.body.collides([obstacleCollisionGroup,
-					playerCollisionGroup]);
-        }
     },
 
     //create monsters
@@ -885,14 +832,9 @@ State.Game.prototype = {
         collect.name = 'pink';
         this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
 
-        //Collect Items 3
-        var collect = collects.create(200, 1400, 'red');
-        collect.name = 'red';
-        this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
-
-        var collect = collects.create(300, 1400, 'key');
-        collect.name = 'key';
-        this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
+//        var collect = collects.create(300, 1400, 'key');
+//        collect.name = 'key';
+//        this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
     },
 
     putVerticalBar: function () {
@@ -940,43 +882,99 @@ State.Game.prototype = {
 	},
 
     //create monsters
-        putBigBoss: function () {
+    putBigBoss: function () {
 
-            //big boss
-            monster = monsters.create(720, 330, 'bigbossattack');
-            monster.name = 'monsterBoss'; 
-            monster.animations.add('walk', [0, 1, 2, 3, 4, 5], 10, true);
-            monster.play('walk');
-        	this.createKinematicObj(monster, monsterCollisionGroup, [monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
-            
-        },
-
-        timeCheck: function (){
-
-            timeCheck = this.game.time.now;
-        },
-
-        bossShoot: function () {
-            var fire = monsters.create(720, 350, 'bigbossattackfire');
-            fire.name = 'monsterBoss'; 
-            fire.animations.add('walk', [0, 1, 2, 3], 10, true);
-            fire.play('walk');
-            this.game.physics.p2.enable(fire, false);
-            fire.body.fixedRotation = true; //no circle movement 
-            fire.body.kinematic = true;
-            fire.body.collideWorldBounds = true;
-            fire.body.setCollisionGroup(monsterCollisionGroup);
-            fire.body.collides([monsterCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup], this.hitLight, this);
-            fire.body.moveRight(300);
-        },
-
-        hitLight: function (body1, body2) {
+        //big boss
+        monster = monsters.create(720, 330, 'bigbossattack');
+        monster.name = 'monsterBoss'; 
+        monster.animations.add('walk', [0, 1, 2, 3, 4, 5], 10, true);
+        monster.play('walk');
+    	this.createKinematicObj(monster, bossCollisionGroup, [bossCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
         
-            if(body1.sprite.name == 'monster') {
-                body1.sprite.kill();
-            }
-            else if(body2.sprite.name == 'monster') {
-                body2.sprite.kill();
-            }
+    },
+    
+    putMonstersBar: function () {
+        "use strict";
+		
+    },
+	
+	moveMonster: function (obj, velocity) {
+		"use strict";
+			timerMonst++;
+			if(timerMonst >= 35 ){
+				obj.forEach(function(objIntern){
+					if(objIntern.name == 'monster'){
+						objIntern.body.velocity.x = velocity;
+						objIntern.scale.x = -1;
+					}
+				});
+				if(timerMonst >= 68){timerMonst = 0;}
+			}else {
+				obj.forEach(function(objIntern){
+					if(objIntern.name == 'monster'){
+						objIntern.body.velocity.x = -velocity;
+						objIntern.scale.x = 1;
+					}
+				});
+			}
+	},
+	moveBarVertical: function (obj, velocity) {
+		"use strict";
+		if(obj.flag) {
+			
+			obj.timerBV++;
+			
+			if(obj.timerBV >= 23) {
+				
+				obj.body.velocity.y = -velocity;
+				
+				if(obj.timerBV >= 44) {
+					obj.timerBV = 0;
+				}
+			}
+			else {
+				obj.body.velocity.y = velocity;
+			}
+		}
+	},
+	
+    beginMoving: function (obj) {
+    	obj.flag = true;
+	},
+
+    timeCheck: function (){
+
+        timeCheck = this.game.time.now;
+    },
+
+    bossShoot: function () {
+        var fire = monsters.create(720, 350, 'bigbossattackfire');
+        fire.name = 'monsterBoss'; 
+        fire.animations.add('walk', [0, 1, 2, 3], 10, true);
+        fire.play('walk');
+        this.game.physics.p2.enable(fire, false);
+        fire.body.fixedRotation = true; //no circle movement 
+        fire.body.kinematic = true;
+        fire.body.collideWorldBounds = false;
+        fire.body.setCollisionGroup(bossCollisionGroup);
+        fire.body.collides([bossCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup], this.hitLight, this);
+        fire.body.moveRight(300);
+    },
+
+    hitLight: function (body1, body2) {
+    
+        if(body1.sprite.name == 'monsterBoss') {
+            body1.sprite.kill();
         }
+        else if(body2.sprite.name == 'monsterBoss') {
+            body2.sprite.kill();
+        }
+    },
+    putCollectRotate: function () {
+        //Collect Items 3
+        var collect = collects.create(1494, 330, 'red');
+        collect.name = 'red';
+        this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
+    },
+
 };
