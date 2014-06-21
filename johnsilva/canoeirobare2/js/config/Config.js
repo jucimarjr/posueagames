@@ -39,7 +39,7 @@ Config.sponsorSplash = {
 //GameSplash
 Config.gameSplash = {
 	dir: {
-		background: 'assets/images/GameSplash_960-600.png',
+		background: 'assets/images/GameSplash_960-600.jpg',
 		bar: 'assets/images/ProgressBar_960-30.png'
 	},
 	x: 0,
@@ -50,7 +50,7 @@ Config.gameSplash = {
 
 //Menu
 Config.menu = {
-	dir: 'assets/images/MenuBackground_960-600.png',
+	dir: 'assets/images/MenuBackground_960-600.jpg',
 	x: 0,
 	y: 0,
 	buttonPlay: {
@@ -94,14 +94,14 @@ Config.menu = {
 
 //HowToPlay
 Config.howToPlay = {
-	dir: 'assets/images/HowToPlay_960-600.png',
+	dir: 'assets/images/HowToPlay_960-600.jpg',
 	x: 0,
 	y: 0
 };
 
 //Credits
 Config.credits = {
-	dir: 'assets/images/Credits_960-600.png',
+	dir: 'assets/images/Credits_960-600.jpg',
 	x: 0,
 	y: 0
 };
