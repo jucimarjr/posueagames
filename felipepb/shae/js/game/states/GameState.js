@@ -19,16 +19,22 @@ Game.GameState = function () {
 	this.heartBeatController;
 
     this.hud;
+    this.loadedLevel;
 
     this.playerHasKey;
     this.stageComplete;
 };
 
-Game.GameState.tileMapName = 'map';
 Game.GameState.currentLevel = 0;
+Game.GameState.levels = [
+    { name: 'tutorial' },
+    { name: 'level_1' },
+    { name: 'level_2' },
+    { name: 'level_3' }
+    // Add more levels here...
+]
 Game.GameState.lightIndex;
 Game.GameState.lightAnimation = [0, 0, 0, 0, 1, 0, 1, 0, 1];
-
 
 Game.GameState.prototype = {
 
@@ -86,7 +92,9 @@ Game.GameState.prototype = {
     },
 
     createTileMap: function () {
-        this.map = this.game.add.tilemap(Game.GameState.tileMapName);
+        this.loadedLevel = Game.GameState.levels[Game.GameState.currentLevel];
+        console.log('loadedLevel: ' + this.loadedLevel.name);
+        this.map = this.game.add.tilemap(this.loadedLevel.name);
         
         this.map.addTilesetImage('walls_tileset');
 
@@ -308,13 +316,19 @@ Game.GameState.prototype = {
 
     onStageComplete: function () {
         console.log('Stage complete! Load next level...');
-		Game.GameState.tileMapName = 'map';           // set next tilemap here
+		
+        Game.GameState.currentLevel += 1;
+
+        var nextState = 'GameState';
+
+        if (Game.GameState.currentLevel >= Game.GameState.levels.length)
+            nextState = 'GameWinState';
 		
 		var self = this;
         var playerLightTween = this.game.add.tween(this);
         playerLightTween.to({ playerLightRadius: 0 }, 500, Phaser.Easing.Quadratic.In, true, 0);
         playerLightTween.onComplete.add(function () {
-            self.navigate('GameState');
+            self.navigate(nextState);
         });
     },
 	

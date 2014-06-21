@@ -105,6 +105,7 @@ Game.MainMenuState.prototype = {
 		var self = this;
         self.game.input.keyboard.onDownCallback = null;
         Utils.fadeInScreen(this.game, TweensConsts.fadeFillStyle, TweensConsts.fadeInDuration, function () {
+        	Game.GameState.currentLevel = 0;
             self.state.start('GameState');
         });
 	},

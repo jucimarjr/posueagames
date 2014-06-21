@@ -20,7 +20,11 @@ Game.PreloaderState.prototype = {
         this.load.setPreloadSprite(this.preloadBar);
 
         // Tile Maps
-        this.game.load.tilemap('map', 'assets/game/tilemaps/maps/collision_test.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.tilemap('tutorial', 'assets/game/tilemaps/maps/tutorial.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.tilemap('level_1', 'assets/game/tilemaps/maps/level_1.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.tilemap('level_2', 'assets/game/tilemaps/maps/level_2.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.tilemap('level_3', 'assets/game/tilemaps/maps/level_3.json', null, Phaser.Tilemap.TILED_JSON);
+        
         this.game.load.image('walls_tileset', 'assets/game/tilemaps/tiles/walls_tileset.png');
         
         // Images
