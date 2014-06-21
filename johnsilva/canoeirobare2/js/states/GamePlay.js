@@ -247,6 +247,15 @@ State.GamePlay.prototype = {
 		
 		if(this.level == Config.finalPhase.id)
 			this.initShadow();
+
+		/*var styleBig = { font: "40px Arial Bold", fill: "#ffffff" };
+		var text ;
+		if(this.level == 7)
+			text = "Final";
+		else
+			text = "Fase "+this.level
+		var phase = game.add.text(430, 500, text, styleBig);	
+		this.game.add.tween(phase).to( { alpha: 0 }, 5000, Phaser.Easing.Linear.None, true);*/
 	},
 
 	shootWater: function(){
