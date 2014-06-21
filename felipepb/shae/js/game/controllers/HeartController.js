@@ -53,8 +53,10 @@ Game.HeartController.prototype = {
 		
 		if (value) {
 			this.resumeTweens();
+			this.sprite.animations.paused = false;
 		} else {
 			this.pauseTweens();
+			this.sprite.animations.paused = true;
 		}
 	},
 	
@@ -125,12 +127,12 @@ Game.HeartController.prototype = {
 			beatSprite.frameName = mySprite.frameName;
 		}
 
-        if (player.currentAnim != 'dying' &&
-            player.currentAnim != Game.PlayerController.AnimState.FlyingSoul &&
-			this.gameState.playerLife() >= 0) {
-				
-			if (playerDistance <= HeartConsts.attackDistance) {
+		var isFlyingSoulAnimationPlaying = player.currentAnim == Game.PlayerController.AnimState.FlyingSoul;
+
+        if (player.currentAnim != 'dying' && this.gameState.playerLife() >= 0) {
+			if (playerDistance <= HeartConsts.attackDistance && !isFlyingSoulAnimationPlaying) {
 	            this.pauseTweens();
+				this.playFlyAnimation();
 
 	            if (pursuitPositions.length == 0) {
 	                pursuitPositions.push({
@@ -157,7 +159,7 @@ Game.HeartController.prototype = {
 	            }
 	        }
 			
-			if (playerSprite.overlap(mySprite) && playerDistance <= HeartConsts.playerDeathDistance) {
+			if (!isFlyingSoulAnimationPlaying && playerSprite.overlap(mySprite) && playerDistance <= HeartConsts.playerDeathDistance) {
 //				pursuitPositions.splice(pursuitPositions.length - 1, 1);
                 this.gameState.onPlayerLostLife();
 				player.destroyBody();
@@ -172,12 +174,12 @@ Game.HeartController.prototype = {
 		var tweens = this.tweens;
 		var length = tweens.length;
 		for (var i = 0; i < length; i++) {
-			if (!tweens[i].isRunning) {
+			if (tweens[i]._paused) {
 				tweens[i].resume();
 			}
 		}
 		
-		if (this.beatSpriteTween && !this.beatSpriteTween.isRunning) {
+		if (this.beatSpriteTween && this.beatSpriteTween._paused) {
 			this.beatSpriteTween.resume();
 		}
 	},
@@ -186,15 +188,13 @@ Game.HeartController.prototype = {
 		var tweens = this.tweens;
         var length = tweens.length;
         for (var i = 0; i < length; i++) {
-            if (tweens[i].isRunning) {
+            if (!tweens[i]._paused) {
 				tweens[i].pause();
-				tweens[i].isRunning = false;
 			}
         }
 
-		if (this.beatSpriteTween && this.beatSpriteTween.isRunning) {
+		if (this.beatSpriteTween && !this.beatSpriteTween._paused) {
 			this.beatSpriteTween.pause();
-			this.beatSpriteTween.isRunning = false;
 		}
 	},
 
@@ -235,6 +235,9 @@ Game.HeartController.prototype = {
 											 new Phaser.Point(previousWaypoint[0], previousWaypoint[1]));
 		var animTime = (HeartConsts.flightSpeed * distance) / 10;
 		
+		for (var i = 0; i < this.tweens.length; i++) {
+            this.tweens[i].stop();
+        }
 		Utils.clearArray(this.tweens);
 
 		var flyTween = this.game.add.tween(this.sprite);
@@ -257,12 +260,16 @@ Game.HeartController.prototype = {
 	},
 
 	playIdleAnimation: function () {
-		this.sprite.animations.play('idle');
-		this.currentAnimation = 'idle';
+		if (this.currentAnimation != 'idle') {
+			this.sprite.animations.play('idle');
+            this.currentAnimation = 'idle';
+		}
 	},
 
 	playFlyAnimation: function () {
-		this.sprite.animations.play('fly');
-		this.currentAnimation = 'fly';
+		if (this.currentAnimation != 'fly') {
+			this.sprite.animations.play('fly');
+            this.currentAnimation = 'fly';
+		}
 	}
 };
