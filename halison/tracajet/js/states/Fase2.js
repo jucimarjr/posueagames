@@ -101,6 +101,17 @@ State.Fase2.prototype = {
 		this.fruits = this.game.add.group();
 		this.fruits.enableBody  = true;
 		this.map.createFromObjects(this.nameFruits,62,'assets2',1,true,false,this.fruits);
+		
+		
+		game.physics.arcade.collide(this.tracajet, this.layer);
+		game.physics.arcade.collide(this.enemies,this.layer);
+	    game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
+	    //game.physics.arcade.overlap(this.sheets,this.tracajet,this.increaseScore,null,this);
+	    //game.physics.arcade.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
+	    this.updateTracajet();
+	    this.updateEnemies();
+	   // this.updateScorePosition();
+		///
 
     },
 
@@ -145,13 +156,94 @@ State.Fase2.prototype = {
 		monkey.animations.add('right',[6,7,8,9,10,11],5,true);
 		game.physics.enable(monkey, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 		monkey.body.collideWorldBounds = true;
-		game.add.tween(monkey).to({x: monkey.body.x, y: monkey.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
-				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
-				.to({x: monkey.body.x+120, y: monkey.body.y}, 1500 + Math.random()*3000 /*duration of the tween (in ms)*/, 
-				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/,  50 + Math.random()*50 /*delay*/, false /*yoyo?*/)
-				.loop().start();
-		monkey.animations.play("right");
+		this.twinEsquerda(monkey);
+	},
+	twinDireita : function(monkey) {
+		monkey.animations.stop();
+		monkey.animations.play("left");
+		var t = game.add.tween(monkey);
+		t.to({x: monkey.body.x - 220, y: monkey.body.y}, 2000 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 50 + Math.random()*50 /*delay*/, false /*yoyo?*/);
+		t.onComplete.addOnce(this.twinEsquerda, this);
+		t.start();
 		
+	},
+	twinEsquerda : function(monkey){
+		monkey.animations.stop();
+		monkey.animations.play("right");
+		var t = game.add.tween(monkey);
+		t.to({x: monkey.body.x+220, y: monkey.body.y}, 2000 + Math.random()*3000 /*duration of the tween (in ms)*/, 
+				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/,  50 + Math.random()*50 /*delay*/, false /*yoyo?*/);
+		t.onComplete.addOnce(this.twinDireita, this);
+		t.start();
+	},
+	updateTracajet : function(){
+		this.tracajet.body.velocity.x = 0;
+		var orientation = 0;
+		 if ( this.cursors.left.isDown) { // vai para esquerda
+	    	orientation = 1;
+			this.tracajet.body.velocity.x = -this.speed;
+	    	this.tracajet.animations.play('walk');
+	    	this.tracajet.scale.x = -1;
+
+	    	if(!this.tracajet.body.onFloor()){
+	    		this.tracajet.body.setSize(35, 50,0,0);
+	    		this.game.add.tween(this.tracajet).to({
+                                angle : -70
+                        }, 20).start();
+	    	}
+
+	    }
+	    else if (this.cursors.right.isDown ) { // vai para direita
+			
+	    	this.tracajet.body.velocity.x = this.speed;
+	    	this.tracajet.scale.x = +1;  // espelha se antes 1
+	    	this.tracajet.animations.play('walk');
+
+	    	if(!this.tracajet.body.onFloor()){
+	    		this.tracajet.body.setSize(35, 50,0,0);
+	    		
+	    		this.game.add.tween(this.tracajet).to({
+                                angle : 70
+                        }, 20).start();
+	    	}
+	    }
+	    else if (this.cursors.up.isDown ) { // vai para cima
+	    	this.tracajet.body.velocity.y = -this.speed;
+			this.tracajet.animations.play('walk');
+			if(!this.tracajet.body.onFloor()){
+				this.tracajet.body.setSize(35, 50,0,0);
+				this.game.add.tween(this.tracajet).to({
+                                angle : 0
+                        }, 20).start();
+			}
+	    }
+	    else if (this.cursors.down.isDown ) { // vai para cima
+	    	this.tracajet.body.velocity.y = this.speed;
+	    	this.tracajet.animations.play('walk');
+			
+			if(!this.tracajet.body.onFloor()){
+				this.tracajet.body.setSize(35, 50,0,0);
+				this.game.add.tween(this.tracajet).to({
+                                angle : -180
+                        }, 20).start();
+			}else{
+				this.game.add.tween(this.tracajet).to({
+                                angle : 0
+                        }, 20).start();
+			}
+	    }
+	    else{
+	    	this.tracajet.body.setSize(35, 78,0,0);
+	    	this.tracajet.animations.stop();
+	    	this.tracajet.frame = 0;
+			if(this.tracajet.body.onFloor()){
+				this.game.add.tween(this.tracajet).to({
+                                angle : 0
+                        }, 20).start();
+			}
+
+	    }
 	}
 
 };
