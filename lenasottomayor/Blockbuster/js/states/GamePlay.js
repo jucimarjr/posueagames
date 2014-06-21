@@ -42,12 +42,13 @@ State.GamePlay.prototype = {
 		this.game.physics.arcade.collide(this.player.spritePlayer, this.layer1.platform);
 		this.game.physics.arcade.collide(this.player.spritePlayer, this.layer1.thorn, this.collisionThorn, null, this);
 
+		this.game.physics.arcade.overlap(this.player.spritePlayer, this.coins.group, this.collectCoins, null, this);
+		this.game.physics.arcade.overlap(this.player.spritePlayer, this.powerlifes.group, this.collectPowerLifes, null, this);
+		this.game.physics.arcade.overlap(this.player.spritePlayer, this.powerstars.group, this.collectPowerStars, null, this);
+
 		this.HUD.update();
 		
 		if(!this.player.lose && this.enemyCollide) {
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.coins.group, this.collectCoins, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.powerlifes.group, this.collectPowerLifes, null, this);
-			this.game.physics.arcade.overlap(this.player.spritePlayer, this.powerstars.group, this.collectPowerStars, null, this);
 			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.cruellasWalker, this.collision, null, this);
 			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.cruellasJumper, this.collision, null, this);
 			this.game.physics.arcade.collide(this.player.spritePlayer, this.enemies.freddysWalker, this.collision, null, this);

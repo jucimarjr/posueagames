@@ -207,6 +207,7 @@ Config.player = {
 	dir: 'assets/spritesheets/Oscar_spritesheet_900-95-18.png',
 	jump: 575,
 	speed: 175,
+	run: 300,
 	height: 95,
 	width: 50,
 	anchor: {
@@ -342,7 +343,7 @@ Config.enemy = {
 		frames: 10,
 		name: 'Vader',
 		distancePlayer: 900,
-		velocity: 100,
+		velocity: 200,
 		hp: 5,
 		timeDie: 2000,
 		anchor: {

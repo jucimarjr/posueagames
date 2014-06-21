@@ -20,11 +20,13 @@ Player = function(game, coins, layer1, powerlifes, powerstars, thorns, HUD, jump
 
 Player.prototype = {
 	create: function () {
-		this.spritePlayer = game.add.sprite(Config.player.position.x, Config.player.position.y, 'oscar');
+		this.spritePlayer = game.add.sprite(Config.player.position.x+11500, Config.player.position.y-200, 'oscar');
 		
 	    //  Animations. When not moving, spritePlayer = 0.
-	    this.spritePlayer.animations.add('walk', [1,2,3,4,5,6,7], 10, true);
-	    this.spritePlayer.animations.add('walk-gold', [11,12,13,14,15,16,17], 10, true);
+	    this.spritePlayer.animations.add('walk', [1,2,3,4,5,6,7], 8, true);
+	    this.spritePlayer.animations.add('walk-gold', [11,12,13,14,15,16,17], 8, true);
+	    this.spritePlayer.animations.add('run', [1,2,3,4,5,6,7], 15, true);
+	    this.spritePlayer.animations.add('run-gold', [11,12,13,14,15,16,17], 15, true);
 	    this.spritePlayer.animations.add('jump', [4], 1, true);
 	    this.spritePlayer.animations.add('jump-gold', [14], 1, true);
 	    this.spritePlayer.animations.add('fall', [3], 1, true);
@@ -41,6 +43,7 @@ Player.prototype = {
 
 	    this.cursors = this.game.input.keyboard.createCursorKeys();
 		this.jump = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		this.run = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
 	},
 
 	update: function() {
@@ -50,7 +53,7 @@ Player.prototype = {
 
 		if(!this.lose) 
 	    {
-			if(this.cursors.left.isDown)
+			if(this.cursors.left.isDown && !this.run.isDown)
 			{
 				this.spritePlayer.body.velocity.x = -Config.player.speed;
 				this.spritePlayer.scale.x = -1;
@@ -60,7 +63,7 @@ Player.prototype = {
 					this.spritePlayer.animations.play('walk');
 				}
 			}
-			else if(this.cursors.right.isDown)
+			else if(this.cursors.right.isDown && !this.run.isDown)
 			{
 				this.spritePlayer.body.velocity.x = Config.player.speed;
 				this.spritePlayer.scale.x = 1;
@@ -70,7 +73,27 @@ Player.prototype = {
 					this.spritePlayer.animations.play('walk');
 				}
 			}
-			else  
+			else if(this.cursors.left.isDown && this.run.isDown)
+			{
+				this.spritePlayer.body.velocity.x = -Config.player.run;
+				this.spritePlayer.scale.x = -1;
+				if(this.gold){
+					this.spritePlayer.animations.play('run-gold');
+				} else {
+					this.spritePlayer.animations.play('run');
+				}
+			}
+			else if(this.cursors.right.isDown && this.run.isDown)
+			{
+				this.spritePlayer.body.velocity.x = Config.player.run;
+				this.spritePlayer.scale.x = 1;
+				if(this.gold){
+					this.spritePlayer.animations.play('run-gold');
+				} else {
+					this.spritePlayer.animations.play('run');
+				}
+			}
+			else
 			{
 				this.spritePlayer.animations.stop();
 				if(this.gold){
@@ -96,6 +119,27 @@ Player.prototype = {
 				this.jumpSound.play();
 				this.spritePlayer.body.velocity.y = -Config.player.jump;
 			}
+//			
+//			if (this.run.isDown && this.spritePlayer.body.onFloor())
+//			{
+//				if(this.cursors.left.isDown) {
+//					this.spritePlayer.body.velocity.x = -Config.player.run;
+//					this.spritePlayer.scale.x = -1;
+//					if(this.gold){
+//						this.spritePlayer.animations.play('run-gold');
+//					} else {
+//						this.spritePlayer.animations.play('run');
+//					}
+//				} else if(this.cursors.right.isDown) {
+//					this.spritePlayer.body.velocity.x = Config.player.run;
+//					this.spritePlayer.scale.x = 1;
+//					if(this.gold){
+//						this.spritePlayer.animations.play('run-gold');
+//					} else {
+//						this.spritePlayer.animations.play('run');
+//					}
+//				}
+//			}
 		}
 	},
 	
