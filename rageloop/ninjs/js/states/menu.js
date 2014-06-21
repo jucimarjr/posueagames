@@ -25,7 +25,7 @@
 
         onPlayClick: function() {
             this.clickAudio.play();
-            this.game.state.start('Gameplay');
+            this.game.state.start('Level1');
         },
 
         onCreditsClick: function() {
