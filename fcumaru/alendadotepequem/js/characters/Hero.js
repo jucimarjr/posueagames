@@ -1,4 +1,4 @@
-function Hero(game, type) {
+function Hero(game) {
 	"use strict";
 	this.game = game;
 
