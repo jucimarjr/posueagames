@@ -308,13 +308,9 @@ State.GamePlay.prototype = {
         this.drop.create(150, this.game.world.height-200);
         var dropSprite = this.drop.getSpriteObject();
         this.game.camera.follow(dropSprite);
-        this.game.physics.p2.enableBody(dropSprite, false);		
+        this.game.physics.p2.enableBody(dropSprite, true);		
         this.drop.configureCharacter(this.setCharacterInicialValues);
-		if (this.playersize == 'small') {
-			this.playershape = dropSprite.body.setCircle(18,0,4);
-		} else {
-			this.playershape = dropSprite.body.setCircle(26,0,4);
-		}        
+		this.playershape = dropSprite.body.setCircle(18,0,4);
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
@@ -575,7 +571,6 @@ State.GamePlay.prototype = {
             body2.sprite.kill();
             body2.hasCollided = true;
 			this.playersize = 'big';
-			this.playershape.radius = game.physics.p2.pxm(26);
             return true;
         }
         return false;
@@ -585,8 +580,6 @@ State.GamePlay.prototype = {
 		if (this.countCall == 1) {
 
 			this.energy.kill();
-			//this.drop.getSpriteObject().body.x = 1890; 
-			//this.drop.getSpriteObject().body.y = 50;
 			this.drop.getSpriteObject().body.moveUp(1500);		
 			this.jumpSound.play();		
 			this.smokeEmitter.start(false, 3000, 50);
@@ -640,13 +633,6 @@ State.GamePlay.prototype = {
             this.countCall = 0;
         }
     },
-	updateCollisionSetup: function () {
-		this.drop.getSpriteObject().body.setCollisionGroup(this.playerCG);
-		this.drop.getSpriteObject().body.collides([this.groundCG, this.crabCG, this.strawCG,
-						this.lifeDropCG, this.seashellCG, this.urchinsCG, this.hotsandCG]);
-		this.drop.getSpriteObject().body.setMaterial(this.characterMaterial);
-		this.game.physics.p2.createContactMaterial(this.characterMaterial, this.groundMaterial, {friction: 0.0, restitution: 0.0});		
-	},
 	stopSmoke: function() {
 		this.haveEnergy = false;
 		this.smokeEmitter.on = false;
@@ -655,13 +641,10 @@ State.GamePlay.prototype = {
 	},
 	stopKillTime: function(time) {
 		this.drop.getSpriteObject().body.createGroupCallback(this.hotsandCG, this.timeOverKill, this);
-		this.playershape.radius = game.physics.p2.pxm(18);
 		clearTimeout(time);
 	},
     stopDecreaseCounter: function(time) {
 		this.drop.getSpriteObject().body.createGroupCallback(this.hotsandCG, this.killDrop, this);
-		this.drop.getSpriteObject().body.setRectangle(50, 55, 0, 0);
-		this.updateCollisionSetup();
 		clearTimeout(time);
     },
 	timeOverKill: function () {
