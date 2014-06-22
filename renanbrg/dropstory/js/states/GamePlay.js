@@ -9,6 +9,8 @@ State.GamePlay = function (game) {
     this.player = null;
     this.crabs = null;
     this.shell = null;
+    this.sunscreen = null;
+    this.can = null;
     this.crabMaterial = null;
     this.groundMaterial = null;
     this.hotsandMaterial = null;
@@ -55,14 +57,17 @@ State.GamePlay.prototype = {
 
         this.game.load.spritesheet('urchin',
                 'assets/spritesheets/seaurchin_80-40.png', 40, 40);
-	    this.game.load.image('wetSand', 'assets/images/areiaMolhada_330-75.png');
-	    this.game.load.image('bucket', 'assets/images/balde_384-497.png');
+        this.game.load.spritesheet('life_drop',
+                'assets/spritesheets/water_200-40.png', 40, 40);
+        this.game.load.image('wetSand', 'assets/images/areiaMolhada_330-75.png');
+		this.game.load.image('bucket', 'assets/images/balde_384-497.png');
 	    this.game.load.image('straw1', 'assets/images/straw_15-20.png');
 	    this.game.load.image('straw2', 'assets/images/straw2_236-276.png');
 	    this.game.load.image('seashell', 'assets/images/seashell_220-68.png');
-        this.game.load.spritesheet('life_drop',
-                'assets/spritesheets/water_200-40.png', 40, 40);
 	    this.game.load.image('smoke', './assets/images/smoke_32-32.png');
+	    this.game.load.image('sunscreen', './assets/images/sunscreen_231-59.png');
+	    this.game.load.image('coversunscreen', './assets/images/tampasunscreen_50-10.png');
+	    this.game.load.image('can', './assets/images/can_313-120.png');
 	    
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
 	    this.game.load.audio('main','assets/gotaMain.wav');
@@ -121,6 +126,7 @@ State.GamePlay.prototype = {
 		this.urchinsCG = game.physics.p2.createCollisionGroup();
 		this.hotsandCG = game.physics.p2.createCollisionGroup();
         this.bucketCG = game.physics.p2.createCollisionGroup();
+        this.sunscreenCG = game.physics.p2.createCollisionGroup();
 		
 		// Create and Setup Material
         this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
@@ -145,26 +151,6 @@ State.GamePlay.prototype = {
                     this.urchinsCG]);
             this.layermain2[i].setMaterial(this.groundMaterial);
         }
-
-        // create player
-        this.drop.create(200, this.game.world.heigth-500);
-        var dropSprite = this.drop.getSpriteObject();
-        this.game.camera.follow(dropSprite);
-        this.game.physics.p2.enableBody(dropSprite, false);
-		
-        this.drop.configureCharacter(this.setCharacterInicialValues);
-		if (this.playersize == 'small') {
-			this.playershape = dropSprite.body.setCircle(18,0,4);
-		} else {
-			this.playershape = dropSprite.body.setCircle(26,0,4);
-		}
-        
-        dropSprite.body.setMaterial(this.characterMaterial);
-        dropSprite.body.setCollisionGroup(this.playerCG);
-        dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
-                this.lifeDropCG, this.seashellCG, this.urchinsCG,
-                this.hotsandCG, this.bucketCG, this.coveredStrawCG]);
-        
         
         // Create sea shell
         this.seashell = this.game.add.sprite(450, this.game.world.height - 106,
@@ -179,12 +165,39 @@ State.GamePlay.prototype = {
                 this.playerCG]);
         this.seashell.body.setMaterial(this.groundMaterial);
 
+        // Create sunscreen
+        this.sunscreen = this.game.add.sprite(3200, this.game.world.height-59-44,'sunscreen');
+        this.game.physics.p2.enableBody(this.sunscreen);
+        this.sunscreen.body.fixedRotation = true;
+        this.sunscreen.body.static = true;
+        this.sunscreen.body.setMaterial(this.groundMaterial);
+        this.sunscreen.body.setCollisionGroup(this.sunscreenCG);
+        this.sunscreen.body.collides([this.groundCG, this.crabCG, this.playerCG]);        
+        var cover = this.game.add.sprite(3060, this.game.world.height-78,'coversunscreen');
+        this.game.physics.p2.enableBody(cover);
+        cover.body.fixedRotation = true;
+        cover.body.static = true;
+        cover.body.setMaterial(this.groundMaterial);
+        cover.body.setCollisionGroup(this.sunscreenCG);
+        cover.body.collides([this.groundCG, this.crabCG, this.playerCG]);
+        
+        // create CAN
+        this.can = this.game.add.sprite(1620, this.game.world.height-80,'can');
+        this.game.physics.p2.enableBody(this.can, false);
+        this.can.body.fixedRotation = true;
+        this.can.body.setRectangle(260,120,0,0);
+        this.can.body.static = true;
+        this.can.body.setMaterial(this.groundMaterial);
+        this.can.body.setCollisionGroup(this.groundCG);
+        this.can.body.collides([this.groundCG, this.crabCG, this.playerCG]);               
+
         // create crabs
         this.crabs = game.add.group();
 		this.crabs.enableBody = true;
 		this.crabs.physicsBodyType = Phaser.Physics.P2JS;		
 		this.crabs.create(this.game.width-180, this.game.height-80-69, 'crab');
         this.crabs.create(this.game.width, this.game.height-80-69, 'crab');
+        this.crabs.create(4480, this.game.height-80-69, 'crab');        
 		for (var i = 0; i < this.crabs.length; i++) {				
 			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);				
 			this.crabs.getAt(i).body.fixedRotation = true;	
@@ -192,36 +205,36 @@ State.GamePlay.prototype = {
 			this.crabs.getAt(i).animations.add('walkL', [0, 1, 2], 10, true);
 			this.crabs.getAt(i).animations.add('walkR', [0, 1, 2], 10, true);			
 			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG,
-                    this.groundCG, this.seashellCG, this.hotsandCG]);
+                    this.groundCG, this.seashellCG, this.hotsandCG, this.sunscreenCG]);
 		}
 		this.crabs.getAt(0).body.moveLeft(400);
 		this.crabs.getAt(1).body.moveRight(400);
+		this.crabs.getAt(2).body.moveRight(400);
 		
 		// create energy       
         this.energy = this.game.add.sprite(1700, this.game.world.height-80-40, 'energy');
         this.game.physics.p2.enableBody(this.energy, false);
         this.energy.body.fixedRotation = true;
-        this.energy.body.setRectangle(35, 26, 0, 0);
-		this.energy.animations.add('energyMove', [0, 1, 2, 3, 4], 7, true);
+        this.energy.body.setCircle(15, 0, 0);
+		this.energy.animations.add('energyMove', [0, 1, 2, 3, 4], 10, true);
 		this.energy.animations.play('energyMove');
         this.energy.body.setCollisionGroup(this.groundCG);	
         this.energy.body.collides([this.groundCG, this.crabCG, this.playerCG,
                 this.hotsandCG]);
 
-
         // Create the sea urchins
         this.urchins = game.add.group();
         this.urchins.enableBody = true;
         this.urchins.physicsBodyType = Phaser.Physics.P2JS;
-        this.urchins.create(3000, this.game.height - 80 - 20, 'urchin');
-        this.urchins.create(3300, this.game.height - 80 - 20, 'urchin');
+        this.urchins.create(3430, this.game.height - 80 - 20, 'urchin');
+        this.urchins.create(3730, this.game.height - 80 - 20, 'urchin');
         for (var i = 0; i < this.urchins.length; i++) {
             this.urchins.getAt(i).body.setCollisionGroup(this.urchinsCG);
             this.urchins.getAt(i).body.static = true;
             this.urchins.getAt(i).animations.add('nohit', [0], 10, true);
             this.urchins.getAt(i).animations.add('hit', [1], 10, true);
             this.urchins.getAt(i).animations.play('nohit');
-            this.urchins.getAt(i).body.collides([this.playerCG, this.hotsandCG]);
+            this.urchins.getAt(i).body.collides([this.playerCG, this.groundCG]);
         }
 
         // Add the bucket
@@ -291,6 +304,23 @@ State.GamePlay.prototype = {
             this.lifeDrop.hasCollided = false;
         }
 
+        // create player
+        this.drop.create(150, this.game.world.height-200);
+        var dropSprite = this.drop.getSpriteObject();
+        this.game.camera.follow(dropSprite);
+        this.game.physics.p2.enableBody(dropSprite, false);		
+        this.drop.configureCharacter(this.setCharacterInicialValues);
+		if (this.playersize == 'small') {
+			this.playershape = dropSprite.body.setCircle(18,0,4);
+		} else {
+			this.playershape = dropSprite.body.setCircle(26,0,4);
+		}        
+        dropSprite.body.setMaterial(this.characterMaterial);
+        dropSprite.body.setCollisionGroup(this.playerCG);
+        dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
+                this.lifeDropCG, this.seashellCG, this.urchinsCG,
+                this.hotsandCG, this.bucketCG, this.coveredStrawCG, this.sunscreenCG]);
+
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
         dropSprite.body.createGroupCallback(this.urchinsCG,
@@ -301,6 +331,7 @@ State.GamePlay.prototype = {
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
         dropSprite.body.createGroupCallback(this.coveredStrawCG,
                 this.insideStraw, this);
+        dropSprite.body.createGroupCallback(this.sunscreenCG, this.hitSunscreen, this);
 		
 		// create contact material
         this.game.physics.p2.createContactMaterial(this.characterMaterial, this.slidingMaterial, {friction: 0.1, restitution: 0});         
@@ -381,6 +412,7 @@ State.GamePlay.prototype = {
 
 		this.moveCrab(this.crabs.getAt(0));
 		this.moveCrab(this.crabs.getAt(1));
+		this.moveCrab(this.crabs.getAt(2));
 		
 		if (this.haveEnergy) {
 			this.smokeEmitter.x = this.drop.getSpriteObject().x;
@@ -569,6 +601,9 @@ State.GamePlay.prototype = {
 		if (this.countCall == 2) {
 			this.countCall = 0;
 		} 			
+	},
+	hitSunscreen: function () {
+		this.playerstate = 'sunscreen';
 	},
 	killDrop: function (body1, body2) {
         this.countCall++;
