@@ -127,6 +127,7 @@ State.GamePlay.prototype = {
 		this.hotsandCG = game.physics.p2.createCollisionGroup();
         this.bucketCG = game.physics.p2.createCollisionGroup();
         this.sunscreenCG = game.physics.p2.createCollisionGroup();
+        this.energyCG = game.physics.p2.createCollisionGroup();
 		
 		// Create and Setup Material
         this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
@@ -141,14 +142,14 @@ State.GamePlay.prototype = {
         //setup all tiles with collisiongroups or materials
 		for (var i=0; i<this.layermain1.length; i++) {
 			this.layermain1[i].setCollisionGroup(this.groundCG);
-			this.layermain1[i].collides([this.playerCG, this.crabCG, this.lifeDropCG, this.groundCG]);
+			this.layermain1[i].collides([this.playerCG, this.crabCG, this.lifeDropCG, this.groundCG, this.energyCG]);
 			this.layermain1[i].setMaterial(this.groundMaterial);
 		}
         for (var i=0; i<this.layermain2.length; i++) {
             this.layermain2[i].setCollisionGroup(this.hotsandCG);
             this.layermain2[i].collides([this.playerCG, this.crabCG,
                     this.lifeDropCG, this.seashellCG, this.groundCG,
-                    this.urchinsCG]);
+                    this.urchinsCG, this.energyCG]);
             this.layermain2[i].setMaterial(this.groundMaterial);
         }
         
@@ -212,7 +213,7 @@ State.GamePlay.prototype = {
 		this.crabs.getAt(2).body.moveRight(400);
 		
 		// create energy       
-        this.energy = this.game.add.sprite(1700, this.game.world.height-80-40, 'energy');
+        /*this.energy = this.game.add.sprite(1700, this.game.world.height-80-40, 'energy');
         this.game.physics.p2.enableBody(this.energy, false);
         this.energy.body.fixedRotation = true;
         this.energy.body.setCircle(15, 0, 0);
@@ -220,7 +221,24 @@ State.GamePlay.prototype = {
 		this.energy.animations.play('energyMove');
         this.energy.body.setCollisionGroup(this.groundCG);	
         this.energy.body.collides([this.groundCG, this.crabCG, this.playerCG,
-                this.hotsandCG]);
+                this.hotsandCG]);*/
+                
+         // add energy
+        this.energy = game.add.group();
+        this.energy.enableBody = true;
+        this.energy.physicsBodyType = Phaser.Physics.P2JS;
+        this.energy.create(1700, this.game.world.height-80-75, 'energy');
+        for (var i = 0; i < this.energy.length; i++) {
+            this.energy.getAt(i).body.setCollisionGroup(this.energyCG);
+            this.energy.getAt(i).body.fixedRotation = true;
+            this.energy.getAt(i).body.static = true;
+            this.energy.getAt(i).animations.add('energyMove',
+                    [0, 1, 2, 3, 4], 10, true);
+            this.energy.getAt(i).animations.play('energyMove');
+            this.energy.getAt(i).body.collides([this.groundCG, this.crabCG, 
+												this.playerCG, this.hotsandCG]);
+            this.energy.hasCollided = false;
+        }
 
         // Create the sea urchins
         this.urchins = game.add.group();
@@ -308,22 +326,22 @@ State.GamePlay.prototype = {
         this.drop.create(150, this.game.world.height-200);
         var dropSprite = this.drop.getSpriteObject();
         this.game.camera.follow(dropSprite);
-        this.game.physics.p2.enableBody(dropSprite, true);		
+        this.game.physics.p2.enableBody(dropSprite, false);		
         this.drop.configureCharacter(this.setCharacterInicialValues);
 		this.playershape = dropSprite.body.setCircle(18,0,4);
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
-                this.lifeDropCG, this.seashellCG, this.urchinsCG,
-                this.hotsandCG, this.bucketCG, this.coveredStrawCG, this.sunscreenCG]);
+								  this.lifeDropCG, this.seashellCG, this.urchinsCG,
+								  this.hotsandCG, this.bucketCG, this.coveredStrawCG, 
+								  this.sunscreenCG, this.energyCG]);
 
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
-        dropSprite.body.createGroupCallback(this.urchinsCG,
-                this.checkCollisionUrchins, this);
+        dropSprite.body.createGroupCallback(this.urchinsCG, this.checkCollisionUrchins, this);
         dropSprite.body.createGroupCallback(this.lifeDropCG,
                 this.checkOverlapWithLifeDrop, this);
-		this.energy.body.createGroupCallback(this.playerCG, this.drinkEnergy, this);
+		dropSprite.body.createGroupCallback(this.energyCG, this.drinkEnergy, this);
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
         dropSprite.body.createGroupCallback(this.coveredStrawCG,
                 this.insideStraw, this);
@@ -575,11 +593,12 @@ State.GamePlay.prototype = {
         }
         return false;
     },
-    drinkEnergy: function() {
+    drinkEnergy: function(body1, body2) {
 		this.countCall++;
 		if (this.countCall == 1) {
 
-			this.energy.kill();
+			body2.sprite.kill();
+			body2.hasCollided = true;
 			this.drop.getSpriteObject().body.moveUp(1500);		
 			this.jumpSound.play();		
 			this.smokeEmitter.start(false, 3000, 50);
