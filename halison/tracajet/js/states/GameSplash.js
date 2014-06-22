@@ -30,6 +30,10 @@ State.GameSplash.prototype = {
 		game.load.image('tilesetPlataformaF1','assets/1aFase/assets_1.png');
 		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
 		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
+		game.load.audio('soundGame','assets/sounds/game_sound.wav');
+		game.load.audio('soundGetSheet','assets/sounds/get_sheet.mp3');
+		game.load.audio('soundGameOver','assets/sounds/game-over.mp3');
+		game.load.audio('soundGetKey','assets/sounds/get_key.mp3')
 	},
 	create: function () {
 		"use strict";

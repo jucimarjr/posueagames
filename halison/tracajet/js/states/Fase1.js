@@ -30,6 +30,10 @@ State.Fase1= function (game) {
 	this.imgLife;
 	this.txLife;
 	this.twenLife;
+	this.soundMusic;
+	this.soundGetSheet;
+	this.soundGameOver;
+	this.soundGetKey;
 };
 
 var folha;
@@ -47,6 +51,10 @@ State.Fase1.prototype = {
 		game.load.image('tilesetPlataformaF1','assets/1aFase/assets_1.png');
 		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
 		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40); */
+		this.soundMusic =  game.add.audio('soundGame',1,true);
+		this.soundGetSheet = game.add.audio('soundGetSheet',1,true);
+		this.soundGameOver = game.add.audio('soundGameOver',1,true);
+		this.soundGetKey = game.add.audio('soundGetKey',1,true)
 	},
 
 	create: function () {
@@ -59,6 +67,8 @@ State.Fase1.prototype = {
 		this.map.addTilesetImage('assets_1','tilesetPlataformaF1' );// primeiro vem nome do arquivo, depois o apelido
 		
 		this.layer = this.map.createLayer('TileWorld');
+		
+		this.soundMusic.play('',0,0.4,true);
 		
 		//Colide com esses tilesets
 		this.map.setCollision([8,9,10,11,12,13,14,17,18,19,20,21,22], true,'TileWorld'); // 0 espaco vazio 1 em diante os tiles do tileset
@@ -137,6 +147,7 @@ State.Fase1.prototype = {
 	}
 	,
 	increaseContKeys : function(tracajet,key){
+		this.soundGetKey.play('',0,0.5,false);
 		key.kill();
 		this.contKeys ++;
 		if(this.contKeys === this.TOTAL_KEYS){
@@ -288,6 +299,7 @@ State.Fase1.prototype = {
 					align: "left"
 				});
 				dieText.setText("GAME OVER");
+				this.soundGameOver.play('',0,0.5,false);
 			}else{
 				this.tracajet.isImmortal = true;
 				Config.game.score.lifes--;
@@ -336,6 +348,7 @@ State.Fase1.prototype = {
 	    }
 	},
 	increaseScore : function(tracajet,sheet){
+		this.soundGetSheet.play('',0,1,false);
 		sheet.kill();
 		Config.game.score.score += 1;
 		this.txtScore.setText("Score : " + Config.game.score.score);
