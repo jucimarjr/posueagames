@@ -176,7 +176,7 @@ State.Fase1.prototype = {
 	},
 	twinDireita : function(jacare) {
 		jacare.animations.stop();
-		jacare.animations.play("left");
+		jacare.animations.play("right");
 		var t = game.add.tween(jacare);
 		t.to({x: jacare.body.x - 320, y: jacare.body.y}, 2000 + Math.random()*3000 /*duration of the tween (in ms)*/, 
 				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/, 50 + Math.random()*50 /*delay*/, false /*yoyo?*/);
@@ -186,7 +186,7 @@ State.Fase1.prototype = {
 	},
 	twinEsquerda : function(jacare){
 		jacare.animations.stop();
-		jacare.animations.play("right");
+		jacare.animations.play("left");
 		var t = game.add.tween(jacare);
 		t.to({x: jacare.body.x+320, y: jacare.body.y}, 2000 + Math.random()*3000 /*duration of the tween (in ms)*/, 
 				Phaser.Easing.Linear.None /*easing type*/, true /*autostart?*/,  50 + Math.random()*50 /*delay*/, false /*yoyo?*/);
