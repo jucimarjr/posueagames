@@ -20,26 +20,15 @@ State.GamePlay = function (game) {
     this.smokeTimer = null;
     this.redSand = null;
     this.userDead = false;
-    this.playershape = null;
     this.dropCollisionGroup = null;
     this.crabCollisionGroup = null;
     this.layerBody = null;
     this.hud = new HUD(this.game);
     this.forceSlidingStraw = false;
-    this.animestate = 'stop';  //stores if player is walk, jump, die
-    this.playersize = 'small'; //stores if player is small or big
-    this.playerstate = 'normal'; //stores if player is normal, with sunscreen, with energy
     this.onAir = false;
     this.hotSandTimerActivated = false;
     
     this.countCall = 0; //count how many times the collision function is called. 
-
-    try {
-        this.drop = new Character(this.game, 'drop',
-                'assets/spritesheets/drop_4590-60.png', [51, 60]);
-    } catch(exception) {
-        console.log(exception.toString());
-    }
 };
 State.GamePlay.prototype = {
 	preload: function () {
@@ -50,15 +39,6 @@ State.GamePlay.prototype = {
 	    this.game.load.image('plataforma','assets/images/barra_160-80.png');
         this.game.load.image('areia','assets/images/areiaSeca_40-40.png');
         this.game.load.image('areia_quente','assets/images/red_40-40.png');
-	    this.game.load.spritesheet('crab','assets/spritesheets/crab_150-69.png', 150, 69);
-	    this.game.load.spritesheet('energy','assets/spritesheets/energy_200-40.png', 40, 40);
-        this.game.load.spritesheet('dropInStraw',
-                'assets/spritesheets/dropinstraw_5280-70.png', 480, 70);
-
-        this.game.load.spritesheet('urchin',
-                'assets/spritesheets/seaurchin_80-40.png', 40, 40);
-        this.game.load.spritesheet('life_drop',
-                'assets/spritesheets/water_200-40.png', 40, 40);
         this.game.load.image('wetSand', 'assets/images/areiaMolhada_330-75.png');
 		this.game.load.image('bucket', 'assets/images/balde_384-497.png');
 	    this.game.load.image('straw1', 'assets/images/straw_15-20.png');
@@ -69,22 +49,32 @@ State.GamePlay.prototype = {
 	    this.game.load.image('coversunscreen', './assets/images/tampasunscreen_50-10.png');
 	    this.game.load.image('can', './assets/images/can_313-120.png');
 	    
+		// spritesheet
+   	    this.game.load.spritesheet('crab','assets/spritesheets/crab_150-69.png', 150, 69);
+	    this.game.load.spritesheet('energy','assets/spritesheets/energy_200-40.png', 40, 40);
+        this.game.load.spritesheet('dropInStraw','assets/spritesheets/dropinstraw_5280-70.png', 480, 70);
+        this.game.load.spritesheet('urchin','assets/spritesheets/seaurchin_80-40.png', 40, 40);
+        this.game.load.spritesheet('life_drop','assets/spritesheets/water_200-40.png', 40, 40);
+
+	    // audios
 	    this.game.load.audio('jump','assets/waterDrop.mp3');
 	    this.game.load.audio('main','assets/gotaMain.wav');
 	    this.game.load.audio('powup','assets/gotaPowerUp.wav');
         this.hud.preload();
 
 		// Player
+		try {
+			this.drop = new Character(this.game, 'drop',
+					'assets/spritesheets/drop_4590-60.png', [51, 60]);
+		} catch(exception) {
+			console.log(exception.toString());
+		}		
         this.drop.preload();
         
-        // Straw physics
-        this.game.load.physics('strawPhysics',
-                'assets/polygon/straw-polygon.json');
-
-        this.game.load.physics('seashellPhysics',
-                'assets/polygon/seashell-polygon.json');
-        this.game.load.physics('bucketPhysics',
-        'assets/polygon/bucket-polygon.json');
+        // jsons
+        this.game.load.physics('strawPhysics','assets/polygon/straw-polygon.json');
+        this.game.load.physics('seashellPhysics','assets/polygon/seashell-polygon.json');
+        this.game.load.physics('bucketPhysics','assets/polygon/bucket-polygon.json');
 	},
 		
 	create: function () {
@@ -211,18 +201,7 @@ State.GamePlay.prototype = {
 		this.crabs.getAt(0).body.moveLeft(400);
 		this.crabs.getAt(1).body.moveRight(400);
 		this.crabs.getAt(2).body.moveRight(400);
-		
-		// create energy       
-        /*this.energy = this.game.add.sprite(1700, this.game.world.height-80-40, 'energy');
-        this.game.physics.p2.enableBody(this.energy, false);
-        this.energy.body.fixedRotation = true;
-        this.energy.body.setCircle(15, 0, 0);
-		this.energy.animations.add('energyMove', [0, 1, 2, 3, 4], 10, true);
-		this.energy.animations.play('energyMove');
-        this.energy.body.setCollisionGroup(this.groundCG);	
-        this.energy.body.collides([this.groundCG, this.crabCG, this.playerCG,
-                this.hotsandCG]);*/
-                
+		                
          // add energy
         this.energy = game.add.group();
         this.energy.enableBody = true;
@@ -327,8 +306,7 @@ State.GamePlay.prototype = {
         var dropSprite = this.drop.getSpriteObject();
         this.game.camera.follow(dropSprite);
         this.game.physics.p2.enableBody(dropSprite, false);		
-        this.drop.configureCharacter(this.setCharacterInicialValues);
-		this.playershape = dropSprite.body.setCircle(18,0,4);
+        this.drop.setCharacterInicialValues(); 
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
@@ -375,53 +353,12 @@ State.GamePlay.prototype = {
         this.mainSound.loop = true;
         this.mainSound.play();
     },
-    setCharacterInicialValues: function(character) {
-    	character.smoothed = false;
-    	character.body.fixedRotation = true;
-    	
-    	// normal state
-        character.animations.add('leftsmallnormal', [4,5,6], 10, true);
-        character.animations.add('rightsmallnormal', [8,9,10], 10, true);                                
-        character.animations.add('jumpleftsmallnormal', [3], 10, false);                
-        character.animations.add('jumprightsmallnormal', [11], 10, false);
-        character.animations.add('stopsmallnormal', [7], 10, true);         
-        character.animations.add('leftbignormal', [19,20,21], 10, true);
-        character.animations.add('rightbignormal', [23,24,25], 10, true);
-        character.animations.add('jumpleftbignormal', [18], 10, true);                
-        character.animations.add('jumprightbignormal', [26], 10, true);
-        character.animations.add('stopbignormal', [22], 10, true);
-
-		// energy state
-        character.animations.add('leftsmallenergy', [34,35,36], 10, true);
-        character.animations.add('rightsmallenergy', [38,39,40], 10, true);                                
-        character.animations.add('jumpleftsmallenergy', [33], 10, false);                
-        character.animations.add('jumprightsmallenergy', [41], 10, false);
-        character.animations.add('stopsmallenergy', [37], 10, true);                 
-        character.animations.add('leftbigenergy', [49,50,51], 10, true);
-        character.animations.add('rightbigenergy', [53,54,55], 10, true);
-        character.animations.add('jumpleftbigenergy', [48], 10, true);                
-        character.animations.add('jumprightbigenergy', [56], 10, true);
-        character.animations.add('stopbigenergy', [52], 10, true);
-        
-        // sunscreen state
-        character.animations.add('leftsmallsunscreen', [64,65,66], 10, true);
-        character.animations.add('rightsmallsunscreen', [68,69,70], 10, true);                                
-        character.animations.add('jumpleftsmallsunscreen', [63], 10, false);                
-        character.animations.add('jumprightsmallsunscreen', [71], 10, false);
-        character.animations.add('stopsmallsunscreen', [67], 10, true);                 
-        character.animations.add('leftbisunscreen', [79,80,81], 10, true);
-        character.animations.add('rightbigsunscreen', [83,84,85], 10, true);
-        character.animations.add('jumpleftbigsunscreen', [78], 10, true);                
-        character.animations.add('jumprightbigsunscreen', [86], 10, true);
-        character.animations.add('stopbigsunscreen', [82], 10, true);
-		
-    },
 	update: function () {
 		"use strict";
 		this.hud.updateFPS();
 		this.handleKeyDown();
 		this.isOnAir();
-		this.playerAnimations(this.drop.getSpriteObject());
+		this.drop.playerAnimations();
 		this.playerOverDiagonalStraw();
 
 		this.moveCrab(this.crabs.getAt(0));
@@ -456,54 +393,39 @@ State.GamePlay.prototype = {
     },
 	handleKeyDown: function () {
 		"use strict";
-		//this.drop.getSpriteObject().body.setZeroVelocity();
 
 		if ( this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
             if (this.forceSlidingStraw == true) {
-                this.drop.getSpriteObject().body.moveLeft(1);
+                this.drop.moveLeft(1);
                 this.drop.getSpriteObject().body.data.force[0] = -1;
             } else {
 				if (!this.onAir) {
-					this.drop.moveRight(4);
-					this.animestate = 'right';
+					this.drop.animestate = 'right';
 				} else {
-					this.animestate = 'jumpright';
+					this.drop.animestate = 'jumpright';
 				}
-				this.drop.getSpriteObject().body.moveRight(300);
+				this.drop.moveRight(300);
             }
         } else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
 			if (!this.onAir) {
-				this.drop.moveLeft(4);
-				this.animestate = 'left';
+				this.drop.animestate = 'left';
 			} else {
-				this.animestate = 'jumpleft';
+				this.drop.animestate = 'jumpleft';
 			}
-			this.drop.getSpriteObject().body.moveLeft(300);
+			this.drop.moveLeft(300);
 		}  else {
 			this.drop.stop();
-			this.animestate = 'stop';
+			this.drop.animestate = 'stop';
 		}
 		
 		if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) {
 			if (this.touchingDown(this.drop.getSpriteObject().body)) { 
-				this.drop.getSpriteObject().body.moveUp(700);
+				this.drop.jump(700);
 				this.jumpSound.play();
 			}
 		}
 	},
 	
-	playerAnimations: function (player) {
-		if (this.animestate === 'jumpTop') { player.animations.stop(); player.frame = 2;}
-			else if (this.animestate === 'jumpright')  { player.animations.play('jumpright'+this.playersize+this.playerstate);}
-			else if (this.animestate === 'jumpleft')  { player.animations.play('jumpleft'+this.playersize+this.playerstate);}
-			else if (this.animestate === 'die')  { player.animations.stop(); player.frame = 6;}
-			else if (this.animestate === 'win')  { player.animations.stop(); player.frame = 7;}
-			else if (this.animestate === 'powerup') { player.animations.stop(); player.frame = 8;}
-			else if (this.animestate === 'fall') { player.animations.stop(); player.frame = 9;}
-			else if (this.animestate === 'left') { player.animations.play('left'+this.playersize+this.playerstate);}
-			else if (this.animestate === 'right') { player.animations.play('right'+this.playersize+this.playerstate);}
-		else { player.animations.stop(); player.animations.play('stop'+this.playersize+this.playerstate);}
-	},
 	// Funcao Magica!!! Deve existir outro jeito!
 	touchingDown: function (someone) {
 		var yAxis = p2.vec2.fromValues(0, 1);
@@ -588,7 +510,7 @@ State.GamePlay.prototype = {
             this.hud.increaseDropBar();
             body2.sprite.kill();
             body2.hasCollided = true;
-			this.playersize = 'big';
+			this.drop.playersize = 'big';
             return true;
         }
         return false;
@@ -599,7 +521,7 @@ State.GamePlay.prototype = {
 
 			body2.sprite.kill();
 			body2.hasCollided = true;
-			this.drop.getSpriteObject().body.moveUp(1500);		
+			this.drop.jump(1500);				
 			this.jumpSound.play();		
 			this.smokeEmitter.start(false, 3000, 50);
 			this.haveEnergy = true;		
@@ -608,14 +530,14 @@ State.GamePlay.prototype = {
 					self.stopSmoke();
 			}, 2000);
 			
-			this.playerstate = 'energy';
+			this.drop.playerstate = 'energy';
 		} 				
 		if (this.countCall == 2) {
 			this.countCall = 0;
 		} 			
 	},
 	hitSunscreen: function () {
-		this.playerstate = 'sunscreen';
+		this.drop.playerstate = 'sunscreen';
 	},
 	killDrop: function (body1, body2) {
         this.countCall++;
@@ -625,14 +547,14 @@ State.GamePlay.prototype = {
             this.haveEnergy = true;
             this.smokeEmitter.on = true;
             this.smokeEmitter.start(false, 3000, 50);
-            if (this.playersize == 'big') {
+            if (this.drop.playersize == 'big') {
                 var self = this;
                 if (this.hud.getDropCounter() == 0) {
                     setTimeout(function(time) {
                         self.hotSandTimerActivated = false;
                         self.stopKillTime(time);
                     }, 2000);
-                    this.playersize = 'small';
+                    this.drop.playersize = 'small';
                     this.hotSandTimerActivated = true;
                 } else {
                     setTimeout(function(time) {
@@ -643,7 +565,7 @@ State.GamePlay.prototype = {
                     }, 2000);
                     this.hotSandTimerActivated = true;
                 }
-            } else if (this.playersize == 'small') {
+            } else if (this.drop.playersize == 'small') {
                 // TODO: restart game
                 this.drop.getSpriteObject().kill();
             }
@@ -656,7 +578,7 @@ State.GamePlay.prototype = {
 		this.haveEnergy = false;
 		this.smokeEmitter.on = false;
 		clearTimeout(this.smokeTimer);
-		this.playerstate = 'normal';
+		this.drop.playerstate = 'normal';
 	},
 	stopKillTime: function(time) {
 		this.drop.getSpriteObject().body.createGroupCallback(this.hotsandCG, this.timeOverKill, this);
@@ -722,7 +644,7 @@ State.GamePlay.prototype = {
             this.playerEnteredRightStraw = false;
         }
         dropSprite.exists = true;
-        dropSprite.body.moveUp(700);
+        this.drop.jump(700);
         this.game.camera.follow(dropSprite);
     },
 	clickHowToPlay: function () {

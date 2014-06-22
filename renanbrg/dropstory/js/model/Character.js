@@ -21,10 +21,15 @@ Character = function(game, characterId, assetPath, assetDimensions) {
     this.character = null;
     this.id = characterId;
     this.assetPath = assetPath;
+    this.animestate = 'stop';  //stores if player is walk, jump, die
+    this.playersize = 'small'; //stores if player is small or big
+    this.playerstate = 'normal'; //stores if player is normal, with sunscreen, with energy
+    this.playershape = null;
 
     this.isAnimated = false;
     this.width = null;
     this.height = null;
+    
     if (typeof assetDimensions === 'undefined') {
         this.isAnimated = false;
     } else if (assetDimensions.length == 2) {
@@ -89,6 +94,62 @@ Character.prototype = {
             throw 'Bad paramater: callback must be a function';
         }
     },
+    
+    setCharacterInicialValues: function () {
+		this.character.smoothed = false;
+    	this.character.body.fixedRotation = true;
+    	this.playershape = this.character.body.setCircle(18,0,4);
+    	
+    	// normal state
+        this.character.animations.add('leftsmallnormal', [4,5,6], 10, true);
+        this.character.animations.add('rightsmallnormal', [8,9,10], 10, true);                                
+        this.character.animations.add('jumpleftsmallnormal', [3], 10, false);                
+        this.character.animations.add('jumprightsmallnormal', [11], 10, false);
+        this.character.animations.add('stopsmallnormal', [7], 10, true);         
+        this.character.animations.add('leftbignormal', [19,20,21], 10, true);
+        this.character.animations.add('rightbignormal', [23,24,25], 10, true);
+        this.character.animations.add('jumpleftbignormal', [18], 10, true);                
+        this.character.animations.add('jumprightbignormal', [26], 10, true);
+        this.character.animations.add('stopbignormal', [22], 10, true);
+
+		// energy state
+        this.character.animations.add('leftsmallenergy', [34,35,36], 10, true);
+        this.character.animations.add('rightsmallenergy', [38,39,40], 10, true);                                
+        this.character.animations.add('jumpleftsmallenergy', [33], 10, false);                
+        this.character.animations.add('jumprightsmallenergy', [41], 10, false);
+        this.character.animations.add('stopsmallenergy', [37], 10, true);                 
+        this.character.animations.add('leftbigenergy', [49,50,51], 10, true);
+        this.character.animations.add('rightbigenergy', [53,54,55], 10, true);
+        this.character.animations.add('jumpleftbigenergy', [48], 10, true);                
+        this.character.animations.add('jumprightbigenergy', [56], 10, true);
+        this.character.animations.add('stopbigenergy', [52], 10, true);
+        
+        // sunscreen state
+        this.character.animations.add('leftsmallsunscreen', [64,65,66], 10, true);
+        this.character.animations.add('rightsmallsunscreen', [68,69,70], 10, true);                                
+        this.character.animations.add('jumpleftsmallsunscreen', [63], 10, false);                
+        this.character.animations.add('jumprightsmallsunscreen', [71], 10, false);
+        this.character.animations.add('stopsmallsunscreen', [67], 10, true);                 
+        this.character.animations.add('leftbisunscreen', [79,80,81], 10, true);
+        this.character.animations.add('rightbigsunscreen', [83,84,85], 10, true);
+        this.character.animations.add('jumpleftbigsunscreen', [78], 10, true);                
+        this.character.animations.add('jumprightbigsunscreen', [86], 10, true);
+        this.character.animations.add('stopbigsunscreen', [82], 10, true);
+	},
+	
+	playerAnimations: function () {
+		if (this.animestate === 'jumpTop') { this.character.animations.stop(); this.character.frame = 2;}
+			else if (this.animestate === 'jumpright')  { this.character.animations.play('jumpright'+this.playersize+this.playerstate);}
+			else if (this.animestate === 'jumpleft')  { this.character.animations.play('jumpleft'+this.playersize+this.playerstate);}
+			else if (this.animestate === 'die')  { this.character.animations.stop(); this.character.frame = 6;}
+			else if (this.animestate === 'win')  { this.character.animations.stop(); this.character.frame = 7;}
+			else if (this.animestate === 'powerup') { this.character.animations.stop(); this.character.frame = 8;}
+			else if (this.animestate === 'fall') { this.character.animations.stop(); this.character.frame = 9;}
+			else if (this.animestate === 'left') { this.character.animations.play('left'+this.playersize+this.playerstate);}
+			else if (this.animestate === 'right') { this.character.animations.play('right'+this.playersize+this.playerstate);}
+		else { this.character.animations.stop(); this.character.animations.play('stop'+this.playersize+this.playerstate);}
+	},
+
 
     /**
      * Make the character move to the right.
@@ -99,12 +160,7 @@ Character.prototype = {
      * @param {integer} speed - how fast the sprite will move to the right.
      */
     moveRight: function(speed) {
-    	//console.log("velocidade: "+this.character.x);
-        //this.character.x += speed;
-        //console.log("velocidade: "+this.character.x);
-        if (this.isAnimated) {
-            //this.character.animations.play('right');
-        }
+		this.character.body.moveRight(speed);
     },
 
     /**
@@ -116,24 +172,7 @@ Character.prototype = {
      * @param {integer} speed - how fast the sprite will move to the left.
      */
     moveLeft: function(speed) {
-        //this.character.x -= speed;
-        if (this.isAnimated) {
-        	//this.character.animations.play('left');
-        }
-    },
-
-    /**
-     * Make the character stop.
-     *
-     * @method Character#stop
-     * @memberof Character
-     */
-    stop: function() {
-        if (this.isAnimated) {
-        	this.character.animations.stop();
-        }
-        //this.character.frame = 9;
-        this.character.body.velocity.x = 0;
+		this.character.body.moveLeft(speed);
     },
 
     /**
@@ -146,10 +185,21 @@ Character.prototype = {
      * It must be a value bigger than 0.
      */
     jump: function(jumpHeight) {
-        //if (this.character.body.onFloor() || this.character.body.touching.down) {
-    	//if (this.character.body.touching.down)
-            this.character.body.velocity.y = -jumpHeight;
-       // }
+		this.character.body.moveUp(jumpHeight);
+    },
+    
+    /**
+     * Make the character stop.
+     *
+     * @method Character#stop
+     * @memberof Character
+     */
+    stop: function() {
+        if (this.isAnimated) {
+        	this.character.animations.stop();
+        }
+        //this.character.frame = 9;
+        this.character.body.velocity.x = 0;
     },
 
     /**
