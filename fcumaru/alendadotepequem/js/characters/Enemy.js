@@ -8,8 +8,10 @@ function Enemy(game) {
 	this.asset = 'assets/boss_120-120-20.png';
 	this.walk = 300;
 	this.life = 1;
+	
+	this.currAnimRef = null;
 
-	this.direction = LEFT;//Math.round(Math.random());
+	this.direction = RIGHT;//Math.round(Math.random());
 
 	this.initX = 20;
 	this.initY = 1000;
@@ -45,7 +47,7 @@ Enemy.method('create', function() {
 	this.enemy.health = this.life;
 });
 
-Enemy.method('update', function(layer, enemies) {
+Enemy.method('update', function(layer, heroes) {
 	"use strict";
 	this.game.physics.arcade.collide(layer, this.enemy);
 

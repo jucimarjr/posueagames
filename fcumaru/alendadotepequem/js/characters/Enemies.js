@@ -26,11 +26,11 @@ Enemies.prototype = {
 			this.values[i].create();
 		}
 	},
-	update : function(layer) {
+	update : function(layer, heroes) {
 		"use strict";
 
 		for (var i = 0; i < this.values.length; i++) {
-			this.values[i].update(layer);
+			this.values[i].update(layer, heroes);
 		}
 	},
 	pop : function() {

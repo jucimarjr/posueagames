@@ -67,7 +67,7 @@ State.Game.prototype = {
 
 		this.enemies.create();
 		this.rocks.create();
-		this.rocks.pop(500, 1000);
+		this.rocks.pop(550, 1000);
 		this.trees.create();
 		this.trees.pop(800, 1500);
 
