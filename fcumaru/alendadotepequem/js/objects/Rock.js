@@ -85,9 +85,11 @@ Rocks.prototype = {
 
 		rock.create();
 	},
-	checkCollision : function(hero) {
+	checkCollision : function(heroes) {
 		for (var i = 0; i < this.values.length; i++) {
-			this.values[i].checkCollision(hero);
+			for (var j = 0; j < heroes.size(); j++) {
+				this.values[i].checkCollision(heroes.getHero(j));
+			}
 		}
 	}
 };

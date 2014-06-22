@@ -23,11 +23,11 @@ function HeroOfPower(game) {
 		"use strict";
 
 		this.hero = this.game.add.sprite(this.initX, this.initY, this.key, 34);
-		this.hero.animations.add('walk', [ 0, 1, 2, 3 ], 10, true);
-		this.hero.animations.add('jump', [ 4, 5, 6, 8 ], 10, false);
-		this.hero.animations.add('power', [ 9, 10, 11 ], 6, true);
-		this.hero.animations.add('down', [ 12, 13, 14 ], 6, false);
-		this.hero.animations.add('died', [ 15, 16, 17 ], 10, true);
+		this.hero.animations.add('walk', [ 7, 1, 2, 3 ], 10, true);
+		this.hero.animations.add('jump', [ 4, 5, 6, 5 , 4 ], 8, false);
+		this.hero.animations.add('power', [ 8, 9, 10, 11 ], 5, true);
+		this.hero.animations.add('down', [ 12, 13 ], 6, false);
+		this.hero.animations.add('died', [ 14, 15, 16 ], 4, true);
 
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
@@ -68,7 +68,7 @@ function HeroOfPower(game) {
 				this.hero.body.velocity.x = -this.walk;
 				if (this.hero.isPushing) {
 					this.hero.animations.play('power');
-				} else {
+				} else if (this.jumpCount == 0) {
 					this.hero.animations.play('walk');
 				}
 				this.hero.scale.x = -1; // espelha se antes -1
@@ -78,7 +78,7 @@ function HeroOfPower(game) {
 				this.hero.body.velocity.x = this.walk;
 				if (this.hero.isPushing) {
 					this.hero.animations.play('power');
-				} else {
+				} else if (this.jumpCount == 0) {
 					this.hero.animations.play('walk');
 				}
 				this.hero.scale.x = +1; // espelha se antes 1
@@ -98,7 +98,7 @@ function HeroOfPower(game) {
 		
 		if (!keyPressed) {
 			this.hero.animations.stop();
-			this.hero.frame = 0;
+			this.hero.frame = 7;
 
 			this.hero.isPushing = false;
 		}

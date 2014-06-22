@@ -11,7 +11,7 @@ Heroes = function(game) {
 	"use strict";
 	this.game = game;
 	this.index = 0;
-	
+
 	this.heroes = new Array();
 
 	var hero1 = new HeroOfPower(game);
@@ -25,11 +25,17 @@ Heroes = function(game) {
 };
 
 Heroes.prototype = {
+	getHero : function(index) {
+		return this.heroes[index].hero;
+	},
 	getCurrent : function() {
 		return this.heroes[this.index].hero;
 	},
 	setCurrentIndex : function(index) {
 		this.index = index;
+	},
+	size : function() {
+		return this.heroes.length;
 	},
 	preload : function() {
 		for (var i = 0; i < this.heroes.length; i++) {

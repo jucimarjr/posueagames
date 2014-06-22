@@ -79,7 +79,7 @@ State.Game.prototype = {
 		this.enemies.update(this.layer);
 		this.trees.update(this.layer);
 		this.rocks.update(this.layer);
-		this.rocks.checkCollision(this.heroes.getCurrent());
+		this.rocks.checkCollision(this.heroes);
 		this.trees.checkCollision(this.heroes.getCurrent());
 		if(this.heroes.heroes[this.heroes.index].type === HERO_OF_ROPE){
 			this.trees.ropeCollision(
