@@ -38,11 +38,18 @@ Tree.prototype = {
         if(this.checkOverlap(this.tree, rope)){
             this.hasRope = true;
             var angle = -90;
-            if(facingLeft) angle *= -1;
-            this.game.add.tween(this.tree)
-                .to({angle: angle}, 2000, Phaser.Easing.Exponential.In)
-                .start()
-                .onComplete.add(function() {this.tree.body.setSize(241, 50, -80, 20);}, this);
+            if(!facingLeft) {
+                this.game.add.tween(this.tree)
+                    .to({angle: angle}, 2000, Phaser.Easing.Exponential.In)
+                    .start()
+                    .onComplete.add(function() {this.tree.body.setSize(241, 50, -80, 20);}, this);
+            }
+            else {
+                this.game.add.tween(this.tree)
+                    .to({angle: -angle}, 2000, Phaser.Easing.Exponential.In)
+                    .start()
+                    .onComplete.add(function() {this.tree.body.setSize(241, 50, 80, 20);}, this);
+            }                
         }
     },
 
