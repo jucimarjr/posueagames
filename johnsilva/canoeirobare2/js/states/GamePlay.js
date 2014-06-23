@@ -78,7 +78,7 @@ State.GamePlay.prototype = {
 				Config.finalPhase.lightRadius += 25;
 			}, null, this);
 			this.game.physics.arcade.overlap(this.player, this.flag, function () {
-				this.game.add.tween(this.player).to({alpha:0}, 500, Phaser.Easing.Linear.None).start().onComplete.add(function() {
+				this.game.add.tween(this.player).to({alpha:0}, 400, Phaser.Easing.Linear.None).start().onComplete.add(function() {
 		    		this.nextPhase();
 				}, this);				
 			}, null, this);		
