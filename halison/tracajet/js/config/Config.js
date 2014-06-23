@@ -175,6 +175,7 @@ Config.game = {
 		},
 		fase3: {
 			background: "assets/images/bg3_tmp_2880-1200.png",
+	        json: "assets/Fase3.json",
 			nuvens: { 
 				dir: "assets/sprites/nuvens_120-40-4.png",
 				width: 120,

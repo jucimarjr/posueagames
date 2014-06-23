@@ -6,7 +6,7 @@
  <tileset firstgid="5" name="frutas_24-30-5" tilewidth="23" tileheight="30">
   <image source="sprites/frutas_24-30-5.png" trans="ff00ff" width="120" height="30"/>
  </tileset>
- <layer name="Background" width="36" height="15">
+ <layer name="Camada de Tiles 1" width="36" height="15">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUjIKBBYxIeCQBRgb8fkeXH2nhQyxAD5vRcIIAfOEyEGkKADV8ABY=
   </data>
