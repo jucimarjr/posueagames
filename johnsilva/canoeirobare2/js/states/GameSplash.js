@@ -49,9 +49,9 @@ State.GameSplash.prototype = {
 		this.game.load.image('bg1', 'assets/level/bg1_462-800.jpg');
 		this.game.load.image('bg2', 'assets/level/bg3_462-800.jpg');
 		this.game.load.image('bg3', 'assets/level/bg6_462-800.jpg');
-		this.game.load.image('bg4', 'assets/level/bg4_462-800.jpg');
-		this.game.load.image('bg5', 'assets/level/bg5_462-800.jpg');
-		this.game.load.image('bg6', 'assets/level/bg6_462-800.jpg');
+		this.game.load.image('bg4', 'assets/level/cenario2/bg1_860-800.jpg');
+		this.game.load.image('bg5', 'assets/level/cenario2/bg2_860-800.jpg');
+		this.game.load.image('bg6', 'assets/level/cenario2/bg3_860-800.jpg');
 		this.game.load.image('bg7', 'assets/level/cenario3/3cave_430-800.jpg');
 		//this.game.load.image('bg9', 'assets/level/bg6_462-800.jpg');
 		this.game.load.image('cipo', 'assets/level/cipo_10-80.png');
@@ -64,6 +64,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('dardo', 'assets/level/cenario3/dartH4_33-7.png');
 		this.game.load.image('acidicWater', 'assets/enemies/gota_13-37.png');
 		this.game.load.image('caba', 'assets/enemies/caba_8-8.png');
+		this.game.load.spritesheet('rain', 'assets/level/rain.png', 17, 17);
 
 		this.game.load.audio('jumpSound', Config.audio.jump);
 		this.game.load.audio('dieSound', Config.audio.die);

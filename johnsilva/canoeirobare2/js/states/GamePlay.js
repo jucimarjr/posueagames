@@ -78,14 +78,9 @@ State.GamePlay.prototype = {
 				Config.finalPhase.lightRadius += 25;
 			}, null, this);
 			this.game.physics.arcade.overlap(this.player, this.flag, function () {
-				Config.levelConfig.checkPoint.x = 0;
-				Config.levelConfig.checkPoint.y = 0;
-				phaseSound.stop();
-				Config.levelId.level = ++this.level;
-				this.player.alpha = 0;
-				this.player.body.x = 0;
-				this.player.body.y = 0;
-				this.game.state.start('GamePlay');
+				this.game.add.tween(this.player).to({alpha:0}, 500).start().onComplete.add(function() {
+		    		this.nextPhase();
+				}, this);				
 			}, null, this);		
 		
         	if (cursors.left.isDown ) {
@@ -131,6 +126,16 @@ State.GamePlay.prototype = {
 				jumping = false;
 			}
 		}
+	},
+
+	nextPhase: function(){
+		Config.levelConfig.checkPoint.x = 0;
+		Config.levelConfig.checkPoint.y = 0;
+		phaseSound.stop();
+		Config.levelId.level = ++this.level;
+		this.player.body.x = 0;
+		this.player.body.y = 0;
+		this.game.state.start('GamePlay');
 	},
 
 	addPlayer: function(){
@@ -247,6 +252,20 @@ State.GamePlay.prototype = {
 		
 		if(this.level == Config.finalPhase.id)
 			this.initShadow();
+
+		if(this.level == 3 || this.level == 6){
+			var emitter = game.add.emitter(game.world.centerX, 0, 400);
+			emitter.width = game.world.width;
+			// emitter.angle = 30; // uncomment to set an angle for the rain.
+			emitter.makeParticles('rain');
+			emitter.minParticleScale = 0.1;
+			emitter.maxParticleScale = 0.5;
+			emitter.setYSpeed(300, 500);
+			emitter.setXSpeed(-5, 5);
+			emitter.minRotation = 0;
+			emitter.maxRotation = 0;
+			emitter.start(false, 1600, 5, 0);
+		}
 
 		/*var styleBig = { font: "40px Arial Bold", fill: "#ffffff" };
 		var text ;
@@ -452,8 +471,8 @@ State.GamePlay.prototype = {
 		this.game.add.tween(this.player).to({alpha:0}, 300).start().onComplete.add(function() {
 		    	//this.loadLevel(this.level);
 		    	//this.game.state.start('GamePlay');
-		    	this.restartPhase(enemie, emitter);
-			}, this);		
+		    this.restartPhase(enemie, emitter);
+		}, this);		
     },
 
     restartPhase: function(enemie, emitter){
@@ -530,10 +549,10 @@ State.GamePlay.prototype = {
     render: function (){
     	/*game.debug.text(this.game.world.bounds.width,32,32);
     	game.debug.text(this.game.world.bounds.height,32,64);*/
-    	game.debug.text(this.player.body.x,32,32);
+    	//game.debug.text(this.player.body.x,32,32);
     	//game.debug.text(this.player.body.y,32,64);
-    	game.debug.text(levelConfig.checkPoint.x,200,32);
-    	game.debug.text(levelConfig.player.posX,400,32);
+    	//game.debug.text(levelConfig.checkPoint.x,200,32);
+    	//game.debug.text(levelConfig.player.posX,400,32);
     	//game.debug.text(levelConfig.checkPoint.y,200,64);
 
     	//game.debug.body(this.player);
