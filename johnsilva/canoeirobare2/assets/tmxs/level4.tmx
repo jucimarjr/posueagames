@@ -46,7 +46,7 @@
  </objectgroup>
  <layer name="Camada de Tiles 1" width="48" height="20">
   <data encoding="base64" compression="zlib">
-   eJzV1ldrwzAUhmElcQekF/UP6d4z3Xvvne75/+/7mlpwKixbnhDBAwEfdD4d5CSeUqq3Q3noxhSmMYNZzGEeC1jEAAYxhGGMYBRjGMdEgTWTDnl0TVeYfwnLWMEq1rCODWym3DNvTcshj67R+bexg13sYR8HOMSR45798B37xtVsOeTRNTr/CU5xhnNc4BJX6m8l7VlHLdQwasxnSdmORR69ZJ5rUaPz3+IO93hAG49ookfos5xR7mmbQ1SNPltD1NyEeZpG3yDPE55FTZDfM+bzgU98ieeSrmtb9oyaQ5qaF7xG9K6p/zmVmL9tmXsEte/GGb/xI/q+5ayJ6m3LmCV/mSu4T3K2WfPre2nenbLzy1X2/OW7Z1v1hOdxK01+32GPMuYfd76o/PK7WN4P2xyrvv+23lW+v3nujK13lvy+Kn7+ac6WNb+8Y67fP0XN3MxWxu9XVasTf79svYO++v+tLz6b/39M5v2Jqy2aS9+ofJ3mF++QUao=
+   eJzV1ldvgzAUhmEnoUNKL8oP6d5777333u3/v++LiqVTC4MhQISlR4rEkc/nI5PEU0p1V5SHTkxgElOYxgxmMYd59KEfAxjEEIYxglGMtammI8y/iCUsYwWrWMM6NjDucMZ21Oj8W9jGDnaxh30c4BALDmfshZ9Q47JPmhqd/xgnOMUZznGBS/W3NhPOWEct1DBqzGdJs0rqJWt0/hvc4g73eMAjmugSeixnvMJRwhyiavTZGhE1TaOvzvQsaoL8njGfD3ziSzyXdJ3e7ync8zpmDllqzN419T+nEvO3LXOPoPbdOOM3fvCCV7y1WBPV25YxS/4iV3Cf5Gyz5tf30rw7ReeXq+j5y3fPtuoJz+NWmvy+wx5FzD/ufFH55XexvB+2OZZ9/229y3x/W7kztt5Z8vsq//mnOVvW/PKOuX7/5DVzM1sRv19lrSr+ftl6B331/1tffDb//5jM+xNXmzeXvlH5quYX3MZQjw==
   </data>
  </layer>
  <objectgroup name="bees" width="48" height="20">
@@ -58,26 +58,26 @@
   <object gid="19" x="1800" y="351"/>
  </objectgroup>
  <objectgroup name="waters" width="48" height="20">
-  <object gid="18" x="178" y="112"/>
-  <object gid="18" x="698" y="270"/>
-  <object gid="18" x="978" y="272"/>
-  <object gid="18" x="1258" y="311"/>
+  <object gid="18" x="178" y="104"/>
+  <object gid="18" x="698" y="264"/>
+  <object gid="18" x="978" y="264"/>
+  <object gid="18" x="1258" y="304"/>
   <object gid="18" x="1578" y="107"/>
-  <object gid="18" x="1618" y="105"/>
-  <object gid="18" x="1738" y="350"/>
+  <object gid="18" x="1618" y="104"/>
+  <object gid="18" x="1738" y="344"/>
   <object gid="18" x="1778" y="549"/>
   <object gid="18" x="1818" y="547"/>
  </objectgroup>
  <objectgroup name="tubes" width="48" height="20">
-  <object gid="23" x="168" y="73"/>
-  <object gid="23" x="688" y="233"/>
-  <object gid="23" x="968" y="233"/>
-  <object gid="23" x="1249" y="273"/>
-  <object gid="23" x="1568" y="72"/>
-  <object gid="23" x="1728" y="313"/>
-  <object gid="23" x="1767" y="514"/>
-  <object gid="23" x="1808" y="513"/>
-  <object gid="23" x="1611" y="72"/>
+  <object gid="23" x="168" y="64"/>
+  <object gid="23" x="688" y="224"/>
+  <object gid="23" x="968" y="224"/>
+  <object gid="23" x="1248" y="264"/>
+  <object gid="23" x="1568" y="64"/>
+  <object gid="23" x="1728" y="304"/>
+  <object gid="23" x="1768" y="504"/>
+  <object gid="23" x="1808" y="504"/>
+  <object gid="23" x="1608" y="64"/>
  </objectgroup>
  <objectgroup name="bushes" width="48" height="20">
   <object gid="13" x="41" y="720"/>
