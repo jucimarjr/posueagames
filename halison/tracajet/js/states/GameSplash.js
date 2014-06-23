@@ -3,6 +3,7 @@
 State.GameSplash = function (game) {
 	"use strict";
 	this.game = game;
+	this.isMenuStarted = false;
 };
 State.GameSplash.prototype = {
 	preload: function () {
@@ -49,10 +50,13 @@ State.GameSplash.prototype = {
 		var h2play =   game.cache.checkImageKey('how-to-play');
 		var crt =       game.cache.checkImageKey('credits-text');
 		var h2playt =   game.cache.checkImageKey('how-to-play-text');
-		if (menu && bPlay && bCredits && bHowPlay && cr && h2play && crt && h2playt ){
+		if (!this.isMenuStarted
+			&& menu && bPlay && bCredits && bHowPlay && cr && h2play && crt && h2playt 
+		){
+		    this.isMenuStarted = true;
 			setTimeout(function () {
-				this.game.state.start('Menu');}
-			, Config.gameSplash.millis);		
+				this.game.state.start('Menu');
+			}, Config.gameSplash.millis);		
 		}
 	}
 };
