@@ -228,8 +228,7 @@ State.GamePlay.prototype = {
 			this.map.setCollisionBetween(1,12, true,'Camada de Tiles 1');
 		}		
 
-		if(levelConfig.branches.exists) this.map.addTilesetImage('branches','branches');
-		if(levelConfig.waters.id>0) this.addWaters(levelConfig.waters.id);
+		if(levelConfig.branches.exists) this.map.addTilesetImage('branches','branches');		
 		if(levelConfig.thorns.id>0) this.addThorns(levelConfig.thorns.id);
 		if(levelConfig.coin.id>0) this.addCoin(levelConfig.coin.id, levelConfig.coin.image);
 		if(levelConfig.cipo.id>0) this.addCipo(levelConfig.cipo.id);
@@ -244,6 +243,7 @@ State.GamePlay.prototype = {
 		this.game.physics.enable(this.layer);
 
 		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);
+		if(levelConfig.waters.id>0) this.addWaters(levelConfig.waters.id);
 		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
 		if(levelConfig.checkPoint.id>0) this.addCheckPoint(levelConfig.checkPoint.id);
 		if(levelConfig.cannons.id>0) this.addCannons(levelConfig.cannons.id);
