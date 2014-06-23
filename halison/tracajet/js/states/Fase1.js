@@ -34,6 +34,7 @@ State.Fase1= function (game) {
 	this.soundGetSheet;
 	this.soundGameOver;
 	this.soundGetKey;
+	this.soundColision;
 };
 
 var folha;
@@ -55,6 +56,7 @@ State.Fase1.prototype = {
 		this.soundGetSheet = game.add.audio('soundGetSheet',1,true);
 		this.soundGameOver = game.add.audio('soundGameOver',1,true);
 		this.soundGetKey = game.add.audio('soundGetKey',1,true)
+		this.soundColision = game.add.audio('soundColision',1,true)
 	},
 
 	create: function () {
@@ -301,6 +303,7 @@ State.Fase1.prototype = {
 				dieText.setText("GAME OVER");
 				this.soundGameOver.play('',0,0.5,false);
 			}else{
+				this.soundColision.play('',0,0.5,false);
 				this.tracajet.isImmortal = true;
 				Config.game.score.lifes--;
 				this.txLife.setText("x " + Config.game.score.lifes);
