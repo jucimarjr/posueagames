@@ -6,7 +6,8 @@ State.GamePlay = function (game) {
     this.map = null;
     this.layer1 = null;
     this.layer2 = null;
-    this.player = null;
+    this.layermain1 = null;
+    this.layermain2 = null;
     this.crabs = null;
     this.shell = null;
     this.sunscreen = null;
@@ -22,7 +23,6 @@ State.GamePlay = function (game) {
     this.userDead = false;
     this.dropCollisionGroup = null;
     this.crabCollisionGroup = null;
-    this.layerBody = null;
     this.hud = new HUD(this.game);
     this.forceSlidingStraw = false;
     this.onAir = false;
@@ -82,267 +82,36 @@ State.GamePlay.prototype = {
 		var background;
 		background = this.game.add.tileSprite(Config.gamePlay.x, Config.gamePlay.y, 4800, 600, 'gameplay-bg');
 		background.fixedToCamera = true;
-		this.game.physics.startSystem(Phaser.Physics.P2JS);
-        this.game.physics.p2.gravity.y = 1400;
-        this.game.physics.defaultRestitution = 0;
-        this.game.stage.smoothed = false;  // no antialiasing
-        this.game.world.enableBodySleeping=true;
         		
 		this.map = this.game.add.tilemap('map');
 		this.map.addTilesetImage('barra_160-80', 'plataforma');
 		this.map.addTilesetImage('areiaSeca_40-40', 'areia');
-        this.map.addTilesetImage('red_40-40', 'areia_quente');
+        this.map.addTilesetImage('red_40-40', 'areia_quente');                       
         this.layer1 = this.map.createLayer('Camada de Tiles 1');
         this.layer2 = this.map.createLayer('Camada de Tiles 2');
         this.layer1.resizeWorld();
         this.layer2.resizeWorld();
-		        
-        //  Set the tiles for collision.
-        //  Do this BEFORE generating the p2 bodies below.
-		//this.map.setCollisionByExclusion([0],true, this.layer);
-        this.layermain1 = game.physics.p2.convertTilemap(this.map, this.layer1);
-        this.layermain2 = game.physics.p2.convertTilemap(this.map, this.layer2);
-        this.game.physics.p2.setImpactEvents(true);
-        this.game.physics.p2.updateBoundsCollisionGroup();
         
-        // define collision group
-		this.playerCG = game.physics.p2.createCollisionGroup();
-		this.groundCG = game.physics.p2.createCollisionGroup();
-		this.crabCG = game.physics.p2.createCollisionGroup();
-		this.strawCG = game.physics.p2.createCollisionGroup();
-		this.coveredStrawCG = game.physics.p2.createCollisionGroup();
-		this.lifeDropCG = game.physics.p2.createCollisionGroup();
-		this.seashellCG = game.physics.p2.createCollisionGroup();
-		this.urchinsCG = game.physics.p2.createCollisionGroup();
-		this.hotsandCG = game.physics.p2.createCollisionGroup();
-        this.bucketCG = game.physics.p2.createCollisionGroup();
-        this.sunscreenCG = game.physics.p2.createCollisionGroup();
-        this.energyCG = game.physics.p2.createCollisionGroup();
-		
-		// Create and Setup Material
-        this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
-        this.slidingMaterial = game.physics.p2.createMaterial('slidingMaterial');            
-        this.crabMaterial = game.physics.p2.createMaterial('crabMaterial');           
-        this.groundMaterial = game.physics.p2.createMaterial('groundMaterial');
-        this.hotsandMaterial = game.physics.p2.createMaterial('hotsandMaterial');
-
+        this.setupPhysics();
+        this.setupLayers();
+		      
 		// wet sand
 		this.game.add.image(0, this.game.height-80, 'wetSand');
-		
-        //setup all tiles with collisiongroups or materials
-		for (var i=0; i<this.layermain1.length; i++) {
-			this.layermain1[i].setCollisionGroup(this.groundCG);
-			this.layermain1[i].collides([this.playerCG, this.crabCG, this.lifeDropCG, this.groundCG, this.energyCG]);
-			this.layermain1[i].setMaterial(this.groundMaterial);
-		}
-        for (var i=0; i<this.layermain2.length; i++) {
-            this.layermain2[i].setCollisionGroup(this.hotsandCG);
-            this.layermain2[i].collides([this.playerCG, this.crabCG,
-                    this.lifeDropCG, this.seashellCG, this.groundCG,
-                    this.urchinsCG, this.energyCG]);
-            this.layermain2[i].setMaterial(this.groundMaterial);
-        }
-        
-        // Create sea shell
-        this.seashell = this.game.add.sprite(450, this.game.world.height - 106,
-                'seashell');
-        this.game.physics.p2.enableBody(this.seashell);
-        this.seashell.body.clearShapes();
-        this.seashell.body.loadPolygon('seashellPhysics', 'seashell_220-68');
-        this.seashell.body.fixedRotation = true;
-        this.seashell.body.static = true;
-        this.seashell.body.setCollisionGroup(this.seashellCG);
-        this.seashell.body.collides([this.groundCG, this.crabCG,
-                this.playerCG]);
-        this.seashell.body.setMaterial(this.groundMaterial);
 
-        // Create sunscreen
-        this.sunscreen = this.game.add.sprite(3200, this.game.world.height-59-44,'sunscreen');
-        this.game.physics.p2.enableBody(this.sunscreen);
-        this.sunscreen.body.fixedRotation = true;
-        this.sunscreen.body.static = true;
-        this.sunscreen.body.setMaterial(this.groundMaterial);
-        this.sunscreen.body.setCollisionGroup(this.sunscreenCG);
-        this.sunscreen.body.collides([this.groundCG, this.crabCG, this.playerCG]);        
-        var cover = this.game.add.sprite(3060, this.game.world.height-78,'coversunscreen');
-        this.game.physics.p2.enableBody(cover);
-        cover.body.fixedRotation = true;
-        cover.body.static = true;
-        cover.body.setMaterial(this.groundMaterial);
-        cover.body.setCollisionGroup(this.sunscreenCG);
-        cover.body.collides([this.groundCG, this.crabCG, this.playerCG]);
-        
-        // create CAN
-        this.can = this.game.add.sprite(1620, this.game.world.height-80,'can');
-        this.game.physics.p2.enableBody(this.can, false);
-        this.can.body.fixedRotation = true;
-        this.can.body.setRectangle(260,120,0,0);
-        this.can.body.static = true;
-        this.can.body.setMaterial(this.groundMaterial);
-        this.can.body.setCollisionGroup(this.groundCG);
-        this.can.body.collides([this.groundCG, this.crabCG, this.playerCG]);               
-
-        // create crabs
-        this.crabs = game.add.group();
-		this.crabs.enableBody = true;
-		this.crabs.physicsBodyType = Phaser.Physics.P2JS;		
-		this.crabs.create(this.game.width-180, this.game.height-80-69, 'crab');
-        this.crabs.create(this.game.width, this.game.height-80-69, 'crab');
-        this.crabs.create(4480, this.game.height-80-69, 'crab');        
-		for (var i = 0; i < this.crabs.length; i++) {				
-			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);				
-			this.crabs.getAt(i).body.fixedRotation = true;	
-			this.crabs.getAt(i).body.setMaterial(this.crabMaterial);
-			this.crabs.getAt(i).animations.add('walkL', [0, 1, 2], 10, true);
-			this.crabs.getAt(i).animations.add('walkR', [0, 1, 2], 10, true);			
-			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG,
-                    this.groundCG, this.seashellCG, this.hotsandCG, this.sunscreenCG]);
-		}
-		this.crabs.getAt(0).body.moveLeft(400);
-		this.crabs.getAt(1).body.moveRight(400);
-		this.crabs.getAt(2).body.moveRight(400);
-		                
-         // add energy
-        this.energy = game.add.group();
-        this.energy.enableBody = true;
-        this.energy.physicsBodyType = Phaser.Physics.P2JS;
-        this.energy.create(1700, this.game.world.height-80-75, 'energy');
-        for (var i = 0; i < this.energy.length; i++) {
-            this.energy.getAt(i).body.setCollisionGroup(this.energyCG);
-            this.energy.getAt(i).body.fixedRotation = true;
-            this.energy.getAt(i).body.static = true;
-            this.energy.getAt(i).animations.add('energyMove',
-                    [0, 1, 2, 3, 4], 10, true);
-            this.energy.getAt(i).animations.play('energyMove');
-            this.energy.getAt(i).body.collides([this.groundCG, this.crabCG, 
-												this.playerCG, this.hotsandCG]);
-            this.energy.hasCollided = false;
-        }
-
-        // Create the sea urchins
-        this.urchins = game.add.group();
-        this.urchins.enableBody = true;
-        this.urchins.physicsBodyType = Phaser.Physics.P2JS;
-        this.urchins.create(3430, this.game.height - 80 - 20, 'urchin');
-        this.urchins.create(3730, this.game.height - 80 - 20, 'urchin');
-        for (var i = 0; i < this.urchins.length; i++) {
-            this.urchins.getAt(i).body.setCollisionGroup(this.urchinsCG);
-            this.urchins.getAt(i).body.static = true;
-            this.urchins.getAt(i).animations.add('nohit', [0], 10, true);
-            this.urchins.getAt(i).animations.add('hit', [1], 10, true);
-            this.urchins.getAt(i).animations.play('nohit');
-            this.urchins.getAt(i).body.collides([this.playerCG, this.groundCG]);
-        }
-
-        // Add the bucket
-        this.bucket = this.game.add.sprite(2250, 272, 'bucket');
-        this.game.physics.p2.enableBody(this.bucket, false);
-        this.bucket.body.clearShapes();
-        this.bucket.body.loadPolygon('bucketPhysics', 'bucket_384-497');
-        this.bucket.body.fixedRotation = true;
-        this.bucket.body.static = true;
-        this.bucket.body.setCollisionGroup(this.bucketCG);
-        this.bucket.body.collides([this.groundCG, this.playerCG]);
-
-        // Tip of the straw (in the left of the bucket)
-        this.strawLeft = this.game.add.sprite(2010, 510, 'straw1');
-        this.game.physics.p2.enableBody(this.strawLeft, false);
-        this.strawLeft.body.fixedRotation = true;
-        this.strawLeft.body.static = true;
-        this.strawLeft.body.setCollisionGroup(this.coveredStrawCG);
-        this.strawLeft.body.collides([this.playerCG]);
-        this.playerEnteredLeftStraw = false;
-
-        // Straw passing under the ground
-        this.strawUnderGround = this.game.add.sprite(2000, 520, 'dropInStraw');
-        var strawAnimationRight =
-            this.strawUnderGround.animations.add('dropInsideRight',
-            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, false);
-        strawAnimationRight.onComplete.add(this.strawAnimationComplete, this);
-        var strawAnimationLeft =
-            this.strawUnderGround.animations.add('dropInsideLeft',
-            [9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 10], 10, false);
-        strawAnimationLeft.onComplete.add(this.strawAnimationComplete, this);
-        this.strawUnderGround.animations.add('strawNormal', [10], 10, false);
-        this.strawUnderGround.animations.play('strawNormal');
-
-        // Tip of the straw (in the right of the bucket)
-        this.strawRight = this.game.add.sprite(2470, 510, 'straw1');
-        this.game.physics.p2.enableBody(this.strawRight, false);
-        this.strawRight.body.fixedRotation = true;
-        this.strawRight.body.static = true;
-        this.strawRight.body.setCollisionGroup(this.coveredStrawCG);
-        this.strawRight.body.collides([this.playerCG]);
-        this.playerEnteredRightStraw = false;
-
-		// canudo
-		this.diagonalStraw = this.game.add.sprite(2720, 270, 'straw2');
-		this.game.physics.p2.enableBody(this.diagonalStraw, false);
-		this.diagonalStraw.body.clearShapes();
-		this.diagonalStraw.body.loadPolygon('strawPhysics', 'straw2_236-276');
-		this.diagonalStraw.body.fixedRotation = true;
-		this.diagonalStraw.body.static = true;
-		this.diagonalStraw.body.setCollisionGroup(this.strawCG);
-        this.diagonalStraw.body.collides([this.groundCG, this.playerCG]);
-
-        // Add a "life drop"
-        this.lifeDrop = game.add.group();
-        this.lifeDrop.enableBody = true;
-        this.lifeDrop.physicsBodyType = Phaser.Physics.P2JS;
-        this.lifeDrop.create(280, 268, 'life_drop');
-        for (var i = 0; i < this.lifeDrop.length; i++) {
-            this.lifeDrop.getAt(i).body.setCollisionGroup(this.lifeDropCG);
-            this.lifeDrop.getAt(i).body.fixedRotation = true;
-            this.lifeDrop.getAt(i).body.static = true;
-            this.lifeDrop.getAt(i).animations.add('dropAnimation',
-                    [0, 1, 2, 3, 4], 10, true);
-            this.lifeDrop.getAt(i).animations.play('dropAnimation');
-            this.lifeDrop.getAt(i).body.collides([this.playerCG, this.groundCG]);
-            this.lifeDrop.hasCollided = false;
-        }
-
-        // create player
-        this.drop.create(150, this.game.world.height-200);
-        var dropSprite = this.drop.getSpriteObject();
-        this.game.camera.follow(dropSprite);
-        this.game.physics.p2.enableBody(dropSprite, false);		
-        this.drop.setCharacterInicialValues(); 
-        dropSprite.body.setMaterial(this.characterMaterial);
-        dropSprite.body.setCollisionGroup(this.playerCG);
-        dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
-								  this.lifeDropCG, this.seashellCG, this.urchinsCG,
-								  this.hotsandCG, this.bucketCG, this.coveredStrawCG, 
-								  this.sunscreenCG, this.energyCG]);
-
-        // collide callbacks
-		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
-        dropSprite.body.createGroupCallback(this.urchinsCG, this.checkCollisionUrchins, this);
-        dropSprite.body.createGroupCallback(this.lifeDropCG,
-                this.checkOverlapWithLifeDrop, this);
-		dropSprite.body.createGroupCallback(this.energyCG, this.drinkEnergy, this);
-		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
-        dropSprite.body.createGroupCallback(this.coveredStrawCG,
-                this.insideStraw, this);
-        dropSprite.body.createGroupCallback(this.sunscreenCG, this.hitSunscreen, this);
-		
-		// create contact material
-        this.game.physics.p2.createContactMaterial(this.characterMaterial, this.slidingMaterial, {friction: 0.1, restitution: 0});         
-        this.game.physics.p2.createContactMaterial(this.groundMaterial, this.crabMaterial, {friction: 0.0, restitution: 0.0});
-        this.game.physics.p2.createContactMaterial(this.characterMaterial, this.groundMaterial, {friction: 0.0, restitution: 0.0});
-        this.game.physics.p2.createContactMaterial(this.crabMaterial, this.hotsandMaterial, {friction: 0.0, restitution: 0.0});
-		
-		// smoke animation
-		// add smoke particles
-		this.smokeEmitter = this.game.add.emitter(1550, this.game.height-80, 100);
-		this.smokeEmitter.gravity = 0;
-		this.smokeEmitter.setXSpeed(-15, 15);
-		this.smokeEmitter.setYSpeed(-80, -50);
-
-		this.smokeEmitter.setAlpha(1, 0, 3000, Phaser.Easing.Linear.InOut);
-		this.smokeEmitter.makeParticles('smoke');
-        				
-        this.hud.create();
-        
+		this.setupShell();
+		this.setupSunscreen();
+		this.setupCan();
+		this.setupCrab();
+		this.setupEnergy();
+		this.setupUrchin();
+		this.setupBucket();
+		this.setupStrawHorizontal();
+		this.setupStrawDiagonal();
+		this.setupLifeDrop();
+		this.setupPlayer(1500, this.game.world.height-200);
+		this.setupSmokeEmitter();
+				        				
+        this.hud.create();        
 		//this.userDead();
 		
         // Sounds
@@ -426,6 +195,259 @@ State.GamePlay.prototype = {
 		}
 	},
 	
+	setupPhysics: function () {
+		this.game.physics.startSystem(Phaser.Physics.P2JS);
+        this.game.physics.p2.gravity.y = 1400;
+        this.game.physics.defaultRestitution = 0;
+        this.game.stage.smoothed = false;  // no antialiasing
+        this.game.world.enableBodySleeping=true;
+        this.game.physics.p2.setImpactEvents(true);
+        this.game.physics.p2.updateBoundsCollisionGroup();
+        
+        // define collision group
+		this.playerCG = game.physics.p2.createCollisionGroup();
+		this.groundCG = game.physics.p2.createCollisionGroup();
+		this.crabCG = game.physics.p2.createCollisionGroup();
+		this.strawCG = game.physics.p2.createCollisionGroup();
+		this.coveredStrawCG = game.physics.p2.createCollisionGroup();
+		this.lifeDropCG = game.physics.p2.createCollisionGroup();
+		this.seashellCG = game.physics.p2.createCollisionGroup();
+		this.urchinsCG = game.physics.p2.createCollisionGroup();
+		this.hotsandCG = game.physics.p2.createCollisionGroup();
+        this.bucketCG = game.physics.p2.createCollisionGroup();
+        this.sunscreenCG = game.physics.p2.createCollisionGroup();
+        this.energyCG = game.physics.p2.createCollisionGroup();
+		
+		// Create and Setup Material
+        this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
+        this.slidingMaterial = game.physics.p2.createMaterial('slidingMaterial');            
+        this.crabMaterial = game.physics.p2.createMaterial('crabMaterial');           
+        this.groundMaterial = game.physics.p2.createMaterial('groundMaterial');
+        this.hotsandMaterial = game.physics.p2.createMaterial('hotsandMaterial');
+        
+		// create contact material
+        this.game.physics.p2.createContactMaterial(this.characterMaterial, this.slidingMaterial, {friction: 0.1, restitution: 0});         
+        this.game.physics.p2.createContactMaterial(this.groundMaterial, this.crabMaterial, {friction: 0.0, restitution: 0.0});
+        this.game.physics.p2.createContactMaterial(this.characterMaterial, this.groundMaterial, {friction: 0.0, restitution: 0.0});
+        this.game.physics.p2.createContactMaterial(this.crabMaterial, this.hotsandMaterial, {friction: 0.0, restitution: 0.0});
+	},	
+	setupLayers: function () {
+		//  Set the tiles for collision.
+        //  Do this BEFORE generating the p2 bodies below.
+		//this.map.setCollisionByExclusion([0],true, this.layer);
+        this.layermain1 = game.physics.p2.convertTilemap(this.map, this.layer1);
+        this.layermain2 = game.physics.p2.convertTilemap(this.map, this.layer2);		
+        //setup all tiles with collisiongroups or materials
+		for (var i=0; i<this.layermain1.length; i++) {
+			this.layermain1[i].setCollisionGroup(this.groundCG);
+			this.layermain1[i].collides([this.playerCG, this.crabCG, this.lifeDropCG, this.groundCG, this.energyCG]);
+			this.layermain1[i].setMaterial(this.groundMaterial);
+		}
+        for (var i=0; i<this.layermain2.length; i++) {
+            this.layermain2[i].setCollisionGroup(this.hotsandCG);
+            this.layermain2[i].collides([this.playerCG, this.crabCG,
+                    this.lifeDropCG, this.seashellCG, this.groundCG,
+                    this.urchinsCG, this.energyCG]);
+            this.layermain2[i].setMaterial(this.groundMaterial);
+        }
+	},
+	setupPlayer: function (posX, posY) {
+		this.drop.create(posX, posY);
+        var dropSprite = this.drop.getSpriteObject();
+        this.game.camera.follow(dropSprite);
+        this.game.physics.p2.enableBody(dropSprite, false);		
+        this.drop.setCharacterInicialValues(); 
+        dropSprite.body.setMaterial(this.characterMaterial);
+        dropSprite.body.setCollisionGroup(this.playerCG);
+        dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
+								  this.lifeDropCG, this.seashellCG, this.urchinsCG,
+								  this.hotsandCG, this.bucketCG, this.coveredStrawCG, 
+								  this.sunscreenCG, this.energyCG]);
+        // collide callbacks
+		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
+        dropSprite.body.createGroupCallback(this.urchinsCG, this.checkCollisionUrchins, this);
+        dropSprite.body.createGroupCallback(this.lifeDropCG, this.checkOverlapWithLifeDrop, this);
+		dropSprite.body.createGroupCallback(this.energyCG, this.drinkEnergy, this);
+		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
+        dropSprite.body.createGroupCallback(this.coveredStrawCG, this.insideStraw, this);
+        dropSprite.body.createGroupCallback(this.sunscreenCG, this.hitSunscreen, this);		
+	},	
+	setupShell: function () {
+		 // Create sea shell
+        this.seashell = this.game.add.sprite(450, this.game.world.height - 106, 'seashell');
+        this.game.physics.p2.enableBody(this.seashell);
+        this.seashell.body.clearShapes();
+        this.seashell.body.loadPolygon('seashellPhysics', 'seashell_220-68');
+        this.seashell.body.fixedRotation = true;
+        this.seashell.body.static = true;
+        this.seashell.body.setCollisionGroup(this.seashellCG);
+        this.seashell.body.collides([this.groundCG, this.crabCG, this.playerCG]);
+        this.seashell.body.setMaterial(this.groundMaterial);
+	},
+	setupSunscreen: function () {
+		// Create sunscreen
+        this.sunscreen = this.game.add.sprite(3200, this.game.world.height-59-44,'sunscreen');
+        this.game.physics.p2.enableBody(this.sunscreen);
+        this.sunscreen.body.fixedRotation = true;
+        this.sunscreen.body.static = true;
+        this.sunscreen.body.setMaterial(this.groundMaterial);
+        this.sunscreen.body.setCollisionGroup(this.sunscreenCG);
+        this.sunscreen.body.collides([this.groundCG, this.crabCG, this.playerCG]);        
+        var cover = this.game.add.sprite(3060, this.game.world.height-78,'coversunscreen');
+        this.game.physics.p2.enableBody(cover);
+        cover.body.fixedRotation = true;
+        cover.body.static = true;
+        cover.body.setMaterial(this.groundMaterial);
+        cover.body.setCollisionGroup(this.sunscreenCG);
+        cover.body.collides([this.groundCG, this.crabCG, this.playerCG]);
+	},	
+	setupCan: function () {
+		// create CAN
+        this.can = this.game.add.sprite(1620, this.game.world.height-80,'can');
+        this.game.physics.p2.enableBody(this.can, false);
+        this.can.body.fixedRotation = true;
+        this.can.body.setRectangle(260,120,0,0);
+        this.can.body.static = true;
+        this.can.body.setMaterial(this.groundMaterial);
+        this.can.body.setCollisionGroup(this.groundCG);
+        this.can.body.collides([this.groundCG, this.crabCG, this.playerCG]);
+	},
+	setupCrab: function () {
+		// create crabs
+        this.crabs = game.add.group();
+		this.crabs.enableBody = true;
+		this.crabs.physicsBodyType = Phaser.Physics.P2JS;		
+		this.crabs.create(this.game.width-180, this.game.height-80-69, 'crab');
+        this.crabs.create(this.game.width, this.game.height-80-69, 'crab');
+        this.crabs.create(4480, this.game.height-80-69, 'crab');        
+		for (var i = 0; i < this.crabs.length; i++) {				
+			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);				
+			this.crabs.getAt(i).body.fixedRotation = true;	
+			this.crabs.getAt(i).body.setMaterial(this.crabMaterial);
+			this.crabs.getAt(i).animations.add('walkL', [0, 1, 2], 10, true);
+			this.crabs.getAt(i).animations.add('walkR', [0, 1, 2], 10, true);			
+			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG,
+                    this.groundCG, this.seashellCG, this.hotsandCG, this.sunscreenCG]);
+		}
+		this.crabs.getAt(0).body.moveLeft(400);
+		this.crabs.getAt(1).body.moveRight(400);
+		this.crabs.getAt(2).body.moveRight(400);
+	},
+	setupEnergy: function () {
+		// add energy
+        this.energy = game.add.group();
+        this.energy.enableBody = true;
+        this.energy.physicsBodyType = Phaser.Physics.P2JS;
+        this.energy.create(1700, this.game.world.height-80-75, 'energy');
+        for (var i = 0; i < this.energy.length; i++) {
+            this.energy.getAt(i).body.setCollisionGroup(this.energyCG);
+            this.energy.getAt(i).body.fixedRotation = true;
+            this.energy.getAt(i).body.static = true;
+            this.energy.getAt(i).animations.add('energyMove',
+                    [0, 1, 2, 3, 4], 10, true);
+            this.energy.getAt(i).animations.play('energyMove');
+            this.energy.getAt(i).body.collides([this.groundCG, this.crabCG, 
+												this.playerCG, this.hotsandCG]);
+            this.energy.hasCollided = false;
+        }
+	},
+	setupUrchin: function () {
+		// Create the sea urchins
+        this.urchins = game.add.group();
+        this.urchins.enableBody = true;
+        this.urchins.physicsBodyType = Phaser.Physics.P2JS;
+        this.urchins.create(3430, this.game.height - 80 - 20, 'urchin');
+        this.urchins.create(3730, this.game.height - 80 - 20, 'urchin');
+        for (var i = 0; i < this.urchins.length; i++) {
+            this.urchins.getAt(i).body.setCollisionGroup(this.urchinsCG);
+            this.urchins.getAt(i).body.static = true;
+            this.urchins.getAt(i).animations.add('nohit', [0], 10, true);
+            this.urchins.getAt(i).animations.add('hit', [1], 10, true);
+            this.urchins.getAt(i).animations.play('nohit');
+            this.urchins.getAt(i).body.collides([this.playerCG, this.groundCG]);
+        }
+	},
+	setupBucket: function() {
+		// Add the bucket
+        this.bucket = this.game.add.sprite(2250, 272, 'bucket');
+        this.game.physics.p2.enableBody(this.bucket, false);
+        this.bucket.body.clearShapes();
+        this.bucket.body.loadPolygon('bucketPhysics', 'bucket_384-497');
+        this.bucket.body.fixedRotation = true;
+        this.bucket.body.static = true;
+        this.bucket.body.setCollisionGroup(this.bucketCG);
+        this.bucket.body.collides([this.groundCG, this.playerCG]);
+	},
+	setupStrawHorizontal: function() {
+		// Tip of the straw (in the left of the bucket)
+        this.strawLeft = this.game.add.sprite(2010, 510, 'straw1');
+        this.game.physics.p2.enableBody(this.strawLeft, false);
+        this.strawLeft.body.fixedRotation = true;
+        this.strawLeft.body.static = true;
+        this.strawLeft.body.setCollisionGroup(this.coveredStrawCG);
+        this.strawLeft.body.collides([this.playerCG]);
+        this.playerEnteredLeftStraw = false;
+
+        // Straw passing under the ground
+        this.strawUnderGround = this.game.add.sprite(2000, 520, 'dropInStraw');
+        var strawAnimationRight =
+            this.strawUnderGround.animations.add('dropInsideRight',
+            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, false);
+        strawAnimationRight.onComplete.add(this.strawAnimationComplete, this);
+        var strawAnimationLeft =
+            this.strawUnderGround.animations.add('dropInsideLeft',
+            [9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 10], 10, false);
+        strawAnimationLeft.onComplete.add(this.strawAnimationComplete, this);
+        this.strawUnderGround.animations.add('strawNormal', [10], 10, false);
+        this.strawUnderGround.animations.play('strawNormal');
+
+        // Tip of the straw (in the right of the bucket)
+        this.strawRight = this.game.add.sprite(2470, 510, 'straw1');
+        this.game.physics.p2.enableBody(this.strawRight, false);
+        this.strawRight.body.fixedRotation = true;
+        this.strawRight.body.static = true;
+        this.strawRight.body.setCollisionGroup(this.coveredStrawCG);
+        this.strawRight.body.collides([this.playerCG]);
+        this.playerEnteredRightStraw = false;
+	},
+	setupStrawDiagonal: function () {
+		// canudo
+		this.diagonalStraw = this.game.add.sprite(2720, 270, 'straw2');
+		this.game.physics.p2.enableBody(this.diagonalStraw, false);
+		this.diagonalStraw.body.clearShapes();
+		this.diagonalStraw.body.loadPolygon('strawPhysics', 'straw2_236-276');
+		this.diagonalStraw.body.fixedRotation = true;
+		this.diagonalStraw.body.static = true;
+		this.diagonalStraw.body.setCollisionGroup(this.strawCG);
+        this.diagonalStraw.body.collides([this.groundCG, this.playerCG]);
+	},
+	setupLifeDrop: function () {
+		// Add a "life drop"
+        this.lifeDrop = game.add.group();
+        this.lifeDrop.enableBody = true;
+        this.lifeDrop.physicsBodyType = Phaser.Physics.P2JS;
+        this.lifeDrop.create(280, 268, 'life_drop');
+        for (var i = 0; i < this.lifeDrop.length; i++) {
+            this.lifeDrop.getAt(i).body.setCollisionGroup(this.lifeDropCG);
+            this.lifeDrop.getAt(i).body.fixedRotation = true;
+            this.lifeDrop.getAt(i).body.static = true;
+            this.lifeDrop.getAt(i).animations.add('dropAnimation',
+                    [0, 1, 2, 3, 4], 10, true);
+            this.lifeDrop.getAt(i).animations.play('dropAnimation');
+            this.lifeDrop.getAt(i).body.collides([this.playerCG, this.groundCG]);
+            this.lifeDrop.hasCollided = false;
+        }
+	},
+	setupSmokeEmitter: function () {
+		// smoke animation
+		// add smoke particles
+		this.smokeEmitter = this.game.add.emitter(1550, this.game.height-80, 100);
+		this.smokeEmitter.gravity = 0;
+		this.smokeEmitter.setXSpeed(-15, 15);
+		this.smokeEmitter.setYSpeed(-80, -50);
+		this.smokeEmitter.setAlpha(1, 0, 3000, Phaser.Easing.Linear.InOut);
+		this.smokeEmitter.makeParticles('smoke');
+	},
 	// Funcao Magica!!! Deve existir outro jeito!
 	touchingDown: function (someone) {
 		var yAxis = p2.vec2.fromValues(0, 1);
