@@ -78,7 +78,7 @@ State.GamePlay.prototype = {
 				Config.finalPhase.lightRadius += 25;
 			}, null, this);
 			this.game.physics.arcade.overlap(this.player, this.flag, function () {
-				this.game.add.tween(this.player).to({alpha:0}, 500).start().onComplete.add(function() {
+				this.game.add.tween(this.player).to({alpha:0}, 500, Phaser.Easing.Linear.None).start().onComplete.add(function() {
 		    		this.nextPhase();
 				}, this);				
 			}, null, this);		
@@ -468,7 +468,7 @@ State.GamePlay.prototype = {
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 		this.player.animations.play('dead');
-		this.game.add.tween(this.player).to({alpha:0}, 300).start().onComplete.add(function() {
+		this.game.add.tween(this.player).to({alpha:0}, 300, Phaser.Easing.Linear.None).start().onComplete.add(function() {
 		    	//this.loadLevel(this.level);
 		    	//this.game.state.start('GamePlay');
 		    this.restartPhase(enemie, emitter);

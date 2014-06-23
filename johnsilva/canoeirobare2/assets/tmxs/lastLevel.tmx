@@ -18,6 +18,12 @@
  <tileset firstgid="22" name="dartH4_33-7" tilewidth="33" tileheight="7">
   <image source="../level/cenario 3/dartH4_33-7.png" width="33" height="7"/>
  </tileset>
+ <tileset firstgid="23" name="cave2_224-146" tilewidth="224" tileheight="146">
+  <image source="../level/cave2_224-146.png" width="224" height="146"/>
+ </tileset>
+ <objectgroup name="cave" width="30" height="30">
+  <object gid="23" x="1080" y="1040"/>
+ </objectgroup>
  <objectgroup name="thorns" width="30" height="30">
   <object gid="19" x="200" y="1010"/>
   <object gid="19" x="280" y="1008"/>

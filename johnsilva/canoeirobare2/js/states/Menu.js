@@ -30,7 +30,8 @@ State.Menu.prototype = {
 	clickPlay: function () {
 		"use strict";
 		this.menuMusic.stop();
-		this.game.state.start('GamePlay');
+		//this.game.state.start('GamePlay');
+		this.game.state.start('Story');
 	},
 	clickHowToPlay: function () {
 		"use strict";

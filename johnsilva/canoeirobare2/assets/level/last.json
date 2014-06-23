@@ -2,6 +2,31 @@
  "layers":[
         {
          "height":30,
+         "name":"cave",
+         "objects":[
+                {
+                 "gid":23,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1080,
+                 "y":1040
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":30,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "height":30,
          "name":"thorns",
          "objects":[
                 {
@@ -1814,6 +1839,21 @@
          "spacing":0,
          "tileheight":7,
          "tilewidth":33
+        }, 
+        {
+         "firstgid":23,
+         "image":"cave2_224-146.png",
+         "imageheight":146,
+         "imagewidth":224,
+         "margin":0,
+         "name":"cave2_224-146",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":146,
+         "tilewidth":224
         }],
  "tilewidth":40,
  "version":1,

@@ -106,6 +106,14 @@ Config.credits = {
 	y: 0
 };
 
+Config.story = {
+	dir: 'assets/images/story1_960-600.jpg',
+	dir2: 'assets/images/story2_960-600.jpg',
+	x: 0,
+	y: 0,
+	millis: 6000,
+};
+
 Config.audio = {
 	menu: 'assets/audio/menu.mp3',
 	phase1: 'assets/audio/phase1.mp3',

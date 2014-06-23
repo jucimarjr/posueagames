@@ -24,6 +24,10 @@ State.GameSplash.prototype = {
 		
 		//HowToPlay
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
+
+		//Story		
+		this.game.load.image('story1', Config.story.dir);
+		this.game.load.image('story2', Config.story.dir2);
 		
 		//Game
 		this.game.load.tilemap('level1', 'assets/level/1.json', null, Phaser.Tilemap.TILED_JSON);
