@@ -9,14 +9,62 @@
  <tileset firstgid="10" name="red_40-40" tilewidth="40" tileheight="40">
   <image source="images/red_40-40.png" width="40" height="40"/>
  </tileset>
- <layer name="Camada de Tiles 1" width="120" height="15">
+ <tileset firstgid="11" name="can_313-120" tilewidth="40" tileheight="40">
+  <image source="images/can_313-120.png" width="313" height="120"/>
+ </tileset>
+ <tileset firstgid="32" name="sunscreen_231-59" tilewidth="40" tileheight="40">
+  <image source="images/sunscreen_231-59.png" width="231" height="59"/>
+ </tileset>
+ <tileset firstgid="37" name="seaurchin_80-40" tilewidth="40" tileheight="40">
+  <image source="spritesheets/seaurchin_80-40.png" width="80" height="40"/>
+ </tileset>
+ <tileset firstgid="39" name="balde_384-497" tilewidth="40" tileheight="40">
+  <image source="images/balde_384-497.png" width="384" height="497"/>
+ </tileset>
+ <tileset firstgid="147" name="glass_280-320" tilewidth="40" tileheight="40">
+  <image source="images/glass_280-320.png" width="280" height="320"/>
+ </tileset>
+ <tileset firstgid="203" name="seashell_220-68" tilewidth="40" tileheight="40">
+  <image source="images/seashell_220-68.png" width="220" height="68"/>
+ </tileset>
+ <tileset firstgid="208" name="straw2_236-276" tilewidth="40" tileheight="40">
+  <image source="images/straw2_236-276.png" width="236" height="276"/>
+ </tileset>
+ <layer name="mainlayer" width="120" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt1MsOgCAMRFF8ov//w3ZL4gLSEsfmnmS2MAK1FAAAYiyW1bJZ9gT7oHVYTku1XAn2QYu5yo258lGfD/V+6tTnQ73fV2a/+5H1PV2Y33ez3/3I+p4uUd+h8k5UeqiIOg+V/7xKDxWcR7+7I/gv7je3B53LAlM=
+   eJzt1uVuwzAUhuExaMzMu+MxMzN0zB12zMwdb/ew98cqRVOiuoszZZM/6VEl2z0+kWUlfn4qKioqKipy4o8ABCJIQr0d7GIP+ziwYA8V8QQjBKEIk1DvEEc4xglOLdhDRTyy7pbnXM9wjgtc4spsg4IpQjFKUIoylKPil/a3a2TdLc+5XuMGt7jDvcn+RFOJKlSjBrWoQ71m3orY/d0jqz/PubrxgEc84dlkf6JpQCOa0IwWtKLN4n3t/u6R1Z/76/cFr3jDOz5MdSeednSgE13oRg96vfzPaN7qe+lLfTO9yHqO73WsOl+jfvvQjwEMYgjDcGjm9eIwGLf6XvpS32htBCIRhWjEIBZxP9xHVr9mYrTPCEYxhnFMYBJTXup5m7dz4pGARCQhGSlI1ayx+/eBaKYxg1nMYR4LcGrm9eI0GP9J1rGBTWxhW2JtvaQhHRnIRBaykaNZ85vfB7nIQz4KUCix9iKWsIwVrGINLs28XlwG43oJF6Dyd6PO93/nExFBWDM=
   </data>
  </layer>
- <layer name="Camada de Tiles 2" width="120" height="15">
+ <layer name="hotsandlayer" width="120" height="15">
   <data encoding="base64" compression="zlib">
    eJzt0cEJADAIA0Df7j+wO5SiKHeQv4kRAAAAAAAA/+WCXOzUtcv0jf77ngIB0ge9
   </data>
  </layer>
+ <layer name="enemies" width="120" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztwQEBAAAAgiD/r25IQAEAAAAAAAAvBhwgAAE=
+  </data>
+ </layer>
+ <objectgroup name="objects" width="120" height="15">
+  <object name="bucketpolygon" x="1720" y="519">
+   <polyline points="0,0 1,-115 -9,-121 -223,-121 -243,-108 -251,-107 -257,-60 -255,-39 -264,-35 -276,-20 -281,0 -1,0"/>
+  </object>
+  <object name="strawpolygon" x="2619" y="357">
+   <polyline points="0,0 180,-211 181,-179 24,2 -1,1"/>
+  </object>
+  <object name="seashellpolygon" x="339" y="518">
+   <polyline points="0,0 29,-21 64,-36 83,-39 113,-39 137,-32 169,-17 182,-5 182,3 0,2"/>
+  </object>
+  <object name="leftglasspolygon" x="3880" y="261">
+   <polyline points="0,0 -12,-49 -23,-57 -80,-57 -80,-42 -27,-42 -24,-37 -14,1 -21,1 -6,257 1,-1"/>
+  </object>
+  <object name="rightglasspolygon" x="4027" y="204">
+   <polyline points="0,0 53,0 54,15 1,14 -3,18 -13,58 -8,57 -26,316 -26,59 -13,7 0,-1"/>
+  </object>
+  <object name="sunscreenpolygon" x="2883" y="480">
+   <polyline points="0,0 126,0 197,6 197,38 -6,40 -6,3 1,-1"/>
+  </object>
+  <object name="urchin" gid="37" x="3479" y="520"/>
+  <object name="urchin" gid="37" x="3239" y="520"/>
+ </objectgroup>
 </map>
