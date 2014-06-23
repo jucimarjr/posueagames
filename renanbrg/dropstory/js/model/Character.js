@@ -25,6 +25,7 @@ Character = function(game, characterId, assetPath, assetDimensions) {
     this.playersize = 'small'; //stores if player is small or big
     this.playerstate = 'normal'; //stores if player is normal, with sunscreen, with energy
     this.playershape = null;
+    this.userDead = false;
 
     this.isAnimated = false;
     this.width = null;
@@ -213,6 +214,15 @@ Character.prototype = {
     getSpriteObject: function() {
         return this.character;
     },
+
+    /**
+     * kill character.
+     *
+     * @method Character#kill
+     */
+    kill: function() {
+		this.character.kill();
+	},    
 
     /**
      * Set a horizontal velocity for the character.
