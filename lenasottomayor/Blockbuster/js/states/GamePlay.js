@@ -12,6 +12,8 @@ State.GamePlay.prototype = {
 		this.coinSound = game.add.audio('coinSound');
 		this.hurtSound = game.add.audio('hurtSound');
 		this.powerupSound = game.add.audio('powerupSound');
+		this.backgroundSound = game.add.audio('music');
+		this.backgroundSound.play('',0,0.8,true);
 		
 		this.tilemap = new Tilemap(game);
 		this.level1 = new Level1(game);

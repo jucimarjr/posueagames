@@ -82,7 +82,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('icon-life', Config.icon.life);
 		
 		//Audio
-		//this.game.load.audio('music', 'assets/audios/AirDucts.wav');
+		this.game.load.audio('music', 'assets/audios/xycexyceBaby.mp3');
 		this.game.load.audio('jumpSound', 'assets/audios/jump.wav');
 		this.game.load.audio('coinSound', 'assets/audios/coin.wav');
 		this.game.load.audio('hurtSound', 'assets/audios/hurt.wav');
