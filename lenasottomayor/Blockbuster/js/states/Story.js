@@ -7,8 +7,7 @@ State.Story = function (game) {
 State.Story.prototype = {
 	create: function () {
 		"use strict";
-		var background;
-		background = this.game.add.sprite(Config.story.x, Config.story.y, 'story');
+		var background = this.game.add.sprite(Config.story.x, Config.story.y, 'story');
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
 	},

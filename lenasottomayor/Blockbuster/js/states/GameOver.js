@@ -5,9 +5,6 @@ State.GameOver = function (game) {
 	this.game = game;
 };
 State.GameOver.prototype = {
-	preload: function () {
-		"use strict";
-	},
 	create: function () {
 		"use strict";
 		var background = this.game.add.sprite(Config.gameOver.x, Config.gameOver.y, 'game-over');

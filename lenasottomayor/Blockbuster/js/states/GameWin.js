@@ -5,9 +5,6 @@ State.GameWin = function (game) {
 	this.game = game;
 };
 State.GameWin.prototype = {
-	preload: function () {
-		"use strict";
-	},
 	create: function () {
 		"use strict";
 		var background = this.game.add.sprite(Config.gameWin.x, Config.gameWin.y, 'game-win');
