@@ -58,6 +58,10 @@ State.Game.prototype = {
         this.getPlayBarOffset[0] = true;
         this.getPlayBarOffset[1] = true;
 		
+        // attack sound
+        this.attackSound = this.game.add.audio(Config.game.audio.attack.key);
+        
+        
         //set p2
         this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.p2.setImpactEvents(true);
@@ -653,6 +657,8 @@ State.Game.prototype = {
         		player.animations.play(Config.game.player.anim.attack.key);
         		
         		this.timeToAttack = timeNow + Config.game.player.attackCooldown;
+        		
+        		this.attackSound.play();
         		
         	}
         	
