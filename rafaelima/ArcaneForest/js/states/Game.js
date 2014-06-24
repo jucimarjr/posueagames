@@ -53,7 +53,10 @@ State.Game.prototype = {
         this.canJump = true;
         this.swordCollider = null;
         this.playerMoving = false;
-        this.getPlayBarOffset = true;
+        
+        this.getPlayBarOffset = [];
+        this.getPlayBarOffset[0] = true;
+        this.getPlayBarOffset[1] = true;
 		
         //set p2
         this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -341,31 +344,48 @@ State.Game.prototype = {
     
     updateHandleBars: function() {
     	
-    	var limitBarLeft = bar2.body.x - game.cache.getImage('bar').width / 2 - 113 / 2;
-    	var limitBarRight = bar2.body.x + game.cache.getImage('bar').width / 2 + 113 / 2;
+    	var widthBar = game.cache.getImage(Config.game.horizontalBar.key).width;
     	
-    	if(!this.playerMoving) { // if player not moving
+    	for(var count = 0; count < 2; count++) {
     		
-	    	if(this.playerCollider.body.x > limitBarLeft && this.playerCollider.body.x < limitBarRight
-	    			&& Math.round(this.playerCollider.body.y) == 1253) {
+    		
+    		var barLocal;
+    		if(count == 0) {
+    			barLocal = bar;
+    		}
+    		else {
+    			barLocal = bar2;
+    		}
+    		
+    		var barYAbove = barLocal.body.y - 62;
+    		
+	    	var limitBarLeft = barLocal.body.x - widthBar / 2 - 113 / 2;
+	    	var limitBarRight = barLocal.body.x + widthBar / 2 + 113 / 2;
+	    	
+	    	if(!this.playerMoving) { // if player not moving
 	    		
-	    		if(this.getPlayBarOffset) {
-	    			this.playBarOffset = this.playerCollider.body.x - bar2.body.x;
-	    			
-	    			this.getPlayBarOffset = false;
-	    		}
-	    		
-	    		this.playerCollider.body.x = bar2.body.x + this.playBarOffset;
-	    		
+		    	if(this.playerCollider.body.x > limitBarLeft && this.playerCollider.body.x < limitBarRight
+		    			&& Math.round(this.playerCollider.body.y) == barYAbove) {//1253) { //1315
+		    		
+		    		if(this.getPlayBarOffset[count]) {
+		    			this.playBarOffset = this.playerCollider.body.x - barLocal.body.x;
+		    			
+		    			this.getPlayBarOffset[count] = false;
+		    		}
+		    		
+		    		this.playerCollider.body.x = barLocal.body.x + this.playBarOffset;
+		    		
+		    	}
+		    	else {
+		    		this.getPlayBarOffset[count] = true;
+		    	}
+		    	
 	    	}
 	    	else {
-	    		this.getPlayBarOffset = true;
+	    		this.getPlayBarOffset[count] = true;
 	    	}
-	    	
     	}
-    	else {
-    		this.getPlayBarOffset = true;
-    	}
+    	
     },
 
     onClick: function () {
@@ -777,8 +797,9 @@ State.Game.prototype = {
 
     //Create Bars
     putBar: function () {
+    	
         //bar 1
-        bar = this.game.add.sprite(3850, 1415, 'bar');
+        bar = this.game.add.sprite(Config.game.horizontalBar.x[0], Config.game.horizontalBar.y[0], Config.game.horizontalBar.key);
         this.createKinematicObj(bar, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
         this.game.add.tween(bar.body.velocity).to({
             x: '+200'
@@ -787,7 +808,7 @@ State.Game.prototype = {
         }, 6000).yoyo().loop().start();
 
         //bar 2
-        bar2 = this.game.add.sprite(4250, 1315, 'bar');
+        bar2 = this.game.add.sprite(Config.game.horizontalBar.x[1], Config.game.horizontalBar.y[1], Config.game.horizontalBar.key);
         this.createKinematicObj(bar2, barCollisionGroup, [barCollisionGroup, playerCollisionGroup]);
         this.game.add.tween(bar2.body.velocity).to({
             x: '+200'

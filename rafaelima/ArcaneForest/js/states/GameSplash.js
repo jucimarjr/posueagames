@@ -37,7 +37,9 @@ State.GameSplash.prototype = {
 		this.game.load.image('bg4', Config.game.dirBg4);
 		this.game.load.image('bg5', Config.game.dirBg5);
 		this.game.load.image('bg6', Config.game.dirBg6);
+		
 		this.game.load.image('bar', Config.game.bar.dir);
+		
 		this.game.load.tilemap('stage', Config.game.tilemap.dir, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('stageRotate', Config.game.tilemapRotate.dir, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tileset', Config.game.tileset.dir);

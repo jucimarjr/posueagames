@@ -117,7 +117,7 @@ Config.game = {
 //		x: 3146,
 //		y: 349,
 		//posicao inicial
-		x: 70,
+		x: 3450,//70,
 		y: 1393,
 		xRotate: 2334,
 		yRotate: 385,
@@ -291,6 +291,13 @@ Config.game = {
 		startRotateY: 444,
 		widthAreaRotate: 1725,
 		widthArea: 3650,
+	},
+	horizontalBar: {
+		key: 'bar',
+		dir: Config.images+'/horizontalbar_139-32.png',
+		x: [3850, 4250],
+		y: [1415, 1315],
+		
 	},
 	verticalbar:{
 		key: 'verticalBar',
