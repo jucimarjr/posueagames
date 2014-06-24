@@ -46,16 +46,18 @@
  </objectgroup>
  <layer name="Camada de Tiles 1" width="48" height="20">
   <data encoding="base64" compression="zlib">
-   eJzVltdqAzEQRRWvUyB+iD8kvffee++J09v/v+eYrGAYpC221sQXDhj2SnNnGK9dNsb0tCll6DLJWoB+GIBBGIJhGIFRGIPxgB6XfOc6M+TfhAmYhCmYhhmYhTmYj3sM5XHJd87m34Yd2IU92IcDOIQjWIQlWIYVWIU1WIeNuMdQHpd852z+EziFMziHC7iEq/j8VkqPJeiIiZRHP0ublZX0yPpSNv8t3ME9PMAj1KAXugUVT4/XcJwyB5fH9hYJj5WsXRHndP6yms8HfMKXeC6xPtvjEzzDTcIc8npkNllX5qyZ9O+vvqPufVc9fsMPvMArvDXpcdWWGe05O9+8+YtUfZ8iR21fXV9+u5d6d4rOL9VMftcd+h753fOplPI8SXnyVzPcUcT8k/pz5ZfvYrkfvjm2ev99tYvYH5+a2Rlf7UbyV034+efprdH8cseyvn9CzVxnS/r9sp7/9P731W7l/oeSzt9n/na6Kj7r/z8avT9J3tBkqevK1278As3lSA4=
+   eJzV1mdvAjEMgOEU6JDKh/JDuvfee0+6oXv9/+99UYlkWckNLoeKpUdCOid2InNQMsb0dagSekx8DGIIwxjBKMYwjglMBsxJU787Yf9TmMYMZjGHeSxgEUsBc9LUl/3vYR8HOMSRWL+MFaxiDevYwCa2sB0wxxW+dfr+L3CJK7V+B7ueMx6jgK6mosrRz6L2ORE1ZY6sLyNufvrRK5TVGau4xg1OcYbzFDn2bEWR46pdFutsVJv9l9T9NOITX+K5ZPNqqOMJz7jFHe7xgMcMOfZudV3ZZ93E37/eo5H7jg9xxm/84AWveMuY46ote7Tr7P2m7T/PaMyTnQFf/7o/1zM7l3p28u5fRpb+XXvofeR3zxeFmOdRkab/SoI98rj/qPO5+pfvYjkfvnts9/z7aucxP77IMjO+2q30XzHh7z/N2VrtX85Y0vdPqDvXvUX9ftmc//T+99Vu5/yHCt3/gPmb6Yr4rP//aHp+onJDS1LX1V+n+QUtXEMM
   </data>
  </layer>
  <objectgroup name="bees" width="48" height="20">
-  <object gid="19" x="333" y="112"/>
+  <object gid="19" x="332" y="101"/>
   <object gid="19" x="376" y="126"/>
   <object gid="19" x="799" y="271"/>
   <object gid="19" x="1281" y="110"/>
   <object gid="19" x="1320" y="122"/>
   <object gid="19" x="1800" y="351"/>
+  <object gid="19" x="1061" y="95"/>
+  <object gid="19" x="702" y="87"/>
  </objectgroup>
  <objectgroup name="waters" width="48" height="20">
   <object gid="18" x="178" y="104"/>
