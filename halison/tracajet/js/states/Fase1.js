@@ -35,6 +35,8 @@ State.Fase1= function (game) {
 	this.soundGameOver;
 	this.soundGetKey;
 	this.soundColision;
+	this.soundWalk;
+	this.isPlayWalk = false;
 };
 
 var folha;
@@ -57,6 +59,7 @@ State.Fase1.prototype = {
 		this.soundGameOver = game.add.audio('soundGameOver',1,true);
 		this.soundGetKey = game.add.audio('soundGetKey',1,true)
 		this.soundColision = game.add.audio('soundColision',1,true)
+		this.soundWalk = game.add.audio('walk',1,true);
 	},
 
 	create: function () {
@@ -216,9 +219,13 @@ State.Fase1.prototype = {
 	}
 	,
 	updateTracajet : function(){
+		
 		this.tracajet.body.velocity.x = 0;
 		var orientation = 0;
 		 if ( this.cursors.left.isDown) { // vai para esquerda
+		 	if(!this.isPlayWalk){
+		 		this.playWalk();
+		 	}
 	    	orientation = 1;
 			this.tracajet.body.velocity.x = -this.speed;
 	    	this.tracajet.animations.play('walk');
@@ -233,7 +240,9 @@ State.Fase1.prototype = {
 
 	    }
 	    else if (this.cursors.right.isDown ) { // vai para direita
-			
+			if(!this.isPlayWalk){
+		 		this.playWalk();
+		 	}
 	    	this.tracajet.body.velocity.x = this.speed;
 	    	this.tracajet.scale.x = +1;  // espelha se antes 1
 	    	this.tracajet.animations.play('walk');
@@ -247,6 +256,9 @@ State.Fase1.prototype = {
 	    	}
 	    }
 	    else if (this.cursors.up.isDown ) { // vai para cima
+	    	if(!this.isPlayWalk){
+		 		this.playWalk();
+		 	}
 	    	this.tracajet.body.velocity.y = -this.speed;
 			this.tracajet.animations.play('walk');
 			if(!this.tracajet.body.onFloor()){
@@ -257,6 +269,9 @@ State.Fase1.prototype = {
 			}
 	    }
 	    else if (this.cursors.down.isDown ) { // vai para cima
+	    	if(!this.isPlayWalk){
+		 		this.playWalk();
+		 	}
 	    	this.tracajet.body.velocity.y = this.speed;
 	    	this.tracajet.animations.play('walk');
 			
@@ -272,6 +287,8 @@ State.Fase1.prototype = {
 			}
 	    }
 	    else{
+	    	this.isPlayWalk = false;
+	    	this.soundWalk.stop();
 	    	this.tracajet.body.setSize(35, 78,0,0);
 	    	this.tracajet.animations.stop();
 	    	this.tracajet.frame = 0;
@@ -284,7 +301,11 @@ State.Fase1.prototype = {
 	    }
 	}
 	,
-	
+	playWalk : function(){
+		this.soundWalk.play('',0,0.5,true);
+		this.isPlayWalk = true;
+	}
+	,
 	tracajetEatStar: function (dino, star)	{
 		this.star.kill();
 	},

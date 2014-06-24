@@ -34,8 +34,9 @@ State.GameSplash.prototype = {
 		game.load.audio('soundGame','assets/sounds/game_sound.wav');
 		game.load.audio('soundGetSheet','assets/sounds/get_sheet.mp3');
 		game.load.audio('soundGameOver','assets/sounds/game-over.mp3');
-		game.load.audio('soundGetKey','assets/sounds/get_key.mp3')
-		game.load.audio('soundColision','assets/sounds/colision.wav')
+		game.load.audio('soundGetKey','assets/sounds/get_key.mp3');
+		game.load.audio('soundColision','assets/sounds/colision.wav');
+		game.load.audio('walk','assets/sounds/walk.wav');
 	},
 	create: function () {
 		"use strict";
