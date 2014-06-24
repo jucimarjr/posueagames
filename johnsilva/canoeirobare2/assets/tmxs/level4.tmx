@@ -46,7 +46,7 @@
  </objectgroup>
  <layer name="Camada de Tiles 1" width="48" height="20">
   <data encoding="base64" compression="zlib">
-   eJzV1ldvgzAUhmEnoUNKL8oP6d5777333u3/v++LiqVTC4MhQISlR4rEkc/nI5PEU0p1V5SHTkxgElOYxgxmMYd59KEfAxjEEIYxglGMtammI8y/iCUsYwWrWMM6NjDucMZ21Oj8W9jGDnaxh30c4BALDmfshZ9Q47JPmhqd/xgnOMUZznGBS/W3NhPOWEct1DBqzGdJs0rqJWt0/hvc4g73eMAjmugSeixnvMJRwhyiavTZGhE1TaOvzvQsaoL8njGfD3ziSzyXdJ3e7ync8zpmDllqzN419T+nEvO3LXOPoPbdOOM3fvCCV7y1WBPV25YxS/4iV3Cf5Gyz5tf30rw7ReeXq+j5y3fPtuoJz+NWmvy+wx5FzD/ufFH55XexvB+2OZZ9/229y3x/W7kztt5Z8vsq//mnOVvW/PKOuX7/5DVzM1sRv19lrSr+ftl6B331/1tffDb//5jM+xNXmzeXvlH5quYX3MZQjw==
+   eJzVltdqAzEQRRWvUyB+iD8kvffee++J09v/v+eYrGAYpC221sQXDhj2SnNnGK9dNsb0tCll6DLJWoB+GIBBGIJhGIFRGIPxgB6XfOc6M+TfhAmYhCmYhhmYhTmYj3sM5XHJd87m34Yd2IU92IcDOIQjWIQlWIYVWIU1WIeNuMdQHpd852z+EziFMziHC7iEq/j8VkqPJeiIiZRHP0ublZX0yPpSNv8t3ME9PMAj1KAXugUVT4/XcJwyB5fH9hYJj5WsXRHndP6yms8HfMKXeC6xPtvjEzzDTcIc8npkNllX5qyZ9O+vvqPufVc9fsMPvMArvDXpcdWWGe05O9+8+YtUfZ8iR21fXV9+u5d6d4rOL9VMftcd+h753fOplPI8SXnyVzPcUcT8k/pz5ZfvYrkfvjm2ev99tYvYH5+a2Rlf7UbyV034+efprdH8cseyvn9CzVxnS/r9sp7/9P731W7l/oeSzt9n/na6Kj7r/z8avT9J3tBkqevK1278As3lSA4=
   </data>
  </layer>
  <objectgroup name="bees" width="48" height="20">
@@ -84,11 +84,11 @@
   <object gid="13" x="80" y="721"/>
   <object gid="13" x="59" y="241"/>
   <object gid="13" x="321" y="201"/>
-  <object gid="13" x="1003" y="161"/>
-  <object gid="13" x="1040" y="163"/>
   <object gid="13" x="1561" y="203"/>
   <object gid="13" x="1600" y="203"/>
   <object gid="13" x="1841" y="719"/>
+  <object gid="13" x="1040" y="160"/>
+  <object gid="13" x="1080" y="160"/>
  </objectgroup>
  <objectgroup name="coin" width="48" height="20">
   <object gid="25" x="640" y="513"/>

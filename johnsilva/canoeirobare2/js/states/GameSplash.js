@@ -10,7 +10,12 @@ State.GameSplash.prototype = {
 		var progressBar = this.game.add.sprite(0, 500, 'progress-bar');
 		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
 		this.game.load.setPreloadSprite(progressBar);
-		this.game.load.onLoadComplete.add(function () {this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); setTimeout(function () {this.game.state.start('Menu');}, Config.gameSplash.millis);}, this);
+		this.game.load.onLoadComplete.add(function () {
+			this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); 
+			setTimeout(function () {
+				this.game.state.start('Menu');
+			}, Config.gameSplash.millis);
+		}, this);
 		
 		//Menu
 		this.game.load.image('menu-background',  Config.menu.dir);
@@ -49,6 +54,7 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('coinIara', 'assets/spritesheets/coins/coinsIara_40-40-8.png',40,40,8);
 		this.game.load.spritesheet('checkP', 'assets/spritesheets/check_20-37-3.png',20,37,3);
 		this.game.load.spritesheet('flag', 'assets/spritesheets/gamewin_40-40-8.png',40,40,8);
+		this.game.load.spritesheet('rain', 'assets/level/rain.png', 17, 17);
 
 		this.game.load.image('bg1', 'assets/level/bg1_462-800.jpg');
 		this.game.load.image('bg2', 'assets/level/bg3_462-800.jpg');
@@ -68,7 +74,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('dardo', 'assets/level/cenario3/dartH4_33-7.png');
 		this.game.load.image('acidicWater', 'assets/enemies/gota_13-37.png');
 		this.game.load.image('caba', 'assets/enemies/caba_8-8.png');
-		this.game.load.spritesheet('rain', 'assets/level/rain.png', 17, 17);
+		this.game.load.image('cave', 'assets/level/cave2_224-146.png');
 
 		this.game.load.audio('jumpSound', Config.audio.jump);
 		this.game.load.audio('dieSound', Config.audio.die);
