@@ -114,6 +114,16 @@ Config.story = {
 	millis: 6000,
 };
 
+Config.end = {
+	dir: 'assets/images/end/end1_960-600.jpg',
+	dir1: 'assets/images/end/end2_960-600.jpg',
+	dir2: 'assets/images/end/end3_960-600.jpg',
+	dir3: 'assets/images/end/end4_960-600.jpg',
+	x: 0,
+	y: 0,
+	millis: 6000,
+};
+
 Config.audio = {
 	menu: 'assets/audio/menu.mp3',
 	phase1: 'assets/audio/phase1.mp3',

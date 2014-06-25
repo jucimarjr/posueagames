@@ -33,6 +33,12 @@ State.GameSplash.prototype = {
 		//Story		
 		this.game.load.image('story1', Config.story.dir);
 		this.game.load.image('story2', Config.story.dir2);
+
+		//End
+		this.game.load.image('end1', Config.end.dir);		
+		this.game.load.image('end2', Config.end.dir1);
+		this.game.load.image('end3', Config.end.dir2);
+		this.game.load.image('end4', Config.end.dir3);
 		
 		//Game
 		this.game.load.tilemap('level1', 'assets/level/1.json', null, Phaser.Tilemap.TILED_JSON);

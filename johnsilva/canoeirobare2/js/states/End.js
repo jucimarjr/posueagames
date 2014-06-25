@@ -1,6 +1,6 @@
 State.End = function (game) {
 		"use strict";
-		this.game = game;	
+		this.game = game;
 };
 State.End.prototype = {
 	preload: function () {
@@ -8,21 +8,24 @@ State.End.prototype = {
 	},
 	create: function () {
 		"use strict";
-		var story1 = this.game.add.sprite(Config.story.x, Config.story.y, 'story1');
-
-		this.game.add.tween(story1).to({alpha:0}, 
-			Config.story.millis, Phaser.Easing.Linear.None).start().onComplete.add(function() {
-
-		    var story2 = this.game.add.sprite(Config.story.x, Config.story.y, 'story2');
-		    this.game.add.tween(story2).to({alpha:0}, Config.story.millis, 
-				Phaser.Easing.Linear.None).start().onComplete.add(function() {
-					this.menu();
-			}, this);
-		}, this);
+		this.initEnd(1);
 	},
 	update: function () {
 		"use strict";
 		Config.global.screen.resize(this.game);
+	},
+
+	initEnd: function(id){
+		
+		var end = this.game.add.sprite(Config.end.x, Config.end.y, 'end'+id);
+
+		this.game.add.tween(end).to({alpha:0}, 
+			Config.end.millis, Phaser.Easing.Linear.None).start().onComplete.add(function() {
+				if(id == 4)
+					this.menu();
+				else
+					this.initEnd(id+1);
+		}, this);
 	},
 
 	menu: function(){
