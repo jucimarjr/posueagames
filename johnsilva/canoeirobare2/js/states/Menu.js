@@ -14,6 +14,8 @@ State.Menu.prototype = {
 		if(!this.menuMusic){
 			this.menuMusic = this.game.add.audio('menu-audio',1,true);
 			this.menuMusic.play('',0,1,true);
+		}else{
+			this.menuMusic.play();
 		}
 		background = this.game.add.sprite(Config.menu.x, Config.menu.y, 'menu-background');
 		buttonPlay = this.game.add.button(Config.menu.buttonPlay.x, Config.menu.buttonPlay.y, 'button-play', this.clickPlay, this, 1, 0, 1);
