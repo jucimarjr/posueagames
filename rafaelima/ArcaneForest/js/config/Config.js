@@ -118,7 +118,7 @@ Config.game = {
 //		x: 3146,
 //		y: 349,
 		//posicao inicial
-		x: 3450,//70,
+		x: 70,
 		y: 1393,
 		xRotate: 2334,
 		yRotate: 385,

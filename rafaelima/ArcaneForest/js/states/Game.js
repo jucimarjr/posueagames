@@ -89,6 +89,7 @@ State.Game.prototype = {
         bg6 = this.game.add.tileSprite(2700, 0, 2464, 1000, 'bg6');
         bg6.tileScale.setTo(2, 2);
         bg4 = this.game.add.tileSprite(2560, 970, 3000, 540, 'bg4');
+        bg5 = this.game.add.tileSprite(2560, 970, 3000, 540, 'bg5');
         
         this.putVerticalBar();
         this.putBar();
@@ -221,7 +222,8 @@ State.Game.prototype = {
         if(this.gameState == STATE_PLAY) {
         	
 	        this.playerCollider.body.force.y = Config.game.player.forceY;
-	        
+	        bg5.y = this.game.camera.y;
+			 
 //	        Config.global.screen.resize(this.game);
 	        
 	        var intVelY = Math.floor( this.playerCollider.body.velocity.y );
@@ -313,7 +315,9 @@ State.Game.prototype = {
         
         }else if(this.gameState == STATE_PAUSED) {
         	this.checkCamera();
-        }else{// end if gamestate == play
+        }else if(this.gameState == STATE_GAMEOVER) {
+//        	this.game.state.start('GameOver');
+        }else{
         	
         }
         
@@ -415,6 +419,9 @@ State.Game.prototype = {
 		 bg3.y = Config.game.gameRotate.bg3y;
 		 bg4.x = Config.game.gameRotate.bg4x;
 		 bg4.y = Config.game.gameRotate.bg4y;
+		 bg5.x = Config.game.gameRotate.bg4x;
+		 bg5.y = this.game.camera.y;
+		 
 		 
 		 layer.destroy();
 		 this.playerCollider.body.clearCollision();
@@ -495,7 +502,7 @@ State.Game.prototype = {
         //DEBUG
 //		this.game.debug.text(timerBV, 32, 32);
 //		this.game.debug.spriteInfo(player, 32, 32);
-//		this.game.debug.cameraInfo(game.camera, 32, 32);
+		this.game.debug.cameraInfo(game.camera, 32, 32);
     },
 
     //collect item (diamond and key)
