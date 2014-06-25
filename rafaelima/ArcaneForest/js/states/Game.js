@@ -21,6 +21,7 @@ var STATE_PLAY = 0;
 var STATE_PAUSED = 1;
 var STATE_GAMEOVER = 2;
 var timerShine, isBlinkPlayer;
+var emitter;
 
 State.Game.prototype = {
     preload: function () {
@@ -45,7 +46,7 @@ State.Game.prototype = {
         "use strict";
         
         this.gameState = STATE_PLAY;
-        
+        emitter = game.add.emitter(game.width / 2 , game.height / 2 + 5, 500);
         this.healthBar = [];
         this.timeImune = 0;
         this.timeToAttack = 0;
@@ -146,6 +147,7 @@ State.Game.prototype = {
         player.checkWorldBounds = true;
         player.body.collideWorldBounds  = false;
         
+        
         // sword collider
         this.swordOffsetX = Config.game.player.collider.sword.offset.right.x;
         this.swordOffsetY = Config.game.player.collider.sword.offset.right.y;
@@ -161,6 +163,7 @@ State.Game.prototype = {
         
         
         //add 'things' to the world
+        this.putEmitter();
         this.putMonsters();
         this.putMonstersBar();
         this.putCollect();
@@ -209,15 +212,24 @@ State.Game.prototype = {
 
     update: function () {
         "use strict";
+        
+        emitter.forEachExists(function(particle) {
+            if (particle.lifespan < 2000) {
+              particle.alpha *= 0.98;
+              particle.scale.x *= 1.01;
+              particle.scale.y *= 1.01;
+            }
+          }, this);
+        
         if(isBlinkPlayer){
         	player.visible = !player.visible;
         }
         //console.log("--"+ this.playerCollider.body.x +","+ this.playerCollider.body.y);
         this.moveMonster(monsters, 280);
-        this.moveBarVertical(verticalBar1, 680);
-        this.moveBarVertical(verticalBar2, 680);
-        this.moveBarVertical(verticalBar3, 680);
-        this.moveBarVertical(verticalBar4, 680);
+        this.moveBarVertical(verticalBar1, 620);
+        this.moveBarVertical(verticalBar2, 620);
+        this.moveBarVertical(verticalBar3, 620);
+        this.moveBarVertical(verticalBar4, 620);
 
         if(this.gameState == STATE_PLAY) {
         	
@@ -231,6 +243,7 @@ State.Game.prototype = {
 	        if (cursors.left.isDown) {
 	        	this.playerCollider.body.moveLeft(500);
 	            player.scale.x = -1;
+	            emitter.emitX = this.playerCollider.body.x - 45;
 	            //player.animations.play('left');
 	            if(!this.attacking && this.canJump && intVelY == 0) {
 	            	player.animations.play(Config.game.player.anim.walk.key);
@@ -248,6 +261,7 @@ State.Game.prototype = {
 	        } else if (cursors.right.isDown) {
 	        	this.playerCollider.body.moveRight(500);
 	        	player.scale.x = 1;
+	        	emitter.emitX = this.playerCollider.body.x + 45;
 	        	//player.animations.play('right');
 	        	if(!this.attacking && this.canJump && intVelY == 0) {
 	        		player.animations.play(Config.game.player.anim.walk.key);
@@ -623,6 +637,7 @@ State.Game.prototype = {
         	}
         	
         }
+        emitter.emitY = this.playerCollider.body.y;
 
     },
 
@@ -993,11 +1008,11 @@ State.Game.prototype = {
 			
 			obj.timerBV++;
 			
-			if(obj.timerBV >= 23) {
+			if(obj.timerBV >= 25) {
 				
 				obj.body.velocity.y = -velocity;
 				
-				if(obj.timerBV >= 44) {
+				if(obj.timerBV >= 48) {
 					obj.timerBV = 0;
 				}
 			}
@@ -1045,5 +1060,31 @@ State.Game.prototype = {
         collect.name = 'red';
         this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
     },
+    
+    putEmitter: function (){
+    	//create an emitter
+        emitter = this.game.add.emitter(this.playerCollider.body.x + 45 , player.body.y, 500);
+        emitter.makeParticles('magic');
+        emitter.gravity = 0;  
+        emitter.width = 32;
+        
+        // setup options for the emitter
+        emitter.forEach(function(particle) { 
+        particle.events.onKilled.add(function() {
+          this.alpha = 1;
+          this.scale.setTo(1,1);
+        }, particle); 
+        particle.events.onRevived.add(function() {
+          this.rotation = game.rnd.realInRange(0, Math.PI *2);
+        }, particle);
+       });
+        
+        emitter.setXSpeed(-10,10); 
+        emitter.setYSpeed(-50,-30);
+        emitter.setRotation(-50,50);
+        emitter.maxParticleScale = 1;
+        emitter.minParticleScale = 0.5;
+        emitter.start(false, 3500, 200);
+    }
 
 };
