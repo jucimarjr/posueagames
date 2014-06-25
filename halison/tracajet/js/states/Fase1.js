@@ -26,7 +26,7 @@ State.Fase1= function (game) {
 	this.txtScore;
 	this.txtPause;
 	this.contKeys = 0;
-	this.TOTAL_KEYS = 8;
+	this.TOTAL_KEYS = 1;
 	this.imgLife;
 	this.txLife;
 	this.twenLife;
@@ -65,7 +65,7 @@ State.Fase1.prototype = {
 	create: function () {
 		game.world.setBounds(0, 0, 2880, 1200);
 		var bgF1 = game.add.tileSprite(0, 0, game.cache.getImage('bgF1').width,game.cache.getImage('bgF1').height, 'bgF1');
-		bgF1.fixedToCamera = true;
+		bgF1.fixedToCamera = false;
 		
 		game.physics.startSystem(Phaser.Game.ARCADE);
 		this.map = game.add.tilemap('mapaFase1'); //adicionando o map
@@ -142,7 +142,7 @@ State.Fase1.prototype = {
 	update: function () {
 		game.physics.arcade.collide(this.tracajet, this.layer);
 		game.physics.arcade.collide(this.enemies,this.layer);
-	    game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
+	    //game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
 	    game.physics.arcade.overlap(this.sheets,this.tracajet,this.increaseScore,null,this);
 	    game.physics.arcade.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
 	    this.updateTracajet();
