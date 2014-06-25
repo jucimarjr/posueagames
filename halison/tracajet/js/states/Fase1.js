@@ -295,7 +295,7 @@ State.Fase1.prototype = {
 	}
 	,
 	playWalk : function(){
-		this.soundWalk.play('',0,0.5,true);
+		this.soundWalk.play('',0,0.4,true);
 		this.isPlayWalk = true;
 	}
 	,
