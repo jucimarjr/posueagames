@@ -64,6 +64,7 @@ State.GameSplash.prototype = {
 		this.game.load.image(Config.game.verticalbar.collider.key, Config.game.verticalbar.collider.dir);
 		this.game.load.image('transparentwall', Config.game.transparentwall.dir);
 		this.game.load.image('magic', 'assets/images/magic3.png');
+		this.game.load.image('darkmask', 'assets/images/darkmask_480-135.png');
 		
 		// lifes
 		this.game.load.image(Config.game.life.full.key, Config.game.life.full.dir);
