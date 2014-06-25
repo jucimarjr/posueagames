@@ -16,6 +16,14 @@ Player = function(game, coins, layer1, powerlifes, powerstars, thorns, HUD, jump
 	this.life = 3;
 	this.spritePlayer = null;
 	this.cursors = null;
+	this.buttonJump = null;
+	this.isJump = null;
+	this.buttonRun = null;
+	this.isRun = null;
+	this.buttonleft = null;
+	this.left = null;
+	this.buttonright = null;
+	this.right = null;
 };
 
 Player.prototype = {
@@ -44,6 +52,34 @@ Player.prototype = {
 	    this.cursors = this.game.input.keyboard.createCursorKeys();
 		this.jump = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		this.run = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
+		
+		this.buttonJump = game.add.button(Config.button.jump.x, Config.button.jump.y, 'button-jump', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
+		this.buttonJump.fixedToCamera = true;  //our buttons should stay on the same place
+		this.buttonJump.events.onInputOver.add(function(){this.isJump=true;}, this);
+		this.buttonJump.events.onInputOut.add(function(){this.isJump=false;}, this);
+		this.buttonJump.events.onInputDown.add(function(){this.isJump=true;}, this);
+		this.buttonJump.events.onInputUp.add(function(){this.isJump=false;}, this);
+		
+		this.buttonRun = game.add.button(Config.button.run.x, Config.button.run.y, 'button-run', null, this, 0, 1, 0, 1);  //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
+		this.buttonRun.fixedToCamera = true;  //our buttons should stay on the same place
+		this.buttonRun.events.onInputOver.add(function(){this.isRun=true;}, this);
+		this.buttonRun.events.onInputOut.add(function(){this.isRun=false;}, this);
+		this.buttonRun.events.onInputDown.add(function(){this.isRun=true;}, this);
+		this.buttonRun.events.onInputUp.add(function(){this.isRun=false;}, this);        
+
+		this.buttonleft = game.add.button(Config.button.horizontal.left.x, Config.button.horizontal.left.y, 'button-horizontal', null, this, 0, 1, 0, 1);
+		this.buttonleft.fixedToCamera = true;
+		this.buttonleft.events.onInputOver.add(function(){this.left=true;}, this);
+		this.buttonleft.events.onInputOut.add(function(){this.left=false;}, this);
+		this.buttonleft.events.onInputDown.add(function(){this.left=true;}, this);
+		this.buttonleft.events.onInputUp.add(function(){this.left=false;}, this);
+
+		this.buttonright = game.add.button(Config.button.horizontal.right.x, Config.button.horizontal.right.y, 'button-horizontal', null, this, 0, 1, 0, 1);
+		this.buttonright.fixedToCamera = true;
+		this.buttonright.events.onInputOver.add(function(){this.right=true;}, this);
+		this.buttonright.events.onInputOut.add(function(){this.right=false;}, this);
+		this.buttonright.events.onInputDown.add(function(){this.right=true;}, this);
+		this.buttonright.events.onInputUp.add(function(){this.right=false;}, this);
 	},
 
 	update: function() {
@@ -53,6 +89,8 @@ Player.prototype = {
 
 		if(!this.lose) 
 	    {
+			//Keyboard =================================================
+			
 			if(this.cursors.left.isDown && !this.run.isDown)
 			{
 				this.spritePlayer.body.velocity.x = -Config.player.speed;
@@ -92,6 +130,46 @@ Player.prototype = {
 				} else {
 					this.spritePlayer.animations.play('run');
 				}
+			} //Joystick Virtual =================================================
+			else if(this.left && !this.isRun)
+			{
+				this.spritePlayer.body.velocity.x = -Config.player.speed;
+				this.spritePlayer.scale.x = -1;
+				if(this.gold){
+					this.spritePlayer.animations.play('walk-gold');
+				} else {
+					this.spritePlayer.animations.play('walk');
+				}
+			}
+			else if(this.right && !this.isRun)
+			{
+				this.spritePlayer.body.velocity.x = Config.player.speed;
+				this.spritePlayer.scale.x = 1;
+				if(this.gold){
+					this.spritePlayer.animations.play('walk-gold');
+				} else {
+					this.spritePlayer.animations.play('walk');
+				}
+			}
+			else if(this.left && this.isRun)
+			{
+				this.spritePlayer.body.velocity.x = -Config.player.run;
+				this.spritePlayer.scale.x = -1;
+				if(this.gold){
+					this.spritePlayer.animations.play('run-gold');
+				} else {
+					this.spritePlayer.animations.play('run');
+				}
+			}
+			else if(this.right && this.isRun)
+			{
+				this.spritePlayer.body.velocity.x = Config.player.run;
+				this.spritePlayer.scale.x = 1;
+				if(this.gold){
+					this.spritePlayer.animations.play('run-gold');
+				} else {
+					this.spritePlayer.animations.play('run');
+				}
 			}
 			else
 			{
@@ -102,7 +180,7 @@ Player.prototype = {
 					this.spritePlayer.frame = 0;
 				}
 			}
-	
+			
 			if(this.gold && (this.spritePlayer.body.velocity.y < 0)){
 				this.spritePlayer.animations.play('jump-gold');
 			} else if (this.spritePlayer.body.velocity.y < 0){
@@ -115,6 +193,16 @@ Player.prototype = {
 	  
 			//  Allow the player to jump if they are touching the ground.
 			if (this.jump.isDown && this.spritePlayer.body.onFloor())
+			{
+				this.jumpSound.play();
+				if (this.run.isDown) {
+					this.spritePlayer.body.velocity.y = -Config.player.jumpRun;
+				} else {
+					this.spritePlayer.body.velocity.y = -Config.player.jump;
+				}
+			}
+
+			if (this.isJump && this.spritePlayer.body.onFloor())
 			{
 				this.jumpSound.play();
 				if (this.run.isDown) {

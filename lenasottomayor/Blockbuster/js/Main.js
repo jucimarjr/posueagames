@@ -1,5 +1,5 @@
 /*global Config, State, Phaser*/
-
+var backgroundSound;
 var game = new Phaser.Game(Config.global.screen.width, Config.global.screen.height, Phaser.Auto, 'game');
 game.state.add('LudusSplash', State.LudusSplash);
 game.state.add('SponsorSplash', State.SponsorSplash);

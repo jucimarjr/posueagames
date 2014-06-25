@@ -16,8 +16,8 @@ State.Menu.prototype = {
 		buttonCredits = this.game.add.button(Config.menu.buttonCredits.x, Config.menu.buttonCredits.y, 'button-credits', this.clickCredits, this, 2, 1, 0, 0);
 		buttonCredits.anchor.setTo(Config.menu.buttonCredits.anchor.x, Config.menu.buttonCredits.anchor.y);
 		
-		this.backgroundSound = game.add.audio('music');
-		this.backgroundSound.play('',0,0.8,true);
+//		this.backgroundSound = game.add.audio('music');
+//		this.backgroundSound.play('',0,0.8,true);
 	},
 	update: function () {
 		"use strict";
@@ -25,7 +25,6 @@ State.Menu.prototype = {
 	},
 	clickPlay: function () {
 		"use strict";
-		this.backgroundSound.stop();
 		this.game.state.start('Story');
 	},
 	clickHowToPlay: function () {

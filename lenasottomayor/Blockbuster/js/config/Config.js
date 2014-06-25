@@ -356,6 +356,46 @@ Config.enemy = {
 	}	
 };
 
+//Audio
+Config.audio = {
+	game: 'assets/audios/xycexyceBaby.mp3',
+	jump: 'assets/audios/jump.wav',
+	coin: 'assets/audios/coin.wav',
+	hurt: 'assets/audios/hurt.wav',
+	powerup: 'assets/audios/powerup.wav'
+};
+
+//Button
+Config.button = {
+	jump: {
+		dir: 'assets/spritesheets/button-round-a.png',
+		x: 750,
+		y: 525,
+		width: 64,
+		height: 64
+	},
+	run: {
+		dir: 'assets/spritesheets/button-round-b.png',
+		x: 850,
+		y: 525,
+		width: 64,
+		height: 64
+	},
+	horizontal: {
+		dir: 'assets/spritesheets/button-horizontal.png',
+		left: {
+			x: 50,
+			y: 525
+		},
+		right: {
+			x: 150,
+			y: 525
+		},
+		width: 64,
+		height: 32
+	}
+};
+
 //HowToPlay
 Config.howToPlay = {
 	dir: 'assets/images/HowToPlay_960-600.png',
