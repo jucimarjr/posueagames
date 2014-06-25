@@ -57,19 +57,13 @@ Game.PauseController.prototype = {
 
 		this.group = this.game.add.group(undefined, 'pause-controller', true);
 		this.group.create(0, 0, 'gamePaused');
-		
-		// <game paused>
-		var gamePausedTitle = new Phaser.BitmapText(this.game, 0, 0, 'silkscreenWhite', '<game paused>', fontSize);
-		gamePausedTitle.x = (cameraWidth - gamePausedTitle.textWidth) / 2.0;
-		gamePausedTitle.y = 60;
-		this.group.add(gamePausedTitle);
-		
+
 		fontSize *= 0.55;
 		var margin = 60;
-		
+
 		// (c)ontinue
 		this.regularContinueText = new Phaser.BitmapText(this.game,
-		                                                 margin, gamePausedTitle.y + gamePausedTitle.textHeight + 50,
+		                                                 margin, 170,
 														 'silkscreenWhite',
 														 '( )ontinue',
 														 fontSize);
