@@ -46,14 +46,7 @@ State.Fase1.prototype = {
 
 	preload: function () {
 		//Agora carrega no GameSplash para não gerar delay
-		/* game.load.tilemap('mapaFase1','assets/1aFase/mapaFase1a.json',null,Phaser.Tilemap.TILED_JSON);
-		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height);
-		game.load.spritesheet('folhas', "assets/1aFase/folhas_120-40.png",40,40);
-		game.load.spritesheet('jacare', "assets/1aFase/jacare_spritesheet_240-80.png",40,40);
-		game.load.image('bgF1',Config.game.fase1.background);
-		game.load.image('tilesetPlataformaF1','assets/1aFase/assets_1.png');
-		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
-		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40); */
+		
 		this.soundMusic =  game.add.audio('soundGame',1,true);
 		this.soundGetSheet = game.add.audio('soundGetSheet',1,true);
 		this.soundGameOver = game.add.audio('soundGameOver',1,true);
@@ -108,10 +101,18 @@ State.Fase1.prototype = {
 		this.sheets.enableBody  = true;
 		this.map.createFromObjects(this.nameSheets,7,'folhas',0,true,false,this.sheets);
 
+
 		//Grupo chaves
 		this.keys = this.game.add.group();
 		this.keys.enableBody = true;
-		this.map.createFromObjects(this.nameKeys,1,'key_8080',0,true,false,this.keys);		
+		this.map.createFromObjects(this.nameKeys,1,'key_8080',0,true,false,this.keys);
+		this.keys.forEach(function(k){
+			this.game.add.tween(k).to({
+                                angle : -180
+                        }, 20).start();
+
+		},this);
+		
 		
 
 		//Cursor
@@ -142,7 +143,7 @@ State.Fase1.prototype = {
 	update: function () {
 		game.physics.arcade.collide(this.tracajet, this.layer);
 		game.physics.arcade.collide(this.enemies,this.layer);
-	    //game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
+	    game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
 	    game.physics.arcade.overlap(this.sheets,this.tracajet,this.increaseScore,null,this);
 	    game.physics.arcade.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
 	    this.updateTracajet();
@@ -156,15 +157,7 @@ State.Fase1.prototype = {
 		key.kill();
 		this.contKeys ++;
 		if(this.contKeys === this.TOTAL_KEYS){
-			/* var moduloPositionX = Math.abs(game.world.position.x);
-			var moduloPositionY = Math.abs(game.world.position.y); 
-			this.game.paused = true;
-			var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
-				font: "48px Arial",
-				fill: "#ff0044",
-				align: "left"
-			});
-			dieText.setText("YOU WIN");  */
+			this.soundWalk.stop();
 			this.game.state.start('Fase2');
 		}
 	}
