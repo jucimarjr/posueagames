@@ -6,14 +6,13 @@ State.GameOver = function (game) {
 State.GameOver.prototype = {
 	create: function () {
 		"use strict";
-		
-//		var text = "GAME OVER";
-//		var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
-//
-//		var t = game.add.text(this.game.world.centerX-300, 0, text, style);
-
+		this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'bg_splash_load');
+		this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR, Phaser.Keyboard.ENTER]);
 	},
 	update: function () {
 		"use strict";
+		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)||this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+			this.game.state.start('Game');
+		}
 	}
 }

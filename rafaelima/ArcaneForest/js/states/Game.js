@@ -316,7 +316,7 @@ State.Game.prototype = {
         }else if(this.gameState == STATE_PAUSED) {
         	this.checkCamera();
         }else if(this.gameState == STATE_GAMEOVER) {
-//        	this.game.state.start('GameOver');
+        	this.game.state.start('GameOver');
         }else{
         	
         }
@@ -502,7 +502,7 @@ State.Game.prototype = {
         //DEBUG
 //		this.game.debug.text(timerBV, 32, 32);
 //		this.game.debug.spriteInfo(player, 32, 32);
-		this.game.debug.cameraInfo(game.camera, 32, 32);
+//		this.game.debug.cameraInfo(game.camera, 32, 32);
     },
 
     //collect item (diamond and key)
