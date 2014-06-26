@@ -14,6 +14,8 @@ Curumim.Scene = function(game)
 	this.points;
 	this.ants;
 	this.ounces;
+	this.araraBlue;
+	this.insaninhos;
 };
 
 Curumim.Scene.prototype = 
@@ -58,9 +60,10 @@ Curumim.Scene.prototype =
 		this.map.createFromObjects('ObjScene1', Config.fruit.point.gid, 'fruits', Config.fruit.point.frame, true, false, this.points);
 		this.points.forEach(function (fruit){ fruit.body.allowGravity = false; fruit.anchor.setTo(.5, .5);}, this.game);
 
-		this.ounces = new Curumim.Enemy(this.game, 'ounce', this.map, 'ObjScene1', 6, [0, 1, 2, 3, 4]);
-		this.ants = new Curumim.Enemy(this.game, 'ant', this.map, 'ObjScene1', 14, [0, 1, 2, 3, 4, 5], [6]);
-
+		this.ounces = new Curumim.Ounce(this.game, 'ounce', this.map, 'ObjScene1', Config.ounce.gid, [0, 1, 2, 3, 4]);
+		this.ants = new Curumim.Enemy(this.game, 'ant', this.map, 'ObjScene1', Config.ant.gid, [0, 1, 2, 3, 4, 5], [6]);
+		this.araraBlue = new Curumim.Enemy(this.game, 'arara_azul', this.map, 'ObjScene1', Config.arara.blue.gid, [0, 1, 2, 3, 4]);
+		this.insaninhos = new Curumim.Enemy(this.game, 'insaninho', this.map, 'ObjScene1', Config.insaninho.gid, [0, 1, 2], [3]);
 	},
 
 	update: function()
@@ -73,6 +76,8 @@ Curumim.Scene.prototype =
 
 		this.ants.update();
 		this.ounces.update();
+		this.araraBlue.update();
+		this.insaninhos.update();
 
 		this.trees.cameraOffset.y = -this.game.camera.y;
 

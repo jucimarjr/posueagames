@@ -152,7 +152,7 @@ Curumim.Player.prototype =
 
 			this.score.numBullets--;
 			var bullet = this.bullets.getFirstDead();
-	        bullet.reset(this.sprite.x + (20 * this.sprite.scale.x), this.sprite.y - 50);	        
+	        bullet.reset(this.sprite.x + (28 * this.sprite.scale.x), this.sprite.y - 48);	        
 	        bullet.body.acceleration.x = Config.bullet.acceleration;
 	        bullet.body.velocity.x = this.sprite.body.velocity.x + Config.bullet.velocity.x * this.sprite.scale.x;
 	        bullet.body.velocity.y = this.sprite.body.velocity.y + Config.bullet.velocity.y;
