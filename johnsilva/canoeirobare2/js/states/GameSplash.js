@@ -92,7 +92,8 @@ State.GameSplash.prototype = {
 		this.game.load.audio('phase6', Config.audio.phase1);
 		this.game.load.audio('phase7', Config.audio.phase2);
 		this.game.load.audio('coinSound', Config.audio.coin);
-		this.game.load.audio('gameWinSound', Config.audio.gameWin);
+		this.game.load.audio('gameWinSound', Config.audio.gameWin);		
+		this.game.load.audio('cpSound', Config.audio.cp);
 	},
 	create: function () {
 		"use strict";

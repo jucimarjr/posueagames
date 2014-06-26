@@ -17,7 +17,9 @@ State.GamePlay.prototype = {
 		jumpSound = game.add.audio('jumpSound');
 		dieSound = game.add.audio('dieSound');
 		coinSound = game.add.audio('coinSound');
-		gameWinSound = game.add.audio('gameWinSound');
+		gameWinSound = game.add.audio('gameWinSound');		
+		cpSound = game.add.audio('cpSound');
+		cpSound.durationMS = 5000;
 		this.game.time.deltaCap = 0.016;		
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
@@ -518,6 +520,11 @@ State.GamePlay.prototype = {
     },
 
     saveCP : function(player, cp) {
+    	//if(!this.saved)
+    		//cpSound.play();
+    	//this.saved = true;
+    	if(!cpSound.isPlaying)
+    		cpSound.play();
     	this.checkPoint.callAll('animations.play', 'animations', 'spin');
     	levelConfig.checkPoint.x = this.player.body.x;
     	levelConfig.checkPoint.y = this.player.body.y;

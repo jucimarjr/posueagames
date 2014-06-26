@@ -131,7 +131,8 @@ Config.audio = {
 	jump: 'assets/audio/jump.mp3',
 	die: 'assets/audio/die.mp3',
 	coin: 'assets/audio/coin.mp3',
-	gameWin: 'assets/audio/gameWin.mp3'
+	gameWin: 'assets/audio/gameWin.mp3',	
+	cp: 'assets/audio/cp.mp3'
 };
 
 Config.player = {
