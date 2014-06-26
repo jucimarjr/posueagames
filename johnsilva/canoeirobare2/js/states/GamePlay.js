@@ -11,11 +11,13 @@ State.GamePlay.prototype = {
 		var cursors;
 		var levelConfig;
 		var onCipo;
-		var jumpSound, dieSound, phaseSound;
+		var jumpSound, dieSound, phaseSound, coinSound, gameWinSound;
 	},
 	create: function () {
 		jumpSound = game.add.audio('jumpSound');
 		dieSound = game.add.audio('dieSound');
+		coinSound = game.add.audio('coinSound');
+		gameWinSound = game.add.audio('gameWinSound');
 		this.game.time.deltaCap = 0.016;		
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
@@ -30,15 +32,14 @@ State.GamePlay.prototype = {
 
 		this.addPlayer();		
 
-		//this.game.camera.y = 1000;
 		cursors = this.game.input.keyboard.createCursorKeys();
 		this.loadLevel(Config.levelId.level);
 
 		// Show FPS
-    	this.game.time.advancedTiming = true;
+    	/*this.game.time.advancedTiming = true;
     	this.fpsText = this.game.add.text(
         	20, 20, '', { font: '16px Arial', fill: '#ffffff' }
-    	);
+    	);*/
 	},
 	update: function () {
 
@@ -80,11 +81,14 @@ State.GamePlay.prototype = {
 				this.game.physics.arcade.overlap(this.player, this.dardos, this.die, null,this);
 			}
 			this.game.physics.arcade.overlap(this.player, this.coin, function (player,coin) {
+				coinSound.play();
 				coin.kill();
 				Config.finalPhase.lightRadius += 25;
 			}, null, this);
 			this.game.physics.arcade.overlap(this.player, this.flag, function () {
-				this.game.add.tween(this.player).to({alpha:0}, 400, Phaser.Easing.Linear.None).start().onComplete.add(function() {
+				gameWinSound.play();
+				this.game.add.tween(this.flag).to({alpha:0}, 200, Phaser.Easing.Exponential.Out).start();
+				this.game.add.tween(this.player).to({alpha:0}, 400, Phaser.Easing.Exponential.Out).start().onComplete.add(function() {
 		    		this.nextPhase();
 				}, this);				
 			}, null, this);		
