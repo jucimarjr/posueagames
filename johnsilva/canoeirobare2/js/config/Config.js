@@ -129,7 +129,9 @@ Config.audio = {
 	phase1: 'assets/audio/phase1.mp3',
 	phase2: 'assets/audio/phase2.mp3',
 	jump: 'assets/audio/jump.mp3',
-	die: 'assets/audio/die.mp3'
+	die: 'assets/audio/die.mp3',
+	coin: 'assets/audio/coin.mp3',
+	gameWin: 'assets/audio/gameWin.mp3'
 };
 
 Config.player = {

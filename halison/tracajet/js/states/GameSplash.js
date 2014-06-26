@@ -19,8 +19,6 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('button-how-to-play', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
 		this.game.load.image('credits', Config.credits.dir);
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
-		this.game.load.spritesheet('how-to-play-text', Config.howToPlay.text.dir, Config.howToPlay.text.width, Config.howToPlay.text.height);
-		this.game.load.spritesheet('credits-text',  Config.credits.text.dir,  Config.credits.text.width,  Config.credits.text.height);
 		
 		//load imagens da fase1 
 		game.load.tilemap('mapaFase1','assets/1aFase/mapaFase1a.json',null,Phaser.Tilemap.TILED_JSON);
@@ -50,10 +48,8 @@ State.GameSplash.prototype = {
 		var bHowPlay = game.cache.checkImageKey('button-how-to-play');
 		var cr =       game.cache.checkImageKey('credits');
 		var h2play =   game.cache.checkImageKey('how-to-play');
-		var crt =       game.cache.checkImageKey('credits-text');
-		var h2playt =   game.cache.checkImageKey('how-to-play-text');
 		if (!this.isMenuStarted
-			&& menu && bPlay && bCredits && bHowPlay && cr && h2play && crt && h2playt 
+			&& menu && bPlay && bCredits && bHowPlay && cr && h2play 
 		){
 		    this.isMenuStarted = true;
 			setTimeout(function () {

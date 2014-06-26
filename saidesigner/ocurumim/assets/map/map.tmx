@@ -6,11 +6,17 @@
  <tileset firstgid="2" name="fruits" tilewidth="30" tileheight="30">
   <image source="../spritesheets/fruits.png" width="120" height="30"/>
  </tileset>
- <tileset firstgid="6" name="ounce" tilewidth="225" tileheight="122">
-  <image source="../spritesheets/ounce.png" width="1831" height="122"/>
- </tileset>
- <tileset firstgid="14" name="ant" tilewidth="72" tileheight="48">
+ <tileset firstgid="6" name="ant" tilewidth="72" tileheight="48">
   <image source="../spritesheets/ant.png" width="504" height="48"/>
+ </tileset>
+ <tileset firstgid="13" name="arara_azul" tilewidth="100" tileheight="78">
+  <image source="../spritesheets/arara_azul.png" width="500" height="78"/>
+ </tileset>
+ <tileset firstgid="18" name="ounce" tilewidth="211" tileheight="97">
+  <image source="../spritesheets/ounce.png" width="1055" height="97"/>
+ </tileset>
+ <tileset firstgid="23" name="insaninho" tilewidth="67" tileheight="69">
+  <image source="../spritesheets/insaninho.png" width="268" height="69"/>
  </tileset>
  <layer name="TileScene1" width="400" height="100">
   <data encoding="base64" compression="zlib">
@@ -21,24 +27,28 @@
   <image source="../images/platform.png"/>
  </imagelayer>
  <objectgroup name="ObjScene1" width="400" height="100">
-  <object gid="3" x="1170" y="260"/>
+  <object name="acai" gid="3" x="1170" y="260"/>
   <object gid="4" x="420" y="800"/>
   <object gid="4" x="420" y="750"/>
   <object gid="4" x="420" y="700"/>
   <object gid="4" x="420" y="640"/>
   <object gid="4" x="910" y="830"/>
   <object gid="5" x="1140" y="510"/>
-  <object gid="4" x="2240" y="560"/>
+  <object name="tucuma" gid="4" x="2240" y="560"/>
   <object gid="2" x="3530" y="600"/>
   <object gid="5" x="3880" y="900"/>
   <object gid="5" x="2970" y="800"/>
   <object gid="4" x="1870" y="780"/>
-  <object gid="5" x="2050" y="580"/>
-  <object gid="2" x="1830" y="540"/>
-  <object gid="6" x="3570" y="700"/>
-  <object gid="6" x="1550" y="890"/>
+  <object name="cupuacu" gid="5" x="2050" y="580"/>
+  <object name="guarana" gid="2" x="1830" y="540"/>
   <object gid="2" x="270" y="870"/>
-  <object gid="14" x="2670" y="910"/>
-  <object gid="14" x="2170" y="910"/>
+  <object gid="6" x="2670" y="910"/>
+  <object name="formiga" gid="6" x="2170" y="910"/>
+  <object gid="13" x="770" y="490"/>
+  <object name="arara" gid="13" x="2020" y="410"/>
+  <object gid="13" x="1680" y="580"/>
+  <object name="onca" gid="18" x="1500" y="910"/>
+  <object gid="5" x="70" y="610"/>
+  <object name="insaninho" gid="23" x="3680" y="710"/>
  </objectgroup>
 </map>

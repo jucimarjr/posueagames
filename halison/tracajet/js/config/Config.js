@@ -89,46 +89,12 @@ Config.menu = {
 
 // How To Play
 Config.howToPlay = {
-	dir: 'assets/images/instrucoes_960-600.png',
-	x: 0,
-	y: 0,
-	text: { 
-		dir: 'assets/images/intrucoes_400-100.png',		
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.5,
-		width: 400,
-		height: 100,
-		anchor: {
-			x: 0.5,
-			y: 0.5
-		},
-		scale: {
-			x: 1.2,
-			y: 1.2
-		}
-	}
+	dir: 'assets/images/tela_instrucoes_960-600.png'
 };
 
 // Credits
 Config.credits = {
-	dir: 'assets/images/creditos_960-600.png',
-	x: 0,
-	y: 0,
-	text: {
-		dir: 'assets/images/creditos_400-300.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.5,
-		width: 400,
-		height: 300,
-		anchor: {
-			x: 0.5,
-			y: 0.5
-		},
-		scale: {
-			x: 1.5,
-			y: 1.5
-		}
-	}
+	dir: 'assets/images/tela_credito_960-600.png'
 };
 
 //Global

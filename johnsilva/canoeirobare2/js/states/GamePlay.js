@@ -11,11 +11,13 @@ State.GamePlay.prototype = {
 		var cursors;
 		var levelConfig;
 		var onCipo;
-		var jumpSound, dieSound, phaseSound;
+		var jumpSound, dieSound, phaseSound, coinSound, gameWinSound;
 	},
 	create: function () {
 		jumpSound = game.add.audio('jumpSound');
 		dieSound = game.add.audio('dieSound');
+		coinSound = game.add.audio('coinSound');
+		gameWinSound = game.add.audio('gameWinSound');
 		this.game.time.deltaCap = 0.016;		
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
@@ -30,15 +32,14 @@ State.GamePlay.prototype = {
 
 		this.addPlayer();		
 
-		//this.game.camera.y = 1000;
 		cursors = this.game.input.keyboard.createCursorKeys();
 		this.loadLevel(Config.levelId.level);
 
 		// Show FPS
-    	this.game.time.advancedTiming = true;
+    	/*this.game.time.advancedTiming = true;
     	this.fpsText = this.game.add.text(
         	20, 20, '', { font: '16px Arial', fill: '#ffffff' }
-    	);
+    	);*/
 	},
 	update: function () {
 
@@ -80,11 +81,14 @@ State.GamePlay.prototype = {
 				this.game.physics.arcade.overlap(this.player, this.dardos, this.die, null,this);
 			}
 			this.game.physics.arcade.overlap(this.player, this.coin, function (player,coin) {
+				coinSound.play();
 				coin.kill();
 				Config.finalPhase.lightRadius += 25;
 			}, null, this);
 			this.game.physics.arcade.overlap(this.player, this.flag, function () {
-				this.game.add.tween(this.player).to({alpha:0}, 400, Phaser.Easing.Linear.None).start().onComplete.add(function() {
+				gameWinSound.play();
+				this.game.add.tween(this.flag).to({alpha:0}, 200, Phaser.Easing.Exponential.Out).start();
+				this.game.add.tween(this.player).to({alpha:0}, 400, Phaser.Easing.Exponential.Out).start().onComplete.add(function() {
 		    		this.nextPhase();
 				}, this);				
 			}, null, this);		
@@ -522,30 +526,16 @@ State.GamePlay.prototype = {
     runCipo : function(player, cipo) {
     	onCipo = true;
     	player.body.velocity.y = Config.player.velocity.down;
-    	//player.frame = Config.climbing.frames.min;
     },
 
     climb : function(velocity) {
     	this.player.animations.play('climbing');
     	this.player.body.velocity.y = velocity;
-    	/*frameClimbing++;
-    	this.player.frame  = frameClimbing;
-    	if(frameClimbing > Config.climbing.frames.max){
-    		frameClimbing = Config.climbing.frames.min;
-    		this.player.frame = frameClimbing;
-    	}*/
-
     },   
 
     initShadow: function(){
-    	// Create the shadow texture
     	this.shadowTexture = this.game.add.bitmapData(this.game.world.bounds.width, this.game.world.bounds.height);
-
-    	// Create an object that will use the bitmap as a texture
     	var lightSprite = this.game.add.image(0, 0, this.shadowTexture);
-
-    	// Set the blend mode to MULTIPLY. This will darken the colors of
-    	// everything below this sprite.
     	lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
     },
 
@@ -554,8 +544,6 @@ State.GamePlay.prototype = {
     	this.shadowTexture.context.fillStyle = 'rgb(9, 9, 9)';
     	//this.shadowTexture.context.fillRect(0, 0, this.game.width, this.game.height);
     	this.shadowTexture.context.fillRect(0, 0, this.game.world.bounds.width, this.game.world.bounds.height);
-    	
-    	// Draw circle of light with a soft edge
     	var gradient = this.shadowTexture.context.createRadialGradient(
     		x, y, Config.finalPhase.lightRadius * 0.75,
     		x, y, Config.finalPhase.lightRadius);
@@ -567,8 +555,7 @@ State.GamePlay.prototype = {
     	this.shadowTexture.context.fillStyle = gradient;
     	this.shadowTexture.context.arc(x, y, Config.finalPhase.lightRadius, 0, Math.PI*2);
     	this.shadowTexture.context.fill();
-
-    	// This just tells the engine it should update the texture cache
+    	
     	this.shadowTexture.dirty = true;
 	},
 

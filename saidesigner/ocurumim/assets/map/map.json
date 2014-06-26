@@ -29,7 +29,7 @@
                 {
                  "gid":3,
                  "height":0,
-                 "name":"",
+                 "name":"acai",
                  "properties":
                     {
 
@@ -127,7 +127,7 @@
                 {
                  "gid":4,
                  "height":0,
-                 "name":"",
+                 "name":"tucuma",
                  "properties":
                     {
 
@@ -197,7 +197,7 @@
                 {
                  "gid":5,
                  "height":0,
-                 "name":"",
+                 "name":"cupuacu",
                  "properties":
                     {
 
@@ -211,7 +211,7 @@
                 {
                  "gid":2,
                  "height":0,
-                 "name":"",
+                 "name":"guarana",
                  "properties":
                     {
 
@@ -221,34 +221,6 @@
                  "width":0,
                  "x":1830,
                  "y":540
-                }, 
-                {
-                 "gid":6,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":3570,
-                 "y":700
-                }, 
-                {
-                 "gid":6,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1550,
-                 "y":890
                 }, 
                 {
                  "gid":2,
@@ -265,7 +237,7 @@
                  "y":870
                 }, 
                 {
-                 "gid":14,
+                 "gid":6,
                  "height":0,
                  "name":"",
                  "properties":
@@ -279,9 +251,9 @@
                  "y":910
                 }, 
                 {
-                 "gid":14,
+                 "gid":6,
                  "height":0,
-                 "name":"",
+                 "name":"formiga",
                  "properties":
                     {
 
@@ -291,6 +263,90 @@
                  "width":0,
                  "x":2170,
                  "y":910
+                }, 
+                {
+                 "gid":13,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":770,
+                 "y":490
+                }, 
+                {
+                 "gid":13,
+                 "height":0,
+                 "name":"arara",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2020,
+                 "y":410
+                }, 
+                {
+                 "gid":13,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1680,
+                 "y":580
+                }, 
+                {
+                 "gid":18,
+                 "height":0,
+                 "name":"onca",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1500,
+                 "y":910
+                }, 
+                {
+                 "gid":5,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":70,
+                 "y":610
+                }, 
+                {
+                 "gid":23,
+                 "height":0,
+                 "name":"insaninho",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3680,
+                 "y":710
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -338,21 +394,6 @@
         }, 
         {
          "firstgid":6,
-         "image":"..\/spritesheets\/ounce.png",
-         "imageheight":122,
-         "imagewidth":1831,
-         "margin":0,
-         "name":"ounce",
-         "properties":
-            {
-
-            },
-         "spacing":0,
-         "tileheight":122,
-         "tilewidth":225
-        }, 
-        {
-         "firstgid":14,
          "image":"..\/spritesheets\/ant.png",
          "imageheight":48,
          "imagewidth":504,
@@ -365,6 +406,51 @@
          "spacing":0,
          "tileheight":48,
          "tilewidth":72
+        }, 
+        {
+         "firstgid":13,
+         "image":"..\/spritesheets\/arara_azul.png",
+         "imageheight":78,
+         "imagewidth":500,
+         "margin":0,
+         "name":"arara_azul",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":78,
+         "tilewidth":100
+        }, 
+        {
+         "firstgid":18,
+         "image":"..\/spritesheets\/ounce.png",
+         "imageheight":97,
+         "imagewidth":1055,
+         "margin":0,
+         "name":"ounce",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":97,
+         "tilewidth":211
+        }, 
+        {
+         "firstgid":23,
+         "image":"..\/spritesheets\/insaninho.png",
+         "imageheight":69,
+         "imagewidth":268,
+         "margin":0,
+         "name":"insaninho",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":69,
+         "tilewidth":67
         }],
  "tilewidth":10,
  "version":1,

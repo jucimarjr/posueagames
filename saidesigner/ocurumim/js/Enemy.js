@@ -33,7 +33,7 @@ Curumim.Enemy = function(game, spriteKey, map, mapObject, gid, walkAnimation, de
 
 Curumim.Enemy.prototype = 
 {
-	update: function()
+	update: function(isCollision)
 	{
 		this.game.physics.arcade.overlap(this.group, player.getCollider(), this.playerCollision, null, this);
 		this.game.physics.arcade.collide(player.getBullets(), this.group, this.bulletCollision, null, this);

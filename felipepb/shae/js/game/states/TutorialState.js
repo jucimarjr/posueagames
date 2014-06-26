@@ -21,16 +21,16 @@ Game.TutorialState.prototype = {
         var cameraWidth = this.game.camera.width;
         var cameraHeight = this.game.camera.height;
         // back button
-        this.redBackText = this.game.add.bitmapText(cameraWidth - 160,
-                                                    25,
-                                                    'silkscreenGray',
-                                                    '( )ack',
-                                                    fontSize);
-        this.regularBackTextBoundingBox = new Phaser.Rectangle(this.redBackText.x, this.redBackText.y,
-                                                               this.redBackText.textWidth, this.redBackText.textHeight);
-                                                               
-        this.redBackText = this.game.add.bitmapText(this.redBackText.x,
-                                                    this.redBackText.y,
+        this.regularBackText = this.game.add.bitmapText(cameraWidth - 160,
+                                                        25,
+                                                        'silkscreenGray',
+                                                        '( )ack',
+                                                        fontSize);
+        this.regularBackTextBoundingBox = new Phaser.Rectangle(this.regularBackText.x, this.regularBackText.y,
+                                                               this.regularBackText.textWidth, this.regularBackText.textHeight);
+
+        this.redBackText = this.game.add.bitmapText(this.regularBackText.x,
+                                                    this.regularBackText.y,
                                                     'silkscreenRed',
                                                     'b',
                                                     fontSize);

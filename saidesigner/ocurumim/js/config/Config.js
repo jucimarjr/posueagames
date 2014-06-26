@@ -45,8 +45,8 @@ Config.gameSplash = {
 	},
 	x: 0,
 	y: 0,
-	millis: 2000,
-	nextState: 4000
+	millis: 1000,
+	nextState: 1000
 };
 
 //Menu
@@ -177,8 +177,8 @@ Config.score = {
 		txt : {
 			x : 70,
 			y : 10,
-			style : { font: "30px Tribeca", fill: "yellow", align: "center" },
-			styleBig : { font: "40px Tribeca", fill: "orange", align: "center" }
+			style : { font: "35px Bored Fjord", fill: "yellow", align: "center" },
+			styleBig : { font: "40px Bored Fjord", fill: "orange", align: "center" }
 		}
 	},
 
@@ -191,8 +191,8 @@ Config.score = {
 		txt : {
 			x : 360,
 			y : 10,
-			style : { font: "30px Tribeca", fill: "yellow", align: "center" },
-			styleBig : { font: "40px Tribeca", fill: "orange", align: "center" }
+			style : { font: "35px Bored Fjord", fill: "yellow", align: "center" },
+			styleBig : { font: "40px Bored Fjord", fill: "orange", align: "center" }
 		}
 	},
 
@@ -205,8 +205,8 @@ Config.score = {
 		txt : {
 			x : 660,
 			y : 10,
-			style : { font: "30px Tribeca", fill: "yellow", align: "center" },
-			styleBig : { font: "40px Tribeca", fill: "orange", align: "center" }
+			style : { font: "35px Bored Fjord", fill: "yellow", align: "center" },
+			styleBig : { font: "40px Bored Fjord", fill: "orange", align: "center" }
 		}
 	}
 };
@@ -250,19 +250,58 @@ Config.fruit = {
 // Ounce
 
 Config.ounce = {
+
+	gid : 18,
+
 	sprite : {
 		src : 'assets/spritesheets/ounce.png',
-		width : 225,
-		height: 122
+		width : 211,
+		height: 97
+	},
+
+	tail : {
+		src: 'assets/images/ounce_tail.png'
+	},
+
+	dizzy : {
+		src : 'assets/spritesheets/ounce_dizzy.png',
+		width : 127,
+		height: 127
 	}
 };
 
 // Ant
 
 Config.ant = {
+	gid: 6,
 	sprite : {
 		src : 'assets/spritesheets/ant.png',
 		width : 72,
 		height: 48
+	}
+};
+
+
+// Arara
+
+Config.arara = {
+	blue : {
+		gid: 13,
+		sprite : {
+			src : 'assets/spritesheets/arara_blue.png',
+			width : 100,
+			height: 78
+		}
+	}
+};
+
+// Insaninho
+
+Config.insaninho = {
+	gid: 23,
+	sprite : {
+		src : 'assets/spritesheets/insaninho.png',
+		width : 67,
+		height: 69
 	}
 };
