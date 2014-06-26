@@ -526,30 +526,16 @@ State.GamePlay.prototype = {
     runCipo : function(player, cipo) {
     	onCipo = true;
     	player.body.velocity.y = Config.player.velocity.down;
-    	//player.frame = Config.climbing.frames.min;
     },
 
     climb : function(velocity) {
     	this.player.animations.play('climbing');
     	this.player.body.velocity.y = velocity;
-    	/*frameClimbing++;
-    	this.player.frame  = frameClimbing;
-    	if(frameClimbing > Config.climbing.frames.max){
-    		frameClimbing = Config.climbing.frames.min;
-    		this.player.frame = frameClimbing;
-    	}*/
-
     },   
 
     initShadow: function(){
-    	// Create the shadow texture
     	this.shadowTexture = this.game.add.bitmapData(this.game.world.bounds.width, this.game.world.bounds.height);
-
-    	// Create an object that will use the bitmap as a texture
     	var lightSprite = this.game.add.image(0, 0, this.shadowTexture);
-
-    	// Set the blend mode to MULTIPLY. This will darken the colors of
-    	// everything below this sprite.
     	lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
     },
 
@@ -558,8 +544,6 @@ State.GamePlay.prototype = {
     	this.shadowTexture.context.fillStyle = 'rgb(9, 9, 9)';
     	//this.shadowTexture.context.fillRect(0, 0, this.game.width, this.game.height);
     	this.shadowTexture.context.fillRect(0, 0, this.game.world.bounds.width, this.game.world.bounds.height);
-    	
-    	// Draw circle of light with a soft edge
     	var gradient = this.shadowTexture.context.createRadialGradient(
     		x, y, Config.finalPhase.lightRadius * 0.75,
     		x, y, Config.finalPhase.lightRadius);
@@ -571,8 +555,7 @@ State.GamePlay.prototype = {
     	this.shadowTexture.context.fillStyle = gradient;
     	this.shadowTexture.context.arc(x, y, Config.finalPhase.lightRadius, 0, Math.PI*2);
     	this.shadowTexture.context.fill();
-
-    	// This just tells the engine it should update the texture cache
+    	
     	this.shadowTexture.dirty = true;
 	},
 
