@@ -99,7 +99,7 @@ function EnemyBoss(game) {
 		}
 
 		this.fireballs.update(layer);
-		// this.fireballs.checkCollision(heroes);
+		this.fireballs.checkCollision(heroes);
 	};
 
 	return that;

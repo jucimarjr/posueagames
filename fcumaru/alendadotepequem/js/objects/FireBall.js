@@ -63,18 +63,7 @@ FireBall.prototype = {
 		this.game.physics.arcade.collide(this.fireball, hero, this.heroCollision);
 	},
 	heroCollision : function(fireball, hero) {
-		fireball.body.moves = false;
-
-		// Only hero of power can move the fireball
-		if (hero.heroType == HERO_OF_POWER &&
-		// Only can move the fireball when the hero on floor
-		hero.body.onFloor() &&
-		// Only can move the fireball when collide by side
-		(fireball.body.touching.right || fireball.body.touching.left)) {
-			fireball.body.moves = true;
-			fireball.body.velocity.x = hero.body.velocity.x * (-1 / 6);
-			hero.isPushing = true;
-		}
+		hero.damage(1);
 	}
 };
 

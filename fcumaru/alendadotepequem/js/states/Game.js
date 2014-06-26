@@ -76,7 +76,7 @@ State.Game.prototype = {
 	update : function() {
 		"use strict";
 		this.heroes.update(this.layer, this.enemies);
-		this.enemies.update(this.layer);
+		this.enemies.update(this.layer, this.heroes);
 		this.trees.update(this.layer);
 		this.rocks.update(this.layer);
 		this.rocks.checkCollision(this.heroes);
