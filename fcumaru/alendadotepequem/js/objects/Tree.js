@@ -40,13 +40,13 @@ Tree.prototype = {
             var angle = -90;
             if(!facingLeft) {
                 this.game.add.tween(this.tree)
-                    .to({angle: angle}, 2000, Phaser.Easing.Exponential.In)
+                    .to({angle: angle}, 1500, Phaser.Easing.Exponential.In)
                     .start()
                     .onComplete.add(function() {this.tree.body.setSize(241, 50, -80, 20);}, this);
             }
             else {
                 this.game.add.tween(this.tree)
-                    .to({angle: -angle}, 2000, Phaser.Easing.Exponential.In)
+                    .to({angle: -angle}, 1500, Phaser.Easing.Exponential.In)
                     .start()
                     .onComplete.add(function() {this.tree.body.setSize(241, 50, 80, 20);}, this);
             }                

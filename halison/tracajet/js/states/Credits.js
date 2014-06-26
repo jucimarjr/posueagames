@@ -10,12 +10,9 @@ State.Credits.prototype = {
 	},
 	create: function () {
 		"use strict";
-		var background = this.game.add.sprite(Config.credits.x, Config.credits.y, 'credits');
+		var background = this.game.add.sprite(0, 0, 'credits');
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
-		var sprite = game.add.sprite(Config.credits.text.x, Config.credits.text.y, 'credits-text');
-		sprite.anchor.setTo(Config.credits.text.anchor.x, Config.credits.text.anchor.y);
-		sprite.scale.setTo( Config.credits.text.scale.x,Config.credits.text.scale.y );
 	},
 	update: function () {
 		"use strict";

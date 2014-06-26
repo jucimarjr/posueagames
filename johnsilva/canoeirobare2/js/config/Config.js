@@ -106,6 +106,24 @@ Config.credits = {
 	y: 0
 };
 
+Config.story = {
+	dir: 'assets/images/story1_960-600.jpg',
+	dir2: 'assets/images/story2_960-600.jpg',
+	x: 0,
+	y: 0,
+	millis: 6000,
+};
+
+Config.end = {
+	dir: 'assets/images/end/end1_960-600.jpg',
+	dir1: 'assets/images/end/end2_960-600.jpg',
+	dir2: 'assets/images/end/end3_960-600.jpg',
+	dir3: 'assets/images/end/end4_960-600.jpg',
+	x: 0,
+	y: 0,
+	millis: 6000,
+};
+
 Config.audio = {
 	menu: 'assets/audio/menu.mp3',
 	phase1: 'assets/audio/phase1.mp3',
@@ -220,7 +238,7 @@ Config.level = {
 		    Config.update.updateLevel(75, 2200, true, 13, 18, 19, 23, 24, 25, 'coin', 33, 37, 38,0,0);
 		else if (level == 6)
 		    Config.update.updateLevel(2400, 400, true, 13, 18, 19, 23, 24, 25, 'coin', 42, 33, 34,0,0);
-		else if (level == 7)
+		else if (level == 7)			
 		    Config.update.updateLevel(75, 1100, false, 16, 0, 0, 0, 19, 0, 'coin', 0, 20, 0,21,22);
 		/*else if (level == 9)
 		    Config.update.updateLevel(2000, 2000, true, 0, 19, 0, 20, 0, 0, 'coin', 0, 18,0,0,0);*/

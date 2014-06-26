@@ -11,8 +11,10 @@ State.Menu.prototype = {
 	create: function () {
 		"use strict";
 		var background, buttonPlay, buttonCredits, buttonHowToPlay ;
-		this.menuMusic = this.game.add.audio('menu-audio',1,true);
-		this.menuMusic.play('',0,1,true);
+		if(!this.menuMusic){
+			this.menuMusic = this.game.add.audio('menu-audio',1,true);
+			this.menuMusic.play('',0,1,true);
+		}
 		background = this.game.add.sprite(Config.menu.x, Config.menu.y, 'menu-background');
 		buttonPlay = this.game.add.button(Config.menu.buttonPlay.x, Config.menu.buttonPlay.y, 'button-play', this.clickPlay, this, 1, 0, 1);
 		buttonPlay.anchor.setTo(Config.menu.buttonPlay.anchor.x, Config.menu.buttonPlay.anchor.y);
@@ -28,16 +30,17 @@ State.Menu.prototype = {
 	clickPlay: function () {
 		"use strict";
 		this.menuMusic.stop();
-		this.game.state.start('GamePlay');
+		//this.game.state.start('GamePlay');
+		this.game.state.start('Story');
 	},
 	clickHowToPlay: function () {
 		"use strict";
-		this.menuMusic.stop();
+		//this.menuMusic.stop();
 		this.game.state.start('HowToPlay');
 	},
 	clickCredits: function () {
 		"use strict";
-		this.menuMusic.stop();
+		//this.menuMusic.stop();
 		this.game.state.start('Credits');
 	}
 };

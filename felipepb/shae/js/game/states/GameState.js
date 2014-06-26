@@ -20,6 +20,8 @@ Game.GameState = function () {
 
     this.hud;
     this.loadedLevel;
+	
+	this.pause;
 
     this.playerHasKey;
     this.stageComplete;
@@ -53,7 +55,7 @@ Game.GameState.prototype = {
 		this.playerLightRadiusFrom = PlayerConsts.lightFocusRadius;
 		this.playerLightRadiusTo = PlayerConsts.lightFocusRadius - 15;
 		this.playerLightAlphaFrom = 0.0;
-        this.playerLightAlphaTo = 0.3;
+        this.playerLightAlphaTo = 0.2;
 		
 		var self = this;
 		Utils.fadeOutScreen(this.game,
@@ -77,6 +79,7 @@ Game.GameState.prototype = {
 	            playerRespawnTween.to(null, 1000, Phaser.Easing.Linear.None, true, 0);
 	            playerRespawnTween.onComplete.add(function () {
 					self.createHUD();
+					self.createPause();
 	                self.player.playRespawnAnimation();
 	            });
 	        });
@@ -179,8 +182,17 @@ Game.GameState.prototype = {
         this.hud = new Game.HUDController(this);
         this.hud.create();
     },
+	
+	createPause: function () {
+		this.pause = new Game.PauseController(this);
+		this.pause.create();
+	},
 
     update: function () {
+		if (this.pause) {
+            this.pause.update();
+        }
+		
         this.game.physics.arcade.collide(this.layer, this.player.sprite);
         this.game.physics.arcade.overlap(this.keyGroup, this.player.sprite, this.collideWithKey, null, this);
         this.game.physics.arcade.collide(this.gateGroup, this.player.sprite, this.collideWithGate, null, this);
@@ -197,6 +209,12 @@ Game.GameState.prototype = {
             this.updatePlayerLight();
 		}
     },
+	
+	pauseUpdate: function () {
+		if (this.pause) {
+			this.pause.pauseUpdate();
+		}
+	},
 
     render: function () {
         this.player.render(this.game);
@@ -337,7 +355,7 @@ Game.GameState.prototype = {
 	navigateToGameLoose: function () {
 		this.navigate('GameLooseState');
 	},
-	
+
 	navigate: function (stateName) {
 		var self = this;
         self.game.input.keyboard.onDownCallback = null;
@@ -346,7 +364,7 @@ Game.GameState.prototype = {
             self.state.start(stateName);
         });
 	},
-	
+
 	playerLife: function () {
         return this.hud ? this.hud.livesCount : PlayerConsts.startingLifeTotal;
     },

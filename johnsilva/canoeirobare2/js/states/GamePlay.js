@@ -49,8 +49,14 @@ State.GamePlay.prototype = {
 		this.game.physics.arcade.collide(this.layer, this.player);
 		this.player.body.velocity.x = 0;
 		onCipo = false;
-		if(this.level == Config.finalPhase.id)
+		if(this.level == Config.finalPhase.id){
 			this.updateShadowTexture(this.player.body.x, this.player.body.y);
+			this.game.physics.arcade.overlap(this.player, this.cave, function () {
+				this.game.add.tween(this.player).to({alpha:0}, 400, Phaser.Easing.Linear.None).start().onComplete.add(function() {
+		    		this.end();
+				}, this);				
+			}, null, this);
+		}
 
 		if(!this.gameOver){		
 			//Config.global.screen.resize(this.game);
@@ -78,14 +84,9 @@ State.GamePlay.prototype = {
 				Config.finalPhase.lightRadius += 25;
 			}, null, this);
 			this.game.physics.arcade.overlap(this.player, this.flag, function () {
-				Config.levelConfig.checkPoint.x = 0;
-				Config.levelConfig.checkPoint.y = 0;
-				phaseSound.stop();
-				Config.levelId.level = ++this.level;
-				this.player.alpha = 0;
-				this.player.body.x = 0;
-				this.player.body.y = 0;
-				this.game.state.start('GamePlay');
+				this.game.add.tween(this.player).to({alpha:0}, 400, Phaser.Easing.Linear.None).start().onComplete.add(function() {
+		    		this.nextPhase();
+				}, this);				
 			}, null, this);		
 		
         	if (cursors.left.isDown ) {
@@ -131,6 +132,25 @@ State.GamePlay.prototype = {
 				jumping = false;
 			}
 		}
+	},
+
+	end: function(){
+		phaseSound.stop();
+		this.player.body.x = 0;
+		this.player.body.y = 0;
+		Config.levelId.level = 1;
+		this.game.state.start('End');
+		return;
+	},
+
+	nextPhase: function(){
+		Config.levelConfig.checkPoint.x = 0;
+		Config.levelConfig.checkPoint.y = 0;
+		phaseSound.stop();
+		Config.levelId.level = ++this.level;
+		this.player.body.x = 0;
+		this.player.body.y = 0;
+		this.game.state.start('GamePlay');
 	},
 
 	addPlayer: function(){
@@ -208,6 +228,7 @@ State.GamePlay.prototype = {
 		if (this.cipo) this.cipo.destroy();		
 		if (this.dardos) this.dardos.destroy();
 		if (this.cannons) this.cannons.destroy();
+		if (this.cave) this.cave.destroy();
 
 		this.bg = this.game.add.tileSprite(0,0,1200,800,'bg'+level);
 		this.bg.fixedToCamera = true;		
@@ -223,12 +244,13 @@ State.GamePlay.prototype = {
 			this.map.setCollisionBetween(1,12, true,'Camada de Tiles 1');
 		}		
 
-		if(levelConfig.branches.exists) this.map.addTilesetImage('branches','branches');
-		if(levelConfig.waters.id>0) this.addWaters(levelConfig.waters.id);
+		if(levelConfig.branches.exists) this.map.addTilesetImage('branches','branches');		
 		if(levelConfig.thorns.id>0) this.addThorns(levelConfig.thorns.id);
 		if(levelConfig.coin.id>0) this.addCoin(levelConfig.coin.id, levelConfig.coin.image);
 		if(levelConfig.cipo.id>0) this.addCipo(levelConfig.cipo.id);
 		if(levelConfig.dardos.id>0) this.addDardos(levelConfig.dardos.id);
+		if(levelConfig.waters.id>0) this.addWaters(levelConfig.waters.id);
+		if(this.level == Config.finalPhase.id) this.addCave(23);
 
 		this.player.bringToTop();
 
@@ -238,15 +260,27 @@ State.GamePlay.prototype = {
 		this.layer.resizeWorld();
 		this.game.physics.enable(this.layer);
 
-		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);
+		if(levelConfig.bees.id>0) this.addBees(levelConfig.bees.id);		
 		if(levelConfig.tubes.id>0) this.addTubes(levelConfig.tubes.id);
 		if(levelConfig.checkPoint.id>0) this.addCheckPoint(levelConfig.checkPoint.id);
 		if(levelConfig.cannons.id>0) this.addCannons(levelConfig.cannons.id);
+		if(levelConfig.flag.id>0) this.addFlag(levelConfig.flag.id)
 
-		this.addFlag(levelConfig.flag.id)
-		
-		if(this.level == Config.finalPhase.id)
-			this.initShadow();
+		if(this.level == 3 || this.level == 6){
+			var emitter = game.add.emitter(game.world.centerX, 0, 400);
+			emitter.width = game.world.width;
+			// emitter.angle = 30; // uncomment to set an angle for the rain.
+			emitter.makeParticles('rain');
+			emitter.minParticleScale = 0.1;
+			emitter.maxParticleScale = 0.5;
+			emitter.setYSpeed(300, 500);
+			emitter.setXSpeed(-5, 5);
+			emitter.minRotation = 0;
+			emitter.maxRotation = 0;
+			emitter.start(false, 1600, 5, 0);
+		}
+
+		if(this.level == Config.finalPhase.id) this.initShadow();
 
 		/*var styleBig = { font: "40px Arial Bold", fill: "#ffffff" };
 		var text ;
@@ -278,6 +312,17 @@ State.GamePlay.prototype = {
 		dardo.reset(dardo.initX, dardo.initY);
 		dardo.body.velocity.x = 100;
 		dardo.body.velocity.y = 0;
+	},
+
+	addCave: function(id){
+		this.cave = game.add.group();
+		this.cave.enableBody = true;
+		this.cave.physicsBodyType = Phaser.Physics.ARCADE;
+		this.map.createFromObjects('cave',id,'cave', 0,true,false,this.cave);
+		this.cave.forEach(function (c){ 
+			c.body.allowGravity = false;
+			c.body.immovable = true;
+		}, this);
 	},
 
 	addFlag: function(id){
@@ -449,11 +494,11 @@ State.GamePlay.prototype = {
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
 		this.player.animations.play('dead');
-		this.game.add.tween(this.player).to({alpha:0}, 300).start().onComplete.add(function() {
+		this.game.add.tween(this.player).to({alpha:0}, 300, Phaser.Easing.Linear.None).start().onComplete.add(function() {
 		    	//this.loadLevel(this.level);
 		    	//this.game.state.start('GamePlay');
-		    	this.restartPhase(enemie, emitter);
-			}, this);		
+		    this.restartPhase(enemie, emitter);
+		}, this);		
     },
 
     restartPhase: function(enemie, emitter){
@@ -530,10 +575,10 @@ State.GamePlay.prototype = {
     render: function (){
     	/*game.debug.text(this.game.world.bounds.width,32,32);
     	game.debug.text(this.game.world.bounds.height,32,64);*/
-    	game.debug.text(this.player.body.x,32,32);
+    	//game.debug.text(this.player.body.x,32,32);
     	//game.debug.text(this.player.body.y,32,64);
-    	game.debug.text(levelConfig.checkPoint.x,200,32);
-    	game.debug.text(levelConfig.player.posX,400,32);
+    	//game.debug.text(levelConfig.checkPoint.x,200,32);
+    	//game.debug.text(levelConfig.player.posX,400,32);
     	//game.debug.text(levelConfig.checkPoint.y,200,64);
 
     	//game.debug.body(this.player);

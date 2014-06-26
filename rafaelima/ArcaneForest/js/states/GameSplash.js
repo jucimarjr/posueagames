@@ -30,14 +30,18 @@ State.GameSplash.prototype = {
 		this.game.load.image(Config.story.key, Config.story.dir);
 		
 		//Game
-		game.load.audio('music_game', Config.game.audio.dir);
+		game.load.audio(Config.game.audio.bg.key, Config.game.audio.bg.dir);
+		game.load.audio(Config.game.audio.attack.key, Config.game.audio.attack.dir);
+		
 		this.game.load.image('bg1', Config.game.dirBg1);
 		this.game.load.image('bg2', Config.game.dirBg2);
 		this.game.load.image('bg3', Config.game.dirBg3);
 		this.game.load.image('bg4', Config.game.dirBg4);
 		this.game.load.image('bg5', Config.game.dirBg5);
 		this.game.load.image('bg6', Config.game.dirBg6);
+		
 		this.game.load.image('bar', Config.game.bar.dir);
+		
 		this.game.load.tilemap('stage', Config.game.tilemap.dir, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('stageRotate', Config.game.tilemapRotate.dir, null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('tileset', Config.game.tileset.dir);
@@ -59,6 +63,8 @@ State.GameSplash.prototype = {
 		this.game.load.image(Config.game.verticalbar.key, Config.game.verticalbar.dir);
 		this.game.load.image(Config.game.verticalbar.collider.key, Config.game.verticalbar.collider.dir);
 		this.game.load.image('transparentwall', Config.game.transparentwall.dir);
+		this.game.load.image('magic', 'assets/images/magic3.png');
+		this.game.load.image('darkmask', 'assets/images/darkmask_480-135.png');
 		
 		// lifes
 		this.game.load.image(Config.game.life.full.key, Config.game.life.full.dir);

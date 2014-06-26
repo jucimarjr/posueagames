@@ -40,7 +40,7 @@ Config.sponsorSplash = {
 //GameSplash
 Config.gameSplash = {
 	dir: {
-		background: 'assets/images/GameSplash_960-600.png',
+		background: 'assets/images/GameSplash_960-600.jpg',
 		bar: 'assets/images/ProgressBar_960-30.png'
 	},
 	x: 0,
@@ -55,33 +55,33 @@ Config.menu = {
 	x: 0,
 	y: 0,
 	buttonPlay: {
-		dir: 'assets/spritesheets/ButtonPlay_600-95.png',
+		dir: 'assets/spritesheets/buttonjogar_928_98.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.4,
-		width: 150,
-		height: 95,
+		y: Config.global.screen.height * 0.5,
+		width: 230,
+		height: 98,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonHowToPlay: {
-		dir: 'assets/spritesheets/ButtonHowToPlay_600-95.png',
+		dir: 'assets/spritesheets/buttoncomojogar_928_98.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.6,
-		width: 150,
-		height: 95,
+		y: Config.global.screen.height * 0.7,
+		width: 230,
+		height: 98,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonCredits: {
-		dir: 'assets/spritesheets/ButtonCredits_600-95.png',
+		dir: 'assets/spritesheets/buttoncredito_928_98.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.8,
-		width: 150,
-		height: 95,
+		y: Config.global.screen.height * 0.9,
+		width: 230,
+		height: 98,
 		anchor: {
 			x: 0.5,
 			y: 0.5
@@ -177,8 +177,8 @@ Config.score = {
 		txt : {
 			x : 70,
 			y : 10,
-			style : { font: "30px Arial", fill: "yellow", align: "center" },
-			styleBig : { font: "40px Verdana", fill: "orange", align: "center" }
+			style : { font: "30px Tribeca", fill: "yellow", align: "center" },
+			styleBig : { font: "40px Tribeca", fill: "orange", align: "center" }
 		}
 	},
 
@@ -191,8 +191,8 @@ Config.score = {
 		txt : {
 			x : 360,
 			y : 10,
-			style : { font: "30px Arial", fill: "yellow", align: "center" },
-			styleBig : { font: "40px Verdana", fill: "orange", align: "center" }
+			style : { font: "30px Tribeca", fill: "yellow", align: "center" },
+			styleBig : { font: "40px Tribeca", fill: "orange", align: "center" }
 		}
 	},
 
@@ -205,8 +205,8 @@ Config.score = {
 		txt : {
 			x : 660,
 			y : 10,
-			style : { font: "30px Arial", fill: "yellow", align: "center" },
-			styleBig : { font: "40px Verdana", fill: "orange", align: "center" }
+			style : { font: "30px Tribeca", fill: "yellow", align: "center" },
+			styleBig : { font: "40px Tribeca", fill: "orange", align: "center" }
 		}
 	}
 };

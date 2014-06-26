@@ -10,7 +10,12 @@ State.GameSplash.prototype = {
 		var progressBar = this.game.add.sprite(0, 500, 'progress-bar');
 		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
 		this.game.load.setPreloadSprite(progressBar);
-		this.game.load.onLoadComplete.add(function () {this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); setTimeout(function () {this.game.state.start('Menu');}, Config.gameSplash.millis);}, this);
+		this.game.load.onLoadComplete.add(function () {
+			this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); 
+			setTimeout(function () {
+				this.game.state.start('Menu');
+			}, Config.gameSplash.millis);
+		}, this);
 		
 		//Menu
 		this.game.load.image('menu-background',  Config.menu.dir);
@@ -24,6 +29,16 @@ State.GameSplash.prototype = {
 		
 		//HowToPlay
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
+
+		//Story		
+		this.game.load.image('story1', Config.story.dir);
+		this.game.load.image('story2', Config.story.dir2);
+
+		//End
+		this.game.load.image('end1', Config.end.dir);		
+		this.game.load.image('end2', Config.end.dir1);
+		this.game.load.image('end3', Config.end.dir2);
+		this.game.load.image('end4', Config.end.dir3);
 		
 		//Game
 		this.game.load.tilemap('level1', 'assets/level/1.json', null, Phaser.Tilemap.TILED_JSON);
@@ -45,13 +60,14 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('coinIara', 'assets/spritesheets/coins/coinsIara_40-40-8.png',40,40,8);
 		this.game.load.spritesheet('checkP', 'assets/spritesheets/check_20-37-3.png',20,37,3);
 		this.game.load.spritesheet('flag', 'assets/spritesheets/gamewin_40-40-8.png',40,40,8);
+		this.game.load.spritesheet('rain', 'assets/level/rain.png', 17, 17);
 
 		this.game.load.image('bg1', 'assets/level/bg1_462-800.jpg');
 		this.game.load.image('bg2', 'assets/level/bg3_462-800.jpg');
 		this.game.load.image('bg3', 'assets/level/bg6_462-800.jpg');
-		this.game.load.image('bg4', 'assets/level/bg4_462-800.jpg');
-		this.game.load.image('bg5', 'assets/level/bg5_462-800.jpg');
-		this.game.load.image('bg6', 'assets/level/bg6_462-800.jpg');
+		this.game.load.image('bg4', 'assets/level/cenario2/bg1_860-800.jpg');
+		this.game.load.image('bg5', 'assets/level/cenario2/bg2_860-800.jpg');
+		this.game.load.image('bg6', 'assets/level/cenario2/bg3_860-800.jpg');
 		this.game.load.image('bg7', 'assets/level/cenario3/3cave_430-800.jpg');
 		//this.game.load.image('bg9', 'assets/level/bg6_462-800.jpg');
 		this.game.load.image('cipo', 'assets/level/cipo_10-80.png');
@@ -64,6 +80,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('dardo', 'assets/level/cenario3/dartH4_33-7.png');
 		this.game.load.image('acidicWater', 'assets/enemies/gota_13-37.png');
 		this.game.load.image('caba', 'assets/enemies/caba_8-8.png');
+		this.game.load.image('cave', 'assets/level/cave2_224-146.png');
 
 		this.game.load.audio('jumpSound', Config.audio.jump);
 		this.game.load.audio('dieSound', Config.audio.die);

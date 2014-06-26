@@ -27,7 +27,7 @@ Curumim.Score.prototype =
 		points.fixedToCamera = true;
 
 		this.txtPoints = this.game.add.text(Config.score.points.txt.x, Config.score.points.txt.y, '', Config.score.points.txt.style);		
-		this.txtPoints.fixedToCamera = true;
+		this.txtPoints.fixedToCamera = true;		
 
 		var bullets = this.game.add.sprite(Config.score.bullets.img.x, Config.score.bullets.img.y, 'fruitsBig');
 		bullets.frame = Config.fruit.bullet.frame;

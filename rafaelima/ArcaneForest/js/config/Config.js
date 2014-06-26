@@ -19,7 +19,8 @@ var Config = {
 
 	assets: 'assets/',
 	images: 'assets/images/',
-	spriteSheets: 'assets/spritesheets/'
+	spriteSheets: 'assets/spritesheets/',
+	audio: 'assets/audio/',
 };
 
 //LudusSplash
@@ -200,7 +201,7 @@ Config.game = {
 		// jump sword: 7, 1, 2
 		// attack: 7 ~ 9
 		damageCooldown: 2000,
-		attackCooldown: 200,
+		attackCooldown: 400,
 		alphaCooldown:400,
 		gravityY: 2000,
 		forceY: 1000,
@@ -281,7 +282,15 @@ Config.game = {
 		y: 8,
 	},
 	audio:{
-		dir: 'assets/audio/arcane_forest_soundtrack.mp3'
+		bg: {
+			key: 'bgSound',
+			dir: Config.audio + 'arcane_forest_soundtrack.mp3',
+		},
+		attack: {
+			key: 'attackSound',
+			dir: Config.audio + 'sword_attack.mp3',
+		}
+		
 	},
 	bar:{
 		dir: Config.images+'/horizontalbar_139-32.png',
@@ -291,6 +300,13 @@ Config.game = {
 		startRotateY: 444,
 		widthAreaRotate: 1725,
 		widthArea: 3650,
+	},
+	horizontalBar: {
+		key: 'bar',
+		dir: Config.images+'/horizontalbar_139-32.png',
+		x: [3850, 4250],
+		y: [1415, 1315],
+		
 	},
 	verticalbar:{
 		key: 'verticalBar',

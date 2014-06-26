@@ -7,24 +7,28 @@ function HeroOfStick(game) {
 	that.key = 'hero3';
 	that.asset = 'assets/heroofstick_120-120-34.png';
 	that.jump = 400;
-	that.walk = 100;
+	that.walk = 200;
 	that.life = 2;
 	that.maxJump = 2;
 	that.initX = 400;
 	that.initY = 1000;
-	
+
 	that.preload = function() {
 		"use strict";
 
 		this.game.load.spritesheet(this.key, this.asset, 120, 120, 34);
 	};
-	
+
 	that.create = function() {
 		"use strict";
 
 		this.hero = this.game.add.sprite(this.initX, this.initY, this.key, 3);
-		this.hero.animations.add('walk', [ 1, 0 ], 6, true);
-		this.hero.animations.add('jump', [ 2 ], 4, true);
+		this.hero.animations.add('walk', [ 0, 1, 2, 3 ], 10, true);
+		this.hero.animations.add('jump', [ 4, 5, 6, 7, 8, 9, 10 ], 8, false);
+		this.hero.animations.add('attack', [ 4, 5, 6, 7, 8, 9, 10 ], 18, false);
+		this.hero.animations.add('down', [ 12, 13 ], 6, false);
+		this.hero.animations.add('died', [ 14, 15, 16 ], 4, true);
+		
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
 		this.hero.body.setSize(60, 120, -15, 0);
@@ -65,6 +69,9 @@ function HeroOfStick(game) {
 				this.hero.body.velocity.x = this.walk;
 				this.hero.scale.x = +1; // espelha se antes 1
 				this.hero.animations.play('walk');
+				keyPressed = true;
+			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+				this.hero.animations.play('attack');
 				keyPressed = true;
 			}
 		}

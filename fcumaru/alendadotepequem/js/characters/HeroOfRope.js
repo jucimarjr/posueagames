@@ -14,6 +14,7 @@ function HeroOfRope(game) {
 	that.initY = 1600;
 	that.numSegmentsRope = 19;
 	that.facingLeft = false;
+	that.state = "idle";
 
 	that.ropeTipKey = 'ropeTip';
 	that.ropeTipAsset = 'assets/rope_20-10.png';
@@ -29,7 +30,7 @@ function HeroOfRope(game) {
 		this.hero = this.game.add.sprite(this.initX, this.initY, this.key, 3);
 		this.hero.animations.add('walk', [ 0, 1, 2, 3 ], 10, true);
 		this.hero.animations.add('jump', [ 4 ], 4, true);
-		this.hero.animations.add('down', [ 4, 5, 6, 7 ], 10, true);
+		this.hero.animations.add('down', [ 4, 5, 6, 7 ], 8, false);
 		this.hero.animations.add('died', [ 15, 16, 17 ], 3, true);
 
 		// permite que a sprite tenha um corpo fisico
@@ -67,44 +68,45 @@ function HeroOfRope(game) {
 		this.game.physics.arcade.collide(layer, this.hero);
 		enemies.checkCollision(this.hero);
 
-		// PEGA A ENTRADA (tecla pressionada):
-		var keyPressed = false;
 		// apenas processar movimento se estiver ativo
 		if (this.active && !this.ropeActive) {
 			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 				// vai para esquerda
 				this.hero.body.velocity.x = -this.walk;
-				this.hero.animations.play('walk');
+				if(this.hero.body.onFloor()) this.hero.animations.play('walk');
 				this.hero.scale.x = -1; // espelha se antes -1
-				keyPressed = true;
+				this.state = "walking";
 				this.facingLeft = true;
 			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
 				// vai para direita
 				this.hero.body.velocity.x = this.walk;
 				this.hero.scale.x = +1; // espelha se antes 1
-				this.hero.animations.play('walk');
-				keyPressed = true;
+				if(this.hero.body.onFloor()) this.hero.animations.play('walk');
+				this.state = "walking";
 				this.facingLeft = false;
+			}
+			else {
+				this.state = "idle";
 			}
 		}
 		// executar a animacao para para cima
 		if (this.jumpCount > 0) {
-			this.hero.animations.play('jump');
-
-			// resetando o contador de pulo quando votlar ao ch�o
+			if(this.hero.body.velocity.y < 0) this.hero.animations.play('jump');
+			this.state = "jumping";
 			if (this.hero.body.onFloor()) {
 				this.jumpCount = 0;
+				this.state = "idle";
 			}
-			keyPressed = true;
 		}
 
-		if (!keyPressed) {
+		if (this.state === "idle") {
 			this.hero.animations.stop();
 			this.hero.frame = 0;
 		}
 
-		if(this.hero.body.velocity.y > 0){
+		if(this.hero.body.velocity.y > 0 && this.state !== "falling"){
 			this.hero.animations.play('down');
+			this.state = "falling";
 		}
 
 		if(this.ropeActive){

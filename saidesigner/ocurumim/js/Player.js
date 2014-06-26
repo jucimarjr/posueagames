@@ -1,15 +1,19 @@
-var Curumim = {}
+var Curumim = {};
+var player;
 
-Curumim.Player = function(game, score) 
+Curumim.Player = function(game) 
 {
 	this.game = game;
-	this.score = score;
+	this.score = score = new Curumim.Score(game);
 	this.sprite;
-	this.jumpButtonPressed = false;
-	this.jumps = 0;
 	this.bullets;
+	this.jumpButtonPressed = false;
+	this.jumps = 0;	
 	this.nextBullet = 0;
 	this.powerUp = false;
+	this.canDie = true;
+
+	player = this;
 };
 
 Curumim.Player.prototype = 
@@ -47,11 +51,19 @@ Curumim.Player.prototype =
 		this.bullets.setAll('checkWorldBounds', true);
     	this.bullets.setAll('outOfBoundsKill', true);
     	this.game.physics.enable(this.bullets, Phaser.Physics.ARCADE);
+
+    	// Score
+
+    	this.score.create();
 	},
 
 	update: function() 
 	{
 		"use strict";
+
+		// Score
+
+		this.score.update();
 
 		// walk or run
 
@@ -134,7 +146,6 @@ Curumim.Player.prototype =
 		}
 	},
 
-
 	fireBullets: function() 
 	{
 		if (this.game.time.now > this.nextBullet && this.bullets.countDead() > 0 && this.score.numBullets > 0) {
@@ -145,8 +156,8 @@ Curumim.Player.prototype =
 	        bullet.body.acceleration.x = Config.bullet.acceleration;
 	        bullet.body.velocity.x = this.sprite.body.velocity.x + Config.bullet.velocity.x * this.sprite.scale.x;
 	        bullet.body.velocity.y = this.sprite.body.velocity.y + Config.bullet.velocity.y;
-	        
-	        bullet.anchor.setTo(.5, .5);	        
+	        bullet.body.bounce.set(0.8);
+	        bullet.anchor.setTo(.5, .5);
 
 	        this.nextBullet = this.game.time.now + Config.bullet.interval;
 	    } 
@@ -156,9 +167,32 @@ Curumim.Player.prototype =
 		return this.sprite;
 	},
 
+	getBullets: function() {
+		return this.bullets;
+	},
+
 	startPowerUp : function() {
 		this.powerUp = true;
 		var self = this;
 		setTimeout(function(){ self.powerUp = false; }, 15000);
+	},
+
+	loseOneLife : function() {
+
+		if (!this.canDie) return;
+
+		this.canDie = false;
+
+		this.score.updateLife(-1);
+
+		var self = this;
+		var tween = this.game.add.tween(this.sprite);
+		tween.to({ alpha: .4 }, 500, null, true, 0, Number.MAX_VALUE, true);		
+
+		setTimeout(function() { 
+			tween.stop();
+			self.sprite.alpha = 1;
+			self.canDie = true;
+		 }, 3000);
 	}
 };
