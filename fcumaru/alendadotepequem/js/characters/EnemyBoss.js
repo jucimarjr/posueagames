@@ -70,6 +70,12 @@ function EnemyBoss(game) {
 	that.update = function(layer, heroes) {
 		"use strict";
 		this.game.physics.arcade.collide(layer, this.enemy);
+		for ( var i = 0; i < heroes.size(); i++) {
+			this.game.physics.arcade.collide(this.enemy, heroes.getHero(i),
+					function(enemy, hero) {
+						hero.damage(1);
+					});
+		}
 
 		if (this.enemy.body.onFloor()) {
 			if (this.enemy.body.blocked.left) {
@@ -80,17 +86,17 @@ function EnemyBoss(game) {
 				this.enemy.damage(1);
 			}
 
-//			if (this.direction == LEFT) {
-//				// vai para esquerda
-//				this.enemy.body.velocity.x = -this.walk;
-//				this.currAnimRef = this.enemy.animations.play('walk');
-//				this.enemy.scale.x = -1; // espelha se antes -1
-//			} else if (this.direction == RIGHT) {
-//				// vai para direita
-//				this.enemy.body.velocity.x = this.walk;
-//				this.currAnimRef = this.enemy.animations.play('walk');
-//				this.enemy.scale.x = 1; // espelha se antes 1
-//			}
+			// if (this.direction == LEFT) {
+			// // vai para esquerda
+			// this.enemy.body.velocity.x = -this.walk;
+			// this.currAnimRef = this.enemy.animations.play('walk');
+			// this.enemy.scale.x = -1; // espelha se antes -1
+			// } else if (this.direction == RIGHT) {
+			// // vai para direita
+			// this.enemy.body.velocity.x = this.walk;
+			// this.currAnimRef = this.enemy.animations.play('walk');
+			// this.enemy.scale.x = 1; // espelha se antes 1
+			// }
 		}
 
 		if (this.currAnimRef == null || !this.currAnimRef.isPlaying) {
