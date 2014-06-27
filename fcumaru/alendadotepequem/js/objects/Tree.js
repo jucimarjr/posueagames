@@ -7,7 +7,7 @@ Tree = function(game, index, x, y) {
 
     this.index = index;
     this.key = 'tree';
-    this.asset = 'assets/tree_118-241.png';
+    this.asset = 'assets/tree_118-360.png';
     this.walk = 150;
     this.hasRope = false;
 };
@@ -22,7 +22,7 @@ Tree.prototype = {
         this.game.physics.enable(this.tree, Phaser.Physics.ARCADE);
         this.tree.body.collideWorldBounds = true;
         this.tree.body.immovable = true;
-        this.tree.body.setSize(50, 170, 0, 0);
+        this.tree.body.setSize(50, 316, 0, 0);
         this.tree.anchor.setTo(0.5, 0.9);
     },
     update : function(layer) {
@@ -42,13 +42,13 @@ Tree.prototype = {
                 this.game.add.tween(this.tree)
                     .to({angle: angle}, 1500, Phaser.Easing.Exponential.In)
                     .start()
-                    .onComplete.add(function() {this.tree.body.setSize(241, 50, -80, 20);}, this);
+                    .onComplete.add(function() {this.tree.body.setSize(360, 50, -80, 20);}, this);
             }
             else {
                 this.game.add.tween(this.tree)
                     .to({angle: -angle}, 1500, Phaser.Easing.Exponential.In)
                     .start()
-                    .onComplete.add(function() {this.tree.body.setSize(241, 50, 80, 20);}, this);
+                    .onComplete.add(function() {this.tree.body.setSize(360, 50, 80, 20);}, this);
             }                
         }
     },
@@ -70,7 +70,7 @@ Trees = function(game) {
 
 Trees.prototype = {
     preload : function() {
-        this.game.load.image('tree', 'assets/tree_118-241.png', 118, 241);
+        this.game.load.image('tree', 'assets/tree_118-360.png', 118, 360);
     },
     create : function() {
         "use strict";
