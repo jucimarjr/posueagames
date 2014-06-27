@@ -40,12 +40,12 @@ State.Story.prototype = {
 		if(isShowRayHelp){
 			if (contFrame < 69){
 	    		if(imgRay!=null){
-	    			imgRay.kill();
-	    		}
+	    			imgRay.destroy();
+	    		} 
 	    		
 	    		imgRay = this.game.add.sprite(0, 0, Config.story.rayHelp.ray[contFrame]);
 	    	}else{
-	    		imgRay.kill();
+	    		imgRay.destroy();
 	    		this.game.state.start('Game');
 	    	}
 			

@@ -21,6 +21,7 @@ var Config = {
 	images: 'assets/images/',
 	spriteSheets: 'assets/spritesheets/',
 	audio: 'assets/audio/',
+	font: 'assets/font'
 };
 
 //LudusSplash
@@ -376,3 +377,20 @@ Config.credits = {
 	x: 0,
 	y: 0
 };
+
+//GameOver
+Config.gameOver = {
+	dir: Config.images+'/gameover.png',
+	tweet: Config.images+'/twitterPixel.png',
+	facebook: Config.images+'/facebook.png',
+	gplus: Config.images+'/gplus.png',
+	x: 0,
+	y: 0
+}
+
+//Victory
+Config.Victory = {
+	dir: Config.images+'/victory.png',
+	x: 0,
+	y: 0
+}

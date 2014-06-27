@@ -4,6 +4,7 @@ State.Credits = function (game) {
 	"use strict";
 	this.game = game;
 };
+
 State.Credits.prototype = {
 	preload: function () {
 		"use strict";

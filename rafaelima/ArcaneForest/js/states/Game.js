@@ -22,6 +22,7 @@ var STATE_PAUSED = 1;
 var STATE_GAMEOVER = 2;
 var timerShine, isBlinkPlayer;
 var emitter;
+var labelScore, score;
 
 State.Game.prototype = {
     preload: function () {
@@ -41,12 +42,13 @@ State.Game.prototype = {
         timerMonst = 0;
         timerBV = 0;
         isBlinkPlayer = false;
+		score = 0;
     },
     create: function () {
         "use strict";
         
         this.gameState = STATE_PLAY;
-        emitter = game.add.emitter(game.width / 2 , game.height / 2 + 5, 500);
+        emitter = this.game.add.emitter(this.game.width / 2 , this.game.height / 2 + 5, 500);
         this.healthBar = [];
         this.timeImune = 0;
         this.timeToAttack = 0;
@@ -132,7 +134,7 @@ State.Game.prototype = {
         player.animations.add(Config.game.player.anim.jump.key, Config.game.player.anim.jump.frames, Config.game.player.anim.jump.speed, Config.game.player.anim.jump.loop);
         player.animations.add(Config.game.player.anim.attack.key, Config.game.player.anim.attack.frames, Config.game.player.anim.attack.speed, Config.game.player.anim.attack.loop);
         
-//        this.playerCollider.reset(3040, 342);
+       this.playerCollider.reset(3040, 342);
 
         this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
@@ -168,6 +170,7 @@ State.Game.prototype = {
         this.putMonstersBar();
         this.putCollect();
         this.putTransparentWall();
+		
         
         beInGround = false;
         isJumping = false;
@@ -185,10 +188,13 @@ State.Game.prototype = {
         pauseButton = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
         pauseButton.onDown.add(this.pauseGame, this);
         
-        game.time.events.add(Phaser.Timer.SECOND * 1, this.beginMoving , this, verticalBar3);
-        game.time.events.add(Phaser.Timer.SECOND * 2, this.beginMoving , this, verticalBar2);
-        game.time.events.add(Phaser.Timer.SECOND * 3, this.beginMoving , this, verticalBar4);
+        this.game.time.events.add(Phaser.Timer.SECOND * 1, this.beginMoving , this, verticalBar3);
+        this.game.time.events.add(Phaser.Timer.SECOND * 3, this.beginMoving , this, verticalBar4);
+        this.game.time.events.add(Phaser.Timer.SECOND * 2, this.beginMoving , this, verticalBar2);
 
+		//time
+		var style = { font: '30px "04B_03__"', fill: "#FFFFFF" };
+		labelScore = this.game.add.text(Config.game.life.x * 4, Config.game.life.y, "0 s", style);
         
     },
     
@@ -316,15 +322,20 @@ State.Game.prototype = {
 	        	this.swordCollider.body.velocity.y = 0;
 	        }
 
-            if (game.time.now - timeCheck > 4000 && monster != null && monster.frame === 0 && isGameRotate && monster.exists===true)
+            if (this.game.time.now - timeCheck > 4000 && monster != null && monster.frame === 0 && isGameRotate && monster.exists===true)
             {
                 this.bossShoot();
                 this.timeCheck();
-            }
+            }else if (monster != null &&  isGameRotate && monster.exists===false){
+				this.game.state.start('Victory');
+			}
             
             
             // handle bars
             this.updateHandleBars();
+			
+			score += 0.01;
+			labelScore.text = score.toFixed(0) + " s";  //sem casa decimal
             
         
         }else if(this.gameState == STATE_PAUSED) {
@@ -366,7 +377,7 @@ State.Game.prototype = {
     
     updateHandleBars: function() {
     	
-    	var widthBar = game.cache.getImage(Config.game.horizontalBar.key).width;
+    	var widthBar = this.game.cache.getImage(Config.game.horizontalBar.key).width;
     	
     	for(var count = 0; count < 2; count++) {
     		
@@ -499,14 +510,14 @@ State.Game.prototype = {
     fallPlayer: function(){
     	if (contFrameGif < 30){
     		if(this.imgPlayerFall!=null){
-    			this.imgPlayerFall.kill();
+    			this.imgPlayerFall.destroy();
     		}
     		
     		this.imgPlayerFall = this.game.add.sprite(0, 0, Config.animationFall.fallGif[contFrameGif]);
     		contFrameGif ++;
     		this.game.camera.follow(this.imgPlayerFall);
     	}else{
-    		this.imgPlayerFall.kill();
+    		this.imgPlayerFall.destroy();
     		this.gameRotate();
     	}
     },
@@ -1075,7 +1086,7 @@ State.Game.prototype = {
           this.scale.setTo(1,1);
         }, particle); 
         particle.events.onRevived.add(function() {
-          this.rotation = game.rnd.realInRange(0, Math.PI *2);
+          this.rotation = this.game.rnd.realInRange(0, Math.PI *2);
         }, particle);
        });
         

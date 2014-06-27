@@ -30,8 +30,8 @@ State.GameSplash.prototype = {
 		this.game.load.image(Config.story.key, Config.story.dir);
 		
 		//Game
-		game.load.audio(Config.game.audio.bg.key, Config.game.audio.bg.dir);
-		game.load.audio(Config.game.audio.attack.key, Config.game.audio.attack.dir);
+		this.game.load.audio(Config.game.audio.bg.key, Config.game.audio.bg.dir);
+		this.game.load.audio(Config.game.audio.attack.key, Config.game.audio.attack.dir);
 		
 		this.game.load.image('bg1', Config.game.dirBg1);
 		this.game.load.image('bg2', Config.game.dirBg2);
@@ -65,6 +65,11 @@ State.GameSplash.prototype = {
 		this.game.load.image('transparentwall', Config.game.transparentwall.dir);
 		this.game.load.image('magic', 'assets/images/magic3.png');
 		this.game.load.image('darkmask', 'assets/images/darkmask_480-135.png');
+		this.game.load.image('gameover', Config.gameOver.dir);
+		this.game.load.image('victory', Config.Victory.dir);
+		this.game.load.image('twitterbird', Config.gameOver.tweet);
+		//this.game.load.image('facebook', Config.gameOver.facebook);
+		//this.game.load.image('gplus', Config.gameOver.gplus);
 		
 		// lifes
 		this.game.load.image(Config.game.life.full.key, Config.game.life.full.dir);
@@ -114,6 +119,6 @@ State.GameSplash.prototype = {
 	},
 	loadComplete: function() {
 		
-		game.state.start('Menu');
+		this.game.state.start('Menu');
 	}
 };
