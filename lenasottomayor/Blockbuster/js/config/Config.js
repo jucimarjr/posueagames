@@ -358,7 +358,7 @@ Config.enemy = {
 
 //Audio
 Config.audio = {
-	game: 'assets/audios/xycexyceBaby.mp3',
+	game: 'assets/audios/8bitDungeonBoss.mp3',
 	jump: 'assets/audios/jump.wav',
 	coin: 'assets/audios/coin.wav',
 	hurt: 'assets/audios/hurt.wav',
@@ -368,31 +368,31 @@ Config.audio = {
 //Button
 Config.button = {
 	jump: {
-		dir: 'assets/spritesheets/button-round-a.png',
-		x: 750,
-		y: 525,
-		width: 64,
-		height: 64
+		dir: 'assets/spritesheets/button-jump.png',
+		x: 700,
+		y: 530,
+		width: 110,
+		height: 50
 	},
 	run: {
-		dir: 'assets/spritesheets/button-round-b.png',
-		x: 850,
-		y: 525,
-		width: 64,
-		height: 64
+		dir: 'assets/spritesheets/button-run.png',
+		x: 825,
+		y: 530,
+		width: 110,
+		height: 50
 	},
 	horizontal: {
-		dir: 'assets/spritesheets/button-horizontal.png',
+		dir: 'assets/spritesheets/button-horizontal-green.png',
 		left: {
-			x: 50,
-			y: 525
+			x: 40,
+			y: 530
 		},
 		right: {
-			x: 150,
-			y: 525
+			x: 165,
+			y: 530
 		},
-		width: 64,
-		height: 32
+		width: 110,
+		height: 50
 	}
 };
 
