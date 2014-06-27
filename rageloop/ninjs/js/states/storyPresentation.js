@@ -3,11 +3,11 @@
 
     var introText = [
         " ",
-        "A história se passa em um castelo onde o herói \nse encontra aprisionado no calabouço.", 
-        "Ele foi aprisionado por ser considerado uma ameaça \naos planos do vilão (sem nome).", 
-        "Ao vasculhar a área, encontra uma mensagem num computador, \nde seu mentor informando o que deve ser feito para ele \nconseguir sair daquele local:",
-        "deve procurar por artefatos espalhados e monta-los \npara encaixar na porta de acesso.", 
-        "Nesse calabouço também existem instrumentos úteis \npara a batalha contra o chefão, esses itens tornarão\no vilão mais vulneráveis aos ataques do herói.",
+        "- Ash, Ash, acorde! \n- Onde estou?", 
+        "- Você está preso, no calabouço de Ryokan. \nSubaru aprisionou você.", 
+        "- Por que ele faria isso? \n- Ele acredita que você é o único capaz de impedi-lo de unificar todos \nos clãs, e se tornar invecível. Você precisa deerrota-lo.",
+        "- Nesse momento ele planeja um ataque feroz à sede do clã \nda estrela negra. Tome cuidado, seus capangas irão ataca-lo, \neles podem ser mortais.", 
+        "- Seja forte! \nVocê tem que coletar os itens azuis, eles enfraquecerão Subaru. \nBoa sorte!",
         //"No final da história o herói consegue \nvencer/derrotar o vilão e sai do Ryokan,",
         //"onde ele terá que enfrentar um exército de ninjas \n(mas o jogo não mostra essa batalha, só fica subentendido)."
     ];
