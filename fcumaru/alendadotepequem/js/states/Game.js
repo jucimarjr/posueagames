@@ -38,8 +38,8 @@ State.Game.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 800;
 		
-		this.bg = game.add.tileSprite(0,-600,2000,1800,'fundo');
-		this.bg.fixedToCamera = true;
+		this.bg = game.add.tileSprite(0, 0, 4320, 2700, 'fundo');
+		this.bg.fixedToCamera = false;
 		
 		map = this.game.add.tilemap('mapa');
 
@@ -60,7 +60,7 @@ State.Game.prototype = {
 		// faisca
 		this.faisca = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
 				game.cache.getImage('faiscas').height, 'faiscas');
-		this.faisca.autoScroll(0, 80);
+		this.faisca.autoScroll(25, 80);
 
 		this.heroes.create();
 		this.game.camera.follow(this.heroes.getCurrent());
