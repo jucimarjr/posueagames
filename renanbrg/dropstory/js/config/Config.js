@@ -2,37 +2,30 @@
 
 //Global
 var Config = {
-	global: {
-		animationVelocity: 6,
-		screen: {
-			width: 960,
-			height: 544,
-			resize: function (game) {
-				"use strict";
-				if (window.innerHeight < 544 || window.innerWidth < 960) {
-					game.scale.setExactFit();
-					game.scale.refresh();
-				}
-			}
-		},
-		key: {
-			nextScreen: Phaser.Keyboard.ENTER
-		}
-	}
+    global: {
+        animationVelocity: 6,
+        screen: {
+            width: 960,
+            height: 600
+        },
+        key: {
+            nextScreen: Phaser.Keyboard.ENTER
+        }
+    }
 };
 
 //LudusSplash
 Config.ludusSplash = {
-	dir: 'assets/images/LudusSplash_960-600.png',
-	x: 0,
-	y: 0,
-	millis: 2000,
-	nextState: 4000
+    dir: 'assets/images/ludussplash_960-600.png',
+    x: 0,
+    y: 0,
+    millis: 2000,
+    nextState: 4000
 };
 
 //SponsorSplash
 Config.sponsorSplash = {
-	dir: 'assets/images/SponsorSplash_960-600.png',
+	dir: 'assets/images/sponsorsplash_960-600.png',
 	x: 0,
 	y: 0,
 	millis: 2000,
@@ -42,8 +35,8 @@ Config.sponsorSplash = {
 //GameSplash
 Config.gameSplash = {
 	dir: {
-		background: 'assets/images/GameSplash_960-600.png',
-		bar: 'assets/images/ProgressBar_960-30.png'
+		background: 'assets/images/gamesplash_960-600.png',
+		bar: 'assets/images/progress-bar_720-40.png'
 	},
 	progressBar: {
 		x: 0,
@@ -57,37 +50,37 @@ Config.gameSplash = {
 
 //Menu
 Config.Menu = {
-	dir: 'assets/images/MenuBackground_960-600.png',
+	dir: 'assets/images/gamesplash_960-600.png',
 	x: 0,
 	y: 0,
 	buttonPlay: {
-		dir: 'assets/spritesheets/ButtonPlay_600-95.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.4,
-		width: 150,
-		height: 95,
+		dir: 'assets/images/playbutton_100-100.png',
+		x: 215,
+		y: (Config.global.screen.height - 50) / 2,
+		width: 100,
+		height: 100,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonHowToPlay: {
-		dir: 'assets/spritesheets/ButtonHowToPlay_600-95.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.6,
-		width: 150,
-		height: 95,
+		dir: 'assets/images/howtobutton_100-100.png',
+		x: 85,
+		y: (Config.global.screen.height - 50) / 2,
+		width: 100,
+		height: 100,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonCredits: {
-		dir: 'assets/spritesheets/ButtonCredits_600-95.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.8,
-		width: 150,
-		height: 95,
+		dir: 'assets/images/creditsbutton_100-100.png',
+		x: 350,
+		y: (Config.global.screen.height - 50) / 2,
+		width: 100,
+		height: 100,
 		anchor: {
 			x: 0.5,
 			y: 0.5
@@ -108,14 +101,14 @@ Config.gamePlay = {
 
 //HowToPlay
 Config.howToPlay = {
-	dir: 'assets/images/HowToPlay_960-600.png',
+	dir: 'assets/images/howtoplay_960-600.png',
 	x: 0,
 	y: 0
 };
 
 //Credits
 Config.credits = {
-	dir: 'assets/images/Credits_960-600.png',
+	dir: 'assets/images/credits_960-600.png',
 	x: 0,
 	y: 0
 };
