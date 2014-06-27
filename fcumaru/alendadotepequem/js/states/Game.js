@@ -21,7 +21,7 @@ State.Game.prototype = {
 	preload : function() {
 		this.game.load.tilemap('mapa', 'assets/mapa.json', null,
 				Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('fundo', 'assets/bg_tepequem_960x1800.png');
+		this.game.load.image('fundo', 'assets/bg_tepequem_4320-2700.png');
 		this.game.load.image('map', 'assets/map.png');
 
 		this.game.load.image('clouds', 'assets/nuvem.png');
@@ -53,8 +53,7 @@ State.Game.prototype = {
 		this.entrada = this.game.add.image(GOAL_X, GOAL_Y, 'entrada');
 
 		// clouds
-		this.clouds = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
-				game.cache.getImage('clouds').height, 'clouds');
+		this.clouds = this.game.add.tileSprite(0, 0, 4320, 2700, 'clouds');
 		this.clouds.autoScroll(-30, 0);
 		
 		// faisca
