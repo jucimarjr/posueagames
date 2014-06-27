@@ -1,0 +1,12 @@
+Instalação
+
+	- Para instalar o jogo, basta decompacta-lo em um diretório.
+	- Para executa-lo, abra o arquivo index.html em um navegador (testado no Firefox).
+
+Controles
+	
+	- Use as Setas Direcionais para mover o jogador (Emma).
+	- Uer Seta para Cima para pular.
+	- Use a Barra de Espaço para atacar.
+	- Use a tecla Enter para pausar ou continuar o jogo.
+	
