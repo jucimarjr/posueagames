@@ -53,15 +53,15 @@ Config.gameSplash = {
 
 //Menu
 Config.menu = {
-	dir: 'assets/images/MenuBackground_1920-1080.png',
+	dir: 'assets/images/bgmenu_1920-1080.jpg',
 	x: 0,
 	y: 0,
 	buttonPlay: {
-		dir: 'assets/spritesheets/ButtonPlay_600-95.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.4,
-		width: 150,
-		height: 95,
+		dir: 'assets/spritesheets/botaojogar_474-55.png',
+		x: Config.global.screen.width * 0.7,
+		y: Config.global.screen.height * 0.7,
+		width: 237,
+		height: 55,
 		anchor: {
 			x: 0.5,
 			y: 0.5
@@ -104,7 +104,7 @@ Config.howToPlay = {
 
 //Credits
 Config.credits = {
-	dir: 'assets/images/Credits_1920-1080.png',
+	dir: 'assets/images/creditos_1920-1080.jpg',
 	x: 0,
 	y: 0
 };

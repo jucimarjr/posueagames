@@ -3,6 +3,7 @@
 State.GameSplash = function (game) {
 	"use strict";
 	this.game = game;
+	this.player = new Player(game);
 };
 State.GameSplash.prototype = {
 	preload: function () {
@@ -38,7 +39,9 @@ State.GameSplash.prototype = {
 		Phase1.Trap.game = this.game;
 		Phase1.Trap.init();
 		Phase1.Enemy.game = this.game;
-		Phase1.Enemy.init();		
+		Phase1.Enemy.init();	
+		
+				this.player.preload();	
 	},
 	create: function () {
 		"use strict";
