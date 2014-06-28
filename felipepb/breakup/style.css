@@ -42,7 +42,8 @@ body {
 
 .header {
 	width: 100%;
-	margin: 1% 0;
+	height: 30px;
+	margin: 5px 0 0 0;
 	padding: 0;
 	float: left;
 	font-family: "Silkscreen";
@@ -71,21 +72,37 @@ color: #8d2b25;
 /* 
 content styles
 */
+.linkActive {
+	border-bottom: 2px solid #333;
+	color: #333 !important;
+}
 
 .header ul {
 	padding:0;
 	margin:0;
-	list-style:none;
-	display:inline;
-	width: 600px;
+	list-style: none;
 }
 	
 .header ul li {
-	padding: 0 12px 0 0;
-	margin: 0;
-	list-style:none;
-	display:inline;
-	float:left;
+	display: inline;
+	margin: 0 8px 0 0;
+	float: left;
+}
+
+.header ul li a {
+	padding: 4px 6px;
+	display: inline-block;
+	
+	/* link layout */
+	text-decoration: none;
+	background-color:#EDEDED;
+	color: #24878d;
+}
+
+.header ul li a:hover {
+	color: #333;
+	background-color: #fff;
+	border-bottom: 2px solid #333;
 }
 
 #gameContainer {
