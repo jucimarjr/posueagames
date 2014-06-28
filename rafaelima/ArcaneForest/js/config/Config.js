@@ -380,7 +380,7 @@ Config.credits = {
 
 //GameOver
 Config.gameOver = {
-	dir: Config.images+'/gameover.png',
+	dir: Config.images+'/game_over_960-540.png',
 	tweet: Config.images+'/twitterPixel.png',
 	facebook: Config.images+'/facebook.png',
 	gplus: Config.images+'/gplus.png',

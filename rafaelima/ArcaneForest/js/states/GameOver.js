@@ -12,7 +12,7 @@ State.GameOver.prototype = {
 	create: function () {
 		"use strict";
 		this.game.add.sprite(Config.gameOver.x, Config.gameOver.y, 'gameover');
-		this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR, Phaser.Keyboard.ENTER, Phaser.Keyboard.M]);
+		this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.ENTER, Phaser.Keyboard.M]);
 		
 		var style = { font: '30px "04B_03__"', fill: "#FFFFFF" };
 		var x = 480, y = 347;
@@ -34,7 +34,7 @@ State.GameOver.prototype = {
 	update: function () {
 		"use strict";
 		Config.global.screen.resize(this.game);
-		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+		if (this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
 			this.game.state.start('Game');
 		}else if (this.game.input.keyboard.isDown(Phaser.Keyboard.M)){
 			//this.game.state.restart(true, true);
