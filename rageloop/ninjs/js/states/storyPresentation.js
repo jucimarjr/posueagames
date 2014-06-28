@@ -19,6 +19,10 @@
         this.index = 0;
 
         this.line = '';
+
+        this.bg_imgs = [];
+
+        this.currentBgidx = -1;
     };
 
     StoryPresentation.prototype = {
@@ -29,11 +33,16 @@
 
             this.stage.backgroundColor = '#000';
 
+            for (var i = 0; i < 3; i++) {
+                this.bg_imgs[i] = this.game.add.sprite(0, 0, 'history_' + (i + 1));
+                this.bg_imgs[i].visible = false;
+            }
+
             var style = { font: "22px pixelFont", fill: "#ffffff"};
 
-            this.storyText = this.game.add.text(10, 450, '', style);
+            this.storyText = this.game.add.text(10, 480, '', style);
 
-            var skipText = this.game.add.text(this.game.width, this.game.height, 'press "S" to skip.', style); 
+            var skipText = this.game.add.text(this.game.width, this.game.height, 'pressione "S" para sair.', style); 
             skipText.anchor.setTo(1, 1);
 
             this.nextLine();
@@ -44,6 +53,15 @@
             if (this.game.input.keyboard.isDown(Phaser.Keyboard.S)) {
                 this.exit();
             }
+        },
+
+        updateBg: function(index) {
+
+            if (this.currentBgidx >= 0) {
+                this.bg_imgs[this.currentBgidx].visible = false;
+            }
+
+            this.bg_imgs[index].visible = true;
         },
 
         updateLine: function() {
@@ -60,6 +78,18 @@
         },
 
         nextLine: function() {
+
+            switch(this.index) {
+                case 0:
+                    this.updateBg(0);
+                    break;
+                case 1:
+                    this.updateBg(1);
+                    break;
+                case 2:
+                    this.updateBg(2);
+                    break;
+            }
 
             this.index++;
 
