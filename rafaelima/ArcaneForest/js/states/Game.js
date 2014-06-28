@@ -188,7 +188,8 @@ State.Game.prototype = {
 
 		//time
 		var style = { font: '30px "04B_03__"', fill: "#FFFFFF" };
-		labelScore = this.game.add.text(Config.game.life.x * 4, Config.game.life.y, "0 s", style);
+		labelScore = this.game.add.text(Config.game.life.x + 800, Config.game.life.y, "0 s", style);
+        labelScore.fixedToCamera = true;
         
     },
     
@@ -318,7 +319,7 @@ State.Game.prototype = {
             // handle bars
             this.updateHandleBars();
 			
-			score += 0.01;
+			score += 0.0166;
 			labelScore.text = score.toFixed(0) + " s";  //sem casa decimal
             
         
@@ -692,12 +693,17 @@ State.Game.prototype = {
     
     killMonster: function(body1, body2) {
     	
-    	if(body1.sprite.name == 'monster'|| body1.sprite.name == 'monsterBoss') {
+    	if(body1.sprite.name == 'monster') {
     		body1.sprite.kill();
     	}
-    	else if(body2.sprite.name == 'monster'|| body2.sprite.name == 'monsterBoss') {
+    	else if(body2.sprite.name == 'monster') {
     		body2.sprite.kill();
-    	}
+    	}else if(body1.sprite.name == 'monsterBoss') {
+            body1.sprite.damage(1);
+        }
+        else if(body2.sprite.name == 'monsterBoss') {
+            body2.sprite.damage(1);
+        }
     	
 //    	console.log("name: "+body1.sprite.name);
 //    	console.log("name: "+body2.sprite.name);
@@ -967,6 +973,7 @@ State.Game.prototype = {
         monster.name = 'monsterBoss'; 
         monster.animations.add('walk', [0, 1, 2, 3, 4, 5], 10, true);
         monster.play('walk');
+        monster.health = 6;
     	this.createKinematicObj(monster, bossCollisionGroup, [bossCollisionGroup, playerCollisionGroup, tileCollisionGroup, swordCollisionGroup]);
         
     },
