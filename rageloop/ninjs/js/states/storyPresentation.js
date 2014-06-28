@@ -83,10 +83,10 @@
                 case 0:
                     this.updateBg(0);
                     break;
-                case 1:
+                case 2:
                     this.updateBg(1);
                     break;
-                case 2:
+                case 3:
                     this.updateBg(2);
                     break;
             }
