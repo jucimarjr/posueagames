@@ -10,8 +10,8 @@ State.GameSplash.prototype = {
 		var progressBar = this.game.add.sprite(0, 500, 'progress-bar');
 		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
 		this.game.load.setPreloadSprite(progressBar);
-		this.game.load.onLoadComplete.add(function () {this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); setTimeout(function () {this.game.state.start('Menu');}, Config.gameSplash.millis);}, this);
-		
+		this.allLoaded = false;
+
 		//Menu
 		this.game.load.image('menu-background',  Config.menu.dir);
 		this.game.load.spritesheet('button-play', Config.menu.buttonPlay.dir, Config.menu.buttonPlay.width, Config.menu.buttonPlay.height);
@@ -25,6 +25,26 @@ State.GameSplash.prototype = {
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
 		
 		//Game
+		this.game.load.tilemap('map', 'assets/map.json', null,
+				Phaser.Tilemap.TILED_JSON);
+		this.game.load.image('fundo', 'assets/bg_tepequem_4320-2700.png');
+		this.game.load.image('map', 'assets/map.png');
+
+		this.game.load.image('clouds', 'assets/nuvem.png');
+		this.game.load.image('faiscas', 'assets/efeito-faisca.png');
+		this.game.load.image('entrada', 'assets/entrada.png');
+
+		this.game.load.onLoadComplete.add(
+			function () {
+				this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); 
+				setTimeout(function () {
+					if(this.allLoaded) return;
+					this.game.state.start('Menu');
+					this.allLoaded = true;
+					clearTimeout(allLoaded);
+				}, 
+				Config.gameSplash.millis);}, 
+			this);
 	},
 	create: function () {
 		"use strict";

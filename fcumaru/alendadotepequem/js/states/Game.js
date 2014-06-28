@@ -19,15 +19,6 @@ var timerSecond = 0;
 
 State.Game.prototype = {
 	preload : function() {
-		this.game.load.tilemap('map', 'assets/map.json', null,
-				Phaser.Tilemap.TILED_JSON);
-		// this.game.load.image('fundo', 'assets/bg_tepequem_4320-2700.png');
-		this.game.load.image('map', 'assets/map.png');
-
-		// this.game.load.image('clouds', 'assets/nuvem.png');
-		// this.game.load.image('faiscas', 'assets/efeito-faisca.png');
-		// this.game.load.image('entrada', 'assets/entrada.png');
-
 		this.heroes.preload();
 		this.enemies.preload();
 		this.rocks.preload();
