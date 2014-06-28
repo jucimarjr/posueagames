@@ -61,13 +61,13 @@ FireBall.prototype = {
 		}
 	},
 	checkCollision : function(hero) {
-		this.game.physics.arcade.collide(this.fireball, hero,
-				this.heroCollision);
+		if (hero.active) {
+			this.game.physics.arcade.collide(this.fireball, hero,
+					this.heroCollision);
+		}
 	},
 	heroCollision : function(fireball, hero) {
-		if (hero.active) {
-			hero.damage(1);
-		}
+		hero.damage(1);
 	}
 };
 

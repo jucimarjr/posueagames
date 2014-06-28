@@ -71,12 +71,13 @@ function EnemyBoss(game) {
 		"use strict";
 		this.game.physics.arcade.collide(layer, this.enemy);
 		for (var i = 0; i < heroes.size(); i++) {
-			this.game.physics.arcade.collide(this.enemy, heroes.getHero(i),
-					function(enemy, hero) {
-						if (hero.active) {
-							hero.damage(1);
-						}
-					});
+			var hero = heroes.getHero(i);
+			if (hero.active) {
+				this.game.physics.arcade.collide(this.enemy, hero, function(
+						enemy, hero) {
+					hero.damage(1);
+				});
+			}
 		}
 
 		if (this.enemy.body.onFloor()) {
