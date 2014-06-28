@@ -132,7 +132,7 @@ BasicGame.Player.prototype = {
         var animationFrames = [];
 
         for (var i = 0; i <= 13; i++) {
-            animationFrames.push('explosion' + i + '_148-158.png');
+            animationFrames.push('explosion' + i + '_148-153.png');
         }
 
         var anim = this.ship.animations.add('explode', animationFrames, 10, false);

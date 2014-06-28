@@ -29,7 +29,7 @@ BasicGame.Preloader.prototype = {
         this.load.atlas('textField', 'assets/textfield_349-52-4.png', 'assets/textfield_349-52-4.json');
         this.load.image('mainMenu', 'assets/splash_960-600.png');
         this.load.image('endGame', 'assets/endgame_960-600.png');
-        this.load.atlas('mainGameAtlas', 'assets/maingameatlas_512-1024.png', 'assets/maingameatlas_512-1024.json');
+        this.load.atlas('mainGameAtlas', 'assets/maingameatlas_1024-1024.png', 'assets/maingameatlas_1024-1024.json');
         this.load.atlas('lightningAtlas', 'assets/lightningatlas_128x256.png', 'assets/lightningatlas_128x256.json');
   		this.load.image('backgroundColor', 'assets/backgroundcolor_960-600.png');
         this.load.image('backgroundPhrases', 'assets/backgroundphrases_960-600.png');
