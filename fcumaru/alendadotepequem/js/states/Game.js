@@ -19,7 +19,7 @@ var timerSecond = 0;
 
 State.Game.prototype = {
 	preload : function() {
-		this.game.load.tilemap('mapa', 'assets/mapa.json', null,
+		this.game.load.tilemap('map', 'assets/map.json', null,
 				Phaser.Tilemap.TILED_JSON);
 		this.game.load.image('fundo', 'assets/bg_tepequem_4320-2700.png');
 		this.game.load.image('map', 'assets/map.png');
@@ -41,7 +41,7 @@ State.Game.prototype = {
 		this.bg = game.add.tileSprite(0, 0, 4320, 2700, 'fundo');
 		this.bg.fixedToCamera = false;
 		
-		map = this.game.add.tilemap('mapa');
+		map = this.game.add.tilemap('map');
 
 		map.addTilesetImage('map', 'map');
 		this.layer = map.createLayer('map');
