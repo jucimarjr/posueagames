@@ -107,7 +107,7 @@ State.Fase1.prototype = {
 		this.keys.enableBody = true;
 		this.map.createFromObjects(this.nameKeys,1,'key_8080',0,true,false,this.keys);
 		this.keys.forEach(function(k){
-			this.game.add.tween(k).to({
+			game.add.tween(k).to({
                                 angle : -180
                         }, 20).start();
 
@@ -142,7 +142,6 @@ State.Fase1.prototype = {
 
 	update: function () {
 		game.physics.arcade.collide(this.tracajet, this.layer);
-		game.physics.arcade.collide(this.enemies,this.layer);
 	    game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
 	    game.physics.arcade.overlap(this.sheets,this.tracajet,this.increaseScore,null,this);
 	    game.physics.arcade.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
