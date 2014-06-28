@@ -45,6 +45,7 @@ function HeroOfPower(game) {
 		this.hero.body.gravity.y = 150;
 
 		this.hero.health = this.life;
+		this.hero.active = false;
 
 		// Add extra params
 		this.hero.heroType = this.type;
@@ -62,7 +63,7 @@ function HeroOfPower(game) {
 		// PEGA A ENTRADA (tecla pressionada):
 		var keyPressed = false;
 		// apenas processar movimento se estiver ativo
-		if (this.active) {
+		if (this.hero.active) {
 			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 				// vai para esquerda
 				this.hero.body.velocity.x = -this.walk;

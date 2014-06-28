@@ -13,7 +13,6 @@ function Hero(game) {
 	this.initY = 1000;
 
 	this.jumpCount = 0;
-	this.active = false;
 }
 
 Hero.method('getSprite', function() {
@@ -66,7 +65,7 @@ Hero.method('update', function(layer, enemies) {
 	// PEGA A ENTRADA (tecla pressionada):
 	var keyPressed = false;
 	// apenas processar movimento se estiver ativo
-	if (this.active) {
+	if (this.hero.active) {
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 			// vai para esquerda
 			this.hero.body.velocity.x = -this.walk;
@@ -99,7 +98,7 @@ Hero.method('update', function(layer, enemies) {
 
 Hero.method('jumpCheck', function() {
 	// apenas processar pulo se estiver ativo
-	if (this.active && this.jumpCount < this.maxJump) {
+	if (this.hero.active && this.jumpCount < this.maxJump) {
 		this.hero.body.velocity.y = -this.jump;
 		this.jumpCount++;
 	}

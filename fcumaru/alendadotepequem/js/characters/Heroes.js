@@ -47,7 +47,7 @@ Heroes.prototype = {
 		for (var i = 0; i < this.heroes.length; i++) {
 			this.heroes[i].create();
 		}
-		this.heroes[this.index].active = true;
+		this.heroes[this.index].hero.active = true;
 		this.switchKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
 		this.switchKey.onDown.add(this.switchHero, this);
 	},
@@ -61,13 +61,13 @@ Heroes.prototype = {
 		}
 	},
 	switchHero : function() {
-		this.heroes[this.index].active = false;
+		this.heroes[this.index].hero.active = false;
 		this.index++;
 		if (this.index >= this.heroes.length) {
 			// Reset value
 			this.index = 0;
 		}
-		this.heroes[this.index].active = true;
+		this.heroes[this.index].hero.active = true;
 		this.game.camera.follow(this.heroes[this.index].hero);
 	},
 

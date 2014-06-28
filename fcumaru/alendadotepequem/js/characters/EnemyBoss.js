@@ -70,10 +70,12 @@ function EnemyBoss(game) {
 	that.update = function(layer, heroes) {
 		"use strict";
 		this.game.physics.arcade.collide(layer, this.enemy);
-		for ( var i = 0; i < heroes.size(); i++) {
+		for (var i = 0; i < heroes.size(); i++) {
 			this.game.physics.arcade.collide(this.enemy, heroes.getHero(i),
 					function(enemy, hero) {
-						hero.damage(1);
+						if (hero.active) {
+							hero.damage(1);
+						}
 					});
 		}
 

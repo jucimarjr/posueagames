@@ -44,6 +44,7 @@ function HeroOfStick(game) {
 		this.hero.body.gravity.y = 150;
 
 		this.hero.health = this.life;
+		this.hero.active = false;
 
 		this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 		this.jumpKey.onDown.add(this.jumpCheck, this);
@@ -57,7 +58,7 @@ function HeroOfStick(game) {
 		// PEGA A ENTRADA (tecla pressionada):
 		var keyPressed = false;
 		// apenas processar movimento se estiver ativo
-		if (this.active) {
+		if (this.hero.active) {
 			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 				// vai para esquerda
 				this.hero.body.velocity.x = -this.walk;
