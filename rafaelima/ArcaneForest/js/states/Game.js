@@ -21,7 +21,6 @@ var STATE_PLAY = 0;
 var STATE_PAUSED = 1;
 var STATE_GAMEOVER = 2;
 var timerShine, isBlinkPlayer;
-var emitter;
 var labelScore, score;
 
 State.Game.prototype = {
@@ -48,7 +47,6 @@ State.Game.prototype = {
         "use strict";
         
         this.gameState = STATE_PLAY;
-        emitter = this.game.add.emitter(this.game.width / 2 , this.game.height / 2 + 5, 500);
         this.healthBar = [];
         this.timeImune = 0;
         this.timeToAttack = 0;
@@ -134,8 +132,6 @@ State.Game.prototype = {
         player.animations.add(Config.game.player.anim.jump.key, Config.game.player.anim.jump.frames, Config.game.player.anim.jump.speed, Config.game.player.anim.jump.loop);
         player.animations.add(Config.game.player.anim.attack.key, Config.game.player.anim.attack.frames, Config.game.player.anim.attack.speed, Config.game.player.anim.attack.loop);
         
-       this.playerCollider.reset(3040, 342);
-
         this.game.physics.p2.enable(this.playerCollider, false);
         this.playerCollider.body.collideWorldBounds = true;
         this.playerCollider.body.fixedRotation = true;
@@ -165,7 +161,6 @@ State.Game.prototype = {
         
         
         //add 'things' to the world
-        this.putEmitter();
         this.putMonsters();
         this.putMonstersBar();
         this.putCollect();
@@ -180,7 +175,6 @@ State.Game.prototype = {
         this.updateHealth();
         
         layer.resizeWorld();
-//        layer.alpha = 2;
 
         cursors = this.game.input.keyboard.createCursorKeys();
         attackButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -219,14 +213,6 @@ State.Game.prototype = {
     update: function () {
         "use strict";
         
-        emitter.forEachExists(function(particle) {
-            if (particle.lifespan < 2000) {
-              particle.alpha *= 0.98;
-              particle.scale.x *= 1.01;
-              particle.scale.y *= 1.01;
-            }
-          }, this);
-        
         if(isBlinkPlayer){
         	player.visible = !player.visible;
         }
@@ -249,7 +235,6 @@ State.Game.prototype = {
 	        if (cursors.left.isDown) {
 	        	this.playerCollider.body.moveLeft(500);
 	            player.scale.x = -1;
-	            emitter.emitX = this.playerCollider.body.x - 45;
 	            //player.animations.play('left');
 	            if(!this.attacking && this.canJump && intVelY == 0) {
 	            	player.animations.play(Config.game.player.anim.walk.key);
@@ -267,7 +252,6 @@ State.Game.prototype = {
 	        } else if (cursors.right.isDown) {
 	        	this.playerCollider.body.moveRight(500);
 	        	player.scale.x = 1;
-	        	emitter.emitX = this.playerCollider.body.x + 45;
 	        	//player.animations.play('right');
 	        	if(!this.attacking && this.canJump && intVelY == 0) {
 	        		player.animations.play(Config.game.player.anim.walk.key);
@@ -648,7 +632,6 @@ State.Game.prototype = {
         	}
         	
         }
-        emitter.emitY = this.playerCollider.body.y;
 
     },
 
@@ -1071,31 +1054,5 @@ State.Game.prototype = {
         collect.name = 'red';
         this.createKinematicObj(collect, collectCollisionGroup, [collectCollisionGroup, playerCollisionGroup]);
     },
-    
-    putEmitter: function (){
-    	//create an emitter
-        emitter = this.game.add.emitter(this.playerCollider.body.x + 45 , player.body.y, 500);
-        emitter.makeParticles('magic');
-        emitter.gravity = 0;  
-        emitter.width = 32;
-        
-        // setup options for the emitter
-        emitter.forEach(function(particle) { 
-        particle.events.onKilled.add(function() {
-          this.alpha = 1;
-          this.scale.setTo(1,1);
-        }, particle); 
-        particle.events.onRevived.add(function() {
-          this.rotation = this.game.rnd.realInRange(0, Math.PI *2);
-        }, particle);
-       });
-        
-        emitter.setXSpeed(-10,10); 
-        emitter.setYSpeed(-50,-30);
-        emitter.setRotation(-50,50);
-        emitter.maxParticleScale = 1;
-        emitter.minParticleScale = 0.5;
-        emitter.start(false, 3500, 200);
-    }
 
 };
