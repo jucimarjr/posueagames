@@ -10,7 +10,7 @@ State.Fase3.prototype = {
 
 	preload: function () {
 		game.load.tilemap('mapa3',Config.game.fase3.json,null,Phaser.Tilemap.TILED_JSON);
-		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height);
+		game.load.spritesheet('tracajet', Config.game.tracajetFlying.dir, Config.game.tracajetFlying.width,Config.game.tracajetFlying.height);
 		game.load.spritesheet('frutas', Config.game.fase3.frutas,24,30);
 		game.load.image('bg3',Config.game.fase3.background);
 		game.load.image('tilesetPlataformaNuvens',Config.game.fase3.nuvens.dir);
@@ -27,7 +27,7 @@ State.Fase3.prototype = {
 
 	create: function () {
 	    game.stage.backgroundColor = '#2d2d2d';
-	    var bg3 = game.add.tileSprite(0, 0, game.stage.bounds.width,game.cache.getImage('bg3').height, 'bg3');
+	    var bg3 = game.add.tileSprite(0, 0, game.cache.getImage('bg3').width,game.cache.getImage('bg3').height, 'bg3');
 	    game.physics.startSystem(Phaser.Game.ARCADE);
 	    this.map = game.add.tilemap('mapa3'); 
 		this.map.addTilesetImage('nuvens_120-40-4','tilesetPlataformaNuvens' );
@@ -36,12 +36,13 @@ State.Fase3.prototype = {
 		this.map.setCollisionBetween(1,12, true,'Camada de Tiles 1'); // 0 espaco vazio 1 em diante os tiles do tileset
 
 		this.tracajet = game.add.sprite(100,500, 'tracajet');
-		this.tracajet.animations.add('walk',[0,1,2,1],6,false);
+		this.tracajet.animations.add('flyDown',[3,1,3],2,false);
+		this.tracajet.animations.add('flyUp',[0,2],1,false);
 		game.physics.enable(this.tracajet, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 //		this.tracajet.body.acceleration.y = 20;
 		this.tracajet.body.collideWorldBounds = true;
 		this.tracajet.anchor.setTo(.5,.5);
-		this.tracajet.angle = -90; // Point the ship up
+		this.tracajet.angle = 0;//-90; // Point the ship up
 
 		
 		// Set maximum velocity
@@ -98,17 +99,22 @@ State.Fase3.prototype = {
         if (this.upInputIsActive()) {
             // If the UP key is down, thrust
             // Calculate acceleration vector based on this.angle and this.ACCELERATION;
-            this.tracajet.body.acceleration.x = Math.cos(this.tracajet.rotation) * this.ACCELERATION;
-            this.tracajet.body.acceleration.y = Math.sin(this.tracajet.rotation) * this.ACCELERATION;
+//        	console.log('cos' + Math.cos(this.tracajet.rotation));
+//        	console.log('sin' + Math.sin(this.tracajet.rotation));
+//        	console.log('rot' + this.tracajet.rotation);
+            this.tracajet.body.acceleration.x = Math.cos(this.tracajet.rotation-1.5707963267948966) * this.ACCELERATION;
+            this.tracajet.body.acceleration.y = Math.sin(this.tracajet.rotation-1.5707963267948966) * this.ACCELERATION;
 
             // Show the frame from the spritesheet with the engine on
-            this.tracajet.frame = 1;
+//            this.tracajet.frame = 0;
+            this.tracajet.animations.play('flyUp');
         } else {
             // Otherwise, stop thrusting
             this.tracajet.body.acceleration.setTo(0, 0);
 
             // Show the frame from the spritesheet with the engine off
-            this.tracajet.frame = 0;
+//            this.tracajet.frame = 0;
+            this.tracajet.animations.play('flyDown');
         }
 	},
 //        game.physics.arcade.overlap(this.tracajet, this.star, this.tracajetEatStar,null,this);
