@@ -10,7 +10,7 @@ function Hero(game) {
 	this.life = 1;
 	this.maxJump = 3;
 	this.initX = 20;
-	this.initY = 1000;
+	this.initY = 2520;
 
 	this.jumpCount = 0;
 }

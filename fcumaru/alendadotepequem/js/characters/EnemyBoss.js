@@ -11,8 +11,8 @@ function EnemyBoss(game) {
 
 	that.fireballs = new FireBalls(game);
 
-	that.initX = 650;
-	that.initY = 1000;
+	that.initX = 2649;
+	that.initY = 780;
 
 	that.preload = function() {
 		"use strict";

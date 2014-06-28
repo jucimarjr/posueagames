@@ -10,8 +10,10 @@ function HeroOfRope(game) {
 	that.walk = 200;
 	that.life = 1;
 	that.maxJump = 2;
-	that.initX = 200;
-	that.initY = 1600;
+//	that.initX = 200;
+//	that.initY = 2520;
+	that.initX = 3020;
+	that.initY = 1260;
 	that.numSegmentsRope = 19;
 	that.facingLeft = false;
 	that.state = "idle";

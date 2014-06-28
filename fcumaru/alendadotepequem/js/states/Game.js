@@ -21,12 +21,12 @@ State.Game.prototype = {
 	preload : function() {
 		this.game.load.tilemap('map', 'assets/map.json', null,
 				Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('fundo', 'assets/bg_tepequem_4320-2700.png');
+		// this.game.load.image('fundo', 'assets/bg_tepequem_4320-2700.png');
 		this.game.load.image('map', 'assets/map.png');
 
-		this.game.load.image('clouds', 'assets/nuvem.png');
-		this.game.load.image('faiscas', 'assets/efeito-faisca.png');
-		this.game.load.image('entrada', 'assets/entrada.png');
+		// this.game.load.image('clouds', 'assets/nuvem.png');
+		// this.game.load.image('faiscas', 'assets/efeito-faisca.png');
+		// this.game.load.image('entrada', 'assets/entrada.png');
 
 		this.heroes.preload();
 		this.enemies.preload();
@@ -37,14 +37,15 @@ State.Game.prototype = {
 		"use strict";
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 800;
-		
+
 		this.bg = game.add.tileSprite(0, 0, 4320, 2700, 'fundo');
 		this.bg.fixedToCamera = false;
-		
+
 		map = this.game.add.tilemap('map');
 
 		map.addTilesetImage('map', 'map');
 		this.layer = map.createLayer('map');
+		game.physics.enable(this.layer);
 
 		this.layer.resizeWorld(); // seta o mundo com as altera��es feitas
 		map.setCollisionBetween(1, 22, true, 0); // 0 espaco
@@ -52,25 +53,27 @@ State.Game.prototype = {
 		// entrada
 		this.entrada = this.game.add.image(GOAL_X, GOAL_Y, 'entrada');
 
-		// clouds
-		this.clouds = this.game.add.tileSprite(0, 0, 4320, 2700, 'clouds');
-		this.clouds.autoScroll(-30, 0);
-		
-		// faisca
-		this.faisca = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
-				game.cache.getImage('faiscas').height, 'faiscas');
-		this.faisca.autoScroll(25, 80);
+		// // clouds
+		// this.clouds = this.game.add.tileSprite(0, 0, 4320, 2700, 'clouds');
+		// this.clouds.autoScroll(-30, 0);
+		//
+		// // faisca
+		// this.faisca = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
+		// game.cache.getImage('faiscas').height, 'faiscas');
+		// this.faisca.autoScroll(25, 80);
 
 		this.heroes.create();
 		this.game.camera.follow(this.heroes.getCurrent());
 
 		this.enemies.create();
 		this.rocks.create();
-		this.rocks.pop(550, 1000);
+		this.rocks.pop(1680, 2220);
+		this.rocks.pop(2520, 2160);
+		this.rocks.pop(3720, 1800);
+		this.rocks.pop(660, 420);
 		this.trees.create();
-		this.trees.pop(800, 1500);
-
-		startTimer();
+		this.trees.pop(1710, 1320);
+		this.trees.pop(2670, 1260);
 	},
 	update : function() {
 		"use strict";
@@ -80,25 +83,25 @@ State.Game.prototype = {
 		this.rocks.update(this.layer);
 		this.rocks.checkCollision(this.heroes);
 		this.trees.checkCollision(this.heroes.getCurrent());
-		if(this.heroes.heroes[this.heroes.index].type === HERO_OF_ROPE){
-			this.trees.ropeCollision(
-				this.heroes.heroes[this.heroes.index].getRope(),
-				this.heroes.heroes[this.heroes.index].facingLeft);
+		if (this.heroes.heroes[this.heroes.index].type === HERO_OF_ROPE) {
+			this.trees.ropeCollision(this.heroes.heroes[this.heroes.index]
+					.getRope(),
+					this.heroes.heroes[this.heroes.index].facingLeft);
 		}
 		if (!this.heroes.isAlive()) {
 			this.game.state.start('GameOver');
 
 		}
-		
+
 	},
 
 	render : function() {
 		// debug settings
-		//this.game.debug.spriteBounds(this.heroes.getCurrent());
-		this.game.debug.body(this.heroes.getCurrent());
-		this.game.debug.body(this.trees.values[0].tree);
-		game.debug.spriteInfo(this.heroes.getCurrent(), 32, 32);
-		game.debug.inputInfo(400, 32);
+		// this.game.debug.spriteBounds(this.heroes.getCurrent());
+		// this.game.debug.body(this.heroes.getCurrent());
+		// this.game.debug.body(this.trees.values[0].tree);
+		// game.debug.spriteInfo(this.heroes.getCurrent(), 32, 32);
+		// game.debug.inputInfo(400, 32);
 	}
 };
 
@@ -111,32 +114,4 @@ function showScore() {
 
 	this.score = this.game.add.text(10, 550, "00", style);
 	this.score.fixedToCamera = true;
-}
-
-function printPosition() {
-	posicao.content = Math.floor(dino.x) + " " + Math.floor(dino.y);
-}
-
-function getTime() {
-	now = new Date();
-	nowSecond = now.getSeconds();
-
-}
-
-function timer() {
-	getTime();
-
-	if (startSecond > nowSecond) {
-		timerSecond = startSecond - nowSecond;
-	} else {
-		timerSecond = nowSecond - startSecond;
-	}
-
-}
-
-function startTimer() {
-	date = new Date();
-	nowSecond = date.getSeconds();
-
-	setInterval("timer()", 1000);
 }

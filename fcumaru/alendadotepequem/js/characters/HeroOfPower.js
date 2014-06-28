@@ -10,8 +10,8 @@ function HeroOfPower(game) {
 	that.walk = 200;
 	that.life = 1;
 	that.maxJump = 3;
-	that.initX = 20;
-	that.initY = 1000;
+	that.initX = 0;
+	that.initY = 2520;
 
 	that.preload = function() {
 		"use strict";
