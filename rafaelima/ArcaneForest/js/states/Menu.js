@@ -20,8 +20,10 @@ State.Menu.prototype = {
 		this.game.add.button(Config.menu.buttonPlay.x, Config.menu.buttonPlay.y, 'button-play', this.clickPlay, this);
 		this.game.add.button(Config.menu.buttonCredits.x, Config.menu.buttonCredits.y, 'button-credits', this.clickCredits, this);
 		
-		music = this.game.add.audio(Config.game.audio.bg.key, 1, true);
-		music.play('', 0, 1, true);
+		if(music == null){
+			music = this.game.add.audio(Config.game.audio.bg.key, 1, true);
+			music.play('', 0, 1, true);
+		}
 		
 		selectorPlay = this.game.add.sprite(336, 320, 'button-play-selector');
 		selectorCredit = this.game.add.sprite(293, 430, 'button-credits-selector');
