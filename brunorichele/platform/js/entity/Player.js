@@ -8,20 +8,20 @@ var PlayerProperties = {
     jump : [8, 9, 10, 11, 12, 13, 14],
     velRun : 250,
     velJump : -400
-}
+};
 
 var PlayerState = {
     IDLE : 0,
     RUNNING : 1,
     JUMPING : 2
-}
+};
 
 function Player(game) {
     this.game = game,
     this.player,
     this.jumpTimer = 0,
     this.state = PlayerState.IDLE;
-}
+};
 
 Player.prototype = {
     preload : function() {
