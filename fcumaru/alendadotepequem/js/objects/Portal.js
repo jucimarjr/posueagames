@@ -1,10 +1,10 @@
-Portal = function(game, x, y) {
+Portal = function(game) {
 	"use strict";
 	this.game = game;
 	this.direction = Math.round(Math.random());
 
-	this.x = x;
-	this.y = y;
+	this.x = 3840;
+	this.y = 480;
 
 	this.key = 'portal';
 	this.asset = 'assets/portal_240-120-6.png';

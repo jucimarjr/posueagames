@@ -10,8 +10,10 @@ function HeroOfStick(game) {
 	that.walk = 200;
 	that.life = 2;
 	that.maxJump = 2;
-	that.initX = 400;
-	that.initY = 2520;
+//	that.initX = 400;
+//	that.initY = 2520;
+	that.initX = 3840;
+	that.initY = 480;
 
 	that.preload = function() {
 		"use strict";

@@ -6,6 +6,7 @@ State.Game = function(game) {
 	this.flames = new Flames(game);
 	this.rocks = new Rocks(game);
 	this.trees = new Trees(game);
+	this.portal = new Portal(game);
 };
 
 var map;
@@ -25,6 +26,7 @@ State.Game.prototype = {
 		this.flames.preload();
 		this.rocks.preload();
 		this.trees.preload();
+		this.portal.preload();
 	},
 	create : function() {
 		"use strict";
@@ -62,6 +64,7 @@ State.Game.prototype = {
 		this.flames.create();
 		this.rocks.create();
 		this.trees.create();
+		this.portal.create();
 	},
 	update : function() {
 		"use strict";
