@@ -75,9 +75,6 @@ State.Fase2.prototype = {
 	    this.enemies =  this.game.add.group();
 		this.enemies.enableBody = true;
 		this.map.createFromObjects(this.nameEnemy,49, 'monkey', 0, true, false, this.enemies);
-		//Configura monkeys
-		console.log(this.enemies);
-		
 		this.enemies.forEach(this.setupEnemies,this);
         
 		//Groups frutas
@@ -115,6 +112,7 @@ State.Fase2.prototype = {
     update: function () {
     	game.physics.arcade.collide(this.tracajet, this.layer);
     	game.physics.arcade.overlap(this.fruits,this.tracajet,this.increaseScore,null,this);
+    	game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
 	    this.updateTracajet();
 	    this.updateScorePosition();
 	    
@@ -134,7 +132,6 @@ State.Fase2.prototype = {
     ,
     
     setupEnemies : function(monkey){
-		
 		monkey.animations.add('left',[0,1,2,3,4,5],10,true);
 		monkey.animations.add('right',[6,7,8,9,10,11],5,true);
 		game.physics.enable(monkey, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
@@ -166,9 +163,8 @@ State.Fase2.prototype = {
 			this.tracajet.body.velocity.x = -this.speed;
 	    	this.tracajet.scale.x = -1;
 	    	this.tracajet.animations.play('walk');
-	    }else if(this.cursors.left.isDown && !this.tracajet.body.onFloor() && this.contJump < 5){
-	    	console.log("Cont jump" + this.contJump);
-	    	this.tracajet.body.velocity.x = -this.speed;
+	    }else if(this.cursors.left.isDown && !this.tracajet.body.onFloor() && this.contJump < 5){	    	
+	    	this.tracajet.body.velocity.x = -120;
 	    	this.tracajet.scale.x = -1;
 	    	this.tracajet.animations.play('walk');
 	    	this.contJump++;
@@ -179,9 +175,8 @@ State.Fase2.prototype = {
 	    	this.tracajet.scale.x = 1;  // espelha se antes 1
 	    	this.tracajet.animations.play('walk');
 	    	this.contJump++;
-	    }else if(this.cursors.right.isDown && !this.tracajet.body.onFloor() && this.contJump < 5){
-	    	console.log("Cont jump direita" + this.contJump);
-	    	this.tracajet.body.velocity.x = this.speed;
+	    }else if(this.cursors.right.isDown && !this.tracajet.body.onFloor() && this.contJump < 5){	    	
+	    	this.tracajet.body.velocity.x = 120;
 	    	this.tracajet.scale.x = 1;
 	    	this.tracajet.animations.play('walk');
 	    	this.contJump++;
@@ -198,6 +193,68 @@ State.Fase2.prototype = {
 		sheet.kill();
 		Config.game.score.score += 1;
 		this.txtScore.setText("Score : " + Config.game.score.score);
+	},
+	gameOver: function(obj){
+		if(obj != undefined && obj.key != 'jacare' && !this.tracajet.isImmortal){
+			if(Config.game.score.lifes == 0){
+				this.tracajet.kill();
+				var moduloPositionX = Math.abs(game.world.position.x);
+				var moduloPositionY = Math.abs(game.world.position.y); 
+				var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
+					font: "48px Arial",
+					fill: "#ff0044",
+					align: "left"
+				});
+				dieText.setText("GAME OVER");
+			}else{
+				this.tracajet.isImmortal = true;
+				Config.game.score.lifes--;
+				this.txLife.setText("x " + Config.game.score.lifes);
+				this.tracajet.alpha = 0;
+				this.twenLife = this.game.add.tween(this.tracajet).to( { alpha: 1 }, 100, Phaser.Easing.Linear.None, true, 0, 50, true);
+				this.twenLife.start()
+				this.game.time.events.add(Phaser.Timer.SECOND * 5, this.updateIsImmortal, this);
+			}
+		}
+	},
+	updateIsImmortal : function(){
+			this.twenLife.stop();
+			this.tracajet.alpha = 1;
+			this.tracajet.isImmortal = false;
+	},
+	changeGameState : function(event){
+		if(event.keyCode === Phaser.Keyboard.ENTER){
+			if(this.game.paused){
+				this.resumeGame();
+			}else{
+				this.pauseGame();
+			}
+		}else if(event.keyCode === Phaser.Keyboard.P){
+			if(this.game.paused){
+				this.resumeGame();
+			}else{
+				this.pauseGame();
+			}
+		}
+	
+	},
+	pauseGame : function (){
+		this.game.paused = true;
+		var moduloPositionX = Math.abs(this.game.world.position.x);
+		var moduloPositionY = Math.abs(this.game.world.position.y); 
+		this.txtPause = this.game.add.text(moduloPositionX  + game.width/3 + 50,moduloPositionY + game.height/3 + 50, "", {
+			font: "50px Arial",
+			fill: "#ff0044",
+			align: "right"
+		});
+		this.txtPause.setText("Paused");
+	},
+	resumeGame : function (event){
+		if(this.game.paused){
+			this.txtPause.destroy();
+			this.game.paused = false;
+		}
 	}
+
 
 };
