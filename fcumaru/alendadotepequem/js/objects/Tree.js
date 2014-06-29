@@ -35,6 +35,13 @@ Tree.prototype = {
         this.game.physics.arcade.collide(this.tree, hero, this.heroCollision);
 
     },
+	heroCollision : function(tree, hero) {
+		if (tree.body.touching.up) {
+			hero.jumpCount = 0;
+			hero.body.allowGravity = false;
+			return;
+		}
+	},
     ropeCollision : function(rope, facingLeft){
         if(this.hasRope) return;
         if(this.checkOverlap(this.tree, rope)){
