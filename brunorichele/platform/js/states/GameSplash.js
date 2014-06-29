@@ -34,6 +34,8 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('button-credits', Config.menu.buttonCredits.dir, Config.menu.buttonCredits.width, Config.menu.buttonCredits.height);
 		this.game.load.spritesheet('button-how-to-play', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
 		
+		this.game.load.image('game-intro1', GameIntro1Properties.background);
+		this.game.load.image('game-intro2', GameIntro2Properties.background);
 		this.game.load.image('game-over', GameOverProperties.background);
 
 		//Credits
