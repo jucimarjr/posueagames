@@ -13,7 +13,7 @@ function HeroOfRope(game) {
 //	that.initX = 200;
 //	that.initY = 2520;
 	that.initX = 3020;
-	that.initY = 1260;
+	that.initY = 1500;
 	that.numSegmentsRope = 19;
 	that.facingLeft = false;
 	that.state = "idle";

@@ -64,15 +64,15 @@ Flames.prototype = {
 	create : function() {
 		"use strict";
 		
-		this.pop(1770, 1320);
-		this.pop(1830, 1320);
-		this.pop(1890, 1320);
-		this.pop(1950, 1320);
+		this.pop(1770, 1560);
+		this.pop(1830, 1560);
+		this.pop(1890, 1560);
+		this.pop(1950, 1560);
 		
-		this.pop(2730, 1260);
-		this.pop(2790, 1260);
-		this.pop(2850, 1260);
-		this.pop(2910, 1260);
+		this.pop(2730, 1500);
+		this.pop(2790, 1500);
+		this.pop(2850, 1500);
+		this.pop(2910, 1500);
 	},
 	update : function(layer) {
 		"use strict";
