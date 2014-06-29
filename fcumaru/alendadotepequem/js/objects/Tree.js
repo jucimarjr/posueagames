@@ -24,6 +24,8 @@ Tree.prototype = {
         this.tree.body.immovable = true;
         this.tree.body.setSize(50, 316, 0, 0);
         this.tree.anchor.setTo(0.5, 0.9);
+
+		this.tree.body.allowGravity = false;
     },
     update : function(layer) {
         "use strict";
@@ -75,8 +77,8 @@ Trees.prototype = {
     create : function() {
         "use strict";
         
-        this.pop(1710, 1320);
-		this.pop(2670, 1260);
+        this.pop(1710, 1705);
+		this.pop(2670, 1645);
     },
     update : function(layer) {
         "use strict";
