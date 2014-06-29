@@ -175,7 +175,7 @@ State.Game.prototype = {
 
 		//time
 		var style = { font: '30px "04B_03__"', fill: "#FFFFFF" };
-		labelScore = this.game.add.text(Config.game.life.x + 430, Config.game.life.y, "00:00", style);
+		labelScore = this.game.add.text(Config.game.life.x + 420, Config.game.life.y, "00:00", style);
         labelScore.fixedToCamera = true;
         
     },
@@ -336,8 +336,9 @@ State.Game.prototype = {
             // handle bars
             this.updateHandleBars();
 			
-			score += 0.0166;
-			labelScore.text = score.toFixed(0) + " s";  //sem casa decimal
+			score += 0.035;
+            var timerG = this.scoreTransforme(score);
+			labelScore.text = timerG;  //sem casa decimal
             
         
         }else if(this.gameState == STATE_PAUSED) {
@@ -348,9 +349,25 @@ State.Game.prototype = {
         
     },
     
-    scoreTransforme: function(scoreNow){
-    	var mins = Math.floor(scoreNow / 60);
-    	var secs = scoreNow % 60;
+    scoreTransforme: function(timeGame){
+    	var textHighscore;
+    	timeGame = timeGame.toFixed(0);
+    	
+    	if (timeGame < 10){
+			textHighscore = "00:0" + timeGame;
+		} else{
+			if (timeGame >= 60){
+			   var min = (timeGame/60);
+			   var valor = min.toString().replace(/,.*/,'');
+			   min = parseInt(valor);
+			   if(min >= 10){
+				   this.gameState = STATE_GAMEOVER;
+			   }
+			   var seg = timeGame % 60;
+			   textHighscore =  (min < 10 ? '0' : '') + min + ':'  + (seg < 10 ? '0' : '') + seg;
+			}else textHighscore =  '00:' + timeGame;
+		}
+    	return textHighscore;
     },   
     
     checkCamera: function(){
@@ -438,6 +455,7 @@ State.Game.prototype = {
 		 bar2.kill();
 		 monsters.removeAll();
 		 collects.removeAll();
+		 this.game.world.remove(labelScore);
 
 		 this.putBarRotate();
 		 
@@ -499,6 +517,10 @@ State.Game.prototype = {
          this.game.camera.follow(null);
          this.game.camera.x = Config.animationFall.xCamera;
          isMoveCamera = false;
+         
+         var style = { font: '30px "04B_03__"', fill: "#FFFFFF" };
+         labelScore = this.game.add.text(Config.game.life.x + 420, Config.game.life.y, this.scoreTransforme(score), style);
+         labelScore.fixedToCamera = true;
     },
     
     putBarRotate: function(){
@@ -529,7 +551,7 @@ State.Game.prototype = {
     render: function () {
         "use strict";
         //DEBUG
-//		this.game.debug.text(timerBV, 32, 32);
+//		this.game.debug.text(valor, 50, 50);
 //		this.game.debug.spriteInfo(player, 32, 32);
 //		this.game.debug.cameraInfo(game.camera, 32, 32);
     },

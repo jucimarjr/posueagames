@@ -27,15 +27,16 @@ State.GameOver.prototype = {
 			music = null;
 		}
 		
-		if (score < 10){
-			textHighscore = "00:0" + score.toFixed(0);
-		} else{
-			if (score > 60){
-			   var min = (score/60);
-			   var seg = (min - min.toFixed(0) )*100;
-				textHighscore =  (min<0?'0':'') + min.toFixed(0) + ':'  + seg.toFixed(0) ;
-			}else textHighscore =  '00:' + score.toFixed(0) ;
-		}
+		textHighscore = this.scoreTransformeGO(score);
+//		if (score < 10){
+//			textHighscore = "00:0" + score.toFixed(0);
+//		} else{
+//			if (score >= 60){
+//			   var min = (score/60);
+//			   var seg = (min - min.toFixed(0) )*100;
+//				textHighscore =  (min<10?'0':'') + min.toFixed(0) + ':'  + (seg.toFixed(0)==0?'0':'') + seg.toFixed(0) ;
+//			}else textHighscore =  '00:' + score.toFixed(0) ;
+//		}
 		text = this.game.add.text(x, y, "You survived little more than " + textHighscore + " min in the forest...", style);
 		text.anchor.setTo(0.5, 0.5);
 	},
@@ -57,6 +58,23 @@ State.GameOver.prototype = {
 			}
 			this.game.state.start('Menu');
 		}
-	}
+	},
+	scoreTransformeGO: function(timeGame){
+    	var textHighscore;
+    	timeGame = timeGame.toFixed(0);
+    	
+    	if (timeGame < 10){
+			textHighscore = "00:0" + timeGame;
+		} else{
+			if (timeGame >= 60){
+			   var min = (timeGame/60);
+			   var valor = min.toString().replace(/,.*/,'');
+			   min = parseInt(valor);
+			   var seg = timeGame % 60;
+			   textHighscore =  (min < 10 ? '0' : '') + min + ':'  + (seg < 10 ? '0' : '') + seg;
+			}else textHighscore =  '00:' + timeGame;
+		}
+    	return textHighscore;
+    },
 
 };
