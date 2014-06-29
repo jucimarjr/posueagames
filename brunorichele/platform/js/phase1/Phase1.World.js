@@ -21,7 +21,7 @@ Phase1.World = {
 	createBg : function(){
 		this.game.world.setBounds(0, 0, this.weith, this.height);
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
-		this.game.physics.p2.gravity.y = 350;
+		this.game.physics.p2.gravity.y = 850;
 		this.game.physics.p2.restitution = 0;
 
 		this.background = this.game.add.tileSprite(this.x, this.y, this.weith, this.height, 'bgphase1');
