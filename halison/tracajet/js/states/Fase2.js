@@ -19,6 +19,8 @@ State.Fase2= function (game) {
 	this.speed = 90;
 	this.imgLife;
 	this.txLife;
+	this.position = 1;
+	this.contJump = 0;
     
 };
 
@@ -64,8 +66,9 @@ State.Fase2.prototype = {
         this.tracajet.animations.add('walk',[0,1,2,1],6,false);
         game.physics.enable(this.tracajet, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 		this.tracajet.body.setSize(35, 78,0,0);
-        this.tracajet.body.acceleration.y = 20;
+        this.tracajet.body.acceleration.y = 150;
         this.tracajet.body.collideWorldBounds = true;
+        this.tracajet.body.drag.x = 190;
         this.tracajet.anchor.setTo(.5,.5);
         game.camera.follow(this.tracajet);
         
@@ -78,7 +81,7 @@ State.Fase2.prototype = {
 		
 		this.enemies.forEach(this.setupEnemies,this);
         
-		//Groups folhas
+		//Groups frutas
 		this.fruits = this.game.add.group();
 		this.fruits.enableBody  = true;
 		this.map.createFromObjects(this.nameFruits,62,'assets2',1,true,false,this.fruits);
@@ -112,6 +115,7 @@ State.Fase2.prototype = {
 
     update: function () {
     	game.physics.arcade.collide(this.tracajet, this.layer);
+    	game.physics.arcade.overlap(this.fruits,this.tracajet,this.increaseScore,null,this);
 	    this.updateTracajet();
 	    this.updateScorePosition();
 	    
@@ -158,26 +162,52 @@ State.Fase2.prototype = {
 		t.start();
 	},
 	updateTracajet : function(){
-		this.tracajet.body.velocity.x = 0;
-		 if ( this.cursors.left.isDown) { // vai para esquerda
+		 
+		 if ( this.cursors.left.isDown && this.tracajet.body.onFloor()) { // vai para esquerda
 			this.tracajet.body.velocity.x = -this.speed;
-	    	this.tracajet.animations.play('walk');
 	    	this.tracajet.scale.x = -1;
-
+	    	this.position = 2;
+	    	this.tracajet.animations.play('walk');
+	    }else if(this.cursors.left.isDown && !this.tracajet.body.onFloor() && this.contJump < 3){
+	    	console.log("Cont jump" + this.contJump);
+	    	this.tracajet.body.velocity.x = -150;
+	    	this.tracajet.scale.x = -1;
+	    	this.position = 2;
+	    	this.tracajet.animations.play('walk');
+	    	this.contJump++;
 	    }
-	    else if (this.cursors.right.isDown ) { // vai para direita
+
+	    if (this.cursors.right.isDown && this.tracajet.body.onFloor()) { // vai para direita
 	    	this.tracajet.body.velocity.x = this.speed;
 	    	this.tracajet.scale.x = 1;  // espelha se antes 1
+	    	this.position = 1;
 	    	this.tracajet.animations.play('walk');
+	    	this.contJump++;
+	    }else if(this.cursors.right.isDown && !this.tracajet.body.onFloor() && this.contJump < 3){
+	    	console.log("Cont jump direita" + this.contJump);
+	    	this.tracajet.body.velocity.x = 150;
+	    	this.tracajet.scale.x = 1;
+	    	this.position = 2;
+	    	this.tracajet.animations.play('walk');
+	    	this.contJump++;
 	    }
-	    else if (this.cursors.up.isDown ) { // vai para cima
-	    	this.tracajet.body.velocity.y = -this.speed;
+	    
+	    if (this.cursors.up.isDown && this.tracajet.body.onFloor()) { // vai para cima
+	    	this.tracajet.body.velocity.y = -230;
+	    	if(this.position ==1){
+	    		this.tracajet.body.velocity.x = this.speed;	
+	    	}else if(this.position == 2){
+	    		this.tracajet.body.velocity.x = -this.speed;
+	    	}
 			this.tracajet.animations.play('walk');
+			this.contJump = 0;
 	    }
-	    else{
-	    	this.tracajet.animations.stop();
-	    	this.tracajet.frame = 0;
-	    }
+	    
+	},
+	increaseScore : function(tracajet,sheet){
+		sheet.kill();
+		Config.game.score.score += 1;
+		this.txtScore.setText("Score : " + Config.game.score.score);
 	}
 
 };
