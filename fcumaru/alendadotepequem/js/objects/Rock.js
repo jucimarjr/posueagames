@@ -22,6 +22,7 @@ Rock.prototype = {
 		this.rock = this.game.add.sprite(this.x, this.y, this.key, 3);
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.rock, Phaser.Physics.ARCADE);
+		this.rock.body.allowGravity = false;
 
 		this.rock.body.acceleration.y = 100;
 
@@ -37,12 +38,24 @@ Rock.prototype = {
 		if (!this.rock.body.touching.right && !this.rock.body.touching.left) {
 			this.rock.body.velocity.x = 0;
 		}
+
+		if (this.rock.body.onFloor()) {
+			this.rock.body.allowGravity = false;
+		} else {
+			this.rock.body.allowGravity = true;
+		}
 	},
 	checkCollision : function(hero) {
 		this.game.physics.arcade.collide(this.rock, hero, this.heroCollision);
 	},
 	heroCollision : function(rock, hero) {
 		rock.body.moves = false;
+		
+		if (rock.body.touching.up) {
+			hero.jumpCount = 0;
+			hero.body.allowGravity = false;
+			return;
+		}
 
 		// Only hero of power can move the rock
 		if (hero.heroType == HERO_OF_POWER &&
@@ -70,10 +83,10 @@ Rocks.prototype = {
 	create : function() {
 		"use strict";
 
-		this.pop(1680, 2220);
-		this.pop(2520, 2160);
-		this.pop(3720, 1800);
-		this.pop(660, 420);
+		this.pop(1680, 2340);
+		this.pop(2520, 2280);
+		this.pop(3840, 1920);
+		this.pop(660, 540);
 	},
 	update : function(layer) {
 		"use strict";

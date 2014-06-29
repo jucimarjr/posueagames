@@ -43,33 +43,36 @@ State.Level1.prototype = {
 	create: function () {
 		"use strict";
 
-//		var background;
-//		background = this.game.add.tileSprite(Config.gamePlay.x, Config.gamePlay.y, 4480, 544, 'gameplay-bg');
-//		background.fixedToCamera = true;
+		var background;
+		background = this.game.add.tileSprite(0, 0, 4480, 544, 'gameplay-bg');
+		background.fixedToCamera = true;
 
         this.map = this.game.add.tilemap('map');
-        this.map.addTilesetImage('wetsand_32-32', 'wetsand');
-        this.map.addTilesetImage('hotsand_32-32', 'hotsand');
-        this.map.addTilesetImage('platform_160-64', 'platform');
-        this.map.addTilesetImage('seashell_224-64', 'seashell');
-        this.map.addTilesetImage('can_320-128', 'can');
-        this.map.addTilesetImage('bucket_384-480', 'bucket');
-        this.map.addTilesetImage('straw_224-256', 'diagonalstraw');
-        this.map.addTilesetImage('sunscreen_288-96', 'sunscreen');
+        this.map.addTilesetImage('wetsand_40-40', 'wetsand');
+        this.map.addTilesetImage('hotsand_40-40', 'hotsand');
+        this.map.addTilesetImage('platform_160-80', 'platform');
+        this.map.addTilesetImage('seashell_120-40', 'seashell');
+        this.map.addTilesetImage('can_320-120', 'can');
+        this.map.addTilesetImage('bucket_360-480', 'bucket');
+        this.map.addTilesetImage('diagonalstraw_240-280', 'diagonalstraw');
+        this.map.addTilesetImage('sunscreen_280-80', 'sunscreen');
         this.map.addTilesetImage('seaurchin_80-40', 'seaurchin');
-        this.map.addTilesetImage('glass_288-320', 'glass');
-        this.map.addTilesetImage('straw_480-64', 'strawground');
-        this.map.addTilesetImage('strawtipleft_15-20', 'strawtipleft');
-        this.map.addTilesetImage('strawtipright_15-20', 'strawtipright');
+        this.map.addTilesetImage('glass_280-320', 'glass');
+        this.map.addTilesetImage('water_200-40', 'lifedrop');
+        this.map.addTilesetImage('energy_200-40', 'energy');
+        this.map.addTilesetImage('sunscreendrop_200-40', 'sundrop');
+//        this.map.addTilesetImage('straw_480-64', 'strawground');
+//        this.map.addTilesetImage('strawtipleft_15-20', 'strawtipleft');
+//        this.map.addTilesetImage('strawtipright_15-20', 'strawtipright');
 
         this.mainLayer = this.map.createLayer('mainlayer');
         this.hotSandLayer = this.map.createLayer('hotsandlayer');
-        this.strawLayer = this.map.createLayer('strawlayer');
+        this.irregularLayer = this.map.createLayer('irregularlayer');
         this.mainLayer.resizeWorld();
 
 //      this.map.setCollisionByExclusion([0], true, this.mainLayer);
 //      this.map.setCollisionByExclusion([0], true, this.hotSandLayer);
-//      this.map.setCollisionByExclusion([0], true, this.strawLayer);
+//      this.map.setCollisionByExclusion([0], true, this.irregularLayer);
 
         this.setupPhysics();
         this.setupLayers();
@@ -82,7 +85,7 @@ State.Level1.prototype = {
 //		this.setupStrawHorizontal(2010, 510);
 //		this.setupStrawDiagonal(2720, 270);
 		this.setupMolecule();
-		this.setupPlayer(100, this.game.world.height-200);
+		this.setupPlayer(1600, 100);
 		this.setupSmokeEmitter(1550, this.game.height-80);
 
         this.hud.create();
@@ -102,7 +105,7 @@ State.Level1.prototype = {
 		this.handleKeyDown();
 		this.isOnAir();
 		this.drop.playerAnimations();
-		this.playerOverDiagonalStraw();
+//		this.playerOverDiagonalStraw();
 
 		this.moveCrab(this.crabs.getAt(0));
 		this.moveCrab(this.crabs.getAt(1));
@@ -181,32 +184,43 @@ State.Level1.prototype = {
 		this.playerCG = game.physics.p2.createCollisionGroup();
 		this.groundCG = game.physics.p2.createCollisionGroup();
 		this.crabCG = game.physics.p2.createCollisionGroup();
-		this.strawCG = game.physics.p2.createCollisionGroup();
-		this.coveredStrawCG = game.physics.p2.createCollisionGroup();
+//		this.strawCG = game.physics.p2.createCollisionGroup();
+//		this.coveredStrawCG = game.physics.p2.createCollisionGroup();
 		this.moleculeCG = game.physics.p2.createCollisionGroup();
+		this.energyCG = game.physics.p2.createCollisionGroup();
+		this.sundropCG = game.physics.p2.createCollisionGroup();
 		this.urchinsCG = game.physics.p2.createCollisionGroup();
 		this.hotsandCG = game.physics.p2.createCollisionGroup();
+        this.glassCG = game.physics.p2.createCollisionGroup();
 
 		// Create and Setup Material
 	    this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
 	    this.crabMaterial = game.physics.p2.createMaterial('crabMaterial');
 	    this.groundMaterial = game.physics.p2.createMaterial('groundMaterial');
 	    this.hotsandMaterial = game.physics.p2.createMaterial('hotsandMaterial');
+	    this.slidingMaterial = game.physics.p2.createMaterial('slidingMaterial');
 
 		// create contact material
 	    this.game.physics.p2.createContactMaterial(this.groundMaterial, this.crabMaterial, {friction: 0.0, restitution: 0.0});
 	    this.game.physics.p2.createContactMaterial(this.characterMaterial, this.groundMaterial, {friction: 0.0, restitution: 0.0});
 	    this.game.physics.p2.createContactMaterial(this.crabMaterial, this.hotsandMaterial, {friction: 0.0, restitution: 0.0});
+	    this.game.physics.p2.createContactMaterial(this.characterMaterial,
+                this.slidingMaterial, {friction: 0.1, restitution: 0.0});
 	},
 	setupLayers: function () {
 	    this.tilesMainLayer = game.physics.p2.convertTilemap(this.map,
 	            this.mainLayer);
 	    this.tilesHotSandLayer = game.physics.p2.convertTilemap(this.map,
 	            this.hotSandLayer);
-	    this.tilesStrawLayer = game.physics.p2.convertTilemap(this.map,
-	    		this.strawLayer);
-	    this.tilesObjects = game.physics.p2.convertCollisionObjects(this.map,
-	            'objects');
+	    this.tilesIrregularLayer = game.physics.p2.convertTilemap(this.map,
+	            this.irregularLayer);
+
+	    var basicShapes = game.physics.p2.convertCollisionObjects(this.map,
+                'basic-shapes');
+	    var strawShapes = game.physics.p2.convertCollisionObjects(this.map,
+                'straw-shapes');
+	    var glassPolygon = game.physics.p2.convertCollisionObjects(this.map,
+                'glass-polygon');
 
 	    //setup all tiles with collisiongroups or materials
 	    for (var i=0; i < this.tilesMainLayer.length; i++) {
@@ -221,22 +235,26 @@ State.Level1.prototype = {
 	                this.moleculeCG, this.groundCG, this.urchinsCG]);
 	    	this.tilesHotSandLayer[i].setMaterial(this.groundMaterial);
 	    }
-	    for (var i=0; i < this.tilesStrawLayer.length; i++) {
-	    	this.tilesStrawLayer[i].setCollisionGroup(this.groundCG);
-	    	this.tilesStrawLayer[i].collides([this.playerCG, this.crabCG,
-	                this.moleculeCG, this.groundCG, this.urchinsCG]);
-	    	this.tilesStrawLayer[i].setMaterial(this.slidingMaterial);
+	    for (var i = 0; i < basicShapes.length; i++){
+	    	basicShapes[i].setCollisionGroup(this.groundCG);
+	    	basicShapes[i].collides([this.playerCG, this.crabCG,
+                    this.moleculeCG, this.energyCG, this.sundropCG]);
+	    	basicShapes[i].setMaterial(this.groundMaterial);
 	    }
-	    for (var i=0; i < this.tilesObjects.length; i++){
-	    	this.tilesObjects[i].setCollisionGroup(this.groundCG, this.crabCG,
-	    			this.moleculeCG, this.energyCG);
-	    	this.tilesObjects[i].collides([this.playerCG]);
-	    	this.tilesObjects[i].setMaterial(this.groundMaterial);
+	    for (var i = 0; i < strawShapes.length; i++){
+	    	strawShapes[i].setCollisionGroup(this.groundCG);
+	    	strawShapes[i].collides([this.playerCG, this.moleculeCG,
+                    this.energyCG, this.sundropCG]);
+	    	strawShapes[i].setMaterial(this.slidingMaterial);
+	    }
+	    for (var i = 0; i < glassPolygon.length; i++){
+	    	glassPolygon[i].setCollisionGroup(this.glassCG);
+	    	glassPolygon[i].collides([this.playerCG]);
+	    	glassPolygon[i].setMaterial(this.groundMaterial);
 	    }
 
-	    // Creating the objects defined in the tilemap
 	    this.urchins = game.add.group();
-	    this.map.createFromObjects('objects', 330, 'urchin', 0, true, false,
+	    this.map.createFromObjects('seaurchins', 202, 'urchin', 0, true, false,
 	            this.urchins);
 	    this.urchins.forEach(this.setupUrchins, this);
     },
@@ -248,16 +266,17 @@ State.Level1.prototype = {
         this.drop.setCharacterInicialValues();
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
-        dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
-								  this.moleculeCG, this.urchinsCG,
-								  this.hotsandCG, this.coveredStrawCG]);
+        dropSprite.body.collides([this.groundCG, this.crabCG, this.moleculeCG,
+                this.urchinsCG, this.hotsandCG, this.glassCG]);
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
         dropSprite.body.createGroupCallback(this.urchinsCG, this.checkCollisionUrchins, this);
         dropSprite.body.createGroupCallback(this.moleculeCG, this.checkOverlapWithLifeDrop, this);
 		dropSprite.body.createGroupCallback(this.drinkEnergy, this);
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
-        dropSprite.body.createGroupCallback(this.coveredStrawCG, this.insideStraw, this);
+        dropSprite.body.createGroupCallback(this.glassCG, this.timeOverKill,
+                this);
+        //dropSprite.body.createGroupCallback(this.coveredStrawCG, this.insideStraw, this);
 	},
 //	setupShell: function (posX, posY) {
 //		 // Create sea shell
@@ -380,8 +399,8 @@ State.Level1.prototype = {
         this.molecule.enableBody = true;
         this.molecule.physicsBodyType = Phaser.Physics.P2JS;
 
-        this.molecule.create(280, 268, 'lifedrop');
-        this.molecule.create(1700, this.game.world.height-80-75, 'energy');
+        this.molecule.create(200, 310, 'lifedrop');
+        this.molecule.create(1750, this.game.world.height-210, 'energy');
 
         for (var i = 0; i < this.molecule.length; i++) {
             this.molecule.getAt(i).body.setCollisionGroup(this.moleculeCG);
@@ -631,6 +650,7 @@ State.Level1.prototype = {
 		clearTimeout(time);
     },
 	timeOverKill: function () {
+		console.log('chamou');
 		this.drop.kill();
 	},
 	moveCrab: function (crab) {

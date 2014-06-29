@@ -12,8 +12,8 @@ function HeroOfStick(game) {
 	that.maxJump = 2;
 //	that.initX = 400;
 //	that.initY = 2520;
-	that.initX = 3840;
-	that.initY = 480;
+	that.initX = 2450;
+	that.initY = 780;
 
 	that.preload = function() {
 		"use strict";
@@ -47,6 +47,9 @@ function HeroOfStick(game) {
 
 		this.hero.health = this.life;
 		this.hero.active = false;
+		this.hero.jumpCount = this.jumpCount;
+
+		this.hero.body.allowGravity = false;
 
 		this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 		this.jumpKey.onDown.add(this.jumpCheck, this);
@@ -79,18 +82,24 @@ function HeroOfStick(game) {
 			}
 		}
 		// executar a animacao para para cima
-		if (this.jumpCount > 0) {
+		if (this.hero.jumpCount > 0) {
 			this.hero.animations.play('jump');
 
 			// resetando o contador de pulo quando votlar ao ch�o
 			if (this.hero.body.onFloor()) {
-				this.jumpCount = 0;
+				this.hero.jumpCount = 0;
 			}
 			keyPressed = true;
 		}
 		if (!keyPressed) {
 			this.hero.animations.stop();
 			this.hero.frame = 0;
+		}
+
+		if (this.hero.body.onFloor()) {
+			this.hero.body.allowGravity = false;
+		} else {
+			this.hero.body.allowGravity = true;
 		}
 	};
 

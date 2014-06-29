@@ -259,15 +259,19 @@ Config.game = {
 		height:56
 	},
 	blue:{
+		key:'blue',
 		dir: Config.images+'/bluediamond_13-25.png'
 	},
 	red:{
+		key:'red',
 		dir: Config.images+'/reddiamond_13-25.png'
 	},
 	pink:{
+		key:'pink',
 		dir: Config.images+'/pinkdiamond_13-25.png'
 	},
 	key:{
+		key:'key',
 		dir: Config.images+'/keytopbar_13-25.png'
 	},
 	life:{
@@ -333,6 +337,7 @@ Config.game = {
 		y: 415
 	},
 	transparentwall:{
+		key: 'transparentwall',
 		dir: Config.images+'/transparentwall_10-540.png',
 		x: 0, 
 		y: 800

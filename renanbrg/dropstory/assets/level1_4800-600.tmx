@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="120" height="15" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="wetsand_40-40" tilewidth="40" tileheight="40">
+  <image source="images/wetsand_40-40.png" width="40" height="40"/>
+ </tileset>
+ <tileset firstgid="2" name="hotsand_40-40" tilewidth="40" tileheight="40">
+  <image source="images/hotsand_40-40.png" width="40" height="40"/>
+ </tileset>
+ <tileset firstgid="3" name="platform_160-80" tilewidth="40" tileheight="40">
+  <image source="images/platform_160-80.png" width="160" height="80"/>
+ </tileset>
+ <tileset firstgid="11" name="seashell_120-40" tilewidth="40" tileheight="40">
+  <image source="images/seashell_120-40.png" width="120" height="40"/>
+ </tileset>
+ <tileset firstgid="14" name="can_320-120" tilewidth="40" tileheight="40">
+  <image source="images/can_320-120.png" width="320" height="120"/>
+ </tileset>
+ <tileset firstgid="38" name="bucket_360-480" tilewidth="40" tileheight="40">
+  <image source="images/bucket_360-480.png" width="360" height="480"/>
+ </tileset>
+ <tileset firstgid="146" name="diagonalstraw_240-280" tilewidth="40" tileheight="40">
+  <image source="images/diagonalstraw_240-280.png" width="240" height="280"/>
+ </tileset>
+ <tileset firstgid="188" name="sunscreen_280-80" tilewidth="40" tileheight="40">
+  <image source="images/sunscreen_280-80.png" width="280" height="80"/>
+ </tileset>
+ <tileset firstgid="202" name="seaurchin_80-40" tilewidth="40" tileheight="40">
+  <image source="spritesheets/seaurchin_80-40.png" width="80" height="40"/>
+ </tileset>
+ <tileset firstgid="204" name="glass_280-320" tilewidth="40" tileheight="40">
+  <image source="images/glass_280-320.png" width="280" height="320"/>
+ </tileset>
+ <tileset firstgid="260" name="water_200-40" tilewidth="40" tileheight="40">
+  <image source="spritesheets/water_200-40.png" width="200" height="40"/>
+ </tileset>
+ <tileset firstgid="265" name="energy_200-40" tilewidth="40" tileheight="40">
+  <image source="spritesheets/energy_200-40.png" width="200" height="40"/>
+ </tileset>
+ <tileset firstgid="270" name="sunscreendrop_200-40" tilewidth="40" tileheight="40">
+  <image source="spritesheets/sunscreendrop_200-40.png" width="200" height="40"/>
+ </tileset>
+ <layer name="hotsandlayer" width="120" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt0CEOADAIBEHS/z8aWUcKhoqZZP3lIgAAAAAAgI5TxFX9pL97sb1R8xKDHQHL
+  </data>
+ </layer>
+ <layer name="irregularlayer" width="120" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztznf0zXUcx3E//jTKrJSV2UBCEUpkq0T2yghlVERI9t4rWRkNyiiyixQyzknJnmVl7+z9+P3hv+4513HHuc59nu/jj+8f7/N5JUlyf5aL3OThCZ7kKZ4mL/miNy1eCMrPMxTgWQpSiMI8x/PRmxYvBBWhKC9QjOKU4EVeomTUlsULRS9TitK8QhnKUo7yVAhwN5JRjOZTxvBZuMfGu+sqUonKvMprvE4V3qBqgLuxjGM8E5jI5+EeG++uq8abVKcGNalFbepQN8DdJCYzhal8wZdh3prY76znD/5kA3+xMQJvx2L1qE8DGvIWjWhME5oGuPuKr5nGdL7h2zBvTWwTm9nCVraxnR0ReDsWe5tmNKcF7/AuLWlF6wB3M5jJLGbzHd+He6x2sovd7OFv/mFvBN6OxdrwHu/zAW1px4e0p0OAuznM5QfmMZ8F4R6rfeznAAf5l0McjsDbsdhHdKQTnfmYLnxCV7oFuFvIIhazhB/5KdxjdYSjHOM4JzjJqQi8HY1S8QAPkpo0pCUd6YO4704PetKL3vShL/3oH/LF99ZpznCWc/zHeS5Ec1QYy8BDPMwjZORRHiNTEPcDGMggBjOEoQxjOCOC3LGUZfzMcn7hV1YEeR9sF7nEZa5wlWtcD/E7/1dyUpAyAm/dKTNZyEo2Hic7OcgZwR0rWcVvrGYNa1kX4nducJNbiT8JPpKSLCHED8WLFy9mug0vwX2/
+  </data>
+ </layer>
+ <layer name="mainlayer" width="120" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt08sKgDAMRNGKWh///8EGuixUW6KY4R6YbQNJJyUAAHzNlsWyWrLQLBSbZbccllNoFgo6pY1OaaO/tdZOvPbV+87o3Mj9fetvtnbita/ed0bnRu5v5L/5Fa8dRf4nyrzuQpf+ibvcmx4EcXFfbRekkgKD
+  </data>
+ </layer>
+ <objectgroup name="seaurchins" width="120" height="15">
+  <object gid="202" x="3359" y="519"/>
+  <object gid="202" x="3601" y="521"/>
+ </objectgroup>
+ <objectgroup name="glass-polygon" width="120" height="15">
+  <object x="4004" y="262">
+   <polyline points="0,0 111,1 109,21 2,19 1,2"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="straw-shapes" width="120" height="15">
+  <object x="2719" y="387">
+   <polyline points="0,0 227,-267 241,-255 15,12 0,0"/>
+  </object>
+  <object x="3922" y="218">
+   <polyline points="0,0 50,0 54,4 65,43 77,43 65,-6 54,-12 0,-12 -2,-5 0,0"/>
+  </object>
+  <object x="4120" y="261">
+   <polyline points="0,0 13,-49 24,-56 77,-56 80,-50 78,-42 28,-42 23,-38 13,1 0,1"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="basic-shapes" width="120" height="15">
+  <object x="359" y="516">
+   <polyline points="0,0 13,-15 34,-29 54,-36 75,-37 102,-27 119,-9 123,1 1,0"/>
+  </object>
+  <object x="1557" y="412">
+   <polyline points="0,0 8,0 24,-14 239,-13 257,-2 257,41 273,107 -17,109 -3,68 -5,40 -1,0"/>
+  </object>
+  <object x="2165" y="1">
+   <polyline points="0,0 -2,198 13,223 25,480 323,480 337,223 353,207 348,17 348,0 1,0"/>
+  </object>
+  <object x="2880" y="506">
+   <polyline points="0,0 0,-52 8,-57 144,-56 274,-46 280,-31 279,-15 276,-1 7,11 -1,0"/>
+  </object>
+  <object x="3984" y="263">
+   <polyline points="0,0 -5,0 11,257"/>
+  </object>
+  <object x="4120" y="520">
+   <polyline points="0,0 19,-256 16,-256"/>
+  </object>
+ </objectgroup>
+</map>

@@ -45,9 +45,6 @@ State.Game.prototype = {
 		this.layer.resizeWorld(); // seta o mundo com as altera��es feitas
 		map.setCollisionBetween(1, 22, true, 0); // 0 espaco
 
-		// entrada
-		this.entrada = this.game.add.image(GOAL_X, GOAL_Y, 'entrada');
-
 		// // clouds
 		// this.clouds = this.game.add.tileSprite(0, 0, 4320, 2700, 'clouds');
 		// this.clouds.autoScroll(-30, 0);

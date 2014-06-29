@@ -11,7 +11,7 @@ function EnemyBoss(game) {
 
 	that.fireballs = new FireBalls(game);
 
-	that.initX = 2649;
+	that.initX = 2650;
 	that.initY = 780;
 
 	that.preload = function() {
@@ -33,7 +33,8 @@ function EnemyBoss(game) {
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.enemy, Phaser.Physics.ARCADE);
 		this.enemy.body.setSize(60, 120, -15, 0);
-		this.enemy.body.acceleration.y = 100;
+
+		this.enemy.body.allowGravity = false;
 
 		// para no limite inferio da tela
 		this.enemy.body.collideWorldBounds = true;
@@ -42,8 +43,6 @@ function EnemyBoss(game) {
 		this.enemy.body.drag.x = 600;
 		// diminui o espaco do deslocamento do espelhamento
 		this.enemy.anchor.setTo(.25, .5);
-
-		this.enemy.body.gravity.y = 150;
 
 		this.enemy.health = this.life;
 

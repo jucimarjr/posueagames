@@ -4,7 +4,7 @@ Portal = function(game) {
 	this.direction = Math.round(Math.random());
 
 	this.x = 3840;
-	this.y = 480;
+	this.y = 660;
 
 	this.key = 'portal';
 	this.asset = 'assets/portal_240-120-6.png';
@@ -25,13 +25,12 @@ Portal.prototype = {
 
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.portal, Phaser.Physics.ARCADE);
-		this.portal.body.acceleration.y = 100;
+		this.portal.body.allowGravity = false;
 
 		// para no limite inferio da tela
 		this.portal.body.collideWorldBounds = true;
 		// diminui o espaco do deslocamento do espelhamento
 		this.portal.anchor.setTo(.5, .5);
-		this.portal.body.gravity.y = 150;
 	},
 	open : function() {
 		"use strict";
