@@ -10,9 +10,9 @@ State.LudusSplash.prototype = {
 	preload: function () {
 		"use strict";
 		this.game.load.image('ludus-splash', Config.ludusSplash.dir);
-		//GameSplash
-		this.game.load.image('game-splash', Config.gameSplash.dir.background);
-		this.game.load.image('progress-bar', Config.gameSplash.dir.bar);
+		//Carregador bg e progress do GameSplash
+		this.game.load.image('game-splash', GameSplashProperties.dir.background);
+		this.game.load.spritesheet('progress-bar', GameSplashProperties.dir.bar, 500, 300);
 	},
 	create: function () {
 		"use strict";

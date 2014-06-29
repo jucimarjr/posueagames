@@ -39,18 +39,6 @@ Config.sponsorSplash = {
 	nextState: 4000
 };
 
-//GameSplash
-Config.gameSplash = {
-	dir: {
-		background: 'assets/images/GameSplash_1920-1080.png',
-		bar: 'assets/images/ProgressBar_1920-30.png'
-	},
-	x: 0,
-	y: 0,
-	millis: 2000,
-	nextState: 4000
-};
-
 //Menu
 Config.menu = {
 	dir: 'assets/images/bgmenu_1920-1080.jpg',
