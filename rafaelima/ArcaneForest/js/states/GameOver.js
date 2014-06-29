@@ -43,9 +43,18 @@ State.GameOver.prototype = {
 		"use strict";
 		Config.global.screen.resize(this.game);
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+			if(musicGameOver != null){
+				musicGameOver.pause();
+				musicGameOver = null;
+			}
 			this.game.state.start('Game');
+			
 		}else if (this.game.input.keyboard.isDown(Phaser.Keyboard.M)){
 			//this.game.state.restart(true, true);
+			if(musicGameOver != null){
+				musicGameOver.pause();
+				musicGameOver = null;
+			}
 			this.game.state.start('Menu');
 		}
 	}

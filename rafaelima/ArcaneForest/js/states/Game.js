@@ -37,10 +37,6 @@ State.Game.prototype = {
 			music.play('', 0, 1, true);
 		}
 		
-		if(musicGameOver != null){
-			musicGameOver.pause();
-			musicGameOver = null;
-		}
         this.gameState = STATE_PLAY;
         this.healthBar = [];
         this.timeImune = 0;
