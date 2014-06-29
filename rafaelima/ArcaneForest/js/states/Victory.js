@@ -21,15 +21,6 @@ State.Victory.prototype = {
 		var textHighscore ;
 		var text;
 		
-//		if (score < 10){
-//			textHighscore = "00:0" + score.toFixed(0);
-//		} else{
-//			if (score > 60){
-//			   var min = (score/60);
-//			   var seg = (min - min.toFixed(0) )*100;
-//				textHighscore = (min<0?'0':'') + min.toFixed(0) + ':'  + seg.toFixed(0) ;
-//			}else textHighscore = "00:" + score.toFixed(0) ;
-//		}
 		textHighscore = this.scoreTransformeV(score);
 		
 		this.addHighscore(score);
@@ -38,14 +29,11 @@ State.Victory.prototype = {
 		text.anchor.setTo(0.5, 0.5);  
 
 		this.game.add.button(475, 406, 'twitterbird', this.tweetscore, this);
-		
-		// this.tweetscore();
 
 	},
 	update: function () {
 		"use strict";
 		Config.global.screen.resize(this.game);
-//		if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
 			this.game.state.start('Menu');
 		}
@@ -60,30 +48,12 @@ State.Victory.prototype = {
 		   if (score < highscore) {
 				localStorage.setItem("highscore", score);
 				
-//				if (score < 10){
-//					textHighscore = "00:0" + score.toFixed(0);
-//				} else{
-//					if (score > 60){
-//					   var min = (score/60);
-//					   var seg = (min - min.toFixed(0) )*100;
-//						textHighscore =  (min<0?'0':'') + min.toFixed(0) + ':'  + seg.toFixed(0) ;
-//					}else textHighscore =  '00:' + highscore.toFixed(0) ;
-//				}
 				textHighscore = this.scoreTransformeV(score);
 
 				this.game.add.text(20, 50, 'Novo Record: ' + textHighscore + ' min' , style);
 			}
 			else { 
 					var highScore = parseFloat(highscore); //string to float
-//					if (highScore < 10){
-//						textHighscore = "00:0" + highScore.toFixed(0);
-//					} else{
-//						if (highScore > 60){
-//						   var min = (highScore/60);
-//						   var seg = (min - min.toFixed(0) )*100;
-//							textHighscore =  (min<0?'0':'') + min.toFixed(0) + ':'  + seg.toFixed(0) ;
-//						}else textHighscore = '00:' + highScore.toFixed(0) ;
-//					}
 					
 					textHighscore = this.scoreTransformeV(highScore);
 					

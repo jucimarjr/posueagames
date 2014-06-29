@@ -116,11 +116,11 @@ Config.game = {
 		width: 32,
 		height: 48,
 		//posicao depois das barras verticais
-//		x: 3146,
-//		y: 349,
+		x: 3146,
+		y: 349,
 		//posicao inicial
-		x: 70,
-		y: 1393,
+//		x: 70,
+//		y: 1393,
 		xRotate: 2334,
 		yRotate: 385,
 		lifes: 3,
@@ -259,15 +259,19 @@ Config.game = {
 		height:56
 	},
 	blue:{
+		key:'blue',
 		dir: Config.images+'/bluediamond_13-25.png'
 	},
 	red:{
+		key:'red',
 		dir: Config.images+'/reddiamond_13-25.png'
 	},
 	pink:{
+		key:'pink',
 		dir: Config.images+'/pinkdiamond_13-25.png'
 	},
 	key:{
+		key:'key',
 		dir: Config.images+'/keytopbar_13-25.png'
 	},
 	life:{
@@ -333,6 +337,7 @@ Config.game = {
 		y: 415
 	},
 	transparentwall:{
+		key: 'transparentwall',
 		dir: Config.images+'/transparentwall_10-540.png',
 		x: 0, 
 		y: 800
@@ -393,6 +398,7 @@ Config.gameOver = {
 
 //Victory
 Config.Victory = {
+	key: 'victory',
 	dir: Config.images+'/victory.png',
 	x: 0,
 	y: 0
