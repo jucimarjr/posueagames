@@ -11,9 +11,9 @@ function HeroOfRope(game) {
 	that.life = 1;
 	that.maxJump = 2;
 //	that.initX = 200;
-//	that.initY = 2520;
+//	that.initY = 2580;
 	that.initX = 3020;
-	that.initY = 1500;
+	that.initY = 1620;
 	that.numSegmentsRope = 19;
 	that.facingLeft = false;
 	that.state = "idle";
@@ -52,6 +52,9 @@ function HeroOfRope(game) {
 
 		this.hero.health = this.life;
 		this.hero.active = false;
+		this.hero.jumpCount = this.jumpCount;
+
+		this.hero.body.allowGravity = false;
 
 		this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 		this.jumpKey.onDown.add(this.jumpCheck, this);
@@ -93,11 +96,11 @@ function HeroOfRope(game) {
 			}
 		}
 		// executar a animacao para para cima
-		if (this.jumpCount > 0) {
+		if (this.hero.jumpCount > 0) {
 			if(this.hero.body.velocity.y < 0) this.hero.animations.play('jump');
 			this.state = "jumping";
 			if (this.hero.body.onFloor()) {
-				this.jumpCount = 0;
+				this.hero.jumpCount = 0;
 				this.state = "idle";
 			}
 		}
@@ -128,6 +131,12 @@ function HeroOfRope(game) {
 						this.ropeSegments[i].x = this.ropeStartX;
 				}
 			}
+		}
+
+		if (this.hero.body.onFloor()) {
+			this.hero.body.allowGravity = false;
+		} else {
+			this.hero.body.allowGravity = true;
 		}
 	};
 
@@ -164,9 +173,9 @@ function HeroOfRope(game) {
 
 	that.jumpCheck = function() {
 		// apenas processar pulo se estiver ativo e não estiver usando a corda
-		if (this.hero.active && this.jumpCount < this.maxJump && !this.ropeActive) {
+		if (this.hero.active && this.hero.jumpCount < this.maxJump && !this.ropeActive) {
 			this.hero.body.velocity.y = -this.jump;
-			this.jumpCount++;
+			this.hero.jumpCount++;
 		}
 	};
 

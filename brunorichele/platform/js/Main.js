@@ -7,5 +7,6 @@ game.state.add('GameSplash', State.GameSplash);
 game.state.add('Menu', State.Menu);
 game.state.add('HowToPlay', State.HowToPlay);
 game.state.add('Credits', State.Credits);
+game.state.add('GameOver', State.GameOver);
 game.state.add('Game', State.Phase1);
 game.state.start('LudusSplash');

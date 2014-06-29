@@ -29,7 +29,14 @@ State.Phase1.prototype = {
     update: function(){
         "use strict";
         Config.global.screen.resize(this.game); 
+		
+		this.collisionFloor();
 
 		this.control.update();
-    }
+    },
+    collisionFloor : function(){
+        if (this.player.alive && this.player.y > game.world.height - this.player.height){
+			this.game.state.start('GameOver');
+        }
+    },	
 };

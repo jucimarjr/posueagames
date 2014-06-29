@@ -15,7 +15,7 @@ State.Level1Preloader.prototype = {
                 'assets/spritesheets/seaurchin_80-40.png', 40, 40);
         this.game.load.spritesheet('lifedrop',
                 'assets/spritesheets/water_200-40.png', 40, 40);
-        this.game.load.spritesheet('crab','assets/spritesheets/crab_150-69.png', 150, 69);
+        this.game.load.spritesheet('crab','assets/spritesheets/crab_160-80.png', 160, 80);
         this.game.load.spritesheet('energy','assets/spritesheets/energy_200-40.png', 40, 40);
         this.game.load.spritesheet('sundrop',
                 'assets/spritesheets/sunscreendrop_200-40.png', 40, 40);
@@ -45,9 +45,9 @@ State.Level1Preloader.prototype = {
 //        this.game.load.image('strawtipright',
 //                'assets/images/strawtipright_15-20.png');
         this.game.load.image('smoke', './assets/images/smoke_32-32.png');
-        this.game.load.audio('jump','assets/waterDrop.mp3');
-        this.game.load.audio('main','assets/gotaMain.mp3');
-        this.game.load.audio('powup','assets/gotaPowerUp.mp3');
+        this.game.load.audio('jump','assets/waterDrop.ogg');
+        this.game.load.audio('main','assets/gotaMain.ogg');
+        this.game.load.audio('powup','assets/gotaPowerUp.ogg');
     },
     create: function() {
         "use strict";

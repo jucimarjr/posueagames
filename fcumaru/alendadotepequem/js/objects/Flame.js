@@ -24,13 +24,12 @@ Flame.prototype = {
 
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.flame, Phaser.Physics.ARCADE);
-		this.flame.body.acceleration.y = 100;
+		this.flame.body.allowGravity = false;
 
 		// para no limite inferio da tela
 		this.flame.body.collideWorldBounds = true;
 		// diminui o espaco do deslocamento do espelhamento
 		this.flame.anchor.setTo(.5, .5);
-		this.flame.body.gravity.y = 150;
 	},
 	update : function(layer) {
 		"use strict";
@@ -64,15 +63,15 @@ Flames.prototype = {
 	create : function() {
 		"use strict";
 		
-		this.pop(1770, 1560);
-		this.pop(1830, 1560);
-		this.pop(1890, 1560);
-		this.pop(1950, 1560);
+		this.pop(1770, 1770);
+		this.pop(1830, 1770);
+		this.pop(1890, 1770);
+		this.pop(1950, 1770);
 		
-		this.pop(2730, 1500);
-		this.pop(2790, 1500);
-		this.pop(2850, 1500);
-		this.pop(2910, 1500);
+		this.pop(2730, 1710);
+		this.pop(2790, 1710);
+		this.pop(2850, 1710);
+		this.pop(2910, 1710);
 	},
 	update : function(layer) {
 		"use strict";

@@ -1,8 +1,3 @@
-var GOAL_X = 420;
-var GOAL_Y = 400;
-var GOAL_WIDTH = 80;
-var GOAL_HEIGHT = 80;
-
 var HERO_OF_POWER = "HERO_OF_POWER";
 var HERO_OF_ROPE = "HERO_OF_ROPE";
 var HERO_OF_STICK = "HERO_OF_STICK";
@@ -55,9 +50,6 @@ Heroes.prototype = {
 		"use strict";
 		for (var i = 0; i < this.heroes.length; i++) {
 			this.heroes[i].update(layer, enemies);
-		}
-		if (this.heroes[this.index].isGoalIn()) {
-			this.game.state.start('YouWin');
 		}
 	},
 	switchHero : function() {
