@@ -17,7 +17,7 @@ State.Victory.prototype = {
 		this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.ENTER]);
 		
 		var style = { font: '40px "04B_03__"', fill: "#FFFFFF" };
-		var x = 498, y = 393;
+		var x = 498, y = 395;
 		var textHighscore ;
 		var text;
 		
@@ -37,7 +37,7 @@ State.Victory.prototype = {
 		text = this.game.add.text(x, y, textHighscore, style);
 		text.anchor.setTo(0.5, 0.5);  
 
-		this.game.add.button(475, 400, 'twitterbird', this.tweetscore, this);
+		this.game.add.button(475, 406, 'twitterbird', this.tweetscore, this);
 		
 		// this.tweetscore();
 
