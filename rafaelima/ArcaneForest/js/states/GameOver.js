@@ -11,8 +11,8 @@ State.GameOver.prototype = {
 	},
 	create: function () {
 		"use strict";
-		this.musicGameOver = this.game.add.audio(Config.game.audio.gameOver.dir);
-		this.musicGameOver.play();
+		musicGameOver = this.game.add.audio(Config.game.audio.gameOver.key);
+		musicGameOver.play();
 
 		this.game.add.sprite(Config.gameOver.x, Config.gameOver.y, 'gameover');
 		this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.ENTER, Phaser.Keyboard.M]);
@@ -43,9 +43,18 @@ State.GameOver.prototype = {
 		"use strict";
 		Config.global.screen.resize(this.game);
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+			if(musicGameOver != null){
+				musicGameOver.pause();
+				musicGameOver = null;
+			}
 			this.game.state.start('Game');
+			
 		}else if (this.game.input.keyboard.isDown(Phaser.Keyboard.M)){
 			//this.game.state.restart(true, true);
+			if(musicGameOver != null){
+				musicGameOver.pause();
+				musicGameOver = null;
+			}
 			this.game.state.start('Menu');
 		}
 	}
