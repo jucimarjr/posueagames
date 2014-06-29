@@ -46,7 +46,6 @@ State.Fase1.prototype = {
 
 	preload: function () {
 		//Agora carrega no GameSplash para não gerar delay
-		
 		this.soundMusic =  game.add.audio('soundGame',1,true);
 		this.soundGetSheet = game.add.audio('soundGetSheet',1,true);
 		this.soundGameOver = game.add.audio('soundGameOver',1,true);
@@ -85,7 +84,6 @@ State.Fase1.prototype = {
 	    this.tracajet.body.drag.x = 200;
 		this.tracajet.anchor.setTo(.5,.5);
 	    this.tracajet.body.gravity.y = 30;
-		this.tracajet.body.setSize(35, 78,0,0);
 		this.tracajet.isImmortal = false;
 	    game.camera.follow(this.tracajet);
 

@@ -15,32 +15,36 @@ State.Fase2= function (game) {
     this.nameEnemy = 'Enemies';
 	this.nameFruits = 'frutas';
 	this.fruits;
+	this.cursors;
+	this.speed = 90;
+	this.imgLife;
+	this.txLife;
+	this.contJump = 0;
     
 };
 
 State.Fase2.prototype = {
 
     preload: function () {
-        game.load.tilemap('mapa','assets/2_Fase/2aFaseJson.json',null,Phaser.Tilemap.TILED_JSON);
-    	//game.load.tilemap('mapa','assets/2_Fase/mapa_fase2b.json',null,Phaser.Tilemap.TILED_JSON);
-        game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height); // 200x160 eh o tamanho do frame da sprite
-        game.load.spritesheet('monkey', "assets/2_Fase/monkey_spritesheet_240-80.png",40,40);
-		game.load.spritesheet('assets2', "assets/2_Fase/assets_2.png",40,40);
-        //game.load.image('star',  Config.game.star.dir);
-        //game.load.image('block', Config.game.tileset.dir);
-        game.load.image('bg',Config.game.fase2.background);
-        game.load.image('tilesetPlataforma','assets/2_Fase/p1_480-40.png');
-		game.load.image('tilesetPlataforma2','assets/2_Fase/p2_480-40.png');
-		game.load.image('tilesetPlataforma3','assets/2_Fase/p3_40-480.png');
-		game.load.image('tilesetPlataforma4','assets/2_Fase/p4_40-480.png');
+        game.load.tilemap('mapa','assets/2_fase/2aFaseJson.json',null,Phaser.Tilemap.TILED_JSON);
+        game.load.spritesheet('monkey', "assets/2_fase/monkey_spritesheet_240-80.png",40,40);
+		game.load.spritesheet('assets2', "assets/2_fase/assets_2.png",40,40);
+        game.load.image('bgF2',Config.game.fase2.background);
+        game.load.image('tilesetPlataforma','assets/2_fase/p1_480-40.png');
+		game.load.image('tilesetPlataforma2','assets/2_fase/p2_480-40.png');
+		game.load.image('tilesetPlataforma3','assets/2_fase/p3_40-480.png');
+		game.load.image('tilesetPlataforma4','assets/2_fase/p4_40-480.png');
 		
+		//Nao vao precisar ser carregadas denovo
+		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
+		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height); // 200x160 eh o tamanho do frame da sprite
 
     },
 
     create: function () {
 
-        var bg = game.add.tileSprite(0, 0, game.cache.getImage('bg').width,game.cache.getImage('bg').height, 'bg');
-
+        var bgF2 = game.add.tileSprite(0, 0, game.cache.getImage('bgF2').width,game.cache.getImage('bgF2').height, 'bgF2');
+        bgF2.fixedToCamera = false;
 
         game.physics.startSystem(Phaser.Game.ARCADE);
 
@@ -56,102 +60,78 @@ State.Fase2.prototype = {
         this.layer.resizeWorld(); //seta o mundo com as alterações feitas
         this.map.setCollisionBetween(1,48, true,'Camada de Tiles 1'); // 0 espaco vazio 1 em diante os tiles do tileset
 
-        //funcao que cria os objetos
-        //group = game.add.group();
-       /*  group.enableBody = true;
-        this.map.createFromObjects('Enemies',1, 'monkey', 0,true,false, group);
-        group.forEach(function (coxa){ coxa.body.allowGravity = false}, this); // faz com que as coxas nao caiam */
-
 
         this.tracajet = game.add.sprite(100, game.world.height-100, 'tracajet');
         this.tracajet.animations.add('walk',[0,1,2,1],6,false);
-        this.tracajet.animations.add('swim',[5,6,7],6,false);
-        this.tracajet.animations.add('startSwim',[3,4],4,true);
         game.physics.enable(this.tracajet, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
-
-        this.tracajet.body.acceleration.y = 20;
+		this.tracajet.body.setSize(35, 78,0,0);
+        this.tracajet.body.acceleration.y = 100;
         this.tracajet.body.collideWorldBounds = true;
-        //tracajet.body.drag.x = 700;
+        this.tracajet.body.drag.x = 150;
         this.tracajet.anchor.setTo(.5,.5);
-        //tracajet.body.gravity.y = 150;
         game.camera.follow(this.tracajet);
-
-        //    star = game.add.group();
-        //    star.create( 500, 50, 'osso');
-        //    game.physics.enable(star, Phaser.Physics.ARCADE);
-        //
-        //    plataform = game.add.group();
-        //    plataform.enableBody = true;
-
-        //    //cria um bloco para o dino ficar em cima
-        //    var block = plataform.create(350, 250, 'bloco');
-        //    block.body.immovable = true;
         
         //Group monkeys
-		console.log('entro aki!');
 	    this.enemies =  this.game.add.group();
 		this.enemies.enableBody = true;
 		this.map.createFromObjects(this.nameEnemy,49, 'monkey', 0, true, false, this.enemies);
-		//Configura monkeys
-		console.log(this.enemies);
-		
 		this.enemies.forEach(this.setupEnemies,this);
         
-		//Groups folhas
+		//Groups frutas
 		this.fruits = this.game.add.group();
 		this.fruits.enableBody  = true;
 		this.map.createFromObjects(this.nameFruits,62,'assets2',1,true,false,this.fruits);
 		
 		
-		game.physics.arcade.collide(this.tracajet, this.layer);
-		game.physics.arcade.collide(this.enemies,this.layer);
-	    game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
-	    //game.physics.arcade.overlap(this.sheets,this.tracajet,this.increaseScore,null,this);
-	    //game.physics.arcade.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
-	    this.updateTracajet();
-	    this.updateEnemies();
-	   // this.updateScorePosition();
-		///
+		//Cursor
+		this.cursors = this.game.input.keyboard.createCursorKeys();
+
+		//Score
+		var moduloPositionX = Math.abs(this.game.world.position.x);
+		var moduloPositionY = Math.abs(this.game.world.position.y); 
+		this.txtScore = this.game.add.text(moduloPositionX  + this.game.width - 100,moduloPositionY + 20, "", {
+			font: "20px Arial",
+			fill: "#ff0044",
+			align: "left"
+		});
+		this.txtScore.setText("Score : " + Config.game.score.score);
+
+		//Life
+		this.imgLife = game.add.image(moduloPositionX  + 100,moduloPositionY,'imgLife');
+		this.txLife = this.game.add.text(moduloPositionX + 130,moduloPositionY + 20, "", {
+			font: "20px Arial",
+			fill: "#ff0044",
+			align: "left"
+		});
+		this.txLife.setText("x " + Config.game.score.lifes);
+		this.game.input.keyboard.addCallbacks(this,this.changeGameState);
 
     },
 
 
     update: function () {
-
-        game.physics.arcade.collide(this.tracajet, this.layer);
-
-        game.physics.arcade.overlap(this.tracajet, this.star, this.tracajetEatStar,null,this);
-
-        if ( game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) { // vai para esquerda
-            this.tracajet.body.velocity.x = -100;
-            this.tracajet.animations.play('walk');
-            this.tracajet.scale.x = -1;
-        }
-        else if ( game.input.keyboard.isDown (Phaser.Keyboard.RIGHT) ) { // vai para direita
-            this.tracajet.body.velocity.x = 100;
-            this.tracajet.scale.x = +1;  // espelha se antes 1
-            this.tracajet.animations.play('walk');
-        }
-        else if ( game.input.keyboard.isDown (Phaser.Keyboard.UP) ) { // vai para cima
-            this.tracajet.body.velocity.y = -100;
-            //		tracajet.animations.play('jump');
-        }
-        else if ( game.input.keyboard.isDown (Phaser.Keyboard.DOWN) ) { // vai para cima
-            this.tracajet.body.velocity.y = 100;
-            //		tracajet.animations.play('jump');
-        }
-        else{
-            this.tracajet.animations.stop();
-            this.tracajet.frame = 0;
-        }
+    	game.physics.arcade.collide(this.tracajet, this.layer);
+    	game.physics.arcade.overlap(this.fruits,this.tracajet,this.increaseScore,null,this);
+    	game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
+	    this.updateTracajet();
+	    this.updateScorePosition();
+	    
     },
-
-    tracajetEatStar: function (dino, star)	{
-        this.star.kill();
-    },
+    updateScorePosition : function(){
+		var moduloPositionX = Math.abs(this.game.world.position.x) +  this.game.width -100;
+		var moduloPositionY = Math.abs(this.game.world.position.y) + 20; 
+		this.txtScore.x = moduloPositionX;
+		this.txtScore.y = moduloPositionY;
+		
+		this.imgLife.x = moduloPositionX - this.game.width + 105;
+		this.imgLife.y = moduloPositionY - 18;
+		
+		this.txLife.x =  moduloPositionX - this.game.width + 125;
+		this.txLife.y = moduloPositionY;
+	}
+    ,
     
     setupEnemies : function(monkey){
-		
 		monkey.animations.add('left',[0,1,2,3,4,5],10,true);
 		monkey.animations.add('right',[6,7,8,9,10,11],5,true);
 		game.physics.enable(monkey, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
@@ -178,72 +158,103 @@ State.Fase2.prototype = {
 		t.start();
 	},
 	updateTracajet : function(){
-		this.tracajet.body.velocity.x = 0;
-		var orientation = 0;
-		 if ( this.cursors.left.isDown) { // vai para esquerda
-	    	orientation = 1;
+		 
+		 if ( this.cursors.left.isDown && this.tracajet.body.onFloor()) { // vai para esquerda
 			this.tracajet.body.velocity.x = -this.speed;
-	    	this.tracajet.animations.play('walk');
 	    	this.tracajet.scale.x = -1;
-
-	    	if(!this.tracajet.body.onFloor()){
-	    		this.tracajet.body.setSize(35, 50,0,0);
-	    		this.game.add.tween(this.tracajet).to({
-                                angle : -70
-                        }, 20).start();
-	    	}
-
+	    	this.tracajet.animations.play('walk');
+	    }else if(this.cursors.left.isDown && !this.tracajet.body.onFloor() && this.contJump < 5){	    	
+	    	this.tracajet.body.velocity.x = -120;
+	    	this.tracajet.scale.x = -1;
+	    	this.tracajet.animations.play('walk');
+	    	this.contJump++;
 	    }
-	    else if (this.cursors.right.isDown ) { // vai para direita
-			
+
+	    if (this.cursors.right.isDown && this.tracajet.body.onFloor()) { // vai para direita
 	    	this.tracajet.body.velocity.x = this.speed;
-	    	this.tracajet.scale.x = +1;  // espelha se antes 1
+	    	this.tracajet.scale.x = 1;  // espelha se antes 1
 	    	this.tracajet.animations.play('walk');
-
-	    	if(!this.tracajet.body.onFloor()){
-	    		this.tracajet.body.setSize(35, 50,0,0);
-	    		
-	    		this.game.add.tween(this.tracajet).to({
-                                angle : 70
-                        }, 20).start();
-	    	}
+	    	this.contJump++;
+	    }else if(this.cursors.right.isDown && !this.tracajet.body.onFloor() && this.contJump < 5){	    	
+	    	this.tracajet.body.velocity.x = 120;
+	    	this.tracajet.scale.x = 1;
+	    	this.tracajet.animations.play('walk');
+	    	this.contJump++;
 	    }
-	    else if (this.cursors.up.isDown ) { // vai para cima
-	    	this.tracajet.body.velocity.y = -this.speed;
+	    
+	    if (this.cursors.up.isDown && this.tracajet.body.onFloor()) { // vai para cima
+	    	this.tracajet.body.velocity.y = -190;
 			this.tracajet.animations.play('walk');
-			if(!this.tracajet.body.onFloor()){
-				this.tracajet.body.setSize(35, 50,0,0);
-				this.game.add.tween(this.tracajet).to({
-                                angle : 0
-                        }, 20).start();
-			}
+			this.contJump = 0;
 	    }
-	    else if (this.cursors.down.isDown ) { // vai para cima
-	    	this.tracajet.body.velocity.y = this.speed;
-	    	this.tracajet.animations.play('walk');
-			
-			if(!this.tracajet.body.onFloor()){
-				this.tracajet.body.setSize(35, 50,0,0);
-				this.game.add.tween(this.tracajet).to({
-                                angle : -180
-                        }, 20).start();
+	    
+	},
+	increaseScore : function(tracajet,sheet){
+		sheet.kill();
+		Config.game.score.score += 1;
+		this.txtScore.setText("Score : " + Config.game.score.score);
+	},
+	gameOver: function(obj){
+		if(obj != undefined && obj.key != 'jacare' && !this.tracajet.isImmortal){
+			if(Config.game.score.lifes == 0){
+				this.tracajet.kill();
+				var moduloPositionX = Math.abs(game.world.position.x);
+				var moduloPositionY = Math.abs(game.world.position.y); 
+				var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
+					font: "48px Arial",
+					fill: "#ff0044",
+					align: "left"
+				});
+				dieText.setText("GAME OVER");
 			}else{
-				this.game.add.tween(this.tracajet).to({
-                                angle : 0
-                        }, 20).start();
+				this.tracajet.isImmortal = true;
+				Config.game.score.lifes--;
+				this.txLife.setText("x " + Config.game.score.lifes);
+				this.tracajet.alpha = 0;
+				this.twenLife = this.game.add.tween(this.tracajet).to( { alpha: 1 }, 100, Phaser.Easing.Linear.None, true, 0, 50, true);
+				this.twenLife.start()
+				this.game.time.events.add(Phaser.Timer.SECOND * 5, this.updateIsImmortal, this);
 			}
-	    }
-	    else{
-	    	this.tracajet.body.setSize(35, 78,0,0);
-	    	this.tracajet.animations.stop();
-	    	this.tracajet.frame = 0;
-			if(this.tracajet.body.onFloor()){
-				this.game.add.tween(this.tracajet).to({
-                                angle : 0
-                        }, 20).start();
+		}
+	},
+	updateIsImmortal : function(){
+			this.twenLife.stop();
+			this.tracajet.alpha = 1;
+			this.tracajet.isImmortal = false;
+	},
+	changeGameState : function(event){
+		if(event.keyCode === Phaser.Keyboard.ENTER){
+			if(this.game.paused){
+				this.resumeGame();
+			}else{
+				this.pauseGame();
 			}
-
-	    }
+		}else if(event.keyCode === Phaser.Keyboard.P){
+			if(this.game.paused){
+				this.resumeGame();
+			}else{
+				this.pauseGame();
+			}
+		}
+	
+	},
+	pauseGame : function (){
+		this.game.paused = true;
+		var moduloPositionX = Math.abs(this.game.world.position.x);
+		var moduloPositionY = Math.abs(this.game.world.position.y); 
+		this.txtPause = this.game.add.text(moduloPositionX  + game.width/3 + 50,moduloPositionY + game.height/3 + 50, "", {
+			font: "50px Arial",
+			fill: "#ff0044",
+			align: "right"
+		});
+		this.txtPause.setText("Paused");
+	},
+	resumeGame : function (event){
+		if(this.game.paused){
+			this.txtPause.destroy();
+			this.game.paused = false;
+		}
 	}
+
 
 };

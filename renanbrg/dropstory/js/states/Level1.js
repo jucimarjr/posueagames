@@ -85,7 +85,7 @@ State.Level1.prototype = {
 //		this.setupStrawHorizontal(2010, 510);
 //		this.setupStrawDiagonal(2720, 270);
 		this.setupMolecule();
-		this.setupPlayer(1600, 100);
+		this.setupPlayer(3900, 100);
 		this.setupSmokeEmitter(1550, this.game.height-80);
 
         this.hud.create();
@@ -253,6 +253,13 @@ State.Level1.prototype = {
 	    	glassPolygon[i].setMaterial(this.groundMaterial);
 	    }
 
+	    this.crabs = game.add.group();
+		this.crabs.enableBody = true;
+		this.crabs.physicsBodyType = Phaser.Physics.P2JS;
+	    this.map.createFromObjects('crab-objects', 275, 'crab', 0, true, false,
+	            this.crabs);
+	    this.crabs.forEach(this.setupCrab, this);
+
 	    this.urchins = game.add.group();
 	    this.map.createFromObjects('seaurchins', 202, 'urchin', 0, true, false,
 	            this.urchins);
@@ -320,20 +327,18 @@ State.Level1.prototype = {
 //	},
 	setupCrab: function() {
 		// create crabs
-        this.crabs = game.add.group();
-		this.crabs.enableBody = true;
-		this.crabs.physicsBodyType = Phaser.Physics.P2JS;
-		this.crabs.create(this.game.width-180, this.game.height-80-69, 'crab');
-        this.crabs.create(this.game.width, this.game.height-80-69, 'crab');
-        this.crabs.create(4480, this.game.height-80-69, 'crab');
+//        this.crabs = game.add.group();
+//		this.crabs.create(this.game.width-180, this.game.height-80-69, 'crab');
+//        this.crabs.create(this.game.width, this.game.height-80-69, 'crab');
+//        this.crabs.create(4480, this.game.height-80-69, 'crab');
 		for (var i = 0; i < this.crabs.length; i++) {
-			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);
 			this.crabs.getAt(i).body.fixedRotation = true;
+			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);
 			this.crabs.getAt(i).body.setMaterial(this.crabMaterial);
 			this.crabs.getAt(i).animations.add('walkL', [0, 1, 2], 10, true);
 			this.crabs.getAt(i).animations.add('walkR', [0, 1, 2], 10, true);
 			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG,
-                    this.groundCG, this.hotsandCG]);
+                    this.groundCG]);
 		}
 		this.crabs.getAt(0).body.moveLeft(400);
 		this.crabs.getAt(1).body.moveRight(400);

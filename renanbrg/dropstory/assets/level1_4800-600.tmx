@@ -39,9 +39,12 @@
  <tileset firstgid="270" name="sunscreendrop_200-40" tilewidth="40" tileheight="40">
   <image source="spritesheets/sunscreendrop_200-40.png" width="200" height="40"/>
  </tileset>
+ <tileset firstgid="275" name="crab_160-80" tilewidth="160" tileheight="80">
+  <image source="spritesheets/crab_160-80.png" width="480" height="80"/>
+ </tileset>
  <layer name="hotsandlayer" width="120" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt0CEOADAIBEHS/z8aWUcKhoqZZP3lIgAAAAAAgI5TxFX9pL97sb1R8xKDHQHL
+   eJzt0LEJAAAIwDDx/6Md3QQ3kQT6QCMAAAAAAICNHKJNn3Q7fivAzgDt
   </data>
  </layer>
  <layer name="irregularlayer" width="120" height="15">
@@ -51,12 +54,17 @@
  </layer>
  <layer name="mainlayer" width="120" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt08sKgDAMRNGKWh///8EGuixUW6KY4R6YbQNJJyUAAHzNlsWyWrLQLBSbZbccllNoFgo6pY1OaaO/tdZOvPbV+87o3Mj9fetvtnbita/ed0bnRu5v5L/5Fa8dRf4nyrzuQpf+ibvcmx4EcXFfbRekkgKD
+   eJzt09kKwCAMRFG7L///wQ34WLAqaemEe2BeDSROSgAA+Joss2WxrIFmIdssu+WwnIFmIaNTsdGp2OjvXWknXvtqfad3rnJ/3/qbpZ147av1nd65yv1V/ptf8dqR8j+JzOsudOmfuMuzoSLQVXPfkcjmAmbhA2E=
   </data>
  </layer>
  <objectgroup name="seaurchins" width="120" height="15">
-  <object gid="202" x="3359" y="519"/>
-  <object gid="202" x="3601" y="521"/>
+  <object gid="202" x="3359" y="558"/>
+  <object gid="202" x="3601" y="560"/>
+ </objectgroup>
+ <objectgroup name="crab-objects" width="120" height="15">
+  <object gid="275" x="600" y="565"/>
+  <object gid="275" x="1120" y="564"/>
+  <object gid="275" x="4377" y="561"/>
  </objectgroup>
  <objectgroup name="glass-polygon" width="120" height="15">
   <object x="4004" y="262">

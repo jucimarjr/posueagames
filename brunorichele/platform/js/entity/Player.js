@@ -29,7 +29,7 @@ Player.prototype = {
     },
 
     create : function() {
-        this.player = this.game.add.sprite(70, 1600, 'player');
+        this.player = this.game.add.sprite(50, 1600, 'player');
         // animations
         //this.player.animations.add('idle', PlayerProperties.idle, 10, true);
         this.player.animations.add('run', PlayerProperties.run, 10, true);
