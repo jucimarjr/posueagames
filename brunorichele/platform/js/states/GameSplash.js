@@ -18,10 +18,13 @@ State.GameSplash = function (game) {
 State.GameSplash.prototype = {
 	preload: function () {
 		"use strict";
-		var sprite = this.game.add.sprite(GameSplashProperties.x, GameSplashProperties.y, 'game-splash'); // carrega o bg
-		this.progress(); // inicia a animacao do splash
+		var sprite = this.game.add.sprite(GameSplashProperties.x, GameSplashProperties.y, 'game-splash'); // Carregar bg
+		
+		this.bar = this.game.add.sprite((1920 - 500)/2, (1080 - 300)/2, 'progress-bar'); // Carregar animacao do splash
+        this.bar.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7], 5, true);
+        this.bar.animations.play('play');	
+		
 		this.game.load.onLoadComplete.add(function () {
-			this.game.add.tween(sprite).to({alpha : 0}, GameSplashProperties.millis, Phaser.Easing.Linear.None).start(); 
 			setTimeout(function () {this.game.state.start('Menu');}, GameSplashProperties.millis);
 		}, this);
 
@@ -50,12 +53,7 @@ State.GameSplash.prototype = {
 		Phase1.Enemy.game = this.game;
 		Phase1.Enemy.init();	
 		
-				this.player.preload();	
-	},
-	progress : function( ) {
-		this.bar = this.game.add.sprite((1920 - 500)/2, (1080 - 300)/2, 'progress-bar');
-        this.bar.animations.add('play', [0, 1, 2, 3, 4, 5, 6, 7], 5, true);
-        this.bar.animations.play('play');		
+		this.player.preload();	
 	},
 	create: function () {
 		"use strict";
