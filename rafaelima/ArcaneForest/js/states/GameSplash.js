@@ -31,6 +31,7 @@ State.GameSplash.prototype = {
 		
 		//Game
 		this.game.load.audio(Config.game.audio.bg.key, Config.game.audio.bg.dir);
+		this.game.load.audio(Config.game.audio.gameOver.key, Config.game.audio.gameOver.dir);
 		this.game.load.audio(Config.game.audio.attack.key, Config.game.audio.attack.dir);
 		
 		this.game.load.image('bg1', Config.game.dirBg1);

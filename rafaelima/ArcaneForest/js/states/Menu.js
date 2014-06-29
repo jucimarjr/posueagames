@@ -8,6 +8,7 @@ var music;
 var selectorPlay;
 var selectorCredit;
 var isPlay;
+var musicGameOver;
 
 State.Menu.prototype = {
 	preload: function () {

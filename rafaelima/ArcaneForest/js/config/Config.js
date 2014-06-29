@@ -290,6 +290,10 @@ Config.game = {
 		attack: {
 			key: 'attackSound',
 			dir: Config.audio + 'sword_attack.mp3',
+		},
+		gameOver: {
+			key: 'gameOver',
+			dir: Config.audio + 'game_over.mp3',
 		}
 		
 	},

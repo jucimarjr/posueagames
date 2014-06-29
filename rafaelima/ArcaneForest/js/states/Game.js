@@ -32,6 +32,11 @@ State.Game.prototype = {
         "use strict";
         this.resetVars();
         
+		if(music == null){
+			music = this.game.add.audio(Config.game.audio.bg.key, 1, true);
+			music.play('', 0, 1, true);
+		}
+		
         this.gameState = STATE_PLAY;
         this.healthBar = [];
         this.timeImune = 0;
@@ -176,6 +181,7 @@ State.Game.prototype = {
     },
     
     resetVars: function(){
+    	
     	imgPlayerFall = null;
     	cursors = null; attackButton = null; pauseButton = null;
     	map = null; transparentWall = null; collects = null; layer = null;
@@ -432,7 +438,6 @@ State.Game.prototype = {
 		 bar2.kill();
 		 monsters.removeAll();
 		 collects.removeAll();
-//		 obstacles.removeAll();
 
 		 this.putBarRotate();
 		 

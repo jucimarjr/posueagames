@@ -11,6 +11,9 @@ State.GameOver.prototype = {
 	},
 	create: function () {
 		"use strict";
+		this.musicGameOver = this.game.add.audio(Config.game.audio.gameOver.dir);
+		this.musicGameOver.play();
+
 		this.game.add.sprite(Config.gameOver.x, Config.gameOver.y, 'gameover');
 		this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.ENTER, Phaser.Keyboard.M]);
 		
@@ -18,6 +21,11 @@ State.GameOver.prototype = {
 		var x = 480, y = 347;
 		var textHighscore;
 		var text;
+		
+		if(music!=null){
+			music.pause();
+			music = null;
+		}
 		
 		if (score < 10){
 			textHighscore = "00:0" + score.toFixed(0);
