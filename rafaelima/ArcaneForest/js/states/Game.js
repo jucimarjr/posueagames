@@ -3,6 +3,7 @@ State.Game = function(game) {
 	this.game = game;
 };
 
+//Create first map
 var layer, player, map, transparentWall, collects, rotate, monster, monsters, timerBV, timerMonst;
 var itemsTaken, flagId, isGameRotate, idPlayer;
 var imgPlayerFall, contFrameGif;
@@ -50,6 +51,7 @@ State.Game.prototype = {
         this.getPlayBarOffset[0] = true;
         this.getPlayBarOffset[1] = true;
 		
+        
         // attack sound
         this.attackSound = this.game.add.audio(Config.game.audio.attack.key);
         
@@ -207,6 +209,7 @@ State.Game.prototype = {
         timerBV = 0;
         isBlinkPlayer = false;
 		score = 0;
+        Config.game.player.items = [];
 		
     },
     
@@ -336,7 +339,7 @@ State.Game.prototype = {
             // handle bars
             this.updateHandleBars();
 			
-			score += 0.035;
+			score += 0.0166;
             var timerG = this.scoreTransforme(score);
 			labelScore.text = timerG;  //sem casa decimal
             
@@ -736,13 +739,11 @@ State.Game.prototype = {
     	
     	if(body1.sprite.name == 'monster') {
     		body1.sprite.kill();
-    	}
-    	else if(body2.sprite.name == 'monster') {
+    	}else if(body2.sprite.name == 'monster') {
     		body2.sprite.kill();
     	}else if(body1.sprite.name == 'monsterBoss') {
             body1.sprite.damage(1);
-        }
-        else if(body2.sprite.name == 'monsterBoss') {
+        }else if(body2.sprite.name == 'monsterBoss') {
             body2.sprite.damage(1);
         }
     	
@@ -765,60 +766,59 @@ State.Game.prototype = {
     	player.visible;
     },
     hitMonsters: function (body1, body2) {
-    	
+    	var verifySpriteMonster = false;
     	var monster;
     	if (isGameRotate){
-    		if(body1.sprite.name == "monsterBoss")
+    		if(body1.sprite.name == "monsterBoss"){
         		monster = body1.sprite;
-        	else
+        		verifySpriteMonster = true;
+        	}else if(body2.sprite.name == "monsterBoss"){
         		monster = body2.sprite;
+        		verifySpriteMonster = true;
+        	}
     	} else {
-	    	if(body1.sprite.name == "monster")
-	    		monster = body1.sprite;
-	    	else 
-	    		monster = body2.sprite;
+	    	if(body1.sprite.name == "monster"){
+        		monster = body1.sprite;
+        		verifySpriteMonster = true;
+        	}else if(body2.sprite.name == "monster"){
+        		monster = body2.sprite;
+        		verifySpriteMonster = true;
+        	}
     	}
     	
     	
     	var timeNow = new Date().getTime();
     	
-    	if(timeNow >= this.timeImune) { // check if player is time immune
-	    	// lose life
-	    	this.playerLifes--;
-	    	
-	    	this.updateHealth();
-	    	
-	    	this.timeImune = timeNow + Config.game.player.damageCooldown;
-	    	
-	    	if(!isBlinkPlayer && this.playerLifes > 0){
-		    	timerShine = this.game.time.create(false);
-		    	timerShine.start();
-	
-		    	timerShine.onComplete.add(this.normalPlayer, this);
-	
-		    	timerShine.repeat(1, 61, this.shinePlayer, this);
-	    	}
-	    	// move player away
-	    	if(this.playerCollider.body.x < monster.body.x) {
-	    		this.playerCollider.body.force.x = -2000;
-	    		//this.playerCollider.body.moveLeft(2000);
-	    		//this.playerCollider.body.moveForward(2000);
-	    	}
-	    	else {
-	    		this.playerCollider.body.force.x = 2000;
-//	    		this.playerCollider.body.moveUp(200);
-//	    		this.playerCollider.body.moveRight(2000);
-	    		//this.playerCollider.body.moveBackward(2000);
-	    	}
-	    	
-	    	if(this.playerLifes == 0) {
-	    		
-	    		this.gameState = STATE_GAMEOVER;
-	    		
-	        	player.kill();
-	        	this.playerCollider.kill();
-	        	
-	        	// TODO: game over screen
+    	if(verifySpriteMonster){
+	    	if(timeNow >= this.timeImune) { // check if player is time immune
+		    	// lose life
+		    	this.playerLifes--;
+		    	
+		    	this.updateHealth();
+		    	
+		    	this.timeImune = timeNow + Config.game.player.damageCooldown;
+		    	
+		    	if(!isBlinkPlayer && this.playerLifes > 0){
+			    	timerShine = this.game.time.create(false);
+			    	timerShine.start();
+		
+			    	timerShine.onComplete.add(this.normalPlayer, this);
+		
+			    	timerShine.repeat(1, 61, this.shinePlayer, this);
+		    	}
+		    	// move player away
+		    	if(this.playerCollider.body.x < monster.body.x) {
+		    		this.playerCollider.body.force.x = -2000;
+		    	}else {
+		    		this.playerCollider.body.force.x = 2000;
+		    	}
+		    	
+		    	if(this.playerLifes == 0) {
+		    		this.gameState = STATE_GAMEOVER;
+		    		
+		        	player.kill();
+		        	this.playerCollider.kill();
+		    	}
 	    	}
     	}
     	

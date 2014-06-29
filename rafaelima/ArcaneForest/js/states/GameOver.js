@@ -28,15 +28,7 @@ State.GameOver.prototype = {
 		}
 		
 		textHighscore = this.scoreTransformeGO(score);
-//		if (score < 10){
-//			textHighscore = "00:0" + score.toFixed(0);
-//		} else{
-//			if (score >= 60){
-//			   var min = (score/60);
-//			   var seg = (min - min.toFixed(0) )*100;
-//				textHighscore =  (min<10?'0':'') + min.toFixed(0) + ':'  + (seg.toFixed(0)==0?'0':'') + seg.toFixed(0) ;
-//			}else textHighscore =  '00:' + score.toFixed(0) ;
-//		}
+
 		text = this.game.add.text(x, y, "You survived little more than " + textHighscore + " min in the forest...", style);
 		text.anchor.setTo(0.5, 0.5);
 	},

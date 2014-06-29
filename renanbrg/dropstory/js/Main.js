@@ -12,4 +12,4 @@ game.state.add('howtoplay-state', State.HowToPlay);
 game.state.add('credits-state', State.Credits);
 game.state.add('boot-state', State.Boot);
 
-game.state.start('boot-state');
+game.state.start('level1preloader-state');

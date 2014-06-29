@@ -29,7 +29,7 @@ State.SponsorSplash.prototype = {
         //How to play image
         this.game.load.image('how-to-play', Config.howToPlay.dir);
         this.game.load.image('progress-bar', Config.gameSplash.dir.bar);
-        this.game.load.audio('som-inicio', 'assets/gota-tela-inicio.wav');
+        this.game.load.audio('som-inicio', 'assets/gota-tela-inicio.mp3');
     },
     create: function () {
         "use strict";

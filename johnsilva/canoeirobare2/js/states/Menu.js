@@ -14,7 +14,7 @@ State.Menu.prototype = {
 		if(!this.menuMusic){
 			this.menuMusic = this.game.add.audio('menu-audio',1,true);
 			this.menuMusic.play('',0,1,true);
-		}else{
+		}else if(!this.menuMusic.isPlaying){
 			this.menuMusic.play();
 		}
 		background = this.game.add.sprite(Config.menu.x, Config.menu.y, 'menu-background');
