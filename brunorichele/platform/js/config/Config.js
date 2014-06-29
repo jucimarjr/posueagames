@@ -85,7 +85,7 @@ Config.menu = {
 
 //HowToPlay
 Config.howToPlay = {
-	dir: 'assets/images/HowToPlay_1920-1080.png',
+	dir: 'assets/images/tutorial_1920-1080.jpg',
 	x: 0,
 	y: 0
 };
