@@ -11,8 +11,8 @@ State.GameOver.prototype = {
 	},
 	create: function () {
 		"use strict";
-		this.musicGO = this.game.add.audio(Config.game.audio.gameOver.key);
-		this.musicGO.play();
+		musicGameOver = this.game.add.audio(Config.game.audio.gameOver.key);
+		musicGameOver.play();
 
 		this.game.add.sprite(Config.gameOver.x, Config.gameOver.y, 'gameover');
 		this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.ENTER, Phaser.Keyboard.M]);
