@@ -13,6 +13,7 @@
         this.layer = null;
         this.itemLayer = null;
         this.spineLayer = null;
+        this.escapeLayer = null;
 
         //player sprite
         this.player = null;
@@ -24,6 +25,7 @@
 
         //items collected
         this.itemCount = 0;
+        this.totalItems = 0;
 
         //level sound
         this.audioAsset = '';
@@ -35,6 +37,8 @@
 
         //HUD
         this.hud = null;
+
+        this.nextLevel = '';
     };
 
     Level.prototype = {
@@ -43,8 +47,8 @@
             this.game.physics.startSystem(Phaser.Game.ARCADE);
             this.game.time.deltaCap = 1/70;
 
-            var bg = this.game.add.tileSprite(0, 0, 960, 600, this.bgAsset);
-            bg.fixedToCamera = true;
+            this.bg = this.game.add.tileSprite(0, 0, 960, 600, this.bgAsset);
+            this.bg.fixedToCamera = true;
 
             this.map = this.game.add.tilemap(this.mapAsset);
             this.map.addTilesetImage('background', 'tileset');
@@ -52,14 +56,17 @@
             this.layer = this.map.createLayer('layer');
             this.itemLayer = this.map.createLayer('items');
             this.spineLayer = this.map.createLayer('spines');
+            this.escapeLayer = this.map.createLayer('escape');
 
             this.layer.resizeWorld();
             this.itemLayer.resizeWorld();
             this.spineLayer.resizeWorld();
+            this.escapeLayer.resizeWorld();
 
             this.map.setCollisionBetween(0, 15, true, 'layer');
             this.map.setCollisionBetween(0, 15, true, 'items');
             this.map.setCollisionBetween(0, 15, true, 'spines');
+            this.map.setCollisionBetween(0, 15, true, 'escape');
 
             this.player = new Player(this.game);
             this.player.create(this.playerX, this.playerY);
@@ -81,6 +88,8 @@
             this.hud = new HUD(this.game);
             this.hud.init();
 
+            this.itemCount = 0;
+
             this.game.camera.follow(this.player.sprite, Phaser.Camera.FOLLOW_PLATFORMER);
         },
 
@@ -101,37 +110,47 @@
                 this.game.physics.arcade.overlap(this.player.sprite, this.enemies.shurikens, this.die, null, this);
                 this.game.physics.arcade.overlap(this.player.sprite, this.enemies.sprites, this.die, null, this);
                 this.game.physics.arcade.overlap(this.player.sprite, this.spineLayer, this.die, null, this);
+                this.game.physics.arcade.overlap(this.player.sprite, this.escapeLayer, this.startNextLevel, null, this);
             }
 
             this.enemies.update();
             this.player.update();
         },
 
-        createEnemies: function () {
-            this.enemies.createNinjaIdle(40*26, 40*38);
-            this.enemies.createNinjaIdle(40*51, 40*38);
-            this.enemies.createNinjaIdle(40*22, 40*26);
-            this.enemies.createNinjaIdle(40*10, 40*23);
-            this.enemies.createNinjaIdle(40*31, 40*18);
-            this.enemies.createNinjaIdle(40*8, 40*12);
-            this.enemies.createNinjaIdle(40*17, 40*10);
-            this.enemies.createNinjaIdle(40*27, 40*5);
-            this.enemies.createNinjaIdle(40*47, 40*9);
-            this.enemies.createNinjaIdle(40*51, 40*7);
+        shutdown: function () {
+            this.bg.destroy();
+            this.map.destroy();
 
-            this.enemies.createNinjaWalker(40*37, 40*41);
-            this.enemies.createNinjaWalker(40*46, 40*21);
-            this.enemies.createNinjaWalker(40*28, 40*24);
+            this.layer.destroy();
+            this.itemLayer.destroy();
+            this.spineLayer.destroy();
+            this.escapeLayer.destroy();
 
-            this.enemies.createNinjaDash(40*12, 40*6);
-            this.enemies.createNinjaDash(40*60, 40*7);
-            this.enemies.createNinjaDash(40*31, 40*10);
+            this.player.sprite.destroy();
+
+            this.enemies.sprites.destroy();
+
+            this.audio.stop();
         },
 
         collectItem: function (player, tile) {
             this.hud.updateItemsCollected(1)
             this.itemCount++;
             this.map.removeTile(tile.x, tile.y, this.itemLayer);
+
+            if (this.itemCount == this.totalItems) {
+                this.openEscape();
+            }
+        },
+
+        openEscape: function () {
+            //open escape layer
+        },
+
+        startNextLevel: function (player, tile) {
+            if (this.nextLevel && this.itemCount == this.totalItems) {
+                this.game.state.start(this.nextLevel);
+            }
         },
 
         die: function (player, obj) {
