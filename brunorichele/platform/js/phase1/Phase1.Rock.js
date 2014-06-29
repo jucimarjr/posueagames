@@ -39,7 +39,7 @@ Phase1.Rock = {
 		{"x": 1000,  "y": 1260, "item": "rock_540-190"},
 		{"x": 950,  "y": 1772, "item": "rock_550-165"},			
 		{"x": 930,  "y": 700,  "item": "rock_925-220"},
-		{"x": 0,    "y": 1021, "item": "rock_655-230"}	
+		{"x": 330,    "y": 1120, "item": "rock_655-230"}	
 	],
 	init : function(){				
 		for(var x = 0; x < this.itemRocks.length; x++){
