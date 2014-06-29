@@ -3,7 +3,7 @@ Phase1.World = {
 	bgImage : "assets/phase1/images/bg1_3000-2000.jpg",
 	//bgImage : "assets/phase1/images/cenariogameguia.jpg",
 	bgImageAlpha : "assets/phase1/images/bg2_3000-2000.png",
-	bgAudio : "assets/phase1/audio/In_my_own_place.mp3",	 											
+	bgAudio : "assets/phase1/audio/light_the_way_mixdown.mp3",	 											
 	weith : 3000,
 	height : 2000,
 	x : 0,

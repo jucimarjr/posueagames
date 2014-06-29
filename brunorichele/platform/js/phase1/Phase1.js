@@ -20,7 +20,7 @@ State.Phase1.prototype = {
 	    Phase1.Door.create();
 		Phase1.World.createBgAlpha();
 		Phase1.Smoke.create();
-		//Phase1.World.createSound(this.game); /* Comentado pq encomoda durante o desenvolvimento*/
+		Phase1.World.createSound(this.game);
 
         //misc defs
         this.cursors = this.game.input.keyboard.createCursorKeys();
