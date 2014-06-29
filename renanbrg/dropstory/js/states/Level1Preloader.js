@@ -15,7 +15,7 @@ State.Level1Preloader.prototype = {
                 'assets/spritesheets/seaurchin_80-40.png', 40, 40);
         this.game.load.spritesheet('lifedrop',
                 'assets/spritesheets/water_200-40.png', 40, 40);
-        this.game.load.spritesheet('crab','assets/spritesheets/crab_150-69.png', 150, 69);
+        this.game.load.spritesheet('crab','assets/spritesheets/crab_160-80.png', 160, 80);
         this.game.load.spritesheet('energy','assets/spritesheets/energy_200-40.png', 40, 40);
         this.game.load.spritesheet('sundrop',
                 'assets/spritesheets/sunscreendrop_200-40.png', 40, 40);
