@@ -34,7 +34,32 @@ Phase1.Enemy = {
 		
 		//Grupo 4					
 		this.createHead(2710, 1720);
-		this.createHead(2840, 1722);		
+		this.createHead(2840, 1722);
+		
+		//Grupo 5					
+		this.createHead(2100, 1225);
+		this.createHead(2350, 1247);
+		
+		//Grupo 6					
+		this.createHead(1550, 1255);
+		this.createHead(1560, 1255);
+		this.createHead(1570, 1255);
+		this.createHead(1580, 1255);	
+		
+		//Grupo 7					
+		this.createHead(900, 1148);
+		this.createHead(910, 1148);
+		this.createHead(1060, 1145);
+		this.createHead(1070, 1147);
+		
+		//Grupo 8					
+		this.createHead(300, 995);	
+		
+		//Grupo 7					
+		this.createHead(1670, 655);
+		this.createHead(1830, 675);
+		this.createHead(1980, 680);
+		this.createHead(2130, 667);									
 	},
     createGreatSpear : function (x, y){
         "use strict";
