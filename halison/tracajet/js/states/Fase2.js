@@ -14,13 +14,19 @@ State.Fase2= function (game) {
     this.enemies;
     this.nameEnemy = 'Enemies';
 	this.nameFruits = 'frutas';
+	this.nameKeys = 'Keys';
 	this.fruits;
 	this.cursors;
 	this.speed = 90;
 	this.imgLife;
 	this.txLife;
 	this.contJump = 0;
-    
+	this.contKeys = 0;
+	this.TOTAL_KEYS = 1;
+	this.contBananas = 0;
+	this.contKeys = 0;
+	this.TOTAL_KEYS = 1;
+	this.isSuperImmortal = false;
 };
 
 State.Fase2.prototype = {
@@ -38,6 +44,7 @@ State.Fase2.prototype = {
 		//Nao vao precisar ser carregadas denovo
 		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
 		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height); // 200x160 eh o tamanho do frame da sprite
+		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
 
     },
 
@@ -63,6 +70,7 @@ State.Fase2.prototype = {
 
         this.tracajet = game.add.sprite(100, game.world.height-100, 'tracajet');
         this.tracajet.animations.add('walk',[0,1,2,1],6,false);
+        this.tracajet.animations.add('launchFruit',[2,3,2],6,false);
         game.physics.enable(this.tracajet, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 		this.tracajet.body.setSize(35, 78,0,0);
         this.tracajet.body.acceleration.y = 100;
@@ -106,6 +114,18 @@ State.Fase2.prototype = {
 		this.txLife.setText("x " + Config.game.score.lifes);
 		this.game.input.keyboard.addCallbacks(this,this.changeGameState);
 
+		
+		//Grupo chaves
+		this.keys = this.game.add.group();
+		this.keys.enableBody = true;
+		this.map.createFromObjects(this.nameKeys,61,'key_8080',0,true,false,this.keys);
+		this.keys.forEach(function(k){
+			game.add.tween(k).to({
+                                angle : 180
+                        }, 100).start();
+
+		},this);
+
     },
 
 
@@ -113,6 +133,7 @@ State.Fase2.prototype = {
     	game.physics.arcade.collide(this.tracajet, this.layer);
     	game.physics.arcade.overlap(this.fruits,this.tracajet,this.increaseScore,null,this);
     	game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
+    	game.physics.arcade.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
 	    this.updateTracajet();
 	    this.updateScorePosition();
 	    
@@ -195,25 +216,27 @@ State.Fase2.prototype = {
 		this.txtScore.setText("Score : " + Config.game.score.score);
 	},
 	gameOver: function(obj){
-		if(obj != undefined && obj.key != 'jacare' && !this.tracajet.isImmortal){
-			if(Config.game.score.lifes == 0){
-				this.tracajet.kill();
-				var moduloPositionX = Math.abs(game.world.position.x);
-				var moduloPositionY = Math.abs(game.world.position.y); 
-				var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
-					font: "48px Arial",
-					fill: "#ff0044",
-					align: "left"
-				});
-				dieText.setText("GAME OVER");
-			}else{
-				this.tracajet.isImmortal = true;
-				Config.game.score.lifes--;
-				this.txLife.setText("x " + Config.game.score.lifes);
-				this.tracajet.alpha = 0;
-				this.twenLife = this.game.add.tween(this.tracajet).to( { alpha: 1 }, 100, Phaser.Easing.Linear.None, true, 0, 50, true);
-				this.twenLife.start()
-				this.game.time.events.add(Phaser.Timer.SECOND * 5, this.updateIsImmortal, this);
+		if(!this.isSuperImmortal){
+			if(obj != undefined && obj.key != 'jacare' && !this.tracajet.isImmortal){
+				if(Config.game.score.lifes == 0){
+					this.tracajet.kill();
+					var moduloPositionX = Math.abs(game.world.position.x);
+					var moduloPositionY = Math.abs(game.world.position.y); 
+					var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
+						font: "48px Arial",
+						fill: "#ff0044",
+						align: "left"
+					});
+					dieText.setText("GAME OVER");
+				}else{
+					this.tracajet.isImmortal = true;
+					Config.game.score.lifes--;
+					this.txLife.setText("x " + Config.game.score.lifes);
+					this.tracajet.alpha = 0;
+					this.twenLife = this.game.add.tween(this.tracajet).to( { alpha: 1 }, 100, Phaser.Easing.Linear.None, true, 0, 50, true);
+					this.twenLife.start()
+					this.game.time.events.add(Phaser.Timer.SECOND * 5, this.updateIsImmortal, this);
+				}
 			}
 		}
 	},
@@ -235,6 +258,10 @@ State.Fase2.prototype = {
 			}else{
 				this.pauseGame();
 			}
+		}else if(event.keyCode === Phaser.Keyboard.R){
+			if(this.contKeys === this.TOTAL_KEYS){
+				this.game.state.start('LudusSplash');
+			}
 		}
 	
 	},
@@ -253,6 +280,29 @@ State.Fase2.prototype = {
 		if(this.game.paused){
 			this.txtPause.destroy();
 			this.game.paused = false;
+		}
+	}
+	,
+	increaseContKeys : function(tracajet,key){
+		key.kill();
+		this.contKeys ++;
+		if(this.contKeys === this.TOTAL_KEYS){
+			this.isSuperImmortal = true;
+			var moduloPositionX = Math.abs(game.world.position.x);
+			var moduloPositionY = Math.abs(game.world.position.y); 
+			var dieText = this.game.add.text(moduloPositionX  + game.width/3,moduloPositionY +game.height/3, "", {
+				font: "48px Arial",
+				fill: "#ff0044",
+				align: "left"
+			});
+			var pressText = this.game.add.text(moduloPositionX  + game.width/3 -70,moduloPositionY +game.height/3 + 50, "", {
+				font: "48px Arial",
+				fill: "#ff0044",
+				align: "left"
+			});
+			dieText.setText("YOU WIN");
+			pressText.setText("Press R to Restart");
+			this.game.add.tween(pressText).to( { alpha: 0 }, 100, Phaser.Easing.Linear.None, true, 0, 50, true).start();
 		}
 	}
 
