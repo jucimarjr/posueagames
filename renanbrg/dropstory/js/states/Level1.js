@@ -85,7 +85,7 @@ State.Level1.prototype = {
 //		this.setupStrawHorizontal(2010, 510);
 //		this.setupStrawDiagonal(2720, 270);
 		this.setupMolecule();
-		this.setupPlayer(100, 100);
+		this.setupPlayer(1600, 100);
 		this.setupSmokeEmitter(1550, this.game.height-80);
 
         this.hud.create();
@@ -219,10 +219,8 @@ State.Level1.prototype = {
                 'basic-shapes');
 	    var strawShapes = game.physics.p2.convertCollisionObjects(this.map,
                 'straw-shapes');
-//	    this.strawShapes = game.physics.p2.convertCollisionObjects(this.map,
-//                'straw-shapes');
-//	    this.glassPolygon = game.physics.p2.convertCollisionObjects(this.map,
-//                'glass-polygon');
+	    var glassPolygon = game.physics.p2.convertCollisionObjects(this.map,
+                'glass-polygon');
 
 	    //setup all tiles with collisiongroups or materials
 	    for (var i=0; i < this.tilesMainLayer.length; i++) {
@@ -237,13 +235,6 @@ State.Level1.prototype = {
 	                this.moleculeCG, this.groundCG, this.urchinsCG]);
 	    	this.tilesHotSandLayer[i].setMaterial(this.groundMaterial);
 	    }
-//	    for (var i=0; i < this.tilesIrregularLayer.length; i++) {
-//	    	this.tilesIrregularLayer[i].setCollisionGroup(this.groundCG);
-//	    	this.tilesIrregularLayer[i].collides([this.playerCG, this.crabCG,
-//	                this.moleculeCG, this.groundCG, this.urchinsCG]);
-//	    	this.tilesIrregularLayer[i].setMaterial(this.slidingMaterial);
-//	    }
-	    console.log('length: ' + basicShapes.length);
 	    for (var i = 0; i < basicShapes.length; i++){
 	    	basicShapes[i].setCollisionGroup(this.groundCG);
 	    	basicShapes[i].collides([this.playerCG, this.crabCG,
@@ -256,16 +247,16 @@ State.Level1.prototype = {
                     this.energyCG, this.sundropCG]);
 	    	strawShapes[i].setMaterial(this.slidingMaterial);
 	    }
-//	    for (var i = 0; i < this.glassPolygon.length; i++){
-//	    	this.glassPolygon[i].setCollisionGroup(this.glassCG);
-//	    	this.glassPolygon[i].collides([this.playerCG]);
-//	    	this.glassPolygon[i].setMaterial(this.groundMaterial);
-//	    }
+	    for (var i = 0; i < glassPolygon.length; i++){
+	    	glassPolygon[i].setCollisionGroup(this.glassCG);
+	    	glassPolygon[i].collides([this.playerCG]);
+	    	glassPolygon[i].setMaterial(this.groundMaterial);
+	    }
 
-//	    this.urchins = game.add.group();
-//	    this.map.createFromObjects('seaurchins', 202, 'urchin', 0, true, false,
-//	            this.urchins);
-//	    this.urchins.forEach(this.setupUrchins, this);
+	    this.urchins = game.add.group();
+	    this.map.createFromObjects('seaurchins', 202, 'urchin', 0, true, false,
+	            this.urchins);
+	    this.urchins.forEach(this.setupUrchins, this);
     },
 	setupPlayer: function (posX, posY) {
 		this.drop.create(posX, posY);
@@ -276,13 +267,15 @@ State.Level1.prototype = {
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.moleculeCG,
-                this.urchinsCG, this.hotsandCG]);
+                this.urchinsCG, this.hotsandCG, this.glassCG]);
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
         dropSprite.body.createGroupCallback(this.urchinsCG, this.checkCollisionUrchins, this);
         dropSprite.body.createGroupCallback(this.moleculeCG, this.checkOverlapWithLifeDrop, this);
 		dropSprite.body.createGroupCallback(this.drinkEnergy, this);
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
+        dropSprite.body.createGroupCallback(this.glassCG, this.timeOverKill,
+                this);
         //dropSprite.body.createGroupCallback(this.coveredStrawCG, this.insideStraw, this);
 	},
 //	setupShell: function (posX, posY) {
@@ -406,8 +399,8 @@ State.Level1.prototype = {
         this.molecule.enableBody = true;
         this.molecule.physicsBodyType = Phaser.Physics.P2JS;
 
-        this.molecule.create(280, 268, 'lifedrop');
-        this.molecule.create(1700, this.game.world.height-80-150, 'energy');
+        this.molecule.create(200, 310, 'lifedrop');
+        this.molecule.create(1750, this.game.world.height-210, 'energy');
 
         for (var i = 0; i < this.molecule.length; i++) {
             this.molecule.getAt(i).body.setCollisionGroup(this.moleculeCG);
@@ -657,6 +650,7 @@ State.Level1.prototype = {
 		clearTimeout(time);
     },
 	timeOverKill: function () {
+		console.log('chamou');
 		this.drop.kill();
 	},
 	moveCrab: function (crab) {
