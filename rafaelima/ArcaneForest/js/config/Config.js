@@ -292,10 +292,9 @@ Config.game = {
 			dir: Config.audio + 'sword_attack.mp3',
 		},
 		gameOver: {
-			key: 'gameOver',
+			key: 'gameOverSound',
 			dir: Config.audio + 'game_over.mp3',
-		}
-		
+		},
 	},
 	bar:{
 		dir: Config.images+'/horizontalbar_139-32.png',
