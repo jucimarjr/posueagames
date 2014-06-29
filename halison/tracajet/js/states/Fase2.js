@@ -213,6 +213,7 @@ State.Fase2.prototype = {
 	increaseScore : function(tracajet,sheet){
 		sheet.kill();
 		Config.game.score.score += 1;
+		this.contBananas++;
 		this.txtScore.setText("Score : " + Config.game.score.score);
 	},
 	gameOver: function(obj){
@@ -303,7 +304,11 @@ State.Fase2.prototype = {
 			dieText.setText("YOU WIN");
 			pressText.setText("Press R to Restart");
 			this.game.add.tween(pressText).to( { alpha: 0 }, 100, Phaser.Easing.Linear.None, true, 0, 50, true).start();
+			this.game.time.events.add(Phaser.Timer.SECOND * 10, this.stopGame, this);
 		}
+	},
+	stopGame : function(){
+		this.game.paused = true;
 	}
 
 
