@@ -3,6 +3,7 @@ State.Game = function(game) {
 	this.game = game;
 	this.heroes = new Heroes(game);
 	this.enemies = new Enemies(game);
+	this.flames = new Flames(game);
 	this.rocks = new Rocks(game);
 	this.trees = new Trees(game);
 };
@@ -21,6 +22,7 @@ State.Game.prototype = {
 	preload : function() {
 		this.heroes.preload();
 		this.enemies.preload();
+		this.flames.preload();
 		this.rocks.preload();
 		this.trees.preload();
 	},
@@ -57,20 +59,17 @@ State.Game.prototype = {
 		this.game.camera.follow(this.heroes.getCurrent());
 
 		this.enemies.create();
+		this.flames.create();
 		this.rocks.create();
-		this.rocks.pop(1680, 2220);
-		this.rocks.pop(2520, 2160);
-		this.rocks.pop(3720, 1800);
-		this.rocks.pop(660, 420);
 		this.trees.create();
-		this.trees.pop(1710, 1320);
-		this.trees.pop(2670, 1260);
 	},
 	update : function() {
 		"use strict";
 		this.heroes.update(this.layer, this.enemies);
 		this.enemies.update(this.layer, this.heroes);
 		this.trees.update(this.layer);
+		this.flames.update(this.layer);
+		this.flames.checkCollision(this.heroes);
 		this.rocks.update(this.layer);
 		this.rocks.checkCollision(this.heroes);
 		this.trees.checkCollision(this.heroes.getCurrent());

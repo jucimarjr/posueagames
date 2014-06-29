@@ -70,7 +70,10 @@ Rocks.prototype = {
 	create : function() {
 		"use strict";
 
-		// Do nothing
+		this.pop(1680, 2220);
+		this.pop(2520, 2160);
+		this.pop(3720, 1800);
+		this.pop(660, 420);
 	},
 	update : function(layer) {
 		"use strict";
