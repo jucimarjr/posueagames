@@ -3,6 +3,7 @@ State.Game = function(game) {
 	this.game = game;
 };
 
+//Create first map
 var layer, player, map, transparentWall, collects, rotate, monster, monsters, timerBV, timerMonst;
 var itemsTaken, flagId, isGameRotate, idPlayer;
 var imgPlayerFall, contFrameGif;
@@ -50,6 +51,7 @@ State.Game.prototype = {
         this.getPlayBarOffset[0] = true;
         this.getPlayBarOffset[1] = true;
 		
+        
         // attack sound
         this.attackSound = this.game.add.audio(Config.game.audio.attack.key);
         
@@ -207,6 +209,7 @@ State.Game.prototype = {
         timerBV = 0;
         isBlinkPlayer = false;
 		score = 0;
+        Config.game.player.items = [];
 		
     },
     
@@ -336,7 +339,7 @@ State.Game.prototype = {
             // handle bars
             this.updateHandleBars();
 			
-			score += 0.035;
+			score += 0.0166;
             var timerG = this.scoreTransforme(score);
 			labelScore.text = timerG;  //sem casa decimal
             

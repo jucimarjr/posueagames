@@ -398,7 +398,6 @@ Config.gameOver = {
 
 //Victory
 Config.Victory = {
-	key: 'victory',
 	dir: Config.images+'/victory.png',
 	x: 0,
 	y: 0

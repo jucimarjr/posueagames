@@ -68,7 +68,8 @@ State.Victory.prototype = {
 	tweetscore: function(){
         //share score on twitter
         var tweetbegin = 'http://twitter.com/home?status=';
-        var tweettxt = 'I got through the first cave in ArcaneForest in '+textHighscore+' at ' + window.location.href + '.';
+//        var tweettxt = 'I got through the first cave in ArcaneForest in '+textHighscore+' at ' + window.location.href + '.';
+        var tweettxt = 'I got through the first cave in ArcaneForest in '+textHighscore+' at ' + 'http://computacao.uea.edu.br/ludus/posueagames/rafaelima/ArcaneForest/' + '.';
         var finaltweet = tweetbegin +encodeURIComponent(tweettxt);
         window.open(finaltweet,'_blank');
     },
