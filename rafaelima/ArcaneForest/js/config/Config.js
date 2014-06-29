@@ -116,11 +116,11 @@ Config.game = {
 		width: 32,
 		height: 48,
 		//posicao depois das barras verticais
-		x: 3146,
-		y: 349,
+//		x: 3146,
+//		y: 349,
 		//posicao inicial
-//		x: 70,
-//		y: 1393,
+		x: 70,
+		y: 1393,
 		xRotate: 2334,
 		yRotate: 385,
 		lifes: 3,
