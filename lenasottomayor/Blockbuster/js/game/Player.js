@@ -69,6 +69,7 @@ Player.prototype = {
 
 		this.buttonleft = game.add.button(Config.button.horizontal.left.x, Config.button.horizontal.left.y, 'button-horizontal', null, this, 0, 1, 0, 1);
 		this.buttonleft.fixedToCamera = true;
+		this.buttonleft.rotation = 3.14;
 		this.buttonleft.events.onInputOver.add(function(){this.left=true;}, this);
 		this.buttonleft.events.onInputOut.add(function(){this.left=false;}, this);
 		this.buttonleft.events.onInputDown.add(function(){this.left=true;}, this);
