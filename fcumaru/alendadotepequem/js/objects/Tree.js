@@ -74,6 +74,9 @@ Trees.prototype = {
     },
     create : function() {
         "use strict";
+        
+        this.pop(1710, 1320);
+		this.pop(2670, 1260);
     },
     update : function(layer) {
         "use strict";
