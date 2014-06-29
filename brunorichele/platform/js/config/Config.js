@@ -45,9 +45,9 @@ Config.menu = {
 	x: 0,
 	y: 0,
 	buttonPlay: {
-		dir: 'assets/spritesheets/botaojogar_474-55.png',
-		x: Config.global.screen.width * 0.7,
-		y: Config.global.screen.height * 0.7,
+		dir: 'assets/spritesheets/jogar_474-55-2.png',
+		x: Config.global.screen.width * 0.6,
+		y: Config.global.screen.height * 0.73,
 		width: 237,
 		height: 55,
 		anchor: {
@@ -56,22 +56,22 @@ Config.menu = {
 		}
 	},
 	buttonHowToPlay: {
-		dir: 'assets/spritesheets/ButtonHowToPlay_600-95.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.6,
-		width: 150,
-		height: 95,
+		dir: 'assets/spritesheets/tutorial_474-55-2.png',
+		x: Config.global.screen.width * 0.6,
+		y: Config.global.screen.height * 0.79,
+		width: 237,
+		height: 55,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonCredits: {
-		dir: 'assets/spritesheets/ButtonCredits_600-95.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.8,
-		width: 150,
-		height: 95,
+		dir: 'assets/spritesheets/creditos_474-55-2.png',
+		x: Config.global.screen.width * 0.6,
+		y: Config.global.screen.height * 0.85,
+		width: 237,
+		height: 55,
 		anchor: {
 			x: 0.5,
 			y: 0.5
