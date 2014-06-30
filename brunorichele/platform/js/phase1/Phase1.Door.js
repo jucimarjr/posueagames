@@ -15,5 +15,11 @@ Phase1.Door = {
         this.door.body.fixedRotation = true;		
 		
 		return this.door;	
-	}
+	},
+	collide : function(player){	
+		player.body.createBodyCallback(this.door, this.action, this);		
+	},
+	action : function(){
+		this.game.state.start('GameFinal');		
+	}		
 };

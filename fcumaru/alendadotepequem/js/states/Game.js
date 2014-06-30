@@ -45,14 +45,14 @@ State.Game.prototype = {
 		this.layer.resizeWorld(); // seta o mundo com as altera��es feitas
 		map.setCollisionBetween(1, 22, true, 0); // 0 espaco
 
-		// // clouds
-		// this.clouds = this.game.add.tileSprite(0, 0, 4320, 2700, 'clouds');
-		// this.clouds.autoScroll(-30, 0);
-		//
-		// // faisca
-		// this.faisca = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
-		// game.cache.getImage('faiscas').height, 'faiscas');
-		// this.faisca.autoScroll(25, 80);
+//		 // clouds
+//		 this.clouds = this.game.add.tileSprite(0, 0, 4320, 2700, 'clouds');
+//		 this.clouds.autoScroll(-30, 0);
+//		
+//		 // faisca
+//		 this.faisca = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
+//		 game.cache.getImage('faiscas').height, 'faiscas');
+//		 this.faisca.autoScroll(25, 80);
 
 		this.heroes.create();
 		this.game.camera.follow(this.heroes.getCurrent());

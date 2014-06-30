@@ -40,10 +40,12 @@ Config.sponsorSplash = {
 Config.gameSplash = {
 	dir: {
 		background: 'assets/images/GameSplash_960-600.png',
-		bar: 'assets/images/ProgressBar_960-30.png'
+		bar: 'assets/images/ProgressBar_600-120.png'
 	},
 	x: 0,
 	y: 0,
+	barX: (Config.global.screen.width - 600) * 0.5,
+	barY: (Config.global.screen.height - 120) * 0.4,
 	millis: 2000,
 	nextState: 4000
 };
@@ -54,33 +56,33 @@ Config.menu = {
 	x: 0,
 	y: 0,
 	buttonPlay: {
-		dir: 'assets/spritesheets/ButtonPlay_600-95.png',
+		dir: 'assets/spritesheets/ButtonPlay_274-50-3.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.4,
-		width: 150,
-		height: 95,
+		y: Config.global.screen.height * 0.55,
+		width: 274,
+		height: 50,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonHowToPlay: {
-		dir: 'assets/spritesheets/ButtonHowToPlay_600-95.png',
+		dir: 'assets/spritesheets/ButtonHowToPlay_274-50-3.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.6,
-		width: 150,
-		height: 95,
+		y: Config.global.screen.height * 0.7,
+		width: 274,
+		height: 50,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonCredits: {
-		dir: 'assets/spritesheets/ButtonCredits_600-95.png',
+		dir: 'assets/spritesheets/ButtonCredits_274-50-3.png',
 		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.8,
-		width: 150,
-		height: 95,
+		y: Config.global.screen.height * 0.85,
+		width: 274,
+		height: 50,
 		anchor: {
 			x: 0.5,
 			y: 0.5
@@ -94,14 +96,36 @@ Config.menu = {
 
 //HowToPlay
 Config.howToPlay = {
-	dir: 'assets/images/HowToPlay_960-600.png',
+	dir: 'assets/images/HowToPlayBoard_960-174.png',
+	width: 274,
+	height: 50,
 	x: 0,
-	y: 0
+	y: Config.global.screen.height * 0.5
 };
 
 //Credits
 Config.credits = {
 	dir: 'assets/images/Credits_960-600.png',
+	x: 0,
+	y: 0
+};
+
+//GameOver
+Config.gameOver = {
+	dir: {
+		background: 'assets/images/GameOver_960-600.png',
+		effect: 'assets/images/GameOverFire_960-600.png'
+	},
+	x: 0,
+	y: 0
+};
+
+//YouWin
+Config.youWin = {
+	dir: {
+		background: 'assets/images/YouWin_960-600.png',
+		effect: 'assets/images/YouWinDiamonds_960-600.png'
+	},
 	x: 0,
 	y: 0
 };

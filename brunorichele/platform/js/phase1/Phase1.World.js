@@ -23,6 +23,8 @@ Phase1.World = {
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
 		this.game.physics.p2.gravity.y = 850;
 		this.game.physics.p2.restitution = 0;
+		
+		game.physics.p2.setImpactEvents(true);
 
 		this.background = this.game.add.tileSprite(this.x, this.y, this.weith, this.height, 'bgphase1');
 		

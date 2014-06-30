@@ -7,17 +7,19 @@ State.YouWin = function(game) {
 State.YouWin.prototype = {
 	preload : function() {
 		"use strict";
-		this.game.load.image('background', 'assets/youWin_960_600.png');
 	},
 	create : function() {
 		"use strict";
 
-		this.background = this.game.add.tileSprite(0, 0,
-				game.stage.bounds.width,
-				game.cache.getImage('background').height, 'background');
-
+		var background = this.game.add.sprite(Config.menu.x, Config.menu.y,
+				'you-win');
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
+
+		var effect = this.game.add.tileSprite(Config.menu.x, Config.menu.y,
+				Config.global.screen.width, Config.global.screen.height,
+				'you-win-effect');
+		effect.autoScroll(0, 80);
 	},
 	update : function() {
 		"use strict";

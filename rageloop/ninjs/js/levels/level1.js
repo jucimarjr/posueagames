@@ -11,9 +11,14 @@
         this.playerY = 40;
 
         this.hasShadow = false;
+
+        this.itemCount = 0;
+        this.totalItems = 8;
+
+        this.nextLevel = 'Level2';
     };
 
-    Level1.prototype = app_container.Level.prototype;
+    Level1.prototype = new app_container.Level();
 
     Level1.prototype.createEnemies = function () {
         this.enemies.createNinjaIdle(40*31, 40*10);
@@ -24,7 +29,7 @@
         this.enemies.createNinjaIdle(40.1*101, 40*5);
         this.enemies.createNinjaIdle(40.1*118, 40*3);
         this.enemies.createNinjaIdle(40*141, 40*8);
-        this.enemies.createNinjaIdle(40*170, 40*3);
+        this.enemies.createNinjaIdle(40*169, 40*3);
         this.enemies.createNinjaIdle(40*174, 40*12);
         this.enemies.createNinjaIdle(40*210, 40*5);
         this.enemies.createNinjaIdle(40.1*232, 40*5);
@@ -34,6 +39,13 @@
         this.enemies.createNinjaDash(40*151, 40*12);
         this.enemies.createNinjaDash(40*146, 40*3);
         this.enemies.createNinjaDash(40*156, 40*3);
+    };
+
+    Level1.prototype.openEscape = function () {
+        this.map.putTile(4, 239, 1, this.escapeLayer);
+        this.map.putTile(4, 239, 2, this.escapeLayer);
+        this.map.putTile(4, 239, 3, this.escapeLayer);
+        this.map.putTile(4, 239, 4, this.escapeLayer);
     };
 
     app_container.Level1 = Level1;

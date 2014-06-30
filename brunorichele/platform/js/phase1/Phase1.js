@@ -20,6 +20,10 @@ State.Phase1.prototype = {
 	    Phase1.Door.create();
 		Phase1.World.createBgAlpha();
 		Phase1.Smoke.create();
+		Phase1.Enemy.collide(this.player.player);
+		Phase1.Smoke.collide(this.player.player);
+		Phase1.Door.collide(this.player.player);
+		
 		Phase1.World.createSound(this.game);
 
         //misc defs
@@ -31,5 +35,5 @@ State.Phase1.prototype = {
         Config.global.screen.resize(this.game); 
 
 		this.control.update();
-    }
+    }	
 };

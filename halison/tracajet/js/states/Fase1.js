@@ -46,7 +46,6 @@ State.Fase1.prototype = {
 
 	preload: function () {
 		//Agora carrega no GameSplash para não gerar delay
-		
 		this.soundMusic =  game.add.audio('soundGame',1,true);
 		this.soundGetSheet = game.add.audio('soundGetSheet',1,true);
 		this.soundGameOver = game.add.audio('soundGameOver',1,true);
@@ -85,7 +84,6 @@ State.Fase1.prototype = {
 	    this.tracajet.body.drag.x = 200;
 		this.tracajet.anchor.setTo(.5,.5);
 	    this.tracajet.body.gravity.y = 30;
-		this.tracajet.body.setSize(35, 78,0,0);
 		this.tracajet.isImmortal = false;
 	    game.camera.follow(this.tracajet);
 
@@ -107,6 +105,7 @@ State.Fase1.prototype = {
 		this.keys.enableBody = true;
 		this.map.createFromObjects(this.nameKeys,1,'key_8080',0,true,false,this.keys);
 		this.keys.forEach(function(k){
+			k.anchor.setTo(.5,.5);
 			game.add.tween(k).to({
                                 angle : -180
                         }, 20).start();
@@ -157,6 +156,7 @@ State.Fase1.prototype = {
 		this.contKeys ++;
 		if(this.contKeys === this.TOTAL_KEYS){
 			this.soundWalk.stop();
+			this.soundMusic.stop()
 			this.game.state.start('Fase2');
 		}
 	}
@@ -314,7 +314,9 @@ State.Fase1.prototype = {
 					align: "left"
 				});
 				dieText.setText("GAME OVER");
+				this.soundMusic.stop();
 				this.soundGameOver.play('',0,0.5,false);
+
 			}else{
 				this.soundColision.play('',0,0.5,false);
 				this.tracajet.isImmortal = true;
