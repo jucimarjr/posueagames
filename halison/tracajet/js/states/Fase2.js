@@ -27,6 +27,8 @@ State.Fase2= function (game) {
 	this.contKeys = 0;
 	this.TOTAL_KEYS = 1;
 	this.isSuperImmortal = false;
+	this.bananaGroup;
+
 };
 
 State.Fase2.prototype = {
@@ -126,6 +128,7 @@ State.Fase2.prototype = {
 
 		},this);
 
+		this.bananaGroup = game.add.group();
     },
 
 
@@ -136,8 +139,20 @@ State.Fase2.prototype = {
     	game.physics.arcade.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
 	    this.updateTracajet();
 	    this.updateScorePosition();
+	    this.updateBananaBullet();
 	    
     },
+    updateBananaBullet : function(){
+    	this.bananaGroup.forEachAlive(function(projectile) {
+            var moduloPosition = Math.abs(this.game.world.position.x);
+			if (projectile.body.x  < moduloPosition || projectile.body.x >  moduloPosition + this.game.width){
+			  projectile.kill();
+			  projectile.destroy();
+			  this.bananaGroup.remove(projectile);
+            }
+        }, this);
+    }
+    ,
     updateScorePosition : function(){
 		var moduloPositionX = Math.abs(this.game.world.position.x) +  this.game.width -100;
 		var moduloPositionY = Math.abs(this.game.world.position.y) + 20; 
@@ -209,11 +224,35 @@ State.Fase2.prototype = {
 			this.contJump = 0;
 	    }
 	    
+	    if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
+    	{	
+    		console.log("cont " + this.bananaGroup.length);
+    		this.tracajet.animations.play('launchFruit');
+    		if (this.lastBulletShotAt === undefined) this.lastBulletShotAt = 0;
+	        if (this.game.time.now - this.lastBulletShotAt < 200) return;
+	        	this.lastBulletShotAt = game.time.now;
+
+	        var bullet = this.bananaGroup.getFirstDead();
+	        if(bullet === null || bullet === undefined) return;
+	        bullet.revive();
+
+	        bullet.checkWorldBounds = true;
+	        bullet.outOfBoundsKill = true;
+	        bullet.reset(this.tracajet.x + (this.tracajet.width * (this.tracajet.scale.x < 0 ? -1 : 1)) / 2, this.tracajet.y - 40);
+	        bullet.body.velocity.x = this.tracajet.scale.x < 0 ? -250 : 250;
+	        bullet.body.velocity.y = 0;
+	        bullet.body.allowGravity = false;
+
+	        this.contBananas--;
+	        if(this.contBananas >=0)
+	        	Config.game.score.score--;
+    	}
 	},
 	increaseScore : function(tracajet,sheet){
 		sheet.kill();
 		Config.game.score.score += 1;
 		this.contBananas++;
+		this.createBulletBanana();
 		this.txtScore.setText("Score : " + Config.game.score.score);
 	},
 	gameOver: function(obj){
@@ -309,6 +348,13 @@ State.Fase2.prototype = {
 	},
 	stopGame : function(){
 		this.game.paused = true;
+	},
+	createBulletBanana : function(){
+		var bullet = game.add.sprite(0, 0, 'assets2');
+    	this.bananaGroup.add(bullet);
+    	bullet.anchor.setTo(.5, .5);
+    	game.physics.enable(bullet, Phaser.Physics.ARCADE);
+    	bullet.kill();
 	}
 
 
