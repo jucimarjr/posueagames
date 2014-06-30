@@ -37,6 +37,6 @@ State.GameIntro1.prototype = {
 	},
 	onNext: function () {
 		"use strict";
-		this.game.state.start('GameFinal');
+		this.game.state.start('GameIntro2');
 	}		
 };
