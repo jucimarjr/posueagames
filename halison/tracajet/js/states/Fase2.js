@@ -121,7 +121,7 @@ State.Fase2.prototype = {
 		this.keys.enableBody = true;
 		this.map.createFromObjects(this.nameKeys,61,'key_8080',0,true,false,this.keys);
 		this.keys.forEach(function(k){
-			k.anchor.setTo(.5,1);
+			k.anchor.setTo(.5,.5);
 			game.add.tween(k).to({
                                 angle : 180
                         }, 100).start();
@@ -137,11 +137,18 @@ State.Fase2.prototype = {
     	game.physics.arcade.overlap(this.fruits,this.tracajet,this.increaseScore,null,this);
     	game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
     	game.physics.arcade.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
+	    game.physics.arcade.overlap(this.bananaGroup,this.enemies,this.killEnemy,null,this);
 	    this.updateTracajet();
 	    this.updateScorePosition();
 	    this.updateBananaBullet();
 	    
     },
+    killEnemy : function(banana,enemie){
+    	enemie.kill();
+    	banana.kill();
+    	this.bananaGroup.remove(banana);
+    }
+    ,
     updateBananaBullet : function(){
     	this.bananaGroup.forEachAlive(function(projectile) {
     		projectile.rotation += 5;
