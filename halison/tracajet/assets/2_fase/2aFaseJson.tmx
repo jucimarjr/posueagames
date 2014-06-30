@@ -68,7 +68,5 @@
   <object gid="62" x="2598" y="960"/>
   <object gid="62" x="40" y="959"/>
  </objectgroup>
- <objectgroup name="Keys" width="72" height="30">
-  <object gid="61" x="322" y="997"/>
- </objectgroup>
+ <objectgroup name="Keys" width="72" height="30"/>
 </map>

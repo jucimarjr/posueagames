@@ -569,20 +569,7 @@
         {
          "height":30,
          "name":"Keys",
-         "objects":[
-                {
-                 "gid":61,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "width":0,
-                 "x":322,
-                 "y":997
-                }],
+         "objects":[],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
