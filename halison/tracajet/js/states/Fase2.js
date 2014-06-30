@@ -28,6 +28,7 @@ State.Fase2= function (game) {
 	this.TOTAL_KEYS = 1;
 	this.isSuperImmortal = false;
 	this.bananaGroup;
+	this.isPlayWalk = false;
 
 };
 
@@ -53,6 +54,8 @@ State.Fase2.prototype = {
 		game.load.audio('soundGetKey','assets/sounds/get_key.mp3');
 		game.load.audio('soundColision','assets/sounds/colision.wav');
 		game.load.audio('walk','assets/sounds/walk.wav');
+		game.load.audio('jump','assets/sounds/jump2.wav');
+		game.load.audio('killSound','assets/sounds/killEnemy.wav');
 
 		this.soundMusic =  game.add.audio('soundGame',1,true);
 		this.soundGetSheet = game.add.audio('soundGetSheet',1,true);
@@ -60,6 +63,8 @@ State.Fase2.prototype = {
 		this.soundGetKey = game.add.audio('soundGetKey',1,true)
 		this.soundColision = game.add.audio('soundColision',1,true)
 		this.soundWalk = game.add.audio('walk',1,true);
+		this.jump2 = game.add.audio('jump',1,true);
+		this.killSound = game.add.audio('killSound',1,true);
 
     },
 
@@ -159,6 +164,7 @@ State.Fase2.prototype = {
     },
     killEnemy : function(banana,enemie){
     	try{
+    		this.killSound.play('',0,0.6,false);
     		enemie.kill();
     		banana.kill();
     	}catch(e){}
@@ -224,29 +230,48 @@ State.Fase2.prototype = {
 			this.tracajet.body.velocity.x = -this.speed;
 	    	this.tracajet.scale.x = -1;
 	    	this.tracajet.animations.play('walk');
+	    	if(!this.isPlayWalk){
+		 		this.playWalk();
+		 	}
 	    }else if(this.cursors.left.isDown && !this.tracajet.body.onFloor() && this.contJump < 5){	    	
 	    	this.tracajet.body.velocity.x = -120;
 	    	this.tracajet.scale.x = -1;
 	    	this.tracajet.animations.play('walk');
 	    	this.contJump++;
+	    	if(!this.isPlayWalk){
+		 		this.playWalk();
+		 	}
 	    }
 
 	    if (this.cursors.right.isDown && this.tracajet.body.onFloor()) { // vai para direita
 	    	this.tracajet.body.velocity.x = this.speed;
 	    	this.tracajet.scale.x = 1;  // espelha se antes 1
 	    	this.tracajet.animations.play('walk');
-	    	this.contJump++;
+	    	if(!this.isPlayWalk){
+		 		this.playWalk();
+		 	}
 	    }else if(this.cursors.right.isDown && !this.tracajet.body.onFloor() && this.contJump < 5){	    	
 	    	this.tracajet.body.velocity.x = 120;
 	    	this.tracajet.scale.x = 1;
 	    	this.tracajet.animations.play('walk');
 	    	this.contJump++;
+	    	if(!this.isPlayWalk){
+		 		this.playWalk();
+		 	}
+	    }
+
+	    if(!this.cursors.right.isDown && !this.cursors.left.isDown){
+	    	this.isPlayWalk = false;
+	    	this.soundWalk.stop();
 	    }
 	    
 	    if (this.cursors.up.isDown && this.tracajet.body.onFloor()) { // vai para cima
 	    	this.tracajet.body.velocity.y = -190;
 			this.tracajet.animations.play('walk');
 			this.contJump = 0;
+			this.isPlayWalk = false;
+			this.soundWalk.stop();
+			this.jump2.play('',0,0.6,false);
 	    }
 	    
 	    if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
@@ -382,7 +407,10 @@ State.Fase2.prototype = {
     	bullet.animations.add('rotating',[1],10,true);
     	game.physics.enable(bullet, Phaser.Physics.ARCADE);
     	bullet.kill();
+	},
+	playWalk : function(){
+		this.soundWalk.play('',0,0.4,true);
+		this.isPlayWalk = true;
 	}
-
 
 };

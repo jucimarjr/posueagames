@@ -156,6 +156,7 @@ State.Fase1.prototype = {
 		this.contKeys ++;
 		if(this.contKeys === this.TOTAL_KEYS){
 			this.soundWalk.stop();
+			this.soundMusic.stop()
 			this.game.state.start('Fase2');
 		}
 	}
