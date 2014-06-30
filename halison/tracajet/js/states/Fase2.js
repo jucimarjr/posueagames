@@ -28,25 +28,35 @@ State.Fase2= function (game) {
 	this.TOTAL_KEYS = 1;
 	this.isSuperImmortal = false;
 	this.bananaGroup;
+	this.isPlayWalk = false;
 
 };
 
 State.Fase2.prototype = {
 
     preload: function () {
-        game.load.tilemap('mapa','assets/2_fase/2aFaseJson.json',null,Phaser.Tilemap.TILED_JSON);
-        game.load.spritesheet('monkey', "assets/2_fase/monkey_spritesheet_240-80.png",40,40);
-		game.load.spritesheet('assets2', "assets/2_fase/assets_2.png",40,40);
-        game.load.image('bgF2',Config.game.fase2.background);
-        game.load.image('tilesetPlataforma','assets/2_fase/p1_480-40.png');
-		game.load.image('tilesetPlataforma2','assets/2_fase/p2_480-40.png');
-		game.load.image('tilesetPlataforma3','assets/2_fase/p3_40-480.png');
-		game.load.image('tilesetPlataforma4','assets/2_fase/p4_40-480.png');
-		
+        
 		//Nao vao precisar ser carregadas denovo
-		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
+		/*game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
 		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height); // 200x160 eh o tamanho do frame da sprite
 		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
+		game.load.audio('soundGame','assets/sounds/game_sound.wav');
+		game.load.audio('soundGetSheet','assets/sounds/get_sheet.mp3');
+		game.load.audio('soundGameOver','assets/sounds/game-over.mp3');
+		game.load.audio('soundGetKey','assets/sounds/get_key.mp3');
+		game.load.audio('soundColision','assets/sounds/colision.wav');
+		game.load.audio('walk','assets/sounds/walk.wav');
+		game.load.audio('jump','assets/sounds/jump2.wav');
+		game.load.audio('killSound','assets/sounds/killEnemy.wav');*/
+
+		this.soundMusic =  game.add.audio('soundGame',1,true);
+		this.soundGetSheet = game.add.audio('soundGetSheet',1,true);
+		this.soundGameOver = game.add.audio('soundGameOver',1,true);
+		this.soundGetKey = game.add.audio('soundGetKey',1,true)
+		this.soundColision = game.add.audio('soundColision',1,true)
+		this.soundWalk = game.add.audio('walk',1,true);
+		this.jump2 = game.add.audio('jump',1,true);
+		this.killSound = game.add.audio('killSound',1,true);
 
     },
 
@@ -121,7 +131,7 @@ State.Fase2.prototype = {
 		this.keys.enableBody = true;
 		this.map.createFromObjects(this.nameKeys,61,'key_8080',0,true,false,this.keys);
 		this.keys.forEach(function(k){
-			k.anchor.setTo(.5,1);
+			k.anchor.setTo(.5,.5);
 			game.add.tween(k).to({
                                 angle : 180
                         }, 100).start();
@@ -129,6 +139,7 @@ State.Fase2.prototype = {
 		},this);
 
 		this.bananaGroup = game.add.group();
+		this.soundMusic.play('',0,0.4,true);
     },
 
 
@@ -137,20 +148,30 @@ State.Fase2.prototype = {
     	game.physics.arcade.overlap(this.fruits,this.tracajet,this.increaseScore,null,this);
     	game.physics.arcade.overlap(this.enemies, this.tracajet,this.gameOver, null,this);
     	game.physics.arcade.overlap(this.keys,this.tracajet,this.increaseContKeys,null,this);
+	    game.physics.arcade.overlap(this.bananaGroup,this.enemies,this.killEnemy,null,this);
 	    this.updateTracajet();
 	    this.updateScorePosition();
 	    this.updateBananaBullet();
 	    
     },
+    killEnemy : function(banana,enemie){
+    	try{
+    		this.killSound.play('',0,0.6,false);
+    		enemie.kill();
+    		banana.kill();
+    	}catch(e){}
+    }
+    ,
     updateBananaBullet : function(){
     	this.bananaGroup.forEachAlive(function(projectile) {
     		projectile.rotation += 5;
     		projectile.animations.play('rotating');
             var moduloPosition = Math.abs(this.game.world.position.x);
 			if (projectile.body.x  < moduloPosition || projectile.body.x >  moduloPosition + this.game.width){
-			  projectile.kill();
-			  projectile.destroy();
-			  this.bananaGroup.remove(projectile);
+			  try{
+			  	projectile.kill();	
+			  }catch(e){}
+			  
             }
         }, this);
     }
@@ -201,56 +222,74 @@ State.Fase2.prototype = {
 			this.tracajet.body.velocity.x = -this.speed;
 	    	this.tracajet.scale.x = -1;
 	    	this.tracajet.animations.play('walk');
+	    	if(!this.isPlayWalk){
+		 		this.playWalk();
+		 	}
 	    }else if(this.cursors.left.isDown && !this.tracajet.body.onFloor() && this.contJump < 5){	    	
 	    	this.tracajet.body.velocity.x = -120;
 	    	this.tracajet.scale.x = -1;
 	    	this.tracajet.animations.play('walk');
 	    	this.contJump++;
+	    	if(!this.isPlayWalk){
+		 		this.playWalk();
+		 	}
 	    }
 
 	    if (this.cursors.right.isDown && this.tracajet.body.onFloor()) { // vai para direita
 	    	this.tracajet.body.velocity.x = this.speed;
 	    	this.tracajet.scale.x = 1;  // espelha se antes 1
 	    	this.tracajet.animations.play('walk');
-	    	this.contJump++;
+	    	if(!this.isPlayWalk){
+		 		this.playWalk();
+		 	}
 	    }else if(this.cursors.right.isDown && !this.tracajet.body.onFloor() && this.contJump < 5){	    	
 	    	this.tracajet.body.velocity.x = 120;
 	    	this.tracajet.scale.x = 1;
 	    	this.tracajet.animations.play('walk');
 	    	this.contJump++;
+	    	if(!this.isPlayWalk){
+		 		this.playWalk();
+		 	}
+	    }
+
+	    if(!this.cursors.right.isDown && !this.cursors.left.isDown){
+	    	this.isPlayWalk = false;
+	    	this.soundWalk.stop();
 	    }
 	    
 	    if (this.cursors.up.isDown && this.tracajet.body.onFloor()) { // vai para cima
 	    	this.tracajet.body.velocity.y = -190;
 			this.tracajet.animations.play('walk');
 			this.contJump = 0;
+			this.isPlayWalk = false;
+			this.soundWalk.stop();
+			this.jump2.play('',0,0.6,false);
 	    }
 	    
 	    if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
     	{	
-    		console.log("cont " + this.bananaGroup.length);
     		this.tracajet.animations.play('launchFruit');
-    		if (this.lastBulletShotAt === undefined) this.lastBulletShotAt = 0;
-	        if (this.game.time.now - this.lastBulletShotAt < 200) return;
-	        	this.lastBulletShotAt = game.time.now;
+	    	if(this.contBananas > 0){
+	    		if (this.lastBulletShotAt === undefined) this.lastBulletShotAt = 0;
+		        if (this.game.time.now - this.lastBulletShotAt < 200) return;
+		        	this.lastBulletShotAt = game.time.now;
 
-	        var bullet = this.bananaGroup.getFirstDead();
-	        if(bullet === null || bullet === undefined) return;
-	        bullet.revive();
-
-	        bullet.checkWorldBounds = true;
-	        bullet.outOfBoundsKill = true;
-	        bullet.reset(this.tracajet.x + (this.tracajet.width * (this.tracajet.scale.x < 0 ? -1 : 1)) , this.tracajet.y);
-	        bullet.body.velocity.x = this.tracajet.scale.x < 0 ? -300 : 300;
-	        bullet.body.velocity.y = 0;
-	        bullet.body.allowGravity = false;
-	        this.contBananas--;
-	        if(this.contBananas >=0)
-	        	Config.game.score.score--;
+		        var bullet = this.bananaGroup.getFirstDead();
+		        if(bullet === null || bullet === undefined) return;
+		        bullet.revive();
+		        bullet.reset(this.tracajet.x + (this.tracajet.scale.x < 0 ? -40 : 40) , this.tracajet.y);
+		        bullet.body.velocity.x = this.tracajet.scale.x < 0 ? -300 : 300;
+		        bullet.body.velocity.y = 0;
+		        bullet.body.allowGravity = false;
+		        this.contBananas--;
+		        if(this.contBananas >=0)
+		        	Config.game.score.score--;
+	    	}
     	}
 	},
 	increaseScore : function(tracajet,sheet){
 		sheet.kill();
+		this.soundGetSheet.play('',0,1,false);
 		Config.game.score.score += 1;
 		this.contBananas++;
 		this.createBulletBanana();
@@ -269,7 +308,9 @@ State.Fase2.prototype = {
 						align: "left"
 					});
 					dieText.setText("GAME OVER");
+					this.soundGameOver.play('',0,0.5,false);
 				}else{
+					this.soundColision.play('',0,0.5,false);
 					this.tracajet.isImmortal = true;
 					Config.game.score.lifes--;
 					this.txLife.setText("x " + Config.game.score.lifes);
@@ -327,6 +368,7 @@ State.Fase2.prototype = {
 	increaseContKeys : function(tracajet,key){
 		key.kill();
 		this.contKeys ++;
+		this.soundGetKey.play('',0,0.5,false);
 		if(this.contKeys === this.TOTAL_KEYS){
 			this.isSuperImmortal = true;
 			var moduloPositionX = Math.abs(game.world.position.x);
@@ -357,7 +399,10 @@ State.Fase2.prototype = {
     	bullet.animations.add('rotating',[1],10,true);
     	game.physics.enable(bullet, Phaser.Physics.ARCADE);
     	bullet.kill();
+	},
+	playWalk : function(){
+		this.soundWalk.play('',0,0.4,true);
+		this.isPlayWalk = true;
 	}
-
 
 };

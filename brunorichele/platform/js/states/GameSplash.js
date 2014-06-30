@@ -31,12 +31,16 @@ State.GameSplash.prototype = {
 		//Menu
 		this.game.load.image('menu-background',  Config.menu.dir);
 		this.game.load.spritesheet('button-play', Config.menu.buttonPlay.dir, Config.menu.buttonPlay.width, Config.menu.buttonPlay.height);
+		this.game.load.spritesheet('button-back', Config.menu.buttonBack.dir, Config.menu.buttonBack.width, Config.menu.buttonBack.height);
+		this.game.load.spritesheet('button-next', Config.menu.buttonNext.dir, Config.menu.buttonNext.width, Config.menu.buttonNext.height);
+		this.game.load.spritesheet('button-init', Config.menu.buttonInit.dir, Config.menu.buttonInit.width, Config.menu.buttonInit.height);
 		this.game.load.spritesheet('button-credits', Config.menu.buttonCredits.dir, Config.menu.buttonCredits.width, Config.menu.buttonCredits.height);
 		this.game.load.spritesheet('button-how-to-play', Config.menu.buttonHowToPlay.dir, Config.menu.buttonHowToPlay.width, Config.menu.buttonHowToPlay.height);
 		
 		this.game.load.image('game-intro1', GameIntro1Properties.background);
 		this.game.load.image('game-intro2', GameIntro2Properties.background);
 		this.game.load.image('game-over', GameOverProperties.background);
+		this.game.load.image('game-final', GameFinalProperties.background);
 
 		//Credits
 		this.game.load.image('credits', Config.credits.dir);

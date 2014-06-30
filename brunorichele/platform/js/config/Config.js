@@ -77,6 +77,39 @@ Config.menu = {
 			y: 0.5
 		}
 	},
+	buttonBack: {
+		dir: 'assets/spritesheets/voltar_474-55-2.png',
+		x: Config.global.screen.width * 0.1,
+		y: Config.global.screen.height * 0.9,
+		width: 237,
+		height: 55,
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		}
+	},
+	buttonNext: {
+		dir: 'assets/spritesheets/avancar_474-55-2.png',
+		x: Config.global.screen.width * 0.9,
+		y: Config.global.screen.height * 0.9,
+		width: 237,
+		height: 55,
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		}
+	},
+	buttonInit: {
+		dir: 'assets/spritesheets/inicio_474-55-2.png',
+		x: Config.global.screen.width * 0.9,
+		y: Config.global.screen.height * 0.9,
+		width: 237,
+		height: 55,
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		}
+	},				
 	textStyle: {
 		font: '25px Ms Sans Serif',
 		fill: '#ffffff'

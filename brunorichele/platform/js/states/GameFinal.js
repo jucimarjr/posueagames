@@ -1,18 +1,18 @@
 /*global setTimeout, State, Config, Phaser*/
-var GameOverProperties = {
-	background: 'assets/images/gameover_1920-1080.jpg',
+var GameFinalProperties = {
+	background: 'assets/images/finalgame_1920-1080.jpg',
 	x: 0,
 	y: 0
 };
 
-State.GameOver = function (game) {
+State.GameFinal = function (game) {
 	"use strict";
 	this.game = game;
 };
-State.GameOver.prototype = {
+State.GameFinal.prototype = {
 	preload: function () {
 		"use strict";
-		var sprite = this.game.add.sprite(GameOverProperties.x, GameOverProperties.y, 'game-over'); // Carregar bg
+		var sprite = this.game.add.sprite(GameFinalProperties.x, GameFinalProperties.y, 'game-final'); // Carregar bg
 		
 		var button = this.game.add.button(Config.menu.buttonBack.x, Config.menu.buttonBack.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
 		button.anchor.setTo(Config.menu.buttonBack.anchor.x, Config.menu.buttonBack.anchor.y);

@@ -105,6 +105,7 @@ State.Fase1.prototype = {
 		this.keys.enableBody = true;
 		this.map.createFromObjects(this.nameKeys,1,'key_8080',0,true,false,this.keys);
 		this.keys.forEach(function(k){
+			k.anchor.setTo(.5,.5);
 			game.add.tween(k).to({
                                 angle : -180
                         }, 20).start();
@@ -155,6 +156,7 @@ State.Fase1.prototype = {
 		this.contKeys ++;
 		if(this.contKeys === this.TOTAL_KEYS){
 			this.soundWalk.stop();
+			this.soundMusic.stop()
 			this.game.state.start('Fase2');
 		}
 	}
@@ -312,7 +314,9 @@ State.Fase1.prototype = {
 					align: "left"
 				});
 				dieText.setText("GAME OVER");
+				this.soundMusic.stop();
 				this.soundGameOver.play('',0,0.5,false);
+
 			}else{
 				this.soundColision.play('',0,0.5,false);
 				this.tracajet.isImmortal = true;

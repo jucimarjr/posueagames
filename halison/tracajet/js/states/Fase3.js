@@ -11,9 +11,8 @@ State.Fase3.prototype = {
 	preload: function () {
 		game.load.tilemap('mapa3',Config.game.fase3.json,null,Phaser.Tilemap.TILED_JSON);
 		game.load.spritesheet('tracajet', Config.game.tracajetFlying.dir, Config.game.tracajetFlying.width,Config.game.tracajetFlying.height);
-		game.load.spritesheet('frutas', Config.game.fase3.frutas,24,30);
 		game.load.image('bg3',Config.game.fase3.background);
-		game.load.image('tilesetPlataformaNuvens',Config.game.fase3.nuvens.dir);
+		game.load.image('tilesetNuvens',Config.game.fase3.nuvens.dir);
 		
 	    // Define motion constants
 	    this.ROTATION_SPEED = 140; // degrees/second
@@ -30,10 +29,10 @@ State.Fase3.prototype = {
 	    var bg3 = game.add.tileSprite(0, 0, game.cache.getImage('bg3').width,game.cache.getImage('bg3').height, 'bg3');
 	    game.physics.startSystem(Phaser.Game.ARCADE);
 	    this.map = game.add.tilemap('mapa3'); 
-		this.map.addTilesetImage('nuvens_120-40-4','tilesetPlataformaNuvens' );
-		this.layer = this.map.createLayer('Camada de Tiles 1');
+		this.map.addTilesetImage('nuvens_120-40-4','tilesetNuvens' );
+		this.layer = this.map.createLayer('Camade de Tiles 1');
 		this.layer.resizeWorld(); 
-		this.map.setCollisionBetween(1,12, true,'Camada de Tiles 1'); // 0 espaco vazio 1 em diante os tiles do tileset
+//		this.map.setCollisionBetween(1,12, true,'Camada de Tiles 1'); // 0 espaco vazio 1 em diante os tiles do tileset
 
 		this.tracajet = game.add.sprite(100,500, 'tracajet');
 		this.tracajet.animations.add('flyDown',[3,1,3],2,false);
@@ -44,6 +43,10 @@ State.Fase3.prototype = {
 		this.tracajet.anchor.setTo(.5,.5);
 		this.tracajet.angle = 0;//-90; // Point the ship up
 
+		// Grupo de nuvens
+		this.clouds = this.game.add.group();
+		this.clouds.enableBody  = false;
+		this.map.createFromObjects('Camada de Nuvens',2,'tilesetNuvens',1,true,false,this.clouds);
 		
 		// Set maximum velocity
 	    this.tracajet.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED); // x, y
@@ -59,7 +62,6 @@ State.Fase3.prototype = {
 	    
 	    
 	    game.camera.follow(this.tracajet);
-		console.log('entrou aki!');
 		
 	    // Capture certain keys to prevent their default actions in the browser.
 	    // This is only necessary because this is an HTML5 game. Games on other
