@@ -20,7 +20,7 @@ State.Level1Preloader.prototype = {
         this.game.load.spritesheet('sundrop',
                 'assets/spritesheets/sunscreendrop_200-40.png', 40, 40);
         this.game.load.spritesheet('dropinstraw',
-                'assets/spritesheets/dropinstraw_3840-80.png', 480, 70);
+                'assets/spritesheets/dropinstraw_3840-80.png', 480, 80);
 
         this.game.load.image('gameplay-bg',
                 'assets/images/backgroundlevel1_4800-600.png');
@@ -39,11 +39,8 @@ State.Level1Preloader.prototype = {
         this.game.load.image('seaurchin',
                 'assets/spritesheets/seaurchin_80-40.png');
         this.game.load.image('glass', 'assets/images/glass_280-320.png');
-//        this.game.load.image('strawground', 'assets/images/straw_480-64.png');
-//        this.game.load.image('strawtipleft',
-//                'assets/images/strawtipleft_15-20.png');
-//        this.game.load.image('strawtipright',
-//                'assets/images/strawtipright_15-20.png');
+        this.game.load.image('strawtip',
+                'assets/images/strawtip_40-40.png');
         this.game.load.image('smoke', './assets/images/smoke_32-32.png');
         this.game.load.audio('jump','assets/waterDrop.ogg');
         this.game.load.audio('main','assets/gotaMain.ogg');
