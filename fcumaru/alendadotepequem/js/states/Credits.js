@@ -13,6 +13,25 @@ State.Credits.prototype = {
 		var background = this.game.add.sprite(Config.menu.x, Config.menu.y, 'menu-background');
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
+		
+		var text = "Universidade do Estado do Amazonas\n" +
+					"Escola Superior de Tecnologia\n" +
+					"Especialização em Desenvolvimento de Jogos Eletrônicos\n" +
+					"\n" +
+					"Designer:\n" +
+					"Antonio Felipe Cumaru\n" +
+					"\n" +
+					"Programadores:\n" +
+					"Bruno Araújo\n" +
+					"Cristina Araújo\n" +
+					"Daniel Frazão\n" +
+					"Gustavo Miyamoto\n" +
+					"\n" +
+					"Orientador:\n" + 
+					"Prof.Dr. Jucimar Maia da Silva Jr";
+	    var style = { font: "16px Arial", fill: "#ffffff", align: "center" };
+
+		var t = game.add.text(game.world.centerX - 200, game.world.centerY - 50, text, style);
 	},
 	update: function () {
 		"use strict";
