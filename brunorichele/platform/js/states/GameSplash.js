@@ -40,6 +40,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('game-intro1', GameIntro1Properties.background);
 		this.game.load.image('game-intro2', GameIntro2Properties.background);
 		this.game.load.image('game-over', GameOverProperties.background);
+		this.game.load.image('game-final', GameFinalProperties.background);
 
 		//Credits
 		this.game.load.image('credits', Config.credits.dir);

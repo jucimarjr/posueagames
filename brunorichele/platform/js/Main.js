@@ -8,6 +8,7 @@ game.state.add('Menu', State.Menu);
 game.state.add('HowToPlay', State.HowToPlay);
 game.state.add('Credits', State.Credits);
 game.state.add('GameOver', State.GameOver);
+game.state.add('GameFinal', State.GameFinal);
 game.state.add('GameIntro1', State.GameIntro1);
 game.state.add('GameIntro2', State.GameIntro2);
 game.state.add('Game', State.Phase1);

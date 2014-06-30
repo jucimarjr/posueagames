@@ -22,6 +22,7 @@ State.Phase1.prototype = {
 		Phase1.Smoke.create();
 		Phase1.Enemy.collide(this.player.player);
 		Phase1.Smoke.collide(this.player.player);
+		Phase1.Door.collide(this.player.player);
 		
 		Phase1.World.createSound(this.game);
 
