@@ -23,7 +23,7 @@ State.Menu.prototype = {
 	},
 	clickPlay: function () {
 		"use strict";
-		this.game.state.start('Game');
+		this.game.state.start('GameIntro1');
 	},
 	clickHowToPlay: function () {
 		"use strict";
