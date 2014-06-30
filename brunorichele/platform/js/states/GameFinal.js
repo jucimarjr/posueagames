@@ -21,8 +21,8 @@ State.GameFinal.prototype = {
 		button2.anchor.setTo(Config.menu.buttonInit.anchor.x, Config.menu.buttonInit.anchor.y);		
 		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
-        game.add.text(330, 850, 'Um homem foi encontrado morto após seu veículo atingir um caminhão', style);
-        game.add.text(620, 900, 'na manhã deste sábado (29/06/2014).', style);
+        game.add.text(500, 850, 'Finalmente uma saída, há luz muito forte vindo dela...', style);
+        game.add.text(700, 900, 'Talvez eu consiga alguma ajuda...', style);
 	},
 	create: function () {
 		"use strict";

@@ -20,9 +20,10 @@ State.GameIntro2.prototype = {
 		var button2 = this.game.add.button(Config.menu.buttonNext.x, Config.menu.buttonNext.y, 'button-next', this.onNext, this, 1, 0, 1, 0);
 		button2.anchor.setTo(Config.menu.buttonNext.anchor.x, Config.menu.buttonNext.anchor.y);
 		
-		/*var style = { font: "40px Helvetica", fill: "#ffffff" };
-        game.add.text(330, 850, 'Um homem foi encontrado morto após seu veículo atingir um caminhão', style);
-        game.add.text(620, 900, 'na manhã deste sábado (29/06/2014).', style);*/
+		var style = { font: "40px Helvetica", fill: "#ffffff" };
+        game.add.text(330, 800, 'Acordei em um lugar estranho e agora estou em busca de socorro...', style);
+        game.add.text(620, 850, 'mas meu corpo todo está escuro e...', style);
+		game.add.text(800, 900, '...Quem sou eu?', style);
 	},
 	create: function () {
 		"use strict";

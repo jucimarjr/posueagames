@@ -20,9 +20,9 @@ State.GameIntro1.prototype = {
 		var button2 = this.game.add.button(Config.menu.buttonNext.x, Config.menu.buttonNext.y, 'button-next', this.onNext, this, 1, 0, 1, 0);
 		button2.anchor.setTo(Config.menu.buttonNext.anchor.x, Config.menu.buttonNext.anchor.y);		
 		
-		/*var style = { font: "40px Helvetica", fill: "#ffffff" };
-        game.add.text(330, 850, 'Um homem foi encontrado morto após seu veículo atingir um caminhão', style);
-        game.add.text(620, 900, 'na manhã deste sábado (29/06/2014).', style);*/
+		var style = { font: "40px Helvetica", fill: "#ffffff" };
+        game.add.text(500, 850, 'Foi tudo muito rápido: Um carro apareceu do nada,', style);
+        game.add.text(400, 900, 'tentei desviar para a calçada e depois do choque tudo ficou escuro.', style);
 	},
 	create: function () {
 		"use strict";
@@ -37,6 +37,6 @@ State.GameIntro1.prototype = {
 	},
 	onNext: function () {
 		"use strict";
-		this.game.state.start('GameIntro2');
+		this.game.state.start('GameFinal');
 	}		
 };
