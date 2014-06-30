@@ -145,6 +145,7 @@ State.Fase2.prototype = {
     updateBananaBullet : function(){
     	this.bananaGroup.forEachAlive(function(projectile) {
     		projectile.rotation += 5;
+    		projectile.animations.play('rotating');
             var moduloPosition = Math.abs(this.game.world.position.x);
 			if (projectile.body.x  < moduloPosition || projectile.body.x >  moduloPosition + this.game.width){
 			  projectile.kill();
@@ -239,7 +240,7 @@ State.Fase2.prototype = {
 
 	        bullet.checkWorldBounds = true;
 	        bullet.outOfBoundsKill = true;
-	        bullet.reset(this.tracajet.x + (this.tracajet.width * (this.tracajet.scale.x < 0 ? -1 : 1)) / 2, this.tracajet.y - 40);
+	        bullet.reset(this.tracajet.x + (this.tracajet.width * (this.tracajet.scale.x < 0 ? -1 : 1)) , this.tracajet.y);
 	        bullet.body.velocity.x = this.tracajet.scale.x < 0 ? -300 : 300;
 	        bullet.body.velocity.y = 0;
 	        bullet.body.allowGravity = false;
@@ -353,6 +354,7 @@ State.Fase2.prototype = {
 		var bullet = game.add.sprite(0, 0, 'assets2');
     	this.bananaGroup.add(bullet);
     	bullet.anchor.setTo(.5, .5);
+    	bullet.animations.add('rotating',[1],10,true);
     	game.physics.enable(bullet, Phaser.Physics.ARCADE);
     	bullet.kill();
 	}
