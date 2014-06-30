@@ -92,7 +92,6 @@ State.Fase2.prototype = {
 		this.fruits.enableBody  = true;
 		this.map.createFromObjects(this.nameFruits,62,'assets2',1,true,false,this.fruits);
 		
-		
 		//Cursor
 		this.cursors = this.game.input.keyboard.createCursorKeys();
 
@@ -122,6 +121,7 @@ State.Fase2.prototype = {
 		this.keys.enableBody = true;
 		this.map.createFromObjects(this.nameKeys,61,'key_8080',0,true,false,this.keys);
 		this.keys.forEach(function(k){
+			k.anchor.setTo(.5,1);
 			game.add.tween(k).to({
                                 angle : 180
                         }, 100).start();
@@ -144,6 +144,7 @@ State.Fase2.prototype = {
     },
     updateBananaBullet : function(){
     	this.bananaGroup.forEachAlive(function(projectile) {
+    		projectile.rotation += 5;
             var moduloPosition = Math.abs(this.game.world.position.x);
 			if (projectile.body.x  < moduloPosition || projectile.body.x >  moduloPosition + this.game.width){
 			  projectile.kill();
@@ -239,10 +240,9 @@ State.Fase2.prototype = {
 	        bullet.checkWorldBounds = true;
 	        bullet.outOfBoundsKill = true;
 	        bullet.reset(this.tracajet.x + (this.tracajet.width * (this.tracajet.scale.x < 0 ? -1 : 1)) / 2, this.tracajet.y - 40);
-	        bullet.body.velocity.x = this.tracajet.scale.x < 0 ? -250 : 250;
+	        bullet.body.velocity.x = this.tracajet.scale.x < 0 ? -300 : 300;
 	        bullet.body.velocity.y = 0;
 	        bullet.body.allowGravity = false;
-
 	        this.contBananas--;
 	        if(this.contBananas >=0)
 	        	Config.game.score.score--;
