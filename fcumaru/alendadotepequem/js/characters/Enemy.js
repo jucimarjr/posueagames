@@ -79,24 +79,3 @@ Enemy.method('checkCollision', function(hero) {
 
 	// TODO
 });
-
-Enemy.method('getX', function() {
-	"use strict";
-	return this.enemy.body.x;
-});
-
-Enemy.method('getY', function() {
-	"use strict";
-	return this.enemy.body.y;
-});
-Enemy.method('dead', function() {
-	"use strict";
-	this.enemy.kill();
-
-});
-
-function log(msg) {
-	setTimeout(function() {
-		throw new Error(msg);
-	}, 0);
-}

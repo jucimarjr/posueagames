@@ -45,14 +45,14 @@ Enemies.prototype = {
 		}
 	},
 	checkDistanceFromEnemy : function(x, y) {
-		distance = Math.sqrt((x - this.values[0].getX()) ^ 2
-				+ (this.values[0].getY() - y) ^ 2);
+		distance = Math.sqrt((x - this.values[0].getSprite().body.x) ^ 2
+				+ (this.values[0].getSprite().body.y - y) ^ 2);
 		return distance;
 	},
 	
 	Attacked : function(boolean) {
 		if (boolean) {
-			this.values[0].dead();
+			this.values[0].getSprite().kill();
 		}
 	}
 
