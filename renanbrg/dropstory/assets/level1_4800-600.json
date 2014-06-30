@@ -601,6 +601,31 @@
          "width":120,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":15,
+         "name":"horizontalstraw",
+         "objects":[
+                {
+                 "gid":278,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2080,
+                 "y":600
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":120,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":
@@ -818,6 +843,21 @@
          "spacing":0,
          "tileheight":80,
          "tilewidth":160
+        }, 
+        {
+         "firstgid":278,
+         "image":"spritesheets\/dropinstraw_3840-80.png",
+         "imageheight":80,
+         "imagewidth":3840,
+         "margin":0,
+         "name":"dropinstraw_3840-80",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":80,
+         "tilewidth":480
         }],
  "tilewidth":40,
  "version":1,

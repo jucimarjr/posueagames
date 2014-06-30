@@ -61,9 +61,7 @@ State.Level1.prototype = {
         this.map.addTilesetImage('water_200-40', 'lifedrop');
         this.map.addTilesetImage('energy_200-40', 'energy');
         this.map.addTilesetImage('sunscreendrop_200-40', 'sundrop');
-//        this.map.addTilesetImage('straw_480-64', 'strawground');
-//        this.map.addTilesetImage('strawtipleft_15-20', 'strawtipleft');
-//        this.map.addTilesetImage('strawtipright_15-20', 'strawtipright');
+        this.map.addTilesetImage('dropinstraw_3840-80', 'dropinstraw');
 
         this.mainLayer = this.map.createLayer('mainlayer');
         this.hotSandLayer = this.map.createLayer('hotsandlayer');
@@ -82,10 +80,10 @@ State.Level1.prototype = {
 //		this.setupCan(1620, this.game.world.height-80);
         this.setupCrab();
 //		this.setupBucket(2250, 272);
-//		this.setupStrawHorizontal(2010, 510);
+//		this.setupStrawHorizontal();
 //		this.setupStrawDiagonal(2720, 270);
 		this.setupMolecule();
-		this.setupPlayer(3900, 100);
+		this.setupPlayer(2000, 100);
 		this.setupSmokeEmitter(1550, this.game.height-80);
 
         this.hud.create();
@@ -105,7 +103,6 @@ State.Level1.prototype = {
 		this.handleKeyDown();
 		this.isOnAir();
 		this.drop.playerAnimations();
-//		this.playerOverDiagonalStraw();
 
 		this.moveCrab(this.crabs.getAt(0));
 		this.moveCrab(this.crabs.getAt(1));
@@ -117,25 +114,15 @@ State.Level1.prototype = {
 		}
 
 	    if (this.playerEnteredLeftStraw) {
-	        this.game.camera.setPosition(this.game.camera.x + 8,
+	        this.game.camera.setPosition(this.game.camera.x + 20,
 	                this.game.camera.y);
 	    } else if (this.playerEnteredRightStraw) {
-	        this.game.camera.setPosition(this.game.camera.x - 8,
+	        this.game.camera.setPosition(this.game.camera.x - 20,
 	                this.game.camera.y);
 	    }
 	//	if(this.userDead()){
 	//	      this.restart();
 	//	   }
-	},
-	playerOverDiagonalStraw: function() {
-	    var characterSprite = this.drop.getSpriteObject();
-	    if (characterSprite.x >= 2513.0 && characterSprite.x <= 2750.0 &&
-	            characterSprite.y <= (this.game.world.height - 200.0) &&
-	            this.touchingDown(characterSprite.body)) {
-	        this.forceSlidingStraw = true;
-	    } else {
-	        this.forceSlidingStraw = false;
-	    }
 	},
 	handleKeyDown: function () {
 		"use strict";
@@ -184,8 +171,7 @@ State.Level1.prototype = {
 		this.playerCG = game.physics.p2.createCollisionGroup();
 		this.groundCG = game.physics.p2.createCollisionGroup();
 		this.crabCG = game.physics.p2.createCollisionGroup();
-//		this.strawCG = game.physics.p2.createCollisionGroup();
-//		this.coveredStrawCG = game.physics.p2.createCollisionGroup();
+		this.coveredStrawCG = game.physics.p2.createCollisionGroup();
 		this.moleculeCG = game.physics.p2.createCollisionGroup();
 		this.energyCG = game.physics.p2.createCollisionGroup();
 		this.sundropCG = game.physics.p2.createCollisionGroup();
@@ -264,6 +250,11 @@ State.Level1.prototype = {
 	    this.map.createFromObjects('seaurchins', 202, 'urchin', 0, true, false,
 	            this.urchins);
 	    this.urchins.forEach(this.setupUrchins, this);
+
+        this.horizontalStraw = game.add.group();
+        this.map.createFromObjects('horizontalstraw', 278, 'dropinstraw', 0,
+                true, false, this.horizontalStraw);
+        this.horizontalStraw.forEach(this.setupStrawHorizontal, this);
     },
 	setupPlayer: function (posX, posY) {
 		this.drop.create(posX, posY);
@@ -274,7 +265,8 @@ State.Level1.prototype = {
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.moleculeCG,
-                this.urchinsCG, this.hotsandCG, this.glassCG]);
+                this.urchinsCG, this.hotsandCG, this.glassCG,
+                this.coveredStrawCG]);
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
         dropSprite.body.createGroupCallback(this.urchinsCG, this.checkCollisionUrchins, this);
@@ -283,7 +275,7 @@ State.Level1.prototype = {
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
         dropSprite.body.createGroupCallback(this.glassCG, this.timeOverKill,
                 this);
-        //dropSprite.body.createGroupCallback(this.coveredStrawCG, this.insideStraw, this);
+        dropSprite.body.createGroupCallback(this.coveredStrawCG, this.insideStraw, this);
 	},
 //	setupShell: function (posX, posY) {
 //		 // Create sea shell
@@ -355,49 +347,35 @@ State.Level1.prototype = {
 //        this.bucket.body.setCollisionGroup(this.groundCG);
 //        this.bucket.body.collides([this.groundCG, this.playerCG]);
 //	},
-//	setupStrawHorizontal: function(posX, posY) {
-//		// Tip of the straw (in the left of the bucket)
-//        this.strawLeft = this.game.add.sprite(posX, posY, 'straw1');
-//        this.game.physics.p2.enableBody(this.strawLeft, false);
-//        this.strawLeft.body.fixedRotation = true;
-//        this.strawLeft.body.static = true;
-//        this.strawLeft.body.setCollisionGroup(this.coveredStrawCG);
-//        this.strawLeft.body.collides([this.playerCG]);
-//        this.playerEnteredLeftStraw = false;
-//
-//        // Straw passing under the ground
-//        this.strawUnderGround = this.game.add.sprite(2000, 520, 'dropInStraw');
-//        var strawAnimationRight =
-//            this.strawUnderGround.animations.add('dropInsideRight',
-//            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, false);
-//        strawAnimationRight.onComplete.add(this.strawAnimationComplete, this);
-//        var strawAnimationLeft =
-//            this.strawUnderGround.animations.add('dropInsideLeft',
-//            [9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 10], 10, false);
-//        strawAnimationLeft.onComplete.add(this.strawAnimationComplete, this);
-//        this.strawUnderGround.animations.add('strawNormal', [10], 10, false);
-//        this.strawUnderGround.animations.play('strawNormal');
-//
-//        // Tip of the straw (in the right of the bucket)
-//        this.strawRight = this.game.add.sprite(2470, 510, 'straw1');
-//        this.game.physics.p2.enableBody(this.strawRight, false);
-//        this.strawRight.body.fixedRotation = true;
-//        this.strawRight.body.static = true;
-//        this.strawRight.body.setCollisionGroup(this.coveredStrawCG);
-//        this.strawRight.body.collides([this.playerCG]);
-//        this.playerEnteredRightStraw = false;
-//	},
-//	setupStrawDiagonal: function (posX, posY) {
-//		// canudo
-//		this.diagonalStraw = this.game.add.sprite(posX, posY, 'straw2');
-//		this.game.physics.p2.enableBody(this.diagonalStraw, false);
-//		this.diagonalStraw.body.clearShapes();
-//		this.diagonalStraw.body.loadPolygon('strawPhysics', 'straw2_236-276');
-//		this.diagonalStraw.body.fixedRotation = true;
-//		this.diagonalStraw.body.static = true;
-//		this.diagonalStraw.body.setCollisionGroup(this.strawCG);
-//        this.diagonalStraw.body.collides([this.groundCG, this.playerCG]);
-//	},
+    setupStrawHorizontal: function(straw) {
+        // Tip of the straw (in the left of the bucket)
+        this.strawLeft = this.game.add.sprite(2091, 510, 'strawtip');
+        this.game.physics.p2.enableBody(this.strawLeft, false);
+        this.strawLeft.body.fixedRotation = true;
+        this.strawLeft.body.static = true;
+        this.strawLeft.body.setCollisionGroup(this.coveredStrawCG);
+        this.strawLeft.body.collides([this.playerCG]);
+        this.playerEnteredLeftStraw = false;
+
+        // Straw passing under the ground
+        var strawAnimationRight = straw.animations.add('dropInsideRight',
+                [0, 1, 2, 3, 4, 5, 6, 7, 0], 10, false);
+        strawAnimationRight.onComplete.add(this.strawAnimationComplete, this);
+        var strawAnimationLeft = straw.animations.add('dropInsideLeft',
+                [7, 6, 5, 4, 3, 2, 1, 0], 10, false);
+        strawAnimationLeft.onComplete.add(this.strawAnimationComplete, this);
+        straw.animations.add('strawNormal', [0], 10, false);
+        straw.animations.play('strawNormal');
+
+        // Tip of the straw (in the right of the bucket)
+        this.strawRight = this.game.add.sprite(2555, 510, 'strawtip');
+        this.game.physics.p2.enableBody(this.strawRight, false);
+        this.strawRight.body.fixedRotation = true;
+        this.strawRight.body.static = true;
+        this.strawRight.body.setCollisionGroup(this.coveredStrawCG);
+        this.strawRight.body.collides([this.playerCG]);
+        this.playerEnteredRightStraw = false;
+	},
 	setupMolecule: function () {
 		// Add a "life drop"
         this.molecule = game.add.group();
@@ -478,16 +456,6 @@ State.Level1.prototype = {
         urchin.body.static = true;
         urchin.body.sprite.name = 'urchin';
         urchin.body.collides([this.playerCG, this.groundCG]);
-    },
-    playerOverDiagonalStraw: function() {
-        var characterSprite = this.drop.getSpriteObject();
-        if (characterSprite.x >= 2513.0 && characterSprite.x <= 2750.0 &&
-                characterSprite.y <= (this.game.world.height - 200.0) &&
-                this.touchingDown(characterSprite.body)) {
-            this.forceSlidingStraw = true;
-        } else {
-            this.forceSlidingStraw = false;
-        }
     },
 	// Funcao Magica!!! Deve existir outro jeito!
 	touchingDown: function (someone) {
@@ -690,24 +658,26 @@ State.Level1.prototype = {
                 dropSprite.exists = false;
                 this.game.camera.target = null;
                 this.playerEnteredLeftStraw = true;
-                this.strawUnderGround.animations.play('dropInsideRight');
+                var straw = this.horizontalStraw.getAt(0);
+                straw.animations.play('dropInsideRight');
             }
         } else {
             if (!this.playerEnteredRightStraw) {
                 dropSprite.exists = false;
                 this.game.camera.target = null;
                 this.playerEnteredRightStraw = true;
-                this.strawUnderGround.animations.play('dropInsideLeft');
+                var straw = this.horizontalStraw.getAt(0);
+                straw.animations.play('dropInsideLeft');
             }
         }
     },
     strawAnimationComplete: function(sprite, animation) {
         var dropSprite = this.drop.getSpriteObject();
         if (this.playerEnteredLeftStraw) {
-            dropSprite.reset(2483, this.game.world.height - 140);
+            dropSprite.reset(2555, this.game.world.height - 160);
             this.playerEnteredLeftStraw = false;
         } else {
-            dropSprite.reset(2019, this.game.world.height - 140);
+            dropSprite.reset(2091, this.game.world.height - 160);
             this.playerEnteredRightStraw = false;
         }
         dropSprite.exists = true;
