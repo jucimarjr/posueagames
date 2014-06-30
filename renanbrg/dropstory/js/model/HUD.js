@@ -84,6 +84,9 @@ HUD.prototype = {
     	this.lifeCounter--;
     	this.lifeLabel.setText(this.lifeCounter);
     },
+    getLifeCounter: function() {
+    	return this.lifeCounter;
+    },
     increaseDropBar: function() {
         this.dropCounter++;
         if (this.dropCounter > 0 && this.dropCounter <= 5) {

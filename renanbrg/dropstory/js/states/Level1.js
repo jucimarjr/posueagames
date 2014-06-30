@@ -22,6 +22,8 @@ State.Level1 = function (game) {
     this.forceSlidingStraw = false;
     this.onAir = false;
     this.hotSandTimerActivated = false;
+    this.userDead = false;
+    
 
     this.countCall = 0; //count how many times the collision function is called.
 };
@@ -89,7 +91,7 @@ State.Level1.prototype = {
 		this.setupSmokeEmitter(1550, this.game.height-80);
 
         this.hud.create();
-		//this.drop.userDead();
+        
 
         // Sounds
         this.jumpSound = this.game.add.audio("jump");
@@ -123,9 +125,11 @@ State.Level1.prototype = {
 	        this.game.camera.setPosition(this.game.camera.x - 8,
 	                this.game.camera.y);
 	    }
-	//	if(this.userDead()){
-	//	      this.restart();
-	//	   }
+	    
+		if(this.userDead == true){
+		      this.restartGame();
+		      this.userDead = false;
+		   }
 	},
 	playerOverDiagonalStraw: function() {
 	    var characterSprite = this.drop.getSpriteObject();
@@ -548,7 +552,7 @@ State.Level1.prototype = {
 		if (!this.touchingUp(body2)) {
 			console.log('Matou o Player!!!!');
 			this.drop.kill();
-			//this.drop.userDead = true;
+			this.userDead = true;
 			return true;
 		}
 		return false;
@@ -556,7 +560,7 @@ State.Level1.prototype = {
     checkCollisionUrchins: function(body1, body2) {
         // body1 is the drop, body2 is the sea urchin.
         this.drop.kill();
-
+        this.userDead = true;
         return true;
     },
     checkOverlapWithLifeDrop: function (body1, body2) {
@@ -629,6 +633,7 @@ State.Level1.prototype = {
             } else if (this.drop.playersize == 'small') {
                 // TODO: restart game
                 this.drop.kill();
+                this.userDead = true;
             }
         }
         if (this.countCall == 2) {
@@ -711,17 +716,18 @@ State.Level1.prototype = {
     },
 	clickHowToPlay: function () {
 		"use strict";
-		this.game.state.start('HowToPlay');
+		this.game.state.start('howtoplay-state');
 	},
 	clickCredits: function () {
 		"use strict";
-		this.game.state.start('Credits');
-	}
-//	restart: function(){
-//		player.resetPosition();
-//        if (lifeCounter==0){
-//        	this.game.state.start('GameOver');
-//        }
-//		this.game.state.restart();
-//	}
+		this.game.state.start('credits-state');
+	},
+	restartGame: function () {
+	    this.hud.decreaseLife();
+		if ( this.hud.getLifeCounter()==0){
+			this.game.state.start('gameOver-state');
+		}
+		this.mainSound.stop();
+		this.game.state.restart();
+	},
 };
