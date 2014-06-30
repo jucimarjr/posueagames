@@ -14,6 +14,12 @@ State.GameOver.prototype = {
 		"use strict";
 		var sprite = this.game.add.sprite(GameOverProperties.x, GameOverProperties.y, 'game-over'); // Carregar bg
 		
+		var button = this.game.add.button(Config.menu.buttonBack.x, Config.menu.buttonBack.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
+		button.anchor.setTo(Config.menu.buttonBack.anchor.x, Config.menu.buttonBack.anchor.y);
+		
+		var button2 = this.game.add.button(Config.menu.buttonInit.x, Config.menu.buttonInit.y, 'button-init', this.onNext, this, 1, 0, 1, 0);
+		button2.anchor.setTo(Config.menu.buttonInit.anchor.x, Config.menu.buttonInit.anchor.y);		
+		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
         game.add.text(330, 850, 'Um homem foi encontrado morto após seu veículo atingir um caminhão', style);
         game.add.text(620, 900, 'na manhã deste sábado (29/06/2014).', style);
@@ -24,5 +30,13 @@ State.GameOver.prototype = {
 	update: function () {
 		"use strict";
 		Config.global.screen.resize(this.game);
-	}
+	},
+	onBack: function () {
+		"use strict";
+		this.game.state.start('Game');
+	},
+	onNext: function () {
+		"use strict";
+		this.game.state.start('Menu');
+	}	
 };
