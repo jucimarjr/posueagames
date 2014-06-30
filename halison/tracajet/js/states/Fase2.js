@@ -47,6 +47,19 @@ State.Fase2.prototype = {
 		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
 		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height); // 200x160 eh o tamanho do frame da sprite
 		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
+		game.load.audio('soundGame','assets/sounds/game_sound.wav');
+		game.load.audio('soundGetSheet','assets/sounds/get_sheet.mp3');
+		game.load.audio('soundGameOver','assets/sounds/game-over.mp3');
+		game.load.audio('soundGetKey','assets/sounds/get_key.mp3');
+		game.load.audio('soundColision','assets/sounds/colision.wav');
+		game.load.audio('walk','assets/sounds/walk.wav');
+
+		this.soundMusic =  game.add.audio('soundGame',1,true);
+		this.soundGetSheet = game.add.audio('soundGetSheet',1,true);
+		this.soundGameOver = game.add.audio('soundGameOver',1,true);
+		this.soundGetKey = game.add.audio('soundGetKey',1,true)
+		this.soundColision = game.add.audio('soundColision',1,true)
+		this.soundWalk = game.add.audio('walk',1,true);
 
     },
 
@@ -129,6 +142,7 @@ State.Fase2.prototype = {
 		},this);
 
 		this.bananaGroup = game.add.group();
+		this.soundMusic.play('',0,0.4,true);
     },
 
 
@@ -144,9 +158,10 @@ State.Fase2.prototype = {
 	    
     },
     killEnemy : function(banana,enemie){
-    	enemie.kill();
-    	banana.kill();
-    	this.bananaGroup.remove(banana);
+    	try{
+    		enemie.kill();
+    		banana.kill();
+    	}catch(e){}
     }
     ,
     updateBananaBullet : function(){
@@ -155,9 +170,10 @@ State.Fase2.prototype = {
     		projectile.animations.play('rotating');
             var moduloPosition = Math.abs(this.game.world.position.x);
 			if (projectile.body.x  < moduloPosition || projectile.body.x >  moduloPosition + this.game.width){
-			  projectile.kill();
-			  projectile.destroy();
-			  this.bananaGroup.remove(projectile);
+			  try{
+			  	projectile.kill();	
+			  }catch(e){}
+			  
             }
         }, this);
     }
@@ -235,29 +251,28 @@ State.Fase2.prototype = {
 	    
 	    if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
     	{	
-    		console.log("cont " + this.bananaGroup.length);
     		this.tracajet.animations.play('launchFruit');
-    		if (this.lastBulletShotAt === undefined) this.lastBulletShotAt = 0;
-	        if (this.game.time.now - this.lastBulletShotAt < 200) return;
-	        	this.lastBulletShotAt = game.time.now;
+	    	if(this.contBananas > 0){
+	    		if (this.lastBulletShotAt === undefined) this.lastBulletShotAt = 0;
+		        if (this.game.time.now - this.lastBulletShotAt < 200) return;
+		        	this.lastBulletShotAt = game.time.now;
 
-	        var bullet = this.bananaGroup.getFirstDead();
-	        if(bullet === null || bullet === undefined) return;
-	        bullet.revive();
-
-	        bullet.checkWorldBounds = true;
-	        bullet.outOfBoundsKill = true;
-	        bullet.reset(this.tracajet.x + (this.tracajet.width * (this.tracajet.scale.x < 0 ? -1 : 1)) , this.tracajet.y);
-	        bullet.body.velocity.x = this.tracajet.scale.x < 0 ? -300 : 300;
-	        bullet.body.velocity.y = 0;
-	        bullet.body.allowGravity = false;
-	        this.contBananas--;
-	        if(this.contBananas >=0)
-	        	Config.game.score.score--;
+		        var bullet = this.bananaGroup.getFirstDead();
+		        if(bullet === null || bullet === undefined) return;
+		        bullet.revive();
+		        bullet.reset(this.tracajet.x + (this.tracajet.scale.x < 0 ? -40 : 40) , this.tracajet.y);
+		        bullet.body.velocity.x = this.tracajet.scale.x < 0 ? -300 : 300;
+		        bullet.body.velocity.y = 0;
+		        bullet.body.allowGravity = false;
+		        this.contBananas--;
+		        if(this.contBananas >=0)
+		        	Config.game.score.score--;
+	    	}
     	}
 	},
 	increaseScore : function(tracajet,sheet){
 		sheet.kill();
+		this.soundGetSheet.play('',0,1,false);
 		Config.game.score.score += 1;
 		this.contBananas++;
 		this.createBulletBanana();
@@ -276,7 +291,9 @@ State.Fase2.prototype = {
 						align: "left"
 					});
 					dieText.setText("GAME OVER");
+					this.soundGameOver.play('',0,0.5,false);
 				}else{
+					this.soundColision.play('',0,0.5,false);
 					this.tracajet.isImmortal = true;
 					Config.game.score.lifes--;
 					this.txLife.setText("x " + Config.game.score.lifes);
@@ -334,6 +351,7 @@ State.Fase2.prototype = {
 	increaseContKeys : function(tracajet,key){
 		key.kill();
 		this.contKeys ++;
+		this.soundGetKey.play('',0,0.5,false);
 		if(this.contKeys === this.TOTAL_KEYS){
 			this.isSuperImmortal = true;
 			var moduloPositionX = Math.abs(game.world.position.x);
