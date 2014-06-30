@@ -20,6 +20,9 @@ State.Phase1.prototype = {
 	    Phase1.Door.create();
 		Phase1.World.createBgAlpha();
 		Phase1.Smoke.create();
+		Phase1.Enemy.collide(this.player.player);
+		Phase1.Smoke.collide(this.player.player);
+		
 		Phase1.World.createSound(this.game);
 
         //misc defs
@@ -29,14 +32,7 @@ State.Phase1.prototype = {
     update: function(){
         "use strict";
         Config.global.screen.resize(this.game); 
-		
-		this.collisionFloor();
 
 		this.control.update();
-    },
-    collisionFloor : function(){
-        if (this.player.alive && this.player.y > game.world.height - this.player.height){
-			this.game.state.start('GameOver');
-        }
-    },	
+    }	
 };

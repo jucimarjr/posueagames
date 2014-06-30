@@ -1,85 +1,68 @@
 Phase1.Enemy = {
 	hand : "assets/phase1/images/hand_150-30-6.png",
 	trapGroup : null,
+	fire : [],
+	posItem : [
+	//	{"x" : 280, "y" : 1660},
+	//	{"x" : 290, "y" : 1660},
+	//	{"x" : 300, "y" : 1660},	
+		{"x" : 310, "y" : 1660},	
+		{"x" : 760, "y" : 1700},	
+		{"x" : 770, "y" : 1700},	
+		{"x" : 780, "y" : 1700},	
+		{"x" : 1060, "y" : 1665},	
+		{"x" : 1065, "y" : 1665},	
+		{"x" : 1070, "y" : 1665},	
+		{"x" : 1075, "y" : 1665},	
+		{"x" : 1080, "y" : 1665},
+		{"x" : 2220, "y" : 1710},	
+		{"x" : 2230, "y" : 1712},	
+		{"x" : 2240, "y" : 1713},	
+		{"x" : 2250, "y" : 1713},	
+		{"x" : 2260, "y" : 1714},
+		{"x" : 2710, "y" : 1720},	
+		{"x" : 2840, "y" : 1722},
+		{"x" : 2100, "y" : 1225},	
+		{"x" : 2350, "y" : 1247},
+		{"x" : 1550, "y" : 1255},	
+		{"x" : 1560, "y" : 1255},	
+		{"x" : 1570, "y" : 1255},	
+		{"x" : 1580, "y" : 1255},	
+		{"x" : 900, "y" : 1148},	
+		{"x" : 910, "y" : 1148},	
+		{"x" : 1060, "y" : 1145},	
+		{"x" : 1070, "y" : 1147},
+		{"x" : 300, "y" : 995},	
+		{"x" : 1670, "y" : 655},	
+		{"x" : 1830, "y" : 675},	
+		{"x" : 1980, "y" : 680},	
+		{"x" : 2130, "y" : 667}
+	],	
 	init : function(){
 		this.game.load.spritesheet('enemyHand', this.hand, 25, 30);
 	},
 	create : function(){
-        // traps
-        this.trapGroup = this.game.add.group();
-
-        //Grupo 1
-		this.createHead(280, 1660);
-		this.createHead(290, 1660);
-		this.createHead(300, 1660);
-		this.createHead(310, 1660);
+		this.head = game.add.group();
+    	this.head.enableBody = true;
+    	this.head.physicsBodyType = Phaser.Physics.P2JS;
 		
-		//Grupo 2
-		this.createHead(760, 1700);
-		this.createHead(770, 1700);
-		this.createHead(780, 1700);	
-		
-		this.createHead(1060, 1665);
-		this.createHead(1065, 1665);
-		this.createHead(1070, 1665);
-		this.createHead(1075, 1665);
-		this.createHead(1080, 1665);
-		
-        //Grupo 3
-		this.createHead(2220, 1710);
-		this.createHead(2230, 1712);
-		this.createHead(2240, 1713);
-		this.createHead(2250, 1713);
-		this.createHead(2260, 1714);
-		
-		//Grupo 4					
-		this.createHead(2710, 1720);
-		this.createHead(2840, 1722);
-		
-		//Grupo 5					
-		this.createHead(2100, 1225);
-		this.createHead(2350, 1247);
-		
-		//Grupo 6					
-		this.createHead(1550, 1255);
-		this.createHead(1560, 1255);
-		this.createHead(1570, 1255);
-		this.createHead(1580, 1255);	
-		
-		//Grupo 7					
-		this.createHead(900, 1148);
-		this.createHead(910, 1148);
-		this.createHead(1060, 1145);
-		this.createHead(1070, 1147);
-		
-		//Grupo 8					
-		this.createHead(300, 995);	
-		
-		//Grupo 7					
-		this.createHead(1670, 655);
-		this.createHead(1830, 675);
-		this.createHead(1980, 680);
-		this.createHead(2130, 667);									
-	},
-    createGreatSpear : function (x, y){
-        "use strict";
-        var greatSpear = this.trapGroup.create(x, y, 'enemyHand');
-        greatSpear.trapType = "spear";
-//        spear.frame = 2;
-        greatSpear.anchor.setTo(0.5, 0);
-        greatSpear.angle = 30;
-        this.game.physics.enable(greatSpear);
-        this.game.add.tween(greatSpear)
-            .to({angle: -30}, 2200, Phaser.Easing.Sinusoidal.InOut)
-            .to({angle: 30}, 2200, Phaser.Easing.Sinusoidal.InOut)
-            .start().loop();
+		for(var x = 0; x < this.posItem.length; x++){		
+			this.fire[x] = this.head.create(this.posItem[x].x, this.posItem[x].y, 'enemyHand');
+			this.fire[x].animations.add('burn', [0, 1, 2, 3, 4, 5], 10, true);
+			this.fire[x].animations.play('burn');	
+			this.fire[x].body.fixedRotation = true;
+			this.fire[x].body.static = true;
+			this.fire[x].body.setRectangle(15, 20);
 			
-        // TODO: animacao
-        console.log("desenhando lanca");
-    },
-	createHead : function(x, y){
-		this.fire = this.game.add.sprite(x, y, 'enemyHand');
-        this.fire.animations.add('burn', [0, 1, 2, 3, 4, 5], 5, true);
-        this.fire.animations.play('burn');		
+			game.physics.p2.enable(this.fire[x], false);
+		}						
+	},
+	collide : function(player){
+		for(var x = 0; x < this.posItem.length; x++){	
+			player.body.createBodyCallback(this.fire[x], this.action, this);
+		}		
+	},
+	action : function(){
+		this.game.state.start('GameOver');		
 	}	
 };
