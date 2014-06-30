@@ -57,7 +57,7 @@
  </layer>
  <layer name="mainlayer" width="120" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt09kKwCAMRFG7L///wQ34WLAqaemEe2BeDSROSgAA+Joss2WxrIFmIdssu+WwnIFmIaNTsdGp2OjvXWknXvtqfad3rnJ/3/qbpZ147av1nd65yv1V/ptf8dqR8j+JzOsudOmfuMuzoSLQVXPfkcjmAmbhA2E=
+   eJzt1FsKgDAMRNFqfdX9L9hAPwt9EdSEe2B+G5k2hgAAgK4o2SS75HA0C9kpuSRJcjuahYyd8o2d8o39LdU60epr9JzZuexvqdaJVl+j58zOtby/lr/9LVrv8Yuu+fe0ad0LXf8T99K2dAR29dzvSszmAQVhA2E=
   </data>
  </layer>
  <objectgroup name="seaurchins" width="120" height="15">
