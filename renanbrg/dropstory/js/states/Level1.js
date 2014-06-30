@@ -23,7 +23,7 @@ State.Level1 = function (game) {
     this.onAir = false;
     this.hotSandTimerActivated = false;
     this.userDead = false;
-    
+    this.dropIsInvincible = false;
 
     this.countCall = 0; //count how many times the collision function is called.
 };
@@ -85,11 +85,11 @@ State.Level1.prototype = {
 //		this.setupStrawHorizontal();
 //		this.setupStrawDiagonal(2720, 270);
 		this.setupMolecule();
-		this.setupPlayer(2000, 100);
+		this.setupPlayer(3000, 100);
 		this.setupSmokeEmitter(1550, this.game.height-80);
 
         this.hud.create();
-        
+
 
         // Sounds
         this.jumpSound = this.game.add.audio("jump");
@@ -122,7 +122,7 @@ State.Level1.prototype = {
 	        this.game.camera.setPosition(this.game.camera.x - 20,
 	                this.game.camera.y);
 	    }
-	    
+
 		if(this.userDead == true){
 		      this.restartGame();
 		      this.userDead = false;
@@ -388,6 +388,7 @@ State.Level1.prototype = {
 
         this.molecule.create(200, 310, 'lifedrop');
         this.molecule.create(1750, this.game.world.height-210, 'energy');
+        this.molecule.create(2920, this.game.world.height - 160, 'sundrop');
 
         for (var i = 0; i < this.molecule.length; i++) {
             this.molecule.getAt(i).body.setCollisionGroup(this.moleculeCG);
@@ -402,6 +403,7 @@ State.Level1.prototype = {
 
         this.molecule.getAt(0).body.sprite.name='lifedrop';
         this.molecule.getAt(1).body.sprite.name='energy';
+        this.molecule.getAt(2).body.sprite.name = 'sunscreendrop';
     },
 	setupSmokeEmitter: function(posX, posY) {
 		// smoke animation
@@ -546,9 +548,11 @@ State.Level1.prototype = {
 				body2.sprite.kill();
 				body2.hasCollided = true;
 				this.drop.playersize = 'big';
-			} else {
+			} else if (body2.sprite.name == 'energy') {
 				this.drinkEnergy(body1, body2);
-			}
+            } else if (body2.sprite.name == 'sunscreendrop') {
+                this.hitSunscreenDrop(body1, body2);
+            }
             return true;
         }
 
@@ -574,10 +578,28 @@ State.Level1.prototype = {
 			this.countCall = 0;
 		}
 	},
-	hitSunscreen: function () {
+	hitSunscreenDrop: function (body1, body2) {
 		this.drop.playerstate = 'sunscreen';
+		this.countCall++;
+        if (this.countCall == 1) {
+            body2.sprite.kill();
+            body2.hasCollided = true;
+            this.dropIsInvincible = true;
+            var self = this;
+            setTimeout(function() {
+                self.dropIsInvincible = false;
+                self.drop.playerstate = 'normal';
+            }, 5500);
+        }
+        if (this.countCall == 2) {
+            this.countCall = 0;
+        }
 	},
 	killDrop: function (body1, body2) {
+        if (this.dropIsInvincible) {
+            return;
+        }
+
         this.countCall++;
         if (this.countCall == 1 && !this.hotSandTimerActivated) {
             console.log('moreeeeeeeeeeeeeeeeeu!!! killlDrop');
