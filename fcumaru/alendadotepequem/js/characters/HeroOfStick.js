@@ -99,7 +99,8 @@ function HeroOfStick(game) {
 		}
 		if (!keyPressed) {
 			this.hero.animations.stop();
-			this.hero.frame = 0;
+			this.hero.frame = 2;
+			this.hero.isPushing = false;
 		}
 
 		if (this.hero.body.onFloor()) {
