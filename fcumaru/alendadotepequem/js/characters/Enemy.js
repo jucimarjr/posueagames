@@ -91,8 +91,8 @@ Enemy.method('getY', function() {
 });
 Enemy.method('dead', function() {
 	"use strict";
-	log("dead");
-	this.enemy.animations.stop();
+	this.enemy.kill();
+
 });
 
 function log(msg) {
