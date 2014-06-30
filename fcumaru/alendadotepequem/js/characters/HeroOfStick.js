@@ -1,6 +1,7 @@
 function HeroOfStick(game) {
 	"use strict";
 	var that = new Hero(game);
+	var distance;
 
 	// Default parameters
 	that.type = HERO_OF_STICK;
@@ -79,6 +80,11 @@ function HeroOfStick(game) {
 			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
 				this.hero.animations.play('attack');
 				keyPressed = true;
+				distance = enemies.checkDistanceFromEnemy(this.hero.x,
+						this.hero.y);
+				if (distance < 5.5) {
+					enemies.Attacked(true);
+				}
 			}
 		}
 		// executar a animacao para para cima
