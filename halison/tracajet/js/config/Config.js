@@ -137,8 +137,8 @@ Config.game = {
 		floor: {
 			dir: 'assets/images/chao.jpg',
 		},
-		jacare:{
-			
+		bird:{
+			dir: 'assets/sprites/passaros_115-115-4.png',
 		},
 		fase1: {
 			background: "assets/images/bg1_2880-1200.png",
