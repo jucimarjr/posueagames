@@ -10,7 +10,7 @@ State.Credits.prototype = {
 	},
 	create: function () {
 		"use strict";
-		var background = this.game.add.sprite(Config.credits.x, Config.credits.y, 'credits');
+		var background = this.game.add.sprite(Config.menu.x, Config.menu.y, 'menu-background');
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
 	},
