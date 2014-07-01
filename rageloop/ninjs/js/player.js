@@ -55,6 +55,7 @@
 
             shuriken.reset(this.sprite.x, this.sprite.y);
             shuriken.body.velocity.x = (this.sprite.scale.x > 0) ? 1000 : -1000;
+            shuriken.body.angularVelocity = (this.sprite.scale.x > 0) ? 1000 : -1000;
             shuriken.scale.set(0.8, 0.8);
             shuriken.checkWorldBounds = true;
             shuriken.outOfBoundsKill = true;

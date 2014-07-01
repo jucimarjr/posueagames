@@ -104,6 +104,7 @@
 
             shuriken.reset(enemy.x + enemy.width, enemy.y);
             shuriken.body.velocity.x = (enemy.scale.x > 0) ? 700 : -700;
+            shuriken.body.angularVelocity = (enemy.scale.x > 0) ? 700 : -700;
             shuriken.scale.set(0.8, 0.8);
             shuriken.checkWorldBounds = true;
             shuriken.outOfBoundsKill = true;
