@@ -22,7 +22,8 @@ var HeartConsts = {
 	attackDistance: 1.6 * PhysicsConsts.pixelsToUnit,
 	pursuitVelocity: PhysicsConsts.pixelsToUnit * 0.02,
 	playerDeathDistance: PhysicsConsts.pixelsToUnit * 0.2,
-	minimumBeatDistance: PhysicsConsts.pixelsToUnit * 2.5
+	minimumBeatDistance: PhysicsConsts.pixelsToUnit * 3.0,
+	heartbeatAttenuation: 600.0
 };
 
 var JoystickConsts = {
