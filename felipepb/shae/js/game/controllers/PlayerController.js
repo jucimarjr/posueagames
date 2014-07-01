@@ -242,7 +242,7 @@ Game.PlayerController.prototype = {
                    this.sprite.frameName == 'shae_run_3_100-100.png') {
             
             if (!this._footstepSFXPlayed) {
-                this.footstepSFX[Utils.random(0, 2)].play('', 0, 1.0);
+                this.footstepSFX[Utils.random(0, 2)].play('', 0, 1.25);
                 this._footstepSFXPlayed = true;
             }
         } else if (this._footstepSFXPlayed) {

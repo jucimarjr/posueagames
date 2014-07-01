@@ -1,37 +1,34 @@
-/**
- * 
- */
 State.GameOver = function (game) {
-	"use strict";
-	this.game = game;
+    "use strict";
+
+    this.game = game;
 };
+
 State.GameOver.prototype = {
-	preload: function () {
-		"use strict";
-		this.game.load.audio('gameOver','assets/gotaGameOver.ogg');
-		
-		
-	},
-	create: function () {
-		"use strict";
-		var background = this.game.add.sprite(Config.gameOver.x, Config.gameOver.y, 'gameOver-bg');
-		background.inputEnabled = true;
-		background.events.onInputDown.add(this.onClick, this);
-		
-		this.mainSound.stop();
-		
-		this.gameOverSound = this.game.add.audio("gameOver");
+    preload: function () {
+        "use strict";
+
+        this.game.load.audio('gameover-song', 'assets/gota-gameover.ogg');
+        this.game.load.image('gameover-bg',  Config.gameOver.dir);
+    },
+    create: function () {
+        "use strict";
+
+        this.background = this.game.add.sprite(Config.gameOver.x,
+                Config.gameOver.y, 'gameover-bg');
+
+        this.gameOverSound = this.game.add.audio('gameover-song');
+        this.gameOverSound.onStop.add(this.nextState, this);
         this.gameOverSound.play();
-	},
-	update: function () {
-		"use strict";
-		Config.global.screen.resize(this.game);
-		if (this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			this.game.state.start('Menu');
-		}
-	},
-	onClick: function () {
-		"use strict";
-		this.game.state.start('Menu');
-	}
+    },
+    nextState: function () {
+        "use strict";
+
+        this.game.add.tween(this.background).to({alpha : 0}, 500,
+                Phaser.Easing.Linear.None).start();
+
+        setTimeout(function() {
+            this.game.state.start('menu-state');
+        }, 600);
+    }
 };

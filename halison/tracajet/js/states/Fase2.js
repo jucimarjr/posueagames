@@ -67,14 +67,14 @@ State.Fase2.prototype = {
 
         game.physics.startSystem(Phaser.Game.ARCADE);
 
-        this.map = game.add.tilemap('mapa'); //adicionando o map
-        this.map.addTilesetImage('p1_480-40','tilesetPlataforma' );// primeiro vem nome do arquivo, depois o apelido
-		this.map.addTilesetImage('p2_480-40','tilesetPlataforma2' );
-		this.map.addTilesetImage('p3_40-480','tilesetPlataforma3' );
-		this.map.addTilesetImage('p4_40-480','tilesetPlataforma4' );
+        this.map = game.add.tilemap('mapaFase2'); //adicionando o map
+        this.map.addTilesetImage('p1_480-40','tilesetPlataformaFase2' );// primeiro vem nome do arquivo, depois o apelido
+		this.map.addTilesetImage('p2_480-40','tilesetPlataformaFase22' );
+		this.map.addTilesetImage('p3_40-480','tilesetPlataformaFase23' );
+		this.map.addTilesetImage('p4_40-480','tilesetPlataformaFase24' );
 		
 		this.map.addTilesetImage('monkeys','monkey' );
-		this.map.addTilesetImage('frutas','assets2' );
+		this.map.addTilesetImage('frutas','assets2Fase2' );
         this.layer = this.map.createLayer('Camada de Tiles 1');
         this.layer.resizeWorld(); //seta o mundo com as alterações feitas
         this.map.setCollisionBetween(1,48, true,'Camada de Tiles 1'); // 0 espaco vazio 1 em diante os tiles do tileset
@@ -100,7 +100,7 @@ State.Fase2.prototype = {
 		//Groups frutas
 		this.fruits = this.game.add.group();
 		this.fruits.enableBody  = true;
-		this.map.createFromObjects(this.nameFruits,62,'assets2',1,true,false,this.fruits);
+		this.map.createFromObjects(this.nameFruits,62,'assets2Fase2',1,true,false,this.fruits);
 		
 		//Cursor
 		this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -393,7 +393,7 @@ State.Fase2.prototype = {
 		this.game.paused = true;
 	},
 	createBulletBanana : function(){
-		var bullet = game.add.sprite(0, 0, 'assets2');
+		var bullet = game.add.sprite(0, 0, 'assets2Fase2');
     	this.bananaGroup.add(bullet);
     	bullet.anchor.setTo(.5, .5);
     	bullet.animations.add('rotating',[1],10,true);

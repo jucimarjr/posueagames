@@ -22,7 +22,6 @@ State.Level1 = function (game) {
     this.forceSlidingStraw = false;
     this.onAir = false;
     this.hotSandTimerActivated = false;
-    this.userDead = false;
     this.dropIsInvincible = false;
 
     this.countCall = 0; //count how many times the collision function is called.
@@ -122,11 +121,6 @@ State.Level1.prototype = {
 	        this.game.camera.setPosition(this.game.camera.x - 20,
 	                this.game.camera.y);
 	    }
-
-		if(this.userDead == true){
-		      this.restartGame();
-		      this.userDead = false;
-		   }
 	},
 	handleKeyDown: function () {
 		"use strict";
@@ -526,16 +520,16 @@ State.Level1.prototype = {
 		// body1 is the drop, body2 is the crab.
 		if (!this.touchingUp(body2)) {
 			console.log('Matou o Player!!!!');
-			this.drop.kill();
-			this.userDead = true;
+            this.restartGame();
+
 			return true;
 		}
 		return false;
     },
     checkCollisionUrchins: function(body1, body2) {
         // body1 is the drop, body2 is the sea urchin.
-        this.drop.kill();
-        this.userDead = true;
+        this.restartGame();
+
         return true;
     },
     checkOverlapWithLifeDrop: function (body1, body2) {
@@ -626,9 +620,7 @@ State.Level1.prototype = {
                     this.hotSandTimerActivated = true;
                 }
             } else if (this.drop.playersize == 'small') {
-                // TODO: restart game
-                this.drop.kill();
-                this.userDead = true;
+                this.restartGame();
             }
         }
         if (this.countCall == 2) {
@@ -719,12 +711,15 @@ State.Level1.prototype = {
 		"use strict";
 		this.game.state.start('credits-state');
 	},
-	restartGame: function () {
-	    this.hud.decreaseLife();
-		if ( this.hud.getLifeCounter()==0){
-			this.game.state.start('gameOver-state');
-		}
-		this.mainSound.stop();
-		this.game.state.restart();
-	},
+    restartGame: function () {
+        this.drop.kill();
+        this.hud.decreaseLife();
+        if (this.hud.getLifeCounter() == 0) {
+            this.mainSound.stop();
+            this.game.state.start('gameover-state');
+        } else {
+            this.mainSound.stop();
+            this.game.state.restart();
+        }
+    }
 };

@@ -108,7 +108,7 @@ Config.credits = {
 
 //GameOver
 Config.gameOver = {
-	dir: 'assets/images/telaFinal_960-600.png',
+	dir: 'assets/images/gameoverbg_960-600.png',
 	x: 0,
 	y: 0
 };
