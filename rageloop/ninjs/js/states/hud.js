@@ -8,6 +8,7 @@
 
 		this.lifes = 5;
 		this.score = 0;
+		this.totalItems = 0;
 		this.items_collected = 0;
 
 		this.scoreText = null;
@@ -15,8 +16,8 @@
 		this.lifeSymbols = [];
 	}
 
-	HUD.prototype.init = function() {
-
+	HUD.prototype.init = function(totalItems) {
+		this.totalItems = totalItems;
 		this.create();
 	}
 
@@ -38,7 +39,7 @@
 
 		style = { font: "28px pixelFont", fill: "#ffffff"};
 
-		this.itemsCollectedText = this.game.add.text(10, 50, "items: " + this.formatNumber(this.score, 2), style);
+		this.itemsCollectedText = this.game.add.text(10, 50, "medals: " + this.formatNumber(this.score, 2) + "/" + this.formatNumber(this.totalItems, 2), style);
 
 		this.itemsCollectedText.fixedToCamera = true;
 
@@ -66,7 +67,7 @@
 		}
 
 		this.items_collected += value;
-		this.itemsCollectedText.setText("items: " + this.formatNumber(this.items_collected, 2));
+		this.itemsCollectedText.setText("medals: " + this.formatNumber(this.items_collected, 2) + "/" + this.formatNumber(this.totalItems, 2));
 	}
 
 	HUD.prototype.updateLifes = function(value) {

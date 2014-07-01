@@ -86,7 +86,7 @@
             this.audio.play();
 
             this.hud = new HUD(this.game);
-            this.hud.init();
+            this.hud.init(this.totalItems);
 
             this.itemCount = 0;
 
