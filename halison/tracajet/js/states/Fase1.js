@@ -83,7 +83,8 @@ State.Fase1.prototype = {
 		this.tracajet.body.collideWorldBounds = true;
 	    this.tracajet.body.drag.x = 200;
 		this.tracajet.anchor.setTo(.5,.5);
-	    this.tracajet.body.gravity.y = 30;
+	    this.tracajet.body.gravity.y = 50;
+	    this.tracajet.body.acceleration.y = 10;
 		this.tracajet.isImmortal = false;
 	    game.camera.follow(this.tracajet);
 
@@ -156,7 +157,7 @@ State.Fase1.prototype = {
 		this.contKeys ++;
 		if(this.contKeys === this.TOTAL_KEYS){
 			this.soundWalk.stop();
-			this.soundMusic.stop()
+			this.soundMusic.stop();
 			this.game.state.start('Fase2');
 		}
 	}
