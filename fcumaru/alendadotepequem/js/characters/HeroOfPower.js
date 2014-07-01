@@ -10,8 +10,8 @@ function HeroOfPower(game) {
 	that.walk = 200;
 	that.life = 1;
 	that.maxJump = 3;
-	that.initX = 20;
-	that.initY = 1000;
+	that.initX = 0;
+	that.initY = 2580;
 
 	that.preload = function() {
 		"use strict";
@@ -45,10 +45,14 @@ function HeroOfPower(game) {
 		this.hero.body.gravity.y = 150;
 
 		this.hero.health = this.life;
+		this.hero.active = false;
 
 		// Add extra params
 		this.hero.heroType = this.type;
 		this.hero.isPushing = false;
+		this.hero.jumpCount = this.jumpCount;
+
+		this.hero.body.allowGravity = false;
 
 		this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 		this.jumpKey.onDown.add(this.jumpCheck, this);
@@ -62,13 +66,13 @@ function HeroOfPower(game) {
 		// PEGA A ENTRADA (tecla pressionada):
 		var keyPressed = false;
 		// apenas processar movimento se estiver ativo
-		if (this.active) {
+		if (this.hero.active) {
 			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 				// vai para esquerda
 				this.hero.body.velocity.x = -this.walk;
 				if (this.hero.isPushing) {
 					this.hero.animations.play('power');
-				} else if (this.jumpCount == 0) {
+				} else if (this.hero.jumpCount == 0) {
 					this.hero.animations.play('walk');
 				}
 				this.hero.scale.x = -1; // espelha se antes -1
@@ -78,7 +82,7 @@ function HeroOfPower(game) {
 				this.hero.body.velocity.x = this.walk;
 				if (this.hero.isPushing) {
 					this.hero.animations.play('power');
-				} else if (this.jumpCount == 0) {
+				} else if (this.hero.jumpCount == 0) {
 					this.hero.animations.play('walk');
 				}
 				this.hero.scale.x = +1; // espelha se antes 1
@@ -86,13 +90,15 @@ function HeroOfPower(game) {
 			}
 		}
 		// executar a animacao para para cima
-		if (this.jumpCount > 0) {
+		if (this.hero.jumpCount > 0) {
 			this.hero.animations.play('jump');
 
 			// resetando o contador de pulo quando votlar ao ch�o
 			if (this.hero.body.onFloor()) {
-				this.jumpCount = 0;
+				this.hero.jumpCount = 0;
 			}
+			
+			this.hero.isPushing = false;			
 			keyPressed = true;
 		}
 		
@@ -101,6 +107,12 @@ function HeroOfPower(game) {
 			this.hero.frame = 7;
 
 			this.hero.isPushing = false;
+		}
+
+		if (this.hero.body.onFloor()) {
+			this.hero.body.allowGravity = false;
+		} else {
+			this.hero.body.allowGravity = true;
 		}
 	};
 

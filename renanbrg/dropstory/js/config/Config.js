@@ -92,13 +92,6 @@ Config.Menu = {
 	}
 };
 
-//GamePlay
-Config.gamePlay = {
-	dir: 'assets/images/background_4800-600.png',
-	x: 0,
-	y: 0
-};
-
 //HowToPlay
 Config.howToPlay = {
 	dir: 'assets/images/howtoplay_960-600.png',
@@ -114,11 +107,11 @@ Config.credits = {
 };
 
 //GameOver
-//Config.credits = {
-//	dir: 'assets/images/GameOver_960-600.png',
-//	x: 0,
-//	y: 0
-//};
+Config.gameOver = {
+	dir: 'assets/images/telaFinal_960-600.png',
+	x: 0,
+	y: 0
+};
 /*Config.gamePlay = {
 	dir: 'assets/images/GamePlayBg_600-960.png',
 	x: 0,

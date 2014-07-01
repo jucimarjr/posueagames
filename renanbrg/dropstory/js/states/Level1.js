@@ -22,6 +22,8 @@ State.Level1 = function (game) {
     this.forceSlidingStraw = false;
     this.onAir = false;
     this.hotSandTimerActivated = false;
+    this.userDead = false;
+    this.dropIsInvincible = false;
 
     this.countCall = 0; //count how many times the collision function is called.
 };
@@ -43,33 +45,34 @@ State.Level1.prototype = {
 	create: function () {
 		"use strict";
 
-//		var background;
-//		background = this.game.add.tileSprite(Config.gamePlay.x, Config.gamePlay.y, 4480, 544, 'gameplay-bg');
-//		background.fixedToCamera = true;
+		var background;
+		background = this.game.add.tileSprite(0, 0, 4480, 544, 'gameplay-bg');
+		background.fixedToCamera = true;
 
         this.map = this.game.add.tilemap('map');
-        this.map.addTilesetImage('wetsand_32-32', 'wetsand');
-        this.map.addTilesetImage('hotsand_32-32', 'hotsand');
-        this.map.addTilesetImage('platform_160-64', 'platform');
-        this.map.addTilesetImage('seashell_224-64', 'seashell');
-        this.map.addTilesetImage('can_320-128', 'can');
-        this.map.addTilesetImage('bucket_384-480', 'bucket');
-        this.map.addTilesetImage('straw_224-256', 'diagonalstraw');
-        this.map.addTilesetImage('sunscreen_288-96', 'sunscreen');
+        this.map.addTilesetImage('wetsand_40-40', 'wetsand');
+        this.map.addTilesetImage('hotsand_40-40', 'hotsand');
+        this.map.addTilesetImage('platform_160-80', 'platform');
+        this.map.addTilesetImage('seashell_120-40', 'seashell');
+        this.map.addTilesetImage('can_320-120', 'can');
+        this.map.addTilesetImage('bucket_360-480', 'bucket');
+        this.map.addTilesetImage('diagonalstraw_240-280', 'diagonalstraw');
+        this.map.addTilesetImage('sunscreen_280-80', 'sunscreen');
         this.map.addTilesetImage('seaurchin_80-40', 'seaurchin');
-        this.map.addTilesetImage('glass_288-320', 'glass');
-        this.map.addTilesetImage('straw_480-64', 'strawground');
-        this.map.addTilesetImage('strawtipleft_15-20', 'strawtipleft');
-        this.map.addTilesetImage('strawtipright_15-20', 'strawtipright');
+        this.map.addTilesetImage('glass_280-320', 'glass');
+        this.map.addTilesetImage('water_200-40', 'lifedrop');
+        this.map.addTilesetImage('energy_200-40', 'energy');
+        this.map.addTilesetImage('sunscreendrop_200-40', 'sundrop');
+        this.map.addTilesetImage('dropinstraw_3840-80', 'dropinstraw');
 
         this.mainLayer = this.map.createLayer('mainlayer');
         this.hotSandLayer = this.map.createLayer('hotsandlayer');
-        this.strawLayer = this.map.createLayer('strawlayer');
+        this.irregularLayer = this.map.createLayer('irregularlayer');
         this.mainLayer.resizeWorld();
 
 //      this.map.setCollisionByExclusion([0], true, this.mainLayer);
 //      this.map.setCollisionByExclusion([0], true, this.hotSandLayer);
-//      this.map.setCollisionByExclusion([0], true, this.strawLayer);
+//      this.map.setCollisionByExclusion([0], true, this.irregularLayer);
 
         this.setupPhysics();
         this.setupLayers();
@@ -79,14 +82,14 @@ State.Level1.prototype = {
 //		this.setupCan(1620, this.game.world.height-80);
         this.setupCrab();
 //		this.setupBucket(2250, 272);
-//		this.setupStrawHorizontal(2010, 510);
+//		this.setupStrawHorizontal();
 //		this.setupStrawDiagonal(2720, 270);
 		this.setupMolecule();
-		this.setupPlayer(100, this.game.world.height-200);
+		this.setupPlayer(3000, 100);
 		this.setupSmokeEmitter(1550, this.game.height-80);
 
         this.hud.create();
-		//this.drop.userDead();
+
 
         // Sounds
         this.jumpSound = this.game.add.audio("jump");
@@ -102,7 +105,6 @@ State.Level1.prototype = {
 		this.handleKeyDown();
 		this.isOnAir();
 		this.drop.playerAnimations();
-		this.playerOverDiagonalStraw();
 
 		this.moveCrab(this.crabs.getAt(0));
 		this.moveCrab(this.crabs.getAt(1));
@@ -114,25 +116,17 @@ State.Level1.prototype = {
 		}
 
 	    if (this.playerEnteredLeftStraw) {
-	        this.game.camera.setPosition(this.game.camera.x + 8,
+	        this.game.camera.setPosition(this.game.camera.x + 20,
 	                this.game.camera.y);
 	    } else if (this.playerEnteredRightStraw) {
-	        this.game.camera.setPosition(this.game.camera.x - 8,
+	        this.game.camera.setPosition(this.game.camera.x - 20,
 	                this.game.camera.y);
 	    }
-	//	if(this.userDead()){
-	//	      this.restart();
-	//	   }
-	},
-	playerOverDiagonalStraw: function() {
-	    var characterSprite = this.drop.getSpriteObject();
-	    if (characterSprite.x >= 2513.0 && characterSprite.x <= 2750.0 &&
-	            characterSprite.y <= (this.game.world.height - 200.0) &&
-	            this.touchingDown(characterSprite.body)) {
-	        this.forceSlidingStraw = true;
-	    } else {
-	        this.forceSlidingStraw = false;
-	    }
+
+		if(this.userDead == true){
+		      this.restartGame();
+		      this.userDead = false;
+		   }
 	},
 	handleKeyDown: function () {
 		"use strict";
@@ -181,32 +175,42 @@ State.Level1.prototype = {
 		this.playerCG = game.physics.p2.createCollisionGroup();
 		this.groundCG = game.physics.p2.createCollisionGroup();
 		this.crabCG = game.physics.p2.createCollisionGroup();
-		this.strawCG = game.physics.p2.createCollisionGroup();
 		this.coveredStrawCG = game.physics.p2.createCollisionGroup();
 		this.moleculeCG = game.physics.p2.createCollisionGroup();
+		this.energyCG = game.physics.p2.createCollisionGroup();
+		this.sundropCG = game.physics.p2.createCollisionGroup();
 		this.urchinsCG = game.physics.p2.createCollisionGroup();
 		this.hotsandCG = game.physics.p2.createCollisionGroup();
+        this.glassCG = game.physics.p2.createCollisionGroup();
 
 		// Create and Setup Material
 	    this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
 	    this.crabMaterial = game.physics.p2.createMaterial('crabMaterial');
 	    this.groundMaterial = game.physics.p2.createMaterial('groundMaterial');
 	    this.hotsandMaterial = game.physics.p2.createMaterial('hotsandMaterial');
+	    this.slidingMaterial = game.physics.p2.createMaterial('slidingMaterial');
 
 		// create contact material
 	    this.game.physics.p2.createContactMaterial(this.groundMaterial, this.crabMaterial, {friction: 0.0, restitution: 0.0});
 	    this.game.physics.p2.createContactMaterial(this.characterMaterial, this.groundMaterial, {friction: 0.0, restitution: 0.0});
 	    this.game.physics.p2.createContactMaterial(this.crabMaterial, this.hotsandMaterial, {friction: 0.0, restitution: 0.0});
+	    this.game.physics.p2.createContactMaterial(this.characterMaterial,
+                this.slidingMaterial, {friction: 0.1, restitution: 0.0});
 	},
 	setupLayers: function () {
 	    this.tilesMainLayer = game.physics.p2.convertTilemap(this.map,
 	            this.mainLayer);
 	    this.tilesHotSandLayer = game.physics.p2.convertTilemap(this.map,
 	            this.hotSandLayer);
-	    this.tilesStrawLayer = game.physics.p2.convertTilemap(this.map,
-	    		this.strawLayer);
-	    this.tilesObjects = game.physics.p2.convertCollisionObjects(this.map,
-	            'objects');
+	    this.tilesIrregularLayer = game.physics.p2.convertTilemap(this.map,
+	            this.irregularLayer);
+
+	    var basicShapes = game.physics.p2.convertCollisionObjects(this.map,
+                'basic-shapes');
+	    var strawShapes = game.physics.p2.convertCollisionObjects(this.map,
+                'straw-shapes');
+	    var glassPolygon = game.physics.p2.convertCollisionObjects(this.map,
+                'glass-polygon');
 
 	    //setup all tiles with collisiongroups or materials
 	    for (var i=0; i < this.tilesMainLayer.length; i++) {
@@ -221,24 +225,40 @@ State.Level1.prototype = {
 	                this.moleculeCG, this.groundCG, this.urchinsCG]);
 	    	this.tilesHotSandLayer[i].setMaterial(this.groundMaterial);
 	    }
-	    for (var i=0; i < this.tilesStrawLayer.length; i++) {
-	    	this.tilesStrawLayer[i].setCollisionGroup(this.groundCG);
-	    	this.tilesStrawLayer[i].collides([this.playerCG, this.crabCG,
-	                this.moleculeCG, this.groundCG, this.urchinsCG]);
-	    	this.tilesStrawLayer[i].setMaterial(this.slidingMaterial);
+	    for (var i = 0; i < basicShapes.length; i++){
+	    	basicShapes[i].setCollisionGroup(this.groundCG);
+	    	basicShapes[i].collides([this.playerCG, this.crabCG,
+                    this.moleculeCG, this.energyCG, this.sundropCG]);
+	    	basicShapes[i].setMaterial(this.groundMaterial);
 	    }
-	    for (var i=0; i < this.tilesObjects.length; i++){
-	    	this.tilesObjects[i].setCollisionGroup(this.groundCG, this.crabCG,
-	    			this.moleculeCG, this.energyCG);
-	    	this.tilesObjects[i].collides([this.playerCG]);
-	    	this.tilesObjects[i].setMaterial(this.groundMaterial);
+	    for (var i = 0; i < strawShapes.length; i++){
+	    	strawShapes[i].setCollisionGroup(this.groundCG);
+	    	strawShapes[i].collides([this.playerCG, this.moleculeCG,
+                    this.energyCG, this.sundropCG]);
+	    	strawShapes[i].setMaterial(this.slidingMaterial);
+	    }
+	    for (var i = 0; i < glassPolygon.length; i++){
+	    	glassPolygon[i].setCollisionGroup(this.glassCG);
+	    	glassPolygon[i].collides([this.playerCG]);
+	    	glassPolygon[i].setMaterial(this.groundMaterial);
 	    }
 
-	    // Creating the objects defined in the tilemap
+	    this.crabs = game.add.group();
+		this.crabs.enableBody = true;
+		this.crabs.physicsBodyType = Phaser.Physics.P2JS;
+	    this.map.createFromObjects('crab-objects', 275, 'crab', 0, true, false,
+	            this.crabs);
+	    this.crabs.forEach(this.setupCrab, this);
+
 	    this.urchins = game.add.group();
-	    this.map.createFromObjects('objects', 330, 'urchin', 0, true, false,
+	    this.map.createFromObjects('seaurchins', 202, 'urchin', 0, true, false,
 	            this.urchins);
 	    this.urchins.forEach(this.setupUrchins, this);
+
+        this.horizontalStraw = game.add.group();
+        this.map.createFromObjects('horizontalstraw', 278, 'dropinstraw', 0,
+                true, false, this.horizontalStraw);
+        this.horizontalStraw.forEach(this.setupStrawHorizontal, this);
     },
 	setupPlayer: function (posX, posY) {
 		this.drop.create(posX, posY);
@@ -248,15 +268,17 @@ State.Level1.prototype = {
         this.drop.setCharacterInicialValues();
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
-        dropSprite.body.collides([this.groundCG, this.crabCG, this.strawCG,
-								  this.moleculeCG, this.urchinsCG,
-								  this.hotsandCG, this.coveredStrawCG]);
+        dropSprite.body.collides([this.groundCG, this.crabCG, this.moleculeCG,
+                this.urchinsCG, this.hotsandCG, this.glassCG,
+                this.coveredStrawCG]);
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
         dropSprite.body.createGroupCallback(this.urchinsCG, this.checkCollisionUrchins, this);
         dropSprite.body.createGroupCallback(this.moleculeCG, this.checkOverlapWithLifeDrop, this);
 		dropSprite.body.createGroupCallback(this.drinkEnergy, this);
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
+        dropSprite.body.createGroupCallback(this.glassCG, this.timeOverKill,
+                this);
         dropSprite.body.createGroupCallback(this.coveredStrawCG, this.insideStraw, this);
 	},
 //	setupShell: function (posX, posY) {
@@ -301,20 +323,18 @@ State.Level1.prototype = {
 //	},
 	setupCrab: function() {
 		// create crabs
-        this.crabs = game.add.group();
-		this.crabs.enableBody = true;
-		this.crabs.physicsBodyType = Phaser.Physics.P2JS;
-		this.crabs.create(this.game.width-180, this.game.height-80-69, 'crab');
-        this.crabs.create(this.game.width, this.game.height-80-69, 'crab');
-        this.crabs.create(4480, this.game.height-80-69, 'crab');
+//        this.crabs = game.add.group();
+//		this.crabs.create(this.game.width-180, this.game.height-80-69, 'crab');
+//        this.crabs.create(this.game.width, this.game.height-80-69, 'crab');
+//        this.crabs.create(4480, this.game.height-80-69, 'crab');
 		for (var i = 0; i < this.crabs.length; i++) {
-			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);
 			this.crabs.getAt(i).body.fixedRotation = true;
+			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);
 			this.crabs.getAt(i).body.setMaterial(this.crabMaterial);
 			this.crabs.getAt(i).animations.add('walkL', [0, 1, 2], 10, true);
 			this.crabs.getAt(i).animations.add('walkR', [0, 1, 2], 10, true);
 			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG,
-                    this.groundCG, this.hotsandCG]);
+                    this.groundCG]);
 		}
 		this.crabs.getAt(0).body.moveLeft(400);
 		this.crabs.getAt(1).body.moveRight(400);
@@ -331,57 +351,44 @@ State.Level1.prototype = {
 //        this.bucket.body.setCollisionGroup(this.groundCG);
 //        this.bucket.body.collides([this.groundCG, this.playerCG]);
 //	},
-//	setupStrawHorizontal: function(posX, posY) {
-//		// Tip of the straw (in the left of the bucket)
-//        this.strawLeft = this.game.add.sprite(posX, posY, 'straw1');
-//        this.game.physics.p2.enableBody(this.strawLeft, false);
-//        this.strawLeft.body.fixedRotation = true;
-//        this.strawLeft.body.static = true;
-//        this.strawLeft.body.setCollisionGroup(this.coveredStrawCG);
-//        this.strawLeft.body.collides([this.playerCG]);
-//        this.playerEnteredLeftStraw = false;
-//
-//        // Straw passing under the ground
-//        this.strawUnderGround = this.game.add.sprite(2000, 520, 'dropInStraw');
-//        var strawAnimationRight =
-//            this.strawUnderGround.animations.add('dropInsideRight',
-//            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10, false);
-//        strawAnimationRight.onComplete.add(this.strawAnimationComplete, this);
-//        var strawAnimationLeft =
-//            this.strawUnderGround.animations.add('dropInsideLeft',
-//            [9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 10], 10, false);
-//        strawAnimationLeft.onComplete.add(this.strawAnimationComplete, this);
-//        this.strawUnderGround.animations.add('strawNormal', [10], 10, false);
-//        this.strawUnderGround.animations.play('strawNormal');
-//
-//        // Tip of the straw (in the right of the bucket)
-//        this.strawRight = this.game.add.sprite(2470, 510, 'straw1');
-//        this.game.physics.p2.enableBody(this.strawRight, false);
-//        this.strawRight.body.fixedRotation = true;
-//        this.strawRight.body.static = true;
-//        this.strawRight.body.setCollisionGroup(this.coveredStrawCG);
-//        this.strawRight.body.collides([this.playerCG]);
-//        this.playerEnteredRightStraw = false;
-//	},
-//	setupStrawDiagonal: function (posX, posY) {
-//		// canudo
-//		this.diagonalStraw = this.game.add.sprite(posX, posY, 'straw2');
-//		this.game.physics.p2.enableBody(this.diagonalStraw, false);
-//		this.diagonalStraw.body.clearShapes();
-//		this.diagonalStraw.body.loadPolygon('strawPhysics', 'straw2_236-276');
-//		this.diagonalStraw.body.fixedRotation = true;
-//		this.diagonalStraw.body.static = true;
-//		this.diagonalStraw.body.setCollisionGroup(this.strawCG);
-//        this.diagonalStraw.body.collides([this.groundCG, this.playerCG]);
-//	},
+    setupStrawHorizontal: function(straw) {
+        // Tip of the straw (in the left of the bucket)
+        this.strawLeft = this.game.add.sprite(2091, 510, 'strawtip');
+        this.game.physics.p2.enableBody(this.strawLeft, false);
+        this.strawLeft.body.fixedRotation = true;
+        this.strawLeft.body.static = true;
+        this.strawLeft.body.setCollisionGroup(this.coveredStrawCG);
+        this.strawLeft.body.collides([this.playerCG]);
+        this.playerEnteredLeftStraw = false;
+
+        // Straw passing under the ground
+        var strawAnimationRight = straw.animations.add('dropInsideRight',
+                [0, 1, 2, 3, 4, 5, 6, 7, 0], 10, false);
+        strawAnimationRight.onComplete.add(this.strawAnimationComplete, this);
+        var strawAnimationLeft = straw.animations.add('dropInsideLeft',
+                [7, 6, 5, 4, 3, 2, 1, 0], 10, false);
+        strawAnimationLeft.onComplete.add(this.strawAnimationComplete, this);
+        straw.animations.add('strawNormal', [0], 10, false);
+        straw.animations.play('strawNormal');
+
+        // Tip of the straw (in the right of the bucket)
+        this.strawRight = this.game.add.sprite(2555, 510, 'strawtip');
+        this.game.physics.p2.enableBody(this.strawRight, false);
+        this.strawRight.body.fixedRotation = true;
+        this.strawRight.body.static = true;
+        this.strawRight.body.setCollisionGroup(this.coveredStrawCG);
+        this.strawRight.body.collides([this.playerCG]);
+        this.playerEnteredRightStraw = false;
+	},
 	setupMolecule: function () {
 		// Add a "life drop"
         this.molecule = game.add.group();
         this.molecule.enableBody = true;
         this.molecule.physicsBodyType = Phaser.Physics.P2JS;
 
-        this.molecule.create(280, 268, 'lifedrop');
-        this.molecule.create(1700, this.game.world.height-80-75, 'energy');
+        this.molecule.create(200, 310, 'lifedrop');
+        this.molecule.create(1750, this.game.world.height-210, 'energy');
+        this.molecule.create(2920, this.game.world.height - 160, 'sundrop');
 
         for (var i = 0; i < this.molecule.length; i++) {
             this.molecule.getAt(i).body.setCollisionGroup(this.moleculeCG);
@@ -396,6 +403,7 @@ State.Level1.prototype = {
 
         this.molecule.getAt(0).body.sprite.name='lifedrop';
         this.molecule.getAt(1).body.sprite.name='energy';
+        this.molecule.getAt(2).body.sprite.name = 'sunscreendrop';
     },
 	setupSmokeEmitter: function(posX, posY) {
 		// smoke animation
@@ -454,16 +462,6 @@ State.Level1.prototype = {
         urchin.body.static = true;
         urchin.body.sprite.name = 'urchin';
         urchin.body.collides([this.playerCG, this.groundCG]);
-    },
-    playerOverDiagonalStraw: function() {
-        var characterSprite = this.drop.getSpriteObject();
-        if (characterSprite.x >= 2513.0 && characterSprite.x <= 2750.0 &&
-                characterSprite.y <= (this.game.world.height - 200.0) &&
-                this.touchingDown(characterSprite.body)) {
-            this.forceSlidingStraw = true;
-        } else {
-            this.forceSlidingStraw = false;
-        }
     },
 	// Funcao Magica!!! Deve existir outro jeito!
 	touchingDown: function (someone) {
@@ -529,7 +527,7 @@ State.Level1.prototype = {
 		if (!this.touchingUp(body2)) {
 			console.log('Matou o Player!!!!');
 			this.drop.kill();
-			//this.drop.userDead = true;
+			this.userDead = true;
 			return true;
 		}
 		return false;
@@ -537,7 +535,7 @@ State.Level1.prototype = {
     checkCollisionUrchins: function(body1, body2) {
         // body1 is the drop, body2 is the sea urchin.
         this.drop.kill();
-
+        this.userDead = true;
         return true;
     },
     checkOverlapWithLifeDrop: function (body1, body2) {
@@ -550,9 +548,11 @@ State.Level1.prototype = {
 				body2.sprite.kill();
 				body2.hasCollided = true;
 				this.drop.playersize = 'big';
-			} else {
+			} else if (body2.sprite.name == 'energy') {
 				this.drinkEnergy(body1, body2);
-			}
+            } else if (body2.sprite.name == 'sunscreendrop') {
+                this.hitSunscreenDrop(body1, body2);
+            }
             return true;
         }
 
@@ -578,10 +578,28 @@ State.Level1.prototype = {
 			this.countCall = 0;
 		}
 	},
-	hitSunscreen: function () {
+	hitSunscreenDrop: function (body1, body2) {
 		this.drop.playerstate = 'sunscreen';
+		this.countCall++;
+        if (this.countCall == 1) {
+            body2.sprite.kill();
+            body2.hasCollided = true;
+            this.dropIsInvincible = true;
+            var self = this;
+            setTimeout(function() {
+                self.dropIsInvincible = false;
+                self.drop.playerstate = 'normal';
+            }, 5500);
+        }
+        if (this.countCall == 2) {
+            this.countCall = 0;
+        }
 	},
 	killDrop: function (body1, body2) {
+        if (this.dropIsInvincible) {
+            return;
+        }
+
         this.countCall++;
         if (this.countCall == 1 && !this.hotSandTimerActivated) {
             console.log('moreeeeeeeeeeeeeeeeeu!!! killlDrop');
@@ -610,6 +628,7 @@ State.Level1.prototype = {
             } else if (this.drop.playersize == 'small') {
                 // TODO: restart game
                 this.drop.kill();
+                this.userDead = true;
             }
         }
         if (this.countCall == 2) {
@@ -631,6 +650,7 @@ State.Level1.prototype = {
 		clearTimeout(time);
     },
 	timeOverKill: function () {
+		console.log('chamou');
 		this.drop.kill();
 	},
 	moveCrab: function (crab) {
@@ -665,24 +685,26 @@ State.Level1.prototype = {
                 dropSprite.exists = false;
                 this.game.camera.target = null;
                 this.playerEnteredLeftStraw = true;
-                this.strawUnderGround.animations.play('dropInsideRight');
+                var straw = this.horizontalStraw.getAt(0);
+                straw.animations.play('dropInsideRight');
             }
         } else {
             if (!this.playerEnteredRightStraw) {
                 dropSprite.exists = false;
                 this.game.camera.target = null;
                 this.playerEnteredRightStraw = true;
-                this.strawUnderGround.animations.play('dropInsideLeft');
+                var straw = this.horizontalStraw.getAt(0);
+                straw.animations.play('dropInsideLeft');
             }
         }
     },
     strawAnimationComplete: function(sprite, animation) {
         var dropSprite = this.drop.getSpriteObject();
         if (this.playerEnteredLeftStraw) {
-            dropSprite.reset(2483, this.game.world.height - 140);
+            dropSprite.reset(2555, this.game.world.height - 160);
             this.playerEnteredLeftStraw = false;
         } else {
-            dropSprite.reset(2019, this.game.world.height - 140);
+            dropSprite.reset(2091, this.game.world.height - 160);
             this.playerEnteredRightStraw = false;
         }
         dropSprite.exists = true;
@@ -691,17 +713,18 @@ State.Level1.prototype = {
     },
 	clickHowToPlay: function () {
 		"use strict";
-		this.game.state.start('HowToPlay');
+		this.game.state.start('howtoplay-state');
 	},
 	clickCredits: function () {
 		"use strict";
-		this.game.state.start('Credits');
-	}
-//	restart: function(){
-//		player.resetPosition();
-//        if (lifeCounter==0){
-//        	this.game.state.start('GameOver');
-//        }
-//		this.game.state.restart();
-//	}
+		this.game.state.start('credits-state');
+	},
+	restartGame: function () {
+	    this.hud.decreaseLife();
+		if ( this.hud.getLifeCounter()==0){
+			this.game.state.start('gameOver-state');
+		}
+		this.mainSound.stop();
+		this.game.state.restart();
+	},
 };

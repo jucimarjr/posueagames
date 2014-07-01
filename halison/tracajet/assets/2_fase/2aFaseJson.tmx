@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="72" height="30" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="p1_480-40" tilewidth="40" tileheight="40">
+  <image source="p1_480-40.png" width="480" height="40"/>
+ </tileset>
+ <tileset firstgid="13" name="p2_480-40" tilewidth="40" tileheight="40">
+  <image source="p2_480-40.png" width="480" height="40"/>
+ </tileset>
+ <tileset firstgid="25" name="p3_40-480" tilewidth="40" tileheight="40">
+  <image source="p3_40-480.png" width="40" height="480"/>
+ </tileset>
+ <tileset firstgid="37" name="p4_40-480" tilewidth="40" tileheight="40">
+  <image source="p4_40-480.png" width="40" height="480"/>
+ </tileset>
+ <tileset firstgid="49" name="monkeys" tilewidth="40" tileheight="40">
+  <image source="monkey_spritesheet_240-80.png" width="240" height="80"/>
+ </tileset>
+ <tileset firstgid="61" name="frutas" tilewidth="40" tileheight="40">
+  <image source="assets_2.png" width="360" height="160"/>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="72" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztmddywyAQRTe99+44MbKU7vb/X5dlbMYbZoGlSM6DzswdY8paQnAFGKCnp6en5z+yhdpG7aB2UXuo/YKxOc5Q56gL1CXqCnXtyb9B3aLuUPeoB9RjoWvcJK8txh60GLsrRiRd+n6eC8fbBIqk9f08FYw9zGj7GVHX9p8R/PWhA9Qh6gh1jDpBnQpjVyStYDmGSvXRS2K7r5UkbDN5KvF3OcYkrftKj6EBlJkbKd72TRTCjBmbislLpSbpMaz7yCiHkSPfde8/lnzQOWUzZvJSaUi6XsXWkvRRyF+UI19y/xPru29dYbDXP9p3uGfkWi+FfEpa33z6xnHlKZ8QuZh6ymJQheKk4BrHpm9yxvkMeO+NpaQXxVJ7yqpAeYg5LPsnt49KelEsTWa5DfWkBaw9h/MeCufVPn+Q+A8l1qcMoTlE1z8+rzHltM5boH6XpO7BdN/U4J5HNO4U3J47ZcrfE6+pDVzrlBC6XxpwzyMad7aS9L30kXhNbaAS2+l+GROViqvh9l/2WYr5lPhB7JqHpquMOKF3fCrc/ivnfEFltKWU2Jv6xpQUbg+Ss98ptQ7KPQOqLfkwY5WD23/knJeUWgflPKOGkQt7HtvQd72e19zeyyZlnRLrJ/Yzlf5WzBm5pG7O/ktltI1F6kfSeqHnZZgJ43F+0OWeS+pHknrSsayZg/u/FYP2I84PutxzSf0oVC92ni/Afwam1+Z6/zJMiN12/Zj/wFKuJbbNL65PH54=
+  </data>
+ </layer>
+ <objectgroup name="Enemies" width="72" height="30">
+  <object gid="49" x="96" y="1003"/>
+  <object gid="49" x="5" y="841"/>
+  <object gid="49" x="478" y="1162"/>
+  <object gid="49" x="511" y="681"/>
+  <object gid="49" x="1240" y="682"/>
+  <object gid="49" x="280" y="362"/>
+  <object gid="49" x="591" y="521"/>
+ </objectgroup>
+ <objectgroup name="frutas" width="72" height="30">
+  <object gid="62" x="113" y="1163"/>
+  <object gid="62" x="-5" y="677"/>
+  <object gid="62" x="123" y="517"/>
+  <object gid="62" x="-5" y="355"/>
+  <object gid="62" x="405" y="999"/>
+  <object gid="62" x="1243" y="196"/>
+  <object gid="49" x="1439" y="201"/>
+  <object gid="64" x="1680" y="1160"/>
+  <object gid="62" x="1287" y="1161"/>
+  <object gid="61" x="2678" y="963"/>
+  <object gid="49" x="1598" y="1162"/>
+  <object gid="49" x="885" y="1161"/>
+  <object gid="49" x="1406" y="1002"/>
+  <object gid="49" x="1398" y="837"/>
+  <object gid="49" x="802" y="1002"/>
+  <object gid="49" x="601" y="841"/>
+  <object gid="49" x="2681" y="802"/>
+  <object gid="49" x="2602" y="1161"/>
+  <object gid="62" x="638" y="1160"/>
+  <object gid="62" x="2712" y="478"/>
+  <object gid="62" x="2528" y="1120"/>
+  <object gid="62" x="2366" y="1082"/>
+  <object gid="62" x="2172" y="920"/>
+  <object gid="62" x="1960" y="670"/>
+  <object gid="62" x="2322" y="630"/>
+  <object gid="62" x="2440" y="308"/>
+  <object gid="62" x="2074" y="432"/>
+  <object gid="62" x="1558" y="676"/>
+  <object gid="62" x="1324" y="522"/>
+  <object gid="62" x="2" y="202"/>
+  <object gid="62" x="80" y="204"/>
+  <object gid="62" x="914" y="198"/>
+  <object gid="62" x="2598" y="960"/>
+  <object gid="62" x="40" y="959"/>
+ </objectgroup>
+ <objectgroup name="Keys" width="72" height="30"/>
+</map>

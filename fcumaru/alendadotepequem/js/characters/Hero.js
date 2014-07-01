@@ -10,10 +10,9 @@ function Hero(game) {
 	this.life = 1;
 	this.maxJump = 3;
 	this.initX = 20;
-	this.initY = 1000;
+	this.initY = 2520;
 
 	this.jumpCount = 0;
-	this.active = false;
 }
 
 Hero.method('getSprite', function() {
@@ -53,6 +52,7 @@ Hero.method('create', function() {
 	this.hero.body.gravity.y = 150;
 
 	this.hero.health = this.life;
+	this.hero.jumpCount = this.jumpCount;
 
 	this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 	this.jumpKey.onDown.add(this.jumpCheck, this);
@@ -66,7 +66,7 @@ Hero.method('update', function(layer, enemies) {
 	// PEGA A ENTRADA (tecla pressionada):
 	var keyPressed = false;
 	// apenas processar movimento se estiver ativo
-	if (this.active) {
+	if (this.hero.active) {
 		if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 			// vai para esquerda
 			this.hero.body.velocity.x = -this.walk;
@@ -82,12 +82,12 @@ Hero.method('update', function(layer, enemies) {
 		}
 	}
 	// executar a animacao para para cima
-	if (this.jumpCount > 0) {
+	if (this.hero.jumpCount > 0) {
 		this.hero.animations.play('jump');
 
 		// resetando o contador de pulo quando votlar ao ch�o
 		if (this.hero.body.onFloor()) {
-			this.jumpCount = 0;
+			this.hero.jumpCount = 0;
 		}
 		keyPressed = true;
 	}
@@ -99,21 +99,11 @@ Hero.method('update', function(layer, enemies) {
 
 Hero.method('jumpCheck', function() {
 	// apenas processar pulo se estiver ativo
-	if (this.active && this.jumpCount < this.maxJump) {
+	if (this.hero.active && this.hero.jumpCount < this.maxJump) {
 		this.hero.body.velocity.y = -this.jump;
-		this.jumpCount++;
+		this.hero.jumpCount++;
 	}
 });
 
 Hero.method('reset', function() {
-});
-
-Hero.method('isGoalIn', function() {
-	if (this.hero.body.x >= GOAL_X && this.hero.body.x <= GOAL_X + GOAL_WIDTH) {
-		if (this.hero.body.y >= GOAL_Y
-				&& this.hero.body.y <= GOAL_Y + GOAL_HEIGHT) {
-			return true;
-		}
-	}
-	return false;
 });

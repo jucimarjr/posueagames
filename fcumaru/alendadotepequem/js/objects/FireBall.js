@@ -20,8 +20,9 @@ FireBall.prototype = {
 		"use strict";
 
 		this.fireball = this.game.add.sprite(this.x, this.y, this.key, 3);
-		this.fireball.animations.add('walk', [ 0, 1, 2, 3, 4, 5, 6, 7 ], 10, true);
-		
+		this.fireball.animations.add('walk', [ 0, 1, 2, 3, 4, 5, 6, 7 ], 10,
+				true);
+
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.fireball, Phaser.Physics.ARCADE);
 		this.fireball.body.acceleration.y = 100;
@@ -60,7 +61,10 @@ FireBall.prototype = {
 		}
 	},
 	checkCollision : function(hero) {
-		this.game.physics.arcade.collide(this.fireball, hero, this.heroCollision);
+		if (hero.active) {
+			this.game.physics.arcade.collide(this.fireball, hero,
+					this.heroCollision);
+		}
 	},
 	heroCollision : function(fireball, hero) {
 		hero.damage(1);
@@ -75,7 +79,8 @@ FireBalls = function(game) {
 
 FireBalls.prototype = {
 	preload : function() {
-		this.game.load.spritesheet('fireball', 'assets/fireball_60-60-8.png', 60, 60, 8);
+		this.game.load.spritesheet('fireball', 'assets/fireball_60-60-8.png',
+				60, 60, 8);
 	},
 	create : function() {
 		"use strict";
@@ -92,7 +97,7 @@ FireBalls.prototype = {
 	pop : function(x, y, direction) {
 		var fireball = new FireBall(game, this.values.length, x, y, direction);
 		this.values.push(fireball);
-		
+
 		fireball.create();
 	},
 	checkCollision : function(heroes) {

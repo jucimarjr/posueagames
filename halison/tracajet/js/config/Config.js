@@ -117,6 +117,14 @@ Config.game = {
 			x: 340,
 			y: 300
 		},
+		tracajetFlying: {
+			dir: 'assets/sprites/tracajet_60-80-4.png',
+			width: 60,
+			height: 80,
+			frames: 4,
+			x: 340,
+			y: 300
+		},
 		star: {
 			dir: 'assets/images/star.png',
 		},
@@ -129,8 +137,8 @@ Config.game = {
 		floor: {
 			dir: 'assets/images/chao.jpg',
 		},
-		jacare:{
-			
+		bird:{
+			dir: 'assets/sprites/passaros_115-115-4.png',
 		},
 		fase1: {
 			background: "assets/images/bg1_2880-1200.png",
@@ -140,7 +148,7 @@ Config.game = {
 			background: "assets/images/bg2_2880-1200.png",
 		},
 		fase3: {
-			background: "assets/images/bg3_tmp_2880-1200.png",
+			background: "assets/images/bg3_2880-1200.png",
 	        json: "assets/Fase3.json",
 			nuvens: { 
 				dir: "assets/sprites/nuvens_120-40-4.png",

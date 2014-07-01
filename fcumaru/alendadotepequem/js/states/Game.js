@@ -3,8 +3,10 @@ State.Game = function(game) {
 	this.game = game;
 	this.heroes = new Heroes(game);
 	this.enemies = new Enemies(game);
+	this.flames = new Flames(game);
 	this.rocks = new Rocks(game);
 	this.trees = new Trees(game);
+	this.portal = new Portal(game);
 };
 
 var map;
@@ -19,86 +21,77 @@ var timerSecond = 0;
 
 State.Game.prototype = {
 	preload : function() {
-		this.game.load.tilemap('mapa', 'assets/mapa.json', null,
-				Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('fundo', 'assets/bg_tepequem_4320-2700.png');
-		this.game.load.image('map', 'assets/map.png');
-
-		this.game.load.image('clouds', 'assets/nuvem.png');
-		this.game.load.image('faiscas', 'assets/efeito-faisca.png');
-		this.game.load.image('entrada', 'assets/entrada.png');
-
 		this.heroes.preload();
 		this.enemies.preload();
+		this.flames.preload();
 		this.rocks.preload();
 		this.trees.preload();
+		this.portal.preload();
 	},
 	create : function() {
 		"use strict";
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 800;
-		
+
 		this.bg = game.add.tileSprite(0, 0, 4320, 2700, 'fundo');
 		this.bg.fixedToCamera = false;
-		
-		map = this.game.add.tilemap('mapa');
+
+		map = this.game.add.tilemap('map');
 
 		map.addTilesetImage('map', 'map');
 		this.layer = map.createLayer('map');
+		game.physics.enable(this.layer);
 
 		this.layer.resizeWorld(); // seta o mundo com as altera��es feitas
 		map.setCollisionBetween(1, 22, true, 0); // 0 espaco
 
-		// entrada
-		this.entrada = this.game.add.image(GOAL_X, GOAL_Y, 'entrada');
-
-		// clouds
-		this.clouds = this.game.add.tileSprite(0, 0, 4320, 2700, 'clouds');
-		this.clouds.autoScroll(-30, 0);
-		
-		// faisca
-		this.faisca = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
-				game.cache.getImage('faiscas').height, 'faiscas');
-		this.faisca.autoScroll(25, 80);
+//		 // clouds
+//		 this.clouds = this.game.add.tileSprite(0, 0, 4320, 2700, 'clouds');
+//		 this.clouds.autoScroll(-30, 0);
+//		
+//		 // faisca
+//		 this.faisca = this.game.add.tileSprite(0, 0, game.stage.bounds.width,
+//		 game.cache.getImage('faiscas').height, 'faiscas');
+//		 this.faisca.autoScroll(25, 80);
 
 		this.heroes.create();
 		this.game.camera.follow(this.heroes.getCurrent());
 
 		this.enemies.create();
+		this.flames.create();
 		this.rocks.create();
-		this.rocks.pop(550, 1000);
 		this.trees.create();
-		this.trees.pop(800, 1500);
-
-		startTimer();
+		this.portal.create();
 	},
 	update : function() {
 		"use strict";
 		this.heroes.update(this.layer, this.enemies);
 		this.enemies.update(this.layer, this.heroes);
 		this.trees.update(this.layer);
+		this.flames.update(this.layer);
+		this.flames.checkCollision(this.heroes);
 		this.rocks.update(this.layer);
 		this.rocks.checkCollision(this.heroes);
 		this.trees.checkCollision(this.heroes.getCurrent());
-		if(this.heroes.heroes[this.heroes.index].type === HERO_OF_ROPE){
-			this.trees.ropeCollision(
-				this.heroes.heroes[this.heroes.index].getRope(),
-				this.heroes.heroes[this.heroes.index].facingLeft);
+		if (this.heroes.heroes[this.heroes.index].type === HERO_OF_ROPE) {
+			this.trees.ropeCollision(this.heroes.heroes[this.heroes.index]
+					.getRope(),
+					this.heroes.heroes[this.heroes.index].facingLeft);
 		}
 		if (!this.heroes.isAlive()) {
 			this.game.state.start('GameOver');
 
 		}
-		
+
 	},
 
 	render : function() {
 		// debug settings
-		//this.game.debug.spriteBounds(this.heroes.getCurrent());
-		this.game.debug.body(this.heroes.getCurrent());
-		this.game.debug.body(this.trees.values[0].tree);
-		game.debug.spriteInfo(this.heroes.getCurrent(), 32, 32);
-		game.debug.inputInfo(400, 32);
+		// this.game.debug.spriteBounds(this.heroes.getCurrent());
+		// this.game.debug.body(this.heroes.getCurrent());
+		// this.game.debug.body(this.trees.values[0].tree);
+		// game.debug.spriteInfo(this.heroes.getCurrent(), 32, 32);
+		// game.debug.inputInfo(400, 32);
 	}
 };
 
@@ -111,32 +104,4 @@ function showScore() {
 
 	this.score = this.game.add.text(10, 550, "00", style);
 	this.score.fixedToCamera = true;
-}
-
-function printPosition() {
-	posicao.content = Math.floor(dino.x) + " " + Math.floor(dino.y);
-}
-
-function getTime() {
-	now = new Date();
-	nowSecond = now.getSeconds();
-
-}
-
-function timer() {
-	getTime();
-
-	if (startSecond > nowSecond) {
-		timerSecond = startSecond - nowSecond;
-	} else {
-		timerSecond = nowSecond - startSecond;
-	}
-
-}
-
-function startTimer() {
-	date = new Date();
-	nowSecond = date.getSeconds();
-
-	setInterval("timer()", 1000);
 }

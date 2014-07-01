@@ -384,8 +384,8 @@ Config.button = {
 	horizontal: {
 		dir: 'assets/spritesheets/button-horizontal-green.png',
 		left: {
-			x: 40,
-			y: 530
+			x: 150,
+			y: 580
 		},
 		right: {
 			x: 165,

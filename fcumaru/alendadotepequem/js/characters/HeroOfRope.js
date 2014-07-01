@@ -10,8 +10,10 @@ function HeroOfRope(game) {
 	that.walk = 200;
 	that.life = 1;
 	that.maxJump = 2;
-	that.initX = 200;
-	that.initY = 1600;
+//	that.initX = 200;
+//	that.initY = 2580;
+	that.initX = 3020;
+	that.initY = 1620;
 	that.numSegmentsRope = 19;
 	that.facingLeft = false;
 	that.state = "idle";
@@ -49,6 +51,10 @@ function HeroOfRope(game) {
 		this.hero.body.gravity.y = 150;
 
 		this.hero.health = this.life;
+		this.hero.active = false;
+		this.hero.jumpCount = this.jumpCount;
+
+		this.hero.body.allowGravity = false;
 
 		this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 		this.jumpKey.onDown.add(this.jumpCheck, this);
@@ -69,7 +75,7 @@ function HeroOfRope(game) {
 		enemies.checkCollision(this.hero);
 
 		// apenas processar movimento se estiver ativo
-		if (this.active && !this.ropeActive) {
+		if (this.hero.active && !this.ropeActive) {
 			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 				// vai para esquerda
 				this.hero.body.velocity.x = -this.walk;
@@ -90,11 +96,11 @@ function HeroOfRope(game) {
 			}
 		}
 		// executar a animacao para para cima
-		if (this.jumpCount > 0) {
+		if (this.hero.jumpCount > 0) {
 			if(this.hero.body.velocity.y < 0) this.hero.animations.play('jump');
 			this.state = "jumping";
 			if (this.hero.body.onFloor()) {
-				this.jumpCount = 0;
+				this.hero.jumpCount = 0;
 				this.state = "idle";
 			}
 		}
@@ -126,10 +132,16 @@ function HeroOfRope(game) {
 				}
 			}
 		}
+
+		if (this.hero.body.onFloor()) {
+			this.hero.body.allowGravity = false;
+		} else {
+			this.hero.body.allowGravity = true;
+		}
 	};
 
 	that.useRope = function(){
-		if(!this.active || this.ropeActive || !this.hero.body.onFloor()) return;
+		if(!this.hero.active || this.ropeActive || !this.hero.body.onFloor()) return;
 		this.ropeActive = true;
 		if(this.facingLeft) {
 			this.ropeStartX = this.hero.x - Math.abs(this.hero.width/2) - this.ropeSegments[0].width;
@@ -161,9 +173,9 @@ function HeroOfRope(game) {
 
 	that.jumpCheck = function() {
 		// apenas processar pulo se estiver ativo e não estiver usando a corda
-		if (this.active && this.jumpCount < this.maxJump && !this.ropeActive) {
+		if (this.hero.active && this.hero.jumpCount < this.maxJump && !this.ropeActive) {
 			this.hero.body.velocity.y = -this.jump;
-			this.jumpCount++;
+			this.hero.jumpCount++;
 		}
 	};
 

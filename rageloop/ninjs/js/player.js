@@ -28,6 +28,7 @@
             this.sprite.animations.add('dash', [33, 34], 8, false);
             this.sprite.animations.add('jump', [99, 98], 8, false);
             this.sprite.animations.add('death', [130, 131, 132, 133, 135], 8, false);
+            this.sprite.animations.add('shuriken', [194, 195, 196], 16, false);
 
             this.sprite.animations.play('idle');
 
@@ -52,7 +53,7 @@
 
             this.game.physics.enable(shuriken, Phaser.Physics.ARCADE);
 
-            shuriken.reset(this.sprite.x + this.sprite.width, this.sprite.y);
+            shuriken.reset(this.sprite.x, this.sprite.y);
             shuriken.body.velocity.x = (this.sprite.scale.x > 0) ? 1000 : -1000;
             shuriken.scale.set(0.8, 0.8);
             shuriken.checkWorldBounds = true;
@@ -62,10 +63,13 @@
 
             this.shurikenTimer = this.game.time.now;
 
+            this.sprite.animations.play('shuriken');
+
             return true;
         },
 
         update: function() {
+            var animationName = '';
 
             if (this.bloodParticles){
                 this.bloodParticles.update(this.sprite);
@@ -75,22 +79,18 @@
 
             var shiftPressed = this.game.input.keyboard.isDown(Phaser.Keyboard.SHIFT);
 
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-                this.fire();
-            }
-
             if (this.cursors.right.isDown) {
                 this.sprite.body.velocity.x = 250 * (shiftPressed ? 2 : 1);
                 this.turnRight();
 
                 if (this.sprite.body.onFloor()) {
                     if (shiftPressed) {
-                        this.sprite.animations.play('dash');
+                        animationName = 'dash';
                     } else {
-                        this.sprite.animations.play('walk');
+                        animationName = 'walk';
                     }
                 } else if (this.sprite.animations.currentAnim.name != 'jump') {
-                    this.sprite.animations.play('jump');
+                    animationName = 'jump';
                 }
             }
 
@@ -100,28 +100,39 @@
 
                 if (this.sprite.body.onFloor()) {
                     if (shiftPressed) {
-                        this.sprite.animations.play('dash');
+                        animationName = 'dash';
                     } else {
-                        this.sprite.animations.play('walk');
+                        animationName = 'walk';
                     }
                 } else if (this.sprite.animations.currentAnim.name != 'jump') {
-                    this.sprite.animations.play('jump');
+                    animationName = 'jump';
                 }
             }
 
             if (!this.cursors.left.isDown && !this.cursors.right.isDown) {
                 if (this.sprite.body.onFloor()) {
                     this.sprite.body.velocity.x = 0;
-                    this.sprite.animations.play('idle');
+                    animationName = 'idle';
                 } else if (this.sprite.animations.currentAnim.name != 'jump') {
-                    this.sprite.animations.play('jump');
+                    animationName = 'jump';
                 }
             }
 
             if (this.cursors.up.isDown) {
                 if (this.sprite.body.onFloor()) {
-                    this.sprite.animations.play('jump');
+                    animationName = 'jump';
                     this.sprite.body.velocity.y = -650;
+                }
+            }
+
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+                this.fire();
+            }
+
+            if (animationName) {
+                //shuriken animation will play until the end
+                if (this.sprite.animations.currentAnim.isFinished || this.sprite.animations.currentAnim.name != 'shuriken') {
+                    this.sprite.animations.play(animationName);
                 }
             }
         },

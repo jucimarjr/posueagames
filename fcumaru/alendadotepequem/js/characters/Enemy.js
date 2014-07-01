@@ -8,10 +8,10 @@ function Enemy(game) {
 	this.asset = 'assets/boss_120-120-20.png';
 	this.walk = 300;
 	this.life = 1;
-	
+
 	this.currAnimRef = null;
 
-	this.direction = RIGHT;//Math.round(Math.random());
+	this.direction = RIGHT;// Math.round(Math.random());
 
 	this.initX = 20;
 	this.initY = 1000;
@@ -76,6 +76,6 @@ Enemy.method('update', function(layer, heroes) {
 
 Enemy.method('checkCollision', function(hero) {
 	"use strict";
-	
-	// TODO 
+
+	// TODO
 });

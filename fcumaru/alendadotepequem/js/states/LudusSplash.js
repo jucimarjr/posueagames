@@ -21,7 +21,8 @@ State.LudusSplash.prototype = {
 			this.game.add.tween(sprite).to({alpha : 0}, Config.ludusSplash.millis, Phaser.Easing.Linear.None).start();
 		}, Config.ludusSplash.millis);
 		setTimeout(function () {
-			this.game.state.start('SponsorSplash');
+//			this.game.state.start('SponsorSplash');
+			this.game.state.start('GameSplash');
 		}, Config.ludusSplash.nextState);
 	},
 	update: function () {

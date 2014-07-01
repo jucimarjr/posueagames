@@ -11,5 +11,5 @@ game.state.add('Game', State.Game);
 game.state.add('Credits', State.Credits);
 game.state.add('GameOver', State.GameOver);
 game.state.add('YouWin', State.YouWin);
-//game.state.start('LudusSplash');
- game.state.start('Game');
+game.state.start('LudusSplash');
+// game.state.start('Game');

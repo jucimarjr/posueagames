@@ -39,56 +39,77 @@ Config.sponsorSplash = {
 	nextState: 4000
 };
 
-//GameSplash
-Config.gameSplash = {
-	dir: {
-		background: 'assets/images/GameSplash_1920-1080.png',
-		bar: 'assets/images/ProgressBar_1920-30.png'
-	},
-	x: 0,
-	y: 0,
-	millis: 2000,
-	nextState: 4000
-};
-
 //Menu
 Config.menu = {
-	dir: 'assets/images/MenuBackground_1920-1080.png',
+	dir: 'assets/images/bgmenu_1920-1080.jpg',
 	x: 0,
 	y: 0,
 	buttonPlay: {
-		dir: 'assets/spritesheets/ButtonPlay_600-95.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.4,
-		width: 150,
-		height: 95,
+		dir: 'assets/spritesheets/jogar_474-55-2.png',
+		x: Config.global.screen.width * 0.6,
+		y: Config.global.screen.height * 0.73,
+		width: 237,
+		height: 55,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonHowToPlay: {
-		dir: 'assets/spritesheets/ButtonHowToPlay_600-95.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.6,
-		width: 150,
-		height: 95,
+		dir: 'assets/spritesheets/tutorial_474-55-2.png',
+		x: Config.global.screen.width * 0.6,
+		y: Config.global.screen.height * 0.79,
+		width: 237,
+		height: 55,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonCredits: {
-		dir: 'assets/spritesheets/ButtonCredits_600-95.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.8,
-		width: 150,
-		height: 95,
+		dir: 'assets/spritesheets/creditos_474-55-2.png',
+		x: Config.global.screen.width * 0.6,
+		y: Config.global.screen.height * 0.85,
+		width: 237,
+		height: 55,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
+	buttonBack: {
+		dir: 'assets/spritesheets/voltar_474-55-2.png',
+		x: Config.global.screen.width * 0.1,
+		y: Config.global.screen.height * 0.9,
+		width: 237,
+		height: 55,
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		}
+	},
+	buttonNext: {
+		dir: 'assets/spritesheets/avancar_474-55-2.png',
+		x: Config.global.screen.width * 0.9,
+		y: Config.global.screen.height * 0.9,
+		width: 237,
+		height: 55,
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		}
+	},
+	buttonInit: {
+		dir: 'assets/spritesheets/inicio_474-55-2.png',
+		x: Config.global.screen.width * 0.9,
+		y: Config.global.screen.height * 0.9,
+		width: 237,
+		height: 55,
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		}
+	},				
 	textStyle: {
 		font: '25px Ms Sans Serif',
 		fill: '#ffffff'
@@ -97,14 +118,14 @@ Config.menu = {
 
 //HowToPlay
 Config.howToPlay = {
-	dir: 'assets/images/HowToPlay_1920-1080.png',
+	dir: 'assets/images/tutorial_1920-1080.jpg',
 	x: 0,
 	y: 0
 };
 
 //Credits
 Config.credits = {
-	dir: 'assets/images/Credits_1920-1080.png',
+	dir: 'assets/images/creditos_1920-1080.jpg',
 	x: 0,
 	y: 0
 };

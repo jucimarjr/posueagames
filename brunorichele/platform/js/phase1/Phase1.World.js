@@ -3,7 +3,7 @@ Phase1.World = {
 	bgImage : "assets/phase1/images/bg1_3000-2000.jpg",
 	//bgImage : "assets/phase1/images/cenariogameguia.jpg",
 	bgImageAlpha : "assets/phase1/images/bg2_3000-2000.png",
-	bgAudio : "assets/phase1/audio/In_my_own_place.mp3",	 											
+	bgAudio : "assets/phase1/audio/light_the_way_mixdown.mp3",	 											
 	weith : 3000,
 	height : 2000,
 	x : 0,
@@ -23,6 +23,8 @@ Phase1.World = {
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
 		this.game.physics.p2.gravity.y = 850;
 		this.game.physics.p2.restitution = 0;
+		
+		game.physics.p2.setImpactEvents(true);
 
 		this.background = this.game.add.tileSprite(this.x, this.y, this.weith, this.height, 'bgphase1');
 		

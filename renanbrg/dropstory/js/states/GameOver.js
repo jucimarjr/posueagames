@@ -8,19 +8,19 @@ State.GameOver = function (game) {
 State.GameOver.prototype = {
 	preload: function () {
 		"use strict";
-		this.game.load.audio('gameOver','assets/gotaGameOver.wav');
-		this.game.load.image('gameOver-bg',  Config.gameOver.dir);
+		this.game.load.audio('gameOver','assets/gotaGameOver.ogg');
+		
 		
 	},
 	create: function () {
 		"use strict";
-		var background = this.game.add.sprite(Config.credits.x, Config.credits.y, 'credits-bg');
+		var background = this.game.add.sprite(Config.gameOver.x, Config.gameOver.y, 'gameOver-bg');
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
 		
 		this.mainSound.stop();
 		
-		this.gameOverSound = this.game.add.audio("credits");
+		this.gameOverSound = this.game.add.audio("gameOver");
         this.gameOverSound.play();
 	},
 	update: function () {

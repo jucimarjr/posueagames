@@ -35,6 +35,18 @@ State.GameSplash.prototype = {
 		game.load.audio('soundGetKey','assets/sounds/get_key.mp3');
 		game.load.audio('soundColision','assets/sounds/colision.wav');
 		game.load.audio('walk','assets/sounds/walk.wav');
+
+		//load fase 2
+		game.load.tilemap('mapa','assets/2_fase/2aFaseJson.json',null,Phaser.Tilemap.TILED_JSON);
+        game.load.spritesheet('monkey', "assets/2_fase/monkey_spritesheet_240-80.png",40,40);
+		game.load.spritesheet('assets2', "assets/2_fase/assets_2.png",40,40);
+        game.load.image('bgF2',Config.game.fase2.background);
+        game.load.image('tilesetPlataforma','assets/2_fase/p1_480-40.png');
+		game.load.image('tilesetPlataforma2','assets/2_fase/p2_480-40.png');
+		game.load.image('tilesetPlataforma3','assets/2_fase/p3_40-480.png');
+		game.load.image('tilesetPlataforma4','assets/2_fase/p4_40-480.png');
+		game.load.audio('jump','assets/sounds/jump2.wav');
+		game.load.audio('killSound','assets/sounds/killEnemy.wav');
 	},
 	create: function () {
 		"use strict";

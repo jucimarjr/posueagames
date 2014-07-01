@@ -1,8 +1,3 @@
-var GOAL_X = 420;
-var GOAL_Y = 400;
-var GOAL_WIDTH = 80;
-var GOAL_HEIGHT = 80;
-
 var HERO_OF_POWER = "HERO_OF_POWER";
 var HERO_OF_ROPE = "HERO_OF_ROPE";
 var HERO_OF_STICK = "HERO_OF_STICK";
@@ -47,7 +42,7 @@ Heroes.prototype = {
 		for (var i = 0; i < this.heroes.length; i++) {
 			this.heroes[i].create();
 		}
-		this.heroes[this.index].active = true;
+		this.heroes[this.index].hero.active = true;
 		this.switchKey = game.input.keyboard.addKey(Phaser.Keyboard.Z);
 		this.switchKey.onDown.add(this.switchHero, this);
 	},
@@ -56,18 +51,15 @@ Heroes.prototype = {
 		for (var i = 0; i < this.heroes.length; i++) {
 			this.heroes[i].update(layer, enemies);
 		}
-		if (this.heroes[this.index].isGoalIn()) {
-			this.game.state.start('YouWin');
-		}
 	},
 	switchHero : function() {
-		this.heroes[this.index].active = false;
+		this.heroes[this.index].hero.active = false;
 		this.index++;
 		if (this.index >= this.heroes.length) {
 			// Reset value
 			this.index = 0;
 		}
-		this.heroes[this.index].active = true;
+		this.heroes[this.index].hero.active = true;
 		this.game.camera.follow(this.heroes[this.index].hero);
 	},
 

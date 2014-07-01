@@ -1,6 +1,7 @@
 function HeroOfStick(game) {
 	"use strict";
 	var that = new Hero(game);
+	var distance;
 
 	// Default parameters
 	that.type = HERO_OF_STICK;
@@ -10,8 +11,10 @@ function HeroOfStick(game) {
 	that.walk = 200;
 	that.life = 2;
 	that.maxJump = 2;
-	that.initX = 400;
-	that.initY = 1000;
+//	that.initX = 400;
+//	that.initY = 2520;
+	that.initX = 2450;
+	that.initY = 780;
 
 	that.preload = function() {
 		"use strict";
@@ -44,6 +47,10 @@ function HeroOfStick(game) {
 		this.hero.body.gravity.y = 150;
 
 		this.hero.health = this.life;
+		this.hero.active = false;
+		this.hero.jumpCount = this.jumpCount;
+
+		this.hero.body.allowGravity = false;
 
 		this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
 		this.jumpKey.onDown.add(this.jumpCheck, this);
@@ -57,7 +64,7 @@ function HeroOfStick(game) {
 		// PEGA A ENTRADA (tecla pressionada):
 		var keyPressed = false;
 		// apenas processar movimento se estiver ativo
-		if (this.active) {
+		if (this.hero.active) {
 			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 				// vai para esquerda
 				this.hero.body.velocity.x = -this.walk;
@@ -73,21 +80,33 @@ function HeroOfStick(game) {
 			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
 				this.hero.animations.play('attack');
 				keyPressed = true;
+				distance = enemies.checkDistanceFromEnemy(this.hero.x,
+						this.hero.y);
+				if (distance < 5.5) {
+					enemies.Attacked(true);
+				}
 			}
 		}
 		// executar a animacao para para cima
-		if (this.jumpCount > 0) {
+		if (this.hero.jumpCount > 0) {
 			this.hero.animations.play('jump');
 
 			// resetando o contador de pulo quando votlar ao ch�o
 			if (this.hero.body.onFloor()) {
-				this.jumpCount = 0;
+				this.hero.jumpCount = 0;
 			}
 			keyPressed = true;
 		}
 		if (!keyPressed) {
 			this.hero.animations.stop();
-			this.hero.frame = 0;
+			this.hero.frame = 2;
+			this.hero.isPushing = false;
+		}
+
+		if (this.hero.body.onFloor()) {
+			this.hero.body.allowGravity = false;
+		} else {
+			this.hero.body.allowGravity = true;
 		}
 	};
 

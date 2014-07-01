@@ -7,7 +7,7 @@ State.Credits = function (game) {
 State.Credits.prototype = {
 	preload: function () {
 		"use strict";
-		this.game.load.audio('credits','assets/gotaExtra.wav');
+		this.game.load.audio('credits','assets/gotaExtra.ogg');
 		this.game.load.image('credits-bg',  Config.credits.dir);
 		
 	},

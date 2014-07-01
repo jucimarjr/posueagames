@@ -3,8 +3,9 @@ State.Game = function(game) {
 	this.game = game;
 };
 
-var layer, player, map, transparentWall, collects, health, rotate, monster, monsters, timer, timerBV, timerMonst;
-var itemsTaken, flagId, isGameRotate, idPlayer, helper;
+//Create first map
+var layer, player, map, transparentWall, collects, rotate, monster, monsters, timerBV, timerMonst;
+var itemsTaken, flagId, isGameRotate, idPlayer;
 var imgPlayerFall, contFrameGif;
 var cursors, attackButton, pauseButton;
 var bg1, bg2, bg3, bg4, bg5, bg6;
@@ -15,37 +16,28 @@ var collectCollisionGroup, barCollisionGroup, swordCollisionGroup, verticalBarDi
 var isJumping, beInGround, yBeforeJump;
 var verticalBar1, verticalBar2, verticalBar3, verticalBar4;
 var timeCheck;
-var monster_speed = 5;
 var isMoveCamera;
+var timerShine, isBlinkPlayer;
+var labelScore, score;
+var monster_speed = 5;
 var STATE_PLAY = 0;
 var STATE_PAUSED = 1;
 var STATE_GAMEOVER = 2;
-var timerShine, isBlinkPlayer;
-var labelScore, score;
 
 State.Game.prototype = {
     preload: function () {
         "use strict";
-        itemsTaken = 0;
-        flagId = false;
-        idPlayer = 0;
-        beInGround = true;
-        isJumping = false;
-        yBeforeJump = 3504;
-        rotate = 0.05;
-        previousX = 0;
-        previousY = 0;
-        isGameRotate = false;
-        isMoveCamera = false;
-        contFrameGif = 0;
-        timerMonst = 0;
-        timerBV = 0;
-        isBlinkPlayer = false;
-		score = 0;
+
     },
     create: function () {
         "use strict";
+        this.resetVars();
         
+		if(music == null){
+			music = this.game.add.audio(Config.game.audio.bg.key, 1, true);
+			music.play('', 0, 1, true);
+		}
+		
         this.gameState = STATE_PLAY;
         this.healthBar = [];
         this.timeImune = 0;
@@ -59,6 +51,7 @@ State.Game.prototype = {
         this.getPlayBarOffset[0] = true;
         this.getPlayBarOffset[1] = true;
 		
+        
         // attack sound
         this.attackSound = this.game.add.audio(Config.game.audio.attack.key);
         
@@ -167,10 +160,6 @@ State.Game.prototype = {
         this.putTransparentWall();
 		
         
-        beInGround = false;
-        isJumping = false;
-        yBeforeJump = 3504;
-        
         this.playerLifes = Config.game.player.lifes;
         this.updateHealth();
         
@@ -188,9 +177,40 @@ State.Game.prototype = {
 
 		//time
 		var style = { font: '30px "04B_03__"', fill: "#FFFFFF" };
-		labelScore = this.game.add.text(Config.game.life.x + 800, Config.game.life.y, "0 s", style);
+		labelScore = this.game.add.text(Config.game.life.x + 420, Config.game.life.y, "00:00", style);
         labelScore.fixedToCamera = true;
         
+    },
+    
+    resetVars: function(){
+    	
+    	imgPlayerFall = null;
+    	cursors = null; attackButton = null; pauseButton = null;
+    	map = null; transparentWall = null; collects = null; layer = null;
+    	player = null; labelScore = null; monster = null; monsters = null; timerShine =null;
+    	verticalBar1= null; verticalBar2= null; verticalBar3= null; verticalBar4= null;
+    	bg1= null; bg2= null; bg3= null; bg4= null; bg5= null; bg6= null;
+    	bar= null; bar2= null;
+    	playerCollisionGroup= null; bossCollisionGroup= null;monsterCollisionGroup= null; tileCollisionGroup = null;
+    	collectCollisionGroup = null;barCollisionGroup = null; swordCollisionGroup = null; verticalBarDieCollisionGroup = null;
+    	itemsTaken = 0; timeCheck = 0;
+        flagId = false;
+        idPlayer = 0;
+        beInGround = true;
+        isJumping = false;
+        yBeforeJump = 3504;
+        rotate = 0.05;
+        previousX = 0;
+        previousY = 0;
+        isGameRotate = false;
+        isMoveCamera = false;
+        contFrameGif = 0;
+        timerMonst = 0;
+        timerBV = 0;
+        isBlinkPlayer = false;
+		score = 0;
+        Config.game.player.items = [];
+		
     },
     
     playerOut: function (player) {
@@ -320,18 +340,38 @@ State.Game.prototype = {
             this.updateHandleBars();
 			
 			score += 0.0166;
-			labelScore.text = score.toFixed(0) + " s";  //sem casa decimal
+            var timerG = this.scoreTransforme(score);
+			labelScore.text = timerG;  //sem casa decimal
             
         
         }else if(this.gameState == STATE_PAUSED) {
         	this.checkCamera();
         }else if(this.gameState == STATE_GAMEOVER) {
         	this.game.state.start('GameOver');
-        }else{
-        	
         }
         
     },
+    
+    scoreTransforme: function(timeGame){
+    	var textHighscore;
+    	timeGame = timeGame.toFixed(0);
+    	
+    	if (timeGame < 10){
+			textHighscore = "00:0" + timeGame;
+		} else{
+			if (timeGame >= 60){
+			   var min = (timeGame/60);
+			   var valor = min.toString().replace(/,.*/,'');
+			   min = parseInt(valor);
+			   if(min >= 10){
+				   this.gameState = STATE_GAMEOVER;
+			   }
+			   var seg = timeGame % 60;
+			   textHighscore =  (min < 10 ? '0' : '') + min + ':'  + (seg < 10 ? '0' : '') + seg;
+			}else textHighscore =  '00:' + timeGame;
+		}
+    	return textHighscore;
+    },   
     
     checkCamera: function(){
     	if(isMoveCamera){
@@ -418,7 +458,7 @@ State.Game.prototype = {
 		 bar2.kill();
 		 monsters.removeAll();
 		 collects.removeAll();
-//		 obstacles.removeAll();
+		 this.game.world.remove(labelScore);
 
 		 this.putBarRotate();
 		 
@@ -480,6 +520,10 @@ State.Game.prototype = {
          this.game.camera.follow(null);
          this.game.camera.x = Config.animationFall.xCamera;
          isMoveCamera = false;
+         
+         var style = { font: '30px "04B_03__"', fill: "#FFFFFF" };
+         labelScore = this.game.add.text(Config.game.life.x + 420, Config.game.life.y, this.scoreTransforme(score), style);
+         labelScore.fixedToCamera = true;
     },
     
     putBarRotate: function(){
@@ -510,7 +554,7 @@ State.Game.prototype = {
     render: function () {
         "use strict";
         //DEBUG
-//		this.game.debug.text(timerBV, 32, 32);
+//		this.game.debug.text(valor, 50, 50);
 //		this.game.debug.spriteInfo(player, 32, 32);
 //		this.game.debug.cameraInfo(game.camera, 32, 32);
     },
@@ -695,13 +739,11 @@ State.Game.prototype = {
     	
     	if(body1.sprite.name == 'monster') {
     		body1.sprite.kill();
-    	}
-    	else if(body2.sprite.name == 'monster') {
+    	}else if(body2.sprite.name == 'monster') {
     		body2.sprite.kill();
     	}else if(body1.sprite.name == 'monsterBoss') {
             body1.sprite.damage(1);
-        }
-        else if(body2.sprite.name == 'monsterBoss') {
+        }else if(body2.sprite.name == 'monsterBoss') {
             body2.sprite.damage(1);
         }
     	
@@ -724,60 +766,59 @@ State.Game.prototype = {
     	player.visible;
     },
     hitMonsters: function (body1, body2) {
-    	
+    	var verifySpriteMonster = false;
     	var monster;
     	if (isGameRotate){
-    		if(body1.sprite.name == "monsterBoss")
+    		if(body1.sprite.name == "monsterBoss"){
         		monster = body1.sprite;
-        	else
+        		verifySpriteMonster = true;
+        	}else if(body2.sprite.name == "monsterBoss"){
         		monster = body2.sprite;
+        		verifySpriteMonster = true;
+        	}
     	} else {
-	    	if(body1.sprite.name == "monster")
-	    		monster = body1.sprite;
-	    	else 
-	    		monster = body2.sprite;
+	    	if(body1.sprite.name == "monster"){
+        		monster = body1.sprite;
+        		verifySpriteMonster = true;
+        	}else if(body2.sprite.name == "monster"){
+        		monster = body2.sprite;
+        		verifySpriteMonster = true;
+        	}
     	}
     	
     	
     	var timeNow = new Date().getTime();
     	
-    	if(timeNow >= this.timeImune) { // check if player is time immune
-	    	// lose life
-	    	this.playerLifes--;
-	    	
-	    	this.updateHealth();
-	    	
-	    	this.timeImune = timeNow + Config.game.player.damageCooldown;
-	    	
-	    	if(!isBlinkPlayer && this.playerLifes > 0){
-		    	timerShine = this.game.time.create(false);
-		    	timerShine.start();
-	
-		    	timerShine.onComplete.add(this.normalPlayer, this);
-	
-		    	timerShine.repeat(1, 61, this.shinePlayer, this);
-	    	}
-	    	// move player away
-	    	if(this.playerCollider.body.x < monster.body.x) {
-	    		this.playerCollider.body.force.x = -2000;
-	    		//this.playerCollider.body.moveLeft(2000);
-	    		//this.playerCollider.body.moveForward(2000);
-	    	}
-	    	else {
-	    		this.playerCollider.body.force.x = 2000;
-//	    		this.playerCollider.body.moveUp(200);
-//	    		this.playerCollider.body.moveRight(2000);
-	    		//this.playerCollider.body.moveBackward(2000);
-	    	}
-	    	
-	    	if(this.playerLifes == 0) {
-	    		
-	    		this.gameState = STATE_GAMEOVER;
-	    		
-	        	player.kill();
-	        	this.playerCollider.kill();
-	        	
-	        	// TODO: game over screen
+    	if(verifySpriteMonster){
+	    	if(timeNow >= this.timeImune) { // check if player is time immune
+		    	// lose life
+		    	this.playerLifes--;
+		    	
+		    	this.updateHealth();
+		    	
+		    	this.timeImune = timeNow + Config.game.player.damageCooldown;
+		    	
+		    	if(!isBlinkPlayer && this.playerLifes > 0){
+			    	timerShine = this.game.time.create(false);
+			    	timerShine.start();
+		
+			    	timerShine.onComplete.add(this.normalPlayer, this);
+		
+			    	timerShine.repeat(1, 61, this.shinePlayer, this);
+		    	}
+		    	// move player away
+		    	if(this.playerCollider.body.x < monster.body.x) {
+		    		this.playerCollider.body.force.x = -2000;
+		    	}else {
+		    		this.playerCollider.body.force.x = 2000;
+		    	}
+		    	
+		    	if(this.playerLifes == 0) {
+		    		this.gameState = STATE_GAMEOVER;
+		    		
+		        	player.kill();
+		        	this.playerCollider.kill();
+		    	}
 	    	}
     	}
     	

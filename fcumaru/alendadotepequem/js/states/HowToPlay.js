@@ -10,9 +10,11 @@ State.HowToPlay.prototype = {
 	},
 	create: function () {
 		"use strict";
-		var background = this.game.add.sprite(Config.howToPlay.x, Config.howToPlay.y, 'how-to-play');
+		var background = this.game.add.sprite(Config.menu.x, Config.menu.y, 'menu-background');
 		background.inputEnabled = true;
 		background.events.onInputDown.add(this.onClick, this);
+
+		var playboard = this.game.add.sprite(Config.howToPlay.x, Config.howToPlay.y, 'how-to-play');
 	},
 	update: function () {
 		"use strict";
