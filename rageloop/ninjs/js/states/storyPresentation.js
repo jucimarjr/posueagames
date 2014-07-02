@@ -5,7 +5,7 @@
         " ",
         "- Ash, Ash, acorde! \n- Onde estou?", 
         "- Você está preso, no calabouço de Ryokan. \nSubaru aprisionou você.", 
-        "- Por que ele faria isso? \n- Ele acredita que você é o único capaz de impedi-lo de unificar todos \nos clãs, e se tornar invecível. Você precisa derrota-lo.",
+        "- Por que ele faria isso? \n- Ele acredita que você é o único capaz de impedi-lo de unificar todos \nos clãs, e se tornar invencível. Você precisa derrota-lo.",
         "- Nesse momento ele planeja um ataque feroz à sede do clã \nda estrela negra. Tome cuidado, seus capangas irão ataca-lo, \neles podem ser mortais.", 
         "- Seja forte! \nVocê tem que coletar os itens azuis, eles enfraquecerão Subaru. \nBoa sorte!",
         //"No final da história o herói consegue \nvencer/derrotar o vilão e sai do Ryokan,",
