@@ -20,7 +20,7 @@ State.GamePlay.prototype = {
 		gameWinSound = game.add.audio('gameWinSound');		
 		cpSound = game.add.audio('cpSound');
 		cpSound.durationMS = 5000;
-		this.game.time.deltaCap = 1/30;//0.016;		
+		this.game.time.deltaCap = 0.016;
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		this.game.physics.arcade.gravity.y = 100;
 		this.game.stage.smoothed = false;		
