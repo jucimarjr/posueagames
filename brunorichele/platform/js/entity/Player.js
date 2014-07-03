@@ -1,5 +1,5 @@
 var PlayerProperties = {
-    path : "assets/phase1/images/player_1200-100-15.png",
+    path : "assets/spritesheets/player_4240-100-53.png",
     width : 80,
     height : 100,
     frames : 15,
