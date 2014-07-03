@@ -23,6 +23,7 @@ Phase1.World = {
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
 		this.game.physics.p2.gravity.y = 1400;
 		this.game.physics.p2.restitution = 0;
+		this.game.world.enableBodySleeping=true;
 		
 		game.physics.p2.setImpactEvents(true);
 
