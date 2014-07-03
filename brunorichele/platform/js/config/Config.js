@@ -22,9 +22,14 @@ var Config = {
 };
 
 //Menu
-Config.menu = {
-	buttonBack: {
-		dir: 'assets/spritesheets/voltar_474-55-2.png',
+Config.button = {
+	load: function(game){
+		game.load.spritesheet('button-back', Config.button.back.background, Config.button.back.width, Config.button.back.height);
+		game.load.spritesheet('button-next', Config.button.next.background, Config.button.next.width, Config.button.next.height);
+		game.load.spritesheet('button-init', Config.button.init.background, Config.button.init.width, Config.button.init.height);		
+	},
+	back: {
+		background: 'assets/spritesheets/voltar_474-55-2.png',
 		x: Config.screen.width * 0.1,
 		y: Config.screen.height * 0.9,
 		width: 237,
@@ -34,8 +39,8 @@ Config.menu = {
 			y: 0.5
 		}
 	},
-	buttonNext: {
-		dir: 'assets/spritesheets/avancar_474-55-2.png',
+	next: {
+		background: 'assets/spritesheets/avancar_474-55-2.png',
 		x: Config.screen.width * 0.9,
 		y: Config.screen.height * 0.9,
 		width: 237,
@@ -45,8 +50,8 @@ Config.menu = {
 			y: 0.5
 		}
 	},
-	buttonInit: {
-		dir: 'assets/spritesheets/inicio_474-55-2.png',
+	init: {
+		background: 'assets/spritesheets/inicio_474-55-2.png',
 		x: Config.screen.width * 0.9,
 		y: Config.screen.height * 0.9,
 		width: 237,

@@ -14,11 +14,11 @@ State.GameFinal.prototype = {
 		"use strict";
 		var sprite = this.game.add.sprite(GameFinalProperties.x, GameFinalProperties.y, 'game-final'); // Carregar bg
 		
-		var button = this.game.add.button(Config.menu.buttonBack.x, Config.menu.buttonBack.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
-		button.anchor.setTo(Config.menu.buttonBack.anchor.x, Config.menu.buttonBack.anchor.y);
+		var button = this.game.add.button(Config.button.back.x, Config.button.back.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
+		button.anchor.setTo(Config.button.back.anchor.x, Config.button.back.anchor.y);
 		
-		var button2 = this.game.add.button(Config.menu.buttonInit.x, Config.menu.buttonInit.y, 'button-init', this.onNext, this, 1, 0, 1, 0);
-		button2.anchor.setTo(Config.menu.buttonInit.anchor.x, Config.menu.buttonInit.anchor.y);		
+		var button2 = this.game.add.button(Config.button.init.x, Config.button.init.y, 'button-init', this.onNext, this, 1, 0, 1, 0);
+		button2.anchor.setTo(Config.button.init.anchor.x, Config.button.init.anchor.y);		
 		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
         game.add.text(500, 850, 'Finalmente uma saída, há luz muito forte vindo dela...', style);

@@ -18,8 +18,8 @@ HowToPlay.prototype = {
 	create: function () {
 		"use strict";
 		var background = this.game.add.sprite(HowToPlayProperties.x, HowToPlayProperties.y, 'how-to-play');
-		var button = this.game.add.button(Config.menu.buttonBack.x, Config.menu.buttonBack.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
-		button.anchor.setTo(Config.menu.buttonBack.anchor.x, Config.menu.buttonBack.anchor.y);
+		var button = this.game.add.button(Config.button.back.x, Config.button.back.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
+		button.anchor.setTo(Config.button.back.anchor.x, Config.button.back.anchor.y);
 	},
 	update: function () {
 		"use strict";

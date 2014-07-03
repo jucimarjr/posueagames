@@ -18,8 +18,8 @@ Credits.prototype = {
 	create: function () {
 		"use strict";
 		var background = this.game.add.sprite(CreditsProperties.x, CreditsProperties.y, 'credits');
-		var button = this.game.add.button(Config.menu.buttonBack.x, Config.menu.buttonBack.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
-		button.anchor.setTo(Config.menu.buttonBack.anchor.x, Config.menu.buttonBack.anchor.y);
+		var button = this.game.add.button(Config.button.back.x, Config.button.back.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
+		button.anchor.setTo(Config.button.back.anchor.x, Config.button.back.anchor.y);
 		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
 		game.add.text(880, 200, 'Créditos', style);

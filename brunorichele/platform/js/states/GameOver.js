@@ -14,11 +14,11 @@ State.GameOver.prototype = {
 		"use strict";
 		var sprite = this.game.add.sprite(GameOverProperties.x, GameOverProperties.y, 'game-over'); // Carregar bg
 		
-		var button = this.game.add.button(Config.menu.buttonBack.x, Config.menu.buttonBack.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
-		button.anchor.setTo(Config.menu.buttonBack.anchor.x, Config.menu.buttonBack.anchor.y);
+		var button = this.game.add.button(Config.button.back.x, Config.button.back.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
+		button.anchor.setTo(Config.button.back.anchor.x, Config.button.back.anchor.y);
 		
-		var button2 = this.game.add.button(Config.menu.buttonInit.x, Config.menu.buttonInit.y, 'button-init', this.onNext, this, 1, 0, 1, 0);
-		button2.anchor.setTo(Config.menu.buttonInit.anchor.x, Config.menu.buttonInit.anchor.y);		
+		var button2 = this.game.add.button(Config.button.init.x, Config.button.init.y, 'button-init', this.onNext, this, 1, 0, 1, 0);
+		button2.anchor.setTo(Config.button.init.anchor.x, Config.button.init.anchor.y);		
 		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
         game.add.text(330, 850, 'Um homem foi encontrado morto após seu veículo atingir um caminhão', style);

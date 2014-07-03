@@ -34,9 +34,7 @@ GameSplash.prototype = {
 		//Menu
 		this.menu.init();
 		
-		this.game.load.spritesheet('button-back', Config.menu.buttonBack.dir, Config.menu.buttonBack.width, Config.menu.buttonBack.height);
-		this.game.load.spritesheet('button-next', Config.menu.buttonNext.dir, Config.menu.buttonNext.width, Config.menu.buttonNext.height);
-		this.game.load.spritesheet('button-init', Config.menu.buttonInit.dir, Config.menu.buttonInit.width, Config.menu.buttonInit.height);
+		Config.button.load(this.game);
 		
 		this.game.load.image('game-intro1', GameIntro1Properties.background);
 		this.game.load.image('game-intro2', GameIntro2Properties.background);
