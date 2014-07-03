@@ -38,6 +38,7 @@ Player.prototype = {
         this.game.physics.p2.enable(this.player);
         this.player.body.fixedRotation = true;
         this.player.body.collideWorldBounds = true;
+		this.player.body.mass = 9999;
 
         this.game.camera.follow(this.player);
     },
