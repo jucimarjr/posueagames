@@ -18,7 +18,9 @@ var Config = {
 		}
 	},
 	pause: function (game){
-		pause_label = game.add.text(Config.screen.width - 100, 1000, 'Pause', { font: '24px Arial', fill: '#fff' });
+		pause_label = game.add.text(0, 0, 'Pause', { font: '24px Arial', fill: '#fff' });
+		pause_label.fixedToCamera = true;
+    	pause_label.cameraOffset.setTo(Config.screen.width - 100, 20);
 		pause_label.inputEnabled = true;
 		pause_label.events.onInputUp.add(function () {
 			// When the paus button is pressed, we pause the game

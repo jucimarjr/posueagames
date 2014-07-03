@@ -54,12 +54,12 @@ Phase1.Enemy = {
 			this.fire[x].body.static = true;
 			this.fire[x].body.setRectangle(15, 20);
 			
-			game.physics.p2.enable(this.fire[x], false);
+			//game.physics.p2.enable(this.fire[x], false);
 		}						
 	},
 	collide : function(player){
 		for(var x = 0; x < this.posItem.length; x++){	
-			player.body.createBodyCallback(this.fire[x], this.action, this);
+			//player.body.createBodyCallback(this.fire[x], this.action, this);
 		}		
 	},
 	action : function(){
