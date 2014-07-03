@@ -14,17 +14,17 @@ State.Phase1.prototype = {
 
 		Phase1.World.createBg();
 		Phase1.Trap.create();
-		Phase1.Enemy.create();		
+		//Phase1.Enemy.create();		
         this.player.create();
 	    this.rocks = Phase1.Rock.create();
 	    Phase1.Door.create();
 		Phase1.World.createBgAlpha();
 		Phase1.Smoke.create();
-		Phase1.Enemy.collide(this.player.player);
-		Phase1.Smoke.collide(this.player.player);
+		//Phase1.Enemy.collide(this.player.player);
+		//Phase1.Smoke.collide(this.player.player);
 		Phase1.Door.collide(this.player.player);
 		
-		Phase1.World.createSound(this.game);
+		//Phase1.World.createSound(this.game);
 
         //misc defs
         this.cursors = this.game.input.keyboard.createCursorKeys();
