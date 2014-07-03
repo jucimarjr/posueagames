@@ -11,7 +11,8 @@ GameSplash = function (game) {
 	this.game = game;
 	this.menu = new Menu(game);
 	this.credits = new Credits(game);
-	this.player = new Player(game);
+	this.howToPlay = new HowToPlay(game);	
+	this.player = new Player(game); 
 };
 GameSplash.prototype = {
 	init: function(){
@@ -42,11 +43,8 @@ GameSplash.prototype = {
 		this.game.load.image('game-over', GameOverProperties.background);
 		this.game.load.image('game-final', GameFinalProperties.background);
 
-		//Credits
 		this.credits.init();
-
-		//HowToPlay
-		this.game.load.image('how-to-play', Config.howToPlay.dir);
+		this.howToPlay.init();
 		
 		Phase1.World.game = this.game;
 		Phase1.World.init();

@@ -1,6 +1,6 @@
-/*global Phaser*/
-
-//Global
+function Config (game){
+	this.game = game;
+};
 var Config = {
 	global: {
 		animationVelocity: 6
@@ -60,11 +60,4 @@ Config.menu = {
 		font: '25px Ms Sans Serif',
 		fill: '#ffffff'
 	}
-};
-
-//HowToPlay
-Config.howToPlay = {
-	dir: 'assets/images/tutorial_1920-1080.jpg',
-	x: 0,
-	y: 0
 };
