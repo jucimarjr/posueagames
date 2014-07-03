@@ -57,10 +57,15 @@ Phase1.Rock = {
 			this.rocks[x].body.loadPolygon('physicsDataRocks', this.posItem[x].item);
 			this.rocks[x].body.static = true;
 			this.rocks[x].body.fixedRotation = true;
+			this.rocks[x].body.setMaterial(rockMaterial);
+			this.rocks[x].body.setCollisionGroup(rockCG);
+    		this.rocks[x].body.collides([playerCG]);
+			this.rocks[x].body.createGroupCallback(playerCG, this.collide);
 		}	
 					
 		return this.rocks;
 	},
-	collide : function(player){
+	collide : function(){
+		game.add.text(Config.screen.width/2, 1500, 'Colidiu com a rocha', { font: '30px Arial', fill: '#fff' });
 	}
 };

@@ -41,28 +41,25 @@ Phase1.Enemy = {
 	init : function(){
 		this.game.load.spritesheet('enemyHand', this.hand, 25, 30);
 	},
-	create : function(){
-		this.head = game.add.group();
-    	this.head.enableBody = true;
-    	this.head.physicsBodyType = Phaser.Physics.P2JS;
-		
+	create : function(){		
 		for(var x = 0; x < this.posItem.length; x++){		
-			this.fire[x] = this.head.create(this.posItem[x].x, this.posItem[x].y, 'enemyHand');
+			this.fire[x] = this.game.add.sprite(this.posItem[x].x, this.posItem[x].y, 'enemyHand');
+			
+			this.game.physics.p2.enable(this.fire[x], false);
+			
 			this.fire[x].animations.add('burn', [0, 1, 2, 3, 4, 5], 10, true);
 			this.fire[x].animations.play('burn');	
 			this.fire[x].body.fixedRotation = true;
 			this.fire[x].body.static = true;
 			this.fire[x].body.setRectangle(15, 20);
-			
-			//game.physics.p2.enable(this.fire[x], false);
+			this.fire[x].body.setMaterial(enemyMaterial);
+			this.fire[x].body.setCollisionGroup(enemyCG);
+    		this.fire[x].body.collides([playerCG]);
+			this.fire[x].body.createGroupCallback(playerCG, this.collide);			
 		}						
 	},
 	collide : function(player){
-		for(var x = 0; x < this.posItem.length; x++){	
-			//player.body.createBodyCallback(this.fire[x], this.action, this);
-		}		
-	},
-	action : function(){
-		this.game.state.start('GameOver');		
-	}	
+		game.add.text(Config.screen.width/2, 1500, 'Colidiu com o inimigo', { font: '30px Arial', fill: '#fff' });	
+		//		this.game.state.start('GameOver');		
+	}
 };

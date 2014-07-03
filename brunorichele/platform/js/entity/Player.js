@@ -39,6 +39,9 @@ Player.prototype = {
         this.player.body.fixedRotation = true;
         this.player.body.collideWorldBounds = true;
 		this.player.body.mass = 9999;
+		this.player.body.setMaterial(playerMaterial);
+		this.player.body.setCollisionGroup(playerCG);
+    	this.player.body.collides([rockCG, enemyCG]);
 
         this.game.camera.follow(this.player);
     },

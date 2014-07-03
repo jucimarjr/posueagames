@@ -29,6 +29,8 @@ Phase1.World = {
 
 		this.background = this.game.add.tileSprite(this.x, this.y, this.weith, this.height, 'bgphase1');
 		
+		this.definePhysicElement();
+		
 		return this.background;	
 	},	
 	createBgAlpha : function(){
@@ -36,6 +38,18 @@ Phase1.World = {
 		
 		return this.backgroundAlpha;	
 	},	
+	definePhysicElement : function(){
+		rockMaterial = game.physics.p2.createMaterial('rock');
+		playerMaterial = game.physics.p2.createMaterial('player');
+		enemyMaterial = game.physics.p2.createMaterial('enemy');		
+		
+		game.physics.p2.createContactMaterial(playerMaterial, rockMaterial, { friction: 2, restitution: 0  });
+		game.physics.p2.createContactMaterial(playerMaterial, enemyMaterial, { friction: 0, restitution: 0  });		
+		
+		playerCG = game.physics.p2.createCollisionGroup();
+		rockCG = game.physics.p2.createCollisionGroup();
+		enemyCG = game.physics.p2.createCollisionGroup();		
+	},
 	createSound : function(){
 		this.bgmusic = this.game.add.audio('bgmusic');
         this.bgmusic.play('', 0, 1, true);	
