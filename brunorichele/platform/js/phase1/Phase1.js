@@ -29,6 +29,8 @@ State.Phase1.prototype = {
         //misc defs
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.control = new Control(this.game, this.player, this.cursors);
+		
+		Config.pause(this.game);
     },
     update: function(){
         "use strict";

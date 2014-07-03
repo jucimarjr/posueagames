@@ -1,7 +1,5 @@
-function Config (game){
-	this.game = game;
-};
 var Config = {
+	choiseLabel : null,
 	global: {
 		animationVelocity: 6
 	},
@@ -18,7 +16,26 @@ var Config = {
 			game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 			game.scale.setScreenSize();	
 		}
-	}	
+	},
+	pause: function (game){
+		pause_label = game.add.text(Config.screen.width - 100, 1000, 'Pause', { font: '24px Arial', fill: '#fff' });
+		pause_label.inputEnabled = true;
+		pause_label.events.onInputUp.add(function () {
+			// When the paus button is pressed, we pause the game
+			game.paused = true;
+	
+			// And a label to illustrate which menu item was chosen. (This is not necessary)
+			this.choiseLabel = game.add.text(Config.screen.width/2, 1500, 'Click outside menu to continue', { font: '30px Arial', fill: '#fff' });
+			this.choiseLabel.anchor.setTo(0.5, 0.5);
+			game.input.onDown.add(Config.unpause, self);
+		});	
+	},
+	unpause: function(){
+		this.choiseLabel.destroy();
+
+		// Unpause the game
+		game.paused = false;	
+	}		
 };
 
 //Menu
