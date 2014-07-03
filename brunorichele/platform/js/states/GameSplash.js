@@ -1,7 +1,7 @@
 /*global setTimeout, State, Config, Phaser*/
 var GameSplashProperties = {
 	background: 'assets/images/GameSplash_1920-1080.jpg',
-	bar: 'assets/images/splashtext_4000-300-8.png',
+	bar: 'assets/spritesheets/splashtext_4000-300-8.png',
 	x: 0,
 	y: 0,
 	millis: 2000,
