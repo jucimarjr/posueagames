@@ -20,12 +20,22 @@ Control.prototype = {
 
         if (this.player.state != PlayerState.JUMPING) {
             if (this.cursors.left.isDown) {
-                this.player.state = PlayerState.RUNNING;
-                this.player.player.body.velocity.x = -PlayerProperties.velRun;
+                if (this.cursors.left.ctrlKey) {
+                    this.player.state = PlayerState.RUNNING;
+                    this.player.player.body.velocity.x = -PlayerProperties.velRun;
+                } else {
+                    this.player.state = PlayerState.WALKING;
+                    this.player.player.body.velocity.x = -PlayerProperties.velWalk;
+                }
                 this.player.player.scale.x = -1;
             } else if (this.cursors.right.isDown) {
-                this.player.state = PlayerState.RUNNING;
-                this.player.player.body.velocity.x = PlayerProperties.velRun;
+                if (this.cursors.right.ctrlKey) {
+                    this.player.state = PlayerState.RUNNING;
+                    this.player.player.body.velocity.x = PlayerProperties.velRun;
+                } else {
+                    this.player.state = PlayerState.WALKING;
+                    this.player.player.body.velocity.x = PlayerProperties.velWalk;
+                }
                 this.player.player.scale.x = +1;
             } else {
                 if (this.player.state != PlayerState.JUMPING) {

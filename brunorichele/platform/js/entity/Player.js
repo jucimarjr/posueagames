@@ -2,10 +2,14 @@ var PlayerProperties = {
     path : "assets/spritesheets/player_4240-100-53.png",
     width : 80,
     height : 100,
-    frames : 15,
-    idle : 14,
-    run : [0, 1, 2, 3, 4, 5, 6, 7],
-    jump : [8, 9, 10, 11, 12, 13, 14],
+    frames : 53,
+    idle : 0,
+    walk : [1, 2, 3, 4, 5, 6, 7, 8],
+    run : [9, 10, 11, 12, 13, 14, 15, 16],
+    jump : [17, 18, 19, 20, 21, 22, 23],
+    velWalk : 150,
+    explode : [35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
+    burn : [45, 46, 47, 48, 49, 50, 51, 52],
     velRun : 250,
     velJump : -400
 };
@@ -13,7 +17,8 @@ var PlayerProperties = {
 var PlayerState = {
     IDLE : 0,
     RUNNING : 1,
-    JUMPING : 2
+    JUMPING : 2,
+    WALKING : 3
 };
 
 function Player(game) {
@@ -33,6 +38,7 @@ Player.prototype = {
         // animations
         //this.player.animations.add('idle', PlayerProperties.idle, 10, true);
         this.player.animations.add('run', PlayerProperties.run, 10, true);
+        this.player.animations.add('walk', PlayerProperties.walk, 10, true);
         this.player.animations.add('jump', PlayerProperties.jump, 10, true);
 
         this.game.physics.p2.enable(this.player);
@@ -47,13 +53,14 @@ Player.prototype = {
     },
 
     update : function() {
-        if(this.state == PlayerState.RUNNING) {
+        if(this.state == PlayerState.WALKING) {
+            this.player.animations.play('walk');
+        } else if(this.state == PlayerState.RUNNING) {
             this.player.animations.play('run');
         } else if(this.state == PlayerState.IDLE) {
             this.player.animations.stop();
-            this.player.frame = 14;
+            this.player.frame = PlayerProperties.idle;
         } else if(this.state == PlayerState.JUMPING) {
-            console.log('jump animation');
             this.player.animations.play('jump');
         }
     }
