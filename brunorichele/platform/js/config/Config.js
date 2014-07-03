@@ -41,42 +41,6 @@ Config.sponsorSplash = {
 
 //Menu
 Config.menu = {
-	dir: 'assets/images/bgmenu_1920-1080.jpg',
-	x: 0,
-	y: 0,
-	buttonPlay: {
-		dir: 'assets/spritesheets/jogar_474-55-2.png',
-		x: Config.global.screen.width * 0.6,
-		y: Config.global.screen.height * 0.73,
-		width: 237,
-		height: 55,
-		anchor: {
-			x: 0.5,
-			y: 0.5
-		}
-	},
-	buttonHowToPlay: {
-		dir: 'assets/spritesheets/tutorial_474-55-2.png',
-		x: Config.global.screen.width * 0.6,
-		y: Config.global.screen.height * 0.79,
-		width: 237,
-		height: 55,
-		anchor: {
-			x: 0.5,
-			y: 0.5
-		}
-	},
-	buttonCredits: {
-		dir: 'assets/spritesheets/creditos_474-55-2.png',
-		x: Config.global.screen.width * 0.6,
-		y: Config.global.screen.height * 0.85,
-		width: 237,
-		height: 55,
-		anchor: {
-			x: 0.5,
-			y: 0.5
-		}
-	},
 	buttonBack: {
 		dir: 'assets/spritesheets/voltar_474-55-2.png',
 		x: Config.global.screen.width * 0.1,
