@@ -4,8 +4,8 @@ var MenuProperties = {
 	y: 0,
 	buttonPlay: {
 		background: 'assets/spritesheets/jogar_474-55-2.png',
-		x: Config.global.screen.width * 0.6,
-		y: Config.global.screen.height * 0.73,
+		x: Config.screen.width * 0.6,
+		y: Config.screen.height * 0.73,
 		width: 237,
 		height: 55,
 		anchor: {
@@ -15,8 +15,8 @@ var MenuProperties = {
 	},
 	buttonHowToPlay: {
 		background: 'assets/spritesheets/tutorial_474-55-2.png',
-		x: Config.global.screen.width * 0.6,
-		y: Config.global.screen.height * 0.79,
+		x: Config.screen.width * 0.6,
+		y: Config.screen.height * 0.79,
 		width: 237,
 		height: 55,
 		anchor: {
@@ -26,8 +26,8 @@ var MenuProperties = {
 	},
 	buttonCredits: {
 		background: 'assets/spritesheets/creditos_474-55-2.png',
-		x: Config.global.screen.width * 0.6,
-		y: Config.global.screen.height * 0.85,
+		x: Config.screen.width * 0.6,
+		y: Config.screen.height * 0.85,
 		width: 237,
 		height: 55,
 		anchor: {
@@ -64,7 +64,7 @@ Menu.prototype = {
 	},
 	update: function () {
 		"use strict";
-		Config.global.screen.resize(this.game);
+		Config.screen.resize(this.game);
 	},
 	clickPlay: function () {
 		"use strict";

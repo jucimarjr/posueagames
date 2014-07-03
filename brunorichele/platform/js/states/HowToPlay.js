@@ -16,7 +16,7 @@ State.HowToPlay.prototype = {
 	},
 	update: function () {
 		"use strict";
-		Config.global.screen.resize(this.game);
+		Config.screen.resize(this.game);
 	},
 	onBack: function () {
 		"use strict";

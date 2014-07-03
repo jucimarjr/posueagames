@@ -1,23 +1,23 @@
 /*global setTimeout, State, Config, Phaser*/
 var GameSplashProperties = {
-	dir: {
-		background: 'assets/images/GameSplash_1920-1080.jpg',
-		bar: 'assets/images/splashtext_4000-300-8.png'
-	},
+	background: 'assets/images/GameSplash_1920-1080.jpg',
+	bar: 'assets/images/splashtext_4000-300-8.png',
 	x: 0,
 	y: 0,
 	millis: 2000,
 	nextState: 4000
 };
-
-State.GameSplash = function (game) {
-	"use strict";
+GameSplash = function (game) {
 	this.game = game;
 	this.menu = new Menu(game);
 	this.credits = new Credits(game);
 	this.player = new Player(game);
 };
-State.GameSplash.prototype = {
+GameSplash.prototype = {
+	init: function(){
+		this.game.load.image('game-splash', GameSplashProperties.background);
+		this.game.load.spritesheet('progress-bar', GameSplashProperties.bar, 500, 300);	
+	},
 	preload: function () {
 		"use strict";
 		var sprite = this.game.add.sprite(GameSplashProperties.x, GameSplashProperties.y, 'game-splash'); // Carregar bg
@@ -68,6 +68,7 @@ State.GameSplash.prototype = {
 	},
 	update: function () {
 		"use strict";
-		Config.global.screen.resize(this.game);
+		Config.screen.resize(this.game);
 	}
 };
+State.GameSplash = GameSplash;

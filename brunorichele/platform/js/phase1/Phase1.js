@@ -32,7 +32,7 @@ State.Phase1.prototype = {
     },
     update: function(){
         "use strict";
-        Config.global.screen.resize(this.game); 
+        Config.screen.resize(this.game); 
 
 		this.control.update();
     }	

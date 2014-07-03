@@ -1,6 +1,6 @@
 /*global Config, State, Phaser*/
 
-var game = new Phaser.Game(Config.global.screen.width, Config.global.screen.height, Phaser.Auto, 'game');
+var game = new Phaser.Game(Config.screen.width, Config.screen.height, Phaser.Auto, 'game');
 game.state.add('LudusSplash', State.LudusSplash);
 game.state.add('SponsorSplash', State.SponsorSplash);
 game.state.add('GameSplash', State.GameSplash);
