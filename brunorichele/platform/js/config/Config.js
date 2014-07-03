@@ -122,10 +122,3 @@ Config.howToPlay = {
 	x: 0,
 	y: 0
 };
-
-//Credits
-Config.credits = {
-	dir: 'assets/images/creditos_1920-1080.jpg',
-	x: 0,
-	y: 0
-};

@@ -13,6 +13,7 @@ var GameSplashProperties = {
 State.GameSplash = function (game) {
 	"use strict";
 	this.game = game;
+	this.credits = new Credits(game);
 	this.player = new Player(game);
 };
 State.GameSplash.prototype = {
@@ -43,7 +44,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('game-final', GameFinalProperties.background);
 
 		//Credits
-		this.game.load.image('credits', Config.credits.dir);
+		this.credits.init();
 
 		//HowToPlay
 		this.game.load.image('how-to-play', Config.howToPlay.dir);

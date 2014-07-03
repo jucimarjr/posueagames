@@ -1,15 +1,23 @@
-State.Credits = function (game) {
-	"use strict";
-	this.game = game;
+var CreditsProperties = {
+	background: 'assets/images/creditos_1920-1080.jpg',
+	x: 0,
+	y: 0
 };
 
-State.Credits.prototype = {
+function Credits(game) {
+    this.game = game
+};
+
+Credits.prototype = {
+	init : function(){
+		this.game.load.image('credits', CreditsProperties.background);	
+	},
 	preload: function () {
-		"use strict";
+		"use strict";	
 	},
 	create: function () {
 		"use strict";
-		var background = this.game.add.sprite(Config.credits.x, Config.credits.y, 'credits');
+		var background = this.game.add.sprite(CreditsProperties.x, CreditsProperties.y, 'credits');
 		var button = this.game.add.button(Config.menu.buttonBack.x, Config.menu.buttonBack.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
 		button.anchor.setTo(Config.menu.buttonBack.anchor.x, Config.menu.buttonBack.anchor.y);
 		
@@ -36,5 +44,12 @@ State.Credits.prototype = {
 	onBack: function () {
 		"use strict";
 		this.game.state.start('Menu');
-	}
+	}	
 };
+
+State.Credits = function (game) {
+	"use strict";
+	this.game = game;
+};
+
+State.Credits.prototype = Credits.prototype;
