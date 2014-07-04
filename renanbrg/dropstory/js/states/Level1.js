@@ -2,6 +2,7 @@
 
 State.Level1 = function (game) {
 	"use strict";
+
 	this.game = game;
     this.map = null;
     this.crabs = null;
@@ -23,6 +24,9 @@ State.Level1 = function (game) {
     this.onAir = false;
     this.hotSandTimerActivated = false;
     this.dropIsInvincible = false;
+    this.lastDropTimer = null;
+    this.decreaseDropTimer = null;
+    this.disableSundropTimer = null;
 
     this.countCall = 0; //count how many times the collision function is called.
 };
@@ -271,7 +275,7 @@ State.Level1.prototype = {
         dropSprite.body.createGroupCallback(this.moleculeCG, this.checkOverlapWithLifeDrop, this);
 		dropSprite.body.createGroupCallback(this.drinkEnergy, this);
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
-        dropSprite.body.createGroupCallback(this.glassCG, this.timeOverKill,
+        dropSprite.body.createGroupCallback(this.glassCG, this.restartGame,
                 this);
         dropSprite.body.createGroupCallback(this.coveredStrawCG, this.insideStraw, this);
 	},
@@ -580,9 +584,15 @@ State.Level1.prototype = {
             body2.hasCollided = true;
             this.dropIsInvincible = true;
             var self = this;
-            setTimeout(function() {
+            this.disableSundropTimer = setTimeout(function() {
                 self.dropIsInvincible = false;
                 self.drop.playerstate = 'normal';
+                // Check if the player is over the hot sand
+                if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
+                        40, self.hotSandLayer)) {
+                    self.countCall = 0;
+                    self.killDrop(body1, null);
+                }
             }, 5500);
         }
         if (this.countCall == 2) {
@@ -597,25 +607,31 @@ State.Level1.prototype = {
         this.countCall++;
         if (this.countCall == 1 && !this.hotSandTimerActivated) {
             console.log('moreeeeeeeeeeeeeeeeeu!!! killlDrop');
-            this.hud.decreaseDropBar();
-            this.haveEnergy = true;
-            this.smokeEmitter.on = true;
-            this.smokeEmitter.start(false, 3000, 50);
             if (this.drop.playersize == 'big') {
+                this.hud.decreaseDropBar();
+                this.haveEnergy = true;
+                this.smokeEmitter.on = true;
+                this.smokeEmitter.start(false, 3000, 50);
                 var self = this;
                 if (this.hud.getDropCounter() == 0) {
-                    setTimeout(function(time) {
+                    this.lastDropTimer = setTimeout(function(time) {
                         self.hotSandTimerActivated = false;
-                        self.stopKillTime(time);
+                        if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
+                                40, self.hotSandLayer)) {
+                            self.restartGame();
+                        }
+                        self.countCall = 0;
                     }, 2000);
                     this.drop.playersize = 'small';
                     this.hotSandTimerActivated = true;
                 } else {
-                    setTimeout(function(time) {
-                        console.log('* setTimeout called');
+                    this.decreaseDropTimer = setTimeout(function() {
                         self.hotSandTimerActivated = false;
                         self.countCall = 0;
-                        self.stopDecreaseCounter(time);
+                        if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
+                                40, self.hotSandLayer)) {
+                            self.killDrop(body1, null);
+                        }
                     }, 2000);
                     this.hotSandTimerActivated = true;
                 }
@@ -632,18 +648,6 @@ State.Level1.prototype = {
 		this.smokeEmitter.on = false;
 		clearTimeout(this.smokeTimer);
 		this.drop.playerstate = 'normal';
-	},
-	stopKillTime: function(time) {
-		this.drop.getSpriteObject().body.createGroupCallback(this.hotsandCG, this.timeOverKill, this);
-		clearTimeout(time);
-	},
-    stopDecreaseCounter: function(time) {
-		this.drop.getSpriteObject().body.createGroupCallback(this.hotsandCG, this.killDrop, this);
-		clearTimeout(time);
-    },
-	timeOverKill: function () {
-		console.log('chamou');
-		this.drop.kill();
 	},
 	moveCrab: function (crab) {
 		if (crab.name == "crab1") {
@@ -712,6 +716,10 @@ State.Level1.prototype = {
 		this.game.state.start('credits-state');
 	},
     restartGame: function () {
+        clearTimeout(this.lastDropTimer);
+        clearTimeout(this.decreaseDropTimer);
+        clearTimeout(this.disableSundropTimer);
+        this.hotSandTimerActivated = false;
         this.drop.kill();
         this.hud.decreaseLife();
         if (this.hud.getLifeCounter() == 0) {

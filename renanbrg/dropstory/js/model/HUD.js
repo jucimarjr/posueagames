@@ -47,13 +47,14 @@ HUD.prototype = {
     create: function() {
         "use strict";
 
+        this.dropCounter = 0;
         this.lifeAsset = this.game.add.image(20, 20, 'life_image');
         this.lifeAsset.fixedToCamera = true;
-        
+
         var styleForX = { font: "26px Helvetica", fill: "#ffffff" };
         this.xLabel = this.game.add.text(70, 26, "x", styleForX);
         this.xLabel.fixedToCamera = true;
-        
+
         var styleForLife = { font: "40px Helvetica", fill: "#ffffff" };
         this.lifeLabel = this.game.add.text(90, 22, this.lifeCounter,
                 styleForLife);
