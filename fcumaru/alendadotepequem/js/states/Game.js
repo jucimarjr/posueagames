@@ -79,10 +79,16 @@ State.Game.prototype = {
 					this.heroes.heroes[this.heroes.index].facingLeft);
 		}
 		if (!this.heroes.isAlive()) {
-			this.game.state.start('GameOver');
-
+			var selected = this.heroes.getSelectedHero();
+			if(selected.state === "dead") return;
+			selected.state = "dying";
+			setTimeout(this.gameOver, 2000);
 		}
 
+	},
+
+	gameOver : function () {
+		 this.game.state.start('GameOver');
 	},
 
 	render : function() {
