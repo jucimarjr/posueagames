@@ -19,6 +19,7 @@
 		//levels
 		app_container.game.state.add('Level1', app_container.Level1);
 		app_container.game.state.add('Level2', app_container.Level2);
+		app_container.game.state.add('Level3', app_container.Level3);
 
 		// start preload
 		app_container.game.state.start('LudusSplash');

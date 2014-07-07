@@ -46,6 +46,7 @@
             /*Maps*/
             this.game.load.tilemap('map1', 'assets/maps/level1.json', null, Phaser.Tilemap.TILED_JSON);
             this.game.load.tilemap('map2', 'assets/maps/level2.json', null, Phaser.Tilemap.TILED_JSON);
+            this.game.load.tilemap('map3', 'assets/maps/boss.json', null, Phaser.Tilemap.TILED_JSON);
             
             /*GameOver assets*/
             this.game.load.image('gameover_bg','assets/images/gameOverBg_960-600.png');
