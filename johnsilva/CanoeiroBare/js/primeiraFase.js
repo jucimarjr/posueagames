@@ -318,14 +318,14 @@ function canoemanEnd() {
     }
 
     remosSound.stop();
-    canoeman.play('dead');
 
     if(finalSound == false){
         var explode = game.add.audio("explodesound");
-        explode.volume = 0.3;
+        explode.volume = 2;
         explode.play();
         finalSound = true;
-    }
+    }    
+    canoeman.play('dead');    
 }
 
 function sleep(milliseconds) {
