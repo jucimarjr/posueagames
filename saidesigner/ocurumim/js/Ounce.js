@@ -33,7 +33,7 @@ Curumim.Ounce = function(game, spriteKey, map, mapObject, gid, walkAnimation)
 
 Curumim.Ounce.prototype = 
 {
-	update: function(isCollision)
+	update: function()
 	{
 		this.group.forEach(function (enemy) 
 		{ 

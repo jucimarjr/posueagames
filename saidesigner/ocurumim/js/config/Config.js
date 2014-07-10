@@ -115,12 +115,25 @@ Config.game = {
 
 }
 
+// River
+
+Config.river = {
+
+	x: 0,
+	y: 525,
+
+	sprite: {
+		src: 'assets/spritesheets/river.png', 
+		width: 960,
+		height: 75
+	}
+};
 
 // Player
 
 Config.player = {
 
-	x: 60,
+	x: 260,
 	y: 600,
 
 	sprite: {
@@ -288,7 +301,7 @@ Config.arara = {
 	blue : {
 		gid: 13,
 		sprite : {
-			src : 'assets/spritesheets/arara_blue.png',
+			src : 'assets/spritesheets/arara_azul.png',
 			width : 100,
 			height: 78
 		}

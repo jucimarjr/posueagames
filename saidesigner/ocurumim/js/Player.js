@@ -12,6 +12,7 @@ Curumim.Player = function(game)
 	this.nextBullet = 0;
 	this.powerUp = false;
 	this.canDie = true;
+	this.platformVelocity = 0; 
 
 	player = this;
 };
@@ -66,8 +67,9 @@ Curumim.Player.prototype =
 		this.score.update();
 
 		// walk or run
-
+		
 		this.sprite.body.velocity.x = 0;
+		
 
 		var velocity = Config.player.velocity.walk;
 		var animation = 'walk';
@@ -92,7 +94,7 @@ Curumim.Player.prototype =
            	this.sprite.body.velocity.x = velocity;                    
            	this.sprite.animations.play(animation);	            
 		} 
-		else if (this.sprite.body.blocked.down) 
+		else if (this.sprite.body.blocked.down || this.sprite.body.velocity.y == 0) 
 		{
             this.sprite.animations.stop();
             this.sprite.frame = 0;
@@ -194,5 +196,9 @@ Curumim.Player.prototype =
 			self.sprite.alpha = 1;
 			self.canDie = true;
 		 }, 3000);
+	},
+
+	getVelocity : function() {
+		return this.sprite.body.velocity.x + this.platformVelocity;	
 	}
 };

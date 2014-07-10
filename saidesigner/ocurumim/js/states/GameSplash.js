@@ -69,11 +69,13 @@ State.GameSplash.prototype = {
 		this.game.load.image('forest', 'assets/images/forest.png');
 		this.game.load.image('platform', 'assets/images/platform.png');
 		this.game.load.image('clouds', 'assets/images/clouds.png');
+		this.game.load.image('ounce_tail', Config.ounce.tail.src);
+		
+		this.game.load.spritesheet('river', Config.river.sprite.src, Config.river.sprite.width, Config.river.sprite.height);
 		this.game.load.spritesheet('fruits', Config.fruit.small.src, Config.fruit.small.width, Config.fruit.small.height);
 		this.game.load.spritesheet('fruitsBig', Config.fruit.big.src, Config.fruit.big.width, Config.fruit.big.height);
 		this.game.load.spritesheet('ounce', Config.ounce.sprite.src, Config.ounce.sprite.width, Config.ounce.sprite.height);
-		this.game.load.spritesheet('ounce_dizzy', Config.ounce.dizzy.src, Config.ounce.dizzy.width, Config.ounce.dizzy.height);
-		this.game.load.image('ounce_tail', Config.ounce.tail.src);
+		this.game.load.spritesheet('ounce_dizzy', Config.ounce.dizzy.src, Config.ounce.dizzy.width, Config.ounce.dizzy.height);		
 		this.game.load.spritesheet('ant', Config.ant.sprite.src, Config.ant.sprite.width, Config.ant.sprite.height);
 		this.game.load.spritesheet('arara_azul', Config.arara.blue.sprite.src, Config.arara.blue.sprite.width, Config.arara.blue.sprite.height);
 		this.game.load.spritesheet('insaninho', Config.insaninho.sprite.src, Config.insaninho.sprite.width, Config.insaninho.sprite.height);		
