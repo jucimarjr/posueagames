@@ -7,6 +7,7 @@ State.Game = function(game) {
 	this.rocks = new Rocks(game);
 	this.trees = new Trees(game);
 	this.portal = new Portal(game);
+	this.reset = false;
 };
 
 var map;
@@ -27,6 +28,18 @@ State.Game.prototype = {
 		this.rocks.preload();
 		this.trees.preload();
 		this.portal.preload();
+	},
+	init : function(){
+		// ajustando estado dos herois
+		if(this.reset){
+			this.heroes.heroes[0].state = "idle";
+			this.heroes.heroes[0].hero.life = 1;
+			this.heroes.heroes[1].state = "idle";
+			this.heroes.heroes[1].hero.life = 1;
+			this.heroes.heroes[2].state = "idle";
+			this.heroes.heroes[2].hero.life = 1;
+			console.log("reseted");
+		}
 	},
 	create : function() {
 		"use strict";
@@ -62,6 +75,7 @@ State.Game.prototype = {
 		this.rocks.create();
 		this.trees.create();
 		this.portal.create();
+		this.reset = true; // resetar tudo da próxima vez que carregar o estado
 	},
 	update : function() {
 		"use strict";
@@ -79,10 +93,16 @@ State.Game.prototype = {
 					this.heroes.heroes[this.heroes.index].facingLeft);
 		}
 		if (!this.heroes.isAlive()) {
-			this.game.state.start('GameOver');
-
+			var selected = this.heroes.getSelectedHero();
+			if(selected.state === "dead") return;
+			selected.state = "dying";
+			setTimeout(this.gameOver, 2000);
 		}
 
+	},
+
+	gameOver : function () {
+		 this.game.state.start('GameOver');
 	},
 
 	render : function() {

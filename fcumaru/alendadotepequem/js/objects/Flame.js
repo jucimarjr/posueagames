@@ -34,18 +34,18 @@ Flame.prototype = {
 	update : function(layer) {
 		"use strict";
 
-		this.game.physics.arcade.collide(layer, this.flame);
+		//this.game.physics.arcade.overlap(layer, this.flame);
 
 		this.flame.animations.play('burn');
 	},
 	checkCollision : function(hero) {
 		if (hero.active) {
-			this.game.physics.arcade.collide(this.flame, hero,
+			this.game.physics.arcade.overlap(this.flame, hero,
 					this.heroCollision);
 		}
 	},
 	heroCollision : function(flame, hero) {
-		hero.damage(1);
+		hero.life--;
 	}
 };
 

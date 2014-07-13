@@ -8,7 +8,6 @@ function HeroOfRope(game) {
 	that.asset = 'assets/heroofrope_120-120-34.png';
 	that.jump = 500;
 	that.walk = 200;
-	that.life = 1;
 	that.maxJump = 2;
 //	that.initX = 200;
 //	that.initY = 2580;
@@ -33,7 +32,7 @@ function HeroOfRope(game) {
 		this.hero.animations.add('walk', [ 0, 1, 2, 3 ], 10, true);
 		this.hero.animations.add('jump', [ 4 ], 4, true);
 		this.hero.animations.add('down', [ 4, 5, 6, 7 ], 8, false);
-		this.hero.animations.add('died', [ 15, 16, 17 ], 3, true);
+		this.hero.animations.add('died', [ 14, 15, 16 ], 3, true);
 
 		// permite que a sprite tenha um corpo fisico
 		this.game.physics.enable(this.hero, Phaser.Physics.ARCADE);
@@ -53,6 +52,7 @@ function HeroOfRope(game) {
 		this.hero.health = this.life;
 		this.hero.active = false;
 		this.hero.jumpCount = this.jumpCount;
+		this.hero.life = 1;
 
 		this.hero.body.allowGravity = false;
 
@@ -73,7 +73,15 @@ function HeroOfRope(game) {
 		"use strict";
 		this.game.physics.arcade.collide(layer, this.hero);
 		enemies.checkCollision(this.hero);
-
+		// verificar morte
+		if(this.state === "dead") return;
+		if(this.state === "dying") {
+			this.hero.animations.play('died');
+			this.state = "dead"; // no more actions from this point
+			console.log("e morreu: " + this.state);
+			return;
+		}
+		
 		// apenas processar movimento se estiver ativo
 		if (this.hero.active && !this.ropeActive) {
 			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {

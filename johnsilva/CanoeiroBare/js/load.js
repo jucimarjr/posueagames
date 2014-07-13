@@ -14,7 +14,7 @@ function create() {
     game.load.audio('remosound', 'songs/remada.mp3');
     game.load.audio('explodesound', 'songs/explode.mp3');
     game.load.audio('botosound', 'songs/boto.mp3');
-    game.load.audio('alligatorsound', 'songs/alligator.wav');
+    game.load.audio('alligatorsound', 'songs/alligator.mp3');
     game.load.audio('fundosound', 'songs/canoeman.mp3');
     if (startSound == true) {
         initSound();

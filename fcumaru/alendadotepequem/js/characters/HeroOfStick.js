@@ -49,6 +49,7 @@ function HeroOfStick(game) {
 		this.hero.health = this.life;
 		this.hero.active = false;
 		this.hero.jumpCount = this.jumpCount;
+		this.hero.life = 1;
 
 		this.hero.body.allowGravity = false;
 
@@ -61,47 +62,63 @@ function HeroOfStick(game) {
 		this.game.physics.arcade.collide(layer, this.hero);
 		enemies.checkCollision(this.hero);
 
-		// PEGA A ENTRADA (tecla pressionada):
-		var keyPressed = false;
-		// apenas processar movimento se estiver ativo
+		// verificar morte
+		if(this.state === "dead") return;
+		if(this.state === "dying") {
+			this.hero.animations.play('died');
+			this.state = "dead"; // no more actions from this point
+			console.log("e morreu: " + this.state);
+			return;
+		}
+
 		if (this.hero.active) {
 			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 				// vai para esquerda
 				this.hero.body.velocity.x = -this.walk;
-				this.hero.animations.play('walk');
+				if(this.hero.body.onFloor()) this.hero.animations.play('walk');
 				this.hero.scale.x = -1; // espelha se antes -1
-				keyPressed = true;
+				this.state = "walking";
+				this.facingLeft = true;
 			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
 				// vai para direita
 				this.hero.body.velocity.x = this.walk;
 				this.hero.scale.x = +1; // espelha se antes 1
-				this.hero.animations.play('walk');
-				keyPressed = true;
+				if(this.hero.body.onFloor()) this.hero.animations.play('walk');
+				this.state = "walking";
+				this.facingLeft = false;
 			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
 				this.hero.animations.play('attack');
-				keyPressed = true;
+				this.state = "attacking";
 				distance = enemies.checkDistanceFromEnemy(this.hero.x,
 						this.hero.y);
 				if (distance < 5.5) {
 					enemies.Attacked(true);
 				}
 			}
+			else {
+				this.state = "idle";
+			}
 		}
 		// executar a animacao para para cima
 		if (this.hero.jumpCount > 0) {
-			this.hero.animations.play('jump');
-
-			// resetando o contador de pulo quando votlar ao ch�o
+			if(this.hero.body.velocity.y < 0) this.hero.animations.play('jump');
+			this.state = "jumping";
 			if (this.hero.body.onFloor()) {
 				this.hero.jumpCount = 0;
+				this.state = "idle";
 			}
-			keyPressed = true;
 		}
-		if (!keyPressed) {
+
+		if (this.state === "idle") {
 			this.hero.animations.stop();
-			this.hero.frame = 2;
-			this.hero.isPushing = false;
+			this.hero.frame = 0;
 		}
+
+		if(this.hero.body.velocity.y > 0 && this.state !== "falling"){
+			this.hero.animations.play('down');
+			this.state = "falling";
+		}
+
 
 		if (this.hero.body.onFloor()) {
 			this.hero.body.allowGravity = false;

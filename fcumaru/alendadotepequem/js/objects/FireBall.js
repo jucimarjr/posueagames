@@ -62,12 +62,12 @@ FireBall.prototype = {
 	},
 	checkCollision : function(hero) {
 		if (hero.active) {
-			this.game.physics.arcade.collide(this.fireball, hero,
+			this.game.physics.arcade.overlap(this.fireball, hero,
 					this.heroCollision);
 		}
 	},
 	heroCollision : function(fireball, hero) {
-		hero.damage(1);
+		hero.life--;
 	}
 };
 

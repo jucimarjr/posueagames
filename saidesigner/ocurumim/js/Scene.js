@@ -5,6 +5,7 @@ Curumim.Scene = function(game)
 	this.forest;
 	this.clouds;
 	this.trees;
+	this.river;
 	this.platform;
 	this.map;
 	this.layer;
@@ -25,13 +26,18 @@ Curumim.Scene.prototype =
 		this.forest = this.game.add.sprite(-1520, -400, 'forest');
 		this.forest.fixedToCamera = true;
 
-		this.clouds = this.game.add.tileSprite(0, 0, 4000, 300, 'clouds');
+		this.clouds = this.game.add.tileSprite(0, 0, 4000, 270, 'clouds');
 		this.clouds.autoScroll(-50, 0);
 				
 		this.trees = this.game.add.sprite(-200, 0, 'trees');	
 		this.trees.fixedToCamera = true;
 
 		this.platform = this.game.add.tileSprite(0, 0, 4000, 1000, 'platform');
+
+		//this.river = this.game.add.sprite(Config.river.x, Config.river.y, 'river');	
+		//this.river.fixedToCamera = true;
+		//this.river.animations.add('animation', [0, 1], 6, true);
+		//this.river.animations.play('animation');			
     	
  		this.map = this.game.add.tilemap('map');
 		this.map.addTilesetImage('tileset', 'tileset');
@@ -62,7 +68,7 @@ Curumim.Scene.prototype =
 
 		this.ounces = new Curumim.Ounce(this.game, 'ounce', this.map, 'ObjScene1', Config.ounce.gid, [0, 1, 2, 3, 4]);
 		this.ants = new Curumim.Enemy(this.game, 'ant', this.map, 'ObjScene1', Config.ant.gid, [0, 1, 2, 3, 4, 5], [6]);
-		this.araraBlue = new Curumim.Enemy(this.game, 'arara_azul', this.map, 'ObjScene1', Config.arara.blue.gid, [0, 1, 2, 3, 4]);
+		this.araraBlue = new Curumim.Platform(this.game, 'arara_azul', this.map, 'ObjScene1', Config.arara.blue.gid, [0, 1, 2, 3, 4]);
 		this.insaninhos = new Curumim.Enemy(this.game, 'insaninho', this.map, 'ObjScene1', Config.insaninho.gid, [0, 1, 2], [3]);
 	},
 
@@ -80,28 +86,13 @@ Curumim.Scene.prototype =
 		this.insaninhos.update();
 
 		this.trees.cameraOffset.y = -this.game.camera.y;
-
-		var velocity = Config.player.velocity.walk;
-		var direction = 0;
-				
-		if (this.game.input.keyboard.isDown(Config.player.keys.run)) 
-		{			
-			velocity = Config.player.velocity.run;
-		}
-
-		if (this.game.input.keyboard.isDown(Config.player.keys.left)) 
-		{
-           	direction = 1;
-		} 
-		else if (this.game.input.keyboard.isDown(Config.player.keys.right)) 
-		{
-			direction = -1; 
-		}
 		
 		if (this.oldCameraX != this.game.camera.x) 
 		{
-			this.forest.cameraOffset.x +=  velocity * 0.0025 * direction;
-			this.trees.cameraOffset.x +=  velocity * 0.01 * direction;			
+			var velocity = player.getVelocity() * -1;
+
+			this.forest.cameraOffset.x +=  velocity * 0.0025;
+			this.trees.cameraOffset.x +=  velocity * 0.01;
 			this.oldCameraX = this.game.camera.x;			
 		}
 	},

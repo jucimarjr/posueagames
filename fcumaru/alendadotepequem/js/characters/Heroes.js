@@ -26,6 +26,9 @@ Heroes.prototype = {
 	getCurrent : function() {
 		return this.heroes[this.index].hero;
 	},
+	getSelectedHero : function (){
+		return this.heroes[this.index];
+	},
 	setCurrentIndex : function(index) {
 		this.index = index;
 	},
@@ -64,6 +67,6 @@ Heroes.prototype = {
 	},
 
 	isAlive : function() {
-		return this.heroes[this.index].isAlive();
+		return this.heroes[this.index].hero.life > 0;
 	}
 };

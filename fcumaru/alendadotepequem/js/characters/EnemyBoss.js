@@ -72,9 +72,9 @@ function EnemyBoss(game) {
 		for (var i = 0; i < heroes.size(); i++) {
 			var hero = heroes.getHero(i);
 			if (hero.active) {
-				this.game.physics.arcade.collide(this.enemy, hero, function(
+				this.game.physics.arcade.overlap(this.enemy, hero, function(
 						enemy, hero) {
-					hero.damage(1);
+					hero.life--;
 				});
 			}
 		}

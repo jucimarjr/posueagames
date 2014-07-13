@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="24" height="15" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="tileset" tilewidth="40" tileheight="40">
+  <image source="../sprites/tileset.png" width="400" height="40"/>
+ </tileset>
+ <layer name="layer" width="24" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjZWBgYKERZgViNgbaAbZhYj4yZqfAPHYcZtIKEGM+LjcR48/B4P6hZj56eOMKZ2zxgq52OIYPtc2HlXG0wCCzAbfrAjE=
+  </data>
+ </layer>
+ <layer name="spines" width="24" height="15" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMBgBAAWgAAE=
+  </data>
+ </layer>
+ <layer name="screen" width="24" height="15" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMBgBAAWgAAE=
+  </data>
+ </layer>
+ <layer name="items" width="24" height="15" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMBgBAAWgAAE=
+  </data>
+ </layer>
+ <layer name="escape" width="24" height="15" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMBgBAAWgAAE=
+  </data>
+ </layer>
+</map>
