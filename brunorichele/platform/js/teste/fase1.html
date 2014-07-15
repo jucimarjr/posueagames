@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>test</title>
+        <script src="phaser.min.js"></script>
+    </head>
+    <body>
+    <script type="text/javascript">
+    
+function preload() {
+    game.load.spritesheet('player', 'player_4240-100-53.png', 80, 100);
+    game.load.tilemap('fase_1', 'fase1.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('cenariogameguia', 'cenariogameguia.jpg');
+}
+
+function create() {
+    game.physics.startSystem(Phaser.Physics.P2JS);
+    
+    mymap = game.add.tilemap('fase_1');
+    mymap.addTilesetImage('cenariogameguia');
+    
+    layermap = mymap.createLayer('background');
+    layerobjects = mymap.createLayer('objects');
+    layerobjects_tiles = game.physics.p2.convertCollisionObjects(mymap, "ground");
+
+    layermap.resizeWorld();
+
+    game.physics.p2.gravity.y = 300;
+
+    player = game.add.sprite(50, 1600, 'player');
+    game.physics.p2.enable(player);
+    player.anchor.setTo(0.5,0.5);
+    game.camera.follow(player);
+    player.body.setCircle(22,0,0);
+    player.body.fixedRotation=true;
+    player.animations.add('walk', [1,2,3,4,3,2], 10, true);
+
+    cursors = game.input.keyboard.createCursorKeys();
+    jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+}
+
+function update() {
+    if (cursors.left.isDown) { player.body.velocity.x = -200; }
+    else if (cursors.right.isDown) { player.body.velocity.x = 200; }
+    else { player.body.velocity.x = 0; }
+
+    if (jumpButton.isDown && game.time.now > jumpTimer && checkIfCanJump()) {
+        console.log('jump');
+        player.body.moveUp(300);
+        jumpTimer = game.time.now + 750;
+    }
+}
+
+function checkIfCanJump() {
+
+    var yAxis = p2.vec2.fromValues(0, 1);
+    var result = false;
+
+    for (var i = 0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++) {
+        var c = game.physics.p2.world.narrowphase.contactEquations[i];
+
+        if (c.bodyA === player.body.data || c.bodyB === player.body.data) {
+            var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis
+            if (c.bodyA === player.body.data) d *= -1;
+            if (d > 0.5) result = true;
+        }
+    }
+    return result;
+
+}
+
+var game = new Phaser.Game(1024, 768, Phaser.CANVAS, '', {preload : preload, create : create, update : update});
+
+    </script>
+    </body>
+</html>
