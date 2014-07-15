@@ -11,7 +11,7 @@
         this.shurikenMinDelay = 1200; //ms
         this.shurikenMaxDelay = 1500; //ms
         this.shurikenAudio = null;
-        this.lastPlaceIndex = -1;
+        this.lastPlaceIndex = 6;
         this.possiblePlaces = {
             0: {x:40*2, y:40*0},
             1: {x:40*10, y:40*5},
@@ -41,7 +41,7 @@
             this.sprite.animations.play('idle');
 
             this.shurikens = this.game.add.group();
-            this.shurikens.createMultiple(10, 'shuriken_enemy');
+            this.shurikens.createMultiple(10, 'shuriken_boss');
             this.shurikens.setAll('anchor.x', 0.5);
             this.shurikens.setAll('anchor.y', 0.5);
 
@@ -114,8 +114,8 @@
 
             shuriken.reset(this.sprite.x + this.sprite.width, this.sprite.y);
             shuriken.anchor.setTo(0.5, 0.5);
-            shuriken.body.allowRotation = false;
             shuriken.rotation = this.game.physics.arcade.moveToObject(shuriken, this.player.sprite, 700, 0);
+            shuriken.body.angularVelocity = (this.sprite.scale.x > 0) ? 700 : -700;
             shuriken.scale.set(0.8, 0.8);
             shuriken.checkWorldBounds = true;
             shuriken.outOfBoundsKill = true;
@@ -123,7 +123,7 @@
             this.shurikenAudio.play();
 
             return true;
-        }        
+        }
     };
 
     window.Boss = Boss;
