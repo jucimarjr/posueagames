@@ -35,7 +35,7 @@
             this.game.load.spritesheet('restart_btn','assets/sprites/start_btn_199-114.png', 199, 57);
 
             /*Gameplay assets*/
-            this.game.load.spritesheet('ninjas', 'assets/sprites/sheetninjas_2848-588.png', 89, 84);
+            this.game.load.spritesheet('ninjas', 'assets/sprites/sheetninjs_2848-588_2.png', 89, 84);
             this.game.load.image('background','assets/sprites/background3_960-600.png');
             this.game.load.image('tileset','assets/sprites/tileset.png');
             this.game.load.image('shuriken', 'assets/sprites/shuriken-ninjs_32-31.png');

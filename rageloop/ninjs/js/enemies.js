@@ -68,6 +68,7 @@
         },
 
         updatesprites: function (enemy) {
+
             if (enemy.type == 'idle') {
                 if ((this.player.sprite.x < enemy.x && enemy.scale.x > 0) || (this.player.sprite.x > enemy.x && enemy.scale.x < 0)) {
                     enemy.scale.x *= -1; //move enemy to always front the player

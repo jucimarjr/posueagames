@@ -7,8 +7,8 @@
         this.mapAsset = 'map3';
         this.audioAsset = 'bgsound';
 
-        this.playerX = 40;
-        this.playerY = 40;
+        this.playerX = 40*10;
+        this.playerY = 40*5;
 
         this.hasShadow = false;
 
@@ -21,7 +21,8 @@
     Level3.prototype = new app_container.Level();
 
     Level3.prototype.createEnemies = function () {
-        this.enemies.createNinjaIdle(40*23, 40*10);
+        this.boss = new Boss(this.game, this.player);
+        this.boss.init(40*22, 40*10);
     };
 
     Level3.prototype.openEscape = function () {

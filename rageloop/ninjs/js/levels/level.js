@@ -23,6 +23,9 @@
         //enemy group
         this.enemies = null;
 
+        //boss sprite
+        this.boss = null;
+
         //items collected
         this.itemCount = 0;
         this.totalItems = 0;
@@ -101,10 +104,19 @@
             this.game.physics.arcade.collide(this.player.sprite, this.layer);
             this.game.physics.arcade.collide(this.enemies.sprites, this.layer);
 
+            if (this.boss) {
+                this.game.physics.arcade.collide(this.boss.sprite, this.layer);
+            }
+
             this.game.physics.arcade.overlap(this.player.sprite, this.itemLayer, this.collectItem, null, this);
             this.game.physics.arcade.overlap(this.player.shurikens, this.layer, this.shurikenCollision, null, this);
             this.game.physics.arcade.overlap(this.player.shurikens, this.enemies.sprites, this.killEnemy, null, this);
             this.game.physics.arcade.overlap(this.enemies.shurikens, this.layer, this.shurikenCollision, null, this);
+
+            if (this.boss) {
+                this.game.physics.arcade.overlap(this.player.shurikens, this.boss.sprite, this.killBoss, null, this);
+                this.game.physics.arcade.overlap(this.player.sprite, this.boss.shurikens, this.die, null, this);
+            }
 
             if (!this.player.dead) {
                 this.game.physics.arcade.overlap(this.player.sprite, this.enemies.shurikens, this.die, null, this);
@@ -115,6 +127,10 @@
 
             this.enemies.update();
             this.player.update();
+
+            if (this.boss) {
+                this.boss.update();
+            }
         },
 
         shutdown: function () {
@@ -181,6 +197,11 @@
             shuriken.kill();
             enemy.kill();
             this.hud.updateScore(1);
+        },
+
+        killBoss: function (boss, shuriken) {
+            shuriken.kill();
+            this.boss.die();
         },
 
         shurikenCollision: function (shuriken, layer) {
