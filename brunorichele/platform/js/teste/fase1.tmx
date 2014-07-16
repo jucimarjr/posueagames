@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="100" height="67" tilewidth="30" tileheight="30">
  <tileset firstgid="1" name="map" tilewidth="30" tileheight="30">
-  <image source="../phase1/images/cenariogameguia.jpg" width="3000" height="2000"/>
+  <image source="cenariogameguia.jpg" width="3000" height="2000"/>
+ </tileset>
+ <tileset firstgid="6601" name="enemies" tilewidth="30" tileheight="30">
+  <image source="enemies.png" width="90" height="30"/>
  </tileset>
  <layer name="background" width="100" height="67">
   <data encoding="base64" compression="zlib">
@@ -9,71 +12,68 @@
   </data>
  </layer>
  <objectgroup name="ground" width="100" height="67">
-  <object x="180" y="240">
-   <polygon points="0,0 60,30 30,90 -150,90 -180,60 -180,30 -90,0 -30,30"/>
+  <object x="185" y="245">
+   <polygon points="0,0 34,23 26,69 -171,87 -185,69 -185,21 -111,6 -33,7"/>
   </object>
-  <object x="210" y="420">
-   <polygon points="0,0 120,0 120,30 0,30"/>
+  <object x="218" y="406">
+   <polygon points="0,0 99,-1 99,35 -1,36"/>
   </object>
-  <object x="360" y="510">
-   <polygon points="0,0 90,0 90,30 0,30"/>
+  <object x="347" y="500">
+   <polygon points="0,0 100,1 100,35 0,35"/>
   </object>
-  <object x="240" y="840">
-   <polygon points="0,0 120,0 120,60 0,60"/>
+  <object x="2999" y="342">
+   <polygon points="0,0 -92,9 -82,42 -261,41 -261,28 -277,25 -405,11 -454,29 -441,92 -502,102 -519,140 -655,206 -522,225 -37,231 0,226"/>
   </object>
-  <object x="480" y="720">
-   <polygon points="0,0 90,-60 210,-90 360,-90 480,-90 450,-120 510,-150 660,-120 720,-90 870,-120 930,90 60,90"/>
+  <object x="2514" y="1410" width="99" height="35"/>
+  <object x="2639" y="1503" width="100" height="34"/>
+  <object x="2795" y="1580" width="99" height="36"/>
+  <object x="2001" y="1357">
+   <polygon points="0,0 -2,-55 12,-91 204,-99 273,-71 443,-72 491,-62 498,-8"/>
   </object>
-  <object x="0" y="990">
-   <polygon points="0,0 90,30 90,60 210,60 270,30 420,30 450,60 420,120 510,120 510,180 660,240 510,270 30,270 0,240"/>
+  <object x="1406" y="1359">
+   <polygon points="0,0 -24,-18 -23,-65 102,-79 238,-79 291,-87 347,-62 331,-16"/>
   </object>
-  <object x="0" y="1620">
-   <polygon points="0,0 90,0 60,120 30,120 60,180 30,240 0,210"/>
+  <object x="735" y="1343">
+   <polygon points="0,0 54,-173 195,-159 335,-165 460,-145 541,-82 455,16"/>
   </object>
-  <object x="90" y="1740">
-   <polygon points="0,0 60,-60 180,-90 270,-60 360,-90 420,90 60,120"/>
+  <object x="247" y="849" width="101" height="35"/>
+  <object x="473" y="707">
+   <polygon points="0,0 84,-61 208,-80 347,-74 475,-89 471,-101 520,-122 649,-107 718,-93 785,-88 861,-91 902,19 922,80 925,94 910,97 733,99 404,94 386,90 85,101"/>
   </object>
-  <object x="690" y="1740">
-   <polygon points="0,0 60,-30 240,0 300,-60 510,-30 540,30 540,120 -30,90"/>
+  <object x="1557" y="754">
+   <polygon points="0,0 12,-35 207,-44 275,-17 445,-19 453,-15 577,-30 714,-29 769,-36 825,-13 809,33 476,49 473,47 0,57"/>
   </object>
-  <object x="780" y="1170">
-   <polygon points="0,0 -60,180 420,180 510,90 420,30 270,0 150,30"/>
+  <object x="1" y="1234">
+   <polygon points="0,0 41,4 519,-1 654,-21 517,-87 499,-125 442,-136 453,-197 404,-216 274,-201 205,-187 148,-183 82,-185 91,-218 0,-225"/>
   </object>
-  <object x="1380" y="1290">
-   <polygon points="0,0 0,60 30,90 360,60 390,0 330,-30 270,0"/>
+  <object x="0" y="1841">
+   <polygon points="0,0 39,4 57,-47 46,-104 65,-119 92,-217 1,-227"/>
   </object>
-  <object x="1350" y="1770">
-   <polygon points="0,0 -30,60 0,90 120,60 90,30 60,30"/>
+  <object x="92" y="1746">
+   <polygon points="0,0 63,-62 157,-81 263,-74 371,-91 413,84 65,100"/>
   </object>
-  <object x="1560" y="1770">
-   <polygon points="0,0 -30,60 0,90 120,60 90,30 60,30"/>
+  <object x="684" y="1740">
+   <polygon points="0,0 53,-15 239,-15 316,-60 528,-45 542,15 541,105 -9,89"/>
   </object>
-  <object x="1770" y="1800">
-   <polygon points="0,0 0,60 90,30 90,0 60,-30 0,-30"/>
+  <object x="1336" y="1811">
+   <polygon points="0,0 15,-18 25,-36 63,-41 85,-27 112,-21 125,23 7,35"/>
   </object>
-  <object x="2190" y="1710">
-   <polygon points="0,0 -60,30 -30,60 -90,60 -90,90 -210,120 -90,150 330,150 270,30 150,30"/>
+  <object x="1536" y="1811">
+   <polygon points="0,0 16,-19 25,-37 63,-42 85,-28 113,-21 124,23 7,35"/>
   </object>
-  <object x="2790" y="1590">
-   <polygon points="0,0 120,0 120,30 0,30"/>
+  <object x="1763" y="1810">
+   <polygon points="0,0 13,-19 18,-35 46,-41 60,-28 80,-21 89,24 5,35"/>
   </object>
-  <object x="2640" y="1500">
-   <polygon points="0,0 120,0 120,60 0,60"/>
+  <object x="1994" y="1830">
+   <polygon points="0,0 106,-40 117,-63 167,-68 157,-104 193,-116 298,-107 349,-99 403,-95 461,-98 505,-13 512,11 490,14 245,14 99,11"/>
   </object>
-  <object x="2490" y="1410">
-   <polygon points="0,0 150,0 150,60 0,60"/>
+  <object x="2629" y="1789">
+   <polygon points="0,0 33,-5 1,-35 145,-53 247,-44 301,-53 371,-51 371,57 41,49"/>
   </object>
-  <object x="2010" y="1260">
-   <polygon points="0,0 -30,60 0,120 510,90 480,30 420,30 270,30 180,0"/>
-  </object>
-  <object x="2760" y="1740">
-   <polygon points="0,0 -150,30 -90,60 -150,60 -90,120 240,120 240,0 150,0 120,30"/>
-  </object>
-  <object x="1560" y="720">
-   <polygon points="0,0 -30,30 0,90 810,60 840,0 780,0 720,30 570,0 450,30 270,30 210,0"/>
-  </object>
-  <object x="2580" y="360">
-   <polygon points="0,0 -30,0 -30,90 -90,90 -90,120 -240,180 -90,210 420,210 420,-30 330,0 360,30 150,30 150,0"/>
-  </object>
+ </objectgroup>
+ <objectgroup name="enemy" width="100" height="67">
+  <object gid="6601" x="329" y="1670"/>
+  <object gid="6601" x="755" y="1724"/>
+  <object gid="6601" x="874" y="1724"/>
  </objectgroup>
 </map>

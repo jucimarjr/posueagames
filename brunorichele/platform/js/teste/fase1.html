@@ -13,6 +13,7 @@ function preload() {
     game.load.spritesheet('player', 'player_4240-100-53.png', 80, 100);
     game.load.tilemap('fase_1', 'fase1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('cenariogameguia', 'cenariogameguia.jpg');
+    game.load.spritesheet('hand', 'hand_150-30-6.png', 25, 30);
 }
 
 var mymap, layermap, layerobjects, layerobjects_tiles, player, cursors, jumpButton, jumpTimer = 0;
@@ -24,10 +25,16 @@ function create() {
     mymap.addTilesetImage('cenariogameguia');
     
     layermap = mymap.createLayer('background');
-    layerobjects = mymap.createLayer('objects');
     layerobjects_tiles = game.physics.p2.convertCollisionObjects(mymap, "ground");
 
     layermap.resizeWorld();
+
+    hands = game.add.group();
+    hands.enableBody = true;
+    mymap.createFromObjects('enemy', 6601, 'hand', 0, true, false, hands);
+
+    hands.callAll('animations.add', 'animations', 'move', [0, 1, 2, 3, 4], 6, true);
+    hands.callAll('animations.play', 'animations', 'move');
 
     game.physics.p2.gravity.y = 300;
 
@@ -36,6 +43,7 @@ function create() {
     player.anchor.setTo(0.5,0.5);
     game.camera.follow(player);
     player.body.setCircle(22,0,0);
+    player.body.mass=9999;
     player.body.fixedRotation=true;
     player.animations.add('walk', [1,2,3,4,3,2], 10, true);
 
