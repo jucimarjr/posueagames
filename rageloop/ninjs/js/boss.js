@@ -66,11 +66,7 @@
                 this.sprite.scale.x *= -1; //move enemy to always front the player
             }
 
-
             if (this.game.time.now > (this.shurikenTimer + this.shurikenCurrentDelay)) {
-
-                animationName = 'jump';
-
                 this.fire();
                 this.shurikenTimer = this.game.time.now;
                 this.shurikenCurrentDelay = this.getRandomBetween(this.shurikenMinDelay, this.shurikenMaxDelay);

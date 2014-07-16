@@ -94,9 +94,14 @@
             this.itemCount = 0;
 
             this.game.camera.follow(this.player.sprite, Phaser.Camera.FOLLOW_PLATFORMER);
+
+            if (typeof this.playIntro === 'function') {
+                this.playIntro();
+            }
         },
 
         update: function() {
+
             if (this.hasShadow) {
                 this.shadow.update();
             }
@@ -123,6 +128,10 @@
                 this.game.physics.arcade.overlap(this.player.sprite, this.enemies.sprites, this.die, null, this);
                 this.game.physics.arcade.overlap(this.player.sprite, this.spineLayer, this.die, null, this);
                 this.game.physics.arcade.overlap(this.player.sprite, this.escapeLayer, this.startNextLevel, null, this);
+            }
+
+            if (typeof this.runningIntro != 'undefined' && this.runningIntro) {
+                return;
             }
 
             this.enemies.update();

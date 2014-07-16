@@ -16,6 +16,8 @@
         this.totalItems = 8;
 
         this.nextLevel = 'Level2';
+
+        this.runningIntro = false;
     };
 
     Level1.prototype = new app_container.Level();
