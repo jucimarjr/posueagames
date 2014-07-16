@@ -37,7 +37,7 @@
             this.sprite.body.collideWorldBounds = true;
             this.sprite.scale.x *= -1;
 
-            this.sprite.animations.add('idle', [72, 73, 74, 75], 4, true);
+            this.sprite.animations.add('idle', [112, 113, 114, 115], 4, true);
             this.sprite.animations.play('idle');
 
             this.shurikens = this.game.add.group();
