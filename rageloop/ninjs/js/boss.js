@@ -38,6 +38,12 @@
             this.sprite.scale.x *= -1;
 
             this.sprite.animations.add('idle', [112, 113, 114, 115], 4, true);
+            var shuriken_anim = this.sprite.animations.add('shuriken', [161, 162, 163], 16, false);
+
+            shuriken_anim.onComplete.add(function() {
+                this.sprite.animations.play('idle');                
+            }, this);
+
             this.sprite.animations.play('idle');
 
             this.shurikens = this.game.add.group();
@@ -62,6 +68,9 @@
 
 
             if (this.game.time.now > (this.shurikenTimer + this.shurikenCurrentDelay)) {
+
+                animationName = 'jump';
+
                 this.fire();
                 this.shurikenTimer = this.game.time.now;
                 this.shurikenCurrentDelay = this.getRandomBetween(this.shurikenMinDelay, this.shurikenMaxDelay);
@@ -121,6 +130,8 @@
             shuriken.outOfBoundsKill = true;
 
             this.shurikenAudio.play();
+
+            this.sprite.animations.play('shuriken');
 
             return true;
         }
