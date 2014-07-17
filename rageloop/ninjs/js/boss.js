@@ -41,7 +41,7 @@
             var shuriken_anim = this.sprite.animations.add('shuriken', [161, 162, 163], 16, false);
 
             shuriken_anim.onComplete.add(function() {
-                this.sprite.animations.play('idle');                
+                this.sprite.animations.play('idle');
             }, this);
 
             this.sprite.animations.play('idle');
@@ -53,6 +53,19 @@
 
             this.shurikenAudio = this.game.add.audio('shuriken_sound');
             this.shurikenAudio.volume = 0.6;
+
+            // special effects
+            this.effects = this.game.add.sprite(x, y, 'boss_effects');
+            this.effects.anchor.setTo(0.5, 0.5);
+            this.effects.visible = false;
+
+            var emerging_anim = this.effects.animations.add('emerging', [0, 1, 2, 3], 10, false, true);
+            var disappearing_anim = this.effects.animations.add('disappearing', [6, 7, 8, 10 , 11], 10, false, true);
+
+            disappearing_anim.onComplete.add(function() {
+                this.teleport();
+                this.effects.visible = false;
+            }, this);
 
         },
 
@@ -91,6 +104,8 @@
 
             var newPlace = this.possiblePlaces[index];
 
+            this.sprite.exists = true;
+
             this.sprite.x = newPlace.x;
             this.sprite.y = newPlace.y;
         },
@@ -99,7 +114,14 @@
 
             if (this.lifes > 0) {
 
-                this.teleport();
+                this.sprite.exists = false;
+
+                this.effects.visible = true;
+                this.effects.x = this.sprite.x;
+                this.effects.y = this.sprite.y;
+                this.effects.animations.play("disappearing");
+
+                //this.teleport();
                 this.lifes--;
 
                 this.shurikenMaxDelay -= 150;
