@@ -36,7 +36,9 @@
 
             /*Gameplay assets*/
             this.game.load.spritesheet('ninjas', 'assets/sprites/sheetninjs_2848-588_2.png', 89, 84);
+            this.game.load.spritesheet('boss_effects', 'assets/sprites/boss_effects_2848-588.png', 310, 294);
             this.game.load.image('background','assets/sprites/background3_960-600.png');
+            this.game.load.image('background_boss','assets/sprites/background4_960-600.png');
             this.game.load.image('versus','assets/sprites/versus.png');
             this.game.load.image('tileset','assets/sprites/tileset.png');
             this.game.load.image('shuriken', 'assets/sprites/shuriken-ninjs_32-31.png');

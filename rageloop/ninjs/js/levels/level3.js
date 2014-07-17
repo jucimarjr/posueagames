@@ -9,7 +9,7 @@
     function Level3() {
         app_container.Level.prototype.constructor.call(this);
 
-        this.bgAsset = 'background';
+        this.bgAsset = 'background_boss';
         this.mapAsset = 'map3';
         this.audioAsset = 'bgsound';
 
@@ -39,7 +39,7 @@
     Level3.prototype.openEscape = function () {
     };
 
-    Level3.prototype.playIntro = function () {
+    Level3.prototype.playIntro2 = function () {
         var tween;
 
         this.runningIntro = true;
