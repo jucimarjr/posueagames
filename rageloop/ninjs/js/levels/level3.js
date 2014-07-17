@@ -23,7 +23,7 @@
 
         this.nextLevel = '';
 
-        this.runningIntro = false;
+        this.runningIntro = true;
 
         this.storyLine = '';
         this.storyLineIndex = 0;
@@ -39,10 +39,11 @@
     Level3.prototype.openEscape = function () {
     };
 
-    Level3.prototype.playIntro2 = function () {
+    Level3.prototype.playIntro = function () {
         var tween;
 
         this.runningIntro = true;
+        this.storyLineIndex = 0;
 
         this.versus_img = this.game.add.sprite(0, 0, 'versus');
         this.versus_img.alpha = 0;
@@ -60,6 +61,8 @@
 
     Level3.prototype.exitIntro = function () {
 
+        this.game.tweens.removeAll()
+
         tween = this.game.add.tween(this.versus_img).to({alpha : 0}, 800, Phaser.Easing.Linear.None);
         tween.start();
 
@@ -70,6 +73,10 @@
     };
 
     Level3.prototype.nextLine = function() {
+
+        if (!this.runningIntro) {
+            return;
+        }
 
         this.storyLineIndex++;
 
@@ -90,9 +97,15 @@
 
     Level3.prototype.updateLine = function() {
 
+        if (!this.runningIntro) {
+            return;
+        }
+
         if (this.storyLine.length < introText[this.storyLineIndex].length) {
             this.storyLine = introText[this.storyLineIndex].substr(0, this.storyLine.length + 1);
-            this.currentText.setText(this.storyLine);
+            if (this.currentText) {
+                this.currentText.setText(this.storyLine);
+            }
         }
         else {
             //  Wait 2 seconds then start a new line

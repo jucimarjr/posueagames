@@ -11,7 +11,7 @@
         this.shurikenMinDelay = 1200; //ms
         this.shurikenMaxDelay = 1500; //ms
         this.shurikenAudio = null;
-        this.lastPlaceIndex = 6;
+        this.currentPlace = 6;
         this.possiblePlaces = {
             0: {x:40*2, y:40*0},
             1: {x:40*10, y:40*5},
@@ -62,9 +62,32 @@
             var emerging_anim = this.effects.animations.add('emerging', [0, 1, 2, 3], 10, false, true);
             var disappearing_anim = this.effects.animations.add('disappearing', [9, 10, 11, 12, 13, 14], 10, false, true);
 
+            disappearing_anim.onStart.add(function() {
+
+                this.effects.visible = true;
+                this.effects.x = this.sprite.x;
+                this.effects.y = this.sprite.y;
+
+            }, this);
+
             disappearing_anim.onComplete.add(function() {
-                this.teleport();
+                this.effects.animations.play("emerging");
+            }, this);
+
+            emerging_anim.onStart.add(function() {
+
+                var newPlace = this.getNewPlace();
+
+                this.effects.x = newPlace.x;
+                this.effects.y = newPlace.y;
+
+            }, this);
+
+            emerging_anim.onComplete.add(function() {
+
+                this.teleport({x: this.effects.x, y: this.effects.y});
                 this.effects.visible = false;
+
             }, this);
 
         },
@@ -91,23 +114,28 @@
             return Math.floor(Math.random()*(max-min+1)+min);
         },
 
-        teleport: function() {
+        getNewPlace: function() {
 
             var min = 0, max = 7;
             var index;
 
             do {
                 index = this.getRandomBetween(min, max);
-            } while(index === this.lastPlaceIndex) ;
+            } while(index === this.currentPlace) ;
         
-            this.lastPlaceIndex = index;
+            this.currentPlace = index;
 
             var newPlace = this.possiblePlaces[index];
 
+            return newPlace;
+        },
+
+        teleport: function(place) {
+
             this.sprite.exists = true;
 
-            this.sprite.x = newPlace.x;
-            this.sprite.y = newPlace.y;
+            this.sprite.x = place.x;
+            this.sprite.y = place.y;
         },
 
         die: function() {
@@ -116,12 +144,9 @@
 
                 this.sprite.exists = false;
 
-                this.effects.visible = true;
-                this.effects.x = this.sprite.x;
-                this.effects.y = this.sprite.y;
                 this.effects.animations.play("disappearing");
-
                 //this.teleport();
+
                 this.lifes--;
 
                 this.shurikenMaxDelay -= 150;

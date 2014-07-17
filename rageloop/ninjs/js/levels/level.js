@@ -95,7 +95,7 @@
 
             this.game.camera.follow(this.player.sprite, Phaser.Camera.FOLLOW_PLATFORMER);
 
-            if (typeof this.playIntro === 'function') {
+            if (typeof this.playIntro === 'function' && this.runningIntro) {
                 this.playIntro();
             }
         },
@@ -131,6 +131,11 @@
             }
 
             if (typeof this.runningIntro != 'undefined' && this.runningIntro) {
+
+                if (this.game.input.keyboard.isDown(Phaser.Keyboard.S)) {
+                    this.exitIntro();
+                }
+
                 return;
             }
 
