@@ -60,7 +60,7 @@
             this.effects.visible = false;
 
             var emerging_anim = this.effects.animations.add('emerging', [0, 1, 2, 3], 10, false, true);
-            var disappearing_anim = this.effects.animations.add('disappearing', [6, 7, 8, 10 , 11], 10, false, true);
+            var disappearing_anim = this.effects.animations.add('disappearing', [9, 10, 11, 12, 13, 14], 10, false, true);
 
             disappearing_anim.onComplete.add(function() {
                 this.teleport();
