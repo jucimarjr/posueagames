@@ -43,14 +43,14 @@ function create() {
     hands.enableBody = true;
     mymap.createFromObjects('enemy', 6601, 'hand', 0, true, false, hands);
 
-    hands.callAll('animations.add', 'animations', 'move', [0, 1, 2, 3, 4], 6, true);
+    hands.callAll('animations.add', 'animations', 'move', [0, 1, 2, 3, 4, 3, 4, 3, 2, 1], 6, true);
     hands.callAll('animations.play', 'animations', 'move');
 
     flames = game.add.group();
     flames.enableBody = true;
     mymap.createFromObjects('flame', 6602, 'flame', 0, true, false, flames);
 
-    flames.callAll('animations.add', 'animations', 'move', [0, 1, 2, 3, 4, 5], 6, true);
+    flames.callAll('animations.add', 'animations', 'move', [0, 1, 2, 3, 4, 5, 4, 3, 2, 1], 6, true);
     flames.callAll('animations.play', 'animations', 'move');
 
     game.physics.p2.gravity.y = 300;
