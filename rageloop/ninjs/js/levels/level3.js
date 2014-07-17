@@ -3,7 +3,7 @@
     var introText = [
         " ",
         "- Finalmente encontrei você Subaru!", 
-        "- HAHAHA!! Você vai se arrepender por isso!!\n Idiota! Você mal vai conseguir ficar em pé.."        
+        "- HAHAHA!! Você vai se arrepender por isso!!\n Idiota! Você mal vai conseguir ficar em pé.."
     ];
 
     function Level3() {
@@ -40,28 +40,40 @@
     };
 
     Level3.prototype.playIntro = function () {
-        var tween;
 
-        this.runningIntro = true;
-        this.storyLineIndex = 0;
+        var self = this;
 
-        this.versus_img = this.game.add.sprite(0, 0, 'versus');
-        this.versus_img.alpha = 0;
+        setTimeout(function(){
 
-        tween = this.game.add.tween(this.versus_img).to({alpha : 1}, 800, Phaser.Easing.Linear.None);
-        tween.start();
+            var tween;
 
-        var style = { font: "22px pixelFont", fill: "#ffffff"};
+            self.runningIntro = true;
+            self.storyLineIndex = 0;
 
-        this.ryokanSpeechText = this.game.add.text(400, 180, '', style);
-        this.subaruSpeechText = this.game.add.text(30, 380, '', style);
+            self.versus_img = self.game.add.sprite(0, 0, 'versus');
+            self.versus_img.alpha = 0;
 
-        this.nextLine();
+            tween = self.game.add.tween(self.versus_img).to({alpha : 1}, 800, Phaser.Easing.Linear.None);
+            tween.start();
+
+            var style = { font: "22px pixelFont", fill: "#ffffff"};
+
+            self.ryokanSpeechText = self.game.add.text(400, 180, '', style);
+            self.subaruSpeechText = self.game.add.text(30, 380, '', style);
+
+            self.nextLine();
+
+        }, 2000);
+
     };
 
     Level3.prototype.exitIntro = function () {
 
-        this.game.tweens.removeAll()
+        if (!this.versus_img) {
+            return;
+        }
+
+        this.game.tweens.removeAll();
 
         tween = this.game.add.tween(this.versus_img).to({alpha : 0}, 800, Phaser.Easing.Linear.None);
         tween.start();

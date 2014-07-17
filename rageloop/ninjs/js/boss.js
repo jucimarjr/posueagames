@@ -11,11 +11,11 @@
         this.shurikenMinDelay = 1200; //ms
         this.shurikenMaxDelay = 1500; //ms
         this.shurikenAudio = null;
-        this.currentPlace = 6;
+        this.currentPlace = -1;
         this.possiblePlaces = {
-            0: {x:40*2, y:40*0},
+            0: {x:40*2, y:40*2},
             1: {x:40*10, y:40*5},
-            2: {x:40*22, y:40*0},
+            2: {x:40*22, y:40*2},
             3: {x:40*7, y:40*8},
             4: {x:40*17, y:40*8},
             5: {x:40*2, y:40*12},
@@ -37,6 +37,8 @@
             this.sprite.body.collideWorldBounds = true;
             this.sprite.scale.x *= -1;
 
+            this.sprite.exists = false;
+
             this.sprite.animations.add('idle', [112, 113, 114, 115], 4, true);
             var shuriken_anim = this.sprite.animations.add('shuriken', [161, 162, 163], 16, false);
 
@@ -57,7 +59,6 @@
             // special effects
             this.effects = this.game.add.sprite(x, y, 'boss_effects');
             this.effects.anchor.setTo(0.5, 0.5);
-            this.effects.visible = false;
 
             var emerging_anim = this.effects.animations.add('emerging', [0, 1, 2, 3], 10, false, true);
             var disappearing_anim = this.effects.animations.add('disappearing', [9, 10, 11, 12, 13, 14], 10, false, true);
@@ -90,6 +91,8 @@
 
             }, this);
 
+            this.effects.animations.play("emerging");
+
         },
 
         update: function() {
@@ -118,6 +121,12 @@
 
             var min = 0, max = 7;
             var index;
+
+            // first time
+            if (this.currentPlace == -1) {
+                this.currentPlace = 6;
+                return this.possiblePlaces[this.currentPlace];
+            }
 
             do {
                 index = this.getRandomBetween(min, max);
