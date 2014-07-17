@@ -1066,6 +1066,73 @@
          "width":100,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":67,
+         "name":"flame",
+         "objects":[
+                {
+                 "gid":6602,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1260,
+                 "y":1980
+                }, 
+                {
+                 "gid":6602,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1470,
+                 "y":1980
+                }, 
+                {
+                 "gid":6602,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1710,
+                 "y":1980
+                }, 
+                {
+                 "gid":6602,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1920,
+                 "y":1980
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":100,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":

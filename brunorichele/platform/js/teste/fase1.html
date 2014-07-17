@@ -14,13 +14,23 @@ function preload() {
     game.load.tilemap('fase_1', 'fase1.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('cenariogameguia', 'cenariogameguia.jpg');
     game.load.spritesheet('hand', 'hand_150-30-6.png', 25, 30);
+    game.load.spritesheet('flame', 'armadilha3_360-390-6.png', 60, 390);
 }
 
-var mymap, layermap, layerobjects, layerobjects_tiles, player, cursors, jumpButton, jumpTimer = 0;
+var mymap,
+    layermap,
+    layerobjects,
+    layerobjects_tiles,
+    player,
+    hands,
+    flames,
+    cursors,
+    jumpButton,
+    jumpTimer = 0;
 
 function create() {
     game.physics.startSystem(Phaser.Physics.P2JS);
-    
+
     mymap = game.add.tilemap('fase_1');
     mymap.addTilesetImage('cenariogameguia');
     
@@ -35,6 +45,13 @@ function create() {
 
     hands.callAll('animations.add', 'animations', 'move', [0, 1, 2, 3, 4], 6, true);
     hands.callAll('animations.play', 'animations', 'move');
+
+    flames = game.add.group();
+    flames.enableBody = true;
+    mymap.createFromObjects('flame', 6602, 'flame', 0, true, false, flames);
+
+    flames.callAll('animations.add', 'animations', 'move', [0, 1, 2, 3, 4, 5], 6, true);
+    flames.callAll('animations.play', 'animations', 'move');
 
     game.physics.p2.gravity.y = 300;
 
@@ -63,7 +80,6 @@ function update() {
 }
 
 function checkIfCanJump() {
-
     var yAxis = p2.vec2.fromValues(0, 1);
     var result = false;
 
@@ -77,7 +93,6 @@ function checkIfCanJump() {
         }
     }
     return result;
-
 }
 
     </script>
