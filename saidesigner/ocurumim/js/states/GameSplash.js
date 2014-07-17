@@ -51,6 +51,9 @@ State.GameSplash.prototype = {
 		//HowToPlay
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
 		
+		//Gameover
+		this.game.load.image('gameover', Config.gameover.dir);
+
 		//Game
 		this.game.load.spritesheet('curumim', Config.player.sprite.src, Config.player.sprite.width, Config.player.sprite.height);
 		this.game.load.image('bullet', Config.bullet.src);

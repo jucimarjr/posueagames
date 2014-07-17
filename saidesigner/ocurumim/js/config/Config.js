@@ -107,6 +107,13 @@ Config.credits = {
 	y: 0
 };
 
+//Gameover
+Config.gameover = {
+	dir: 'assets/images/Gameover.png',
+	x: 0,
+	y: 0
+};
+
 // Game
 
 Config.game = {

@@ -46,18 +46,26 @@ Curumim.Score.prototype =
 
 	updateLife: function(value)
 	{
-		var text = this.game.add.text(Config.score.lifes.txt.x + 30, Config.score.lifes.txt.y, 
-			value > 0 ? '+' + value : value , Config.score.lifes.txt.styleBig);		
-		text.fixedToCamera = true;
 
-		var tween = this.game.add.tween(text);
+		if (this.numLifes == 0)
+		{
+			this.game.state.start('Gameover');
+		}
+		else 
+		{
+			var text = this.game.add.text(Config.score.lifes.txt.x + 30, Config.score.lifes.txt.y, 
+				value > 0 ? '+' + value : value , Config.score.lifes.txt.styleBig);		
+			text.fixedToCamera = true;
 
-	 	tween.onComplete.add(function() {
-			this.numLifes += value;
-			text.destroy();
-	 	}, this);
+			var tween = this.game.add.tween(text);
 
-		tween.to({ alpha: 0 }, 700, null).start();
+		 	tween.onComplete.add(function() {
+				this.numLifes += value;
+				text.destroy();
+		 	}, this);
+
+			tween.to({ alpha: 0 }, 700, null).start();
+		}
 	},
 
 	addBullets: function()
