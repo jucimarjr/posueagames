@@ -46,8 +46,7 @@ Curumim.Score.prototype =
 
 	updateLife: function(value)
 	{
-
-		if (this.numLifes == 0)
+		if (this.numLifes == 0 && value < 0)
 		{
 			this.game.state.start('Gameover');
 		}
