@@ -40,6 +40,7 @@
             this.sprite.exists = false;
 
             this.sprite.animations.add('idle', [112, 113, 114, 115], 4, true);
+            this.sprite.animations.add('death', [178, 179, 180, 181, 182, 183], 8, false);
             var shuriken_anim = this.sprite.animations.add('shuriken', [161, 162, 163], 16, false);
 
             shuriken_anim.onComplete.add(function() {
@@ -97,7 +98,7 @@
 
         update: function() {
 
-            if (!this.sprite.visible) {
+            if (!this.sprite.visible || this.lifes <= 0) {
                 return;
             }
 
@@ -149,6 +150,8 @@
 
         die: function() {
 
+            this.lifes--;
+
             if (this.lifes > 0) {
 
                 this.sprite.exists = false;
@@ -156,13 +159,14 @@
                 this.effects.animations.play("disappearing");
                 //this.teleport();
 
-                this.lifes--;
-
                 this.shurikenMaxDelay -= 150;
                 this.shurikenMinDelay -= 150;
 
             } else {
-                this.sprite.kill();
+
+                this.sprite.alive = false;
+                this.sprite.animations.play('death');
+                //this.sprite.kill();
             }
         },
 
@@ -174,7 +178,6 @@
             this.game.physics.enable(shuriken, Phaser.Physics.ARCADE);
 
             shuriken.reset(this.sprite.x + this.sprite.width, this.sprite.y);
-            shuriken.anchor.setTo(0.5, 0.5);
             shuriken.rotation = this.game.physics.arcade.moveToObject(shuriken, this.player.sprite, 700, 0);
             shuriken.body.angularVelocity = (this.sprite.scale.x > 0) ? 700 : -700;
             shuriken.scale.set(0.8, 0.8);
