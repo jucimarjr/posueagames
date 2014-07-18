@@ -725,6 +725,7 @@ State.Level1.prototype = {
         if (this.hud.getLifeCounter() == 0) {
             this.mainSound.stop();
             this.game.state.start('gameover-state');
+            this.hud.lifeCounter = 3;
         } else {
             this.mainSound.stop();
             this.game.state.restart();
