@@ -5,23 +5,20 @@ State.Fase3= function (game) {
 	this.map;
 };
 
-
 State.Fase3.prototype = {
 
 	preload: function () {
 		game.load.tilemap('mapa3',Config.game.fase3.json,null,Phaser.Tilemap.TILED_JSON);
-		game.load.spritesheet('tracajet', Config.game.tracajetFlying.dir, Config.game.tracajetFlying.width,Config.game.tracajetFlying.height);
 		game.load.image('bg3',Config.game.fase3.background);
 		game.load.image('tilesetNuvens',Config.game.fase3.nuvens.dir);
-		
+		game.load.spritesheet('tracajet2', Config.game.tracajet2.dir, Config.game.tracajet2.width,Config.game.tracajet2.height);
+
 	    // Define motion constants
 	    this.ROTATION_SPEED = 140; // degrees/second
-	    this.ACCELERATION = 150; // pixels/second/second
+	    this.ACCELERATION = 250; // pixels/second/second
 	    this.MAX_SPEED = 150; // pixels/second
 	    this.DRAG = 0; // pixels/second
 	    this.GRAVITY = 100; // pixels/second/second
-
-	
 	},
 
 	create: function () {
@@ -34,20 +31,20 @@ State.Fase3.prototype = {
 		this.layer.resizeWorld(); 
 //		this.map.setCollisionBetween(1,12, true,'Camada de Tiles 1'); // 0 espaco vazio 1 em diante os tiles do tileset
 
-		this.tracajet = game.add.sprite(100,500, 'tracajet');
-		this.tracajet.animations.add('flyDown',[3,1,3],2,false);
-		this.tracajet.animations.add('flyUp',[0,2],1,false);
+		// Grupo de nuvens
+		this.clouds = this.game.add.group();
+		this.clouds.enableBody  = false;
+		this.map.createFromObjects('Camada de Nuvens',2,'tilesetNuvens',0,true,false,this.clouds);
+		
+		this.tracajet = game.add.sprite(100,500, 'tracajet2');
+		this.tracajet.animations.add('flyDown',[13,11],2,false);
+		this.tracajet.animations.add('flyUp',[12,14],1,false);
 		game.physics.enable(this.tracajet, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 //		this.tracajet.body.acceleration.y = 20;
 		this.tracajet.body.collideWorldBounds = true;
 		this.tracajet.anchor.setTo(.5,.5);
 		this.tracajet.angle = 0;//-90; // Point the ship up
 
-		// Grupo de nuvens
-		this.clouds = this.game.add.group();
-		this.clouds.enableBody  = false;
-		this.map.createFromObjects('Camada de Nuvens',2,'tilesetNuvens',1,true,false,this.clouds);
-		
 		// Set maximum velocity
 	    this.tracajet.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED); // x, y
 	    
@@ -62,6 +59,8 @@ State.Fase3.prototype = {
 	    
 	    
 	    game.camera.follow(this.tracajet);
+	    
+
 		
 	    // Capture certain keys to prevent their default actions in the browser.
 	    // This is only necessary because this is an HTML5 game. Games on other
@@ -78,7 +77,25 @@ State.Fase3.prototype = {
 
 	update: function () {
 
-        game.physics.arcade.collide(this.tracajet, this.layer);
+//        game.physics.arcade.collide(this.tracajet, this.layer);
+        
+		/*
+	    // Refresh asteroid position
+	    for (var i = 0; i < this.clouds.length ; i++)
+		{
+			var sprite = this.clouds.getAt(i);
+//			sprite.body.setZeroVelocity();
+//			sprite.body.moveLeft(1);
+			sprite.x  = sprite.x - sprite.velocity; 
+//			if (sprite.body.x <= -sprite.width)
+//			{
+////				sprite.velocity = game.rnd.integerInRange(100,200);
+//				sprite.body.x = game.cache.getImage('bg3').width;
+////				sprite.body.y = game.rnd.integerInRange(-100, 620);
+//		    }
+		}
+
+*/
         
         if (this.leftInputIsActive()) {
             // If the LEFT key is down, rotate left

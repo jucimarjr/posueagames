@@ -35,10 +35,25 @@ State.Fase2= function (game) {
 State.Fase2.prototype = {
 
     preload: function () {
-        
+    	//load fase 2  // dps passar para preload da fase 1
+		game.load.tilemap('mapaFase2','assets/2_fase/2aFaseJson.json',null,Phaser.Tilemap.TILED_JSON);
+        game.load.spritesheet('monkey', "assets/2_fase/monkey_spritesheet_240-80.png",40,40);
+		game.load.spritesheet('assets2Fase2', "assets/2_fase/assets_2.png",40,40);
+        game.load.image('bgF2',Config.game.fase2.background);
+        game.load.image('tilesetPlataformaFase2','assets/2_fase/p1_480-40.png');
+		game.load.image('tilesetPlataformaFase22','assets/2_fase/p2_480-40.png');
+		game.load.image('tilesetPlataformaFase23','assets/2_fase/p3_40-480.png');
+		game.load.image('tilesetPlataformaFase24','assets/2_fase/p4_40-480.png');
+		game.load.audio('jump','assets/sounds/jump2.wav');
+		game.load.audio('killSound','assets/sounds/killEnemy.wav');
+		
+		// excluir dps que implantar, pois já é carregado na fase 1
+		game.load.spritesheet('tracajet2', Config.game.tracajet2.dir, Config.game.tracajet2.width,Config.game.tracajet2.height);
+		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
+		
 		//Nao vao precisar ser carregadas denovo
-		/*game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
-		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height); // 200x160 eh o tamanho do frame da sprite
+		/* game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
+		 game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height); // 200x160 eh o tamanho do frame da sprite
 		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
 		game.load.audio('soundGame','assets/sounds/game_sound.wav');
 		game.load.audio('soundGetSheet','assets/sounds/get_sheet.mp3');
@@ -47,7 +62,7 @@ State.Fase2.prototype = {
 		game.load.audio('soundColision','assets/sounds/colision.wav');
 		game.load.audio('walk','assets/sounds/walk.wav');
 		game.load.audio('jump','assets/sounds/jump2.wav');
-		game.load.audio('killSound','assets/sounds/killEnemy.wav');*/
+		game.load.audio('killSound','assets/sounds/killEnemy.wav'); */
 
 		this.soundMusic =  game.add.audio('soundGame',1,true);
 		this.soundGetSheet = game.add.audio('soundGetSheet',1,true);
@@ -80,8 +95,8 @@ State.Fase2.prototype = {
         this.map.setCollisionBetween(1,48, true,'Camada de Tiles 1'); // 0 espaco vazio 1 em diante os tiles do tileset
 
 
-        this.tracajet = game.add.sprite(100, game.world.height-100, 'tracajet');
-        this.tracajet.animations.add('walk',[0,1,2,1],6,false);
+        this.tracajet = game.add.sprite(100, game.world.height-100, 'tracajet2');
+        this.tracajet.animations.add('walk',[2,3,4,1],6,false);
         this.tracajet.animations.add('launchFruit',[2,3,2],6,false);
         game.physics.enable(this.tracajet, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 		this.tracajet.body.setSize(35, 78,0,0);

@@ -125,6 +125,12 @@ Config.game = {
 			x: 340,
 			y: 300
 		},
+		tracajet2: {
+			dir: 'assets/sprites/sprites_final_60-80-20.png',
+			width: 60,
+			height: 80
+		},
+
 		star: {
 			dir: 'assets/images/star.png',
 		},

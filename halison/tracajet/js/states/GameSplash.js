@@ -20,33 +20,8 @@ State.GameSplash.prototype = {
 		this.game.load.image('credits', Config.credits.dir);
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
 		
-		//load imagens da fase1 
-		game.load.tilemap('mapaFase1','assets/1aFase/mapaFase1a.json',null,Phaser.Tilemap.TILED_JSON);
-		game.load.spritesheet('tracajet', Config.game.tracajet.dir, Config.game.tracajet.width,Config.game.tracajet.height);
-		game.load.spritesheet('folhas', "assets/1aFase/folhas_120-40.png",40,40);
-		game.load.spritesheet('jacare', "assets/1aFase/jacare_spritesheet_240-80.png",40,40);
-		game.load.image('bgF1',Config.game.fase1.background);
-		game.load.image('tilesetPlataformaF1','assets/1aFase/assets_1.png');
-		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
-		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
-		game.load.audio('soundGame','assets/sounds/game_sound.wav');
-		game.load.audio('soundGetSheet','assets/sounds/get_sheet.mp3');
-		game.load.audio('soundGameOver','assets/sounds/game-over.mp3');
-		game.load.audio('soundGetKey','assets/sounds/get_key.mp3');
-		game.load.audio('soundColision','assets/sounds/colision.wav');
-		game.load.audio('walk','assets/sounds/walk.wav');
-
-		//load fase 2
-		game.load.tilemap('mapaFase2','assets/2_fase/2aFaseJson.json',null,Phaser.Tilemap.TILED_JSON);
-        game.load.spritesheet('monkey', "assets/2_fase/monkey_spritesheet_240-80.png",40,40);
-		game.load.spritesheet('assets2Fase2', "assets/2_fase/assets_2.png",40,40);
-        game.load.image('bgF2',Config.game.fase2.background);
-        game.load.image('tilesetPlataformaFase2','assets/2_fase/p1_480-40.png');
-		game.load.image('tilesetPlataformaFase22','assets/2_fase/p2_480-40.png');
-		game.load.image('tilesetPlataformaFase23','assets/2_fase/p3_40-480.png');
-		game.load.image('tilesetPlataformaFase24','assets/2_fase/p4_40-480.png');
-		game.load.audio('jump','assets/sounds/jump2.wav');
-		game.load.audio('killSound','assets/sounds/killEnemy.wav');
+		// COLOCAR LOAD DA FASE 1 e FASE 2 AQUI!
+		
 	},
 	create: function () {
 		"use strict";

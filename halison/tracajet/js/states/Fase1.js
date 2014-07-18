@@ -45,6 +45,22 @@ var folhas;
 State.Fase1.prototype = {
 
 	preload: function () {
+		//load imagens da fase1 
+		game.load.tilemap('mapaFase1','assets/1aFase/mapaFase1a.json',null,Phaser.Tilemap.TILED_JSON);
+		game.load.spritesheet('tracajet2', Config.game.tracajet2.dir, Config.game.tracajet2.width,Config.game.tracajet2.height);
+		game.load.spritesheet('folhas', "assets/1aFase/folhas_120-40.png",40,40);
+		game.load.spritesheet('jacare', "assets/1aFase/jacare_spritesheet_240-80.png",40,40);
+		game.load.image('bgF1',Config.game.fase1.background);
+		game.load.image('tilesetPlataformaF1','assets/1aFase/assets_1.png');
+		game.load.image('key_8080','assets/1aFase/chave_80-80.png');
+		game.load.image('imgLife','assets/tracajet1_20-40.png',20,40);
+		game.load.audio('soundGame','assets/sounds/game_sound.wav');
+		game.load.audio('soundGetSheet','assets/sounds/get_sheet.mp3');
+		game.load.audio('soundGameOver','assets/sounds/game-over.mp3');
+		game.load.audio('soundGetKey','assets/sounds/get_key.mp3');
+		game.load.audio('soundColision','assets/sounds/colision.wav');
+		game.load.audio('walk','assets/sounds/walk.wav');
+
 		//Agora carrega no GameSplash para não gerar delay
 		this.soundMusic =  game.add.audio('soundGame',1,true);
 		this.soundGetSheet = game.add.audio('soundGetSheet',1,true);
@@ -73,10 +89,10 @@ State.Fase1.prototype = {
 		this.map.setTileIndexCallback([15,16,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,47,48,55,56],this.gameOver,this);
 		this.layer.resizeWorld(); //seta o mundo com as alterações feitas
 		//Sprite do tracajet
-		this.tracajet = game.add.sprite(20, game.cache.getImage('bgF1').height - 120, 'tracajet');
-		this.tracajet.animations.add('walk',[0,1,2,1],6,false);
-		this.tracajet.animations.add('swim',[5,6,7],6,false);
-		this.tracajet.animations.add('startSwim',[3,4],2,true);
+		this.tracajet = game.add.sprite(20, game.cache.getImage('bgF1').height - 120, 'tracajet2');
+		this.tracajet.animations.add('walk',[1,2,3,4,5],6,false);
+		this.tracajet.animations.add('swim',[6,7,8,9,10],6,false);
+		this.tracajet.animations.add('startSwim',[9,10],2,true);
 		game.physics.enable(this.tracajet, Phaser.Physics.ARCADE); // permite que a sprite tenha um corpo fisico
 		
 		this.tracajet.body.acceleration.y = 20;
