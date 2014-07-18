@@ -45,6 +45,10 @@
             this.game.load.image('shuriken_enemy', 'assets/sprites/shuriken-enemy_28-27.png');
             this.game.load.image('shuriken_boss', 'assets/sprites/shuriken-vilao_32-31.png');
             this.game.load.image('ninja_life', 'assets/images/vida-hud-27-26.png');
+            this.game.load.image('ninja_barlife_bg', "assets/images/bg_energia_180-40.png");
+            this.game.load.image('ninja_barlife', "assets/images/energia_150-8.png");
+            this.game.load.image('boss_barlife_bg', "assets/images/bg_energia-vilao_180-40.png");
+            this.game.load.image('boss_barlife', "assets/images/energia_vilao_150-8.png");
             this.game.load.image('blood_particle', 'assets/sprites/red_particle_5-5.png');
 
             /*Maps*/
