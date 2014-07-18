@@ -21,7 +21,21 @@ this.game.add.sprite(0, 0, 'menu_bg');
 
         },
 
-        update: function() {},
+        update: function() {
+
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.P)) {
+                this.onPlayClick();
+            }
+
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.C)) {
+                this.onCreditsClick();
+            }
+
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.T)) {
+                this.onHowtoClick();
+            }       
+
+        },
 
         onPlayClick: function() {
             this.clickAudio.play();

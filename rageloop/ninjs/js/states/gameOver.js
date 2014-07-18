@@ -21,7 +21,17 @@
             this.bgSound.play();
         },
 
-        update: function() {},
+        update: function() {
+
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.P)) {
+                this.onPlayClick();
+            }
+
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.M)) {
+                this.onMenuClick();
+            }
+
+        },
 
         onPlayClick: function() {
             this.bgSound.stop();

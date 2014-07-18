@@ -15,7 +15,13 @@
             this.clickAudio = this.game.add.audio('click');
         },
 
-        update: function() {},
+        update: function() {
+
+            if (this.game.input.keyboard.isDown(Phaser.Keyboard.M)) {
+                this.onResetClick();
+            }
+
+        },
 
         onResetClick: function() {
         	this.clickAudio.play();

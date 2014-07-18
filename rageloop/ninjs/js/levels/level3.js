@@ -61,6 +61,9 @@
             self.ryokanSpeechText = self.game.add.text(400, 180, '', style);
             self.subaruSpeechText = self.game.add.text(30, 380, '', style);
 
+            self.skipText = self.game.add.text(self.game.width, self.game.height, 'pressione "S" para sair.', style); 
+            self.skipText.anchor.setTo(1, 1);
+
             self.nextLine();
 
         }, 2000);
@@ -80,6 +83,7 @@
 
         this.ryokanSpeechText.destroy();
         this.subaruSpeechText.destroy();
+        this.skipText.destroy();
 
         this.runningIntro = false;
     };
