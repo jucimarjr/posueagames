@@ -89,7 +89,7 @@
             this.audio.play();
 
             this.hud = new HUD(this.game);
-            this.hud.init(this.totalItems);
+            this.hud.init(this.totalItems, (this.boss) ? this.boss.lifes : -1);
 
             this.itemCount = 0;
 
@@ -214,6 +214,11 @@
         },
 
         killBoss: function (boss, shuriken) {
+
+            if (this.boss) {
+                this.hud.updateBossLifes(-1);
+            }
+
             shuriken.kill();
             this.boss.die();
         },
