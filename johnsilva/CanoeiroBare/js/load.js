@@ -33,7 +33,7 @@ function create() {
     game.load.image('jungleRight', 'assets/bg/jungleRight_196-1200.jpg');
     game.load.image('mainScore', 'assets/botoes/score_900-110.png');
     game.load.image('record', 'assets/botoes/score_250-100.png');
-    game.load.image('logo', 'asets/bg/logo.png');
+    game.load.image('logo', 'assets/bg/logo.png');
     game.load.image('logoBarra', 'assets/bg/logo_barra-160-64.png');
 
     //Sprites - Fase
