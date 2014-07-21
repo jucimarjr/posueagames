@@ -41,35 +41,35 @@ Curumim.Scene.prototype =
     	
  		this.map = this.game.add.tilemap('map');
 		this.map.addTilesetImage('tileset', 'tileset');
-		this.layer = this.map.createLayer('TileScene1');
+		this.layer = this.map.createLayer('TileScene2');
 		this.layer.resizeWorld();		
 
-		this.map.setCollisionBetween(1, 1, true, 'TileScene1', false);
+		this.map.setCollisionBetween(1, 1, true, 'TileScene2', false);
 
 		this.lifes = this.game.add.group();
 		this.lifes.enableBody = true;
-		this.map.createFromObjects('ObjScene1', Config.fruit.life.gid, 'fruits', Config.fruit.life.frame, true, false, this.lifes);
+		this.map.createFromObjects('ObjScene2', Config.fruit.life.gid, 'fruits', Config.fruit.life.frame, true, false, this.lifes);
 		this.lifes.forEach(function (fruit){ fruit.body.allowGravity = false; fruit.anchor.setTo(.5, .5);}, this.game);
 
 		this.energy = this.game.add.group();
 		this.energy.enableBody = true;
-		this.map.createFromObjects('ObjScene1', Config.fruit.energy.gid, 'fruits', Config.fruit.energy.frame, true, false, this.energy);
+		this.map.createFromObjects('ObjScene2', Config.fruit.energy.gid, 'fruits', Config.fruit.energy.frame, true, false, this.energy);
 		this.energy.forEach(function (fruit){ fruit.body.allowGravity = false; fruit.anchor.setTo(.5, .5);}, this.game);			
 
 		this.bullets = this.game.add.group();
 		this.bullets.enableBody = true;
-		this.map.createFromObjects('ObjScene1', Config.fruit.bullet.gid, 'fruits', Config.fruit.bullet.frame, true, false, this.bullets);
+		this.map.createFromObjects('ObjScene2', Config.fruit.bullet.gid, 'fruits', Config.fruit.bullet.frame, true, false, this.bullets);
 		this.bullets.forEach(function (fruit){ fruit.body.allowGravity = false; fruit.anchor.setTo(.5, .5);}, this.game);	
 
 		this.points = this.game.add.group();
 		this.points.enableBody = true;
-		this.map.createFromObjects('ObjScene1', Config.fruit.point.gid, 'fruits', Config.fruit.point.frame, true, false, this.points);
+		this.map.createFromObjects('ObjScene2', Config.fruit.point.gid, 'fruits', Config.fruit.point.frame, true, false, this.points);
 		this.points.forEach(function (fruit){ fruit.body.allowGravity = false; fruit.anchor.setTo(.5, .5);}, this.game);
 
-		this.ounces = new Curumim.Ounce(this.game, 'ounce', this.map, 'ObjScene1', Config.ounce.gid, [0, 1, 2, 3, 4]);
-		this.ants = new Curumim.Enemy(this.game, 'ant', this.map, 'ObjScene1', Config.ant.gid, [0, 1, 2, 3, 4, 5], [6]);
-		this.araraBlue = new Curumim.Platform(this.game, 'arara_azul', this.map, 'ObjScene1', Config.arara.blue.gid, [0, 1, 2, 3, 4]);
-		this.insaninhos = new Curumim.Enemy(this.game, 'insaninho', this.map, 'ObjScene1', Config.insaninho.gid, [0, 1, 2], [3]);
+		this.ounces = new Curumim.Ounce(this.game, 'ounce', this.map, 'ObjScene2', Config.ounce.gid, [0, 1, 2, 3, 4]);
+		this.ants = new Curumim.Enemy(this.game, 'ant', this.map, 'ObjScene2', Config.ant.gid, [0, 1, 2, 3, 4, 5], [6]);
+		this.araraBlue = new Curumim.Platform(this.game, 'arara_azul', this.map, 'ObjScene2', Config.arara.blue.gid, [0, 1, 2, 3, 4]);
+		this.insaninhos = new Curumim.Enemy(this.game, 'insaninho', this.map, 'ObjScene2', Config.insaninho.gid, [0, 1, 2], [3]);
 	},
 
 	update: function()

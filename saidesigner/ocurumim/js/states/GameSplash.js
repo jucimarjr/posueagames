@@ -68,9 +68,9 @@ State.GameSplash.prototype = {
 		}
 		
 		this.game.load.tilemap('map','assets/map/map.json', null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.image('trees', 'assets/images/trees.png');
-		this.game.load.image('forest', 'assets/images/forest.png');
-		this.game.load.image('platform', 'assets/images/platform.png');
+		this.game.load.image('trees', 'assets/images/trees2.png');
+		this.game.load.image('forest', 'assets/images/forest2.png');
+		this.game.load.image('platform', 'assets/images/platform2.png');
 		this.game.load.image('clouds', 'assets/images/clouds.png');
 		this.game.load.image('ounce_tail', Config.ounce.tail.src);
 		
