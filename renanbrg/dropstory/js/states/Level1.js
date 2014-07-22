@@ -719,6 +719,7 @@ State.Level1.prototype = {
         clearTimeout(this.lastDropTimer);
         clearTimeout(this.decreaseDropTimer);
         clearTimeout(this.disableSundropTimer);
+        this.countCall = 0;
         this.hotSandTimerActivated = false;
         this.drop.kill();
         this.hud.decreaseLife();
