@@ -30,8 +30,11 @@ State.GamePlay.prototype = {
 
 
 		cursors = this.game.input.keyboard.createCursorKeys();
+		this.ticou = false;
 	},
 	update: function () {		
+
+		this.game.physics.arcade.overlap(this.player, this.fish2, this.ticar, null,this);
 
 		if (cursors.left.isUp ) {
 			this.leftUp = true;
@@ -47,7 +50,7 @@ State.GamePlay.prototype = {
 			this.player.scale.x = 1;
 			this.player.position.setTo(playerX,playerY);			
 			this.player.animations.play('ticar');			
-			this.game.physics.arcade.overlap(this.player, this.fish2, this.ticar, null,this);
+			ticou = true;
 		}
 		else if(cursors.right.isDown && this.rightUp){
 			this.fish2.y+=runY;
@@ -56,7 +59,8 @@ State.GamePlay.prototype = {
 			this.player.scale.x = -1;
 			this.player.position.setTo(Config.global.screen.width-playerX,playerY);			
 			this.player.animations.play('ticar');			
-			this.game.physics.arcade.overlap(this.player, this.fish2, this.ticar, null,this);
+			//this.game.physics.arcade.overlap(this.player, this.fish2, this.ticar, null,this);
+			ticou = true;
 		}
 
 		if(this.fish2.y > Config.global.screen.height){
@@ -67,11 +71,12 @@ State.GamePlay.prototype = {
 	},
 
 	ticar: function(){
-		if(this.leftUp == false || this.rightUp == false){
+		if(ticou){
 			if(++frame > 2)
 				this.fish2.frame = 2;
 			else
 				this.fish2.frame = frame;
+			ticou = false;
 		}
 	},
 
