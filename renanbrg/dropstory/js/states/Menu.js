@@ -11,8 +11,7 @@ State.Menu.prototype = {
     preload: function() {
         "use strict";
 
-        this.game.load.image('level1preloaderbg',
-                'assets/images/level1preloaderbackground_960-600.png');
+        this.game.load.image('level1preloaderbg', Config.preloaderLevel1.dir);
         this.game.load.spritesheet('button-back', Config.Menu.buttonBack.dir,
                 Config.Menu.buttonBack.width, Config.Menu.buttonBack.height);
     },

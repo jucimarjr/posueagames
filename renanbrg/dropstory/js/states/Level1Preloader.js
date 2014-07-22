@@ -7,7 +7,7 @@ State.Level1Preloader = function(game) {
 State.Level1Preloader.prototype = {
 	preload: function () {
 
-        var background = this.game.add.sprite(0, 0, 'level1preloaderbg');
+        this.background = this.game.add.sprite(0, 0, 'level1preloaderbg');
         this.progressBar = this.game.add.sprite(120, 530, 'progress-bar');
         this.game.load.setPreloadSprite(this.progressBar);
 
@@ -49,12 +49,19 @@ State.Level1Preloader.prototype = {
     create: function() {
         "use strict";
 
-        this.game.add.tween(this.progressBar).to({alpha : 0}, 1000,
+        var tween = this.game.add.tween(this.progressBar).to({alpha : 0}, 1000,
                 Phaser.Easing.Linear.None).start();
+        tween.onComplete.add(this.tweenFinished, this);
+    },
+    tweenFinished: function() {
+        var self = this;
+        setTimeout(function(timer) {
+            self.game.add.tween(self.background).to({alpha : 0}, 1000,
+                    Phaser.Easing.Linear.None).start();
+        }, 1000);
 
         setTimeout(function(timer) {
-            clearTimeout(timer);
-            this.game.state.start('level1-state');
-        }, 1000);
-    },
+            self.game.state.start('level1-state');
+        }, 2000);
+    }
 };

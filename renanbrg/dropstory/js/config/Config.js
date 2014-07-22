@@ -123,6 +123,13 @@ Config.gameOver = {
 	x: 0,
 	y: 0
 };
+
+//Preloader image of the Level 1
+Config.preloaderLevel1 = {
+    dir: 'assets/images/level1preloaderbg_960-600.png',
+    x: 0,
+    y: 0
+};
 /*Config.gamePlay = {
 	dir: 'assets/images/GamePlayBg_600-960.png',
 	x: 0,
