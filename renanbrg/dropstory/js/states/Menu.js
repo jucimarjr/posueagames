@@ -4,6 +4,7 @@ State.Menu = function(game) {
     "use strict";
 
     this.game = game;
+    this.inicioSound = null;
 };
 
 State.Menu.prototype = {
@@ -12,6 +13,8 @@ State.Menu.prototype = {
 
         this.game.load.image('level1preloaderbg',
                 'assets/images/level1preloaderbackground_960-600.png');
+        this.game.load.spritesheet('button-back', Config.Menu.buttonBack.dir,
+                Config.Menu.buttonBack.width, Config.Menu.buttonBack.height);
     },
     create: function() {
         "use strict";
@@ -30,9 +33,11 @@ State.Menu.prototype = {
                 Config.Menu.buttonCredits.y, 'button-credits',
                 this.clickCredits, this, 1, 0, 1, 0);
 
-        this.inicioSound = this.game.add.audio('som-inicio');
-        this.inicioSound.loop = true;
-        this.inicioSound.play();
+        if (this.inicioSound == null) {
+            this.inicioSound = this.game.add.audio('som-inicio');
+            this.inicioSound.loop = true;
+            this.inicioSound.play();
+        }
     },
     clickPlay: function () {
         "use strict";

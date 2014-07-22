@@ -86,6 +86,17 @@ Config.Menu = {
 			y: 0.5
 		}
 	},
+	buttonBack: {
+		dir: 'assets/spritesheets/backbutton_240-120.png',
+		x: 820,
+		y: 460,
+		width: 120,
+		height: 120,
+		anchor: {
+			x: 0.5,
+			y: 0.5
+		}
+	},
 	textStyle: {
 		font: '25px Ms Sans Serif',
 		fill: '#ffffff'
