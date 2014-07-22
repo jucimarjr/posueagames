@@ -42,7 +42,7 @@ State.Menu.prototype = {
         "use strict";
 
         this.inicioSound.stop();
-        this.game.state.start('level1preloader-state');
+        this.game.state.start('level2preloader-state');
     },
     clickHowToPlay: function () {
         "use strict";
