@@ -20,15 +20,15 @@ State.Menu.prototype = {
                 'game-splash');
         var playButton = this.game.add.button(Config.Menu.buttonPlay.x,
                 Config.Menu.buttonPlay.y, 'button-play', this.clickPlay,
-                this, 0, 0, 0, 0);
+                this, 1, 0, 1, 0);
 
         var howToButton = this.game.add.button(Config.Menu.buttonHowToPlay.x,
                 Config.Menu.buttonHowToPlay.y, 'button-how-to-play',
-                this.clickHowToPlay, this, 0, 0, 0, 0);
+                this.clickHowToPlay, this, 1, 0, 1, 0);
 
         var creditsButton = this.game.add.button(Config.Menu.buttonCredits.x,
                 Config.Menu.buttonCredits.y, 'button-credits',
-                this.clickCredits, this, 0, 0, 0, 0);
+                this.clickCredits, this, 1, 0, 1, 0);
 
         this.inicioSound = this.game.add.audio('som-inicio');
         this.inicioSound.loop = true;
