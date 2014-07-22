@@ -9,7 +9,18 @@ Curumim.Platform = function(game, spriteKey, map, mapObject, gid, animation)
 	{ 		
 		platform.body.allowGravity = false;
 		platform.body.immovable = true;
+
+		var timeSeed = new Date();
+		var random = new Phaser.RandomDataGenerator([timeSeed.getTime()]);		
+		var rand = random.integerInRange(1, 10);
+
 		platform.body.velocity.x = -50;
+		if (rand % 2 == 0)
+		{
+			platform.scale.x *= -1;
+			platform.body.velocity.x = 50;
+		}
+		
 		platform.anchor.setTo(.5, 0);
 
 		if (typeof animation != 'undefined')
