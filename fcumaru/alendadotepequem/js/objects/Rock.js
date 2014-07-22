@@ -34,6 +34,7 @@ Rock.prototype = {
 	},
 	update : function(layer) {
 		"use strict";
+        this.game.physics.arcade.collide(layer, this.rock);
 
 		if (!this.rock.body.touching.right && !this.rock.body.touching.left) {
 			this.rock.body.velocity.x = 0;
@@ -59,13 +60,16 @@ Rock.prototype = {
 
 		// Only hero of power can move the rock
 		if (hero.heroType == HERO_OF_POWER &&
-		// Only can move the rock when the hero on floor
-		hero.body.onFloor() &&
-		// Only can move the rock when collide by side
-		(rock.body.touching.right || rock.body.touching.left)) {
-			rock.body.moves = true;
-			rock.body.velocity.x = hero.body.velocity.x * (-1 / 6);
-			hero.isPushing = true;
+			// Only can move the rock when the hero on floor
+			hero.body.onFloor()){
+			// Only can move the rock when collide by side
+			if (rock.body.touching.right || rock.body.touching.left) {
+				rock.body.moves = true;
+				//rock.body.velocity.x = hero.body.velocity.x * (-1 / 2);
+				rock.body.velocity.x = hero.body.velocity.x * 0.5;
+				hero.isPushing = true;
+			}
+			else hero.isPushing = false;
 		}
 	}
 };

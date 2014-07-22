@@ -77,7 +77,10 @@ function HeroOfPower(game) {
 			if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 				// vai para esquerda
 				this.hero.body.velocity.x = -this.walk;
-				if(this.hero.body.onFloor()) this.hero.animations.play('walk');
+				if(this.hero.body.onFloor()) {
+					if(this.hero.isPushing) this.hero.animations.play('power');
+					else this.hero.animations.play('walk');
+				}
 				this.hero.scale.x = -1; // espelha se antes -1
 				this.state = "walking";
 				this.facingLeft = true;
@@ -85,7 +88,10 @@ function HeroOfPower(game) {
 				// vai para direita
 				this.hero.body.velocity.x = this.walk;
 				this.hero.scale.x = +1; // espelha se antes 1
-				if(this.hero.body.onFloor()) this.hero.animations.play('walk');
+				if(this.hero.body.onFloor()){
+					if(this.hero.isPushing) this.hero.animations.play('power');
+					else this.hero.animations.play('walk');
+				}
 				this.state = "walking";
 				this.facingLeft = false;
 			}
@@ -105,6 +111,7 @@ function HeroOfPower(game) {
 
 		if (this.state === "idle") {
 			this.hero.animations.stop();
+			this.hero.isPushing = false;
 			this.hero.frame = 0;
 		}
 
