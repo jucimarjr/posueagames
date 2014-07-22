@@ -5,7 +5,7 @@ var Config = {
 	global: {
 		animationVelocity: 6,
 		screen: {
-			width: 960,
+			width: 450,
 			height: 600,
 			resize: function (game) {
 				"use strict";

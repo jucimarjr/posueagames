@@ -6,32 +6,69 @@ State.GamePlay = function (game) {
 };
 State.GamePlay.prototype = {
 	preload: function () {
-		this.player = game.add.sprite(0, 500 ,'player');
-		this.player.animations.add('ticar',[2],5,false);
-		this.game.physics.enable(this.player);
-		this.player.body.allowGravity = false;
-		this.player.body.immovable = true;
-
-
+		var cursors;
+		var playerX,playerY, fishX, frame,runY;
 	},
 	create: function () {
-		this.game.physics.startSystem(Phaser.Game.ARCADE);		
+		this.game.physics.startSystem(Phaser.Game.ARCADE);
+		playerY = 450;
+		playerX = 100;
+		fishX = 120;
+		frame = 0;
+		runY = 40;
+
+		this.game.add.sprite(0, 0, 'bg');
+
+		this.player = this.game.add.sprite(playerX, playerY ,'player');
+		this.game.physics.enable(this.player);
+		this.player.animations.add('ticar',[0,1,0],15,false);
+		this.player.anchor.setTo(.5, .5);
+
+		this.fish2 = this.game.add.sprite(fishX, 0,'fish2');
+		this.game.physics.enable(this.fish2);
+		this.player.anchor.setTo(.5, .5);
+
+
+		cursors = this.game.input.keyboard.createCursorKeys();
 	},
 	update: function () {
-		this.game.physics.arcade.overlap(this.player, this.fish, this.ticar, null,this);
-
-		if (cursors.left.isDown ) {
-			this.player.scale.x = 1;
-			this.player.scale.x = -1;
+		if (cursors.left.isUp ) {
+			this.leftUp = true;
 		}
-		else if(cursors.right.isDown){
-			this.player.scale.x = -1; 
+		if (cursors.right.isUp ) {
+			this.rightUp = true;
+		}
+		if (cursors.left.isDown && this.leftUp) {
+			this.leftUp = false;
+			this.player.scale.x = -1;
 			this.player.scale.x = 1;
+			this.player.position.setTo(playerX,playerY);
+			this.player.animations.play('ticar');
+			this.fish2.y+=runY;
+			this.game.physics.arcade.overlap(this.player, this.fish2, this.ticar, null,this);
+		}
+		else if(cursors.right.isDown && this.rightUp){
+			this.rightUp = false;
+			this.player.scale.x = 1; 
+			this.player.scale.x = -1;
+			this.player.position.setTo(Config.global.screen.width-playerX,playerY);
+			this.player.animations.play('ticar');
+			this.fish2.y+=runY;
+			this.game.physics.arcade.overlap(this.player, this.fish2, this.ticar, null,this);
+		}
+
+		if(this.fish2.y > Config.global.screen.height){
+			this.fish2.y = 0;
+			frame = 0;
+			this.fish2.frame = 0;
 		}
 	},
 
 	ticar: function(){
-
+		if(++frame > 2)
+			this.fish2.frame = 2;
+		else
+			this.fish2.frame = frame;
 	},
 
 	end: function(){
