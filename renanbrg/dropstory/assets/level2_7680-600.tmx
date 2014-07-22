@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="192" height="15" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="platform_160-80" tilewidth="40" tileheight="40">
+  <image source="images/platform_160-80.png" width="160" height="80"/>
+ </tileset>
+ <tileset firstgid="9" name="hotsand_40-40" tilewidth="40" tileheight="40">
+  <image source="images/hotsand_40-40.png" width="40" height="40"/>
+ </tileset>
+ <tileset firstgid="10" name="crab_160-80" tilewidth="160" tileheight="80">
+  <image source="spritesheets/crab_160-80.png" width="480" height="80"/>
+ </tileset>
+ <tileset firstgid="13" name="bird" tilewidth="54" tileheight="50">
+  <image source="images/bird.jpeg" width="54" height="50"/>
+ </tileset>
+ <tileset firstgid="14" name="glass_280-320" tilewidth="40" tileheight="40">
+  <image source="images/glass_280-320.png" width="280" height="320"/>
+ </tileset>
+ <tileset firstgid="70" name="seashell_120-40" tilewidth="40" tileheight="40">
+  <image source="images/seashell_120-40.png" width="120" height="40"/>
+ </tileset>
+ <tileset firstgid="73" name="seaurchin_80-40" tilewidth="40" tileheight="40">
+  <image source="spritesheets/seaurchin_80-40.png" width="80" height="40"/>
+ </tileset>
+ <layer name="Camada de Tiles 1" width="192" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt1ldvwyAYheF0pr3pTPduuvfee///X9Q3d5aNhB1wSPA50iOL2BYfCIJrtWz60I8BDBruK0rMGcIw6hgJXIuiKHFE56pS5fg8V1t7ybaP8uw3X88o5nT73Nnqc71fVlp7ybaP8uw3X88o5rjMXSfWlq0+1/tFYxvzGMYxgUlMYRoND30rxVPmGo3tfyfPXNnGPINZzGEeC1jEku9ilVwJuUbT68nWDh0fc7WMFaxiDevYwKbhWX3/Z9NNY3GtJb2ebO0Y0sQWtrGDXexh3/Csvv+zSY8l5H6IaV47lQMc4gjHOMEpzkIW1cPRGuyNnCeuF7jEFa5xg9tAdVUhLmdEqHfb7cO1XVbuEtd7POART3jGS4l9Vz0uZ0Sod9vtw7XtMz/4xV/it1e84R0f+MQXvj33XTSmWkOlSC2jIiJSSf9fnx3R
+  </data>
+ </layer>
+ <objectgroup name="glass-polygon" width="192" height="15">
+  <object gid="62" x="4353" y="361"/>
+  <object gid="62" x="4355" y="304"/>
+  <object gid="27" x="4329" y="345"/>
+  <object gid="27" x="4329" y="347"/>
+  <object gid="27" x="4439" y="352"/>
+  <object gid="62" x="4416" y="348"/>
+  <object gid="62" x="4413" y="317"/>
+ </objectgroup>
+ <objectgroup name="crab-objects" width="192" height="15">
+  <object gid="10" x="676" y="560"/>
+  <object gid="10" x="5300" y="560"/>
+  <object gid="10" x="4919" y="559"/>
+  <object gid="10" x="6156" y="561"/>
+  <object gid="10" x="6523" y="557"/>
+  <object gid="10" x="6887" y="557"/>
+ </objectgroup>
+ <objectgroup name="bird" width="192" height="15">
+  <object gid="13" x="690" y="206"/>
+ </objectgroup>
+ <objectgroup name="basic-shapes" width="192" height="15"/>
+ <objectgroup name="seaurchins" width="192" height="15">
+  <object gid="73" x="3655" y="235"/>
+  <object gid="73" x="3704" y="233"/>
+  <object gid="73" x="3744" y="232"/>
+  <object gid="73" x="4783" y="288"/>
+  <object gid="73" x="4825" y="284"/>
+  <object gid="73" x="4865" y="279"/>
+  <object gid="73" x="5127" y="280"/>
+  <object gid="73" x="5181" y="279"/>
+  <object gid="73" x="5220" y="277"/>
+  <object gid="73" x="5497" y="280"/>
+  <object gid="73" x="5547" y="281"/>
+  <object gid="73" x="5588" y="277"/>
+  <object gid="73" x="6423" y="524"/>
+  <object gid="73" x="6785" y="520"/>
+ </objectgroup>
+</map>
