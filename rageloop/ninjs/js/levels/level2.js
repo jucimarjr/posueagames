@@ -15,7 +15,7 @@
         this.itemCount = 0;
         this.totalItems = 10;
 
-        this.nextLevel = '';
+        this.nextLevel = 'LevelSelect';
 
         this.runningIntro = false;
     };

@@ -13,6 +13,7 @@
 		app_container.game.state.add('Gameover', app_container.Gameover);
 
 		app_container.game.state.add('Credits', app_container.Credits);
+		app_container.game.state.add('LevelSelect', app_container.LevelSelect);
 		app_container.game.state.add('Howto', app_container.HowToPlay);
 		app_container.game.state.add('StoryPresentation', app_container.StoryPresentation);
 
