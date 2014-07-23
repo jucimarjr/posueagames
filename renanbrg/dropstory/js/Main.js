@@ -7,6 +7,8 @@ game.state.add('pause-state', State.Pause);
 game.state.add('gameover-state', State.GameOver);
 game.state.add('level1preloader-state', State.Level1Preloader);
 game.state.add('level1-state', State.Level1);
+game.state.add('level2preloader-state', State.Level2Preloader);
+game.state.add('level2-state', State.Level2);
 game.state.add('menu-state', State.Menu);
 game.state.add('howtoplay-state', State.HowToPlay);
 game.state.add('credits-state', State.Credits);

@@ -91,5 +91,7 @@
   <object gid="3" x="850" y="230"/>
   <object gid="13" x="380" y="360"/>
   <object gid="18" x="1000" y="700"/>
+  <object gid="6" x="1170" y="900"/>
+  <object gid="6" x="1250" y="900"/>
  </objectgroup>
 </map>

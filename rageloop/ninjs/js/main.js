@@ -3,7 +3,7 @@
 	var init = function() {
 
 		// Initialize Phaser, and creates a game
-		app_container.game = new Phaser.Game(960, 600, Phaser.AUTO, 'game_container');
+		app_container.game = new Phaser.Game(960, 600, Phaser.CANVAS, 'game_container');
 
 		// add phaser states
 		app_container.game.state.add('LudusSplash', app_container.LudusSplash);
@@ -13,8 +13,10 @@
 		app_container.game.state.add('Gameover', app_container.Gameover);
 
 		app_container.game.state.add('Credits', app_container.Credits);
+		app_container.game.state.add('LevelSelect', app_container.LevelSelect);
 		app_container.game.state.add('Howto', app_container.HowToPlay);
 		app_container.game.state.add('StoryPresentation', app_container.StoryPresentation);
+		app_container.game.state.add('EndScene', app_container.EndScene);		
 
 		//levels
 		app_container.game.state.add('Level1', app_container.Level1);

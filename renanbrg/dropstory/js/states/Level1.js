@@ -88,7 +88,7 @@ State.Level1.prototype = {
 //		this.setupStrawHorizontal();
 //		this.setupStrawDiagonal(2720, 270);
 		this.setupMolecule();
-		this.setupPlayer(3000, 100);
+		this.setupPlayer(100, 100);
 		this.setupSmokeEmitter(1550, this.game.height-80);
 
         this.hud.create();
@@ -396,7 +396,7 @@ State.Level1.prototype = {
                     [0, 1, 2, 3, 4], 10, true);
             this.molecule.getAt(i).animations.play('dropAnimation');
             this.molecule.getAt(i).body.collides([this.playerCG, this.groundCG]);
-            this.molecule.hasCollided = false;
+            this.molecule.getAt(i).hasCollided = false;
         }
 
         this.molecule.getAt(0).body.sprite.name='lifedrop';
@@ -557,47 +557,38 @@ State.Level1.prototype = {
         return false;
     },
     drinkEnergy: function(body1, body2) {
-		this.countCall++;
-		if (this.countCall == 1) {
-			body2.sprite.kill();
-			body2.hasCollided = true;
-			this.drop.jump(1500);
-			this.jumpSound.play();
-			this.smokeEmitter.start(false, 3000, 50);
-			this.haveEnergy = true;
-			var self = this;
-			this.smokeTimer = setTimeout(function() {
-					self.stopSmoke();
-			}, 2000);
+        console.log('Player get the energy drop!!!!');
 
-			this.drop.playerstate = 'energy';
-		}
-		if (this.countCall == 2) {
-			this.countCall = 0;
-		}
-	},
-	hitSunscreenDrop: function (body1, body2) {
-		this.drop.playerstate = 'sunscreen';
-		this.countCall++;
-        if (this.countCall == 1) {
-            body2.sprite.kill();
-            body2.hasCollided = true;
-            this.dropIsInvincible = true;
-            var self = this;
-            this.disableSundropTimer = setTimeout(function() {
-                self.dropIsInvincible = false;
-                self.drop.playerstate = 'normal';
-                // Check if the player is over the hot sand
-                if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
-                        40, self.hotSandLayer)) {
-                    self.countCall = 0;
-                    self.killDrop(body1, null);
-                }
-            }, 5500);
-        }
-        if (this.countCall == 2) {
-            this.countCall = 0;
-        }
+        body2.sprite.kill();
+        body2.hasCollided = true;
+        this.drop.jump(1500);
+        this.jumpSound.play();
+        this.smokeEmitter.start(false, 3000, 50);
+        this.haveEnergy = true;
+        var self = this;
+        this.smokeTimer = setTimeout(function() {
+                self.stopSmoke();
+        }, 2000);
+        this.drop.playerstate = 'energy';
+    },
+    hitSunscreenDrop: function (body1, body2) {
+        console.log('Player get the sunscreen drop!!!!');
+
+        this.drop.playerstate = 'sunscreen';
+        body2.sprite.kill();
+        body2.hasCollided = true;
+        this.dropIsInvincible = true;
+        var self = this;
+        this.disableSundropTimer = setTimeout(function() {
+            self.dropIsInvincible = false;
+            self.drop.playerstate = 'normal';
+            // Check if the player is over the hot sand
+            if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
+                    40, self.hotSandLayer)) {
+                self.countCall = 0;
+                self.killDrop(body1, null);
+            }
+        }, 5500);
 	},
 	killDrop: function (body1, body2) {
         if (this.dropIsInvincible) {
@@ -719,6 +710,7 @@ State.Level1.prototype = {
         clearTimeout(this.lastDropTimer);
         clearTimeout(this.decreaseDropTimer);
         clearTimeout(this.disableSundropTimer);
+        this.countCall = 0;
         this.hotSandTimerActivated = false;
         this.drop.kill();
         this.hud.decreaseLife();

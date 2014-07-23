@@ -47,7 +47,7 @@
  </tileset>
  <layer name="hotsandlayer" width="120" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt0LEJAAAIwDDx/6Md3QQ3kQT6QCMAAAAAAICNHKJNn3Q7fivAzgDt
+   eJzt0LEJAAAIwDDx/6OdXQQ3kQT6QCMAAAAAAICNHKKbXulu/Fa5lgDr
   </data>
  </layer>
  <layer name="irregularlayer" width="120" height="15">
@@ -57,7 +57,7 @@
  </layer>
  <layer name="mainlayer" width="120" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt1FsKgDAMRNFqfdX9L9hAPwt9EdSEe2B+G5k2hgAAgK4o2SS75HA0C9kpuSRJcjuahYyd8o2d8o39LdU60epr9JzZuexvqdaJVl+j58zOtby/lr/9LVrv8Yuu+fe0ad0LXf8T99K2dAR29dzvSszmAQVhA2E=
+   eJzt01sKwCAMRFH7fux/wR3ws9CqjVjDPTC/RhMTAgAAtiZlVhZldVQL0absyqGcjmohYqd8Y6d8Y3/zWPUr95zSuuzv3VMvrfqVe05p3Z73t9bdPf15q7e0+Cee5lCL1Vzo9T8xl3dDQsZmt8NXqfMlfeYCqwoDYw==
   </data>
  </layer>
  <objectgroup name="seaurchins" width="120" height="15">

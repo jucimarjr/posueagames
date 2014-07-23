@@ -19,9 +19,9 @@
         this.hasShadow = false;
 
         this.itemCount = 0;
-        this.totalItems = 8;
+        this.totalItems = 0;
 
-        this.nextLevel = '';
+        this.nextLevel = 'EndScene';
 
         this.runningIntro = true;
 
@@ -32,6 +32,9 @@
     Level3.prototype = new app_container.Level();
 
     Level3.prototype.createEnemies = function () {
+
+        window.app_container.currentLevel = "Level3";
+
         this.boss = new Boss(this.game, this.player);
         this.boss.init(40*22, 40*10);
     };

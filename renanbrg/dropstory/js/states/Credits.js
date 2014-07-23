@@ -1,37 +1,29 @@
 /*global State, Config, Phaser*/
 
 State.Credits = function (game) {
-	"use strict";
-	this.game = game;
+    "use strict";
+
+    this.game = game;
 };
+
 State.Credits.prototype = {
-	preload: function () {
-		"use strict";
-		this.game.load.audio('credits','assets/gotaExtra.ogg');
-		this.game.load.image('credits-bg',  Config.credits.dir);
-		
-	},
-	create: function () {
-		"use strict";
-		var background = this.game.add.sprite(Config.credits.x, Config.credits.y, 'credits-bg');
-		background.inputEnabled = true;
-		background.events.onInputDown.add(this.onClick, this);
-		
-		this.inicioSound.stop();
-		
-		this.creditsSound = this.game.add.audio("credits");
-        this.creditsSound.loop = true;
-        this.creditsSound.play();
-	},
-	update: function () {
-		"use strict";
-		Config.global.screen.resize(this.game);
-		if (this.game.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-			this.game.state.start('Menu');
-		}
-	},
-	onClick: function () {
-		"use strict";
-		this.game.state.start('Menu');
-	}
+    preload: function () {
+        "use strict";
+
+        this.game.load.image('credits-bg',  Config.credits.dir);
+    },
+    create: function () {
+        "use strict";
+
+        var background = this.game.add.sprite(Config.credits.x,
+                Config.credits.y, 'credits-bg');
+        var playButton = this.game.add.button(Config.Menu.buttonBack.x,
+                Config.Menu.buttonBack.y, 'button-back', this.clickPlay,
+                this, 1, 0, 1, 0);
+    },
+    clickPlay: function () {
+        "use strict";
+
+        this.game.state.start('menu-state');
+    }
 };

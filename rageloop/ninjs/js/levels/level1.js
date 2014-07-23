@@ -15,7 +15,7 @@
         this.itemCount = 0;
         this.totalItems = 8;
 
-        this.nextLevel = 'Level2';
+        this.nextLevel = 'LevelSelect';
 
         this.runningIntro = false;
     };
@@ -23,6 +23,9 @@
     Level1.prototype = new app_container.Level();
 
     Level1.prototype.createEnemies = function () {
+
+        window.app_container.currentLevel = "Level1";
+
         this.enemies.createNinjaIdle(40*31, 40*10);
         this.enemies.createNinjaIdle(40*43, 40*8);
         this.enemies.createNinjaIdle(40*69, 40*9);

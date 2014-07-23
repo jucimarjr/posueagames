@@ -21,12 +21,24 @@ Curumim.Ounce = function(game, spriteKey, map, mapObject, gid, walkAnimation)
 		enemy.dizzy.anchor.setTo(.5, 0);
 		enemy.dizzy.alpha = 0;
 
+		var timeSeed = new Date();
+		var random = new Phaser.RandomDataGenerator([timeSeed.getTime()]);
+		var posTarget = enemy.x - 300;
+		var rand = random.integerInRange(1, 10);
+
+		if (rand % 2 == 0)
+		{			
+			enemy.scale.x *= -1;
+			enemy.x -= 300;
+			posTarget = enemy.x + 300;
+		}		
+
 		enemy.tween = this.add.tween(enemy);
 		enemy.tween.onLoop.add(function() {				
 			enemy.scale.x *= -1;
  		}, this);
 
-		enemy.tween.to({ x: enemy.x - 300 }, 3000, null, true, 0, Number.MAX_VALUE, true);
+		enemy.tween.to({ x: posTarget }, 3000, null, true, 0, Number.MAX_VALUE, true);
 
 	}, this.game);
 };

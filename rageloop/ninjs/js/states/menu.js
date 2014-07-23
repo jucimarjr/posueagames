@@ -38,7 +38,7 @@
 
         onPlayClick: function() {
             this.clickAudio.play();
-            this.game.state.start('Level3');
+            this.game.state.start('LevelSelect');
         },
 
         onCreditsClick: function() {
