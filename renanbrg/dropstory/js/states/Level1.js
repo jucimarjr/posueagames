@@ -559,8 +559,6 @@ State.Level1.prototype = {
     drinkEnergy: function(body1, body2) {
         console.log('Player get the energy drop!!!!');
 
-        body2.sprite.kill();
-        body2.hasCollided = true;
         this.drop.jump(1500);
         this.jumpSound.play();
         this.smokeEmitter.start(false, 3000, 50);
