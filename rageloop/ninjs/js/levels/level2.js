@@ -23,6 +23,9 @@
     Level2.prototype = new app_container.Level();
 
     Level2.prototype.createEnemies = function () {
+
+        window.app_container.currentLevel = "Level2";
+
         this.enemies.createNinjaIdle(40*26, 40*38);
         this.enemies.createNinjaIdle(40*51, 40*38);
         this.enemies.createNinjaIdle(40*22, 40*26);

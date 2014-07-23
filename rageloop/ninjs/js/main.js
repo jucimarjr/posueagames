@@ -16,6 +16,7 @@
 		app_container.game.state.add('LevelSelect', app_container.LevelSelect);
 		app_container.game.state.add('Howto', app_container.HowToPlay);
 		app_container.game.state.add('StoryPresentation', app_container.StoryPresentation);
+		app_container.game.state.add('EndScene', app_container.EndScene);		
 
 		//levels
 		app_container.game.state.add('Level1', app_container.Level1);

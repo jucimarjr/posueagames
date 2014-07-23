@@ -143,6 +143,11 @@
             this.player.update();
 
             if (this.boss) {
+
+                if (this.boss.lifes <= 0) {
+                    this.startNextLevel();
+                }
+
                 this.boss.update();
             }
         },
@@ -177,10 +182,20 @@
             //open escape layer
         },
 
-        startNextLevel: function (player, tile) {
-            if (this.nextLevel && this.itemCount == this.totalItems) {
-                this.game.state.start(this.nextLevel);
+        startNextLevel: function () {
+
+            var self = this;
+            var delay = 1000; //ms
+
+            if (this.nextLevel === 'EndScene') {
+                delay = 3000;
             }
+
+            if (this.nextLevel && this.itemCount == this.totalItems) {
+                setTimeout(function(){
+                    self.game.state.start(self.nextLevel);    
+                }, delay);                
+            } 
         },
 
         die: function (player, obj) {

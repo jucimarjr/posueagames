@@ -36,7 +36,7 @@
         onPlayClick: function() {
             this.bgSound.stop();
             this.clickAudio.play();
-            this.game.state.start('Level3');
+            this.game.state.start(window.app_container.currentLevel);
         },
 
         onMenuClick: function() {

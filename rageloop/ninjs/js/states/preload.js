@@ -22,6 +22,9 @@
             this.game.load.image('history_1','assets/images/history/scene01_960-600.png');
             this.game.load.image('history_2','assets/images/history/scene02_960-600.png');
             this.game.load.image('history_3','assets/images/history/scene03_960-600.png');
+
+            /*end scene*/
+            this.game.load.image('end_scene','assets/images/final_scene_960-600.png');
             
             /*Menu assets*/
             this.game.load.image('menu_bg','assets/images/menuBg_960-600.png');
