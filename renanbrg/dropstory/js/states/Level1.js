@@ -29,6 +29,7 @@ State.Level1 = function (game) {
     this.disableSundropTimer = null;
 
     this.countCall = 0; //count how many times the collision function is called.
+    this.updateRate = 0;
 };
 State.Level1.prototype = {
 	preload: function () {
@@ -119,11 +120,21 @@ State.Level1.prototype = {
 		}
 
 	    if (this.playerEnteredLeftStraw) {
-	        this.game.camera.setPosition(this.game.camera.x + 20,
-	                this.game.camera.y);
+            if (this.updateRate == 0) {
+                this.updateRate = 30 - (this.game.time.fps / 3);
+            }
+            if (this.game.camera.x < 2078) {
+                this.game.camera.setPosition(this.game.camera.x +
+                        this.updateRate, this.game.camera.y);
+            }
 	    } else if (this.playerEnteredRightStraw) {
-	        this.game.camera.setPosition(this.game.camera.x - 20,
-	                this.game.camera.y);
+            if (this.updateRate == 0) {
+                this.updateRate = 30 - (this.game.time.fps / 3);
+            }
+            if (this.game.camera.x > 1608) {
+                this.game.camera.setPosition(this.game.camera.x -
+                        this.updateRate, this.game.camera.y);
+            }
 	    }
 	},
 	handleKeyDown: function () {
@@ -699,6 +710,7 @@ State.Level1.prototype = {
         dropSprite.exists = true;
         this.drop.jump(700);
         this.game.camera.follow(dropSprite);
+        this.updateRate = 0;
     },
 	clickHowToPlay: function () {
 		"use strict";
