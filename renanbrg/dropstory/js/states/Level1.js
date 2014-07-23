@@ -564,6 +564,10 @@ State.Level1.prototype = {
         this.smokeEmitter.start(false, 3000, 50);
         this.haveEnergy = true;
         var self = this;
+        if (this.smokeTimer != null) {
+            clearTimeout(this.smokeTimer);
+            this.smokeTimer = null;
+        }
         this.smokeTimer = setTimeout(function() {
                 self.stopSmoke();
         }, 2000);
@@ -635,7 +639,7 @@ State.Level1.prototype = {
 	stopSmoke: function() {
 		this.haveEnergy = false;
 		this.smokeEmitter.on = false;
-		clearTimeout(this.smokeTimer);
+		this.smokeTimer = null;
 		this.drop.playerstate = 'normal';
 	},
 	moveCrab: function (crab) {
