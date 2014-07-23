@@ -12,6 +12,7 @@ State.Level2 = function (game) {
     this.crabMaterial = null;
     this.groundMaterial = null;
     this.hotsandMaterial = null;
+    this.hotSandLayer = null;
     this.energy = null;
     this.smokeEmitter = null;
     this.haveEnergy = false;
@@ -45,21 +46,18 @@ State.Level2.prototype = {
         this.map = this.game.add.tilemap('maplevel2');
         this.map.addTilesetImage('hotsand_40-40', 'hotsand');
         this.map.addTilesetImage('platform_160-80', 'platform');
+        this.map.addTilesetImage('glass_280-320', 'glass');
         this.map.addTilesetImage('seashell_120-40', 'seashell');
         this.map.addTilesetImage('seaurchin_80-40', 'seaurchin');
 
         this.mainLayer = this.map.createLayer('mainlayer2');
+        this.hotSandLayer = this.map.createLayer('hotsandlayer');
+        this.irregularLayer = this.map.createLayer('irregularlayer');
         this.mainLayer.resizeWorld();
 
         this.setupPhysics();
         this.setupLayers();
-        this.setupPlayer(300, 100);
-        
-        //this.setupCrab();
-        /*this.setupCrab();
-		this.setupMolecule();
-		this.setupPlayer(3000, 100);
-		this.setupSmokeEmitter(1550, this.game.height-80);*/
+        this.setupPlayer(4000, 100);
 
         this.hud.create();
 
@@ -76,6 +74,13 @@ State.Level2.prototype = {
 		this.handleKeyDown();
 		this.isOnAir();
 		this.drop.playerAnimations();
+		this.moveCrab(this.crabs.getAt(0));
+		this.moveCrab(this.crabs.getAt(1));
+		this.moveCrab(this.crabs.getAt(2));
+		this.moveCrab(this.crabs.getAt(3));
+		this.moveCrab(this.crabs.getAt(4));
+		this.moveCrab(this.crabs.getAt(5));
+
 	},
 	handleKeyDown: function () {
 		"use strict";
@@ -139,9 +144,9 @@ State.Level2.prototype = {
 	},
 	setupLayers: function () {
 	    this.tilesMainLayer = game.physics.p2.convertTilemap(this.map,this.mainLayer);
-	    //this.tilesHotSandLayer = game.physics.p2.convertTilemap(this.map,this.hotSandLayer);
+	    this.tilesHotSandLayer = game.physics.p2.convertTilemap(this.map,this.hotSandLayer);
 	    
-	    //this.tilesIrregularLayer = game.physics.p2.convertTilemap(this.map,this.irregularLayer);
+	    this.tilesIrregularLayer = game.physics.p2.convertTilemap(this.map,this.irregularLayer);
 
 	    var basicShapes = game.physics.p2.convertCollisionObjects(this.map,'basic-shapes');
 	    var glassPolygon = game.physics.p2.convertCollisionObjects(this.map,'glass-polygon');
@@ -152,15 +157,15 @@ State.Level2.prototype = {
 	    	this.tilesMainLayer[i].collides([this.playerCG, this.crabCG,this.moleculeCG]);
 	    	this.tilesMainLayer[i].setMaterial(this.groundMaterial);
 	    }
-	    /*for (var i=0; i < this.tilesHotSandLayer.length; i++) {
+	    for (var i=0; i < this.tilesHotSandLayer.length; i++) {
 	    	this.tilesHotSandLayer[i].setCollisionGroup(this.hotsandCG);
 	    	this.tilesHotSandLayer[i].collides([this.playerCG, this.crabCG,
 	                this.moleculeCG, this.groundCG, this.urchinsCG]);
 	    	this.tilesHotSandLayer[i].setMaterial(this.groundMaterial);
-	    }*/
+	    }
 	    for (var i = 0; i < basicShapes.length; i++) {
 	    	basicShapes[i].setCollisionGroup(this.groundCG);
-	    	basicShapes[i].collides([this.playerCG, this.crabCG,this.moleculeCG, this.energyCG, this.sundropCG]);
+	    	basicShapes[i].collides([this.playerCG, this.crabCG,this.moleculeCG, this.energyCG]);
 	    	basicShapes[i].setMaterial(this.groundMaterial);
 	    }
 	    for (var i = 0; i < glassPolygon.length; i++) {
@@ -176,7 +181,7 @@ State.Level2.prototype = {
 	    this.crabs.forEach(this.setupCrab, this);
 
 	    this.urchins = game.add.group();
-	    this.map.createFromObjects('seaurchins', 71, 'urchin', 0, true, false, this.urchins);
+	    this.map.createFromObjects('seaurchins', 72, 'urchin', 0, true, false, this.urchins);
 	    this.urchins.forEach(this.setupUrchins, this);
     },
 	setupPlayer: function (posX, posY) {
@@ -205,15 +210,21 @@ State.Level2.prototype = {
 			this.crabs.getAt(i).body.setMaterial(this.crabMaterial);
 			this.crabs.getAt(i).animations.add('walkL', [0, 1, 2], 10, true);
 			this.crabs.getAt(i).animations.add('walkR', [0, 1, 2], 10, true);
-			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG, this.groundCG]);
+			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG, this.groundCG, this.urchinsCG]);
 		}
+		this.crabs.getAt(0).body.moveLeft(300);
+		this.crabs.getAt(1).body.moveLeft(300);
+		this.crabs.getAt(2).body.moveRight(300);
+		this.crabs.getAt(3).body.moveLeft(300);
+		this.crabs.getAt(4).body.moveRight(300);
+		this.crabs.getAt(5).body.moveLeft(300);
 	},
     setupUrchins: function(urchin) {
     	game.physics.p2.enable(urchin);
         urchin.body.setCollisionGroup(this.urchinsCG);
         urchin.body.static = true;
         urchin.body.sprite.name = 'urchin';
-        urchin.body.collides([this.playerCG, this.groundCG]);
+        urchin.body.collides([this.playerCG, this.groundCG, this.crabCG]);
     },
 
 	touchingDown: function (someone) {
@@ -274,6 +285,26 @@ State.Level2.prototype = {
 			this.onAir = true;
 		}
 	},
-
-
+	moveCrab: function (crab) {
+		if (crab.name == "crab1") {
+			if (this.touchingLeft(crab.body)) {
+				crab.body.moveRight(300);
+				crab.animations.play('walkR');
+			} else if (this.touchingRight(crab.body)) {
+				crab.body.moveLeft(300);
+				crab.animations.play('walkL');
+			} else {
+			}
+		} else {
+			if (this.touchingRight(crab.body)) {
+				crab.body.moveLeft(300);
+				crab.animations.play('walkL');
+			} else if (this.touchingLeft(crab.body)) {
+				crab.body.moveRight(300);
+				crab.animations.play('walkR');
+			} else {
+				//this.crab.body.velocity.x = -100;
+			}
+		}
+	},
 };
