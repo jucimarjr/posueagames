@@ -15,7 +15,7 @@ State.Phase1.prototype = {
 		Phase1.World.createBg();
 		Phase1.Trap.create();
 		Phase1.Enemy.create();		
-        this.player.create();
+        this.player.create(50, 1600);
 	    Phase1.Rock.create();
 	    Phase1.Door.create();
 		Phase1.World.createBgAlpha();

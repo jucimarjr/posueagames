@@ -60,7 +60,7 @@ GameSplash.prototype = {
 	    Phase2.World.game = this.game;
 	    Phase2.World.init();
 		
-		this.player.preload();	
+		this.player.preload();
 	},
 	create: function () {
 		"use strict";

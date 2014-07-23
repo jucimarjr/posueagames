@@ -33,8 +33,8 @@ Player.prototype = {
         this.game.load.spritesheet('player', PlayerProperties.path, PlayerProperties.width, PlayerProperties.height);
     },
 
-    create : function() {
-        this.player = this.game.add.sprite(50, 1600, 'player');
+    create : function(x, y) {
+        this.player = this.game.add.sprite(x, y, 'player');
         // animations
         //this.player.animations.add('idle', PlayerProperties.idle, 10, true);
         this.player.animations.add('run', PlayerProperties.run, 10, true);
@@ -45,9 +45,9 @@ Player.prototype = {
         this.player.body.fixedRotation = true;
         this.player.body.collideWorldBounds = true;
 		this.player.body.mass = 9999;
-		this.player.body.setMaterial(playerMaterial);
+		/* this.player.body.setMaterial(playerMaterial);
 		this.player.body.setCollisionGroup(playerCG);
-    	this.player.body.collides([rockCG, enemyCG]);
+    	this.player.body.collides([rockCG, enemyCG]);*/
 
         this.game.camera.follow(this.player);
     },
