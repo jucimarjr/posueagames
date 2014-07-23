@@ -185,7 +185,7 @@
         startNextLevel: function () {
 
             var self = this;
-            var delay = 1000; //ms
+            var delay = 0; //ms
 
             if (this.nextLevel === 'EndScene') {
                 delay = 3000;
