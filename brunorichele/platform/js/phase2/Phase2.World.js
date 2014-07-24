@@ -17,7 +17,7 @@ Phase2.World = {
         this.game.world.enableBodySleeping=true;
 
         this.background = this.game.add.sprite(0, 0, 'bg1fase2');
-        this.floor = this.game.add.sprite(0, 908, 'floorfase2');
+        this.floor = this.game.add.sprite(0, 998, 'floorfase2');
     },
     createForeground : function() {
         this.foreground = this.game.add.sprite(0, 0, 'bg2fase2');
@@ -29,10 +29,9 @@ Phase2.World = {
         this.game.physics.p2.setWorldMaterial(worldMaterial, true, true, true, true);*/
 
         this.game.physics.p2.enable(this.floor);
-        this.floor.static = true;
-        this.floor.body.mass = 9999;
-        /*this.floor.body.fixedRotation = true;
-        this.floor.body.setMaterial(spriteMaterial);
+        this.floor.body.static = true;
+        this.floor.body.fixedRotation = true;
+        /*this.floor.body.setMaterial(spriteMaterial);
 
         var contactMaterial = this.game.physics.p2.createContactMaterial(spriteMaterial, worldMaterial);
 

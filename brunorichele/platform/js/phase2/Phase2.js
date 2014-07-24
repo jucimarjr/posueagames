@@ -8,7 +8,8 @@ State.Phase2.prototype = {
     },
     create : function() {
         Phase2.World.createBackground();
-        this.player.create(150, 600);
+        this.player.create(150, 870);
+        this.player.player.body.mass = 100;
         Phase2.World.createForeground();
 
         Phase2.World.collision(this.player.player);
