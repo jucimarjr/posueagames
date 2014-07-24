@@ -16,6 +16,9 @@ State.Level2 = function (game) {
     this.energy = null;
     this.smokeEmitter = null;
     this.haveEnergy = false;
+    this.molecule = null;
+    this.acidgroup = null;
+    this.timerEventRain = [];
     this.hud = new HUD(this.game);
     this.onAir = false;
 
@@ -57,7 +60,17 @@ State.Level2.prototype = {
 
         this.setupPhysics();
         this.setupLayers();
-        this.setupPlayer(4000, 100);
+        this.setupPlayer(1300, 100);
+        this.setupMolecule();
+        this.setupAcidDrop();
+
+		// falling acid rain
+		this.timerEventRain[0]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 1320,0);
+		this.timerEventRain[1]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 2640,0);
+		this.timerEventRain[2]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 2800,0);
+		this.timerEventRain[3]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 2960,0);
+		this.timerEventRain[4]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 3120,0);
+		this.timerEventRain[5]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 3280,0);
 
         this.hud.create();
 
@@ -129,6 +142,7 @@ State.Level2.prototype = {
 		this.urchinsCG = game.physics.p2.createCollisionGroup();
 		this.hotsandCG = game.physics.p2.createCollisionGroup();
         this.glassCG = game.physics.p2.createCollisionGroup();
+        this.acidCG = game.physics.p2.createCollisionGroup();
 
 		// Create and Setup Material
 	    this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
@@ -193,7 +207,7 @@ State.Level2.prototype = {
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.moleculeCG, this.energyCG,
-								  this.urchinsCG, this.hotsandCG, this.glassCG]);
+								  this.urchinsCG, this.hotsandCG, this.glassCG, this.acidCG]);
         // collide callbacks
 		/*dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
         dropSprite.body.createGroupCallback(this.urchinsCG, this.checkCollisionUrchins, this);
@@ -226,7 +240,45 @@ State.Level2.prototype = {
         urchin.body.sprite.name = 'urchin';
         urchin.body.collides([this.playerCG, this.groundCG, this.crabCG]);
     },
+	setupMolecule: function () {
+		// Add a "life drop"
+        this.molecule = game.add.group();
+        this.molecule.enableBody = true;
+        this.molecule.physicsBodyType = Phaser.Physics.P2JS;
 
+        this.molecule.create(1040, 160, 'lifedrop'); //lifedrop1
+        this.molecule.create(1640, 200, 'lifedrop'); //lifedrop2
+        this.molecule.create(3600, this.game.world.height-80, 'energy'); //energy1
+        this.molecule.create(4200, this.game.world.height-120, 'energy'); //energy2
+
+        for (var i = 0; i < this.molecule.length; i++) {
+            this.molecule.getAt(i).body.setCollisionGroup(this.moleculeCG);
+            this.molecule.getAt(i).body.fixedRotation = true;
+            this.molecule.getAt(i).body.static = true;
+            this.molecule.getAt(i).animations.add('dropAnimation',[0, 1, 2, 3, 4], 10, true);
+            this.molecule.getAt(i).animations.play('dropAnimation');
+            this.molecule.getAt(i).body.collides([this.playerCG, this.groundCG]);
+            this.molecule.getAt(i).hasCollided = false;
+        }
+
+        this.molecule.getAt(0).body.sprite.name='lifedrop';
+        this.molecule.getAt(1).body.sprite.name='energy';
+    },
+    setupAcidDrop: function() {
+		this.acidgroup = game.add.group();
+		this.acidgroup.enableBody = true;
+		this.acidgroup.physicsBodyType = Phaser.Physics.P2JS;
+	},
+    fallRain: function(posX, posY) {
+		var acidrain;
+		acidrain = this.acidgroup.create(posX, posY, 'aciddrop'); //create bullet at the right side of the camera view
+        acidrain.name = "aciddrop";
+        acidrain.body.collideWorldBounds=false;
+        acidrain.body.allowSleep=true;
+        acidrain.body.setCollisionGroup(this.acidCG);
+        acidrain.body.fixedRotation = true;
+        acidrain.body.collides([this.playerCG]);
+	},
 	touchingDown: function (someone) {
 		var yAxis = p2.vec2.fromValues(0, 1);
 		var result = false;
@@ -308,3 +360,4 @@ State.Level2.prototype = {
 		}
 	},
 };
+

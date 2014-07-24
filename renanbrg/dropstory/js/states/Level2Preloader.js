@@ -13,6 +13,7 @@ State.Level2Preloader.prototype = {
 
         this.game.load.spritesheet('urchin','assets/spritesheets/seaurchin_80-40.png', 40, 40);
         this.game.load.spritesheet('lifedrop','assets/spritesheets/water_200-40.png', 40, 40);
+        this.game.load.spritesheet('aciddrop','assets/spritesheets/aciddrop_120-30.png', 40, 30);
         this.game.load.spritesheet('crab','assets/spritesheets/crab_160-80.png', 160, 80);
         this.game.load.spritesheet('energy','assets/spritesheets/energy_200-40.png', 40, 40);
         this.game.load.image('gameplay-bg','assets/images/backgroundlevel1_4800-600.png');
