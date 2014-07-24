@@ -21,5 +21,27 @@ Phase2.World = {
     },
     createForeground : function() {
         this.foreground = this.game.add.sprite(0, 0, 'bg2fase2');
+    },
+    collision : function(player) {
+        /*var spriteMaterial = this.game.physics.p2.createMaterial('spriteMaterial', player.body);
+        var worldMaterial = this.game.physics.p2.createMaterial('worldMaterial');
+
+        this.game.physics.p2.setWorldMaterial(worldMaterial, true, true, true, true);*/
+
+        this.game.physics.p2.enable(this.floor);
+        this.floor.static = true;
+        this.floor.body.mass = 9999;
+        /*this.floor.body.fixedRotation = true;
+        this.floor.body.setMaterial(spriteMaterial);
+
+        var contactMaterial = this.game.physics.p2.createContactMaterial(spriteMaterial, worldMaterial);
+
+        contactMaterial.friction = 0.0;
+        contactMaterial.restitution = 0.0;
+        contactMaterial.stiffness = 1e7;
+        contactMaterial.relaxation = 0;
+        contactMaterial.frictionStiffness = 1e7;
+        contactMaterial.frictionRelaxation = 3;
+        contactMaterial.surfaceVelocity = 0.0;*/
     }
 }
