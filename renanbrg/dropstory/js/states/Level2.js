@@ -16,6 +16,7 @@ State.Level2 = function (game) {
     this.energy = null;
     this.smokeEmitter = null;
     this.haveEnergy = false;
+    this.dropIsInvincible = false;
     this.molecule = null;
     this.acidgroup = null;
     this.timerEventRain = [];
@@ -219,13 +220,11 @@ State.Level2.prototype = {
         dropSprite.body.collides([this.groundCG, this.crabCG, this.moleculeCG, this.energyCG,
 								  this.urchinsCG, this.hotsandCG, this.glassCG, this.acidCG]);
         // collide callbacks
-		/*dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
+		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
         dropSprite.body.createGroupCallback(this.urchinsCG, this.checkCollisionUrchins, this);
         dropSprite.body.createGroupCallback(this.moleculeCG, this.checkOverlapWithLifeDrop, this);
-		dropSprite.body.createGroupCallback(this.drinkEnergy, this);
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
         dropSprite.body.createGroupCallback(this.glassCG, this.restartGame, this);
-        dropSprite.body.createGroupCallback(this.coveredStrawCG, this.insideStraw, this);*/
 	},
 	setupCrab: function() {
 		for (var i = 0; i < this.crabs.length; i++) {
@@ -271,9 +270,10 @@ State.Level2.prototype = {
             this.molecule.getAt(i).body.collides([this.playerCG, this.groundCG]);
             this.molecule.getAt(i).hasCollided = false;
         }
-
         this.molecule.getAt(0).body.sprite.name='lifedrop';
-        this.molecule.getAt(1).body.sprite.name='energy';
+        this.molecule.getAt(1).body.sprite.name='lifedrop';
+        this.molecule.getAt(2).body.sprite.name='energy';
+        this.molecule.getAt(3).body.sprite.name='energy';
     },
     setupAcidDrop: function() {
 		this.acidgroup = game.add.group();
@@ -310,6 +310,104 @@ State.Level2.prototype = {
 		this.timerEventRain[7]=game.time.events.loop(Phaser.Timer.SECOND*1.25, this.fallRain, this, 6600,0,7);
 		this.timerStartRain.stop();
 	},
+	checkOverlapCrabDrop: function (body1, body2) {
+		// body1 is the drop, body2 is the crab.
+		if (!this.touchingUp(body2)) {
+			console.log('Matou o Player!!!!');
+            this.restartGame();
+
+			return true;
+		}
+		return false;
+    },
+    checkCollisionUrchins: function(body1, body2) {
+        // body1 is the drop, body2 is the sea urchin.
+        this.restartGame();
+
+        return true;
+    },
+    checkOverlapWithLifeDrop: function (body1, body2) {
+        // body1 is the drop; body2 is the life drop.
+        if (!body2.hasCollided) {
+			if (body2.sprite.name == 'lifedrop') {
+				console.log('Player get the life drop!!!!');
+				//this.powUpSound.play();
+				this.hud.increaseDropBar();
+				body2.sprite.kill();
+				body2.hasCollided = true;
+				this.drop.playersize = 'big';
+			} else if (body2.sprite.name == 'energy') {
+				this.drinkEnergy(body1, body2);
+            }
+            return true;
+        }
+
+        return false;
+    },
+    drinkEnergy: function(body1, body2) {
+        console.log('Player get the energy drop!!!!');
+
+        this.drop.jump(1500);
+        //this.jumpSound.play();
+        //this.smokeEmitter.start(false, 3000, 50);
+        this.haveEnergy = true;
+        var self = this;
+        /*if (this.smokeTimer != null) {
+            clearTimeout(this.smokeTimer);
+            this.smokeTimer = null;
+        }
+        this.smokeTimer = setTimeout(function() {
+                self.stopSmoke();
+        }, 2000);*/
+        this.drop.playerstate = 'energy';
+    },
+    killDrop: function (body1, body2) {
+        if (this.dropIsInvincible) {
+            return;
+        }
+
+        this.countCall++;
+        if (this.countCall == 1 && !this.hotSandTimerActivated) {
+            console.log('moreeeeeeeeeeeeeeeeeu!!! killlDrop');
+            if (this.drop.playersize == 'big') {
+                this.hud.decreaseDropBar();
+                this.haveEnergy = true;
+                //this.smokeEmitter.on = true;
+                //this.smokeEmitter.start(false, 3000, 50);
+                var self = this;
+                if (this.hud.getDropCounter() == 0) {
+                    this.lastDropTimer = setTimeout(function(time) {
+                        self.hotSandTimerActivated = false;
+                        if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
+                                40, self.hotSandLayer)) {
+                            self.restartGame();
+                        }
+                        self.countCall = 0;
+                    }, 2000);
+                    this.drop.playersize = 'small';
+                    this.hotSandTimerActivated = true;
+                } else {
+                    this.decreaseDropTimer = setTimeout(function() {
+                        self.hotSandTimerActivated = false;
+                        self.countCall = 0;
+                        if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
+                                40, self.hotSandLayer)) {
+                            self.killDrop(body1, null);
+                        }
+                    }, 2000);
+                    this.hotSandTimerActivated = true;
+                }
+            } else if (this.drop.playersize == 'small') {
+                this.restartGame();
+            }
+        }
+        if (this.countCall == 2) {
+            this.countCall = 0;
+        }
+    },
+    restartGame: function () {
+		this.drop.kill();
+    },
 	touchingDown: function (someone) {
 		var yAxis = p2.vec2.fromValues(0, 1);
 		var result = false;

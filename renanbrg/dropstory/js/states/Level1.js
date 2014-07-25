@@ -675,9 +675,6 @@ State.Level1.prototype = {
 			}
 		}
 	},
-	crabKillDrop: function () {
-		this.drop.kill();
-	},
     insideStraw: function() {
         var dropSprite = this.drop.getSpriteObject();
         if (dropSprite.x < 2300) {
