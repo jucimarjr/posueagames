@@ -20,7 +20,6 @@ State.Level1 = function (game) {
     this.dropCollisionGroup = null;
     this.crabCollisionGroup = null;
     this.hud = new HUD(this.game);
-    this.forceSlidingStraw = false;
     this.onAir = false;
     this.hotSandTimerActivated = false;
     this.dropIsInvincible = false;
@@ -160,17 +159,12 @@ State.Level1.prototype = {
 		"use strict";
 
 		if ( this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
-	        if (this.forceSlidingStraw == true) {
-	            this.drop.moveLeft(1);
-	            this.drop.getSpriteObject().body.data.force[0] = -1;
-	        } else {
-				if (!this.onAir) {
-					this.drop.animestate = 'right';
-				} else {
-					this.drop.animestate = 'jumpright';
-				}
-				this.drop.moveRight(300);
-	        }
+            if (!this.onAir) {
+                this.drop.animestate = 'right';
+            } else {
+                this.drop.animestate = 'jumpright';
+            }
+            this.drop.moveRight(300);
 		} else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
 			if (!this.onAir) {
 				this.drop.animestate = 'left';
