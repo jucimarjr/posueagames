@@ -33,7 +33,7 @@
  </layer>
  <layer name="mainlayer2" width="192" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt1tsOQDAMgGHnw/u/sN5IBLFRW6f+L+nFwtKpblQVAABIqZZoJFqJzngtQG69xCAxSkwZ8sXst7fuwbnSaxdan/Z6Kmveq5wx++2te3BOU7scvRVan/b6XbHPvOalH22l7FFv505Mrbw9s3eW72vfT6GxNf7/saWt676fQuO/4f//qKQz0lNd8Q2ckcA9mm+E1dynObRj+KP5RljNfZpDOwaAr5gJ4sexABwvCu8=
+   eJzt19EKgzAMhWE33Zzv/8Lmpkx0mEiS6uz/QS5EW8oxYOw6AAAAIMdD6inVSw0nnwV18M6/XlJvqVHq49yr5LqXqSX7qGfwm/edZ2ev7e+9H32eouS6l6kl+6hnkCM7e21/7/0lS2/Ta/+Fb6Nd7d5m/sl39nyzXq9dt4T5Z+tq/eHNdr1eu0bb6A/ALno+qb0e8IieT2qv1xz9f7ja/Ah4HP1/YH68l4miGq4ZWPYK7w==
   </data>
  </layer>
  <objectgroup name="basic-shapes" width="192" height="15">
@@ -64,11 +64,12 @@
  </objectgroup>
  <objectgroup name="crab-objects" width="192" height="15">
   <object gid="10" x="676" y="560"/>
-  <object gid="10" x="5300" y="560"/>
-  <object gid="10" x="4919" y="559"/>
-  <object gid="10" x="6156" y="561"/>
-  <object gid="10" x="6523" y="557"/>
-  <object gid="10" x="6887" y="557"/>
+  <object gid="10" x="5500" y="560"/>
+  <object gid="10" x="4773" y="559"/>
+  <object gid="10" x="6180" y="557"/>
+  <object gid="10" x="6465" y="557"/>
+  <object gid="10" x="6943" y="561"/>
+  <object gid="10" x="5136" y="562"/>
  </objectgroup>
  <objectgroup name="bird" width="192" height="15">
   <object gid="74" x="690" y="206"/>
@@ -77,19 +78,21 @@
   <object x="4403" y="263" width="115" height="17"/>
  </objectgroup>
  <objectgroup name="seaurchins" width="192" height="15">
-  <object gid="72" x="3655" y="235"/>
-  <object gid="72" x="3704" y="233"/>
-  <object gid="72" x="3744" y="232"/>
-  <object gid="72" x="4783" y="288"/>
-  <object gid="72" x="4825" y="284"/>
-  <object gid="72" x="4865" y="279"/>
-  <object gid="72" x="5127" y="280"/>
-  <object gid="72" x="5181" y="279"/>
-  <object gid="72" x="5220" y="277"/>
-  <object gid="72" x="5497" y="280"/>
-  <object gid="72" x="5547" y="281"/>
-  <object gid="72" x="5588" y="277"/>
-  <object gid="72" x="6423" y="524"/>
-  <object gid="72" x="6785" y="520"/>
+  <object gid="72" x="3643" y="237"/>
+  <object gid="72" x="3696" y="239"/>
+  <object gid="72" x="3750" y="238"/>
+  <object gid="72" x="4765" y="292"/>
+  <object gid="72" x="4817" y="292"/>
+  <object gid="72" x="4871" y="293"/>
+  <object gid="72" x="5127" y="298"/>
+  <object gid="72" x="5179" y="297"/>
+  <object gid="72" x="5232" y="293"/>
+  <object gid="72" x="5487" y="300"/>
+  <object gid="72" x="5545" y="297"/>
+  <object gid="72" x="5600" y="293"/>
+  <object gid="72" x="6403" y="528"/>
+  <object gid="72" x="6761" y="530"/>
+  <object gid="72" x="6036" y="522"/>
+  <object gid="72" x="7124" y="526"/>
  </objectgroup>
 </map>
