@@ -17,7 +17,7 @@ State.GamePlay.prototype = {
 		fishX = 120;
 		frame = 0;
 		runY = 40;
-		lastY = -1;
+		lastY = null;
 
 
 		this.game.add.sprite(0, 0, 'bg');
@@ -29,8 +29,8 @@ State.GamePlay.prototype = {
 		this.player.anchor.setTo(.5, .5);
 
 		fishes = game.add.group();
-		fishes.createMultiple(10, 'fish2');
-		//this.addFishes();
+		//fishes.createMultiple(10, 'fish2');
+		this.addFishes();
 		/*this.fish2 = this.game.add.sprite(fishX, -60,'fish2');
 		this.game.physics.enable(this.fish2);
 		this.fish2.body.setSize(this.fish2.width, this.fish2.height-10, 0, 0);
@@ -39,10 +39,9 @@ State.GamePlay.prototype = {
 		cursors = this.game.input.keyboard.createCursorKeys();
 		this.ticou = false;
 	},
-	update: function () {		
+	update: function () {
 
-		this.addOneFish();
-		/*this.game.physics.arcade.overlap(this.player, this.fish2, this.ticar, null,this);*/
+		/*this.game.physics.arcade.overlap(this.player, this.fish2, this.ticar, null,this);*/		
 
 		if (cursors.left.isUp ) {
 			this.leftUp = true;
@@ -60,6 +59,7 @@ State.GamePlay.prototype = {
 			this.player.position.setTo(playerX,playerY);			
 			this.player.animations.play('ticar');			
 			ticou = true;
+			//this.addOneFish();
 		}
 		else if(cursors.right.isDown && this.rightUp){
 			//this.fish2.y+=runY;
@@ -71,8 +71,11 @@ State.GamePlay.prototype = {
 			this.player.animations.play('ticar');			
 			//this.game.physics.arcade.overlap(this.player, this.fish2, this.ticar, null,this);
 			ticou = true;
+			//this.addOneFish();
 		}
 
+		//this.renew();
+		
 		/*if(this.fish2.y >= Config.global.screen.height){
 			this.fish2.y = 0-this.fish2.height/2;
 			frame = 0;
@@ -81,43 +84,39 @@ State.GamePlay.prototype = {
 	},
 
 	run: function(){
-		fishes.forEachAlive(function (f){ 
-			f.y+=runY;
+		fishes.forEach(function (f){ 
+			f.y += runY;			
+			if(f.y < lastY){
+				lastY = f.y;
+			}
+		}, this);
+		fishes.forEach(function (f){
+			if( (f.y - (f.height/2)) >= Config.global.screen.height){
+				f.y = lastY + f.height + runY;
+				//frame = 0;
+				//f.frame = 0;
+			}
 		}, this);
 	},
 
-	addFishes: function(){
+	renew: function(){
 		
-		/*for(var i=0;i<5;i++){			
-			var fish = this.game.add.sprite(fishX, -this.fish2.height/2,'fish2');
-			this.game.physics.enable(fish);
-			this.fish2.body.setSize(this.fish2.width, this.fish2.height-10, 0, 0);
-			this.fish2.anchor.setTo(.5, .5);			
-			fish.kill();
-		}*/
-		fishes.createMultiple(10, 'fish2'); 
 	},
 
-	addOneFish: function(){
-		var fish = fishes.getFirstDead();		
-		//fish.revive();
-		this.game.physics.enable(fish);
-		fish.body.setSize(fish.width, fish.height-10, 0, 0);
-		fish.anchor.setTo(.5, .5);
-
-		if(lastY<=0)
-			lastY = playerY-(this.player.height+fish.height)/2;
-		else
-			lastY -= fish2.height/2;
-		fish.reset(fishX, lastY);
-		//fish.checkWorldBounds = true;
-		fish.outOfBoundsKill = true;
-		 /*var fish = fishes.getFirstDead();
-		 if (fish === null || fish === undefined) return;
-		 fish.revive();
-		 fish.checkWorldBounds = true;
-		 fish.outOfBoundsKill = true;
-		 fish.reset(fishX, -fish.height/2);*/
+	addFishes: function(){
+		for(var i=0;i<6;i++){
+			var fish = this.game.add.sprite(-200, 200,'fish2');
+			this.game.physics.enable(fish);
+			fish.body.setSize(fish.width, fish.height-10, 0, 0);
+			fish.anchor.setTo(.5, .5);
+			if(lastY==null)
+				lastY = playerY-(this.player.height+fish.height)/2;
+			else
+				lastY -= fish.height;
+			fish.reset(fishX, lastY);
+			fishes.add(fish);
+		}
+		lastY = 1000;
 	},
 
 	ticar: function(){
@@ -147,9 +146,9 @@ State.GamePlay.prototype = {
     	game.debug.body(this.player);
     	//game.debug.body(this.fish2);
     	
-    	/*fishes.forEach(function (f){ 
+    	fishes.forEach(function (f){ 
 			game.debug.body(f);
-		}, this);*/
+		}, this);
 
 		/*this.waters.forEach(function (w){ 
 			game.debug.body(w);
