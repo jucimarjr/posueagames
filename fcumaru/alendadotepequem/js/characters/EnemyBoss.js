@@ -49,7 +49,7 @@ function EnemyBoss(game) {
 		this.fireballs.create();
 
 		// Throw fire ball event
-		this.game.time.events.loop(Phaser.Timer.SECOND * 5, function() {
+		/*this.game.time.events.loop(Phaser.Timer.SECOND * 5, function() {
 			"use strict";
 
 			this.currAnimRef = this.enemy.animations.play('fire');
@@ -63,7 +63,7 @@ function EnemyBoss(game) {
 			var y = this.enemy.body.y + 60;
 
 			this.fireballs.pop(x, y, this.direction);
-		}, this);
+		}, this);*/
 	};
 
 	that.update = function(layer, heroes) {
