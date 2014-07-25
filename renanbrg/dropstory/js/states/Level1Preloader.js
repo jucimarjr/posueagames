@@ -24,6 +24,7 @@ State.Level1Preloader.prototype = {
 
         this.game.load.image('gameplay-bg',
                 'assets/images/backgroundlevel1_4800-600.png');
+        this.game.load.image('pausesplash', Config.pause.dir);
 
         this.game.load.tilemap('map', 'assets/level1_4800-600.json', null,
                 Phaser.Tilemap.TILED_JSON);

@@ -32,6 +32,7 @@ State.Level1 = function (game) {
     this.updateRate = 0;
 
     this.jumpKey = null;
+    this.pauseKey = null;
 };
 State.Level1.prototype = {
 	preload: function () {
@@ -51,10 +52,14 @@ State.Level1.prototype = {
 	create: function () {
 		"use strict";
 
-        this.game.onResume.add(this.setupControl, this);
+        this.game.onPause.add(this.pauseGame, this);
+        this.game.onResume.add(this.resumeGame, this);
 
         this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.jumpKey.onDown.add(this.jumpPlayer, this);
+
+        this.pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        this.pauseKey.onDown.add(this.startPauseGameEvent, this);
 
 		var background;
 		background = this.game.add.tileSprite(0, 0, 4480, 544, 'gameplay-bg');
@@ -101,7 +106,6 @@ State.Level1.prototype = {
 
         this.hud.create();
 
-
         // Sounds
         this.jumpSound = this.game.add.audio("jump");
         this.mainSound = this.game.add.audio("main");
@@ -113,6 +117,7 @@ State.Level1.prototype = {
 	update: function () {
 		"use strict";
 		this.hud.updateFPS();
+
 		this.handleKeyDown();
 		this.isOnAir();
 		this.drop.playerAnimations();
@@ -144,13 +149,25 @@ State.Level1.prototype = {
             }
 	    }
 	},
-    setupControl: function() {
+    pauseGame: function() {
+        this.hud.showPauseImage();
+    },
+    resumeGame: function() {
         "use strict";
 
         this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.jumpKey.onDown.add(this.jumpPlayer, this);
+
+        this.pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        this.pauseKey.onDown.add(this.startPauseGameEvent, this);
+
+        this.hud.hidePauseImage();
     },
     jumpPlayer: function() {
+        if (this.game.paused == true) {
+            return;
+        }
+
         if (this.touchingDown(this.drop.getSpriteObject().body)) {
             if (this.energyState == false) {
                 this.drop.jump(700);
@@ -162,15 +179,33 @@ State.Level1.prototype = {
                 this.haveEnergy = true;
                 var self = this;
                 if (this.smokeTimer != null) {
-                    clearTimeout(this.smokeTimer);
-                    this.smokeTimer = null;
+                    this.smokeTimer.stop();
                 }
-                this.smokeTimer = setTimeout(function() {
+                this.smokeTimer = this.game.time.create();
+                this.smokeTimer.add(2000, function() {
                         self.stopSmoke();
                 }, 2000);
+                this.smokeTimer.start();
                 this.energyState = false;
                 this.drop.playerstate = 'normal';
             }
+        }
+    },
+    startPauseGameEvent: function() {
+        this.game.paused = !this.game.paused;
+    },
+    clearTimers: function() {
+        if (this.lastDropTimer != null) {
+            this.lastDropTimer.destroy();
+        }
+        if (this.disableSundropTimer != null) {
+            this.disableSundropTimer.destroy();
+        }
+        if (this.decreaseDropTimer != null) {
+            this.decreaseDropTimer.destroy();
+        }
+        if (this.smokeTimer != null) {
+            this.smokeTimer.destroy();
         }
     },
 	handleKeyDown: function () {
@@ -605,7 +640,8 @@ State.Level1.prototype = {
         body2.hasCollided = true;
         this.dropIsInvincible = true;
         var self = this;
-        this.disableSundropTimer = setTimeout(function() {
+        this.disableSundropTimer = this.game.time.create();
+        this.disableSundropTimer.add(5500, function() {
             self.dropIsInvincible = false;
             self.drop.playerstate = 'normal';
             // Check if the player is over the hot sand
@@ -614,7 +650,8 @@ State.Level1.prototype = {
                 self.countCall = 0;
                 self.killDrop(body1, null);
             }
-        }, 5500);
+        }, this);
+        this.disableSundropTimer.start();
 	},
 	killDrop: function (body1, body2) {
         if (this.dropIsInvincible) {
@@ -631,25 +668,29 @@ State.Level1.prototype = {
                 this.smokeEmitter.start(false, 3000, 50);
                 var self = this;
                 if (this.hud.getDropCounter() == 0) {
-                    this.lastDropTimer = setTimeout(function(time) {
+                    this.lastDropTimer = this.game.time.create();
+                    this.lastDropTimer.add(2000, function() {
                         self.hotSandTimerActivated = false;
                         if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
                                 40, self.hotSandLayer)) {
                             self.restartGame();
                         }
                         self.countCall = 0;
-                    }, 2000);
+                    }, this);
+                    this.lastDropTimer.start();
                     this.drop.playersize = 'small';
                     this.hotSandTimerActivated = true;
                 } else {
-                    this.decreaseDropTimer = setTimeout(function() {
+                    this.decreaseDropTimer = this.game.time.create();
+                    this.decreaseDropTimer.add(2000, function() {
                         self.hotSandTimerActivated = false;
                         self.countCall = 0;
                         if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
                                 40, self.hotSandLayer)) {
                             self.killDrop(body1, null);
                         }
-                    }, 2000);
+                    }, this);
+                    this.decreaseDropTimer.start();
                     this.hotSandTimerActivated = true;
                 }
             } else if (this.drop.playersize == 'small') {
@@ -663,7 +704,7 @@ State.Level1.prototype = {
 	stopSmoke: function() {
 		this.haveEnergy = false;
 		this.smokeEmitter.on = false;
-		this.smokeTimer = null;
+		this.smokeTimer.destroy();
 	},
 	moveCrab: function (crab) {
 		if (crab.name == "crab1") {
@@ -730,9 +771,7 @@ State.Level1.prototype = {
 		this.game.state.start('credits-state');
 	},
     restartGame: function () {
-        clearTimeout(this.lastDropTimer);
-        clearTimeout(this.decreaseDropTimer);
-        clearTimeout(this.disableSundropTimer);
+    	this.clearTimers();
         this.countCall = 0;
         this.hotSandTimerActivated = false;
         this.drop.kill();

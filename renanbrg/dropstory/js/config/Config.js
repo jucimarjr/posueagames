@@ -125,6 +125,13 @@ Config.gameOver = {
 };
 
 //Preloader image of the Level 1
+Config.pause = {
+    dir: 'assets/images/pausesplash_320-320.png',
+    x: (Config.global.screen.width / 2) - 160,
+    y: (Config.global.screen.height / 2) - 160
+};
+
+//Preloader image of the Level 1
 Config.preloaderLevel1 = {
     dir: 'assets/images/level1preloaderbg_960-600.png',
     x: 0,

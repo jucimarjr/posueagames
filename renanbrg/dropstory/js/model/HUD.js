@@ -20,6 +20,7 @@ HUD = function(game) {
     this.lifeLabel = null;
     this.lifeCounter = 3;
     this.dropCounter = 0;
+    this.pauseSprite = null;
 };
 
 HUD.prototype = {
@@ -75,6 +76,12 @@ HUD.prototype = {
         this.dropAttemps.animations.add('attempt0', [0], 10, false);
         this.dropAttemps.fixedToCamera = true;
 
+        this.pauseSprite = this.game.add.sprite(this.game.width / 2,
+                this.game.height / 2, 'pausesplash');
+        this.pauseSprite.fixedToCamera = true;
+        this.pauseSprite.anchor.setTo(0.5, 0.5);
+        this.pauseSprite.visible = false;
+
         this.game.time.advancedTiming = true;
         var styleFPS = {font: '16px Arial', fill: '#ffffff'};
         this.fpsText = this.game.add.text(this.game.camera.width / 2, 10, '',
@@ -111,5 +118,11 @@ HUD.prototype = {
         if (this.game.time.fps !== 0) {
             this.fpsText.setText('FPS: ' + this.game.time.fps);
         }
+    },
+    showPauseImage: function() {
+        this.pauseSprite.visible = true;
+    },
+    hidePauseImage: function() {
+        this.pauseSprite.visible = false;
     }
 };
