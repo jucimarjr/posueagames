@@ -91,6 +91,7 @@ Rocks.prototype = {
 		this.pop(2520, 2280);
 		this.pop(3840, 1920);
 		this.pop(660, 540);
+		this.pop(3500, 1680);
 	},
 	update : function(layer) {
 		"use strict";
