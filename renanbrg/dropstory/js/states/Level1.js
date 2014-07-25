@@ -30,6 +30,8 @@ State.Level1 = function (game) {
 
     this.countCall = 0; //count how many times the collision function is called.
     this.updateRate = 0;
+
+    this.jumpKey = null;
 };
 State.Level1.prototype = {
 	preload: function () {
@@ -48,6 +50,11 @@ State.Level1.prototype = {
 	},
 	create: function () {
 		"use strict";
+
+        this.game.onResume.add(this.setupControl, this);
+
+        this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.jumpKey.onDown.add(this.jumpPlayer, this);
 
 		var background;
 		background = this.game.add.tileSprite(0, 0, 4480, 544, 'gameplay-bg');
@@ -137,6 +144,18 @@ State.Level1.prototype = {
             }
 	    }
 	},
+    setupControl: function() {
+        "use strict";
+
+        this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.jumpKey.onDown.add(this.jumpPlayer, this);
+    },
+    jumpPlayer: function() {
+        if (this.touchingDown(this.drop.getSpriteObject().body)) {
+            this.drop.jump(700);
+            this.jumpSound.play();
+        }
+    },
 	handleKeyDown: function () {
 		"use strict";
 
@@ -152,7 +171,7 @@ State.Level1.prototype = {
 				}
 				this.drop.moveRight(300);
 	        }
-	    } else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
+		} else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
 			if (!this.onAir) {
 				this.drop.animestate = 'left';
 			} else {
@@ -162,13 +181,6 @@ State.Level1.prototype = {
 		}  else {
 			this.drop.stop();
 			this.drop.animestate = 'stop';
-		}
-
-		if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) {
-			if (this.touchingDown(this.drop.getSpriteObject().body)) {
-				this.drop.jump(700);
-				this.jumpSound.play();
-			}
 		}
 	},
 	setupPhysics: function () {
