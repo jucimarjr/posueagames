@@ -8,7 +8,7 @@ State.Phase2.prototype = {
     },
     create : function() {
         Phase2.World.createBackground();
-        this.player.create(150, 808);
+        this.player.create(450, 808);
         this.player.player.body.mass = 100;
         Phase2.World.createForeground();
 

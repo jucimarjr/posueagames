@@ -7,7 +7,7 @@
  </layer>
  <objectgroup name="ground" width="500" height="36">
   <object x="0" y="900">
-   <polygon points="0,0 15000,0 15000,180 0,180"/>
+   <polygon points="0,9 15000,9 15000,180 0,180"/>
   </object>
  </objectgroup>
 </map>
