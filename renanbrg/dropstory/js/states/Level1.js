@@ -23,6 +23,7 @@ State.Level1 = function (game) {
     this.onAir = false;
     this.hotSandTimerActivated = false;
     this.dropIsInvincible = false;
+    this.energyState = false;
     this.lastDropTimer = null;
     this.decreaseDropTimer = null;
     this.disableSundropTimer = null;
@@ -151,8 +152,25 @@ State.Level1.prototype = {
     },
     jumpPlayer: function() {
         if (this.touchingDown(this.drop.getSpriteObject().body)) {
-            this.drop.jump(700);
-            this.jumpSound.play();
+            if (this.energyState == false) {
+                this.drop.jump(700);
+                this.jumpSound.play();
+            } else {
+                this.drop.jump(1500);
+                this.jumpSound.play();
+                this.smokeEmitter.start(false, 3000, 50);
+                this.haveEnergy = true;
+                var self = this;
+                if (this.smokeTimer != null) {
+                    clearTimeout(this.smokeTimer);
+                    this.smokeTimer = null;
+                }
+                this.smokeTimer = setTimeout(function() {
+                        self.stopSmoke();
+                }, 2000);
+                this.energyState = false;
+                this.drop.playerstate = 'normal';
+            }
         }
     },
 	handleKeyDown: function () {
@@ -402,7 +420,7 @@ State.Level1.prototype = {
         this.molecule.physicsBodyType = Phaser.Physics.P2JS;
 
         this.molecule.create(200, 310, 'lifedrop');
-        this.molecule.create(1750, this.game.world.height-210, 'energy');
+        this.molecule.create(1700, this.game.world.height-210, 'energy');
         this.molecule.create(2920, this.game.world.height - 160, 'sundrop');
 
         for (var i = 0; i < this.molecule.length; i++) {
@@ -576,18 +594,7 @@ State.Level1.prototype = {
     drinkEnergy: function(body1, body2) {
         console.log('Player get the energy drop!!!!');
 
-        this.drop.jump(1500);
-        this.jumpSound.play();
-        this.smokeEmitter.start(false, 3000, 50);
-        this.haveEnergy = true;
-        var self = this;
-        if (this.smokeTimer != null) {
-            clearTimeout(this.smokeTimer);
-            this.smokeTimer = null;
-        }
-        this.smokeTimer = setTimeout(function() {
-                self.stopSmoke();
-        }, 2000);
+        this.energyState = true;
         this.drop.playerstate = 'energy';
     },
     hitSunscreenDrop: function (body1, body2) {
@@ -657,7 +664,6 @@ State.Level1.prototype = {
 		this.haveEnergy = false;
 		this.smokeEmitter.on = false;
 		this.smokeTimer = null;
-		this.drop.playerstate = 'normal';
 	},
 	moveCrab: function (crab) {
 		if (crab.name == "crab1") {
