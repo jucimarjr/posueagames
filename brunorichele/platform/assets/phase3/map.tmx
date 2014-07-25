@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="267" height="36" tilewidth="30" tileheight="30">
+ <layer name="map" width="267" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T+3sARQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN5YwAAE=
+  </data>
+ </layer>
+ <objectgroup name="ground" width="267" height="36">
+  <object x="0" y="930">
+   <polygon points="0,0 0,150 8010,150 8010,0"/>
+  </object>
+  <object x="0" y="660">
+   <polygon points="0,0 0,60 8010,60 8010,0"/>
+  </object>
+  <object x="0" y="390">
+   <polygon points="0,0 0,60 8010,60 8010,0"/>
+  </object>
+ </objectgroup>
+</map>

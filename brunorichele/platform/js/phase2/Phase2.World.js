@@ -4,7 +4,7 @@ Phase2.World = {
     background : null,
     foreground : null,
     floor : null,
-    init : function () {
+    init : function() {
         this.game.load.image('bg1fase2', 'assets/phase2/map/bg1fase2_15000-1080.jpg');
         this.game.load.image('bg2fase2', 'assets/phase2/map/bg2fase2_15000-1080.png');
         this.game.load.image('floorfase2', 'assets/phase2/map/floorfase2_1500-172.jpg');
