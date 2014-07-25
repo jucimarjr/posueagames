@@ -25,4 +25,15 @@
   <object gid="2" x="1320" y="900"/>
   <object gid="2" x="1440" y="900"/>
  </objectgroup>
+ <objectgroup name="objects" width="500" height="36">
+  <object gid="3" x="1500" y="1080"/>
+  <object gid="3" x="3000" y="1080"/>
+  <object gid="3" x="4500" y="1080"/>
+  <object gid="3" x="6000" y="1080"/>
+  <object gid="3" x="7500" y="1080"/>
+  <object gid="3" x="9000" y="1080"/>
+  <object gid="3" x="10500" y="1080"/>
+  <object gid="3" x="12000" y="1080"/>
+  <object gid="3" x="13500" y="1080"/>
+ </objectgroup>
 </map>

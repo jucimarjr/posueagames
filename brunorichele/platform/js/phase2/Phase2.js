@@ -11,6 +11,7 @@ State.Phase2.prototype = {
         Phase2.World.createBackground();
         this.player.create(450, 808);
         this.player.player.body.mass = 100;
+        Phase2.World.createObjects();
         Phase2.Enemy.createEnemy(Phase2.World.mymap);
         Phase2.World.createForeground();
 
