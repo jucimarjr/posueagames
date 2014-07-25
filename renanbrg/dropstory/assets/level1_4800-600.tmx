@@ -98,11 +98,11 @@
   <object x="2880" y="506">
    <polyline points="0,0 0,-52 8,-57 144,-56 274,-46 280,-31 279,-15 276,-1 7,11 -1,0"/>
   </object>
-  <object x="3984" y="263">
-   <polyline points="0,0 -5,0 11,257"/>
+  <object x="4138" y="262">
+   <polyline points="0,0 -17,258 -26,258 -9,1 -1,1"/>
   </object>
-  <object x="4120" y="520">
-   <polyline points="0,0 19,-256 16,-256"/>
+  <object x="3980" y="261">
+   <polyline points="0,0 16,258 25,258 9,0 0,-1"/>
   </object>
  </objectgroup>
  <objectgroup name="horizontalstraw" width="120" height="15">
