@@ -59,6 +59,8 @@ GameSplash.prototype = {
 
 	    Phase2.World.game = this.game;
 	    Phase2.World.init();
+	    Phase2.Enemy.game = this.game;
+        Phase2.Enemy.init();
 
 	    Phase3.World.game = this.game;
         Phase3.World.init();

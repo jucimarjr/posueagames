@@ -51,6 +51,157 @@
          "width":500,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":36,
+         "name":"enemy",
+         "objects":[
+                {
+                 "gid":1,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":360,
+                 "y":870
+                }, 
+                {
+                 "gid":1,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":480,
+                 "y":840
+                }, 
+                {
+                 "gid":1,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":600,
+                 "y":870
+                }, 
+                {
+                 "gid":1,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":720,
+                 "y":840
+                }, 
+                {
+                 "gid":1,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":840,
+                 "y":870
+                }, 
+                {
+                 "gid":1,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":960,
+                 "y":840
+                }, 
+                {
+                 "gid":2,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1080,
+                 "y":900
+                }, 
+                {
+                 "gid":2,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1200,
+                 "y":900
+                }, 
+                {
+                 "gid":2,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1320,
+                 "y":900
+                }, 
+                {
+                 "gid":2,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1440,
+                 "y":900
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":500,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":
@@ -58,7 +209,22 @@
 
     },
  "tileheight":30,
- "tilesets":[],
+ "tilesets":[
+        {
+         "firstgid":1,
+         "image":"..\/enemies.png",
+         "imageheight":30,
+         "imagewidth":90,
+         "margin":0,
+         "name":"enemies",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":30,
+         "tilewidth":30
+        }],
  "tilewidth":30,
  "version":1,
  "width":500
