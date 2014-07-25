@@ -10,9 +10,9 @@ State.Phase3.prototype = {
         Phase3.World.createBackground();
         this.player.create(500, 750);
         this.player.player.body.mass = 100;
-        //Phase3.World.createForeground();
+        Phase3.World.createForeground();
 
-        Phase3.World.collision(this.player.player);
+        Phase3.World.collision();
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.control = new Control(this.game, this.player, this.cursors);

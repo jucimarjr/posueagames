@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="500" height="36" tilewidth="30" tileheight="30">
+ <layer name="map" width="500" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1vBqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACANxlPAAE=
+  </data>
+ </layer>
+ <objectgroup name="ground" width="500" height="36">
+  <object x="0" y="900">
+   <polygon points="0,0 15000,0 15000,180 0,180"/>
+  </object>
+ </objectgroup>
+</map>

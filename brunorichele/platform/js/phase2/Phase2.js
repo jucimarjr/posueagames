@@ -8,11 +8,11 @@ State.Phase2.prototype = {
     },
     create : function() {
         Phase2.World.createBackground();
-        this.player.create(150, 870);
+        this.player.create(150, 808);
         this.player.player.body.mass = 100;
         Phase2.World.createForeground();
 
-        Phase2.World.collision(this.player.player);
+        Phase2.World.collision();
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.control = new Control(this.game, this.player, this.cursors);
