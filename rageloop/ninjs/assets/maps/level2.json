@@ -55,7 +55,7 @@
          "firstgid":1,
          "image":"..\/sprites\/tileset.png",
          "imageheight":40,
-         "imagewidth":400,
+         "imagewidth":440,
          "margin":0,
          "name":"background",
          "properties":

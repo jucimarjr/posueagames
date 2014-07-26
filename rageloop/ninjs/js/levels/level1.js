@@ -47,10 +47,10 @@
     };
 
     Level1.prototype.openEscape = function () {
-        this.map.putTile(4, 239, 1, this.escapeLayer);
-        this.map.putTile(4, 239, 2, this.escapeLayer);
-        this.map.putTile(4, 239, 3, this.escapeLayer);
-        this.map.putTile(4, 239, 4, this.escapeLayer);
+        this.map.putTile(11, 239, 1, this.escapeLayer);
+        this.map.putTile(11, 239, 2, this.escapeLayer);
+        this.map.putTile(11, 239, 3, this.escapeLayer);
+        this.map.putTile(11, 239, 4, this.escapeLayer);
     };
 
     app_container.Level1 = Level1;
