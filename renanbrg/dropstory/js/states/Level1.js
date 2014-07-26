@@ -113,6 +113,8 @@ State.Level1.prototype = {
        // this.inicioSound.stop();
         this.mainSound.loop = true;
         this.mainSound.play();
+
+        this.countCall = 0;
 	},
 	update: function () {
 		"use strict";
@@ -772,7 +774,6 @@ State.Level1.prototype = {
 	},
     restartGame: function () {
     	this.clearTimers();
-        this.countCall = 0;
         this.hotSandTimerActivated = false;
         this.drop.kill();
         this.hud.decreaseLife();
