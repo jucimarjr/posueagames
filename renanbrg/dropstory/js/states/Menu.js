@@ -35,6 +35,8 @@ State.Menu.prototype = {
         if (this.inicioSound == null) {
             this.inicioSound = this.game.add.audio('som-inicio');
             this.inicioSound.loop = true;
+        }
+        if (!this.inicioSound.isPlaying) {
             this.inicioSound.play();
         }
     },
