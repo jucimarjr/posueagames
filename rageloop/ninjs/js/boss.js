@@ -56,6 +56,8 @@
 
             this.shurikenAudio = this.game.add.audio('shuriken_sound');
             this.shurikenAudio.volume = 0.6;
+            this.shurikenAudio.addMarker('throw', 0, 0.5);
+            this.shurikenAudio.addMarker('hit', 0.5, 0.5);
 
             // special effects
             this.effects = this.game.add.sprite(x, y, 'boss_effects');
@@ -151,6 +153,7 @@
         die: function() {
 
             this.lifes--;
+            this.shurikenAudio.play('hit');
 
             if (this.lifes > 0) {
 
@@ -184,7 +187,7 @@
             shuriken.checkWorldBounds = true;
             shuriken.outOfBoundsKill = true;
 
-            this.shurikenAudio.play();
+            this.shurikenAudio.play('throw');
 
             this.sprite.animations.play('shuriken');
 

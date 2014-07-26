@@ -206,6 +206,7 @@
             }
 
             this.player.die();
+            this.player.shurikenAudio.play('hit');
 
             this.hud.updateLifes(-1);
 
@@ -226,6 +227,7 @@
             shuriken.kill();
             enemy.kill();
             this.hud.updateScore(1);
+            this.player.shurikenAudio.play('hit');
         },
 
         killBoss: function (boss, shuriken) {
@@ -240,6 +242,7 @@
 
         shurikenCollision: function (shuriken, layer) {
             shuriken.kill();
+            this.player.shurikenAudio.play('hit');
         }
     };
 

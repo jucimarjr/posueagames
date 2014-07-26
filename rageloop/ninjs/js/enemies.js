@@ -24,6 +24,9 @@
 
             this.shurikenAudio = this.game.add.audio('shuriken_sound');
             this.shurikenAudio.volume = 0.6;
+
+            this.shurikenAudio.addMarker('throw', 0, 0.5);
+            this.shurikenAudio.addMarker('hit', 0.5, 0.5);
         },
 
         update: function() {
@@ -110,7 +113,7 @@
             shuriken.checkWorldBounds = true;
             shuriken.outOfBoundsKill = true;
 
-            this.shurikenAudio.play();
+            this.shurikenAudio.play('throw');
 
             return true;
         }
