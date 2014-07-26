@@ -6,14 +6,14 @@
   </data>
  </layer>
  <objectgroup name="ground" width="267" height="36">
-  <object x="0" y="930">
-   <polygon points="0,-21 0,150 8010,150 8012,-21"/>
+  <object x="0" y="900">
+   <polygon points="0,9 7362,9 7650,-242 8010,-242 8010,30 0,30"/>
   </object>
-  <object x="0" y="660">
-   <polygon points="-2,-4 0,68 8009,68 8010,-4"/>
+  <object x="0" y="720">
+   <polygon points="0,8 7349,8 7349,-64 630,-64 336,-317 0,-317"/>
   </object>
-  <object x="0" y="390">
-   <polygon points="1,12 0,90 8010,90 8010,12"/>
+  <object x="660" y="390">
+   <polygon points="0,10 0,86 7350,86 7350,10"/>
   </object>
  </objectgroup>
 </map>
