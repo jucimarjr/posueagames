@@ -17,6 +17,8 @@ Game.GameState = function () {
 
 	this.hearts = [];
 	this.heartBeatController;
+	
+	this.playerClone;
 
     this.hud;
     this.loadedLevel;
@@ -48,6 +50,12 @@ Game.GameState.prototype = {
 		this.createPlayer();
         this.createHearts();
 		this.createPlayerLight();
+
+		if (Game.GameState.currentLevel == Game.GameState.levels.length - 1)
+			this.createPlayerClone();
+		else
+			this.playerClone = null;
+
 		this.createHeartBeatController();
 		this.playerLightRadius = 0;
 		this.playerLightAlpha = 0.0;
@@ -65,7 +73,7 @@ Game.GameState.prototype = {
                                 self.onFadeOutScreenAnimationCompleted();
 							});
     },
-	
+
 	onFadeOutScreenAnimationCompleted: function () {
 		var self = this;
 		var pauseTween = this.game.add.tween(this);
@@ -94,7 +102,7 @@ Game.GameState.prototype = {
 
     createTileMap: function () {
         this.loadedLevel = Game.GameState.levels[Game.GameState.currentLevel];
-        console.log('loadedLevel: ' + this.loadedLevel.name);
+        console.log('loaded level: ' + this.loadedLevel.name);
         this.map = this.game.add.tilemap(this.loadedLevel.name);
         
         this.map.addTilesetImage('walls_tileset');
@@ -123,6 +131,11 @@ Game.GameState.prototype = {
         this.game.camera.follow(this.player.sprite, 0);
         this.playerHasKey = false;
     },
+    
+    createPlayerClone: function () {
+    	this.playerClone = new Game.PlayerCloneController(this);
+        this.playerClone.create();
+    },
 	
 	createHearts: function () {		
         var waypoints = this.map.collision.collision;
@@ -133,7 +146,7 @@ Game.GameState.prototype = {
             this.hearts.push(heart);
         };
 	},
-	
+
 	createHeartBeatController: function () {
 		this.heartBeatController = new Game.HeartBeatController(this.game, this.player.sprite);
 		this.heartBeatController.setHearts(this.hearts);
@@ -198,6 +211,8 @@ Game.GameState.prototype = {
         this.game.physics.arcade.collide(this.gateGroup, this.player.sprite, this.collideWithGate, null, this);
         
         this.player.update();
+        if (this.playerClone)
+        	this.playerClone.update();
 		
 		var hearts = this.hearts;
 		var heartsLength = hearts.length;
@@ -311,7 +326,18 @@ Game.GameState.prototype = {
         
         this.playerHasKey = true;
         keySprite.onCollected(playerSprite);
-        this.hud.showKeyIcon();
+        
+        if (this.playerClone) {
+        	this.stageComplete = true;
+            this.player.stopAndBlockInput();
+            this.player.destroyBody();
+			for (var i = 0; i < this.hearts.length; i++) {
+				this.hearts[i].setEnabled(false);
+			}
+			this.onStageComplete();
+        } else {
+        	this.hud.showKeyIcon();
+        }
     },
 
     collideWithGate: function (playerSprite, gateSprite) {
