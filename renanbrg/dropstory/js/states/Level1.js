@@ -14,16 +14,16 @@ State.Level1 = function (game) {
     this.hotsandMaterial = null;
     this.energy = null;
     this.smokeEmitter = null;
-    this.haveEnergy = false;
+    this.haveEnergy;
     this.smokeTimer = null;
     this.redSand = null;
     this.dropCollisionGroup = null;
     this.crabCollisionGroup = null;
     this.hud = new HUD(this.game);
-    this.onAir = false;
-    this.hotSandTimerActivated = false;
-    this.dropIsInvincible = false;
-    this.energyState = false;
+    this.onAir;
+    this.hotSandTimerActivated;
+    this.dropIsInvincible;
+    this.energyState;
     this.lastDropTimer = null;
     this.decreaseDropTimer = null;
     this.disableSundropTimer = null;
@@ -51,6 +51,12 @@ State.Level1.prototype = {
 	},
 	create: function () {
 		"use strict";
+
+        this.haveEnergy = false;
+        this.onAir = false;
+        this.hotSandTimerActivated = false;
+        this.dropIsInvincible = false;
+        this.energyState = false;
 
         this.game.onPause.add(this.pauseGame, this);
         this.game.onResume.add(this.resumeGame, this);
