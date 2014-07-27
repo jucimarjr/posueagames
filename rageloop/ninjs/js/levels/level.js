@@ -84,9 +84,8 @@
             }
 
             this.audio = this.game.add.audio(this.audioAsset);
-            this.audio.volume = 0.8;
-            this.audio.loop = true;
-            this.audio.play();
+            this.audio.addMarker('bg', 0, 67.3, 0.8, true);
+            this.audio.play('bg');
 
             this.hud = new HUD(this.game);
             this.hud.init(this.totalItems, (this.boss) ? this.boss.lifes : -1);
