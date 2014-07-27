@@ -9,6 +9,7 @@
         this.shurikenDelay = 400;
         this.shurikenAudio = null;
         this.dead = false;
+        this.bloodParticles = null;
     }
 
     Player.prototype = {
@@ -151,7 +152,10 @@
 
         revive: function() {
             this.dead = false;
-            this.sprite.animations.play('idle');
+
+            if (this.sprite) {
+                this.sprite.animations.play('idle');
+            }
         },
 
         turnLeft: function() {
@@ -164,6 +168,19 @@
             if (this.sprite.scale.x < 0) {
                 this.sprite.scale.x *= -1;
             }
+        },
+
+        destroy: function () {
+            this.sprite.destroy();
+            this.shurikens.destroy();
+
+            if (this.bloodParticles) {
+                this.bloodParticles.destroy();
+            }
+
+            this.sprite = null;
+            this.shurikens = null;
+            this.bloodParticles = null;
         }
     };
 

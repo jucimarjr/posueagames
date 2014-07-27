@@ -116,6 +116,14 @@
             this.shurikenAudio.play('throw');
 
             return true;
+        },
+
+        destroy: function () {
+            this.sprites.destroy();
+            this.shurikens.destroy();
+
+            this.sprites = null;
+            this.shurikens = null;
         }
     };
 

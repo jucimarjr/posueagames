@@ -160,11 +160,24 @@
             this.spineLayer.destroy();
             this.escapeLayer.destroy();
 
-            this.player.sprite.destroy();
+            this.player.destroy();
+            this.enemies.destroy();
 
-            this.enemies.sprites.destroy();
+            if (this.boss) {
+                this.boss.destroy();
+            }
 
             this.audio.stop();
+
+            this.bg = null;
+            this.map = null;
+            this.layer = null;
+            this.itemLayer = null;
+            this.spineLayer = null;
+            this.escapeLayer = null;
+            this.player = null;
+            this.enemies = null;
+            this.boss = null;
         },
 
         collectItem: function (player, tile) {
@@ -217,7 +230,9 @@
             
             } else {
                 setTimeout(function(){
-                    self.player.revive();
+                    if (self.player) {
+                        self.player.revive();
+                    }
                 }, 1200);
             }
         },

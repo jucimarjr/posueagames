@@ -21,7 +21,11 @@
             5: {x:40*2, y:40*12},
             6: {x:40*22, y:40*12},
             7: {x:40*10, y:40*12},
-        }
+        };
+        this.effects = null;
+        this.shuriken_anim = null;
+        this.emerging_anim = null;
+        this.disappearing_anim = null;
     }
 
     Boss.prototype = {
@@ -41,9 +45,10 @@
 
             this.sprite.animations.add('idle', [112, 113, 114, 115], 4, true);
             this.sprite.animations.add('death', [178, 179, 180, 181, 182, 183], 8, false);
-            var shuriken_anim = this.sprite.animations.add('shuriken', [161, 162, 163], 16, false);
 
-            shuriken_anim.onComplete.add(function() {
+            this.shuriken_anim = this.sprite.animations.add('shuriken', [161, 162, 163], 16, false);
+
+            this.shuriken_anim.onComplete.add(function() {
                 this.sprite.animations.play('idle');
             }, this);
 
@@ -63,10 +68,10 @@
             this.effects = this.game.add.sprite(x, y, 'boss_effects');
             this.effects.anchor.setTo(0.5, 0.5);
 
-            var emerging_anim = this.effects.animations.add('emerging', [0, 1, 2, 3], 10, false, true);
-            var disappearing_anim = this.effects.animations.add('disappearing', [9, 10, 11, 12, 13, 14], 10, false, true);
+            this.emerging_anim = this.effects.animations.add('emerging', [0, 1, 2, 3], 10, false, true);
+            this.disappearing_anim = this.effects.animations.add('disappearing', [9, 10, 11, 12, 13, 14], 10, false, true);
 
-            disappearing_anim.onStart.add(function() {
+            this.disappearing_anim.onStart.add(function() {
 
                 this.effects.visible = true;
                 this.effects.x = this.sprite.x;
@@ -74,11 +79,11 @@
 
             }, this);
 
-            disappearing_anim.onComplete.add(function() {
+            this.disappearing_anim.onComplete.add(function() {
                 this.effects.animations.play("emerging");
             }, this);
 
-            emerging_anim.onStart.add(function() {
+            this.emerging_anim.onStart.add(function() {
 
                 var newPlace = this.getNewPlace();
 
@@ -87,7 +92,7 @@
 
             }, this);
 
-            emerging_anim.onComplete.add(function() {
+            this.emerging_anim.onComplete.add(function() {
 
                 this.teleport({x: this.effects.x, y: this.effects.y});
                 this.effects.visible = false;
@@ -192,6 +197,16 @@
             this.sprite.animations.play('shuriken');
 
             return true;
+        },
+
+        destroy: function () {
+            this.sprite.destroy();
+            this.shurikens.destroy();
+            this.effects.destroy();
+
+            this.sprite = null;
+            this.shurikens = null;
+            this.effects = null;
         }
     };
 

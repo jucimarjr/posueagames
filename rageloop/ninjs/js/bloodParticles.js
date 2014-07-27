@@ -43,6 +43,10 @@
         }, duration);
     };
 
+    Blood.prototype.destroy = function() {
+        this.emitter.destroy();
+    };
+
     window.Blood = Blood;
 
 }(window.app_container = window.app_container || {}));
