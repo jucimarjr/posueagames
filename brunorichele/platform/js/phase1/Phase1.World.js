@@ -12,6 +12,7 @@ Phase1.World = {
         this.game.load.image('bg3fase1_test', 'assets/phase1/images/bg3fase1_3000-2000.png');
         this.game.load.spritesheet('smoke_test', 'assets/phase1/images/smoke_12000-300-4.png', 3000, 300);
         this.game.load.tilemap('map1_test', 'assets/phase1/map.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.audio('bgmusic', "assets/audio/light_the_way_mixdown.mp3");
     },
     createWorld : function() {
         this.game.world.setBounds(0, 0, 3000, 2000);
@@ -34,6 +35,12 @@ Phase1.World = {
         this.smoke.animations.add('show', [0, 1, 2, 3], 10, true);
         this.smoke.animations.play('show');		
     },
+	createSound : function(){
+		this.bgmusic = this.game.add.audio('bgmusic');
+        this.bgmusic.play('', 0, 1, true);	
+		
+		return this.bgmusic;
+	},	
     createObjects : function() {
     },
     collision : function(player) {
