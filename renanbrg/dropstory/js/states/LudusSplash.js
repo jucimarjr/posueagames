@@ -11,6 +11,7 @@ State.LudusSplash.prototype = {
         "use strict";
 
         this.game.load.image('sponsor-splash', Config.sponsorSplash.dir);
+        this.game.load.audio('storymusic', 'assets/gotaAnimation.ogg');
     },
     create: function () {
         "use strict";
@@ -27,7 +28,7 @@ State.LudusSplash.prototype = {
 
         setTimeout(function(timer) {
             clearTimeout(timer);
-            this.game.state.start('sponsor-state');
+            this.game.state.start('story-state');
         }, Config.ludusSplash.nextState);
     }
 };
