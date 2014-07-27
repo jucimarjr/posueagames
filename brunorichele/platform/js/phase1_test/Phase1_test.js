@@ -22,5 +22,6 @@ State.Phase1_test.prototype = {
     },
     update : function() {
         this.control.update();
+        Phase1_test.Trap.update(this.player);
     }
 }
