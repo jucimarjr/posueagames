@@ -6,6 +6,7 @@ Phase1_test.World = {
     foreground : null,
     init : function() {
         this.game.load.image('bg1fase1_test', 'assets/phase1/images/bg1fase1_3000-2000.jpg');
+        this.game.load.image('bg2fase1_test', 'assets/phase1/images/bg2fase1_3000-2000.png');
         this.game.load.tilemap('map1_test', 'assets/phase1/map.json', null, Phaser.Tilemap.TILED_JSON);
     },
     createWorld : function() {
@@ -21,6 +22,7 @@ Phase1_test.World = {
         this.background = this.game.add.sprite(0, 0, 'bg1fase1_test');
     },
     createForeground : function() {
+        this.foreground = this.game.add.sprite(0, 0, 'bg2fase1_test')
     },
     createObjects : function() {
     },
