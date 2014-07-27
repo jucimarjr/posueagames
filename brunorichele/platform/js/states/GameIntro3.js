@@ -38,6 +38,7 @@ State.GameIntro3.prototype = {
 	},
 	onNext: function () {
 		"use strict";
+		GameOverProperties.Phase = 'Phase2';
 		this.game.state.start('Phase2');
 	}	
 };

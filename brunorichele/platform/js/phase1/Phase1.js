@@ -12,7 +12,7 @@ State.Phase1.prototype = {
         this.player.create(50, 1600);
         this.player.player.body.mass = 100;
         Phase1.World.createObjects();
-        Phase1.Trap.createTrap(Phase1.World.mymap)
+     //   Phase1.Trap.createTrap(Phase1.World.mymap)
       //  Phase1.Enemy.createEnemy(Phase1.World.mymap);	 
         Phase1.World.createForeground();
 
@@ -23,6 +23,6 @@ State.Phase1.prototype = {
     },
     update : function() {
         this.control.update();
-        Phase1.Trap.update(this.player);
+    //    Phase1.Trap.update(this.player);
     }
 }

@@ -17,6 +17,8 @@ Phase1.Trap = {
             if (this.checkBurn(player.player, flame)) {
                 player.state = PlayerState.BURNING;
                 console.log('burn mother fucker! burn!!!');
+				this.game.state.start('GameOver');
+				player.state = PlayerState.IDLE;
             }
         }
     },
