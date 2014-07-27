@@ -13,6 +13,7 @@ State.Phase1.prototype = {
         this.player.player.body.mass = 100;
         Phase1.World.createObjects();
         Phase1.Trap.createTrap(Phase1.World.mymap)
+      //  Phase1.Enemy.createEnemy(Phase1.World.mymap);	 
         Phase1.World.createForeground();
 
         Phase1.World.collision();

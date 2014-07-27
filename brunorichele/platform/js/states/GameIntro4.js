@@ -1,18 +1,18 @@
 /*global setTimeout, State, Config, Phaser*/
-var GameIntro2Properties = {
-	background: 'assets/images/introgame2_1920-1080.jpg',
+var GameIntro4Properties = {
+	background: 'assets/images/introgamefase3_1920-1080.jpg',
 	x: 0,
 	y: 0
 };
 
-State.GameIntro2 = function (game) {
+State.GameIntro4 = function (game) {
 	"use strict";
 	this.game = game;
 };
-State.GameIntro2.prototype = {
+State.GameIntro4.prototype = {
 	preload: function () {
 		"use strict";
-		var sprite = this.game.add.sprite(GameIntro2Properties.x, GameIntro2Properties.y, 'game-intro2'); // Carregar bg
+		var sprite = this.game.add.sprite(GameIntro4Properties.x, GameIntro4Properties.y, 'game-intro4'); // Carregar bg
 		
 		var button = this.game.add.button(Config.button.back.x, Config.button.back.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
 		button.anchor.setTo(Config.button.back.anchor.x, Config.button.back.anchor.y);
@@ -34,10 +34,10 @@ State.GameIntro2.prototype = {
 	},
 	onBack: function () {
 		"use strict";
-		this.game.state.start('GameIntro1');
+		this.game.state.start('Phase2');
 	},
 	onNext: function () {
 		"use strict";
-		this.game.state.start('Phase1');
+		this.game.state.start('Phase3');
 	}	
 };
