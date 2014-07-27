@@ -12,6 +12,7 @@ State.Phase1_test.prototype = {
         this.player.create(50, 1600);
         this.player.player.body.mass = 100;
         Phase1_test.World.createObjects();
+        Phase1_test.Trap.createTrap(Phase1_test.World.mymap)
         Phase1_test.World.createForeground();
 
         Phase1_test.World.collision();

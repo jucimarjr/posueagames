@@ -11,7 +11,7 @@ var PlayerProperties = {
     explode : [35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
     burn : [45, 46, 47, 48, 49, 50, 51, 52],
     velRun : 400,
-    velJump : -400
+    velJump : -500
 };
 
 var PlayerState = {
