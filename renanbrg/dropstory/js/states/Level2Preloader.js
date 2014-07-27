@@ -7,7 +7,7 @@ State.Level2Preloader = function(game) {
 State.Level2Preloader.prototype = {
 	preload: function () {
 
-        this.background = this.game.add.sprite(0, 0, 'level1preloaderbg');
+        this.background = this.game.add.sprite(0, 0, 'level2preloaderbg');
         this.progressBar = this.game.add.sprite(120, 530, 'progress-bar');
         this.game.load.setPreloadSprite(this.progressBar);
 
@@ -22,6 +22,7 @@ State.Level2Preloader.prototype = {
         this.game.load.tilemap('maplevel2', 'assets/level2_7680-600.json', null,Phaser.Tilemap.TILED_JSON);
         this.game.load.image('hotsand', 'assets/images/hotsand_40-40.png');
         this.game.load.image('platform', 'assets/images/platform_160-80.png');
+        this.game.load.image('fakeplatform', 'assets/images/fakeplatform_160-80.png');
         this.game.load.image('seashell', 'assets/images/seashell_120-40.png');
         this.game.load.image('seaurchin','assets/spritesheets/seaurchin_80-40.png');
         this.game.load.image('glass', 'assets/images/glass_280-320.png');

@@ -92,6 +92,10 @@ HUD.prototype = {
     	this.lifeCounter--;
     	this.lifeLabel.setText(this.lifeCounter);
     },
+	increaseLife: function() {
+    	this.lifeCounter++;
+    	this.lifeLabel.setText(this.lifeCounter);
+    },
     getLifeCounter: function() {
     	return this.lifeCounter;
     },

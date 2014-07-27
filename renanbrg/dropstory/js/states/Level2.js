@@ -13,6 +13,7 @@ State.Level2 = function (game) {
     this.groundMaterial = null;
     this.hotsandMaterial = null;
     this.hotSandLayer = null;
+    this.fakeplatform = null;
     this.energy = null;
     this.smokeEmitter = null;
     this.haveEnergy = false;
@@ -52,11 +53,13 @@ State.Level2.prototype = {
         this.map = this.game.add.tilemap('maplevel2');
         this.map.addTilesetImage('hotsand_40-40', 'hotsand');
         this.map.addTilesetImage('platform_160-80', 'platform');
+        this.map.addTilesetImage('fakeplatform_160-80', 'fakeplatform');
         this.map.addTilesetImage('glass_280-320', 'glass');
         this.map.addTilesetImage('seashell_120-40', 'seashell');
         this.map.addTilesetImage('seaurchin_80-40', 'seaurchin');
 
         this.mainLayer = this.map.createLayer('mainlayer2');
+        this.fakeplatform = this.map.createLayer('fakeplatform');
         this.hotSandLayer = this.map.createLayer('hotsandlayer');
         this.irregularLayer = this.map.createLayer('irregularlayer');
         this.mainLayer.resizeWorld();
@@ -164,6 +167,7 @@ State.Level2.prototype = {
 	    // define collision group
 		this.playerCG = game.physics.p2.createCollisionGroup();
 		this.groundCG = game.physics.p2.createCollisionGroup();
+		this.fakeCG = game.physics.p2.createCollisionGroup();
 		this.crabCG = game.physics.p2.createCollisionGroup();
 		this.moleculeCG = game.physics.p2.createCollisionGroup();
 		this.energyCG = game.physics.p2.createCollisionGroup();
@@ -186,6 +190,7 @@ State.Level2.prototype = {
 	},
 	setupLayers: function () {
 	    this.tilesMainLayer = game.physics.p2.convertTilemap(this.map,this.mainLayer);
+	    this.tilesFakeLayer = game.physics.p2.convertTilemap(this.map,this.fakeplatform);
 	    this.tilesHotSandLayer = game.physics.p2.convertTilemap(this.map,this.hotSandLayer);
 	    
 	    this.tilesIrregularLayer = game.physics.p2.convertTilemap(this.map,this.irregularLayer);
@@ -198,6 +203,11 @@ State.Level2.prototype = {
 	    	this.tilesMainLayer[i].setCollisionGroup(this.groundCG);
 	    	this.tilesMainLayer[i].collides([this.playerCG, this.crabCG,this.moleculeCG, this.acidCG]);
 	    	this.tilesMainLayer[i].setMaterial(this.groundMaterial);
+	    }
+	    for (var i=0; i < this.tilesFakeLayer.length; i++) {
+	    	this.tilesFakeLayer[i].setCollisionGroup(this.fakeCG);
+	    	this.tilesFakeLayer[i].collides([this.playerCG, this.crabCG,this.moleculeCG, this.acidCG]);
+	    	this.tilesFakeLayer[i].setMaterial(this.groundMaterial);
 	    }
 	    for (var i=0; i < this.tilesHotSandLayer.length; i++) {
 	    	this.tilesHotSandLayer[i].setCollisionGroup(this.hotsandCG);
@@ -235,7 +245,7 @@ State.Level2.prototype = {
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.moleculeCG, this.energyCG,
-								  this.urchinsCG, this.hotsandCG, this.glassCG, this.acidCG]);
+								  this.urchinsCG, this.hotsandCG, this.glassCG, this.acidCG, this.fakeCG]);
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
         dropSprite.body.createGroupCallback(this.urchinsCG, this.checkCollisionUrchins, this);
@@ -251,7 +261,7 @@ State.Level2.prototype = {
 			this.crabs.getAt(i).body.setMaterial(this.crabMaterial);
 			this.crabs.getAt(i).animations.add('walkL', [0, 1, 2], 10, true);
 			this.crabs.getAt(i).animations.add('walkR', [0, 1, 2], 10, true);
-			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG, this.groundCG, this.urchinsCG]);
+			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG, this.groundCG, this.urchinsCG, this.fakeCG]);
 		}
 		this.crabs.getAt(0).body.moveLeft(350);
 		this.crabs.getAt(1).body.moveRight(350);		
@@ -285,7 +295,7 @@ State.Level2.prototype = {
         this.molecule.create(2195, 300, 'evildrop'); //evildrop3
         this.molecule.create(2320, 300, 'evildrop'); //evildrop4
         // life UP
-        this.molecule.create(2960, 150, 'lifeup'); //1 life
+        this.molecule.create(3280, 150, 'lifeup'); //1 life
         
         this.molecule.getAt(0).body.sprite.name='lifedrop';
         this.molecule.getAt(1).body.sprite.name='lifedrop';
@@ -310,7 +320,7 @@ State.Level2.prototype = {
 				this.molecule.getAt(i).animations.add('dropAnimation',[0, 1, 2, 3, 4], 10, true);
 			}
             this.molecule.getAt(i).animations.play('dropAnimation');
-            this.molecule.getAt(i).body.collides([this.playerCG, this.groundCG]);
+            this.molecule.getAt(i).body.collides([this.playerCG, this.groundCG, this.fakeCG]);
             this.molecule.getAt(i).hasCollided = false;
         }
     },    
@@ -327,9 +337,10 @@ State.Level2.prototype = {
 		aciddrop.body.allowSleep=true;
 		aciddrop.body.setCollisionGroup(this.acidCG);
 		aciddrop.body.fixedRotation = true;
-		aciddrop.body.collides([this.playerCG, this.groundCG]);
+		aciddrop.body.collides([this.playerCG, this.groundCG, this.fakeCG]);
 		// kill acid drop when collides to ground
 		aciddrop.body.createGroupCallback(this.groundCG, this.collidesGroundAcid, this);
+		aciddrop.body.createGroupCallback(this.fakeCG, this.collidesGroundAcid, this);
 	},
 	collidesGroundAcid: function(body1, body2) {
 		var timerAcidRain; 
@@ -382,7 +393,8 @@ State.Level2.prototype = {
             } else if (body2.sprite.name == 'evildrop') {
 				this.hitEvilDrop(body1, body2);
 			} else if (body2.sprite.name == 'lifeup') {
-				this.hitEvilDrop(body1, body2);
+				this.hud.increaseLife();
+				body2.sprite.kill();
 			}
             return true;
         }

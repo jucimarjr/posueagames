@@ -137,8 +137,8 @@ Config.preloaderLevel1 = {
     x: 0,
     y: 0
 };
-/*Config.gamePlay = {
-	dir: 'assets/images/GamePlayBg_600-960.png',
-	x: 0,
-	y: 0,
-};*/
+Config.preloaderLevel2 = {
+    dir: 'assets/images/level2preloaderbg_960-600.png',
+    x: 0,
+    y: 0
+};
