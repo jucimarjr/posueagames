@@ -11,5 +11,5 @@ game.state.add('GameOver', State.GameOver);
 game.state.add('GameFinal', State.GameFinal);
 game.state.add('GameIntro1', State.GameIntro1);
 game.state.add('GameIntro2', State.GameIntro2);
-game.state.add('Game', /*State.Phase1*/State.Phase3);
+game.state.add('Game', /*State.Phase1*/State.Phase1_test);
 game.state.start('LudusSplash');

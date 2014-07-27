@@ -16,6 +16,11 @@ State.Phase1.prototype = {
 		Phase1.Trap.create();
 		Phase1.Enemy.create();		
         this.player.create(50, 1600);
+
+        this.player.player.body.setMaterial(playerMaterial);
+        this.player.player.body.setCollisionGroup(playerCG);
+        this.player.player.body.collides([rockCG, enemyCG])
+
 	    Phase1.Rock.create();
 	    Phase1.Door.create();
 		Phase1.World.createBgAlpha();

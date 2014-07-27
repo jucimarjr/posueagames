@@ -64,6 +64,9 @@ GameSplash.prototype = {
 
 	    Phase3.World.game = this.game;
         Phase3.World.init();
+
+        Phase1_test.World.game = this.game;
+        Phase1_test.World.init();
 		
 		this.player.preload();
 	},
