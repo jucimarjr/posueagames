@@ -14,6 +14,8 @@ State.Level2Preloader.prototype = {
         this.game.load.spritesheet('urchin','assets/spritesheets/seaurchin_80-40.png', 40, 40);
         this.game.load.spritesheet('lifedrop','assets/spritesheets/water_200-40.png', 40, 40);
         this.game.load.spritesheet('aciddrop','assets/spritesheets/aciddrop_120-30.png', 40, 30);
+        this.game.load.spritesheet('evildrop','assets/spritesheets/evildrop_180-60.png', 60, 60);
+		this.game.load.spritesheet('lifeup','assets/images/life_80-80.png', 80, 80);
         this.game.load.spritesheet('crab','assets/spritesheets/crab_160-80.png', 160, 80);
         this.game.load.spritesheet('energy','assets/spritesheets/energy_200-40.png', 40, 40);
         this.game.load.image('gameplay-bg','assets/images/backgroundlevel1_4800-600.png');
@@ -24,7 +26,7 @@ State.Level2Preloader.prototype = {
         this.game.load.image('seaurchin','assets/spritesheets/seaurchin_80-40.png');
         this.game.load.image('glass', 'assets/images/glass_280-320.png');
         this.game.load.image('smoke', './assets/images/smoke_32-32.png');
-        
+
         //audios
         this.game.load.audio('jump','assets/waterDrop.ogg');
         this.game.load.audio('main','assets/gotaMain.ogg');

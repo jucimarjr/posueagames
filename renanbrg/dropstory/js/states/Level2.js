@@ -16,11 +16,12 @@ State.Level2 = function (game) {
     this.energy = null;
     this.smokeEmitter = null;
     this.haveEnergy = false;
+    this.smokeTimer = null;
     this.dropIsInvincible = false;
     this.molecule = null;
     this.acidgroup = null;
+    this.smokeEmitter = null;
     this.timerEventRain = [];
-    this.timerStartRain = null;
     this.hud = new HUD(this.game);
     this.onAir = false;
 
@@ -47,7 +48,7 @@ State.Level2.prototype = {
 		var background;
 		background = this.game.add.tileSprite(0, 0, 4800, 600, 'gameplay-bg');
 		background.fixedToCamera = true;
-
+		
         this.map = this.game.add.tilemap('maplevel2');
         this.map.addTilesetImage('hotsand_40-40', 'hotsand');
         this.map.addTilesetImage('platform_160-80', 'platform');
@@ -62,26 +63,22 @@ State.Level2.prototype = {
 
         this.setupPhysics();
         this.setupLayers();
-        this.setupPlayer(4000, 100);
+        this.setupPlayer(2250, 100);
         this.setupMolecule();
         this.setupAcidDrop();
 
 		// falling acid rain
-		this.timerEventRain[0]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 1320,0,0);
-		this.timerEventRain[2]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2800,0,2);
-		this.timerEventRain[4]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 3120,0,4);
-
-		this.timerEventRain[6]=game.time.events.loop(Phaser.Timer.SECOND*1.25, this.fallRain, this, 6200,0,6);
-		this.timerEventRain[8]=game.time.events.loop(Phaser.Timer.SECOND*1.25, this.fallRain, this, 7040,0,8);
-
-		//  Create our Timer
-		this.timerStartRain = game.time.create(false);
-
-		//  Set a TimerEvent to occur after 2 seconds
-		this.timerStartRain.loop(500, this.startRain, this);
-		this.timerStartRain.start();
+		this.timerEventRain[0]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 1360,0);
+		this.timerEventRain[1]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2640,0,1);		
+		this.timerEventRain[2]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 2800,0);
+		this.timerEventRain[3]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2960,0,3);
+		this.timerEventRain[4]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 3120,0);
+		this.timerEventRain[5]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 3280,0,5);
+		this.timerEventRain[6]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 6200,0);		
+		this.timerEventRain[7]=game.time.events.loop(Phaser.Timer.SECOND*0.8, this.fallRain, this, 6600,0,7);
+		this.timerEventRain[8]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 7040,0);
 		
-
+		this.setupSmokeEmitter(1550, this.game.height-80);
         this.hud.create();
 
         // Sounds
@@ -97,14 +94,18 @@ State.Level2.prototype = {
 		this.handleKeyDown();
 		this.isOnAir();
 		this.drop.playerAnimations();
-		this.moveCrab(this.crabs.getAt(0));
-		this.moveCrab(this.crabs.getAt(1));
-		this.moveCrab(this.crabs.getAt(2));
-		this.moveCrab(this.crabs.getAt(3));
-		this.moveCrab(this.crabs.getAt(4));
-		this.moveCrab(this.crabs.getAt(5));
-		this.moveCrab(this.crabs.getAt(6));
-
+		this.moveCrab(this.crabs.getAt(0), 350);
+		this.moveCrab(this.crabs.getAt(1), 350);
+		this.moveCrab(this.crabs.getAt(2), 350);
+		this.moveCrab(this.crabs.getAt(3), 350);
+		this.moveCrab(this.crabs.getAt(4), 300);
+		this.moveCrab(this.crabs.getAt(5), 300);
+		this.moveCrab(this.crabs.getAt(6), 300);
+		
+		if (this.haveEnergy) {
+			this.smokeEmitter.x = this.drop.getSpriteObject().x;
+			this.smokeEmitter.y = this.drop.getSpriteObject().y + 56;
+		}
 	},
 	handleKeyDown: function () {
 		"use strict";
@@ -134,6 +135,22 @@ State.Level2.prototype = {
 				this.jumpSound.play();
 			}
 		}
+	},
+	setupSmokeEmitter: function(posX, posY) {
+		// smoke animation
+		// add smoke particles
+		this.smokeEmitter = this.game.add.emitter(posX, posY, 100);
+		this.smokeEmitter.gravity = 0;
+		this.smokeEmitter.setXSpeed(-15, 15);
+		this.smokeEmitter.setYSpeed(-80, -50);
+		this.smokeEmitter.setAlpha(1, 0, 3000, Phaser.Easing.Linear.InOut);
+		this.smokeEmitter.makeParticles('smoke');
+    },
+    stopSmoke: function() {
+		this.haveEnergy = false;
+		this.smokeEmitter.on = false;
+		this.drop.playerstate = 'normal'; //temporario
+		this.smokeTimer.destroy();
 	},
 	setupPhysics: function () {
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -179,7 +196,7 @@ State.Level2.prototype = {
 	    //setup all tiles with collisiongroups or materials
 	    for (var i=0; i < this.tilesMainLayer.length; i++) {
 	    	this.tilesMainLayer[i].setCollisionGroup(this.groundCG);
-	    	this.tilesMainLayer[i].collides([this.playerCG, this.crabCG,this.moleculeCG]);
+	    	this.tilesMainLayer[i].collides([this.playerCG, this.crabCG,this.moleculeCG, this.acidCG]);
 	    	this.tilesMainLayer[i].setMaterial(this.groundMaterial);
 	    }
 	    for (var i=0; i < this.tilesHotSandLayer.length; i++) {
@@ -225,6 +242,7 @@ State.Level2.prototype = {
         dropSprite.body.createGroupCallback(this.moleculeCG, this.checkOverlapWithLifeDrop, this);
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
         dropSprite.body.createGroupCallback(this.glassCG, this.restartGame, this);
+        dropSprite.body.createGroupCallback(this.acidCG, this.restartGame, this);
 	},
 	setupCrab: function() {
 		for (var i = 0; i < this.crabs.length; i++) {
@@ -239,9 +257,9 @@ State.Level2.prototype = {
 		this.crabs.getAt(1).body.moveRight(350);		
 		this.crabs.getAt(2).body.moveLeft(350);
 		this.crabs.getAt(3).body.moveLeft(350);
-		this.crabs.getAt(4).body.moveLeft(350);
-		this.crabs.getAt(5).body.moveRight(350);
-		this.crabs.getAt(6).body.moveLeft(350);
+		this.crabs.getAt(4).body.moveLeft(300);
+		this.crabs.getAt(5).body.moveRight(300);
+		this.crabs.getAt(6).body.moveLeft(300);
 	},
     setupUrchins: function(urchin) {
     	game.physics.p2.enable(urchin);
@@ -254,61 +272,84 @@ State.Level2.prototype = {
 		// Add a "life drop"
         this.molecule = game.add.group();
         this.molecule.enableBody = true;
+        this.molecule.enableBodyDebug = true;
         this.molecule.physicsBodyType = Phaser.Physics.P2JS;
 
-        this.molecule.create(1040, 160, 'lifedrop'); //lifedrop1
-        this.molecule.create(1640, 200, 'lifedrop'); //lifedrop2
+        this.molecule.create(1040, 150, 'lifedrop'); //lifedrop1
+        this.molecule.create(1675, 190, 'lifedrop'); //lifedrop2
         this.molecule.create(3600, this.game.world.height-80, 'energy'); //energy1
         this.molecule.create(4200, this.game.world.height-120, 'energy'); //energy2
+        // evildrop
+        this.molecule.create(1990, 300, 'evildrop'); //evildrop1
+        this.molecule.create(2115, 300, 'evildrop'); //evildrop2
+        this.molecule.create(2195, 300, 'evildrop'); //evildrop3
+        this.molecule.create(2320, 300, 'evildrop'); //evildrop4
+        // life UP
+        this.molecule.create(2960, 150, 'lifeup'); //1 life
+        
+        this.molecule.getAt(0).body.sprite.name='lifedrop';
+        this.molecule.getAt(1).body.sprite.name='lifedrop';
+        this.molecule.getAt(2).body.sprite.name='energy';
+        this.molecule.getAt(3).body.sprite.name='energy';        
+        // evil drop
+        this.molecule.getAt(4).body.sprite.name='evildrop';
+        this.molecule.getAt(5).body.sprite.name='evildrop';
+        this.molecule.getAt(6).body.sprite.name='evildrop';
+        this.molecule.getAt(7).body.sprite.name='evildrop';
+        
+        this.molecule.getAt(8).body.sprite.name='lifeup';
 
         for (var i = 0; i < this.molecule.length; i++) {
             this.molecule.getAt(i).body.setCollisionGroup(this.moleculeCG);
             this.molecule.getAt(i).body.fixedRotation = true;
             this.molecule.getAt(i).body.static = true;
-            this.molecule.getAt(i).animations.add('dropAnimation',[0, 1, 2, 3, 4], 10, true);
+            if (this.molecule.getAt(i).body.sprite.name == 'evildrop') {
+				// animation is different to evildrop
+				this.molecule.getAt(i).animations.add('dropAnimation',[0, 1], 10, true);
+			} else if (this.molecule.getAt(i).body.sprite.name != 'lifeup') {
+				this.molecule.getAt(i).animations.add('dropAnimation',[0, 1, 2, 3, 4], 10, true);
+			}
             this.molecule.getAt(i).animations.play('dropAnimation');
             this.molecule.getAt(i).body.collides([this.playerCG, this.groundCG]);
             this.molecule.getAt(i).hasCollided = false;
         }
-        this.molecule.getAt(0).body.sprite.name='lifedrop';
-        this.molecule.getAt(1).body.sprite.name='lifedrop';
-        this.molecule.getAt(2).body.sprite.name='energy';
-        this.molecule.getAt(3).body.sprite.name='energy';
-    },
+    },    
     setupAcidDrop: function() {
 		this.acidgroup = game.add.group();
 		this.acidgroup.enableBody = true;
 		this.acidgroup.physicsBodyType = Phaser.Physics.P2JS;
-		this.acidgroup.create(1320, 0, 'aciddrop');
+	},
+    fallRain: function(posX, posY) {
+        //this.acidgroup.getAt(index).reset(posX, posY);
+        var aciddrop;
+        aciddrop = this.acidgroup.create(posX, posY, 'aciddrop');
+		aciddrop.body.collideWorldBounds=false;
+		aciddrop.body.allowSleep=true;
+		aciddrop.body.setCollisionGroup(this.acidCG);
+		aciddrop.body.fixedRotation = true;
+		aciddrop.body.collides([this.playerCG, this.groundCG]);
+		// kill acid drop when collides to ground
+		aciddrop.body.createGroupCallback(this.groundCG, this.collidesGroundAcid, this);
+	},
+	collidesGroundAcid: function(body1, body2) {
+		var timerAcidRain; 
+		body1.sprite.frame = 1;
 		
-		this.acidgroup.create(2640, 0, 'aciddrop');
-		this.acidgroup.create(2800, 0, 'aciddrop');
-		this.acidgroup.create(2960, 0, 'aciddrop');
-		this.acidgroup.create(3120, 0, 'aciddrop');
-		this.acidgroup.create(3280, 0, 'aciddrop');
+		timerAcidRain = this.game.time.create();
 
-		this.acidgroup.create(6160, 0, 'aciddrop');
-		this.acidgroup.create(6640, 0, 'aciddrop');
-		this.acidgroup.create(7080, 0, 'aciddrop');
-		
-        for (var i = 0; i < this.acidgroup.length; i++) {
-			this.acidgroup.getAt(i).body.collideWorldBounds=false;
-			this.acidgroup.getAt(i).body.allowSleep=true;
-			this.acidgroup.getAt(i).body.setCollisionGroup(this.acidCG);
-			this.acidgroup.getAt(i).body.fixedRotation = true;
-			this.acidgroup.getAt(i).body.collides([this.playerCG]);
-        }
-	},
-    fallRain: function(posX, posY, index) {
-        this.acidgroup.getAt(index).reset(posX, posY);
-	},
-	// start rain only for 3 acid drops
-	startRain: function() {
-		this.timerEventRain[1]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2640,0,1);
-		this.timerEventRain[3]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2960,0,3);
-		this.timerEventRain[5]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 3280,0,5);
-		this.timerEventRain[7]=game.time.events.loop(Phaser.Timer.SECOND*1.25, this.fallRain, this, 6600,0,7);
-		this.timerStartRain.stop();
+		timerAcidRain.add(200, function() {
+			var timerSplitAcid = this.game.time.create();
+			body1.sprite.frame = 2;
+			timerAcidRain.destroy();
+
+			timerSplitAcid.add(100, function() {
+				body1.sprite.kill();
+				timerSplitAcid.destroy();
+			}, this);
+			timerSplitAcid.start();
+			
+		}, this);
+		timerAcidRain.start();
 	},
 	checkOverlapCrabDrop: function (body1, body2) {
 		// body1 is the drop, body2 is the crab.
@@ -338,27 +379,50 @@ State.Level2.prototype = {
 				this.drop.playersize = 'big';
 			} else if (body2.sprite.name == 'energy') {
 				this.drinkEnergy(body1, body2);
-            }
+            } else if (body2.sprite.name == 'evildrop') {
+				this.hitEvilDrop(body1, body2);
+			} else if (body2.sprite.name == 'lifeup') {
+				this.hitEvilDrop(body1, body2);
+			}
             return true;
         }
 
         return false;
     },
+    hitEvilDrop: function(body1, body2) {
+		if (this.hud.getDropCounter() > 0) { 
+			this.hud.decreaseDropBar();
+			if (this.hud.getDropCounter() == 0)
+					this.drop.playersize = 'small';
+		} else if(this.hud.getDropCounter() == 0) {
+			this.restartGame();
+		}
+		// stop animation
+		body2.sprite.animations.stop();
+		body2.sprite.frame = 2;
+		var timerEvilDrop = this.game.time.create();
+		var self = this;
+		timerEvilDrop.add(2000, function() {
+			body2.sprite.animations.play('dropAnimation');
+			timerEvilDrop.destroy();
+		}, this);
+		timerEvilDrop.start();
+	},
     drinkEnergy: function(body1, body2) {
         console.log('Player get the energy drop!!!!');
 
         this.drop.jump(1500);
         //this.jumpSound.play();
-        //this.smokeEmitter.start(false, 3000, 50);
+        this.smokeEmitter.start(false, 3000, 50);
         this.haveEnergy = true;
         var self = this;
-        /*if (this.smokeTimer != null) {
+        if (this.smokeTimer != null) {
             clearTimeout(this.smokeTimer);
             this.smokeTimer = null;
         }
         this.smokeTimer = setTimeout(function() {
                 self.stopSmoke();
-        }, 2000);*/
+        }, 2000);
         this.drop.playerstate = 'energy';
     },
     killDrop: function (body1, body2) {
@@ -372,8 +436,8 @@ State.Level2.prototype = {
             if (this.drop.playersize == 'big') {
                 this.hud.decreaseDropBar();
                 this.haveEnergy = true;
-                //this.smokeEmitter.on = true;
-                //this.smokeEmitter.start(false, 3000, 50);
+                this.smokeEmitter.on = true;
+                this.smokeEmitter.start(false, 3000, 50);
                 var self = this;
                 if (this.hud.getDropCounter() == 0) {
                     this.lastDropTimer = setTimeout(function(time) {
@@ -466,22 +530,22 @@ State.Level2.prototype = {
 			this.onAir = true;
 		}
 	},
-	moveCrab: function (crab) {
+	moveCrab: function (crab, velocity) {
 		if (crab.name == "crab1") {
 			if (this.touchingLeft(crab.body)) {
-				crab.body.moveRight(350);
+				crab.body.moveRight(velocity);
 				crab.animations.play('walkR');
 			} else if (this.touchingRight(crab.body)) {
-				crab.body.moveLeft(350);
+				crab.body.moveLeft(velocity);
 				crab.animations.play('walkL');
 			} else {
 			}
 		} else {
 			if (this.touchingRight(crab.body)) {
-				crab.body.moveLeft(350);
+				crab.body.moveLeft(velocity);
 				crab.animations.play('walkL');
 			} else if (this.touchingLeft(crab.body)) {
-				crab.body.moveRight(350);
+				crab.body.moveRight(velocity);
 				crab.animations.play('walkR');
 			} else {
 				//this.crab.body.velocity.x = -100;
