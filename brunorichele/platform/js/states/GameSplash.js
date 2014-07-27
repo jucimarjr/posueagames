@@ -43,19 +43,6 @@ GameSplash.prototype = {
 
 		this.credits.init();
 		this.howToPlay.init();
-		
-		Phase1.World.game = this.game;
-		Phase1.World.init();
-		Phase1.Rock.game = this.game;
-		Phase1.Rock.init();
-		Phase1.Smoke.game = this.game;	
-		Phase1.Smoke.init();
-		Phase1.Door.game = this.game;	
-		Phase1.Door.init();
-		Phase1.Trap.game = this.game;
-		Phase1.Trap.init();
-		Phase1.Enemy.game = this.game;
-		Phase1.Enemy.init();
 
 	    Phase2.World.game = this.game;
 	    Phase2.World.init();
@@ -65,10 +52,10 @@ GameSplash.prototype = {
 	    Phase3.World.game = this.game;
         Phase3.World.init();
 
-        Phase1_test.World.game = this.game;
-        Phase1_test.World.init();
-        Phase1_test.Trap.game = this.game;
-        Phase1_test.Trap.init();
+        Phase1.World.game = this.game;
+        Phase1.World.init();
+        Phase1.Trap.game = this.game;
+        Phase1.Trap.init();
 		
 		this.player.preload();
 	},
