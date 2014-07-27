@@ -55,7 +55,7 @@ Config.Menu = {
 	y: 0,
 	buttonPlay: {
 		dir: 'assets/spritesheets/playbutton_240-120.png',
-		x: 185,
+		x: 175,
 		y: (Config.global.screen.height - 50) / 2,
 		width: 120,
 		height: 120,
@@ -65,22 +65,22 @@ Config.Menu = {
 		}
 	},
 	buttonHowToPlay: {
-		dir: 'assets/spritesheets/howtoplaybutton_240-120.png',
-		x: 40,
-		y: (Config.global.screen.height - 50) / 2,
-		width: 120,
-		height: 120,
+		dir: 'assets/spritesheets/howtoplaybutton_200-100.png',
+		x: 60,
+		y: Config.global.screen.height * 0.6,
+		width: 100,
+		height: 100,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonCredits: {
-		dir: 'assets/spritesheets/creditsbutton_240-120.png',
-		x: 330,
-		y: (Config.global.screen.height - 50) / 2,
-		width: 120,
-		height: 120,
+		dir: 'assets/spritesheets/creditsbutton_200-100.png',
+		x: 310,
+		y: Config.global.screen.height * 0.6,
+		width: 100,
+		height: 100,
 		anchor: {
 			x: 0.5,
 			y: 0.5
@@ -126,7 +126,7 @@ Config.gameOver = {
 
 //Preloader image of the Level 1
 Config.pause = {
-    dir: 'assets/images/pausesplash_320-320.png',
+    dir: 'assets/images/pausesplash_298-200.png',
     x: (Config.global.screen.width / 2) - 160,
     y: (Config.global.screen.height / 2) - 160
 };
