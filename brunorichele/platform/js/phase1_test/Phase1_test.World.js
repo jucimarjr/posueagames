@@ -4,9 +4,13 @@ Phase1_test.World = {
     mymap : null,
     background : null,
     foreground : null,
+    alpha : null,
+    smoke : null,
     init : function() {
         this.game.load.image('bg1fase1_test', 'assets/phase1/images/bg1fase1_3000-2000.jpg');
         this.game.load.image('bg2fase1_test', 'assets/phase1/images/bg2fase1_3000-2000.png');
+        this.game.load.image('bg3fase1_test', 'assets/phase1/images/bg3fase1_3000-2000.png');
+        this.game.load.spritesheet('smoke_test', 'assets/phase1/images/smoke_12000-300-4.png', 3000, 300);
         this.game.load.tilemap('map1_test', 'assets/phase1/map.json', null, Phaser.Tilemap.TILED_JSON);
     },
     createWorld : function() {
@@ -22,7 +26,13 @@ Phase1_test.World = {
         this.background = this.game.add.sprite(0, 0, 'bg1fase1_test');
     },
     createForeground : function() {
-        this.foreground = this.game.add.sprite(0, 0, 'bg2fase1_test')
+        this.foreground = this.game.add.sprite(0, 0, 'bg2fase1_test');
+
+        this.smoke = this.game.add.sprite(0, 1700, 'smoke_test');
+        this.smoke.animations.add('show', [0, 1, 2, 3], 10, true);
+        this.smoke.animations.play('show');
+
+        this.alpha = this.game.add.sprite(0, 0, 'bg2fase1_test');
     },
     createObjects : function() {
     },
