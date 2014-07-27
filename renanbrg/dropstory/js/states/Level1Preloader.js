@@ -21,6 +21,8 @@ State.Level1Preloader.prototype = {
                 'assets/spritesheets/sunscreendrop_200-40.png', 40, 40);
         this.game.load.spritesheet('dropinstraw',
                 'assets/spritesheets/dropinstraw_3840-80.png', 480, 80);
+        this.game.load.spritesheet('umbrella',
+                'assets/spritesheets/umbrella_240-80.png', 80, 80);
 
         this.game.load.image('gameplay-bg',
                 'assets/images/backgroundlevel1_4800-600.png');

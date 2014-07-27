@@ -109,6 +109,7 @@ State.Level1.prototype = {
 		this.setupMolecule();
 		this.setupPlayer(100, 100);
 		this.setupSmokeEmitter(1550, this.game.height-80);
+        this.setupUmbrella(4740, 280);
 
         this.hud.create();
 
@@ -258,6 +259,7 @@ State.Level1.prototype = {
 		this.urchinsCG = game.physics.p2.createCollisionGroup();
 		this.hotsandCG = game.physics.p2.createCollisionGroup();
         this.glassCG = game.physics.p2.createCollisionGroup();
+        this.umbrellaCG = game.physics.p2.createCollisionGroup();
 
 		// Create and Setup Material
 	    this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
@@ -345,7 +347,7 @@ State.Level1.prototype = {
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.moleculeCG,
-                this.urchinsCG, this.hotsandCG, this.glassCG,
+                this.urchinsCG, this.hotsandCG, this.glassCG, this.umbrellaCG,
                 this.coveredStrawCG]);
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
@@ -356,6 +358,8 @@ State.Level1.prototype = {
         dropSprite.body.createGroupCallback(this.glassCG, this.restartGame,
                 this);
         dropSprite.body.createGroupCallback(this.coveredStrawCG, this.insideStraw, this);
+        dropSprite.body.createGroupCallback(this.umbrellaCG,
+                this.startUmbrellaAnimation, this);
 	},
 //	setupShell: function (posX, posY) {
 //		 // Create sea shell
@@ -538,6 +542,17 @@ State.Level1.prototype = {
         urchin.body.static = true;
         urchin.body.sprite.name = 'urchin';
         urchin.body.collides([this.playerCG, this.groundCG]);
+    },
+    setupUmbrella: function(posX, posY) {
+        this.umbrella = this.game.add.sprite(posX, posY, 'umbrella');
+        this.game.physics.p2.enableBody(this.umbrella);
+        this.umbrella.body.fixedRotation = true;
+        this.umbrella.body.static = true;
+        this.umbrella.body.setCollisionGroup(this.umbrellaCG);
+        this.umbrella.body.collides([this.playerCG]);
+        var umbrellaAnimation = this.umbrella.animations.add('openUmbrella',
+                [0, 1, 2], 10, false);
+        umbrellaAnimation.onComplete.add(this.nextLevel, this);
     },
 	// Funcao Magica!!! Deve existir outro jeito!
 	touchingDown: function (someone) {
@@ -791,5 +806,14 @@ State.Level1.prototype = {
             this.mainSound.stop();
             this.game.state.restart();
         }
+    },
+    startUmbrellaAnimation: function(body1, body2) {
+        var umbrellaSprite = body2.sprite;
+        umbrellaSprite.animations.play('openUmbrella');
+    },
+    nextLevel: function() {
+        this.clearTimers();
+        this.mainSound.stop();
+        this.game.state.start('level2preloader-state');
     }
 };
