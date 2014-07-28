@@ -1,6 +1,8 @@
 var game = new Phaser.Game(Config.global.screen.width,
 		Config.global.screen.height, Phaser.CANVAS, 'game');
 
+var hud = new HUD(game);
+
 game.state.add('ludus-state', State.LudusSplash);
 game.state.add('story-state', State.Story);
 game.state.add('sponsor-state', State.SponsorSplash);

@@ -11,6 +11,7 @@ State.Menu.prototype = {
     preload: function() {
         "use strict";
 
+        hud.preload();
         this.game.load.image('level1preloaderbg', Config.preloaderLevel1.dir);
         this.game.load.spritesheet('button-back', Config.Menu.buttonBack.dir,
                 Config.Menu.buttonBack.width, Config.Menu.buttonBack.height);
@@ -44,6 +45,7 @@ State.Menu.prototype = {
         "use strict";
 
         this.inicioSound.stop();
+        hud.init();
         this.game.state.start('level1preloader-state');
     },
     clickHowToPlay: function () {

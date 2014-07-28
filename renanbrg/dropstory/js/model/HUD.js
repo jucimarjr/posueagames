@@ -14,12 +14,9 @@ HUD = function(game) {
     "use strict";
 
     this.game = game;
-
     this.lifeAsset = null;
     this.xLabel = null;
     this.lifeLabel = null;
-    this.lifeCounter = 3;
-    this.dropCounter = 0;
     this.pauseSprite = null;
 };
 
@@ -37,7 +34,25 @@ HUD.prototype = {
         this.game.load.spritesheet('dropper',
                 'assets/spritesheets/dropper_600-182.png', 100, 182);
     },
-
+    /**
+     * Init the life counter and the drop counter.
+     *
+     * @method HUD#init
+     * @memberof HUD
+     */
+    init: function() {
+        this.lifeCounter = 3;
+        this.dropCounter = 0;
+    },
+    /**
+     * Init the drop counter.
+     *
+     * @method HUD#initDropCounter
+     * @memberof HUD
+     */
+    initDropCounter: function() {
+        this.dropCounter = 0;
+    },
     /**
      * Add the HUD images in the game.
      *
@@ -48,7 +63,6 @@ HUD.prototype = {
     create: function() {
         "use strict";
 
-        this.dropCounter = 0;
         this.lifeAsset = this.game.add.image(20, 20, 'life_image');
         this.lifeAsset.fixedToCamera = true;
 
@@ -73,7 +87,8 @@ HUD.prototype = {
         this.dropAttemps.animations.add('attempt4Down', [3], 10, false);
         this.dropAttemps.animations.add('attempt5Up', [5], 10, false);
         this.dropAttemps.animations.add('attempt5Down', [4], 10, false);
-        this.dropAttemps.animations.add('attempt0', [0], 10, false);
+        this.dropAttemps.animations.play('attempt' + (this.dropCounter + 1)
+                + 'Down');
         this.dropAttemps.fixedToCamera = true;
 
         this.pauseSprite = this.game.add.sprite(this.game.width / 2,

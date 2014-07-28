@@ -19,7 +19,6 @@ State.Level1 = function (game) {
     this.redSand = null;
     this.dropCollisionGroup = null;
     this.crabCollisionGroup = null;
-    this.hud = new HUD(this.game);
     this.onAir;
     this.hotSandTimerActivated;
     this.dropIsInvincible;
@@ -46,8 +45,6 @@ State.Level1.prototype = {
 			console.log(exception.toString());
 		}
         this.drop.preload();
-
-        this.hud.preload();
 	},
 	create: function () {
 		"use strict";
@@ -111,7 +108,7 @@ State.Level1.prototype = {
 		this.setupSmokeEmitter(1550, this.game.height-80);
         this.setupUmbrella(4740, 280);
 
-        this.hud.create();
+        hud.create();
 
         // Sounds
         this.jumpSound = this.game.add.audio("jump");
@@ -125,7 +122,8 @@ State.Level1.prototype = {
 	},
 	update: function () {
 		"use strict";
-		this.hud.updateFPS();
+
+		hud.updateFPS();
 
 		this.handleKeyDown();
 		this.isOnAir();
@@ -159,7 +157,7 @@ State.Level1.prototype = {
 	    }
 	},
     pauseGame: function() {
-        this.hud.showPauseImage();
+        hud.showPauseImage();
     },
     resumeGame: function() {
         "use strict";
@@ -170,7 +168,7 @@ State.Level1.prototype = {
         this.pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
         this.pauseKey.onDown.add(this.startPauseGameEvent, this);
 
-        this.hud.hidePauseImage();
+        hud.hidePauseImage();
     },
     jumpPlayer: function() {
         if (this.game.paused == true) {
@@ -635,7 +633,7 @@ State.Level1.prototype = {
 			if (body2.sprite.name == 'lifedrop') {
 				console.log('Player get the life drop!!!!');
 				this.powUpSound.play();
-				this.hud.increaseDropBar();
+                hud.increaseDropBar();
 				body2.sprite.kill();
 				body2.hasCollided = true;
 				this.drop.playersize = 'big';
@@ -685,12 +683,12 @@ State.Level1.prototype = {
         if (this.countCall == 1 && !this.hotSandTimerActivated) {
             console.log('moreeeeeeeeeeeeeeeeeu!!! killlDrop');
             if (this.drop.playersize == 'big') {
-                this.hud.decreaseDropBar();
+                hud.decreaseDropBar();
                 this.haveEnergy = true;
                 this.smokeEmitter.on = true;
                 this.smokeEmitter.start(false, 3000, 50);
                 var self = this;
-                if (this.hud.getDropCounter() == 0) {
+                if (hud.getDropCounter() == 0) {
                     this.lastDropTimer = this.game.time.create();
                     this.lastDropTimer.add(2000, function() {
                         self.hotSandTimerActivated = false;
@@ -797,11 +795,11 @@ State.Level1.prototype = {
     	this.clearTimers();
         this.hotSandTimerActivated = false;
         this.drop.kill();
-        this.hud.decreaseLife();
-        if (this.hud.getLifeCounter() == 0) {
+        hud.initDropCounter();
+        hud.decreaseLife();
+        if (hud.getLifeCounter() == 0) {
             this.mainSound.stop();
             this.game.state.start('gameover-state');
-            this.hud.lifeCounter = 3;
         } else {
             this.mainSound.stop();
             this.game.state.restart();
