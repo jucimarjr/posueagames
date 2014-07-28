@@ -12,7 +12,7 @@ State.GamePlay.prototype = {
 	},
 	create: function () {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
-		playerY = 480;
+		playerY = 400;
 		playerX = 100;
 		fishX = 120;
 		frame = 0;
@@ -20,12 +20,13 @@ State.GamePlay.prototype = {
 		lastY = null;
 
 
+
 		this.game.add.sprite(0, 0, 'bg');
 
 		this.player = this.game.add.sprite(playerX, playerY ,'player');
 		this.game.physics.enable(this.player);
 		this.player.animations.add('ticar',[0,1,0],30,false);
-		this.player.body.setSize(this.player.width, 10, 0, 0);
+		this.player.body.setSize(this.player.width, 10, 0, 5);
 		this.player.anchor.setTo(.5, .5);
 
 		fishes = game.add.group();
@@ -41,7 +42,7 @@ State.GamePlay.prototype = {
 	},
 	update: function () {
 
-		/*this.game.physics.arcade.overlap(this.player, this.fish2, this.ticar, null,this);*/		
+		this.game.physics.arcade.overlap(this.player, fishes, this.ticar, null,this);
 
 		if (cursors.left.isUp ) {
 			this.leftUp = true;
@@ -110,7 +111,7 @@ State.GamePlay.prototype = {
 			fish.body.setSize(fish.width, fish.height-10, 0, 0);
 			fish.anchor.setTo(.5, .5);
 			if(lastY==null)
-				lastY = playerY-(this.player.height+fish.height)/2;
+				lastY = 345;
 			else
 				lastY -= fish.height;
 			fish.reset(fishX, lastY);
@@ -119,12 +120,12 @@ State.GamePlay.prototype = {
 		lastY = 1000;
 	},
 
-	ticar: function(){
+	ticar: function(player, fish){
 		if(ticou){
 			if(++frame > 2)
-				this.fish2.frame = 2;
+				fish.frame = 2;
 			else
-				this.fish2.frame = frame;
+				fish.frame = frame;
 			ticou = false;
 		}
 	},
@@ -135,8 +136,8 @@ State.GamePlay.prototype = {
 	},
 
     render: function (){
-    	/*game.debug.text(this.game.world.bounds.width,32,32);
-    	game.debug.text(this.game.world.bounds.height,32,64);*/
+    	game.debug.text(lastY,32,32);
+    	/*game.debug.text(this.game.world.bounds.height,32,64);*/
     	//game.debug.text(this.player.body.x,32,32);
     	//game.debug.text(this.player.body.y,32,64);
     	//game.debug.text(levelConfig.checkPoint.x,200,32);
