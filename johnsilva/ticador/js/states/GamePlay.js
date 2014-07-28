@@ -7,14 +7,15 @@ State.GamePlay = function (game) {
 State.GamePlay.prototype = {
 	preload: function () {
 		var cursors;
-		var playerX,playerY, fishX, frame,runY;
+		var playerX,playerY, fishXLeft,fishXRight, frame,runY;
 		var fishes, lastY;
 	},
 	create: function () {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		playerY = 400;
 		playerX = 100;
-		fishX = 120;
+		fishXLeft = 120;
+		fishXRight = 300;
 		frame = 0;
 		runY = 40;
 		lastY = null;
@@ -93,15 +94,20 @@ State.GamePlay.prototype = {
 		}, this);
 		fishes.forEach(function (f){
 			if( (f.y - (f.height/2)) >= Config.global.screen.height){
-				f.y = lastY + f.height + runY;
+				var posY = lastY + f.height + runY;
+				this.resetPosition(f, posY);
 				//frame = 0;
 				//f.frame = 0;
 			}
 		}, this);
 	},
 
-	renew: function(){
-		
+	resetPosition: function(fish, y){
+		var rnd = this.game.rnd.integerInRange(-10, 9);
+		if(rnd < 0)
+			fish.reset(fishXLeft, y);
+		else
+			fish.reset(fishXRight, y);
 	},
 
 	addFishes: function(){
@@ -114,7 +120,9 @@ State.GamePlay.prototype = {
 				lastY = 345;
 			else
 				lastY -= fish.height;
-			fish.reset(fishX, lastY);
+			
+			this.resetPosition(fish, lastY);
+
 			fishes.add(fish);
 		}
 		lastY = 1000;
