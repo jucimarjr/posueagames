@@ -39,6 +39,8 @@ GameSplash.prototype = {
 		
 		this.game.load.image('game-intro1', GameIntro1Properties.background);
 		this.game.load.image('game-intro2', GameIntro2Properties.background);
+		this.game.load.image('game-intro3', GameIntro3Properties.background);
+		this.game.load.image('game-intro4', GameIntro4Properties.background);				
 		this.game.load.image('game-over', GameOverProperties.background);
 		this.game.load.image('game-final', GameFinalProperties.background);
 
