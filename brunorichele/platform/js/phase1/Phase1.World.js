@@ -10,7 +10,6 @@ Phase1.World = {
         this.game.load.image('bg1fase1_test', 'assets/phase1/images/bg1fase1_3000-2000.jpg');
         this.game.load.image('bg2fase1_test', 'assets/phase1/images/bg2fase1_3000-2000.png');
         this.game.load.image('bg3fase1_test', 'assets/phase1/images/bg3fase1_3000-2000.png');
-        this.game.load.spritesheet('door', 'assets/phase1/images/door_4320-255-32.png', 135, 255);
         this.game.load.spritesheet('smoke_test', 'assets/phase1/images/smoke_12000-300-4.png', 3000, 300);
         this.game.load.tilemap('map1_test', 'assets/phase1/map.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.audio('bgmusic', "assets/audio/light_the_way_mixdown.mp3");
@@ -43,35 +42,10 @@ Phase1.World = {
 		return this.bgmusic;
 	},	
     createObjects : function() {
-        door = this.game.add.sprite(2670, 140, 'door');
-        door.animations.add('default', [0, 1, 2, 3, 4, 5]);
-        finishAnim = door.animations.add('finish', [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]);
-        finishAnim.onStart.add(this.finishAnimStart, this);
-        finishAnim.onComplete.add(this.finishAnimComplete, this);
-
-        door.animations.play('default', 6, true);
     },
     collision : function(player) {
         groundLayer = this.game.physics.p2.convertCollisionObjects(this.mymap, 'ground');
     },
     update : function(player) {
-        if (this.checkFinish(player.player, door)) {
-            console.log('terminou!!!');
-            player.player.kill();
-            player.player.reset(3000, 0);
-            door.animations.stop();
-            door.animations.play('finish', 6, true);
-        }
-    },
-    checkFinish : function(player, door) {
-        var playerBounds = player.getBounds();
-        var doorBounds = door.getBounds();
-        return Phaser.Rectangle.intersects(playerBounds, doorBounds);
-    },
-    finishAnimStart : function(sprite, animation) {
-        animation.loop = false;
-    },
-    finishAnimComplete : function(sprite, animation) {
-        console.log('muda de fase');
     }
 }
