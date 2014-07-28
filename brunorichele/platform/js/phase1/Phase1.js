@@ -24,6 +24,7 @@ State.Phase1.prototype = {
     },
     update : function() {
         this.control.update();
+        Phase1.World.update(this.player);
     //    Phase1.Trap.update(this.player);
     }
 }
