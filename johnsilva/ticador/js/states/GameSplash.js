@@ -41,7 +41,7 @@ State.GameSplash.prototype = {
 		*/
 		//Game
 		this.game.load.spritesheet('player', 'assets/sprites/player_200-160-2.png', 200,150,2);
-		this.game.load.spritesheet('fish2', 'assets/sprites/fish2_90-120-3.png',90,120,3);
+		this.game.load.spritesheet('fish2', 'assets/sprites/fish2_90-120-4.png',90,120,4);
 		
 		this.game.load.image('bg', 'assets/bg/bg_450-600.png');
 		

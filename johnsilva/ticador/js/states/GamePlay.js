@@ -94,7 +94,7 @@ State.GamePlay.prototype = {
 		}, this);
 		fishes.forEach(function (f){
 			if( (f.y - (f.height/2)) >= Config.global.screen.height){
-				var posY = lastY + f.height + runY;
+				var posY = lastY + f.height + runY + 40;
 				this.resetPosition(f, posY);
 				//frame = 0;
 				//f.frame = 0;
@@ -117,7 +117,7 @@ State.GamePlay.prototype = {
 			fish.body.setSize(fish.width, fish.height-10, 0, 0);
 			fish.anchor.setTo(.5, .5);
 			if(lastY==null)
-				lastY = 345;
+				lastY = 325;
 			else
 				lastY -= fish.height;
 			
@@ -130,8 +130,8 @@ State.GamePlay.prototype = {
 
 	ticar: function(player, fish){
 		if(ticou){
-			if(++frame > 2)
-				fish.frame = 2;
+			if(++frame > 3)
+				fish.frame = 3;
 			else
 				fish.frame = frame;
 			ticou = false;
