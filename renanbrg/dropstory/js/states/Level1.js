@@ -14,22 +14,24 @@ State.Level1 = function (game) {
     this.hotsandMaterial = null;
     this.energy = null;
     this.smokeEmitter = null;
-    this.haveEnergy = false;
+    this.haveEnergy;
     this.smokeTimer = null;
     this.redSand = null;
     this.dropCollisionGroup = null;
     this.crabCollisionGroup = null;
-    this.hud = new HUD(this.game);
-    this.forceSlidingStraw = false;
-    this.onAir = false;
-    this.hotSandTimerActivated = false;
-    this.dropIsInvincible = false;
+    this.onAir;
+    this.hotSandTimerActivated;
+    this.dropIsInvincible;
+    this.energyState;
     this.lastDropTimer = null;
     this.decreaseDropTimer = null;
     this.disableSundropTimer = null;
 
     this.countCall = 0; //count how many times the collision function is called.
     this.updateRate = 0;
+
+    this.jumpKey = null;
+    this.pauseKey = null;
 };
 State.Level1.prototype = {
 	preload: function () {
@@ -38,16 +40,29 @@ State.Level1.prototype = {
 		// Player
 		try {
 			this.drop = new Character(this.game, 'drop',
-					'assets/spritesheets/drop_4590-60.png', [51, 60]);
+					'assets/spritesheets/drop_4590-60.png', [51, 60], 0);
 		} catch(exception) {
 			console.log(exception.toString());
 		}
         this.drop.preload();
-
-        this.hud.preload();
 	},
 	create: function () {
 		"use strict";
+
+        this.haveEnergy = false;
+        this.onAir = false;
+        this.hotSandTimerActivated = false;
+        this.dropIsInvincible = false;
+        this.energyState = false;
+
+        this.game.onPause.add(this.pauseGame, this);
+        this.game.onResume.add(this.resumeGame, this);
+
+        this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.jumpKey.onDown.add(this.jumpPlayer, this);
+
+        this.pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        this.pauseKey.onDown.add(this.startPauseGameEvent, this);
 
 		var background;
 		background = this.game.add.tileSprite(0, 0, 4480, 544, 'gameplay-bg');
@@ -91,9 +106,9 @@ State.Level1.prototype = {
 		this.setupMolecule();
 		this.setupPlayer(100, 100);
 		this.setupSmokeEmitter(1550, this.game.height-80);
+        this.setupUmbrella(4740, 280);
 
-        this.hud.create();
-
+        hud.create();
 
         // Sounds
         this.jumpSound = this.game.add.audio("jump");
@@ -102,10 +117,14 @@ State.Level1.prototype = {
        // this.inicioSound.stop();
         this.mainSound.loop = true;
         this.mainSound.play();
+
+        this.countCall = 0;
 	},
 	update: function () {
 		"use strict";
-		this.hud.updateFPS();
+
+		hud.updateFPS();
+
 		this.handleKeyDown();
 		this.isOnAir();
 		this.drop.playerAnimations();
@@ -137,22 +156,76 @@ State.Level1.prototype = {
             }
 	    }
 	},
+    pauseGame: function() {
+        hud.showPauseImage();
+    },
+    resumeGame: function() {
+        "use strict";
+
+        this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.jumpKey.onDown.add(this.jumpPlayer, this);
+
+        this.pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        this.pauseKey.onDown.add(this.startPauseGameEvent, this);
+
+        hud.hidePauseImage();
+    },
+    jumpPlayer: function() {
+        if (this.game.paused == true) {
+            return;
+        }
+
+        if (this.touchingDown(this.drop.getSpriteObject().body)) {
+            if (this.energyState == false) {
+                this.drop.jump(700);
+                this.jumpSound.play();
+            } else {
+                this.drop.jump(1500);
+                this.jumpSound.play();
+                this.smokeEmitter.start(false, 3000, 50);
+                this.haveEnergy = true;
+                var self = this;
+                if (this.smokeTimer != null) {
+                    this.smokeTimer.stop();
+                }
+                this.smokeTimer = this.game.time.create();
+                this.smokeTimer.add(2000, function() {
+                        self.stopSmoke();
+                }, 2000);
+                this.smokeTimer.start();
+                this.energyState = false;
+                this.drop.playerstate = 'normal';
+            }
+        }
+    },
+    startPauseGameEvent: function() {
+        this.game.paused = !this.game.paused;
+    },
+    clearTimers: function() {
+        if (this.lastDropTimer != null) {
+            this.lastDropTimer.destroy();
+        }
+        if (this.disableSundropTimer != null) {
+            this.disableSundropTimer.destroy();
+        }
+        if (this.decreaseDropTimer != null) {
+            this.decreaseDropTimer.destroy();
+        }
+        if (this.smokeTimer != null) {
+            this.smokeTimer.destroy();
+        }
+    },
 	handleKeyDown: function () {
 		"use strict";
 
 		if ( this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
-	        if (this.forceSlidingStraw == true) {
-	            this.drop.moveLeft(1);
-	            this.drop.getSpriteObject().body.data.force[0] = -1;
-	        } else {
-				if (!this.onAir) {
-					this.drop.animestate = 'right';
-				} else {
-					this.drop.animestate = 'jumpright';
-				}
-				this.drop.moveRight(300);
-	        }
-	    } else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
+            if (!this.onAir) {
+                this.drop.animestate = 'right';
+            } else {
+                this.drop.animestate = 'jumpright';
+            }
+            this.drop.moveRight(300);
+		} else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
 			if (!this.onAir) {
 				this.drop.animestate = 'left';
 			} else {
@@ -162,13 +235,6 @@ State.Level1.prototype = {
 		}  else {
 			this.drop.stop();
 			this.drop.animestate = 'stop';
-		}
-
-		if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) {
-			if (this.touchingDown(this.drop.getSpriteObject().body)) {
-				this.drop.jump(700);
-				this.jumpSound.play();
-			}
 		}
 	},
 	setupPhysics: function () {
@@ -191,6 +257,7 @@ State.Level1.prototype = {
 		this.urchinsCG = game.physics.p2.createCollisionGroup();
 		this.hotsandCG = game.physics.p2.createCollisionGroup();
         this.glassCG = game.physics.p2.createCollisionGroup();
+        this.umbrellaCG = game.physics.p2.createCollisionGroup();
 
 		// Create and Setup Material
 	    this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
@@ -278,7 +345,7 @@ State.Level1.prototype = {
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.moleculeCG,
-                this.urchinsCG, this.hotsandCG, this.glassCG,
+                this.urchinsCG, this.hotsandCG, this.glassCG, this.umbrellaCG,
                 this.coveredStrawCG]);
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
@@ -289,6 +356,8 @@ State.Level1.prototype = {
         dropSprite.body.createGroupCallback(this.glassCG, this.restartGame,
                 this);
         dropSprite.body.createGroupCallback(this.coveredStrawCG, this.insideStraw, this);
+        dropSprite.body.createGroupCallback(this.umbrellaCG,
+                this.startUmbrellaAnimation, this);
 	},
 //	setupShell: function (posX, posY) {
 //		 // Create sea shell
@@ -396,7 +465,7 @@ State.Level1.prototype = {
         this.molecule.physicsBodyType = Phaser.Physics.P2JS;
 
         this.molecule.create(200, 310, 'lifedrop');
-        this.molecule.create(1750, this.game.world.height-210, 'energy');
+        this.molecule.create(1700, this.game.world.height-210, 'energy');
         this.molecule.create(2920, this.game.world.height - 160, 'sundrop');
 
         for (var i = 0; i < this.molecule.length; i++) {
@@ -471,6 +540,17 @@ State.Level1.prototype = {
         urchin.body.static = true;
         urchin.body.sprite.name = 'urchin';
         urchin.body.collides([this.playerCG, this.groundCG]);
+    },
+    setupUmbrella: function(posX, posY) {
+        this.umbrella = this.game.add.sprite(posX, posY, 'umbrella');
+        this.game.physics.p2.enableBody(this.umbrella);
+        this.umbrella.body.fixedRotation = true;
+        this.umbrella.body.static = true;
+        this.umbrella.body.setCollisionGroup(this.umbrellaCG);
+        this.umbrella.body.collides([this.playerCG]);
+        var umbrellaAnimation = this.umbrella.animations.add('openUmbrella',
+                [0, 1, 2], 10, false);
+        umbrellaAnimation.onComplete.add(this.nextLevel, this);
     },
 	// Funcao Magica!!! Deve existir outro jeito!
 	touchingDown: function (someone) {
@@ -553,7 +633,7 @@ State.Level1.prototype = {
 			if (body2.sprite.name == 'lifedrop') {
 				console.log('Player get the life drop!!!!');
 				this.powUpSound.play();
-				this.hud.increaseDropBar();
+                hud.increaseDropBar();
 				body2.sprite.kill();
 				body2.hasCollided = true;
 				this.drop.playersize = 'big';
@@ -570,18 +650,7 @@ State.Level1.prototype = {
     drinkEnergy: function(body1, body2) {
         console.log('Player get the energy drop!!!!');
 
-        this.drop.jump(1500);
-        this.jumpSound.play();
-        this.smokeEmitter.start(false, 3000, 50);
-        this.haveEnergy = true;
-        var self = this;
-        if (this.smokeTimer != null) {
-            clearTimeout(this.smokeTimer);
-            this.smokeTimer = null;
-        }
-        this.smokeTimer = setTimeout(function() {
-                self.stopSmoke();
-        }, 2000);
+        this.energyState = true;
         this.drop.playerstate = 'energy';
     },
     hitSunscreenDrop: function (body1, body2) {
@@ -592,7 +661,8 @@ State.Level1.prototype = {
         body2.hasCollided = true;
         this.dropIsInvincible = true;
         var self = this;
-        this.disableSundropTimer = setTimeout(function() {
+        this.disableSundropTimer = this.game.time.create();
+        this.disableSundropTimer.add(5500, function() {
             self.dropIsInvincible = false;
             self.drop.playerstate = 'normal';
             // Check if the player is over the hot sand
@@ -601,7 +671,8 @@ State.Level1.prototype = {
                 self.countCall = 0;
                 self.killDrop(body1, null);
             }
-        }, 5500);
+        }, this);
+        this.disableSundropTimer.start();
 	},
 	killDrop: function (body1, body2) {
         if (this.dropIsInvincible) {
@@ -612,31 +683,35 @@ State.Level1.prototype = {
         if (this.countCall == 1 && !this.hotSandTimerActivated) {
             console.log('moreeeeeeeeeeeeeeeeeu!!! killlDrop');
             if (this.drop.playersize == 'big') {
-                this.hud.decreaseDropBar();
+                hud.decreaseDropBar();
                 this.haveEnergy = true;
                 this.smokeEmitter.on = true;
                 this.smokeEmitter.start(false, 3000, 50);
                 var self = this;
-                if (this.hud.getDropCounter() == 0) {
-                    this.lastDropTimer = setTimeout(function(time) {
+                if (hud.getDropCounter() == 0) {
+                    this.lastDropTimer = this.game.time.create();
+                    this.lastDropTimer.add(2000, function() {
                         self.hotSandTimerActivated = false;
                         if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
                                 40, self.hotSandLayer)) {
                             self.restartGame();
                         }
                         self.countCall = 0;
-                    }, 2000);
+                    }, this);
+                    this.lastDropTimer.start();
                     this.drop.playersize = 'small';
                     this.hotSandTimerActivated = true;
                 } else {
-                    this.decreaseDropTimer = setTimeout(function() {
+                    this.decreaseDropTimer = this.game.time.create();
+                    this.decreaseDropTimer.add(2000, function() {
                         self.hotSandTimerActivated = false;
                         self.countCall = 0;
                         if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
                                 40, self.hotSandLayer)) {
                             self.killDrop(body1, null);
                         }
-                    }, 2000);
+                    }, this);
+                    this.decreaseDropTimer.start();
                     this.hotSandTimerActivated = true;
                 }
             } else if (this.drop.playersize == 'small') {
@@ -650,8 +725,7 @@ State.Level1.prototype = {
 	stopSmoke: function() {
 		this.haveEnergy = false;
 		this.smokeEmitter.on = false;
-		this.smokeTimer = null;
-		this.drop.playerstate = 'normal';
+		this.smokeTimer.destroy();
 	},
 	moveCrab: function (crab) {
 		if (crab.name == "crab1") {
@@ -674,9 +748,6 @@ State.Level1.prototype = {
 				//this.crab.body.velocity.x = -100;
 			}
 		}
-	},
-	crabKillDrop: function () {
-		this.drop.kill();
 	},
     insideStraw: function() {
         var dropSprite = this.drop.getSpriteObject();
@@ -721,20 +792,26 @@ State.Level1.prototype = {
 		this.game.state.start('credits-state');
 	},
     restartGame: function () {
-        clearTimeout(this.lastDropTimer);
-        clearTimeout(this.decreaseDropTimer);
-        clearTimeout(this.disableSundropTimer);
-        this.countCall = 0;
+    	this.clearTimers();
         this.hotSandTimerActivated = false;
         this.drop.kill();
-        this.hud.decreaseLife();
-        if (this.hud.getLifeCounter() == 0) {
+        hud.initDropCounter();
+        hud.decreaseLife();
+        if (hud.getLifeCounter() == 0) {
             this.mainSound.stop();
             this.game.state.start('gameover-state');
-            this.hud.lifeCounter = 3;
         } else {
             this.mainSound.stop();
             this.game.state.restart();
         }
+    },
+    startUmbrellaAnimation: function(body1, body2) {
+        var umbrellaSprite = body2.sprite;
+        umbrellaSprite.animations.play('openUmbrella');
+    },
+    nextLevel: function() {
+        this.clearTimers();
+        this.mainSound.stop();
+        this.game.state.start('level2preloader-state');
     }
 };

@@ -21,9 +21,12 @@
  <tileset firstgid="74" name="bird" tilewidth="54" tileheight="50">
   <image source="images/bird.jpeg" width="54" height="50"/>
  </tileset>
+ <tileset firstgid="75" name="fakeplatform_160-80" tilewidth="40" tileheight="40">
+  <image source="images/fakePlatform_160-80.png" width="160" height="80"/>
+ </tileset>
  <layer name="irregularlayer" width="192" height="15">
   <data encoding="base64" compression="zlib">
-   eJztzstWgXEYRvHvBjqTSA4hQjoplEKo+7+j9rDVMvV/v8Hea/0mz+jJMjMzMzMzMzOzfHWAQxzhGCc4xVnkKbNEFVDEOUq4QBmVyFNmibpEFVeooY4GmoGfzFJ1jRba6OAGXfQiT5kl6hZ9DDDEHUa4jzxllqgHPOIJzxjjBa+Rp8wSNcEUM7zhHXN8RJ4y20NbfOPnz/aJBZZY4QtrbFKf+9eur1Hl6YuZmeWzXxHaC1M=
+   eJztzstaAWAURmE3EKKUotJJIsecKocOuP87soYGGvq3wVrP8072ZH+ZjJmZmZmZmZnZcXWCLHLI4xQFFCNHmSXqDOco4QKXKOMqcpRZoq5RQRU3uMUdaoGbzFJ1jwc84gnPqOMlcpRZohp4RRMtvKGNTuQos0R10UMfA7xjiFHkKLNEjTHBFB/4xBdmkaPMDtAKa2x2bnMssMQ3fvCLv9Tj/mnf5qjfkVvMzOy42wIYXQwl
   </data>
  </layer>
  <layer name="hotsandlayer" width="192" height="15">
@@ -31,23 +34,19 @@
    eJztw7ENAAAMAiDX/v9w7zBCQgIAAAAAAAAAAAB9TofDsgecQgbB
   </data>
  </layer>
+ <layer name="fakeplatform" width="192" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt190KwCAIgNHeb/97/4eZd4MYZCwT9DvgRRBYRpGlAAAAADYWiVVik9id14I5OPPXIXFKXBL3hHya2o+ag29/zzxT7UfvVVP7UXNgI1PtM+01ikzvM1DzfrPq+9caA5HU9681BgDoeP8fvPMjN+//g3X+3v6B/gKR9PYP9BcAongAtgYsKQ==
+  </data>
+ </layer>
  <layer name="mainlayer2" width="192" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt19EKgzAMhWE33Zzv/8Lmpkx0mEiS6uz/QS5EW8oxYOw6AAAAIMdD6inVSw0nnwV18M6/XlJvqVHq49yr5LqXqSX7qGfwm/edZ2ev7e+9H32eouS6l6kl+6hnkCM7e21/7/0lS2/Ta/+Fb6Nd7d5m/sl39nyzXq9dt4T5Z+tq/eHNdr1eu0bb6A/ALno+qb0e8IieT2qv1xz9f7ja/Ah4HP1/YH68l4miGq4ZWPYK7w==
+   eJzt1UsOgzAMBUAo9MP9L4yXFSvaxEoIM9Jb2SvLlqcJAAAAGN0ceUSWyJpQh549I6/IO/JJqH9zK9zZL7dSw5l7q9XDf8w2z5l7q9VzFcd9a71/I82W/h33zf5BntL/0vo/QYnS/+I/AeTYRG6cHeiGCHE=
   </data>
  </layer>
  <objectgroup name="basic-shapes" width="192" height="15">
   <object x="4118" y="519">
    <polyline points="0,0 14,-15 27,-27 42,-35 57,-39 75,-39 87,-35 101,-27 114,-15 120,-4 123,1"/>
-  </object>
-  <object x="5840" y="519">
-   <polyline points="0,0 10,-13 22,-24 36,-34 51,-39 68,-39 80,-36 91,-32 101,-26 110,-17 116,-8 121,-1"/>
-  </object>
-  <object x="7240" y="519">
-   <polyline points="0,0 8,-12 16,-20 28,-29 41,-34 54,-38 73,-38 88,-34 99,-27 108,-21 115,-13 121,-2"/>
-  </object>
-  <object x="7362" y="518">
-   <polyline points="0,0 1,2"/>
   </object>
   <object x="4377" y="262">
    <polyline points="0,0 17,259 28,258 11,1 2,0"/>
@@ -60,6 +59,15 @@
   </object>
   <object x="4534" y="260">
    <polyline points="0,0 11,-39 17,-43 66,-42 66,-55 12,-56 0,-48 -14,2 0,2"/>
+  </object>
+  <object x="5920" y="518">
+   <polyline points="0,0 6,-9 18,-19 30,-27 42,-33 57,-37 75,-36 89,-32 101,-25 109,-18 118,-7 121,0"/>
+  </object>
+  <object x="7160" y="519">
+   <polyline points="0,0 7,-9 15,-17 25,-25 38,-33 53,-37 68,-37 80,-37 93,-32 102,-26 112,-15 117,-7 121,-1"/>
+  </object>
+  <object x="7319" y="521">
+   <polyline points="0,0 9,-13 19,-22 29,-29 39,-35 51,-39 61,-40 78,-39 89,-35 99,-29 109,-21 117,-11 124,-1"/>
   </object>
  </objectgroup>
  <objectgroup name="crab-objects" width="192" height="15">
@@ -78,21 +86,21 @@
   <object x="4403" y="263" width="115" height="17"/>
  </objectgroup>
  <objectgroup name="seaurchins" width="192" height="15">
-  <object gid="72" x="3643" y="237"/>
-  <object gid="72" x="3696" y="239"/>
-  <object gid="72" x="3750" y="238"/>
-  <object gid="72" x="4765" y="292"/>
-  <object gid="72" x="4817" y="292"/>
-  <object gid="72" x="4871" y="293"/>
-  <object gid="72" x="5127" y="298"/>
-  <object gid="72" x="5179" y="297"/>
-  <object gid="72" x="5232" y="293"/>
-  <object gid="72" x="5487" y="300"/>
-  <object gid="72" x="5545" y="297"/>
-  <object gid="72" x="5600" y="293"/>
-  <object gid="72" x="6403" y="528"/>
-  <object gid="72" x="6761" y="530"/>
-  <object gid="72" x="6036" y="522"/>
-  <object gid="72" x="7124" y="526"/>
+  <object gid="72" x="3662" y="264"/>
+  <object gid="72" x="3713" y="266"/>
+  <object gid="72" x="3767" y="264"/>
+  <object gid="72" x="4784" y="304"/>
+  <object gid="72" x="4835" y="306"/>
+  <object gid="72" x="4887" y="306"/>
+  <object gid="72" x="5144" y="307"/>
+  <object gid="72" x="5196" y="308"/>
+  <object gid="72" x="5250" y="307"/>
+  <object gid="72" x="5504" y="306"/>
+  <object gid="72" x="5556" y="306"/>
+  <object gid="72" x="5605" y="304"/>
+  <object gid="72" x="6403" y="561"/>
+  <object gid="72" x="6761" y="563"/>
+  <object gid="72" x="6036" y="558"/>
+  <object gid="72" x="7121" y="559"/>
  </objectgroup>
 </map>

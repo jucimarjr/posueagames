@@ -84,9 +84,8 @@
             }
 
             this.audio = this.game.add.audio(this.audioAsset);
-            this.audio.volume = 0.8;
-            this.audio.loop = true;
-            this.audio.play();
+            this.audio.addMarker('bg', 0, 67.3, 0.8, true);
+            this.audio.play('bg');
 
             this.hud = new HUD(this.game);
             this.hud.init(this.totalItems, (this.boss) ? this.boss.lifes : -1);
@@ -161,11 +160,24 @@
             this.spineLayer.destroy();
             this.escapeLayer.destroy();
 
-            this.player.sprite.destroy();
+            this.player.destroy();
+            this.enemies.destroy();
 
-            this.enemies.sprites.destroy();
+            if (this.boss) {
+                this.boss.destroy();
+            }
 
             this.audio.stop();
+
+            this.bg = null;
+            this.map = null;
+            this.layer = null;
+            this.itemLayer = null;
+            this.spineLayer = null;
+            this.escapeLayer = null;
+            this.player = null;
+            this.enemies = null;
+            this.boss = null;
         },
 
         collectItem: function (player, tile) {
@@ -206,6 +218,7 @@
             }
 
             this.player.die();
+            this.player.shurikenAudio.play('hit');
 
             this.hud.updateLifes(-1);
 
@@ -217,7 +230,9 @@
             
             } else {
                 setTimeout(function(){
-                    self.player.revive();
+                    if (self.player) {
+                        self.player.revive();
+                    }
                 }, 1200);
             }
         },
@@ -226,6 +241,7 @@
             shuriken.kill();
             enemy.kill();
             this.hud.updateScore(1);
+            this.player.shurikenAudio.play('hit');
         },
 
         killBoss: function (boss, shuriken) {
@@ -240,6 +256,7 @@
 
         shurikenCollision: function (shuriken, layer) {
             shuriken.kill();
+            this.player.shurikenAudio.play('hit');
         }
     };
 

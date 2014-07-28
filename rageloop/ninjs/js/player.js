@@ -9,6 +9,7 @@
         this.shurikenDelay = 400;
         this.shurikenAudio = null;
         this.dead = false;
+        this.bloodParticles = null;
     }
 
     Player.prototype = {
@@ -39,6 +40,8 @@
 
             this.shurikenAudio = this.game.add.audio('shuriken_sound');
             this.shurikenAudio.volume = 0.6;
+            this.shurikenAudio.addMarker('throw', 0, 0.5);
+            this.shurikenAudio.addMarker('hit', 0.5, 0.5);
 
             this.bloodParticles = new Blood(this.game);
             this.bloodParticles.init();
@@ -60,7 +63,7 @@
             shuriken.checkWorldBounds = true;
             shuriken.outOfBoundsKill = true;
 
-            this.shurikenAudio.play();
+            this.shurikenAudio.play('throw');
 
             this.shurikenTimer = this.game.time.now;
 
@@ -149,7 +152,10 @@
 
         revive: function() {
             this.dead = false;
-            this.sprite.animations.play('idle');
+
+            if (this.sprite) {
+                this.sprite.animations.play('idle');
+            }
         },
 
         turnLeft: function() {
@@ -162,6 +168,19 @@
             if (this.sprite.scale.x < 0) {
                 this.sprite.scale.x *= -1;
             }
+        },
+
+        destroy: function () {
+            this.sprite.destroy();
+            this.shurikens.destroy();
+
+            if (this.bloodParticles) {
+                this.bloodParticles.destroy();
+            }
+
+            this.sprite = null;
+            this.shurikens = null;
+            this.bloodParticles = null;
         }
     };
 

@@ -102,6 +102,8 @@ Game.MainMenuState.prototype = {
 	},
 
 	navigateToGameplay: function () {
+		Facebook.getLoginStatus();
+
 		var self = this;
         self.game.input.keyboard.onDownCallback = null;
         Utils.fadeInScreen(this.game, TweensConsts.fadeFillStyle, TweensConsts.fadeInDuration, function () {

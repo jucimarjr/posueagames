@@ -12,9 +12,12 @@
  * @param {string} assetPath - The path in the file system for the asset.
  * @param {Array int} - Dimensions of the asset: [width, height]. If not given,
  * assumes that the asset is not animated.
- *
+ * @param {int} dropCounter - the total of drops in the HUD's drop counter. If
+ * it is equal to zero, then the character starts with the small drop animation.
+ * otherwise, it starts with the big drop animation.
  */
-Character = function(game, characterId, assetPath, assetDimensions) {
+Character = function(game, characterId, assetPath, assetDimensions,
+        dropCounter) {
     "use strict";
 
     this.game = game;
@@ -22,7 +25,11 @@ Character = function(game, characterId, assetPath, assetDimensions) {
     this.id = characterId;
     this.assetPath = assetPath;
     this.animestate = 'stop';  //stores if player is walk left or right, jump, die
-    this.playersize = 'small'; //stores if player is small or big
+    if (dropCounter == 0) {
+        this.playersize = 'small'; //stores if player is small or big
+    } else {
+        this.playersize = 'big';
+    }
     this.playerstate = 'normal'; //stores if player is normal, with sunscreen, with energy
     this.playershape = null;
     this.userDead = false;
@@ -30,7 +37,7 @@ Character = function(game, characterId, assetPath, assetDimensions) {
     this.isAnimated = false;
     this.width = null;
     this.height = null;
-    
+
     if (typeof assetDimensions === 'undefined') {
         this.isAnimated = false;
     } else if (assetDimensions.length == 2) {
@@ -95,49 +102,49 @@ Character.prototype = {
             throw 'Bad paramater: callback must be a function';
         }
     },
-    
+
     setCharacterInicialValues: function () {
 		this.character.smoothed = false;
     	this.character.body.fixedRotation = true;
     	this.playershape = this.character.body.setCircle(18,0,4);
-    	
+
     	// normal state
         this.character.animations.add('leftsmallnormal', [4,5,6], 10, true);
-        this.character.animations.add('rightsmallnormal', [8,9,10], 10, true);                                
-        this.character.animations.add('jumpleftsmallnormal', [3], 10, false);                
+        this.character.animations.add('rightsmallnormal', [8,9,10], 10, true);
+        this.character.animations.add('jumpleftsmallnormal', [3], 10, false);
         this.character.animations.add('jumprightsmallnormal', [11], 10, false);
-        this.character.animations.add('stopsmallnormal', [7], 10, true);         
+        this.character.animations.add('stopsmallnormal', [7], 10, true);
         this.character.animations.add('leftbignormal', [19,20,21], 10, true);
         this.character.animations.add('rightbignormal', [23,24,25], 10, true);
-        this.character.animations.add('jumpleftbignormal', [18], 10, true);                
+        this.character.animations.add('jumpleftbignormal', [18], 10, true);
         this.character.animations.add('jumprightbignormal', [26], 10, true);
         this.character.animations.add('stopbignormal', [22], 10, true);
 
 		// energy state
         this.character.animations.add('leftsmallenergy', [34,35,36], 10, true);
-        this.character.animations.add('rightsmallenergy', [38,39,40], 10, true);                                
-        this.character.animations.add('jumpleftsmallenergy', [33], 10, false);                
+        this.character.animations.add('rightsmallenergy', [38,39,40], 10, true);
+        this.character.animations.add('jumpleftsmallenergy', [33], 10, false);
         this.character.animations.add('jumprightsmallenergy', [41], 10, false);
-        this.character.animations.add('stopsmallenergy', [37], 10, true);                 
+        this.character.animations.add('stopsmallenergy', [37], 10, true);
         this.character.animations.add('leftbigenergy', [49,50,51], 10, true);
         this.character.animations.add('rightbigenergy', [53,54,55], 10, true);
-        this.character.animations.add('jumpleftbigenergy', [48], 10, true);                
+        this.character.animations.add('jumpleftbigenergy', [48], 10, true);
         this.character.animations.add('jumprightbigenergy', [56], 10, true);
         this.character.animations.add('stopbigenergy', [52], 10, true);
-        
+
         // sunscreen state
         this.character.animations.add('leftsmallsunscreen', [64,65,66], 10, true);
-        this.character.animations.add('rightsmallsunscreen', [68,69,70], 10, true);                                
-        this.character.animations.add('jumpleftsmallsunscreen', [63], 10, false);                
+        this.character.animations.add('rightsmallsunscreen', [68,69,70], 10, true);
+        this.character.animations.add('jumpleftsmallsunscreen', [63], 10, false);
         this.character.animations.add('jumprightsmallsunscreen', [71], 10, false);
-        this.character.animations.add('stopsmallsunscreen', [67], 10, true);                 
+        this.character.animations.add('stopsmallsunscreen', [67], 10, true);
         this.character.animations.add('leftbisunscreen', [79,80,81], 10, true);
         this.character.animations.add('rightbigsunscreen', [83,84,85], 10, true);
-        this.character.animations.add('jumpleftbigsunscreen', [78], 10, true);                
+        this.character.animations.add('jumpleftbigsunscreen', [78], 10, true);
         this.character.animations.add('jumprightbigsunscreen', [86], 10, true);
         this.character.animations.add('stopbigsunscreen', [82], 10, true);
 	},
-	
+
 	playerAnimations: function () {
 		if (this.animestate === 'jumpTop') { this.character.animations.stop(); this.character.frame = 2;}
 			else if (this.animestate === 'jumpright')  { this.character.animations.play('jumpright'+this.playersize+this.playerstate);}
@@ -188,7 +195,7 @@ Character.prototype = {
     jump: function(jumpHeight) {
 		this.character.body.moveUp(jumpHeight);
     },
-    
+
     /**
      * Make the character stop.
      *
@@ -222,7 +229,7 @@ Character.prototype = {
      */
     kill: function() {
 		this.character.kill();
-	},    
+	},
 
     /**
      * Set a horizontal velocity for the character.

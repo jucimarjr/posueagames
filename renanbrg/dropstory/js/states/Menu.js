@@ -11,6 +11,7 @@ State.Menu.prototype = {
     preload: function() {
         "use strict";
 
+        hud.preload();
         this.game.load.image('level1preloaderbg', Config.preloaderLevel1.dir);
         this.game.load.spritesheet('button-back', Config.Menu.buttonBack.dir,
                 Config.Menu.buttonBack.width, Config.Menu.buttonBack.height);
@@ -35,6 +36,8 @@ State.Menu.prototype = {
         if (this.inicioSound == null) {
             this.inicioSound = this.game.add.audio('som-inicio');
             this.inicioSound.loop = true;
+        }
+        if (!this.inicioSound.isPlaying) {
             this.inicioSound.play();
         }
     },
@@ -42,7 +45,8 @@ State.Menu.prototype = {
         "use strict";
 
         this.inicioSound.stop();
-        this.game.state.start('level2preloader-state');
+        hud.init();
+        this.game.state.start('level1preloader-state');
     },
     clickHowToPlay: function () {
         "use strict";

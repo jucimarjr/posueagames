@@ -7,9 +7,11 @@ State.Phase3.prototype = {
     preload : function() {
     },
     create : function() {
+        Phase3.World.createWorld();
         Phase3.World.createBackground();
-        this.player.create(500, 750);
+        this.player.create(/*500*/7140, 750);
         this.player.player.body.mass = 100;
+        Phase3.World.createObjects();
         Phase3.World.createForeground();
 
         Phase3.World.collision();

@@ -1,40 +1,30 @@
-
-State.Phase1 = function (game){
-    "use strict";
+State.Phase1 = function(game) {
     this.game = game;
-	this.player = new Player(game);	
-};
+    this.player = new Player(game);
+}
 
 State.Phase1.prototype = {
-    preload: function () {
-        "use strict";
+    preload : function() {
     },
-    create: function() {
-        "use strict";
-
-		Phase1.World.createBg();
-		Phase1.Trap.create();
-		Phase1.Enemy.create();		
+    create : function() {
+        Phase1.World.createWorld();
+        Phase1.World.createBackground();
         this.player.create(50, 1600);
-	    Phase1.Rock.create();
-	    Phase1.Door.create();
-		Phase1.World.createBgAlpha();
-		Phase1.Smoke.create();
-		//Phase1.Smoke.collide(this.player.player);
-		Phase1.Door.collide(this.player.player);
-		
-		//Phase1.World.createSound(this.game);
+        this.player.player.body.mass = 100;
+        Phase1.World.createObjects();
+     //   Phase1.Trap.createTrap(Phase1.World.mymap)
+      //  Phase1.Enemy.createEnemy(Phase1.World.mymap);	 
+        Phase1.World.createForeground();
+		Phase1.World.createSound();
 
-        //misc defs
+        Phase1.World.collision();
+
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.control = new Control(this.game, this.player, this.cursors);
-		
-		Config.pause(this.game);
     },
-    update: function(){
-        "use strict";
-        Config.screen.resize(this.game); 
-
-		this.control.update();
-    }	
-};
+    update : function() {
+        this.control.update();
+        Phase1.World.update(this.player);
+    //    Phase1.Trap.update(this.player);
+    }
+}
