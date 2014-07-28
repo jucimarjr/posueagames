@@ -43,27 +43,35 @@ Phase1.World = {
 		return this.bgmusic;
 	},	
     createObjects : function() {
-        door = this.game.add.group();
-        door.enableBody = true;
-        this.mymap.createFromObjects('door', 3, 'door', 0, true, false, door)
+        door = this.game.add.sprite(2670, 140, 'door');
+        door.animations.add('default', [0, 1, 2, 3, 4, 5]);
+        finishAnim = door.animations.add('finish', [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]);
+        finishAnim.onStart.add(this.finishAnimStart, this);
+        finishAnim.onComplete.add(this.finishAnimComplete, this);
 
-        door.callAll('animations.add', 'animations', 'default', [0, 1, 2, 3, 4, 5], 6, true);
-        door.callAll('animations.add', 'animations', 'finish', [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], 6, true);
-        door.callAll('animations.play', 'animations', 'default');
+        door.animations.play('default', 6, true);
     },
     collision : function(player) {
         groundLayer = this.game.physics.p2.convertCollisionObjects(this.mymap, 'ground');
     },
     update : function(player) {
-        if (this.checkFinish(player.player, door.children[0])) {
+        if (this.checkFinish(player.player, door)) {
             console.log('terminou!!!');
             player.player.kill();
-            door.callAll('animations.play', 'animations', 'finish');
+            player.player.reset(3000, 0);
+            door.animations.stop();
+            door.animations.play('finish', 6, true);
         }
     },
     checkFinish : function(player, door) {
         var playerBounds = player.getBounds();
         var doorBounds = door.getBounds();
         return Phaser.Rectangle.intersects(playerBounds, doorBounds);
+    },
+    finishAnimStart : function(sprite, animation) {
+        animation.loop = false;
+    },
+    finishAnimComplete : function(sprite, animation) {
+        console.log('muda de fase');
     }
 }
