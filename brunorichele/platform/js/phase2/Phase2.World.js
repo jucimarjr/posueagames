@@ -9,6 +9,7 @@ Phase2.World = {
         this.game.load.image('bg2fase2', 'assets/phase2/map/bg2fase2_15000-1080.png');
         this.game.load.tilemap('map2', 'assets/phase2/map.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.spritesheet('post', 'assets/phase3/map/poste_2985-496-5.png', 597, 496);
+		this.game.load.audio('musicphase2', "assets/audio/Radial.mp3");
     },
     createWorld : function() {
         this.game.world.setBounds(0, 0, 15000, 1080);
@@ -27,6 +28,12 @@ Phase2.World = {
     createForeground : function() {
         this.foreground = this.game.add.sprite(0, 0, 'bg2fase2');
     },
+	createSound : function(){
+		this.bgmusic = this.game.add.audio('musicphase2');
+        this.bgmusic.play('', 0, 1, true);	
+		
+		return this.bgmusic;
+	},
     createObjects : function() {
         posts = this.game.add.group();
         posts.enableBody = true;

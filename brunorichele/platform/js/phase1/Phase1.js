@@ -16,7 +16,7 @@ State.Phase1.prototype = {
         Phase1.Trap.createTrap(Phase1.World.mymap)
         //Phase1.Enemy.createEnemy(Phase1.World.mymap);
         Phase1.World.createForeground();
-		//Phase1.World.createSound();
+		Phase1.World.createSound();
 
         Phase1.World.collision();
 
@@ -30,5 +30,6 @@ State.Phase1.prototype = {
     },
     changeLevel : function() {
         this.game.state.start('GameIntro3');
+		Phase1.World.bgmusic.stop();
     }
 }

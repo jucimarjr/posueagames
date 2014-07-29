@@ -8,6 +8,7 @@ Phase3.World = {
         this.game.load.image('bg1fase3', 'assets/phase3/map/bg1fase3_8000-1080.jpg');
         this.game.load.image('bg2fase3', 'assets/phase3/map/bg2fase3_8000-1080.png');
         this.game.load.tilemap('map3', 'assets/phase3/map.json', null, Phaser.Tilemap.TILED_JSON);
+		this.game.load.audio('musicphase3', "assets/audio/Hospital.mp3");
     },
     createWorld : function() {
         this.game.world.setBounds(0, 0, 8000, 1080);
@@ -26,6 +27,12 @@ Phase3.World = {
     createForeground : function() {
         this.foreground = this.game.add.sprite(0, 0, 'bg2fase3');
     },
+	createSound : function(){
+		this.bgmusic = this.game.add.audio('musicphase3');
+        this.bgmusic.play('', 0, 1, true);	
+		
+		return this.bgmusic;
+	},
     createObjects : function() {
     },
     collision : function() {

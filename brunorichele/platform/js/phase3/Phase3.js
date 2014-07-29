@@ -13,6 +13,7 @@ State.Phase3.prototype = {
         this.player.player.body.mass = 100;
         Phase3.World.createObjects();
         Phase3.World.createForeground();
+		Phase3.World.createSound();
 
         Phase3.World.collision();
 
@@ -21,5 +22,8 @@ State.Phase3.prototype = {
     },
     update : function() {
         this.control.update();
+    },
+    changeFinal : function() {
+		Phase3.World.bgmusic.stop();		
     }
 }

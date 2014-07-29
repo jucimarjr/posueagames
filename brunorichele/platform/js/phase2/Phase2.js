@@ -16,6 +16,7 @@ State.Phase2.prototype = {
         Phase2.World.createObjects();
         Phase2.Enemy.createEnemy(Phase2.World.mymap);
         Phase2.World.createForeground();
+		Phase2.World.createSound();
 
         Phase2.World.collision();
 
@@ -28,5 +29,6 @@ State.Phase2.prototype = {
     },
     changeLevel : function() {
         this.game.state.start('GameIntro4');
+		Phase2.World.bgmusic.stop();		
     }
 }

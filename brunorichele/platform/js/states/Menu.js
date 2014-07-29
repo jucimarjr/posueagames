@@ -46,7 +46,8 @@ Menu.prototype = {
 		this.game.load.image('menu-background',  MenuProperties.background);
 		this.game.load.spritesheet('button-play', MenuProperties.buttonPlay.background, MenuProperties.buttonPlay.width, MenuProperties.buttonPlay.height);
 		this.game.load.spritesheet('button-credits', MenuProperties.buttonCredits.background, MenuProperties.buttonCredits.width, MenuProperties.buttonCredits.height);
-		this.game.load.spritesheet('button-how-to-play', MenuProperties.buttonHowToPlay.background, MenuProperties.buttonHowToPlay.width, MenuProperties.buttonHowToPlay.height);		
+		this.game.load.spritesheet('button-how-to-play', MenuProperties.buttonHowToPlay.background, MenuProperties.buttonHowToPlay.width, MenuProperties.buttonHowToPlay.height);	
+		this.game.load.audio('musicmenu', "assets/audio/Light the Way.mp3");	
 	},
 	preload: function () {
 		"use strict";
@@ -61,6 +62,13 @@ Menu.prototype = {
 		buttonHowToPlay.anchor.setTo(MenuProperties.buttonHowToPlay.anchor.x, MenuProperties.buttonHowToPlay.anchor.y);
 		buttonCredits = this.game.add.button(MenuProperties.buttonCredits.x, MenuProperties.buttonCredits.y, 'button-credits', this.clickCredits, this, 1, 0, 1, 0);
 		buttonCredits.anchor.setTo(MenuProperties.buttonCredits.anchor.x, MenuProperties.buttonCredits.anchor.y);
+		this.createSound();
+	},
+	createSound : function(){
+		this.bgmusic = this.game.add.audio('musicmenu');
+        this.bgmusic.play('', 0, 1, true);	
+		
+		return this.bgmusic;
 	},
 	update: function () {
 		"use strict";
@@ -68,6 +76,7 @@ Menu.prototype = {
 	},
 	clickPlay: function () {
 		"use strict";
+		this.bgmusic.stop();
 		this.game.state.start('GameIntro1');
 	},
 	clickHowToPlay: function () {
