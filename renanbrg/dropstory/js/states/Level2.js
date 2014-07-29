@@ -56,10 +56,11 @@ State.Level2.prototype = {
         this.dropIsInvincible = false;
         this.energyState = false;
         this.restartState = false;
-        
+        this.winState = false;
+
         this.game.onPause.add(this.pauseGame, this);
         this.game.onResume.add(this.resumeGame, this);
-        
+
         this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.jumpKey.onDown.add(this.jumpPlayer, this);
 
@@ -107,17 +108,20 @@ State.Level2.prototype = {
         this.mainSound = this.game.add.audio("main");
         this.powUpSound = this.game.add.audio("powup");
         this.loseSound = this.game.add.audio('lose');
+        this.loseSound.onStop.add(this.restartGameState, this);
+        this.winSound = this.game.add.audio('stageclear');
+        this.winSound.onStop.add(this.nextLevel, this);
        // this.inicioSound.stop();
         this.mainSound.loop = true;
         this.mainSound.play();
-        
+
         this.countCall = 0;
 	},
 	update: function () {
 		"use strict";
 		hud.updateFPS();
-		
-		if (this.restartState) {
+
+		if (this.restartState || this.winState) {
             this.drop.getSpriteObject().body.velocity.x = 0;
             this.crabs.getAt(0).body.velocity.x = 0;
             this.crabs.getAt(1).body.velocity.x = 0;
@@ -132,7 +136,7 @@ State.Level2.prototype = {
 		this.handleKeyDown();
 		this.isOnAir();
 		this.drop.playerAnimations();
-		
+
 		this.moveCrab(this.crabs.getAt(0), 350);
 		this.moveCrab(this.crabs.getAt(1), 350);
 		this.moveCrab(this.crabs.getAt(2), 350);
@@ -231,7 +235,7 @@ State.Level2.prototype = {
 			this.drop.stop();
 			this.drop.animestate = 'stop';
 		}
-	},	
+	},
 	setupSmokeEmitter: function(posX, posY) {
 		// smoke animation
 		// add smoke particles
@@ -333,7 +337,7 @@ State.Level2.prototype = {
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.moleculeCG, this.energyCG,
-								  this.urchinsCG, this.hotsandCG, this.glassCG, this.acidCG, 
+								  this.urchinsCG, this.hotsandCG, this.glassCG, this.acidCG,
 								  this.fakeCG, this.umbrellaCG]);
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
@@ -389,9 +393,7 @@ State.Level2.prototype = {
         this.umbrella.body.static = true;
         this.umbrella.body.setCollisionGroup(this.umbrellaCG);
         this.umbrella.body.collides([this.playerCG]);
-        var umbrellaAnimation = this.umbrella.animations.add('openUmbrella',
-                [0, 1, 2], 10, false);
-        umbrellaAnimation.onComplete.add(this.nextLevel, this);
+        this.umbrella.animations.add('openUmbrella', [0, 1, 2], 10, false);
     },
 	setupMolecule: function () {
 		// Add a "life drop"
@@ -473,7 +475,7 @@ State.Level2.prototype = {
 				timerSplitAcid.destroy();
 			}, this);
 			timerSplitAcid.start();
-			
+
 		}, this);
 		timerAcidRain.start();
 	},
@@ -493,7 +495,7 @@ State.Level2.prototype = {
 				timerSplitAcid.destroy();
 			}, this);
 			timerSplitAcid.start();
-			
+
 		}, this);
 		timerAcidRain.start();
 	},
@@ -657,7 +659,6 @@ State.Level2.prototype = {
             this.drop.animestate = 'evaporate';
             this.drop.playerAnimations();
             this.loseSound.play();
-            this.loseSound.onStop.add(this.restartGameState, this);
         }
     },
     restartGameState: function() {
@@ -671,14 +672,20 @@ State.Level2.prototype = {
         }
     },
     nextLevel: function() {
-        this.clearTimers();
-        this.removeTimerRain();
-        this.mainSound.stop();
-        this.game.state.start('level1preloader-state');
+        this.game.state.start('ending-state');
     },
     startUmbrellaAnimation: function(body1, body2) {
-        var umbrellaSprite = body2.sprite;
-        umbrellaSprite.animations.play('openUmbrella');
+        if (this.winState == false) {
+            this.winState = true;
+            this.clearTimers();
+            this.removeTimerRain();
+            var umbrellaSprite = body2.sprite;
+            umbrellaSprite.animations.play('openUmbrella');
+            this.drop.animestate = 'stop';
+            this.drop.playerAnimations();
+            this.mainSound.stop();
+            this.winSound.play();
+        }
     },
 	touchingDown: function (someone) {
 		var yAxis = p2.vec2.fromValues(0, 1);
