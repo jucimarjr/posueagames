@@ -12,7 +12,7 @@ Control.prototype = {
     },
 
     processInput : function() {
-        if (this.player.state == PlayerState.BURNING) {
+        if (this.isDying()) {
             this.player.player.body.velocity.y = 0;
             this.player.player.body.velocity.x = 0;
         } else {
@@ -67,5 +67,8 @@ Control.prototype = {
             }
         }
         return result;
+    },
+    isDying : function() {
+        return this.player.state == PlayerState.BURNING || this.player.state == PlayerState.CAUGHT;
     }
 }

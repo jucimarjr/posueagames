@@ -32,7 +32,7 @@ Phase1.World = {
         this.alpha = this.game.add.sprite(0, 0, 'bg2fase1_test');
 		
         this.smoke = this.game.add.sprite(0, 1700, 'smoke_test');
-        this.smoke.animations.add('show', [0, 1, 2, 3], 10, true);
+        this.smoke.animations.add('show', [0, 1, 2, 3], 5, true);
         this.smoke.animations.play('show');
     },
 	createSound : function(){

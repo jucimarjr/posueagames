@@ -1,7 +1,8 @@
 State.Phase1 = function(game) {
-    this.game = game;
-    this.player = new Player(game);
-    this.door = new Door(game);
+    this.game = game,
+    this.player = new Player(game),
+    this.door = new Door(game),
+    this.hands = new Hands(game);
 }
 
 State.Phase1.prototype = {
@@ -12,8 +13,9 @@ State.Phase1.prototype = {
         Phase1.World.createBackground();
         this.player.create(50, 1600);
         this.player.player.body.mass = 100;
+        this.hands.create(Phase1.World.mymap);
         this.door.create(this, 2670, 140);
-        Phase1.Trap.createTrap(Phase1.World.mymap)
+        Phase1.Trap.createTrap(Phase1.World.mymap);
         //Phase1.Enemy.createEnemy(Phase1.World.mymap);
         Phase1.World.createForeground();
 		GameOverProperties.StopMusic = Phase1.World.createSound();
@@ -25,6 +27,7 @@ State.Phase1.prototype = {
     },
     update : function() {
         this.control.update();
+        this.hands.update(this.player);
         this.door.update(this.player, 3000, 0);
         Phase1.Trap.update(this.player);
     },
