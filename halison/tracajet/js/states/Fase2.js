@@ -17,7 +17,7 @@ State.Fase2= function (game) {
 	this.nameKeys = 'Keys';
 	this.fruits;
 	this.cursors;
-	this.speed = 90;
+	this.speed = 100;
 	this.imgLife;
 	this.txLife;
 	this.contJump = 0;
@@ -273,7 +273,7 @@ State.Fase2.prototype = {
 	    }
 	    
 	    if (this.cursors.up.isDown && this.tracajet.body.onFloor()) { // vai para cima
-	    	this.tracajet.body.velocity.y = -190;
+	    	this.tracajet.body.velocity.y = -200;
 			this.tracajet.animations.play('walk');
 			this.contJump = 0;
 			this.isPlayWalk = false;
