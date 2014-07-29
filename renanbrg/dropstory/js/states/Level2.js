@@ -31,7 +31,6 @@ State.Level2 = function (game) {
     this.jumpKey = null;
     this.pauseKey = null;
 
-
     this.countCall = 0; //count how many times the collision function is called.
 };
 State.Level2.prototype = {
@@ -86,9 +85,10 @@ State.Level2.prototype = {
 
         this.setupPhysics();
         this.setupLayers();
-        this.setupPlayer(100, 100); //3040
+        this.setupPlayer(7500, 100); //3040
         this.setupMolecule();
         this.setupAcidDrop();
+        this.setupUmbrella(7640, 280);
 
 		// falling acid rain
 		this.timerEventRain[0]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 1360,0);
@@ -190,35 +190,6 @@ State.Level2.prototype = {
             }
         }
     },
-	/*handleKeyDown: function () {
-		"use strict";
-
-		if ( this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
-			if (!this.onAir) {
-				this.drop.animestate = 'right';
-			} else {
-				this.drop.animestate = 'jumpright';
-			}
-			this.drop.moveRight(300);
-	    } else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
-			if (!this.onAir) {
-				this.drop.animestate = 'left';
-			} else {
-				this.drop.animestate = 'jumpleft';
-			}
-			this.drop.moveLeft(300);
-		}  else {
-			this.drop.stop();
-			this.drop.animestate = 'stop';
-		}
-
-		if ( this.game.input.keyboard.isDown (Phaser.Keyboard.SPACEBAR) ) {
-			if (this.touchingDown(this.drop.getSpriteObject().body)) {
-				this.drop.jump(700);
-				this.jumpSound.play();
-			}
-		}
-	},*/
 	startPauseGameEvent: function() {
         this.game.paused = !this.game.paused;
     },
@@ -288,6 +259,7 @@ State.Level2.prototype = {
 		this.hotsandCG = game.physics.p2.createCollisionGroup();
         this.glassCG = game.physics.p2.createCollisionGroup();
         this.acidCG = game.physics.p2.createCollisionGroup();
+		this.umbrellaCG = game.physics.p2.createCollisionGroup();
 
 		// Create and Setup Material
 	    this.characterMaterial = game.physics.p2.createMaterial('characterMaterial');
@@ -358,7 +330,8 @@ State.Level2.prototype = {
         dropSprite.body.setMaterial(this.characterMaterial);
         dropSprite.body.setCollisionGroup(this.playerCG);
         dropSprite.body.collides([this.groundCG, this.crabCG, this.moleculeCG, this.energyCG,
-								  this.urchinsCG, this.hotsandCG, this.glassCG, this.acidCG, this.fakeCG]);
+								  this.urchinsCG, this.hotsandCG, this.glassCG, this.acidCG, 
+								  this.fakeCG, this.umbrellaCG]);
         // collide callbacks
 		dropSprite.body.createGroupCallback(this.crabCG, this.checkOverlapCrabDrop, this);
         dropSprite.body.createGroupCallback(this.urchinsCG, this.checkCollisionUrchins, this);
@@ -367,6 +340,8 @@ State.Level2.prototype = {
         dropSprite.body.createGroupCallback(this.glassCG, this.playerLose, this);
         dropSprite.body.createGroupCallback(this.acidCG, this.acidHitPlayer, this);
         dropSprite.body.createGroupCallback(this.fakeCG, this.hitFakePlatform, this);
+        dropSprite.body.createGroupCallback(this.umbrellaCG, this.startUmbrellaAnimation, this);
+
 	},
 	setupCrab: function() {
 		for (var i = 0; i < this.crabs.length; i++) {
@@ -403,6 +378,17 @@ State.Level2.prototype = {
         urchin.body.static = true;
         urchin.body.sprite.name = 'urchin';
         urchin.body.collides([this.playerCG, this.crabCG]);
+    },
+    setupUmbrella: function(posX, posY) {
+        this.umbrella = this.game.add.sprite(posX, posY, 'umbrella');
+        this.game.physics.p2.enableBody(this.umbrella);
+        this.umbrella.body.fixedRotation = true;
+        this.umbrella.body.static = true;
+        this.umbrella.body.setCollisionGroup(this.umbrellaCG);
+        this.umbrella.body.collides([this.playerCG]);
+        var umbrellaAnimation = this.umbrella.animations.add('openUmbrella',
+                [0, 1, 2], 10, false);
+        umbrellaAnimation.onComplete.add(this.nextLevel, this);
     },
 	setupMolecule: function () {
 		// Add a "life drop"
@@ -650,7 +636,6 @@ State.Level2.prototype = {
             this.drop.playerAnimations();
             this.loseSound.play();
             this.loseSound.onStop.add(this.restartGameState, this);
-            //this.restartGameState();
         }
     },
     restartGameState: function() {
@@ -663,18 +648,15 @@ State.Level2.prototype = {
             this.game.state.restart();
         }
     },
-    /*setupUmbrella: function(posX, posY) {
-        this.umbrella = this.game.add.sprite(posX, posY, 'umbrella');
-        this.game.physics.p2.enableBody(this.umbrella);
-        this.umbrella.body.fixedRotation = true;
-        this.umbrella.body.static = true;
-        this.umbrella.body.setCollisionGroup(this.umbrellaCG);
-        this.umbrella.body.collides([this.playerCG]);
-        var umbrellaAnimation = this.umbrella.animations.add('openUmbrella',
-                [0, 1, 2], 10, false);
-        umbrellaAnimation.onComplete.add(this.nextLevel, this);
-    },*/
-
+    nextLevel: function() {
+        this.clearTimers();
+        this.mainSound.stop();
+        this.game.state.start('level1preloader-state');
+    },
+    startUmbrellaAnimation: function(body1, body2) {
+        var umbrellaSprite = body2.sprite;
+        umbrellaSprite.animations.play('openUmbrella');
+    },
 	touchingDown: function (someone) {
 		var yAxis = p2.vec2.fromValues(0, 1);
 		var result = false;

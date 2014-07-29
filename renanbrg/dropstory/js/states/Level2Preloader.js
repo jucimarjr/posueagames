@@ -18,6 +18,7 @@ State.Level2Preloader.prototype = {
 		this.game.load.spritesheet('lifeup','assets/images/life_80-80.png', 80, 80);
         this.game.load.spritesheet('crab','assets/spritesheets/crab_160-80.png', 160, 80);
         this.game.load.spritesheet('energy','assets/spritesheets/energy_200-40.png', 40, 40);
+        this.game.load.spritesheet('umbrella','assets/spritesheets/umbrella_240-80.png', 80, 80);
         this.game.load.image('gameplay-bg','assets/images/backgroundlevel1_4800-600.png');
         this.game.load.tilemap('maplevel2', 'assets/level2_7680-600.json', null,Phaser.Tilemap.TILED_JSON);
         this.game.load.image('hotsand', 'assets/images/hotsand_40-40.png');
