@@ -46,6 +46,11 @@ Phase1.World = {
     collision : function(player) {
         groundLayer = this.game.physics.p2.convertCollisionObjects(this.mymap, 'ground');
     },
+    collisionFloor : function(player){
+        if (player.player.y > 1800){
+			this.game.state.start('GameOver');		
+        }
+    },	
     update : function(player) {
     }
 }

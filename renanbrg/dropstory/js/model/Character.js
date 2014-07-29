@@ -106,6 +106,7 @@ Character.prototype = {
     setCharacterInicialValues: function () {
 		this.character.smoothed = false;
     	this.character.body.fixedRotation = true;
+    	this.character.body.sprite.name = 'playerdrop';
     	this.playershape = this.character.body.setCircle(18,0,4);
 
     	// normal state

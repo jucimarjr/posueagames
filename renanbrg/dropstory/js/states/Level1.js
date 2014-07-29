@@ -23,6 +23,7 @@ State.Level1 = function (game) {
     this.hotSandTimerActivated;
     this.dropIsInvincible;
     this.energyState;
+    this.restartState;
     this.lastDropTimer = null;
     this.decreaseDropTimer = null;
     this.disableSundropTimer = null;
@@ -54,6 +55,7 @@ State.Level1.prototype = {
         this.hotSandTimerActivated = false;
         this.dropIsInvincible = false;
         this.energyState = false;
+        this.restartState = false;
 
         this.game.onPause.add(this.pauseGame, this);
         this.game.onResume.add(this.resumeGame, this);
@@ -675,7 +677,7 @@ State.Level1.prototype = {
         this.disableSundropTimer.start();
 	},
 	killDrop: function (body1, body2) {
-        if (this.dropIsInvincible) {
+        if (this.dropIsInvincible || this.restartState) {
             return;
         }
 
@@ -792,6 +794,7 @@ State.Level1.prototype = {
 		this.game.state.start('credits-state');
 	},
     restartGame: function () {
+        this.restartState = true;
     	this.clearTimers();
         this.hotSandTimerActivated = false;
         this.drop.kill();

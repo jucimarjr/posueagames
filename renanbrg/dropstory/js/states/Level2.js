@@ -19,11 +19,18 @@ State.Level2 = function (game) {
     this.haveEnergy = false;
     this.smokeTimer = null;
     this.dropIsInvincible = false;
+    this.hotSandTimerActivated = null;
+    this.energyState = null;
+    this.restartState = null
     this.molecule = null;
     this.acidgroup = null;
     this.smokeEmitter = null;
     this.timerEventRain = [];
+    this.fakePositions = [];
     this.onAir = false;
+    this.jumpKey = null;
+    this.pauseKey = null;
+
 
     this.countCall = 0; //count how many times the collision function is called.
 };
@@ -43,6 +50,24 @@ State.Level2.prototype = {
 	},
 	create: function () {
 		"use strict";
+		this.timerEventRain = [];
+		this.fakePositions = [];
+		
+		this.haveEnergy = false;
+        this.onAir = false;
+        this.hotSandTimerActivated = false;
+        this.dropIsInvincible = false;
+        this.energyState = false;
+        this.restartState = false;
+        
+        this.game.onPause.add(this.pauseGame, this);
+        this.game.onResume.add(this.resumeGame, this);
+        
+        this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.jumpKey.onDown.add(this.jumpPlayer, this);
+
+        this.pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        this.pauseKey.onDown.add(this.startPauseGameEvent, this);
 
 		var background;
 		background = this.game.add.tileSprite(0, 0, 4800, 600, 'gameplay-bg');
@@ -51,34 +76,31 @@ State.Level2.prototype = {
         this.map = this.game.add.tilemap('maplevel2');
         this.map.addTilesetImage('hotsand_40-40', 'hotsand');
         this.map.addTilesetImage('platform_160-80', 'platform');
-        this.map.addTilesetImage('fakeplatform_160-80', 'fakeplatform');
         this.map.addTilesetImage('glass_280-320', 'glass');
         this.map.addTilesetImage('seashell_120-40', 'seashell');
-        this.map.addTilesetImage('seaurchin_80-40', 'seaurchin');
 
         this.mainLayer = this.map.createLayer('mainlayer2');
-        this.fakeplatform = this.map.createLayer('fakeplatform');
         this.hotSandLayer = this.map.createLayer('hotsandlayer');
         this.irregularLayer = this.map.createLayer('irregularlayer');
         this.mainLayer.resizeWorld();
 
         this.setupPhysics();
         this.setupLayers();
-        this.setupPlayer(2250, 100);
+        this.setupPlayer(100, 100);
         this.setupMolecule();
         this.setupAcidDrop();
 
 		// falling acid rain
 		this.timerEventRain[0]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 1360,0);
-		this.timerEventRain[1]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2640,0,1);
-		this.timerEventRain[2]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 2800,0);
+		this.timerEventRain[1]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2640,0,1);		
+		this.timerEventRain[2]=game.time.events.loop(Phaser.Timer.SECOND*1.3, this.fallRain, this, 2800,0);
 		this.timerEventRain[3]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2960,0,3);
-		this.timerEventRain[4]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 3120,0);
+		this.timerEventRain[4]=game.time.events.loop(Phaser.Timer.SECOND*1.3, this.fallRain, this, 3120,0);
 		this.timerEventRain[5]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 3280,0,5);
-		this.timerEventRain[6]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 6200,0);
-		this.timerEventRain[7]=game.time.events.loop(Phaser.Timer.SECOND*0.8, this.fallRain, this, 6600,0,7);
-		this.timerEventRain[8]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 7040,0);
-
+		this.timerEventRain[6]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 6200,0);		
+		this.timerEventRain[7]=game.time.events.loop(Phaser.Timer.SECOND*1.1, this.fallRain, this, 6600,0,7);
+		this.timerEventRain[8]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 7040,0);
+		
 		this.setupSmokeEmitter(1550, this.game.height-80);
         hud.create();
 
@@ -88,6 +110,8 @@ State.Level2.prototype = {
         this.powUpSound = this.game.add.audio("powup");
         this.mainSound.loop = true;
         this.mainSound.play();
+        
+        this.countCall = 0;
 	},
 	update: function () {
 		"use strict";
@@ -108,7 +132,49 @@ State.Level2.prototype = {
 			this.smokeEmitter.y = this.drop.getSpriteObject().y + 56;
 		}
 	},
-	handleKeyDown: function () {
+	pauseGame: function() {
+        hud.showPauseImage();
+    },
+    resumeGame: function() {
+        "use strict";
+
+        this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.jumpKey.onDown.add(this.jumpPlayer, this);
+
+        this.pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        this.pauseKey.onDown.add(this.startPauseGameEvent, this);
+
+        hud.hidePauseImage();
+    },
+    jumpPlayer: function() {
+        if (this.game.paused == true) {
+            return;
+        }
+
+        if (this.touchingDown(this.drop.getSpriteObject().body)) {
+            if (this.energyState == false) {
+                this.drop.jump(700);
+                this.jumpSound.play();
+            } else {
+                this.drop.jump(1500);
+                this.jumpSound.play();
+                this.smokeEmitter.start(false, 3000, 50);
+                this.haveEnergy = true;
+                var self = this;
+                if (this.smokeTimer != null) {
+                    this.smokeTimer.stop();
+                }
+                this.smokeTimer = this.game.time.create();
+                this.smokeTimer.add(2000, function() {
+                        self.stopSmoke();
+                }, 2000);
+                this.smokeTimer.start();
+                this.energyState = false;
+                this.drop.playerstate = 'normal';
+            }
+        }
+    },
+	/*handleKeyDown: function () {
 		"use strict";
 
 		if ( this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
@@ -136,7 +202,46 @@ State.Level2.prototype = {
 				this.jumpSound.play();
 			}
 		}
-	},
+	},*/
+	startPauseGameEvent: function() {
+        this.game.paused = !this.game.paused;
+    },
+    clearTimers: function() {
+        if (this.lastDropTimer != null) {
+            this.lastDropTimer.destroy();
+        }
+        if (this.disableSundropTimer != null) {
+            this.disableSundropTimer.destroy();
+        }
+        if (this.decreaseDropTimer != null) {
+            this.decreaseDropTimer.destroy();
+        }
+        if (this.smokeTimer != null) {
+            this.smokeTimer.destroy();
+        }
+    },
+	handleKeyDown: function () {
+		"use strict";
+
+		if ( this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
+            if (!this.onAir) {
+                this.drop.animestate = 'right';
+            } else {
+                this.drop.animestate = 'jumpright';
+            }
+            this.drop.moveRight(300);
+		} else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
+			if (!this.onAir) {
+				this.drop.animestate = 'left';
+			} else {
+				this.drop.animestate = 'jumpleft';
+			}
+			this.drop.moveLeft(300);
+		}  else {
+			this.drop.stop();
+			this.drop.animestate = 'stop';
+		}
+	},	
 	setupSmokeEmitter: function(posX, posY) {
 		// smoke animation
 		// add smoke particles
@@ -147,12 +252,6 @@ State.Level2.prototype = {
 		this.smokeEmitter.setAlpha(1, 0, 3000, Phaser.Easing.Linear.InOut);
 		this.smokeEmitter.makeParticles('smoke');
     },
-    stopSmoke: function() {
-		this.haveEnergy = false;
-		this.smokeEmitter.on = false;
-		this.drop.playerstate = 'normal'; //temporario
-		this.smokeTimer.destroy();
-	},
 	setupPhysics: function () {
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
 	    this.game.physics.p2.gravity.y = 1400;
@@ -188,7 +287,6 @@ State.Level2.prototype = {
 	},
 	setupLayers: function () {
 	    this.tilesMainLayer = game.physics.p2.convertTilemap(this.map,this.mainLayer);
-	    this.tilesFakeLayer = game.physics.p2.convertTilemap(this.map,this.fakeplatform);
 	    this.tilesHotSandLayer = game.physics.p2.convertTilemap(this.map,this.hotSandLayer);
 
 	    this.tilesIrregularLayer = game.physics.p2.convertTilemap(this.map,this.irregularLayer);
@@ -201,11 +299,6 @@ State.Level2.prototype = {
 	    	this.tilesMainLayer[i].setCollisionGroup(this.groundCG);
 	    	this.tilesMainLayer[i].collides([this.playerCG, this.crabCG,this.moleculeCG, this.acidCG]);
 	    	this.tilesMainLayer[i].setMaterial(this.groundMaterial);
-	    }
-	    for (var i=0; i < this.tilesFakeLayer.length; i++) {
-	    	this.tilesFakeLayer[i].setCollisionGroup(this.fakeCG);
-	    	this.tilesFakeLayer[i].collides([this.playerCG, this.crabCG,this.moleculeCG, this.acidCG]);
-	    	this.tilesFakeLayer[i].setMaterial(this.groundMaterial);
 	    }
 	    for (var i=0; i < this.tilesHotSandLayer.length; i++) {
 	    	this.tilesHotSandLayer[i].setCollisionGroup(this.hotsandCG);
@@ -223,6 +316,12 @@ State.Level2.prototype = {
 	    	glassPolygon[i].collides([this.playerCG]);
 	    	glassPolygon[i].setMaterial(this.groundMaterial);
 	    }
+
+	    this.fakeplatform = game.add.group();
+		this.fakeplatform.enableBody = true;
+		this.fakeplatform.physicsBodyType = Phaser.Physics.P2JS;
+	    this.map.createFromObjects('fakeplatform', 75, 'fakeplatform', 0, true, false,this.fakeplatform);
+	    this.fakeplatform.forEach(this.setupFakePlatform, this);
 
 	    this.crabs = game.add.group();
 		this.crabs.enableBody = true;
@@ -250,7 +349,8 @@ State.Level2.prototype = {
         dropSprite.body.createGroupCallback(this.moleculeCG, this.checkOverlapWithLifeDrop, this);
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
         dropSprite.body.createGroupCallback(this.glassCG, this.restartGame, this);
-        dropSprite.body.createGroupCallback(this.acidCG, this.restartGame, this);
+        dropSprite.body.createGroupCallback(this.acidCG, this.acidHitPlayer, this);
+        dropSprite.body.createGroupCallback(this.fakeCG, this.hitFakePlatform, this);
 	},
 	setupCrab: function() {
 		for (var i = 0; i < this.crabs.length; i++) {
@@ -259,7 +359,7 @@ State.Level2.prototype = {
 			this.crabs.getAt(i).body.setMaterial(this.crabMaterial);
 			this.crabs.getAt(i).animations.add('walkL', [0, 1, 2], 10, true);
 			this.crabs.getAt(i).animations.add('walkR', [0, 1, 2], 10, true);
-			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG, this.groundCG, this.urchinsCG, this.fakeCG]);
+			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG, this.groundCG, this.urchinsCG]);
 		}
 		this.crabs.getAt(0).body.moveLeft(350);
 		this.crabs.getAt(1).body.moveRight(350);
@@ -268,6 +368,18 @@ State.Level2.prototype = {
 		this.crabs.getAt(4).body.moveLeft(300);
 		this.crabs.getAt(5).body.moveRight(300);
 		this.crabs.getAt(6).body.moveLeft(300);
+	},
+	setupFakePlatform: function() {
+		for (var i = 0; i < this.fakeplatform.length; i++) {
+			this.fakeplatform.getAt(i).body.fixedRotation = true;
+			this.fakeplatform.getAt(i).body.kinematic=true;
+			this.fakeplatform.getAt(i).body.collideWorldBounds=false;
+			this.fakeplatform.getAt(i).body.setCollisionGroup(this.fakeCG);
+			this.fakeplatform.getAt(i).body.sprite.name = i;
+			this.fakeplatform.getAt(i).body.setMaterial(this.groundMaterial);
+			this.fakeplatform.getAt(i).body.collides([this.playerCG, this.acidCG]);
+			this.fakePositions.push({x: this.fakeplatform.getAt(i).body.x, y: this.fakeplatform.getAt(i).body.y});
+		}
 	},
     setupUrchins: function(urchin) {
     	game.physics.p2.enable(urchin);
@@ -293,8 +405,8 @@ State.Level2.prototype = {
         this.molecule.create(2195, 300, 'evildrop'); //evildrop3
         this.molecule.create(2320, 300, 'evildrop'); //evildrop4
         // life UP
-        this.molecule.create(3280, 150, 'lifeup'); //1 life
-
+        this.molecule.create(2960, 150, 'lifeup'); //1 life
+        
         this.molecule.getAt(0).body.sprite.name='lifedrop';
         this.molecule.getAt(1).body.sprite.name='lifedrop';
         this.molecule.getAt(2).body.sprite.name='energy';
@@ -333,18 +445,18 @@ State.Level2.prototype = {
         aciddrop = this.acidgroup.create(posX, posY, 'aciddrop');
 		aciddrop.body.collideWorldBounds=false;
 		aciddrop.body.allowSleep=true;
+		aciddrop.body.sprite.name = 'aciddrop';
 		aciddrop.body.setCollisionGroup(this.acidCG);
 		aciddrop.body.fixedRotation = true;
 		aciddrop.body.collides([this.playerCG, this.groundCG, this.fakeCG]);
 		// kill acid drop when collides to ground
-		aciddrop.body.createGroupCallback(this.groundCG, this.collidesGroundAcid, this);
-		aciddrop.body.createGroupCallback(this.fakeCG, this.collidesGroundAcid, this);
+		aciddrop.body.createGroupCallback(this.groundCG, this.collidesAcidRain, this);
+		aciddrop.body.createGroupCallback(this.fakeCG, this.collidesAcidRain, this);
 	},
-	collidesGroundAcid: function(body1, body2) {
+	collidesAcidRain: function(body1, body2) {
 		var timerAcidRain;
-		body1.sprite.frame = 1;
-
 		timerAcidRain = this.game.time.create();
+		body1.sprite.frame = 1;
 
 		timerAcidRain.add(200, function() {
 			var timerSplitAcid = this.game.time.create();
@@ -356,7 +468,27 @@ State.Level2.prototype = {
 				timerSplitAcid.destroy();
 			}, this);
 			timerSplitAcid.start();
+			
+		}, this);
+		timerAcidRain.start();
+	},
+	acidHitPlayer: function(body1, body2) {
+		var timerAcidRain;
+		timerAcidRain = this.game.time.create();
+		body2.sprite.frame = 1;
 
+		timerAcidRain.add(200, function() {
+			var timerSplitAcid = this.game.time.create();
+			body2.sprite.frame = 2;
+			timerAcidRain.destroy();
+
+			timerSplitAcid.add(50, function() {
+				body2.sprite.kill();
+				this.restartGame();
+				timerSplitAcid.destroy();
+			}, this);
+			timerSplitAcid.start();
+			
 		}, this);
 		timerAcidRain.start();
 	},
@@ -391,7 +523,7 @@ State.Level2.prototype = {
             } else if (body2.sprite.name == 'evildrop') {
 				this.hitEvilDrop(body1, body2);
 			} else if (body2.sprite.name == 'lifeup') {
-				this.hud.increaseLife();
+				hud.increaseLife();
 				body2.sprite.kill();
 			}
             return true;
@@ -416,6 +548,22 @@ State.Level2.prototype = {
 		}, this);
 		timerEvilDrop.start();
 	},
+	hitFakePlatform: function(body1, body2) {
+		var timerFakeFall = this.game.time.create();
+		var timerBackPlatform;
+		timerFakeFall.add(1500, function() {
+			timerBackPlatform = this.game.time.create();
+			body2.velocity.y=240;
+			timerFakeFall.destroy();
+			timerBackPlatform.add(4000, function() {
+				body2.velocity.y=0;
+				body2.sprite.reset(this.fakePositions[body2.sprite.name].x, this.fakePositions[body2.sprite.name].y);
+				timerBackPlatform.destroy();
+			}, this);
+			timerBackPlatform.start();
+		}, this);
+		timerFakeFall.start();
+	},
     drinkEnergy: function(body1, body2) {
         console.log('Player get the energy drop!!!!');
 
@@ -433,8 +581,8 @@ State.Level2.prototype = {
         }, 2000);
         this.drop.playerstate = 'energy';
     },
-    killDrop: function (body1, body2) {
-        if (this.dropIsInvincible) {
+	killDrop: function (body1, body2) {
+        if (this.dropIsInvincible || this.restartState) {
             return;
         }
 
@@ -446,26 +594,31 @@ State.Level2.prototype = {
                 this.haveEnergy = true;
                 this.smokeEmitter.on = true;
                 this.smokeEmitter.start(false, 3000, 50);
+                var self = this;
                 if (hud.getDropCounter() == 0) {
-                    this.lastDropTimer = setTimeout(function(time) {
+                    this.lastDropTimer = this.game.time.create();
+                    this.lastDropTimer.add(2000, function() {
                         self.hotSandTimerActivated = false;
                         if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
                                 40, self.hotSandLayer)) {
                             self.restartGame();
                         }
                         self.countCall = 0;
-                    }, 2000);
+                    }, this);
+                    this.lastDropTimer.start();
                     this.drop.playersize = 'small';
                     this.hotSandTimerActivated = true;
                 } else {
-                    this.decreaseDropTimer = setTimeout(function() {
+                    this.decreaseDropTimer = this.game.time.create();
+                    this.decreaseDropTimer.add(2000, function() {
                         self.hotSandTimerActivated = false;
                         self.countCall = 0;
                         if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
                                 40, self.hotSandLayer)) {
                             self.killDrop(body1, null);
                         }
-                    }, 2000);
+                    }, this);
+                    this.decreaseDropTimer.start();
                     this.hotSandTimerActivated = true;
                 }
             } else if (this.drop.playersize == 'small') {
@@ -476,9 +629,38 @@ State.Level2.prototype = {
             this.countCall = 0;
         }
     },
+	stopSmoke: function() {
+		this.haveEnergy = false;
+		this.smokeEmitter.on = false;
+		this.smokeTimer.destroy();
+	},
     restartGame: function () {
-		this.drop.kill();
+        this.restartState = true;
+    	this.clearTimers();
+        this.hotSandTimerActivated = false;
+        this.drop.kill();
+        hud.initDropCounter();
+        hud.decreaseLife();
+        if (hud.getLifeCounter() == 0) {
+            this.mainSound.stop();
+            this.game.state.start('gameover-state');
+        } else {
+            this.mainSound.stop();
+            this.game.state.restart();
+        }
     },
+    /*setupUmbrella: function(posX, posY) {
+        this.umbrella = this.game.add.sprite(posX, posY, 'umbrella');
+        this.game.physics.p2.enableBody(this.umbrella);
+        this.umbrella.body.fixedRotation = true;
+        this.umbrella.body.static = true;
+        this.umbrella.body.setCollisionGroup(this.umbrellaCG);
+        this.umbrella.body.collides([this.playerCG]);
+        var umbrellaAnimation = this.umbrella.animations.add('openUmbrella',
+                [0, 1, 2], 10, false);
+        umbrellaAnimation.onComplete.add(this.nextLevel, this);
+    },*/
+
 	touchingDown: function (someone) {
 		var yAxis = p2.vec2.fromValues(0, 1);
 		var result = false;

@@ -21,8 +21,8 @@ State.GameIntro4.prototype = {
 		button2.anchor.setTo(Config.button.next.anchor.x, Config.button.next.anchor.y);		
 		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
-        game.add.text(330, 800, 'Corredores que não acabam mais e esse medo que me consome.', style);
-        game.add.text(620, 850, 'Para onde eu devo seguir? Como encontrarei respostas?', style);                          
+        game.add.text(370, 800, 'Corredores que não acabam mais e esse medo que me consome.', style);
+        game.add.text(450, 850, 'Para onde eu devo seguir? Como encontrarei respostas?', style);                          
 	},
 	create: function () {
 		"use strict";

@@ -29,6 +29,6 @@ State.Phase2.prototype = {
     },
     changeLevel : function() {
         this.game.state.start('GameIntro4');
-		Phase2.World.bgmusic.stop();		
+		Phase2.World.bgmusic.stop();	
     }
 }

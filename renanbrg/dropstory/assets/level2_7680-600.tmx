@@ -21,8 +21,8 @@
  <tileset firstgid="74" name="bird" tilewidth="54" tileheight="50">
   <image source="images/bird.jpeg" width="54" height="50"/>
  </tileset>
- <tileset firstgid="75" name="fakeplatform_160-80" tilewidth="40" tileheight="40">
-  <image source="images/fakePlatform_160-80.png" width="160" height="80"/>
+ <tileset firstgid="75" name="fakeplatform_160-80" tilewidth="160" tileheight="80">
+  <image source="images/fakeplatform_160-80.png" width="160" height="80"/>
  </tileset>
  <layer name="irregularlayer" width="192" height="15">
   <data encoding="base64" compression="zlib">
@@ -34,14 +34,9 @@
    eJztw7ENAAAMAiDX/v9w7zBCQgIAAAAAAAAAAAB9TofDsgecQgbB
   </data>
  </layer>
- <layer name="fakeplatform" width="192" height="15">
-  <data encoding="base64" compression="zlib">
-   eJzt190KwCAIgNHeb/97/4eZd4MYZCwT9DvgRRBYRpGlAAAAADYWiVVik9id14I5OPPXIXFKXBL3hHya2o+ag29/zzxT7UfvVVP7UXNgI1PtM+01ikzvM1DzfrPq+9caA5HU9681BgDoeP8fvPMjN+//g3X+3v6B/gKR9PYP9BcAongAtgYsKQ==
-  </data>
- </layer>
  <layer name="mainlayer2" width="192" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt1UsOgzAMBUAo9MP9L4yXFSvaxEoIM9Jb2SvLlqcJAAAAGN0ceUSWyJpQh549I6/IO/JJqH9zK9zZL7dSw5l7q9XDf8w2z5l7q9VzFcd9a71/I82W/h33zf5BntL/0vo/QYnS/+I/AeTYRG6cHeiGCHE=
+   eJzt1TsOgCAQQEH/n/tf2C2NlRoIiDPJq6Aiu6HrAAAAgNb10RCN0ZThHGo2R0u0RluG8zO7wp892ZUU7uxbqju8423zubNvqe58xXXeSs9fS29L/a7zZv4gn9L/C5TkfwGo0y79uAOd9whN
   </data>
  </layer>
  <objectgroup name="basic-shapes" width="192" height="15">
@@ -102,5 +97,25 @@
   <object gid="72" x="6761" y="563"/>
   <object gid="72" x="6036" y="558"/>
   <object gid="72" x="7121" y="559"/>
+ </objectgroup>
+ <objectgroup name="fakeplatform" width="192" height="15">
+  <object gid="75" x="401" y="561"/>
+  <object gid="75" x="721" y="401"/>
+  <object gid="75" x="1682" y="320"/>
+  <object gid="75" x="1041" y="281"/>
+  <object gid="75" x="1680" y="561"/>
+  <object gid="75" x="2001" y="441"/>
+  <object gid="75" x="2642" y="601"/>
+  <object gid="75" x="3282" y="601"/>
+  <object gid="75" x="2801" y="601"/>
+  <object gid="75" x="3121" y="601"/>
+  <object gid="75" x="2322" y="441"/>
+  <object gid="75" x="2162" y="441"/>
+  <object gid="75" x="2961" y="601"/>
+  <object gid="75" x="5201" y="282"/>
+  <object gid="75" x="3722" y="242"/>
+  <object gid="75" x="4841" y="281"/>
+  <object gid="75" x="4041" y="320"/>
+  <object gid="75" x="5562" y="282"/>
  </objectgroup>
 </map>
