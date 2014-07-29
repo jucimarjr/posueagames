@@ -10,10 +10,10 @@
    <polygon points="0,9 7362,9 7650,-242 8010,-242 8010,30 0,30"/>
   </object>
   <object x="0" y="720">
-   <polygon points="0,8 7349,8 7349,-64 630,-64 336,-317 0,-317"/>
+   <polygon points="0,8 7349,8 7462,-64 630,-64 336,-317 0,-317"/>
   </object>
   <object x="660" y="390">
-   <polygon points="0,10 0,86 7350,86 7350,10"/>
+   <polygon points="-105,10 0,86 7350,86 7350,10"/>
   </object>
  </objectgroup>
 </map>
