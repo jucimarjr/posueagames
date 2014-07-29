@@ -18,7 +18,8 @@ State.Phase3.prototype = {
         Phase3.World.collision();
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
-        this.control = new Control(this.game, this.player, this.cursors);
+		this.KeyA = game.input.keyboard.addKey(Phaser.Keyboard.A);
+        this.control = new Control(this.game, this.player, this.cursors, this.KeyA);
     },
     update : function() {
         this.control.update();
