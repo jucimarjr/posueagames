@@ -515,7 +515,7 @@ State.Level2.prototype = {
         if (!body2.hasCollided) {
 			if (body2.sprite.name == 'lifedrop') {
 				console.log('Player get the life drop!!!!');
-				//this.powUpSound.play();
+				this.powUpSound.play();
 				hud.increaseDropBar();
 				body2.sprite.kill();
 				body2.hasCollided = true;
