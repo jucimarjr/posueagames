@@ -52,7 +52,7 @@ State.Level2.prototype = {
 		"use strict";
 		this.timerEventRain = [];
 		this.fakePositions = [];
-		
+
 		this.haveEnergy = false;
         this.onAir = false;
         this.hotSandTimerActivated = false;
@@ -86,7 +86,7 @@ State.Level2.prototype = {
 
         this.setupPhysics();
         this.setupLayers();
-        this.setupPlayer(100, 100);
+        this.setupPlayer(100, 100); //3040
         this.setupMolecule();
         this.setupAcidDrop();
 
@@ -108,6 +108,8 @@ State.Level2.prototype = {
         this.jumpSound = this.game.add.audio("jump");
         this.mainSound = this.game.add.audio("main");
         this.powUpSound = this.game.add.audio("powup");
+        this.loseSound = this.game.add.audio('lose');
+       // this.inicioSound.stop();
         this.mainSound.loop = true;
         this.mainSound.play();
         
@@ -116,9 +118,23 @@ State.Level2.prototype = {
 	update: function () {
 		"use strict";
 		hud.updateFPS();
+		
+		if (this.restartState) {
+            this.drop.getSpriteObject().body.velocity.x = 0;
+            this.crabs.getAt(0).body.velocity.x = 0;
+            this.crabs.getAt(1).body.velocity.x = 0;
+            this.crabs.getAt(2).body.velocity.x = 0;
+            this.crabs.getAt(3).body.velocity.x = 0;
+            this.crabs.getAt(4).body.velocity.x = 0;
+            this.crabs.getAt(5).body.velocity.x = 0;
+			this.crabs.getAt(6).body.velocity.x = 0;
+            return;
+        }
+
 		this.handleKeyDown();
 		this.isOnAir();
 		this.drop.playerAnimations();
+		
 		this.moveCrab(this.crabs.getAt(0), 350);
 		this.moveCrab(this.crabs.getAt(1), 350);
 		this.moveCrab(this.crabs.getAt(2), 350);
@@ -348,7 +364,7 @@ State.Level2.prototype = {
         dropSprite.body.createGroupCallback(this.urchinsCG, this.checkCollisionUrchins, this);
         dropSprite.body.createGroupCallback(this.moleculeCG, this.checkOverlapWithLifeDrop, this);
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
-        dropSprite.body.createGroupCallback(this.glassCG, this.restartGame, this);
+        dropSprite.body.createGroupCallback(this.glassCG, this.playerLose, this);
         dropSprite.body.createGroupCallback(this.acidCG, this.acidHitPlayer, this);
         dropSprite.body.createGroupCallback(this.fakeCG, this.hitFakePlatform, this);
 	},
@@ -484,7 +500,7 @@ State.Level2.prototype = {
 
 			timerSplitAcid.add(50, function() {
 				body2.sprite.kill();
-				this.restartGame();
+				this.playerLose();
 				timerSplitAcid.destroy();
 			}, this);
 			timerSplitAcid.start();
@@ -496,7 +512,7 @@ State.Level2.prototype = {
 		// body1 is the drop, body2 is the crab.
 		if (!this.touchingUp(body2)) {
 			console.log('Matou o Player!!!!');
-            this.restartGame();
+            this.playerLose();
 
 			return true;
 		}
@@ -504,7 +520,7 @@ State.Level2.prototype = {
     },
     checkCollisionUrchins: function(body1, body2) {
         // body1 is the drop, body2 is the sea urchin.
-        this.restartGame();
+        this.playerLose();
 
         return true;
     },
@@ -536,7 +552,7 @@ State.Level2.prototype = {
 			hud.decreaseDropBar();
 			if (hud.getDropCounter() == 0){this.drop.playersize = 'small';}
 		} else if(hud.getDropCounter() == 0) {
-			this.restartGame();
+			this.playerLose();
 		}
 		// stop animation
 		body2.sprite.animations.stop();
@@ -567,18 +583,7 @@ State.Level2.prototype = {
     drinkEnergy: function(body1, body2) {
         console.log('Player get the energy drop!!!!');
 
-        this.drop.jump(1500);
-        //this.jumpSound.play();
-        this.smokeEmitter.start(false, 3000, 50);
-        this.haveEnergy = true;
-        var self = this;
-        if (this.smokeTimer != null) {
-            clearTimeout(this.smokeTimer);
-            this.smokeTimer = null;
-        }
-        this.smokeTimer = setTimeout(function() {
-                self.stopSmoke();
-        }, 2000);
+        this.energyState = true;
         this.drop.playerstate = 'energy';
     },
 	killDrop: function (body1, body2) {
@@ -601,7 +606,7 @@ State.Level2.prototype = {
                         self.hotSandTimerActivated = false;
                         if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
                                 40, self.hotSandLayer)) {
-                            self.restartGame();
+                            self.playerLose();
                         }
                         self.countCall = 0;
                     }, this);
@@ -622,7 +627,7 @@ State.Level2.prototype = {
                     this.hotSandTimerActivated = true;
                 }
             } else if (this.drop.playersize == 'small') {
-                this.restartGame();
+                this.playerLose();
             }
         }
         if (this.countCall == 2) {
@@ -634,18 +639,27 @@ State.Level2.prototype = {
 		this.smokeEmitter.on = false;
 		this.smokeTimer.destroy();
 	},
-    restartGame: function () {
-        this.restartState = true;
-    	this.clearTimers();
-        this.hotSandTimerActivated = false;
+	playerLose: function () {
+        if (this.restartState == false) {
+            this.restartState = true;
+            this.clearTimers();
+            this.mainSound.stop();
+            this.smokeEmitter.kill();
+            this.hotSandTimerActivated = false;
+            this.drop.animestate = 'evaporate';
+            this.drop.playerAnimations();
+            this.loseSound.play();
+            this.loseSound.onStop.add(this.restartGameState, this);
+            //this.restartGameState();
+        }
+    },
+    restartGameState: function() {
         this.drop.kill();
         hud.initDropCounter();
         hud.decreaseLife();
         if (hud.getLifeCounter() == 0) {
-            this.mainSound.stop();
             this.game.state.start('gameover-state');
         } else {
-            this.mainSound.stop();
             this.game.state.restart();
         }
     },

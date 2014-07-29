@@ -27,11 +27,13 @@ State.Level2Preloader.prototype = {
         this.game.load.image('seaurchin','assets/spritesheets/seaurchin_80-40.png');
         this.game.load.image('glass', 'assets/images/glass_280-320.png');
         this.game.load.image('smoke', './assets/images/smoke_32-32.png');
+        this.game.load.image('pausesplash', Config.pause.dir);
 
         //audios
         this.game.load.audio('jump','assets/waterDrop.ogg');
         this.game.load.audio('main','assets/gotaMain.ogg');
         this.game.load.audio('powup','assets/gotaPowerUp.ogg');
+        this.game.load.audio('lose', 'assets/lose.ogg');
     },
     create: function() {
         "use strict";
