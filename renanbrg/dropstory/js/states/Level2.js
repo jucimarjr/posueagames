@@ -85,19 +85,19 @@ State.Level2.prototype = {
 
         this.setupPhysics();
         this.setupLayers();
-        this.setupPlayer(7500, 100); //3040
+        this.setupPlayer(100, 100); //3040
         this.setupMolecule();
         this.setupAcidDrop();
-        this.setupUmbrella(7640, 280);
+        this.setupUmbrella(7625, 280);
 
 		// falling acid rain
 		this.timerEventRain[0]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 1360,0);
-		this.timerEventRain[1]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2640,0,1);		
+		this.timerEventRain[1]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2640,0,1);
 		this.timerEventRain[2]=game.time.events.loop(Phaser.Timer.SECOND*1.3, this.fallRain, this, 2800,0);
 		this.timerEventRain[3]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2960,0,3);
 		this.timerEventRain[4]=game.time.events.loop(Phaser.Timer.SECOND*1.3, this.fallRain, this, 3120,0);
 		this.timerEventRain[5]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 3280,0,5);
-		this.timerEventRain[6]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 6200,0);		
+		this.timerEventRain[6]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 6200,0);
 		this.timerEventRain[7]=game.time.events.loop(Phaser.Timer.SECOND*1.1, this.fallRain, this, 6600,0,7);
 		this.timerEventRain[8]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 7040,0);
 		
@@ -408,7 +408,7 @@ State.Level2.prototype = {
         this.molecule.create(2320, 300, 'evildrop'); //evildrop4
         // life UP
         this.molecule.create(2960, 150, 'lifeup'); //1 life
-        
+
         this.molecule.getAt(0).body.sprite.name='lifedrop';
         this.molecule.getAt(1).body.sprite.name='lifedrop';
         this.molecule.getAt(2).body.sprite.name='energy';
@@ -534,19 +534,31 @@ State.Level2.prototype = {
         return false;
     },
     hitEvilDrop: function(body1, body2) {
+		var timerEvilDrop = this.game.time.create();
 		if (hud.getDropCounter() > 0) {
 			hud.decreaseDropBar();
-			if (hud.getDropCounter() == 0){this.drop.playersize = 'small';}
+			if (hud.getDropCounter() == 0){
+				this.drop.playersize = 'small';
+			}
 		} else if(hud.getDropCounter() == 0) {
+			if (timerEvilDrop != null) {
+				timerEvilDrop.destroy();
+				timerEvilDrop = null;
+			}
 			this.playerLose();
+			return;
 		}
 		// stop animation
 		body2.sprite.animations.stop();
 		body2.sprite.frame = 2;
-		var timerEvilDrop = this.game.time.create();
 		timerEvilDrop.add(2000, function() {
 			body2.sprite.animations.play('dropAnimation');
 			timerEvilDrop.destroy();
+			if (this.touchingUp(body2) || this.touchingLeft(body2) || this.touchingRight(body2)) {
+				this.hitEvilDrop(body1, body2);
+			} else {
+				return;
+			}
 		}, this);
 		timerEvilDrop.start();
 	},
