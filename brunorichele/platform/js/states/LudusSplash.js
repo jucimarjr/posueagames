@@ -9,7 +9,7 @@ var State = {
 	LudusSplash: function (game) {
 		"use strict";
 		this.game = game;
-		this.sponsorSplash = new SponsorSplash(game);
+		//this.sponsorSplash = new SponsorSplash(game);
 		this.gameSplash = new GameSplash(game);		
 	}
 };
@@ -18,7 +18,7 @@ State.LudusSplash.prototype = {
 		"use strict";
 		this.game.load.image('ludus-splash', LudusSplashProperties.background);
 
-		this.sponsorSplash.init();
+		//this.sponsorSplash.init();
 		this.gameSplash.init();
 	},
 	create: function () {
@@ -28,7 +28,8 @@ State.LudusSplash.prototype = {
 			this.game.add.tween(sprite).to({alpha : 0}, LudusSplashProperties.millis, Phaser.Easing.Linear.None).start();
 		}, LudusSplashProperties.millis);
 		setTimeout(function () {
-			this.game.state.start('SponsorSplash');
+			//this.game.state.start('SponsorSplash');
+			this.game.state.start('GameSplash');
 		}, LudusSplashProperties.nextState);
 	},
 	update: function () {
