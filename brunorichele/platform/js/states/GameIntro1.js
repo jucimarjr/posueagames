@@ -21,7 +21,7 @@ State.GameIntro1.prototype = {
 		button2.anchor.setTo(Config.button.next.anchor.x, Config.button.next.anchor.y);		
 		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
-        game.add.text(500, 850, 'Foi tudo muito rápido: Um carro apareceu do nada,', style);
+        game.add.text(500, 850, 'Foi tudo muito rápido: Um caminhão apareceu do nada,', style);
         game.add.text(400, 900, 'tentei desviar para a calçada e depois do choque tudo ficou escuro.', style);
 	},
 	create: function () {
