@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="500" height="36" tilewidth="30" tileheight="30">
  <tileset firstgid="1" name="enemies" tilewidth="30" tileheight="30">
-  <image source="../enemies.png" width="90" height="30"/>
+  <image source="enemies.png" width="90" height="90"/>
  </tileset>
  <layer name="map" width="500" height="36">
   <data encoding="base64" compression="zlib">
@@ -12,18 +12,6 @@
   <object x="0" y="900">
    <polygon points="0,9 15000,9 15000,180 0,180"/>
   </object>
- </objectgroup>
- <objectgroup name="enemy" width="500" height="36">
-  <object gid="1" x="360" y="870"/>
-  <object gid="1" x="480" y="840"/>
-  <object gid="1" x="600" y="870"/>
-  <object gid="1" x="720" y="840"/>
-  <object gid="1" x="840" y="870"/>
-  <object gid="1" x="960" y="840"/>
-  <object gid="2" x="1080" y="900"/>
-  <object gid="2" x="1200" y="900"/>
-  <object gid="2" x="1320" y="900"/>
-  <object gid="2" x="1440" y="900"/>
  </objectgroup>
  <objectgroup name="objects" width="500" height="36">
   <object gid="3" x="1500" y="1080"/>

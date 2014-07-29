@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="30" tileheight="20">
  <tileset firstgid="1" name="enemies" tilewidth="30" tileheight="20">
-  <image source="../enemies.png" width="90" height="30"/>
+  <image source="enemies.png" width="90" height="60"/>
  </tileset>
  <layer name="map" width="100" height="100">
   <data encoding="base64" compression="zlib">
@@ -98,9 +98,6 @@
   <object gid="1" x="1470" y="2000"/>
   <object gid="1" x="1680" y="2000"/>
   <object gid="1" x="1890" y="2000"/>
- </objectgroup>
- <objectgroup name="door" width="100" height="100">
-  <object gid="3" x="2670" y="380"/>
  </objectgroup>
  <objectgroup name="hands" width="100" height="100">
   <object gid="2" x="750" y="1720"/>
