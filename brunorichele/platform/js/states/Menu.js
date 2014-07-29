@@ -34,7 +34,8 @@ var MenuProperties = {
 			x: 0.5,
 			y: 0.5
 		}
-	}
+	},
+	page : null
 };
 
 function Menu(game) {
@@ -62,7 +63,10 @@ Menu.prototype = {
 		buttonHowToPlay.anchor.setTo(MenuProperties.buttonHowToPlay.anchor.x, MenuProperties.buttonHowToPlay.anchor.y);
 		buttonCredits = this.game.add.button(MenuProperties.buttonCredits.x, MenuProperties.buttonCredits.y, 'button-credits', this.clickCredits, this, 1, 0, 1, 0);
 		buttonCredits.anchor.setTo(MenuProperties.buttonCredits.anchor.x, MenuProperties.buttonCredits.anchor.y);
-		this.createSound();
+		
+		if(MenuProperties.page == null){
+			this.createSound();
+		}
 	},
 	createSound : function(){
 		this.bgmusic = this.game.add.audio('musicmenu');
@@ -76,15 +80,18 @@ Menu.prototype = {
 	},
 	clickPlay: function () {
 		"use strict";
+		MenuProperties.page = null;
 		this.bgmusic.stop();
 		this.game.state.start('GameIntro1');
 	},
 	clickHowToPlay: function () {
 		"use strict";
+		MenuProperties.page = "howtoplay";
 		this.game.state.start('HowToPlay');
 	},
 	clickCredits: function () {
 		"use strict";
+		MenuProperties.page = "credits";
 		this.game.state.start('Credits');
 	}	
 };
