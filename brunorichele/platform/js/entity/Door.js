@@ -19,7 +19,6 @@ Door.prototype = {
     },
     update : function(player, x, y) {
         if (this.checkFinish(player.player, door)) {
-            console.log('terminou!!!');
             player.player.kill();
             player.player.reset(x, y);
             door.animations.stop();
@@ -35,7 +34,6 @@ Door.prototype = {
         animation.loop = false;
     },
     finishAnimComplete : function(sprite, animation) {
-        console.log('muda de fase');
         this.listener.changeLevel();
     }
 }

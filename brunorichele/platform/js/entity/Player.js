@@ -41,7 +41,9 @@ Player.prototype = {
         this.player.animations.add('run', PlayerProperties.run, 10, true);
         this.player.animations.add('walk', PlayerProperties.walk, 10, true);
         this.player.animations.add('jump', PlayerProperties.jump, 10, true);
-        this.player.animations.add('burn', PlayerProperties.burn, 10, true);
+        burn = this.player.animations.add('burn', PlayerProperties.burn, 10, true);
+        burn.onStart.add(this.dieAnimStart, this);
+        burn.onComplete.add(this.dieAnimComplete, this);
 
         this.game.physics.p2.enable(this.player);
         this.player.body.fixedRotation = true;
@@ -49,6 +51,8 @@ Player.prototype = {
 		this.player.body.mass = 9999;
 
         this.game.camera.follow(this.player);
+
+        this.state = PlayerState.IDLE;
     },
 
     update : function() {
@@ -64,5 +68,11 @@ Player.prototype = {
         } else if(this.state == PlayerState.BURNING) {
             this.player.animations.play('burn');
         }
+    },
+    dieAnimStart : function(sprite, animation) {
+        animation.loop = false;
+    },
+    dieAnimComplete : function(sprite, animation) {
+        this.game.state.start('GameOver');
     }
 }

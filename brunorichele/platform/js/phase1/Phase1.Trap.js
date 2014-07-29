@@ -12,14 +12,12 @@ Phase1.Trap = {
     },
     update : function(player) {
         var i;
-        for(i = 0; i < flames.children.length - 1; i++){
+        for(i = 0; i < flames.children.length; i++){
             flame = flames.children[i];
-            frame = flame.animations._anims.move._frames[flame.animations._anims.move._frameIndex];
+            index = flame.animations._anims.move._frameIndex;
+            frame = flame.animations._anims.move._frames[index];
             if ((frame === 4 || frame === 5) && this.checkBurn(player.player, flame)) {
                 player.state = PlayerState.BURNING;
-                console.log('burn mother fucker! burn!!!');
-				this.game.state.start('GameOver');
-				player.state = PlayerState.IDLE;
             }
         }
     },
