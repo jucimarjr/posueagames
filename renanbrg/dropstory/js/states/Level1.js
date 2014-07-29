@@ -41,7 +41,7 @@ State.Level1.prototype = {
 		// Player
 		try {
 			this.drop = new Character(this.game, 'drop',
-					'assets/spritesheets/drop_4590-60.png', [51, 60], 0);
+					'assets/spritesheets/drop_4794-60.png', [51, 60], 0);
 		} catch(exception) {
 			console.log(exception.toString());
 		}
@@ -116,6 +116,7 @@ State.Level1.prototype = {
         this.jumpSound = this.game.add.audio("jump");
         this.mainSound = this.game.add.audio("main");
         this.powUpSound = this.game.add.audio("powup");
+        this.loseSound = this.game.add.audio('lose');
        // this.inicioSound.stop();
         this.mainSound.loop = true;
         this.mainSound.play();
@@ -126,6 +127,14 @@ State.Level1.prototype = {
 		"use strict";
 
 		hud.updateFPS();
+
+        if (this.restartState) {
+            this.drop.getSpriteObject().body.velocity.x = 0;
+            this.crabs.getAt(0).body.velocity.x = 0;
+            this.crabs.getAt(1).body.velocity.x = 0;
+            this.crabs.getAt(2).body.velocity.x = 0;
+            return;
+        }
 
 		this.handleKeyDown();
 		this.isOnAir();
@@ -355,7 +364,7 @@ State.Level1.prototype = {
         dropSprite.body.createGroupCallback(this.moleculeCG, this.checkOverlapWithLifeDrop, this);
 		dropSprite.body.createGroupCallback(this.drinkEnergy, this);
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
-        dropSprite.body.createGroupCallback(this.glassCG, this.restartGame,
+        dropSprite.body.createGroupCallback(this.glassCG, this.playerLose,
                 this);
         dropSprite.body.createGroupCallback(this.coveredStrawCG, this.insideStraw, this);
         dropSprite.body.createGroupCallback(this.umbrellaCG,
@@ -617,7 +626,7 @@ State.Level1.prototype = {
 		// body1 is the drop, body2 is the crab.
 		if (!this.touchingUp(body2)) {
 			console.log('Matou o Player!!!!');
-            this.restartGame();
+            this.playerLose();
 
 			return true;
 		}
@@ -625,7 +634,7 @@ State.Level1.prototype = {
     },
     checkCollisionUrchins: function(body1, body2) {
         // body1 is the drop, body2 is the sea urchin.
-        this.restartGame();
+        this.playerLose();
 
         return true;
     },
@@ -696,7 +705,7 @@ State.Level1.prototype = {
                         self.hotSandTimerActivated = false;
                         if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
                                 40, self.hotSandLayer)) {
-                            self.restartGame();
+                            self.playerLose();
                         }
                         self.countCall = 0;
                     }, this);
@@ -717,7 +726,7 @@ State.Level1.prototype = {
                     this.hotSandTimerActivated = true;
                 }
             } else if (this.drop.playersize == 'small') {
-                this.restartGame();
+                this.playerLose();
             }
         }
         if (this.countCall == 2) {
@@ -793,18 +802,26 @@ State.Level1.prototype = {
 		"use strict";
 		this.game.state.start('credits-state');
 	},
-    restartGame: function () {
-        this.restartState = true;
-    	this.clearTimers();
-        this.hotSandTimerActivated = false;
+    playerLose: function () {
+        if (this.restartState == false) {
+            this.restartState = true;
+            this.clearTimers();
+            this.mainSound.stop();
+            this.smokeEmitter.kill();
+            this.hotSandTimerActivated = false;
+            this.drop.animestate = 'evaporate';
+            this.drop.playerAnimations();
+            this.loseSound.play();
+            this.loseSound.onStop.add(this.restartGameState, this);
+        }
+    },
+    restartGameState: function() {
         this.drop.kill();
         hud.initDropCounter();
         hud.decreaseLife();
         if (hud.getLifeCounter() == 0) {
-            this.mainSound.stop();
             this.game.state.start('gameover-state');
         } else {
-            this.mainSound.stop();
             this.game.state.restart();
         }
     },
