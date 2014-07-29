@@ -25,6 +25,7 @@
 				text-align: center;
 			}
 		</style>
+<!-- 		< link href="assets/final/video-js.css" rel="stylesheet" type="text/css" >  -->      
 	</head>
 	<body >
         <div id="fb-root"></div>
@@ -44,12 +45,29 @@
         </div>
 
         <div id="game">	</div>
+        <div id="container_video" style="display:none;">
+            <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="99%" height="99%"
+                  poster="http://video-js.zencoder.com/oceans-clip.png"
+                  data-setup="{}">
+                <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4' />
+                <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+                <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+                <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+             </video>        
+        </div>
         
 		<div class="fb-comments" 
              data-href="http://computacao.uea.edu.br/ludus/posueagames/brunorichele/platform/" 
              data-width="960" data-numposts="10" data-colorscheme="light">
         </div>
         
+<!--          <script type="text/javascript" src="js/final/video.js"></script>
+
+          <!-- Unless using the CDN hosted version, update the URL to the Flash SWF -- >
+         <script>
+            videojs.options.flash.swf = "assets/final/video-js.swf";
+         </script >-->
+                
         <script type="text/javascript" src="../../phaser/phaser.min.js"></script>       
 		<script type="text/javascript" src="js/config/Config.js"></script>
 
@@ -59,7 +77,7 @@
         <script type="text/javascript" src="js/entity/Hands.js"></script>
 
 		<script type="text/javascript" src="js/states/LudusSplash.js"></script>
- 		<!--<script type="text/javascript" src="js/states/SponsorSplash.js"></script> -->      
+ 		<!--<script type="text/javascript" src="js/states/SponsorSplash.js" ></script > -->      
 		<script type="text/javascript" src="js/states/GameSplash.js"></script>
 		<script type="text/javascript" src="js/states/Menu.js"></script>
 		<script type="text/javascript" src="js/states/HowToPlay.js"></script>

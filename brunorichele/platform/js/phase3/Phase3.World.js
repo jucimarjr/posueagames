@@ -37,5 +37,15 @@ Phase3.World = {
     },
     collision : function() {
         groundLayer = this.game.physics.p2.convertCollisionObjects(this.mymap, 'ground');
+    },
+    collisionHole : function(player, music){
+        if (player.player.x > 7397 && (player.player.y > 230 && player.player.y < 360)){
+			console.log("entrou")
+			player.player.kill();
+			music.stop();
+			document.getElementById('game').style.display = 'none';
+			document.getElementById('container_video').style.display = 'block';	
+			document.getElementById('example_video_1').play();			
+        }
     }
 }

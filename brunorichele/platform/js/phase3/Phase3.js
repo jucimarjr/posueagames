@@ -22,6 +22,7 @@ State.Phase3.prototype = {
     },
     update : function() {
         this.control.update();
+		Phase3.World.collisionHole(this.player,Phase3.World.bgmusic);//Gambi: modificar se possível
     },
     changeFinal : function() {
 		Phase3.World.bgmusic.stop();
