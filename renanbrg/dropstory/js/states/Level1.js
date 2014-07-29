@@ -56,6 +56,7 @@ State.Level1.prototype = {
         this.dropIsInvincible = false;
         this.energyState = false;
         this.restartState = false;
+        this.winState = false;
 
         this.game.onPause.add(this.pauseGame, this);
         this.game.onResume.add(this.resumeGame, this);
@@ -117,6 +118,9 @@ State.Level1.prototype = {
         this.mainSound = this.game.add.audio("main");
         this.powUpSound = this.game.add.audio("powup");
         this.loseSound = this.game.add.audio('lose');
+        this.loseSound.onStop.add(this.restartGameState, this);
+        this.winSound = this.game.add.audio('stageclear');
+        this.winSound.onStop.add(this.nextLevel, this);
        // this.inicioSound.stop();
         this.mainSound.loop = true;
         this.mainSound.play();
@@ -128,7 +132,7 @@ State.Level1.prototype = {
 
 		hud.updateFPS();
 
-        if (this.restartState) {
+        if (this.restartState || this.winState) {
             this.drop.getSpriteObject().body.velocity.x = 0;
             this.crabs.getAt(0).body.velocity.x = 0;
             this.crabs.getAt(1).body.velocity.x = 0;
@@ -559,9 +563,7 @@ State.Level1.prototype = {
         this.umbrella.body.static = true;
         this.umbrella.body.setCollisionGroup(this.umbrellaCG);
         this.umbrella.body.collides([this.playerCG]);
-        var umbrellaAnimation = this.umbrella.animations.add('openUmbrella',
-                [0, 1, 2], 10, false);
-        umbrellaAnimation.onComplete.add(this.nextLevel, this);
+        this.umbrella.animations.add('openUmbrella', [0, 1, 2], 10, false);
     },
 	// Funcao Magica!!! Deve existir outro jeito!
 	touchingDown: function (someone) {
@@ -819,7 +821,6 @@ State.Level1.prototype = {
             this.drop.animestate = 'evaporate';
             this.drop.playerAnimations();
             this.loseSound.play();
-            this.loseSound.onStop.add(this.restartGameState, this);
         }
     },
     restartGameState: function() {
@@ -833,12 +834,18 @@ State.Level1.prototype = {
         }
     },
     startUmbrellaAnimation: function(body1, body2) {
-        var umbrellaSprite = body2.sprite;
-        umbrellaSprite.animations.play('openUmbrella');
+        if (this.winState == false) {
+            this.winState = true;
+            this.clearTimers();
+            var umbrellaSprite = body2.sprite;
+            umbrellaSprite.animations.play('openUmbrella');
+            this.drop.animestate = 'stop';
+            this.drop.playerAnimations();
+            this.mainSound.stop();
+            this.winSound.play();
+        }
     },
     nextLevel: function() {
-        this.clearTimers();
-        this.mainSound.stop();
         this.game.state.start('level2preloader-state');
     }
 };
