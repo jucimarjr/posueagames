@@ -81,6 +81,8 @@ Menu.prototype = {
 	clickPlay: function () {
 		"use strict";
 		MenuProperties.page = null;
+		this.carro = this.game.add.audio('music-carro');
+        this.carro.play();	
 		this.bgmusic.stop();
 		this.game.state.start('GameIntro1');
 	},
