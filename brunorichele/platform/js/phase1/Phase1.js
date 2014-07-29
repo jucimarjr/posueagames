@@ -16,7 +16,6 @@ State.Phase1.prototype = {
         this.hands.create(Phase1.World.mymap);
         this.door.create(this, 2670, 140);
         Phase1.Trap.createTrap(Phase1.World.mymap);
-        //Phase1.Enemy.createEnemy(Phase1.World.mymap);
         Phase1.World.createForeground();
 		GameOverProperties.StopMusic = Phase1.World.createSound();
 
