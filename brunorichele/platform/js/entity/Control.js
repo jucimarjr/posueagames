@@ -1,7 +1,8 @@
-function Control(game, player, cursors) {
+function Control(game, player, cursors, keya) {
     this.game = game,
     this.player = player,
     this.cursors = cursors,
+	this.KeyA = keya,
     this.jumpTimer = 0;
 }
 
@@ -24,7 +25,7 @@ Control.prototype = {
 
             if (this.player.state != PlayerState.JUMPING) {
                 if (this.cursors.left.isDown) {
-                    if (this.cursors.left.ctrlKey) {
+                    if (this.KeyA.isDown) {
                         this.player.state = PlayerState.RUNNING;
                         this.player.player.body.velocity.x = -PlayerProperties.velRun;
                     } else {
@@ -33,7 +34,7 @@ Control.prototype = {
                     }
                     this.player.player.scale.x = -1;
                 } else if (this.cursors.right.isDown) {
-                    if (this.cursors.right.ctrlKey) {
+                    if (this.KeyA.isDown) {
                         this.player.state = PlayerState.RUNNING;
                         this.player.player.body.velocity.x = PlayerProperties.velRun;
                     } else {
