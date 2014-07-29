@@ -13,7 +13,7 @@ State.Phase3.prototype = {
         this.player.player.body.mass = 100;
         Phase3.World.createObjects();
         Phase3.World.createForeground();
-		Phase3.World.createSound();
+		GameOverProperties.StopMusic = Phase3.World.createSound();
 
         Phase3.World.collision();
 

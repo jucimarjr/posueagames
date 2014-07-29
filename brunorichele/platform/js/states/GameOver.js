@@ -3,7 +3,8 @@ var GameOverProperties = {
 	background: 'assets/images/gameover_1920-1080.jpg',
 	x: 0,
 	y: 0,
-	Phase : null
+	Phase : null,
+	StopMusic : null
 };
 
 State.GameOver = function (game) {
@@ -22,8 +23,7 @@ State.GameOver.prototype = {
 		button2.anchor.setTo(Config.button.init.anchor.x, Config.button.init.anchor.y);		
 		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
-        game.add.text(330, 850, 'Um homem foi encontrado morto após seu veículo atingir um caminhão', style);
-        game.add.text(620, 900, 'na manhã de hoje.', style);
+        game.add.text(330, 850, 'Um homem foi encontrado morto..após seu veículo ser atingido por um caminhão...', style);
 	},
 	create: function () {
 		"use strict";
@@ -34,10 +34,12 @@ State.GameOver.prototype = {
 	},
 	onBack: function () {
 		"use strict";
+		GameOverProperties.StopMusic.stop();
 		this.game.state.start(GameOverProperties.Phase);
 	},
 	onNext: function () {
 		"use strict";
+		GameOverProperties.StopMusic.stop();		
 		this.game.state.start('Menu');
 	}	
 };
