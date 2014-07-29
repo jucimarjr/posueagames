@@ -165,7 +165,7 @@ State.Level2.prototype = {
         hud.hidePauseImage();
     },
     jumpPlayer: function() {
-        if (this.game.paused == true) {
+        if (this.game.paused == true || this.restartState || this.winState) {
             return;
         }
 
