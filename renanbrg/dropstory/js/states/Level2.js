@@ -23,6 +23,7 @@ State.Level2 = function (game) {
     this.acidgroup = null;
     this.smokeEmitter = null;
     this.timerEventRain = [];
+    this.fakePositions = [];
     this.onAir = false;
 
     this.countCall = 0; //count how many times the collision function is called.
@@ -51,34 +52,31 @@ State.Level2.prototype = {
         this.map = this.game.add.tilemap('maplevel2');
         this.map.addTilesetImage('hotsand_40-40', 'hotsand');
         this.map.addTilesetImage('platform_160-80', 'platform');
-        this.map.addTilesetImage('fakeplatform_160-80', 'fakeplatform');
         this.map.addTilesetImage('glass_280-320', 'glass');
         this.map.addTilesetImage('seashell_120-40', 'seashell');
-        this.map.addTilesetImage('seaurchin_80-40', 'seaurchin');
 
         this.mainLayer = this.map.createLayer('mainlayer2');
-        this.fakeplatform = this.map.createLayer('fakeplatform');
         this.hotSandLayer = this.map.createLayer('hotsandlayer');
         this.irregularLayer = this.map.createLayer('irregularlayer');
         this.mainLayer.resizeWorld();
 
         this.setupPhysics();
         this.setupLayers();
-        this.setupPlayer(2250, 100);
+        this.setupPlayer(100, 100);
         this.setupMolecule();
         this.setupAcidDrop();
 
 		// falling acid rain
 		this.timerEventRain[0]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 1360,0);
-		this.timerEventRain[1]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2640,0,1);
-		this.timerEventRain[2]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 2800,0);
+		this.timerEventRain[1]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2640,0,1);		
+		this.timerEventRain[2]=game.time.events.loop(Phaser.Timer.SECOND*1.3, this.fallRain, this, 2800,0);
 		this.timerEventRain[3]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 2960,0,3);
-		this.timerEventRain[4]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 3120,0);
+		this.timerEventRain[4]=game.time.events.loop(Phaser.Timer.SECOND*1.3, this.fallRain, this, 3120,0);
 		this.timerEventRain[5]=game.time.events.loop(Phaser.Timer.SECOND*1.2, this.fallRain, this, 3280,0,5);
-		this.timerEventRain[6]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 6200,0);
-		this.timerEventRain[7]=game.time.events.loop(Phaser.Timer.SECOND*0.8, this.fallRain, this, 6600,0,7);
-		this.timerEventRain[8]=game.time.events.loop(Phaser.Timer.SECOND, this.fallRain, this, 7040,0);
-
+		this.timerEventRain[6]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 6200,0);		
+		this.timerEventRain[7]=game.time.events.loop(Phaser.Timer.SECOND*1.1, this.fallRain, this, 6600,0,7);
+		this.timerEventRain[8]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 7040,0);
+		
 		this.setupSmokeEmitter(1550, this.game.height-80);
         hud.create();
 
@@ -188,7 +186,6 @@ State.Level2.prototype = {
 	},
 	setupLayers: function () {
 	    this.tilesMainLayer = game.physics.p2.convertTilemap(this.map,this.mainLayer);
-	    this.tilesFakeLayer = game.physics.p2.convertTilemap(this.map,this.fakeplatform);
 	    this.tilesHotSandLayer = game.physics.p2.convertTilemap(this.map,this.hotSandLayer);
 
 	    this.tilesIrregularLayer = game.physics.p2.convertTilemap(this.map,this.irregularLayer);
@@ -201,11 +198,6 @@ State.Level2.prototype = {
 	    	this.tilesMainLayer[i].setCollisionGroup(this.groundCG);
 	    	this.tilesMainLayer[i].collides([this.playerCG, this.crabCG,this.moleculeCG, this.acidCG]);
 	    	this.tilesMainLayer[i].setMaterial(this.groundMaterial);
-	    }
-	    for (var i=0; i < this.tilesFakeLayer.length; i++) {
-	    	this.tilesFakeLayer[i].setCollisionGroup(this.fakeCG);
-	    	this.tilesFakeLayer[i].collides([this.playerCG, this.crabCG,this.moleculeCG, this.acidCG]);
-	    	this.tilesFakeLayer[i].setMaterial(this.groundMaterial);
 	    }
 	    for (var i=0; i < this.tilesHotSandLayer.length; i++) {
 	    	this.tilesHotSandLayer[i].setCollisionGroup(this.hotsandCG);
@@ -223,6 +215,12 @@ State.Level2.prototype = {
 	    	glassPolygon[i].collides([this.playerCG]);
 	    	glassPolygon[i].setMaterial(this.groundMaterial);
 	    }
+
+	    this.fakeplatform = game.add.group();
+		this.fakeplatform.enableBody = true;
+		this.fakeplatform.physicsBodyType = Phaser.Physics.P2JS;
+	    this.map.createFromObjects('fakeplatform', 75, 'fakeplatform', 0, true, false,this.fakeplatform);
+	    this.fakeplatform.forEach(this.setupFakePlatform, this);
 
 	    this.crabs = game.add.group();
 		this.crabs.enableBody = true;
@@ -250,7 +248,8 @@ State.Level2.prototype = {
         dropSprite.body.createGroupCallback(this.moleculeCG, this.checkOverlapWithLifeDrop, this);
 		dropSprite.body.createGroupCallback(this.hotsandCG, this.killDrop, this);
         dropSprite.body.createGroupCallback(this.glassCG, this.restartGame, this);
-        dropSprite.body.createGroupCallback(this.acidCG, this.restartGame, this);
+        dropSprite.body.createGroupCallback(this.acidCG, this.acidHitPlayer, this);
+        dropSprite.body.createGroupCallback(this.fakeCG, this.hitFakePlatform, this);
 	},
 	setupCrab: function() {
 		for (var i = 0; i < this.crabs.length; i++) {
@@ -259,7 +258,7 @@ State.Level2.prototype = {
 			this.crabs.getAt(i).body.setMaterial(this.crabMaterial);
 			this.crabs.getAt(i).animations.add('walkL', [0, 1, 2], 10, true);
 			this.crabs.getAt(i).animations.add('walkR', [0, 1, 2], 10, true);
-			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG, this.groundCG, this.urchinsCG, this.fakeCG]);
+			this.crabs.getAt(i).body.collides([this.crabCG, this.playerCG, this.groundCG, this.urchinsCG]);
 		}
 		this.crabs.getAt(0).body.moveLeft(350);
 		this.crabs.getAt(1).body.moveRight(350);
@@ -268,6 +267,18 @@ State.Level2.prototype = {
 		this.crabs.getAt(4).body.moveLeft(300);
 		this.crabs.getAt(5).body.moveRight(300);
 		this.crabs.getAt(6).body.moveLeft(300);
+	},
+	setupFakePlatform: function() {
+		for (var i = 0; i < this.fakeplatform.length; i++) {
+			this.fakeplatform.getAt(i).body.fixedRotation = true;
+			this.fakeplatform.getAt(i).body.kinematic=true;
+			this.fakeplatform.getAt(i).body.collideWorldBounds=false;
+			this.fakeplatform.getAt(i).body.setCollisionGroup(this.fakeCG);
+			this.fakeplatform.getAt(i).body.sprite.name = i;
+			this.fakeplatform.getAt(i).body.setMaterial(this.groundMaterial);
+			this.fakeplatform.getAt(i).body.collides([this.playerCG, this.acidCG]);
+			this.fakePositions.push({x: this.fakeplatform.getAt(i).body.x, y: this.fakeplatform.getAt(i).body.y});
+		}
 	},
     setupUrchins: function(urchin) {
     	game.physics.p2.enable(urchin);
@@ -293,8 +304,8 @@ State.Level2.prototype = {
         this.molecule.create(2195, 300, 'evildrop'); //evildrop3
         this.molecule.create(2320, 300, 'evildrop'); //evildrop4
         // life UP
-        this.molecule.create(3280, 150, 'lifeup'); //1 life
-
+        this.molecule.create(2960, 150, 'lifeup'); //1 life
+        
         this.molecule.getAt(0).body.sprite.name='lifedrop';
         this.molecule.getAt(1).body.sprite.name='lifedrop';
         this.molecule.getAt(2).body.sprite.name='energy';
@@ -333,18 +344,18 @@ State.Level2.prototype = {
         aciddrop = this.acidgroup.create(posX, posY, 'aciddrop');
 		aciddrop.body.collideWorldBounds=false;
 		aciddrop.body.allowSleep=true;
+		aciddrop.body.sprite.name = 'aciddrop';
 		aciddrop.body.setCollisionGroup(this.acidCG);
 		aciddrop.body.fixedRotation = true;
 		aciddrop.body.collides([this.playerCG, this.groundCG, this.fakeCG]);
 		// kill acid drop when collides to ground
-		aciddrop.body.createGroupCallback(this.groundCG, this.collidesGroundAcid, this);
-		aciddrop.body.createGroupCallback(this.fakeCG, this.collidesGroundAcid, this);
+		aciddrop.body.createGroupCallback(this.groundCG, this.collidesAcidRain, this);
+		aciddrop.body.createGroupCallback(this.fakeCG, this.collidesAcidRain, this);
 	},
-	collidesGroundAcid: function(body1, body2) {
+	collidesAcidRain: function(body1, body2) {
 		var timerAcidRain;
-		body1.sprite.frame = 1;
-
 		timerAcidRain = this.game.time.create();
+		body1.sprite.frame = 1;
 
 		timerAcidRain.add(200, function() {
 			var timerSplitAcid = this.game.time.create();
@@ -356,7 +367,27 @@ State.Level2.prototype = {
 				timerSplitAcid.destroy();
 			}, this);
 			timerSplitAcid.start();
+			
+		}, this);
+		timerAcidRain.start();
+	},
+	acidHitPlayer: function(body1, body2) {
+		var timerAcidRain;
+		timerAcidRain = this.game.time.create();
+		body2.sprite.frame = 1;
 
+		timerAcidRain.add(200, function() {
+			var timerSplitAcid = this.game.time.create();
+			body2.sprite.frame = 2;
+			timerAcidRain.destroy();
+
+			timerSplitAcid.add(50, function() {
+				body2.sprite.kill();
+				this.restartGame();
+				timerSplitAcid.destroy();
+			}, this);
+			timerSplitAcid.start();
+			
 		}, this);
 		timerAcidRain.start();
 	},
@@ -415,6 +446,22 @@ State.Level2.prototype = {
 			timerEvilDrop.destroy();
 		}, this);
 		timerEvilDrop.start();
+	},
+	hitFakePlatform: function(body1, body2) {
+		var timerFakeFall = this.game.time.create();
+		var timerBackPlatform;
+		timerFakeFall.add(1500, function() {
+			timerBackPlatform = this.game.time.create();
+			body2.velocity.y=240;
+			timerFakeFall.destroy();
+			timerBackPlatform.add(4000, function() {
+				body2.velocity.y=0;
+				body2.sprite.reset(this.fakePositions[body2.sprite.name].x, this.fakePositions[body2.sprite.name].y);
+				timerBackPlatform.destroy();
+			}, this);
+			timerBackPlatform.start();
+		}, this);
+		timerFakeFall.start();
 	},
     drinkEnergy: function(body1, body2) {
         console.log('Player get the energy drop!!!!');
