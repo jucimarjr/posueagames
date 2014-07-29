@@ -27,6 +27,7 @@ State.Phase1.prototype = {
         this.control.update();
         this.door.update(this.player, 3000, 0);
         Phase1.Trap.update(this.player);
+		Phase1.World.collisionFloor(this.player);
     },
     changeLevel : function() {
         this.game.state.start('GameIntro3');
