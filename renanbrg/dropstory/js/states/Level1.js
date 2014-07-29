@@ -202,7 +202,7 @@ State.Level1.prototype = {
                 this.smokeTimer = this.game.time.create();
                 this.smokeTimer.add(2000, function() {
                         self.stopSmoke();
-                }, 2000);
+                }, this);
                 this.smokeTimer.start();
                 this.energyState = false;
                 this.drop.playerstate = 'normal';
@@ -668,8 +668,8 @@ State.Level1.prototype = {
         console.log('Player get the sunscreen drop!!!!');
 
         this.drop.playerstate = 'sunscreen';
-        body2.sprite.kill();
-        body2.hasCollided = true;
+        //body2.sprite.kill();
+        body2.hasCollided = false;
         this.dropIsInvincible = true;
         var self = this;
         this.disableSundropTimer = this.game.time.create();
@@ -698,6 +698,13 @@ State.Level1.prototype = {
                 this.haveEnergy = true;
                 this.smokeEmitter.on = true;
                 this.smokeEmitter.start(false, 3000, 50);
+                //stop smoke on player
+                var stopSmokeTimer = this.game.time.create();
+				stopSmokeTimer.add(2000, function() {
+					stopSmokeTimer.destroy();
+					this.smokeEmitter.on = false;
+				}, this);
+				stopSmokeTimer.start();
                 var self = this;
                 if (hud.getDropCounter() == 0) {
                     this.lastDropTimer = this.game.time.create();

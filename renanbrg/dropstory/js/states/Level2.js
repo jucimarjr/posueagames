@@ -181,7 +181,7 @@ State.Level2.prototype = {
                 this.smokeTimer = this.game.time.create();
                 this.smokeTimer.add(2000, function() {
                         self.stopSmoke();
-                }, 2000);
+                }, this);
                 this.smokeTimer.start();
                 this.energyState = false;
                 this.drop.playerstate = 'normal';
@@ -600,6 +600,12 @@ State.Level2.prototype = {
                 this.haveEnergy = true;
                 this.smokeEmitter.on = true;
                 this.smokeEmitter.start(false, 3000, 50);
+                var stopSmokeTimer = this.game.time.create();
+				stopSmokeTimer.add(2000, function() {
+					stopSmokeTimer.destroy();
+					this.smokeEmitter.on = false;
+				}, this);
+				stopSmokeTimer.start();
                 var self = this;
                 if (hud.getDropCounter() == 0) {
                     this.lastDropTimer = this.game.time.create();
