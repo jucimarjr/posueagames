@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="267" height="36" tilewidth="30" tileheight="30">
+ <tileset firstgid="1" name="enemies" tilewidth="30" tileheight="30">
+  <image source="enemies.png" width="90" height="90"/>
+ </tileset>
  <layer name="map" width="267" height="36">
   <data encoding="base64" compression="zlib">
    eJztwQENAAAAwqD3T+3sARQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN5YwAAE=
@@ -15,5 +18,11 @@
   <object x="660" y="390">
    <polygon points="-105,10 0,86 7350,86 7350,10"/>
   </object>
+ </objectgroup>
+ <objectgroup name="spikes" width="267" height="36">
+  <object gid="4" x="1050" y="908"/>
+  <object gid="4" x="6780" y="908"/>
+  <object gid="4" x="6780" y="655"/>
+  <object gid="4" x="1050" y="655"/>
  </objectgroup>
 </map>

@@ -127,6 +127,73 @@
          "width":267,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":36,
+         "name":"spikes",
+         "objects":[
+                {
+                 "gid":4,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1050,
+                 "y":908
+                }, 
+                {
+                 "gid":4,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":6780,
+                 "y":908
+                }, 
+                {
+                 "gid":4,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":6780,
+                 "y":655
+                }, 
+                {
+                 "gid":4,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1050,
+                 "y":655
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":267,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":
@@ -134,7 +201,22 @@
 
     },
  "tileheight":30,
- "tilesets":[],
+ "tilesets":[
+        {
+         "firstgid":1,
+         "image":"enemies.png",
+         "imageheight":90,
+         "imagewidth":90,
+         "margin":0,
+         "name":"enemies",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":30,
+         "tilewidth":30
+        }],
  "tilewidth":30,
  "version":1,
  "width":267

@@ -68,6 +68,6 @@ Control.prototype = {
         return result;
     },
     isDying : function() {
-        return this.player.state == PlayerState.BURNING || this.player.state == PlayerState.CAUGHT;
+        return this.player.state == PlayerState.BURNING || this.player.state == PlayerState.CAUGHT || this.player.state == PlayerState.EXPLODING;
     }
 }
