@@ -24,6 +24,6 @@ State.Phase3.prototype = {
         this.control.update();
     },
     changeFinal : function() {
-		Phase3.World.bgmusic.stop();		
+		Phase3.World.bgmusic.stop();
     }
 }
