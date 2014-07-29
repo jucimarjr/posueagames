@@ -2138,7 +2138,7 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":750,
+                 "x":810,
                  "y":1720
                 }, 
                 {
@@ -2152,21 +2152,7 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2040,
-                 "y":1260
-                }, 
-                {
-                 "gid":2,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1440,
+                 "x":1500,
                  "y":1280
                 }, 
                 {
@@ -2180,7 +2166,7 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":690,
+                 "x":810,
                  "y":620
                 }, 
                 {
