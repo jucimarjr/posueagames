@@ -61,10 +61,10 @@ State.Level2.prototype = {
         this.game.onPause.add(this.pauseGame, this);
         this.game.onResume.add(this.resumeGame, this);
 
-        this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.jumpKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.jumpKey.onDown.add(this.jumpPlayer, this);
 
-        this.pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        this.pauseKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
         this.pauseKey.onDown.add(this.startPauseGameEvent, this);
 
 		var background;
@@ -156,10 +156,10 @@ State.Level2.prototype = {
     resumeGame: function() {
         "use strict";
 
-        this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.jumpKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.jumpKey.onDown.add(this.jumpPlayer, this);
 
-        this.pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        this.pauseKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
         this.pauseKey.onDown.add(this.startPauseGameEvent, this);
 
         hud.hidePauseImage();
@@ -672,6 +672,10 @@ State.Level2.prototype = {
         }
     },
     nextLevel: function() {
+        this.game.onPause.remove(this.pauseGame, this);
+        this.game.onResume.remove(this.resumeGame, this);
+        this.pauseKey.onDown.remove(this.startPauseGameEvent, this);
+        this.jumpKey.onDown.remove(this.jumpPlayer, this);
         this.game.state.start('ending-state');
     },
     startUmbrellaAnimation: function(body1, body2) {
