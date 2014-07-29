@@ -10,11 +10,11 @@ State.Phase1.prototype = {
     create : function() {
         Phase1.World.createWorld();
         Phase1.World.createBackground();
-        this.player.create(/*50, 1600*/2570, 140);
+        this.player.create(50, 1600);
         this.player.player.body.mass = 100;
         this.door.create(this, 2670, 140);
-     //   Phase1.Trap.createTrap(Phase1.World.mymap)
-      //  Phase1.Enemy.createEnemy(Phase1.World.mymap);	 
+        Phase1.Trap.createTrap(Phase1.World.mymap)
+        //Phase1.Enemy.createEnemy(Phase1.World.mymap);
         Phase1.World.createForeground();
 		//Phase1.World.createSound();
 
@@ -26,7 +26,7 @@ State.Phase1.prototype = {
     update : function() {
         this.control.update();
         this.door.update(this.player, 3000, 0);
-    //    Phase1.Trap.update(this.player);
+        Phase1.Trap.update(this.player);
     },
     changeLevel : function() {
         this.game.state.start('GameIntro3');

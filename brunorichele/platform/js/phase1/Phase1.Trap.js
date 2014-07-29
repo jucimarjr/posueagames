@@ -7,14 +7,15 @@ Phase1.Trap = {
         flames.enableBody = true;
         mymap.createFromObjects('flames', 1, 'flame', 0, true, false, flames);
 
-        flames.callAll('animations.add', 'animations', 'move', [0, 1, 2, 3, 4, 5], 8, true);
+        flames.callAll('animations.add', 'animations', 'move', [0, 1, 2, 1, 0, 1, 2, 1, 0, 1, 2, 3, 4, 5, 4, 5, 4, 3, 2, 1], 8, true);
         flames.callAll('animations.play', 'animations', 'move');
     },
     update : function(player) {
         var i;
         for(i = 0; i < flames.children.length - 1; i++){
             flame = flames.children[i];
-            if (this.checkBurn(player.player, flame)) {
+            frame = flame.animations._anims.move._frames[flame.animations._anims.move._frameIndex];
+            if ((frame === 4 || frame === 5) && this.checkBurn(player.player, flame)) {
                 player.state = PlayerState.BURNING;
                 console.log('burn mother fucker! burn!!!');
 				this.game.state.start('GameOver');
