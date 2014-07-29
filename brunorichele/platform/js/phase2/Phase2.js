@@ -30,6 +30,8 @@ State.Phase2.prototype = {
     },
     changeLevel : function() {
         this.game.state.start('GameIntro4');
+		this.porta = this.game.add.audio('music-porta');
+        this.porta.play();
 		Phase2.World.bgmusic.stop();	
     }
 }

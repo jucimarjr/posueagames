@@ -42,6 +42,8 @@ Phase3.World = {
         if (player.player.x > 7397 && (player.player.y > 230 && player.player.y < 360)){
 			console.log("entrou")
 			player.player.kill();
+			this.porta = this.game.add.audio('music-porta');
+        	this.porta.play();
 			music.stop();
 			document.getElementById('game').style.display = 'none';
 			document.getElementById('container_video').style.display = 'block';	
