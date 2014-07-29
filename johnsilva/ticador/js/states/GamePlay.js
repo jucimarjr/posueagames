@@ -8,7 +8,7 @@ State.GamePlay.prototype = {
 	preload: function () {
 		var cursors;
 		var playerX,playerY, fishXLeft,fishXRight, frame,runY;
-		var fishes, lastY;
+		var fishes, lastY,lastFish;
 	},
 	create: function () {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
@@ -19,8 +19,7 @@ State.GamePlay.prototype = {
 		frame = 0;
 		runY = 40;
 		lastY = null;
-
-
+		lastHeight = 0;
 
 		this.game.add.sprite(0, 0, 'bg');
 
@@ -31,16 +30,11 @@ State.GamePlay.prototype = {
 		this.player.anchor.setTo(.5, .5);
 
 		fishes = game.add.group();
-		//fishes.createMultiple(10, 'fish2');
 		this.addFishes();
-		/*this.fish2 = this.game.add.sprite(fishX, -60,'fish2');
-		this.game.physics.enable(this.fish2);
-		this.fish2.body.setSize(this.fish2.width, this.fish2.height-10, 0, 0);
-		this.fish2.anchor.setTo(.5, .5);*/
-
 		cursors = this.game.input.keyboard.createCursorKeys();
 		this.ticou = false;
 	},
+
 	update: function () {
 
 		this.game.physics.arcade.overlap(this.player, fishes, this.ticar, null,this);
@@ -52,49 +46,43 @@ State.GamePlay.prototype = {
 			this.rightUp = true;
 		}		
 
-		if (cursors.left.isDown && this.leftUp) {
-			//this.fish2.y+=runY;
+		if (cursors.left.isDown && this.leftUp) {		
 			this.run();
 			this.leftUp = false;
-			this.player.scale.x = -1;
-			this.player.scale.x = 1;
+			this.changeSprite(-1);
 			this.player.position.setTo(playerX,playerY);			
 			this.player.animations.play('ticar');			
 			ticou = true;
-			//this.addOneFish();
 		}
 		else if(cursors.right.isDown && this.rightUp){
-			//this.fish2.y+=runY;
 			this.run();
 			this.rightUp = false;
-			this.player.scale.x = 1; 
-			this.player.scale.x = -1;
+			this.changeSprite(1);
 			this.player.position.setTo(Config.global.screen.width-playerX,playerY);			
 			this.player.animations.play('ticar');			
-			//this.game.physics.arcade.overlap(this.player, this.fish2, this.ticar, null,this);
 			ticou = true;
-			//this.addOneFish();
 		}
+	},
 
-		//this.renew();
-		
-		/*if(this.fish2.y >= Config.global.screen.height){
-			this.fish2.y = 0-this.fish2.height/2;
-			frame = 0;
-			this.fish2.frame = 0;
-		}*/
+	changeSprite: function(scale){
+		this.player.scale.x = scale;
+		this.player.scale.x = (-1)*scale;
 	},
 
 	run: function(){
+		lastY = 1000;
 		fishes.forEach(function (f){ 
 			f.y += runY;			
 			if(f.y < lastY){
 				lastY = f.y;
+				lastFish = f;
 			}
 		}, this);
 		fishes.forEach(function (f){
 			if( (f.y - (f.height/2)) >= Config.global.screen.height){
-				var posY = lastY + f.height + runY + 40;
+				//var posY = lastY-f.height;
+				//var posY = lastY + f.height + runY + 40;
+				var posY = lastFish.y-(lastFish.height+f.height)/2; //lastY + f.height + runY + 40;
 				this.resetPosition(f, posY);
 				//frame = 0;
 				//f.frame = 0;
@@ -111,13 +99,13 @@ State.GamePlay.prototype = {
 	},
 
 	addFishes: function(){
-		for(var i=0;i<6;i++){
-			var fish = this.game.add.sprite(-200, 200,'fish2');
+		for(var i=0;i<10;i++){
+			var fish = this.game.add.sprite(-200, 200,'fish3');
 			this.game.physics.enable(fish);
 			fish.body.setSize(fish.width, fish.height-10, 0, 0);
 			fish.anchor.setTo(.5, .5);
 			if(lastY==null)
-				lastY = 325;
+				lastY = playerY-10-5-fish.height/2;//+5;//325;
 			else
 				lastY -= fish.height;
 			
@@ -125,7 +113,6 @@ State.GamePlay.prototype = {
 
 			fishes.add(fish);
 		}
-		lastY = 1000;
 	},
 
 	ticar: function(player, fish){
@@ -153,7 +140,6 @@ State.GamePlay.prototype = {
     	//game.debug.text(levelConfig.checkPoint.y,200,64);
 
     	game.debug.body(this.player);
-    	//game.debug.body(this.fish2);
     	
     	fishes.forEach(function (f){ 
 			game.debug.body(f);
