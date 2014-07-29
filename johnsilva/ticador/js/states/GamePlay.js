@@ -80,9 +80,7 @@ State.GamePlay.prototype = {
 		}, this);
 		fishes.forEach(function (f){
 			if( (f.y - (f.height/2)) >= Config.global.screen.height){
-				//var posY = lastY-f.height;
-				//var posY = lastY + f.height + runY + 40;
-				var posY = lastFish.y-(lastFish.height+f.height)/2; //lastY + f.height + runY + 40;
+				var posY = lastFish.y-(lastFish.height+f.height)/2;
 				this.resetPosition(f, posY);
 				//frame = 0;
 				//f.frame = 0;
