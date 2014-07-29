@@ -19,12 +19,18 @@ State.Level2 = function (game) {
     this.haveEnergy = false;
     this.smokeTimer = null;
     this.dropIsInvincible = false;
+    this.hotSandTimerActivated = null;
+    this.energyState = null;
+    this.restartState = null
     this.molecule = null;
     this.acidgroup = null;
     this.smokeEmitter = null;
     this.timerEventRain = [];
     this.fakePositions = [];
     this.onAir = false;
+    this.jumpKey = null;
+    this.pauseKey = null;
+
 
     this.countCall = 0; //count how many times the collision function is called.
 };
@@ -44,6 +50,24 @@ State.Level2.prototype = {
 	},
 	create: function () {
 		"use strict";
+		this.timerEventRain = [];
+		this.fakePositions = [];
+		
+		this.haveEnergy = false;
+        this.onAir = false;
+        this.hotSandTimerActivated = false;
+        this.dropIsInvincible = false;
+        this.energyState = false;
+        this.restartState = false;
+        
+        this.game.onPause.add(this.pauseGame, this);
+        this.game.onResume.add(this.resumeGame, this);
+        
+        this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.jumpKey.onDown.add(this.jumpPlayer, this);
+
+        this.pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        this.pauseKey.onDown.add(this.startPauseGameEvent, this);
 
 		var background;
 		background = this.game.add.tileSprite(0, 0, 4800, 600, 'gameplay-bg');
@@ -86,6 +110,8 @@ State.Level2.prototype = {
         this.powUpSound = this.game.add.audio("powup");
         this.mainSound.loop = true;
         this.mainSound.play();
+        
+        this.countCall = 0;
 	},
 	update: function () {
 		"use strict";
@@ -106,7 +132,49 @@ State.Level2.prototype = {
 			this.smokeEmitter.y = this.drop.getSpriteObject().y + 56;
 		}
 	},
-	handleKeyDown: function () {
+	pauseGame: function() {
+        hud.showPauseImage();
+    },
+    resumeGame: function() {
+        "use strict";
+
+        this.jumpKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.jumpKey.onDown.add(this.jumpPlayer, this);
+
+        this.pauseKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        this.pauseKey.onDown.add(this.startPauseGameEvent, this);
+
+        hud.hidePauseImage();
+    },
+    jumpPlayer: function() {
+        if (this.game.paused == true) {
+            return;
+        }
+
+        if (this.touchingDown(this.drop.getSpriteObject().body)) {
+            if (this.energyState == false) {
+                this.drop.jump(700);
+                this.jumpSound.play();
+            } else {
+                this.drop.jump(1500);
+                this.jumpSound.play();
+                this.smokeEmitter.start(false, 3000, 50);
+                this.haveEnergy = true;
+                var self = this;
+                if (this.smokeTimer != null) {
+                    this.smokeTimer.stop();
+                }
+                this.smokeTimer = this.game.time.create();
+                this.smokeTimer.add(2000, function() {
+                        self.stopSmoke();
+                }, 2000);
+                this.smokeTimer.start();
+                this.energyState = false;
+                this.drop.playerstate = 'normal';
+            }
+        }
+    },
+	/*handleKeyDown: function () {
 		"use strict";
 
 		if ( this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
@@ -134,7 +202,46 @@ State.Level2.prototype = {
 				this.jumpSound.play();
 			}
 		}
-	},
+	},*/
+	startPauseGameEvent: function() {
+        this.game.paused = !this.game.paused;
+    },
+    clearTimers: function() {
+        if (this.lastDropTimer != null) {
+            this.lastDropTimer.destroy();
+        }
+        if (this.disableSundropTimer != null) {
+            this.disableSundropTimer.destroy();
+        }
+        if (this.decreaseDropTimer != null) {
+            this.decreaseDropTimer.destroy();
+        }
+        if (this.smokeTimer != null) {
+            this.smokeTimer.destroy();
+        }
+    },
+	handleKeyDown: function () {
+		"use strict";
+
+		if ( this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ) {
+            if (!this.onAir) {
+                this.drop.animestate = 'right';
+            } else {
+                this.drop.animestate = 'jumpright';
+            }
+            this.drop.moveRight(300);
+		} else if ( this.game.input.keyboard.isDown (Phaser.Keyboard.LEFT) ) {
+			if (!this.onAir) {
+				this.drop.animestate = 'left';
+			} else {
+				this.drop.animestate = 'jumpleft';
+			}
+			this.drop.moveLeft(300);
+		}  else {
+			this.drop.stop();
+			this.drop.animestate = 'stop';
+		}
+	},	
 	setupSmokeEmitter: function(posX, posY) {
 		// smoke animation
 		// add smoke particles
@@ -145,12 +252,6 @@ State.Level2.prototype = {
 		this.smokeEmitter.setAlpha(1, 0, 3000, Phaser.Easing.Linear.InOut);
 		this.smokeEmitter.makeParticles('smoke');
     },
-    stopSmoke: function() {
-		this.haveEnergy = false;
-		this.smokeEmitter.on = false;
-		this.drop.playerstate = 'normal'; //temporario
-		this.smokeTimer.destroy();
-	},
 	setupPhysics: function () {
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
 	    this.game.physics.p2.gravity.y = 1400;
@@ -422,7 +523,7 @@ State.Level2.prototype = {
             } else if (body2.sprite.name == 'evildrop') {
 				this.hitEvilDrop(body1, body2);
 			} else if (body2.sprite.name == 'lifeup') {
-				this.hud.increaseLife();
+				hud.increaseLife();
 				body2.sprite.kill();
 			}
             return true;
@@ -480,8 +581,8 @@ State.Level2.prototype = {
         }, 2000);
         this.drop.playerstate = 'energy';
     },
-    killDrop: function (body1, body2) {
-        if (this.dropIsInvincible) {
+	killDrop: function (body1, body2) {
+        if (this.dropIsInvincible || this.restartState) {
             return;
         }
 
@@ -493,26 +594,31 @@ State.Level2.prototype = {
                 this.haveEnergy = true;
                 this.smokeEmitter.on = true;
                 this.smokeEmitter.start(false, 3000, 50);
+                var self = this;
                 if (hud.getDropCounter() == 0) {
-                    this.lastDropTimer = setTimeout(function(time) {
+                    this.lastDropTimer = this.game.time.create();
+                    this.lastDropTimer.add(2000, function() {
                         self.hotSandTimerActivated = false;
                         if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
                                 40, self.hotSandLayer)) {
                             self.restartGame();
                         }
                         self.countCall = 0;
-                    }, 2000);
+                    }, this);
+                    this.lastDropTimer.start();
                     this.drop.playersize = 'small';
                     this.hotSandTimerActivated = true;
                 } else {
-                    this.decreaseDropTimer = setTimeout(function() {
+                    this.decreaseDropTimer = this.game.time.create();
+                    this.decreaseDropTimer.add(2000, function() {
                         self.hotSandTimerActivated = false;
                         self.countCall = 0;
                         if (self.map.getTileWorldXY(body1.x, body1.y + 23, 40,
                                 40, self.hotSandLayer)) {
                             self.killDrop(body1, null);
                         }
-                    }, 2000);
+                    }, this);
+                    this.decreaseDropTimer.start();
                     this.hotSandTimerActivated = true;
                 }
             } else if (this.drop.playersize == 'small') {
@@ -523,9 +629,38 @@ State.Level2.prototype = {
             this.countCall = 0;
         }
     },
+	stopSmoke: function() {
+		this.haveEnergy = false;
+		this.smokeEmitter.on = false;
+		this.smokeTimer.destroy();
+	},
     restartGame: function () {
-		this.drop.kill();
+        this.restartState = true;
+    	this.clearTimers();
+        this.hotSandTimerActivated = false;
+        this.drop.kill();
+        hud.initDropCounter();
+        hud.decreaseLife();
+        if (hud.getLifeCounter() == 0) {
+            this.mainSound.stop();
+            this.game.state.start('gameover-state');
+        } else {
+            this.mainSound.stop();
+            this.game.state.restart();
+        }
     },
+    /*setupUmbrella: function(posX, posY) {
+        this.umbrella = this.game.add.sprite(posX, posY, 'umbrella');
+        this.game.physics.p2.enableBody(this.umbrella);
+        this.umbrella.body.fixedRotation = true;
+        this.umbrella.body.static = true;
+        this.umbrella.body.setCollisionGroup(this.umbrellaCG);
+        this.umbrella.body.collides([this.playerCG]);
+        var umbrellaAnimation = this.umbrella.animations.add('openUmbrella',
+                [0, 1, 2], 10, false);
+        umbrellaAnimation.onComplete.add(this.nextLevel, this);
+    },*/
+
 	touchingDown: function (someone) {
 		var yAxis = p2.vec2.fromValues(0, 1);
 		var result = false;
