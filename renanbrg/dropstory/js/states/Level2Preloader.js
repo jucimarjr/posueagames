@@ -7,9 +7,9 @@ State.Level2Preloader = function(game) {
 State.Level2Preloader.prototype = {
 	preload: function () {
 
-        this.background = this.game.add.sprite(0, 0, 'level2preloaderbg');
         this.progressBar = this.game.add.sprite(120, 530, 'progress-bar');
         this.game.load.setPreloadSprite(this.progressBar);
+        this.game.load.image('level2preloaderbg', Config.preloaderLevel2.dir);
 
         this.game.load.spritesheet('urchin','assets/spritesheets/seaurchin_80-40.png', 40, 40);
         this.game.load.spritesheet('lifedrop','assets/spritesheets/water_200-40.png', 40, 40);
@@ -35,7 +35,7 @@ State.Level2Preloader.prototype = {
     },
     create: function() {
         "use strict";
-
+		this.background = this.game.add.sprite(0, 0, 'level2preloaderbg');
         var tween = this.game.add.tween(this.progressBar).to({alpha : 0}, 1000,
                 Phaser.Easing.Linear.None).start();
         tween.onComplete.add(this.tweenFinished, this);
