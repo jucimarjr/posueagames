@@ -142,3 +142,8 @@ Config.preloaderLevel2 = {
     x: 0,
     y: 0
 };
+Config.ending = {
+    dir: 'assets/images/thanks_960-600.png',
+    x: 0,
+    y: 0
+};
