@@ -100,7 +100,7 @@ State.Level2.prototype = {
 		this.timerEventRain[6]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 6200,0);
 		this.timerEventRain[7]=game.time.events.loop(Phaser.Timer.SECOND*1.1, this.fallRain, this, 6600,0,7);
 		this.timerEventRain[8]=game.time.events.loop(Phaser.Timer.SECOND*1.4, this.fallRain, this, 7040,0);
-		
+
 		this.setupSmokeEmitter(1550, this.game.height-80);
         hud.create();
 
@@ -207,6 +207,11 @@ State.Level2.prototype = {
             this.smokeTimer.destroy();
         }
     },
+    removeTimerRain: function() {
+		for (var i = 0; i < this.timerEventRain.length; i++) {
+			this.game.time.events.remove(this.timerEventRain[i]);
+		}
+	},
 	handleKeyDown: function () {
 		"use strict";
 
@@ -641,6 +646,7 @@ State.Level2.prototype = {
         if (this.restartState == false) {
             this.restartState = true;
             this.clearTimers();
+            this.removeTimerRain();
             this.mainSound.stop();
             this.smokeEmitter.kill();
             this.hotSandTimerActivated = false;
@@ -662,6 +668,7 @@ State.Level2.prototype = {
     },
     nextLevel: function() {
         this.clearTimers();
+        this.removeTimerRain();
         this.mainSound.stop();
         this.game.state.start('level1preloader-state');
     },
