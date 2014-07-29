@@ -106,6 +106,7 @@ Character.prototype = {
     setCharacterInicialValues: function () {
 		this.character.smoothed = false;
     	this.character.body.fixedRotation = true;
+    	this.character.body.sprite.name = 'playerdrop';
     	this.playershape = this.character.body.setCircle(18,0,4);
 
     	// normal state
@@ -143,6 +144,9 @@ Character.prototype = {
         this.character.animations.add('jumpleftbigsunscreen', [78], 10, true);
         this.character.animations.add('jumprightbigsunscreen', [86], 10, true);
         this.character.animations.add('stopbigsunscreen', [82], 10, true);
+
+        // Make the drop disappear when the player dies
+        this.character.animations.add('evaporate', [90, 91, 92, 93], 10, false);
 	},
 
 	playerAnimations: function () {
@@ -155,6 +159,7 @@ Character.prototype = {
 			else if (this.animestate === 'fall') { this.character.animations.stop(); this.character.frame = 9;}
 			else if (this.animestate === 'left') { this.character.animations.play('left'+this.playersize+this.playerstate);}
 			else if (this.animestate === 'right') { this.character.animations.play('right'+this.playersize+this.playerstate);}
+			else if (this.animestate === 'evaporate') { this.character.animations.play('evaporate');}
 		else { this.character.animations.stop(); this.character.animations.play('stop'+this.playersize+this.playerstate);}
 	},
 

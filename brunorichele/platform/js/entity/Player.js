@@ -1,8 +1,8 @@
 var PlayerProperties = {
-    path : "assets/spritesheets/player_4240-100-53.png",
+    path : 'assets/spritesheets/player_4640-100-58.png',
     width : 80,
     height : 100,
-    frames : 53,
+    frames : 58,
     idle : 0,
     walk : [1, 2, 3, 4, 5, 6, 7, 8],
     run : [9, 10, 11, 12, 13, 14, 15, 16],
@@ -10,6 +10,7 @@ var PlayerProperties = {
     velWalk : 250,
     explode : [35, 36, 37, 38, 39, 40, 41, 42, 43, 44],
     burn : [45, 46, 47, 48, 49, 50, 51, 52],
+    grab : [53, 54, 55, 56, 57],
     velRun : 400,
     velJump : -500
 };
@@ -19,7 +20,8 @@ var PlayerState = {
     RUNNING : 1,
     JUMPING : 2,
     WALKING : 3,
-    BURNING : 4
+    BURNING : 4,
+    CAUGHT : 5
 };
 
 function Player(game) {
@@ -41,17 +43,23 @@ Player.prototype = {
         this.player.animations.add('run', PlayerProperties.run, 10, true);
         this.player.animations.add('walk', PlayerProperties.walk, 10, true);
         this.player.animations.add('jump', PlayerProperties.jump, 10, true);
-        this.player.animations.add('burn', PlayerProperties.burn, 10, true);
+        burn = this.player.animations.add('burn', PlayerProperties.burn, 10, true);
+        grab = this.player.animations.add('grab', PlayerProperties.grab, 4, true);
+
+        burn.onStart.add(this.dieAnimStart, this);
+        burn.onComplete.add(this.dieAnimComplete, this);
+
+        grab.onStart.add(this.dieAnimStart, this);
+        grab.onComplete.add(this.dieAnimComplete, this);
 
         this.game.physics.p2.enable(this.player);
         this.player.body.fixedRotation = true;
         this.player.body.collideWorldBounds = true;
 		this.player.body.mass = 9999;
-		/* this.player.body.setMaterial(playerMaterial);
-		this.player.body.setCollisionGroup(playerCG);
-    	this.player.body.collides([rockCG, enemyCG]);*/
 
         this.game.camera.follow(this.player);
+
+        this.state = PlayerState.IDLE;
     },
 
     update : function() {
@@ -66,6 +74,14 @@ Player.prototype = {
             this.player.animations.play('jump');
         } else if(this.state == PlayerState.BURNING) {
             this.player.animations.play('burn');
+        } else if(this.state == PlayerState.CAUGHT) {
+            this.player.animations.play('grab');
         }
+    },
+    dieAnimStart : function(sprite, animation) {
+        animation.loop = false;
+    },
+    dieAnimComplete : function(sprite, animation) {
+        this.game.state.start('GameOver');
     }
 }

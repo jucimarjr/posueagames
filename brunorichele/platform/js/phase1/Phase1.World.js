@@ -10,10 +10,9 @@ Phase1.World = {
         this.game.load.image('bg1fase1_test', 'assets/phase1/images/bg1fase1_3000-2000.jpg');
         this.game.load.image('bg2fase1_test', 'assets/phase1/images/bg2fase1_3000-2000.png');
         this.game.load.image('bg3fase1_test', 'assets/phase1/images/bg3fase1_3000-2000.png');
-        this.game.load.spritesheet('door', 'assets/phase1/images/door_4320-255-32.png', 135, 255);
         this.game.load.spritesheet('smoke_test', 'assets/phase1/images/smoke_12000-300-4.png', 3000, 300);
         this.game.load.tilemap('map1_test', 'assets/phase1/map.json', null, Phaser.Tilemap.TILED_JSON);
-		this.game.load.audio('bgmusic', "assets/audio/light_the_way_mixdown.mp3");
+		this.game.load.audio('musicphase1', "assets/audio/Spiral.mp3");
     },
     createWorld : function() {
         this.game.world.setBounds(0, 0, 3000, 2000);
@@ -32,38 +31,26 @@ Phase1.World = {
 
         this.alpha = this.game.add.sprite(0, 0, 'bg2fase1_test');
 		
-        /*this.smoke = this.game.add.sprite(0, 1700, 'smoke_test');
-        this.smoke.animations.add('show', [0, 1, 2, 3], 10, true);
-        this.smoke.animations.play('show');*/
+        this.smoke = this.game.add.sprite(0, 1700, 'smoke_test');
+        this.smoke.animations.add('show', [0, 1, 2, 3], 5, true);
+        this.smoke.animations.play('show');
     },
 	createSound : function(){
-		this.bgmusic = this.game.add.audio('bgmusic');
+		this.bgmusic = this.game.add.audio('musicphase1');
         this.bgmusic.play('', 0, 1, true);	
 		
 		return this.bgmusic;
 	},	
     createObjects : function() {
-        door = this.game.add.group();
-        door.enableBody = true;
-        this.mymap.createFromObjects('door', 3, 'door', 0, true, false, door)
-
-        door.callAll('animations.add', 'animations', 'default', [0, 1, 2, 3, 4, 5], 6, true);
-        door.callAll('animations.add', 'animations', 'finish', [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], 6, true);
-        door.callAll('animations.play', 'animations', 'default');
     },
     collision : function(player) {
         groundLayer = this.game.physics.p2.convertCollisionObjects(this.mymap, 'ground');
     },
-    update : function(player) {
-        if (this.checkFinish(player.player, door.children[0])) {
-            console.log('terminou!!!');
-            player.player.kill();
-            door.callAll('animations.play', 'animations', 'finish');
+    collisionFloor : function(player){
+        if (player.player.y > 1800){
+			this.game.state.start('GameOver');		
         }
-    },
-    checkFinish : function(player, door) {
-        var playerBounds = player.getBounds();
-        var doorBounds = door.getBounds();
-        return Phaser.Rectangle.intersects(playerBounds, doorBounds);
+    },	
+    update : function(player) {
     }
 }

@@ -21,9 +21,8 @@ State.GameIntro4.prototype = {
 		button2.anchor.setTo(Config.button.next.anchor.x, Config.button.next.anchor.y);		
 		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
-        game.add.text(330, 800, 'Acordei em um lugar estranho e agora estou em busca de socorro...', style);
-        game.add.text(620, 850, 'mas meu corpo todo está escuro e...', style);
-		game.add.text(800, 900, '...Quem sou eu?', style);
+        game.add.text(370, 800, 'Corredores que não acabam mais e esse medo que me consome.', style);
+        game.add.text(450, 850, 'Para onde eu devo seguir? Como encontrarei respostas?', style);                          
 	},
 	create: function () {
 		"use strict";
