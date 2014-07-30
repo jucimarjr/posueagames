@@ -33,9 +33,14 @@ State.Phase1.prototype = {
 		Phase1.World.collisionFloor(this.player);
     },
     changeLevel : function() {
-        this.game.state.start('GameIntro3');
 		this.porta = this.game.add.audio('music-porta');
-        this.porta.play();		
-		Phase1.World.bgmusic.stop();
+		this.porta.play();		
+		Phase1.World.bgmusic.stop();		
+
+		var FadeOut = game.add.tween(Phase1.World.background).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None);
+		FadeOut.onComplete.add(function(){
+        	this.game.state.start('GameIntro3');
+		});
+		FadeOut.start();
     }
 }
