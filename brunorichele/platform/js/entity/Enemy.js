@@ -20,7 +20,7 @@ var WormBase = {
     default : [0, 1, 2],
     objLayer : 'worms',
     objId : 7,
-    velx : 15
+    velx : 13
 }
 
 var MonsterBase = {
