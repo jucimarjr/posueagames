@@ -40,10 +40,11 @@ State.GameSplash.prototype = {
 		this.game.load.image('end4', Config.end.dir3);
 		*/
 		//Game
-		this.game.load.spritesheet('player', 'assets/sprites/player_200-160-2.png', 200,150,2);
-		this.game.load.spritesheet('fish4', 'assets/sprites/fish4_90-120-4.png',90,120,4);
-		this.game.load.spritesheet('fish3', 'assets/sprites/fish3_90-80-3.png',90,80,3);
+		this.game.load.spritesheet('player', 'assets/sprites/player_200-160-2.png', 200,150,2);		
 		this.game.load.spritesheet('fish2', 'assets/sprites/fish2_90-40-2.png',90,40,2);
+		this.game.load.spritesheet('fish3', 'assets/sprites/fish3_90-80-3.png',90,80,3);
+		this.game.load.spritesheet('fish4', 'assets/sprites/fish4_90-120-4.png',90,120,4);
+
 		
 		this.game.load.image('bg', 'assets/bg/bg_450-600.png');
 		
