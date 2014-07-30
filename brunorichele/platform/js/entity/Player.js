@@ -21,7 +21,8 @@ var PlayerState = {
     JUMPING : 2,
     WALKING : 3,
     BURNING : 4,
-    CAUGHT : 5
+    CAUGHT : 5,
+    EXPLODING : 6
 };
 
 function Player(game) {
@@ -45,12 +46,16 @@ Player.prototype = {
         this.player.animations.add('jump', PlayerProperties.jump, 10, true);
         burn = this.player.animations.add('burn', PlayerProperties.burn, 10, true);
         grab = this.player.animations.add('grab', PlayerProperties.grab, 4, true);
+        explode = this.player.animations.add('explode', PlayerProperties.explode, 4, true);
 
         burn.onStart.add(this.dieAnimStart, this);
         burn.onComplete.add(this.dieAnimComplete, this);
 
         grab.onStart.add(this.dieAnimStart, this);
         grab.onComplete.add(this.dieAnimComplete, this);
+
+        explode.onStart.add(this.dieAnimStart, this);
+        explode.onComplete.add(this.dieAnimComplete, this);
 
         this.game.physics.p2.enable(this.player);
         this.player.body.fixedRotation = true;
@@ -76,6 +81,8 @@ Player.prototype = {
             this.player.animations.play('burn');
         } else if(this.state == PlayerState.CAUGHT) {
             this.player.animations.play('grab');
+        } else if(this.state == PlayerState.EXPLODING) {
+            this.player.animations.play('explode');
         }
     },
     dieAnimStart : function(sprite, animation) {

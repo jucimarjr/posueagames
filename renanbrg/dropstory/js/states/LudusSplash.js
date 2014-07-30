@@ -10,7 +10,6 @@ State.LudusSplash.prototype = {
     preload: function () {
         "use strict";
 
-        this.game.load.image('sponsor-splash', Config.sponsorSplash.dir);
         this.game.load.audio('storymusic', 'assets/gotaAnimation.ogg');
     },
     create: function () {

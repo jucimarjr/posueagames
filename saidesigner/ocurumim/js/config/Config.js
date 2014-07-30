@@ -40,7 +40,7 @@ Config.sponsorSplash = {
 //GameSplash
 Config.gameSplash = {
 	dir: {
-		background: 'assets/images/GameSplash_960-600.jpg',
+		background: 'assets/images/GameSplash_960-600.png',
 		bar: 'assets/images/ProgressBar_960-30.png'
 	},
 	x: 0,
@@ -55,33 +55,33 @@ Config.menu = {
 	x: 0,
 	y: 0,
 	buttonPlay: {
-		dir: 'assets/spritesheets/buttonjogar_928_98.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.5,
-		width: 230,
-		height: 98,
+		dir: 'assets/spritesheets/jogar.png',
+		x: 264,
+		y: 265,
+		width: 275,
+		height: 71,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonHowToPlay: {
-		dir: 'assets/spritesheets/buttoncomojogar_928_98.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.7,
-		width: 230,
-		height: 98,
+		dir: 'assets/spritesheets/comojogar.png',
+		x: 663,
+		y: 265,
+		width: 275,
+		height: 71,
 		anchor: {
 			x: 0.5,
 			y: 0.5
 		}
 	},
 	buttonCredits: {
-		dir: 'assets/spritesheets/buttoncredito_928_98.png',
-		x: Config.global.screen.width * 0.5,
-		y: Config.global.screen.height * 0.9,
-		width: 230,
-		height: 98,
+		dir: 'assets/spritesheets/creditos.png',
+		x: 480,
+		y: 445,
+		width: 275,
+		height: 71,
 		anchor: {
 			x: 0.5,
 			y: 0.5
@@ -196,8 +196,8 @@ Config.score = {
 
 		txt : {
 			x : 70,
-			y : 10,
-			style : { font: "35px Bored Fjord", fill: "yellow", align: "center" },
+			y : 20,
+			style : { font: "35px Bored Fjord", fill: "#99201F", align: "center" },
 			styleBig : { font: "40px Bored Fjord", fill: "orange", align: "center" }
 		}
 	},
@@ -210,9 +210,9 @@ Config.score = {
 
 		txt : {
 			x : 360,
-			y : 10,
-			style : { font: "35px Bored Fjord", fill: "yellow", align: "center" },
-			styleBig : { font: "40px Bored Fjord", fill: "orange", align: "center" }
+			y : 20,
+			style : { font: "35px Bored Fjord", fill: "#99201F", align: "center" },
+			styleBig : { font: "70px Bored Fjord", fill: "#1D3A0F", align: "center" }
 		}
 	},
 
@@ -224,8 +224,8 @@ Config.score = {
 
 		txt : {
 			x : 660,
-			y : 10,
-			style : { font: "35px Bored Fjord", fill: "yellow", align: "center" },
+			y : 20,
+			style : { font: "35px Bored Fjord", fill: "#99201F", align: "center" },
 			styleBig : { font: "40px Bored Fjord", fill: "orange", align: "center" }
 		}
 	}

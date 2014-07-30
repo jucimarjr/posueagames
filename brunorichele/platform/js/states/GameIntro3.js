@@ -12,7 +12,8 @@ State.GameIntro3 = function (game) {
 State.GameIntro3.prototype = {
 	preload: function () {
 		"use strict";
-		var sprite = this.game.add.sprite(GameIntro3Properties.x, GameIntro3Properties.y, 'game-intro3'); // Carregar bg
+		this.sprite = this.game.add.sprite(GameIntro3Properties.x, GameIntro3Properties.y, 'game-intro3'); // Carregar bg
+		this.sprite.alpha = 0;
 		
 		var button = this.game.add.button(Config.button.back.x, Config.button.back.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
 		button.anchor.setTo(Config.button.back.anchor.x, Config.button.back.anchor.y);
@@ -21,8 +22,14 @@ State.GameIntro3.prototype = {
 		button2.anchor.setTo(Config.button.next.anchor.x, Config.button.next.anchor.y);		
 		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
-        game.add.text(330, 800, 'Que lugar é esse? Que criaturas são essas? A cidade está tomada pelo caos', style);
-        game.add.text(620, 850, 'e não encontro ninguém pra me ajudar...', style);		                          
+        this.text1 = game.add.text(270, 800, 'Que lugar é esse? Que criaturas são essas? A cidade está tomada pelo caos', style);
+		this.text1.alpha = 0;
+        this.text2 = game.add.text(590, 850, 'e não encontro ninguém pra me ajudar...', style);	
+		this.text2.alpha = 0;
+		
+		game.add.tween(this.sprite).to( { alpha: 1 }, 3000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.text1).to( { alpha: 1 }, 3000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.text2).to( { alpha: 1 }, 3000, Phaser.Easing.Linear.None).start();						                          
 	},
 	create: function () {
 		"use strict";
@@ -33,11 +40,24 @@ State.GameIntro3.prototype = {
 	},
 	onBack: function () {
 		"use strict";
-		this.game.state.start('Phaser1');
+		var FadeOut = game.add.tween(this.sprite).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None);
+		FadeOut.onComplete.add(function(){
+			game.state.start('Phase1');
+		});
+		FadeOut.start();		
+		game.add.tween(this.text1).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.text2).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();		
 	},
 	onNext: function () {
 		"use strict";
-		GameOverProperties.Phase = 'Phase2';
-		this.game.state.start('Phase2');
+		var FadeOut = game.add.tween(this.sprite).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None);
+		FadeOut.onComplete.add(function(){
+			GameOverProperties.Phase = 'Phase2';
+			GameOverProperties.StopMusic = null;
+			game.state.start('Phase2');
+		});
+		FadeOut.start();		
+		game.add.tween(this.text1).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.text2).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();			
 	}	
 };

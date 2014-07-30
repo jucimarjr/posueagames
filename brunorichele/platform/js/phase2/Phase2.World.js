@@ -23,7 +23,8 @@ Phase2.World = {
     },
     createBackground : function() {
         this.background = this.game.add.sprite(0, 0, 'bg1fase2');
-        //this.game.stage.backgroundColor = '#007236';
+		this.background.alpha = 0;
+//        this.game.stage.backgroundColor = '#007236';
     },
     createForeground : function() {
         this.foreground = this.game.add.sprite(0, 0, 'bg2fase2');

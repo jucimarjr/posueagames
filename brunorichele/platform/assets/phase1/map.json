@@ -2125,31 +2125,6 @@
         }, 
         {
          "height":100,
-         "name":"door",
-         "objects":[
-                {
-                 "gid":3,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2670,
-                 "y":380
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "width":100,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "height":100,
          "name":"hands",
          "objects":[
                 {
@@ -2163,7 +2138,7 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":750,
+                 "x":810,
                  "y":1720
                 }, 
                 {
@@ -2177,21 +2152,7 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2040,
-                 "y":1260
-                }, 
-                {
-                 "gid":2,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1440,
+                 "x":1500,
                  "y":1280
                 }, 
                 {
@@ -2205,7 +2166,7 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":690,
+                 "x":810,
                  "y":620
                 }, 
                 {
@@ -2238,8 +2199,8 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/enemies.png",
-         "imageheight":30,
+         "image":"enemies.png",
+         "imageheight":60,
          "imagewidth":90,
          "margin":0,
          "name":"enemies",

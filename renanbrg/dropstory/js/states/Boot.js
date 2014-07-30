@@ -11,11 +11,11 @@ State.Boot.prototype = {
         "use strict";
 
         this.game.load.image('ludus-splash', Config.ludusSplash.dir);
-	},
-	create: function () {
-		"use strict";
+    },
+    create: function () {
+        "use strict";
 
-		if (this.game.device.desktop) {
+        if (this.game.device.desktop) {
             this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.game.scale.maxWidth = Config.global.screen.width;
             this.game.scale.maxHeight = Config.global.screen.height;
@@ -25,5 +25,5 @@ State.Boot.prototype = {
         } else {
             console.log('Game not supported for mobile devices');
         }
-	}
+    }
 };

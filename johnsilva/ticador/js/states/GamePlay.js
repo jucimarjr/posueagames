@@ -19,6 +19,7 @@ State.GamePlay.prototype = {
 		frame = 0;
 		runY = 40;
 		lastY = null;
+		lastFish = null;
 		lastHeight = 0;
 
 		this.game.add.sprite(0, 0, 'bg');
@@ -97,18 +98,31 @@ State.GamePlay.prototype = {
 	},
 
 	addFishes: function(){
-		for(var i=0;i<10;i++){
-			var fish = this.game.add.sprite(-200, 200,'fish3');
+		for(var i=0;i<25;i++){
+			var rnd = this.game.rnd.integerInRange(1, 10);
+			if(rnd <= 2)
+				this.fishRnd = 'fish2';
+			else if(rnd <= 5)
+				this.fishRnd = 'fish3';
+			else if(rnd <= 10)
+				this.fishRnd = 'fish4';
+
+			var fish = this.game.add.sprite(-200, 200, this.fishRnd);
+
 			this.game.physics.enable(fish);
 			fish.body.setSize(fish.width, fish.height-10, 0, 0);
 			fish.anchor.setTo(.5, .5);
-			if(lastY==null)
-				lastY = playerY-10-5-fish.height/2;//+5;//325;
+			/*if(lastY==null)
+				lastY = playerY-10-5-fish.height/2;
 			else
-				lastY -= fish.height;
+				lastY -= (lastFish.height+fish.height)/2;*/
+			if(lastFish==null)
+				this.newY = playerY-10-5-fish.height/2;
+			else
+				this.newY = lastFish.y - (lastFish.height+fish.height)/2;
 			
-			this.resetPosition(fish, lastY);
-
+			this.resetPosition(fish, this.newY);
+			lastFish = fish;
 			fishes.add(fish);
 		}
 	},
@@ -130,29 +144,10 @@ State.GamePlay.prototype = {
 
     render: function (){
     	game.debug.text(lastY,32,32);
-    	/*game.debug.text(this.game.world.bounds.height,32,64);*/
-    	//game.debug.text(this.player.body.x,32,32);
-    	//game.debug.text(this.player.body.y,32,64);
-    	//game.debug.text(levelConfig.checkPoint.x,200,32);
-    	//game.debug.text(levelConfig.player.posX,400,32);
-    	//game.debug.text(levelConfig.checkPoint.y,200,64);
-
     	game.debug.body(this.player);
     	
-    	fishes.forEach(function (f){ 
+    	/*fishes.forEach(function (f){ 
 			game.debug.body(f);
-		}, this);
-
-		/*this.waters.forEach(function (w){ 
-			game.debug.body(w);
-		}, this);*/
-
-		/*this.bees.forEach(function (bees){ 
-			game.debug.body(bees);
-		}, this);*/
-
-		/*this.cipo.forEach(function (c){ 
-			game.debug.body(c);
 		}, this);*/
     },
 };

@@ -12,7 +12,8 @@ State.GameIntro1 = function (game) {
 State.GameIntro1.prototype = {
 	preload: function () {
 		"use strict";
-		var sprite = this.game.add.sprite(GameIntro1Properties.x, GameIntro1Properties.y, 'game-intro1'); // Carregar bg
+		this.sprite = this.game.add.sprite(GameIntro1Properties.x, GameIntro1Properties.y, 'game-intro1'); // Carregar bg
+		this.sprite.alpha = 0;
 		
 		var button = this.game.add.button(Config.button.back.x, Config.button.back.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
 		button.anchor.setTo(Config.button.back.anchor.x, Config.button.back.anchor.y);
@@ -21,8 +22,14 @@ State.GameIntro1.prototype = {
 		button2.anchor.setTo(Config.button.next.anchor.x, Config.button.next.anchor.y);		
 		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
-        game.add.text(500, 850, 'Foi tudo muito rápido: Um carro apareceu do nada,', style);
-        game.add.text(400, 900, 'tentei desviar para a calçada e depois do choque tudo ficou escuro.', style);
+        this.text1 = game.add.text(440, 850, 'Foi tudo muito rápido: Um caminhão apareceu do nada,', style);
+		this.text1.alpha = 0;
+        this.text2 = game.add.text(340, 900, 'tentei desviar para a calçada e depois do choque tudo ficou escuro.', style);
+		this.text2.alpha = 0;
+		
+		game.add.tween(this.sprite).to( { alpha: 1 }, 3000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.text1).to( { alpha: 1 }, 3000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.text2).to( { alpha: 1 }, 3000, Phaser.Easing.Linear.None).start();			
 	},
 	create: function () {
 		"use strict";
@@ -33,10 +40,22 @@ State.GameIntro1.prototype = {
 	},
 	onBack: function () {
 		"use strict";
-		this.game.state.start('Menu');
+		var FadeOut = game.add.tween(this.sprite).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None);
+		FadeOut.onComplete.add(function(){
+			game.state.start('Menu');
+		});
+		FadeOut.start();		
+		game.add.tween(this.text1).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.text2).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();			
 	},
 	onNext: function () {
 		"use strict";
-		this.game.state.start('GameIntro2');
+		var FadeOut = game.add.tween(this.sprite).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None);
+		FadeOut.onComplete.add(function(){
+			game.state.start('GameIntro2');
+		});
+		FadeOut.start();		
+		game.add.tween(this.text1).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.text2).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();		
 	}		
 };

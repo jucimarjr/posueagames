@@ -17,12 +17,17 @@ State.Phase1.prototype = {
         this.door.create(this, 2670, 140);
         Phase1.Trap.createTrap(Phase1.World.mymap);
         Phase1.World.createForeground();
-		GameOverProperties.StopMusic = Phase1.World.createSound();
+		if(GameOverProperties.StopMusic == null){
+			GameOverProperties.StopMusic = Phase1.World.createSound();
+		}
 
         Phase1.World.collision();
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
-        this.control = new Control(this.game, this.player, this.cursors);
+		this.KeyA = game.input.keyboard.addKey(Phaser.Keyboard.A);
+        this.control = new Control(this.game, this.player, this.cursors, this.KeyA);
+		
+		game.add.tween(Phase1.World.background).to( { alpha: 1 }, 6000, Phaser.Easing.Linear.None).start();
     },
     update : function() {
         this.control.update();
@@ -32,7 +37,15 @@ State.Phase1.prototype = {
 		Phase1.World.collisionFloor(this.player);
     },
     changeLevel : function() {
-        this.game.state.start('GameIntro3');
-		Phase1.World.bgmusic.stop();
+		this.porta = this.game.add.audio('music-porta');
+		this.porta.play();		
+		Phase1.World.bgmusic.stop();		
+
+		var FadeOut = game.add.tween(Phase1.World.background).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None);
+		FadeOut.onComplete.add(function(){
+			GameOverProperties.StopMusic = null;
+        	this.game.state.start('GameIntro3');
+		});
+		FadeOut.start();
     }
 }

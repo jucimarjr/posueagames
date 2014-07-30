@@ -25,6 +25,7 @@ Phase1.World = {
     },
     createBackground : function() {
         this.background = this.game.add.sprite(0, 0, 'bg1fase1_test');
+		this.background.alpha = 0;
     },
     createForeground : function() {
         this.foreground = this.game.add.sprite(0, 0, 'bg2fase1_test');
@@ -48,7 +49,11 @@ Phase1.World = {
     },
     collisionFloor : function(player){
         if (player.player.y > 1800){
-			this.game.state.start('GameOver');		
+			var FadeOut = game.add.tween(this.background).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None);
+			FadeOut.onComplete.add(function(){
+				game.state.start('GameOver');	
+			});
+			FadeOut.start();				
         }
     },	
     update : function(player) {
