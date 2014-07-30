@@ -91,20 +91,10 @@ State.Level1.prototype = {
         this.irregularLayer = this.map.createLayer('irregularlayer');
         this.mainLayer.resizeWorld();
 
-//      this.map.setCollisionByExclusion([0], true, this.mainLayer);
-//      this.map.setCollisionByExclusion([0], true, this.hotSandLayer);
-//      this.map.setCollisionByExclusion([0], true, this.irregularLayer);
-
         this.setupPhysics();
         this.setupLayers();
 
-//		this.setupShell(450, this.game.world.height - 106);
-//		this.setupSunscreen(3200, this.game.world.height-59-44);
-//		this.setupCan(1620, this.game.world.height-80);
         this.setupCrab();
-//		this.setupBucket(2250, 272);
-//		this.setupStrawHorizontal();
-//		this.setupStrawDiagonal(2720, 270);
 		this.setupMolecule();
 		this.setupPlayer(100, 100);
 		this.setupSmokeEmitter(1550, this.game.height-80);
@@ -120,7 +110,6 @@ State.Level1.prototype = {
         this.loseSound.onStop.add(this.restartGameState, this);
         this.winSound = this.game.add.audio('stageclear');
         this.winSound.onStop.add(this.nextLevel, this);
-       // this.inicioSound.stop();
         this.mainSound.loop = true;
         this.mainSound.play();
 
@@ -371,52 +360,8 @@ State.Level1.prototype = {
         dropSprite.body.createGroupCallback(this.umbrellaCG,
                 this.startUmbrellaAnimation, this);
 	},
-//	setupShell: function (posX, posY) {
-//		 // Create sea shell
-//        this.seashell = this.game.add.sprite(posX, posY, 'seashell');
-//        this.game.physics.p2.enableBody(this.seashell);
-//        this.seashell.body.clearShapes();
-//        this.seashell.body.loadPolygon('seashellPhysics', 'seashell_220-68');
-//        this.seashell.body.fixedRotation = true;
-//        this.seashell.body.static = true;
-//        this.seashell.body.setCollisionGroup(this.groundCG);
-//        this.seashell.body.collides([this.groundCG, this.crabCG, this.playerCG]);
-//        this.seashell.body.setMaterial(this.groundMaterial);
-//	},
-//	setupSunscreen: function (posX, posY) {
-//		// Create sunscreen
-//        this.sunscreen = this.game.add.sprite(posX, posY,'sunscreen');
-//        this.game.physics.p2.enableBody(this.sunscreen);
-//        this.sunscreen.body.fixedRotation = true;
-//        this.sunscreen.body.static = true;
-//        this.sunscreen.body.setMaterial(this.groundMaterial);
-//        this.sunscreen.body.setCollisionGroup(this.groundCG);
-//        this.sunscreen.body.collides([this.groundCG, this.crabCG, this.playerCG]);
-//        var cover = this.game.add.sprite(3060, this.game.world.height-78,'coversunscreen');
-//        this.game.physics.p2.enableBody(cover);
-//        cover.body.fixedRotation = true;
-//        cover.body.static = true;
-//        cover.body.setMaterial(this.groundMaterial);
-//        cover.body.setCollisionGroup(this.groundCG);
-//        cover.body.collides([this.groundCG, this.crabCG, this.playerCG]);
-//	},
-//	setupCan: function(posX, posY) {
-//		// create CAN
-//        this.can = this.game.add.sprite(posX, posY,'can');
-//        this.game.physics.p2.enableBody(this.can, false);
-//        this.can.body.fixedRotation = true;
-//        this.can.body.setRectangle(260,120,0,0);
-//        this.can.body.static = true;
-//        this.can.body.setMaterial(this.groundMaterial);
-//        this.can.body.setCollisionGroup(this.groundCG);
-//        this.can.body.collides([this.groundCG, this.crabCG, this.playerCG]);
-//	},
 	setupCrab: function() {
 		// create crabs
-//        this.crabs = game.add.group();
-//		this.crabs.create(this.game.width-180, this.game.height-80-69, 'crab');
-//        this.crabs.create(this.game.width, this.game.height-80-69, 'crab');
-//        this.crabs.create(4480, this.game.height-80-69, 'crab');
 		for (var i = 0; i < this.crabs.length; i++) {
 			this.crabs.getAt(i).body.fixedRotation = true;
 			this.crabs.getAt(i).body.setCollisionGroup(this.crabCG);
@@ -430,17 +375,6 @@ State.Level1.prototype = {
 		this.crabs.getAt(1).body.moveRight(400);
 		this.crabs.getAt(2).body.moveRight(400);
 	},
-//	setupBucket: function(posX, posY) {
-//		// Add the bucket
-//        this.bucket = this.game.add.sprite(posX, posY, 'bucket');
-//        this.game.physics.p2.enableBody(this.bucket, false);
-//        this.bucket.body.clearShapes();
-//        this.bucket.body.loadPolygon('bucketPhysics', 'bucket_384-497');
-//        this.bucket.body.fixedRotation = true;
-//        this.bucket.body.static = true;
-//        this.bucket.body.setCollisionGroup(this.groundCG);
-//        this.bucket.body.collides([this.groundCG, this.playerCG]);
-//	},
     setupStrawHorizontal: function(straw) {
         // Tip of the straw (in the left of the bucket)
         this.strawLeft = this.game.add.sprite(2091, 510, 'strawtip');
@@ -667,7 +601,6 @@ State.Level1.prototype = {
         console.log('Player get the sunscreen drop!!!!');
 
         this.drop.playerstate = 'sunscreen';
-        //body2.sprite.kill();
         body2.hasCollided = false;
         this.dropIsInvincible = true;
         var self = this;
@@ -764,8 +697,6 @@ State.Level1.prototype = {
 			} else if (this.touchingLeft(crab.body)) {
 				crab.body.moveRight(400);
 				crab.animations.play('walkR');
-			} else {
-				//this.crab.body.velocity.x = -100;
 			}
 		}
 	},

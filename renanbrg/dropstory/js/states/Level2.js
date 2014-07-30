@@ -111,7 +111,6 @@ State.Level2.prototype = {
         this.loseSound.onStop.add(this.restartGameState, this);
         this.winSound = this.game.add.audio('stageclear');
         this.winSound.onStop.add(this.nextLevel, this);
-       // this.inicioSound.stop();
         this.mainSound.loop = true;
         this.mainSound.play();
 
@@ -446,7 +445,6 @@ State.Level2.prototype = {
 		this.acidgroup.physicsBodyType = Phaser.Physics.P2JS;
 	},
     fallRain: function(posX, posY) {
-        //this.acidgroup.getAt(index).reset(posX, posY);
         var aciddrop;
         aciddrop = this.acidgroup.create(posX, posY, 'aciddrop');
 		aciddrop.body.collideWorldBounds=false;
@@ -765,8 +763,6 @@ State.Level2.prototype = {
 			} else if (this.touchingLeft(crab.body)) {
 				crab.body.moveRight(velocity);
 				crab.animations.play('walkR');
-			} else {
-				//this.crab.body.velocity.x = -100;
 			}
 		}
 	},
