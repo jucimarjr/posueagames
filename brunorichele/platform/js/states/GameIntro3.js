@@ -22,7 +22,7 @@ State.GameIntro3.prototype = {
 		button2.anchor.setTo(Config.button.next.anchor.x, Config.button.next.anchor.y);		
 		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
-        var text1 = game.add.text(330, 800, 'Que lugar é esse? Que criaturas são essas? A cidade está tomada pelo caos', style);
+        this.text1 = game.add.text(330, 800, 'Que lugar é esse? Que criaturas são essas? A cidade está tomada pelo caos', style);
 		this.text1.alpha = 0;
         var text2 = game.add.text(620, 850, 'e não encontro ninguém pra me ajudar...', style);	
 		this.text2.alpha = 0;
