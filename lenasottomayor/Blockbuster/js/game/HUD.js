@@ -83,9 +83,9 @@ HUD.prototype = {
 		this.lifes += value;
 		
 		if (this.lifes<10){
-			this.lifeText.setText('x 0' + this.lifes);
+			this.lifeText.setText( '0'+this.lifes+' x');
 		} else {
-			this.lifeText.setText('x ' + this.lifes);
+			this.lifeText.setText(this.lifes+'x ');
 		}
 	},
 	
