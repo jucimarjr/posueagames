@@ -24,9 +24,31 @@
   <object gid="4" x="6780" y="908"/>
   <object gid="4" x="6780" y="655"/>
   <object gid="4" x="1050" y="655"/>
+  <object gid="4" x="2820" y="908"/>
+  <object gid="4" x="3120" y="908"/>
+  <object gid="4" x="3421" y="908"/>
+  <object gid="4" x="4141" y="908"/>
+  <object gid="4" x="5221" y="908"/>
+  <object gid="4" x="5611" y="908"/>
+  <object gid="4" x="6211" y="655"/>
+  <object gid="4" x="5850" y="655"/>
+  <object gid="4" x="5460" y="655"/>
+  <object gid="4" x="4471" y="655"/>
+  <object gid="4" x="3240" y="655"/>
+  <object gid="4" x="2160" y="656"/>
+  <object gid="4" x="1860" y="655"/>
  </objectgroup>
  <objectgroup name="worms" width="267" height="36">
   <object gid="7" x="6542" y="907"/>
   <object gid="7" x="6991" y="655"/>
+  <object gid="7" x="1351" y="908"/>
+  <object gid="7" x="1890" y="907"/>
+  <object gid="7" x="2491" y="908"/>
+  <object gid="7" x="3960" y="907"/>
+  <object gid="7" x="4561" y="908"/>
+  <object gid="7" x="2461" y="654"/>
+  <object gid="7" x="2851" y="654"/>
+  <object gid="7" x="3932" y="654"/>
+  <object gid="7" x="3361" y="655"/>
  </objectgroup>
 </map>
