@@ -133,8 +133,8 @@ State.GamePlay.prototype = {
     render: function (){
     	game.debug.body(this.player);
     	
-    	fishes.forEach(function (f){ 
+    	/*fishes.forEach(function (f){ 
 			game.debug.body(f);
-		}, this);
+		}, this);*/
     },
 };
