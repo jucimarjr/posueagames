@@ -673,6 +673,9 @@ State.Level1.prototype = {
         body2.hasCollided = false;
         this.dropIsInvincible = true;
         var self = this;
+        if (this.disableSundropTimer != null) {
+        	this.disableSundropTimer.stop();
+        }
         this.disableSundropTimer = this.game.time.create();
         this.disableSundropTimer.add(5500, function() {
             self.dropIsInvincible = false;
