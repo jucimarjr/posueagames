@@ -3,6 +3,7 @@
 State.Menu = function (game) {
 	"use strict";
 	this.game = game;
+	this.gameSnd;
 };
 State.Menu.prototype = {
 	preload: function () {
@@ -18,6 +19,9 @@ State.Menu.prototype = {
 		buttonHowToPlay.anchor.setTo(Config.menu.buttonHowToPlay.anchor.x, Config.menu.buttonHowToPlay.anchor.y);
 		buttonCredits = this.game.add.button(Config.menu.buttonCredits.x, Config.menu.buttonCredits.y, 'button-credits', this.clickCredits, this, 0, 1, 2, 3);
 		buttonCredits.anchor.setTo(Config.menu.buttonCredits.anchor.x, Config.menu.buttonCredits.anchor.y);
+
+		this.gameSnd = this.game.add.audio('game', 1, true);
+		this.gameSnd.play();
 	},
 	update: function () {
 		"use strict";
@@ -25,6 +29,7 @@ State.Menu.prototype = {
 	},
 	clickPlay: function () {
 		"use strict";
+		this.gameSnd.stop();
 		this.game.state.start('Game');
 	},
 	clickHowToPlay: function () {

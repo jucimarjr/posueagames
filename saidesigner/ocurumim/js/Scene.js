@@ -17,6 +17,7 @@ Curumim.Scene = function(game)
 	this.ounces;
 	this.araraBlue;
 	this.insaninhos;
+	this.ambience;
 };
 
 Curumim.Scene.prototype = 
@@ -70,6 +71,9 @@ Curumim.Scene.prototype =
 		this.ants = new Curumim.Enemy(this.game, 'ant', this.map, 'ObjScene2', Config.ant.gid, [0, 1, 2, 3, 4, 5], [6]);
 		this.araraBlue = new Curumim.Platform(this.game, 'arara_azul', this.map, 'ObjScene2', Config.arara.blue.gid, [0, 1, 2, 3, 4]);
 		this.insaninhos = new Curumim.Enemy(this.game, 'insaninho', this.map, 'ObjScene2', Config.insaninho.gid, [0, 1, 2], [3]);
+
+		this.ambience = this.game.add.audio('ambience', 1, true);
+		this.ambience.play();
 	},
 
 	update: function()

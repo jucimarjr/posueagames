@@ -13,7 +13,8 @@ Curumim.Player = function(game)
 	this.powerUp = false;
 	this.canDie = true;
 	this.platformVelocity = 0; 
-
+	this.walkingSnd;
+	this.jumpingSnd;
 	player = this;
 };
 
@@ -56,6 +57,13 @@ Curumim.Player.prototype =
     	// Score
 
     	this.score.create();
+
+    	// Sounds
+
+		this.walkingSnd = this.game.add.audio('walking', 1, false);
+		this.walkingSnd.addMarker("snd", 28, 0.2, 1, false);
+
+		this.jumpingSnd = this.game.add.audio('jumping', 1, false);
 	},
 
 	update: function() 
@@ -83,21 +91,23 @@ Curumim.Player.prototype =
 		}
 		
 		if (this.game.input.keyboard.isDown(Config.player.keys.left)) 
-		{
+		{			
            	this.sprite.scale.x = -1;
            	this.sprite.body.velocity.x = -velocity;
            	this.sprite.animations.play(animation);
+           	this.playSound('walking');
 		} 
 		else if (this.game.input.keyboard.isDown(Config.player.keys.right)) 
-		{ 
+		{ 			
            	this.sprite.scale.x = 1;
            	this.sprite.body.velocity.x = velocity;                    
            	this.sprite.animations.play(animation);	            
+           	this.playSound('walking');
 		} 
 		else if (this.sprite.body.blocked.down || this.sprite.body.velocity.y == 0) 
 		{
             this.sprite.animations.stop();
-            this.sprite.frame = 0;
+            this.sprite.frame = 0;            
         }
 
         // jump
@@ -110,6 +120,7 @@ Curumim.Player.prototype =
 				{
 					this.jumps++;
 					this.sprite.body.velocity.y = jumpForce;
+					this.playSound('jumping');					
 				}
 				this.jumpButtonPressed = true;
 			}
@@ -165,21 +176,25 @@ Curumim.Player.prototype =
 	    } 
 	},
 
-	getCollider: function() {		
+	getCollider: function() 
+	{		
 		return this.sprite;
 	},
 
-	getBullets: function() {
+	getBullets: function() 
+	{
 		return this.bullets;
 	},
 
-	startPowerUp : function() {
+	startPowerUp : function() 
+	{
 		this.powerUp = true;
 		var self = this;
 		setTimeout(function(){ self.powerUp = false; }, 15000);
 	},
 
-	loseOneLife : function() {
+	loseOneLife : function() 
+	{
 
 		if (!this.canDie) return;
 
@@ -189,16 +204,35 @@ Curumim.Player.prototype =
 
 		var self = this;
 		var tween = this.game.add.tween(this.sprite);
-		tween.to({ alpha: .4 }, 500, null, true, 0, Number.MAX_VALUE, true);		
+		tween.to({ alpha: .4 }, 250, null, true, 0, Number.MAX_VALUE, true);		
 
 		setTimeout(function() { 
 			tween.stop();
 			self.sprite.alpha = 1;
 			self.canDie = true;
-		 }, 3000);
+		 }, 4000);
 	},
 
-	getVelocity : function() {
+	getVelocity : function() 
+	{
 		return this.sprite.body.velocity.x + this.platformVelocity;	
+	},
+
+	playSound: function(sound) 
+	{
+		if (sound == 'walking')
+		{
+			if (!this.walkingSnd.isPlaying /*&& this.sprite.body.velocity.y == 0*/) 
+	       	{
+	       		this.walkingSnd.play("snd");
+	       	}	
+		}
+		else if (sound == 'jumping')
+		{
+			if (!this.jumpingSnd.isPlaying) 
+	       	{
+	       		this.jumpingSnd.play();
+	       	}	
+		}
 	}
 };

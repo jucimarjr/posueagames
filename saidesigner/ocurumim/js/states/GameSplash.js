@@ -82,5 +82,14 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('ant', Config.ant.sprite.src, Config.ant.sprite.width, Config.ant.sprite.height);
 		this.game.load.spritesheet('arara_azul', Config.arara.blue.sprite.src, Config.arara.blue.sprite.width, Config.arara.blue.sprite.height);
 		this.game.load.spritesheet('insaninho', Config.insaninho.sprite.src, Config.insaninho.sprite.width, Config.insaninho.sprite.height);		
+
+		this.game.load.audio('game', 'assets/sounds/game.mp3');		
+		this.game.load.audio('ambience', 'assets/sounds/ambience.ogg');		
+		this.game.load.audio('walking', 'assets/sounds/walking.wav');
+		this.game.load.audio('jumping', 'assets/sounds/jumping.wav');
+		this.game.load.audio('getcoin', 'assets/sounds/getcoin.ogg');
+		this.game.load.audio('pain', 'assets/sounds/pain.wav');
+		
+
 	}
 };
