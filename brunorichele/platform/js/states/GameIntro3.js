@@ -24,7 +24,7 @@ State.GameIntro3.prototype = {
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
         this.text1 = game.add.text(330, 800, 'Que lugar é esse? Que criaturas são essas? A cidade está tomada pelo caos', style);
 		this.text1.alpha = 0;
-        var text2 = game.add.text(620, 850, 'e não encontro ninguém pra me ajudar...', style);	
+        this.text2 = game.add.text(620, 850, 'e não encontro ninguém pra me ajudar...', style);	
 		this.text2.alpha = 0;
 		
 		game.add.tween(this.sprite).to( { alpha: 1 }, 3000, Phaser.Easing.Linear.None).start();
