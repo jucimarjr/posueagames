@@ -84,7 +84,7 @@ State.Level2.prototype = {
 
         this.setupPhysics();
         this.setupLayers();
-        this.setupPlayer(100, 100); //3040
+        this.setupPlayer(100, 100);
         this.setupMolecule();
         this.setupAcidDrop();
         this.setupUmbrella(7625, 280);
@@ -102,11 +102,11 @@ State.Level2.prototype = {
                 this.fallRain, this, 3120, 0);
         this.timerEventRain[5] = game.time.events.loop(Phaser.Timer.SECOND*1.2,
                 this.fallRain, this, 3280, 0, 5);
-        this.timerEventRain[6] = game.time.events.loop(Phaser.Timer.SECOND*1.4,
+        this.timerEventRain[6] = game.time.events.loop(Phaser.Timer.SECOND*1.5,
                 this.fallRain, this, 6200, 0);
-        this.timerEventRain[7] = game.time.events.loop(Phaser.Timer.SECOND*1.1,
+        this.timerEventRain[7] = game.time.events.loop(Phaser.Timer.SECOND*1.2,
                 this.fallRain, this, 6600, 0, 7);
-        this.timerEventRain[8] = game.time.events.loop(Phaser.Timer.SECOND*1.4,
+        this.timerEventRain[8] = game.time.events.loop(Phaser.Timer.SECOND*1.5,
                 this.fallRain, this, 7040, 0);
 
         this.setupSmokeEmitter(1550, this.game.height-80);
