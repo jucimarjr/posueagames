@@ -27,9 +27,9 @@
  <objectgroup name="skulls" width="500" height="36">
   <object gid="5" x="750" y="900"/>
   <object gid="5" x="1080" y="900"/>
-  <object gid="5" x="1320" y="900"/>
-  <object gid="5" x="1500" y="900"/>
+  <object gid="5" x="1410" y="900"/>
+  <object gid="5" x="1740" y="900"/>
   <object gid="5" x="2070" y="900"/>
-  <object gid="5" x="2430" y="900"/>
+  <object gid="5" x="2400" y="900"/>
  </objectgroup>
 </map>

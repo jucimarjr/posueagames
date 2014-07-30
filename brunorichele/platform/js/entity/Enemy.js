@@ -8,7 +8,8 @@ var SkullBase = {
     height : 41,
     default : [2, 3],
     objLayer : 'skulls',
-    objId : 5
+    objId : 5,
+    velx : 30
 }
 
 var WormBase = {
@@ -18,7 +19,8 @@ var WormBase = {
     height : 18,
     default : [0, 1, 2],
     objLayer : 'worms',
-    objId : 7
+    objId : 7,
+    velx : 20
 }
 
 function Enemy(enemy) {
@@ -35,6 +37,11 @@ Enemy.prototype.create = function(mymap) {
     enemies.enableBody = true;
     mymap.createFromObjects(this.enemy.objLayer, this.enemy.objId, this.enemy.name, 0, true, false, enemies);
 
+    var i;
+    for (i = 0; i < enemies.children.length; i++) {
+        enemies.children[i].anchor.set(.5);
+    }
+
     enemies.callAll('animations.add', 'animations', 'default', this.enemy.default, 4, true);
 
     this.movement(enemies);
@@ -49,10 +56,10 @@ Enemy.prototype.update = function(player) {
     for (i = 0; i < enemies.children.length; i++) {
         enemy = enemies.children[i];
         if (player.player.body.x > enemy.body.x) {
-            enemy.body.velocity.x = 20;
+            enemy.body.velocity.x = this.enemy.velx;
             enemy.scale.x = +1;
         } else if (player.player.body.x < enemy.body.x) {
-            enemy.body.velocity.x = -20;
+            enemy.body.velocity.x = -this.enemy.velx;
             enemy.scale.x = -1;
         }
         if(this.checkCollision(player.player, enemy)) {
@@ -76,7 +83,7 @@ Skull.prototype.constructor = Skull;
 Skull.prototype.movement = function(enemies) {
     var i;
     for(i = 0; i < enemies.children.length; i++) {
-        game.add.tween(enemies.children[i]).to({y : enemies.children[i].body.y - 80}, 800, Phaser.Easing.Cubic.InOut, true, 0, Number.MAX_VALUE, true);
+        game.add.tween(enemies.children[i]).to({y : enemies.children[i].body.y - 150}, 1000, Phaser.Easing.Cubic.InOut, true, 0, Number.MAX_VALUE, true);
     }
 }
 
