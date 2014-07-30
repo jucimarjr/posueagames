@@ -50,7 +50,13 @@ Phase3.World = {
 			music.stop();
 			document.getElementById('game').style.display = 'none';
 			document.getElementById('container_video').style.display = 'block';	
-			document.getElementById('example_video_1').play();			
+			var video = document.getElementById('example_video_1');		
+			video.onended = function(e) {
+    			game.state.start('Menu');
+				document.getElementById('game').style.display = 'block';
+				document.getElementById('container_video').style.display = 'none';	
+    		};	
+			video.play();
         }
     }
 }
