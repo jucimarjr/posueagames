@@ -50,7 +50,8 @@ Credits.prototype = {
 		game.add.tween(this.text2).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None).start();	
 		game.add.tween(this.text3).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None).start();
 		game.add.tween(this.text4).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None).start();
-		game.add.tween(this.text5).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None).start();			
+		game.add.tween(this.text5).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.text6).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None).start();			
 	},
 	update: function () {
 		"use strict";
@@ -67,7 +68,8 @@ Credits.prototype = {
 		game.add.tween(this.text2).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();	
 		game.add.tween(this.text3).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
 		game.add.tween(this.text4).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
-		game.add.tween(this.text5).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();		
+		game.add.tween(this.text5).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.text6).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();		
 	}	
 };
 
