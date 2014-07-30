@@ -19,8 +19,8 @@ FinalDoor.prototype = {
     },
     update : function(player, x, y) {
         if (this.checkFinish(player.player, door)) {
+	        player.player.kill();		
             player.player.reset(x, y);
-            player.player.kill();
             door.animations.stop();
             door.animations.play('finish', 6, true);
         }

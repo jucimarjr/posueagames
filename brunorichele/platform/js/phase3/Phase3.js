@@ -36,9 +36,24 @@ State.Phase3.prototype = {
         this.spikes.update(this.player);
         this.worms.update(this.player);
         this.finalDoor.update(this.player, 7320, 240);
-		Phase3.World.collisionHole(this.player,Phase3.World.bgmusic);//Gambi: modificar se possível
     },
-    changeFinal : function() {
-		Phase3.World.bgmusic.stop();
-    }
+    changeLevel : function() {
+			this.porta = this.game.add.audio('music-porta');
+        	this.porta.play();
+			Phase3.World.bgmusic.stop();
+
+		var FadeOut = game.add.tween(Phase3.World.background).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None);
+		FadeOut.onComplete.add(function(){
+			document.getElementById('game').style.display = 'none';
+			document.getElementById('container_video').style.display = 'block';	
+			var video = document.getElementById('example_video_1');		
+			video.onended = function(e) {
+    			game.state.start('Menu');
+				document.getElementById('game').style.display = 'block';
+				document.getElementById('container_video').style.display = 'none';	
+    		};	
+			video.play();
+		});
+		FadeOut.start();					
+	}
 }
