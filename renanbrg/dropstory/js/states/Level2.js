@@ -104,7 +104,7 @@ State.Level2.prototype = {
                 this.fallRain, this, 3280, 0, 5);
         this.timerEventRain[6] = game.time.events.loop(Phaser.Timer.SECOND*1.5,
                 this.fallRain, this, 6200, 0);
-        this.timerEventRain[7] = game.time.events.loop(Phaser.Timer.SECOND*1.2,
+        this.timerEventRain[7] = game.time.events.loop(Phaser.Timer.SECOND*1.3,
                 this.fallRain, this, 6600, 0, 7);
         this.timerEventRain[8] = game.time.events.loop(Phaser.Timer.SECOND*1.5,
                 this.fallRain, this, 7040, 0);
