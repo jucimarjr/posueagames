@@ -12,7 +12,7 @@ State.Phase3.prototype = {
     create : function() {
         Phase3.World.createWorld();
         Phase3.World.createBackground();
-        this.player.create(500/*7140*/, 850/*240*/);
+        this.player.create(500, 850);
         this.player.player.body.mass = 100;
         this.spikes.create(Phase3.World.mymap);
         this.worms.create(Phase3.World.mymap);
@@ -48,7 +48,10 @@ State.Phase3.prototype = {
 		FadeOut.onComplete.add(function(){
 			document.getElementById('game').style.display = 'none';
 			document.getElementById('container_video').style.display = 'block';	
-			var video = document.getElementById('example_video_1');		
+			var video = document.getElementById('example_video_1');	
+			var height = window.innerHeight || document.documentElement.clientHeight || document.body.offsetHeight;
+			video.height = height; 
+				
 			video.onended = function(e) {
     			game.state.start('Menu');
 				document.getElementById('game').style.display = 'block';
