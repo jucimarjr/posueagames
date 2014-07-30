@@ -13,14 +13,16 @@ Spikes.prototype = {
 
         var i;
         for(i = 0; i < manySpikes.children.length; i++) {
-            this.game.add.tween(manySpikes.children[i]).to({y : manySpikes.children[i].body.y + 85}, 1000, Phaser.Easing.Cubic.InOut, true, 500, Number.MAX_VALUE, true);
+            spikes = manySpikes.children[i];
+            spikes.startY = spikes.body.y;
+            this.game.add.tween(spikes).to({y : spikes.body.y + 65}, 1000, Phaser.Easing.Cubic.InOut, true, 500, Number.MAX_VALUE, true);
         }
     },
     update : function(player) {
         var i;
         for (i = 0; i < manySpikes.children.length; i++) {
             spikes = manySpikes.children[i];
-            if (this.checkCollision(player.player, spikes)) {
+            if (this.checkCollision(player.player, spikes) && (spikes.body.y < spikes.startY + 45)) {
                 player.state = PlayerState.BURNING;
             }
         }

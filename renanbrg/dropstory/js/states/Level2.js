@@ -114,6 +114,7 @@ State.Level2.prototype = {
 
         // Sounds
         this.jumpSound = this.game.add.audio("jump");
+        this.lifeSound = this.game.add.audio("life");
         this.mainSound = this.game.add.audio("main");
         this.powUpSound = this.game.add.audio("powup");
         this.loseSound = this.game.add.audio('lose');
@@ -565,6 +566,7 @@ State.Level2.prototype = {
             } else if (body2.sprite.name == 'evildrop') {
                 this.hitEvilDrop(body1, body2);
             } else if (body2.sprite.name == 'lifeup') {
+            	this.lifeSound.play();
                 hud.increaseLife();
                 body2.sprite.kill();
             }
