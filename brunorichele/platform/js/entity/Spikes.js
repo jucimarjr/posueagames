@@ -26,8 +26,8 @@ Spikes.prototype = {
         }
     },
     checkCollision : function(player, spikes) {
-            var playerBounds = player.getBounds();
-            var spikesBounds = spikes.getBounds();
-            return Phaser.Rectangle.intersects(playerBounds, spikesBounds);
+        var playerBounds = player.getBounds();
+        var spikesBounds = spikes.getBounds();
+        return Phaser.Rectangle.intersects(playerBounds, spikesBounds);
     }
 }

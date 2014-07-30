@@ -25,11 +25,31 @@
   <object gid="3" x="13500" y="1080"/>
  </objectgroup>
  <objectgroup name="skulls" width="500" height="36">
-  <object gid="5" x="750" y="900"/>
-  <object gid="5" x="1080" y="900"/>
-  <object gid="5" x="1410" y="900"/>
-  <object gid="5" x="1740" y="900"/>
-  <object gid="5" x="2070" y="900"/>
-  <object gid="5" x="2400" y="900"/>
+  <object gid="5" x="750" y="930"/>
+  <object gid="5" x="1140" y="930"/>
+  <object gid="5" x="1530" y="930"/>
+  <object gid="5" x="1920" y="930"/>
+  <object gid="5" x="2310" y="930"/>
+  <object gid="5" x="2700" y="930"/>
+  <object gid="5" x="7680" y="930"/>
+  <object gid="5" x="7410" y="930"/>
+  <object gid="5" x="7140" y="930"/>
+  <object gid="5" x="6510" y="930"/>
+  <object gid="5" x="6060" y="930"/>
+  <object gid="5" x="5370" y="930"/>
+  <object gid="5" x="4860" y="930"/>
+  <object gid="5" x="4380" y="930"/>
+ </objectgroup>
+ <objectgroup name="spikes" width="500" height="36">
+  <object gid="4" x="3120" y="908"/>
+  <object gid="4" x="3691" y="908"/>
+  <object gid="4" x="3901" y="908"/>
+  <object gid="4" x="5221" y="907"/>
+  <object gid="4" x="5911" y="908"/>
+  <object gid="4" x="6631" y="908"/>
+  <object gid="4" x="7951" y="908"/>
+  <object gid="4" x="8190" y="907"/>
+  <object gid="4" x="8430" y="908"/>
+  <object gid="4" x="8670" y="908"/>
  </objectgroup>
 </map>

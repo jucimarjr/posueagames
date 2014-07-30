@@ -48,7 +48,7 @@ Enemy.prototype.create = function(mymap) {
 }
 
 Enemy.prototype.movement = function(enemies) {
-    console.log('movement');
+    // TODO movimento do inimigo
 }
 
 Enemy.prototype.update = function(player) {
@@ -83,7 +83,7 @@ Skull.prototype.constructor = Skull;
 Skull.prototype.movement = function(enemies) {
     var i;
     for(i = 0; i < enemies.children.length; i++) {
-        game.add.tween(enemies.children[i]).to({y : enemies.children[i].body.y - 150}, 1000, Phaser.Easing.Cubic.InOut, true, 0, Number.MAX_VALUE, true);
+        game.add.tween(enemies.children[i]).to({y : enemies.children[i].body.y - 180}, 1500, Phaser.Easing.Cubic.InOut, true, 0, Number.MAX_VALUE, true);
     }
 }
 

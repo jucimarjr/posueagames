@@ -2,6 +2,7 @@ State.Phase2 = function(game) {
     this.game = game,
     this.player = new Player(game),
     this.skull = skull,
+    this.spikes = new Spikes(game),
     this.door = new Door(game);
 }
 
@@ -14,6 +15,7 @@ State.Phase2.prototype = {
         this.player.create(450, 808/*14000, 790*/);
         this.player.player.body.mass = 100;
         this.skull.create(Phase2.World.mymap);
+        this.spikes.create(Phase2.World.mymap);
         this.door.create(this, 14555, 700);
         Phase2.World.createObjects();
         Phase2.World.createForeground();
@@ -32,6 +34,7 @@ State.Phase2.prototype = {
     update : function() {
         this.control.update();
         this.skull.update(this.player);
+        this.spikes.update(this.player);
         this.door.update(this.player, 15000, 0);
     },
     changeLevel : function() {
