@@ -24,7 +24,7 @@ State.GameOver.prototype = {
 		button2.anchor.setTo(Config.button.init.anchor.x, Config.button.init.anchor.y);		
 		
 		var style = { font: "40px Helvetica", fill: "#ffffff" };
-        this.text1 = game.add.text(220, 850, 'Um homem foi encontrado morto..após seu veículo ser atingido por um caminhão...', style);
+        this.text1 = game.add.text(220, 850, 'Um homem foi encontrado morto após seu veículo ser atingido por um caminhão...', style);
 		this.text1.alpha = 0;
 				
 		game.add.tween(this.sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None).start();
