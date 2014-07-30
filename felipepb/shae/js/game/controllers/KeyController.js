@@ -50,9 +50,9 @@ Game.KeyController.prototype.onCollected = function (playerSprite) {
 	collectedAnim.to({ x: 0, y: 0 }, 500, Phaser.Easing.Cubic.Out, true);
 	collectedAnim.onComplete.add(this.onCollectedAnimComplete, this);
     this.collectedSFX.play('', 0, 0.25);
-}
+};
 
 Game.KeyController.prototype.onCollectedAnimComplete = function () {
 	this.emitter.destroy();
 	this.destroy();
-}
+};
