@@ -62,19 +62,19 @@ State.Story.prototype = {
             var tween1 = this.game.add.tween(self.sprite).to({alpha : 0},
                     2000, Phaser.Easing.Linear.None).start();
             tween1.onComplete.add(self.startNextSplash, self);
-        }, 6000);
+        }, 7000);
 
         this.timer3 = setTimeout(function() {
             var tween1 = this.game.add.tween(self.sprite).to({alpha : 0},
                     2000, Phaser.Easing.Linear.None).start();
             tween1.onComplete.add(self.startNextSplash, self);
-        }, 10500);
+        }, 11500);
 
         this.timer4 = setTimeout(function() {
             var tween1 = this.game.add.tween(self.sprite).to({alpha : 0},
                     2000, Phaser.Easing.Linear.None).start();
             tween1.onComplete.add(self.startMenu, self);
-        }, 15000);
+        }, 16000);
     },
     startNextSplash: function() {
         this.currentFrame++;
