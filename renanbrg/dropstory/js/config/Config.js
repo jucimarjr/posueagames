@@ -23,15 +23,6 @@ Config.ludusSplash = {
     nextState: 4000
 };
 
-//SponsorSplash
-Config.sponsorSplash = {
-	dir: 'assets/images/sponsorsplash_960-600.png',
-	x: 0,
-	y: 0,
-	millis: 2000,
-	nextState: 4000
-};
-
 //GameSplash
 Config.gameSplash = {
 	dir: {

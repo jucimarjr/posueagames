@@ -5,8 +5,6 @@ var hud = new HUD(game);
 
 game.state.add('ludus-state', State.LudusSplash);
 game.state.add('story-state', State.Story);
-game.state.add('sponsor-state', State.SponsorSplash);
-game.state.add('pause-state', State.Pause);
 game.state.add('ending-state', State.Ending);
 game.state.add('gameover-state', State.GameOver);
 game.state.add('level1preloader-state', State.Level1Preloader);
