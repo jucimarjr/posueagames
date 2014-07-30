@@ -194,6 +194,45 @@
          "width":267,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":36,
+         "name":"worms",
+         "objects":[
+                {
+                 "gid":7,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":6542,
+                 "y":907
+                }, 
+                {
+                 "gid":7,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":6991,
+                 "y":655
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":267,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":

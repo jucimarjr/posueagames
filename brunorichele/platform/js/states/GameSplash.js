@@ -16,6 +16,7 @@ GameSplash = function (game) {
 	this.door = new Door(game);
 	this.hands = new Hands(game);
 	this.spikes = new Spikes(game);
+	this.worm = new Worm(game);
 };
 GameSplash.prototype = {
 	init: function(){
@@ -64,6 +65,7 @@ GameSplash.prototype = {
         Phase1.Trap.game = this.game;
         Phase1.Trap.init();
 		
+		this.worm.preload();
 		this.spikes.preload();
 		this.hands.preload();
 		this.door.preload();

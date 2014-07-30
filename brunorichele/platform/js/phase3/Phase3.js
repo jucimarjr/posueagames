@@ -1,6 +1,7 @@
 State.Phase3 = function(game) {
     this.game = game,
     this.player = new Player(game),
+    this.worms = new Worm(game),
     this.spikes = new Spikes(game);
 }
 
@@ -13,6 +14,7 @@ State.Phase3.prototype = {
         this.player.create(/*500*/7140, 750);
         this.player.player.body.mass = 100;
         this.spikes.create(Phase3.World.mymap);
+        this.worms.create(Phase3.World.mymap);
         Phase3.World.createObjects();
         Phase3.World.createForeground();
 		GameOverProperties.StopMusic = Phase3.World.createSound();
@@ -26,6 +28,7 @@ State.Phase3.prototype = {
     update : function() {
         this.control.update();
         this.spikes.update(this.player);
+        this.worms.update(this.player);
 		Phase3.World.collisionHole(this.player,Phase3.World.bgmusic);//Gambi: modificar se possível
     },
     changeFinal : function() {

@@ -25,4 +25,8 @@
   <object gid="4" x="6780" y="655"/>
   <object gid="4" x="1050" y="655"/>
  </objectgroup>
+ <objectgroup name="worms" width="267" height="36">
+  <object gid="7" x="6542" y="907"/>
+  <object gid="7" x="6991" y="655"/>
+ </objectgroup>
 </map>
