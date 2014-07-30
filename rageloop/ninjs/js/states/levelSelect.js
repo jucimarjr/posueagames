@@ -4,9 +4,9 @@
     function LevelSelect() {
 
         this.levels = [
-            {name: "Calabouço", scene: 'Level1', position: {x: 300, y: 300}},
-            {name: "Torre", scene: 'Level2', position: {x: 500, y: 300}},
-            {name: "Subaru Room", scene: 'Level3', position: {x: 700, y: 300}}
+            {name: "Calabouço", scene: 'Level1', position: {x: 255, y: 250}, icon: 'level_select_1', iconHover: 'level_select_1_hover'},
+            {name: "Torre", scene: 'Level2', position: {x: 480, y: 250}, icon: 'level_select_2', iconHover: 'level_select_2_hover'},
+            {name: "Subaru Room", scene: 'Level3', position: {x: 705, y: 250}, icon: 'level_select_3', iconHover: 'level_select_3_hover'}
         ];
 
     };
@@ -39,15 +39,15 @@
                 return -1;
             }
 
-            var levelIcon = this.game.add.button(levelInfo.position.x, levelInfo.position.y, 'shuriken', function () {
+            var levelIcon = this.game.add.button(levelInfo.position.x, levelInfo.position.y, levelInfo.icon, function () {
                 this.game.state.start(levelInfo.scene);
             }, this, 0, 0, 0);
 
             levelIcon.anchor.set(0.5, 0.5);
 
-            var style = { font: "15px pixelFont", fill: "#000000"};
+            var style = { font: "15px pixelFont", fill: "#FFFFFF"};
 
-            this.team = this.game.add.text(levelInfo.position.x, levelInfo.position.y + 50, levelInfo.name, style);
+            this.team = this.game.add.text(levelInfo.position.x, levelInfo.position.y + 140, levelInfo.name, style);
             this.team.anchor.set(0.5, 0.5);
 
         },
