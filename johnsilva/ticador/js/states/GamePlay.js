@@ -7,20 +7,15 @@ State.GamePlay = function (game) {
 State.GamePlay.prototype = {
 	preload: function () {
 		var cursors;
-		var playerX,playerY, fishXLeft,fishXRight, frame,runY;
+		var playerX,playerY, fishXLeft,fishXRight, runY;
 		var fishes, lastY,lastFish;
 	},
 	create: function () {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
-		playerY = 400;
-		playerX = 100;
-		fishXLeft = 120;
-		fishXRight = 300;
-		frame = 0;
+		playerY = 400; playerX = 100;
+		fishXLeft = 120; fishXRight = 300;
 		runY = 40;
-		lastY = null;
 		lastFish = null;
-		lastHeight = 0;
 
 		this.game.add.sprite(0, 0, 'bg');
 
@@ -83,8 +78,7 @@ State.GamePlay.prototype = {
 			if( (f.y - (f.height/2)) >= Config.global.screen.height){
 				var posY = lastFish.y-(lastFish.height+f.height)/2;
 				this.resetPosition(f, posY);
-				//frame = 0;
-				//f.frame = 0;
+				f.frame = 0;
 			}
 		}, this);
 	},
@@ -99,7 +93,7 @@ State.GamePlay.prototype = {
 
 	addFishes: function(){
 		for(var i=0;i<25;i++){
-			var rnd = this.game.rnd.integerInRange(1, 10);
+			var rnd = this.game.rnd.integerInRange(1, 10);			
 			if(rnd <= 2)
 				this.fishRnd = 'fish2';
 			else if(rnd <= 5)
@@ -108,14 +102,11 @@ State.GamePlay.prototype = {
 				this.fishRnd = 'fish4';
 
 			var fish = this.game.add.sprite(-200, 200, this.fishRnd);
+			fish.frame = 0;
 
 			this.game.physics.enable(fish);
 			fish.body.setSize(fish.width, fish.height-10, 0, 0);
 			fish.anchor.setTo(.5, .5);
-			/*if(lastY==null)
-				lastY = playerY-10-5-fish.height/2;
-			else
-				lastY -= (lastFish.height+fish.height)/2;*/
 			if(lastFish==null)
 				this.newY = playerY-10-5-fish.height/2;
 			else
@@ -127,12 +118,9 @@ State.GamePlay.prototype = {
 		}
 	},
 
-	ticar: function(player, fish){
+	ticar: function(player, f){
 		if(ticou){
-			if(++frame > 3)
-				fish.frame = 3;
-			else
-				fish.frame = frame;
+			f.frame+=1;
 			ticou = false;
 		}
 	},
@@ -146,8 +134,8 @@ State.GamePlay.prototype = {
     	game.debug.text(lastY,32,32);
     	game.debug.body(this.player);
     	
-    	/*fishes.forEach(function (f){ 
+    	fishes.forEach(function (f){ 
 			game.debug.body(f);
-		}, this);*/
+		}, this);
     },
 };
