@@ -17,13 +17,17 @@ State.Phase3.prototype = {
         this.worms.create(Phase3.World.mymap);
         Phase3.World.createObjects();
         Phase3.World.createForeground();
-		GameOverProperties.StopMusic = Phase3.World.createSound();
+		if(GameOverProperties.StopMusic == null){
+			GameOverProperties.StopMusic = Phase3.World.createSound();
+		}
 
         Phase3.World.collision();
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
 		this.KeyA = game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.control = new Control(this.game, this.player, this.cursors, this.KeyA);
+		
+		game.add.tween(Phase3.World.background).to( { alpha: 1 }, 6000, Phaser.Easing.Linear.None).start();		
     },
     update : function() {
         this.control.update();

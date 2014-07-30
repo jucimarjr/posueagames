@@ -17,13 +17,17 @@ State.Phase2.prototype = {
         this.door.create(this, 14555, 700);
         Phase2.World.createObjects();
         Phase2.World.createForeground();
-		GameOverProperties.StopMusic = Phase2.World.createSound();
+		if(GameOverProperties.StopMusic == null){
+			GameOverProperties.StopMusic = Phase2.World.createSound();
+		}
 
         Phase2.World.collision();
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
 		this.KeyA = game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.control = new Control(this.game, this.player, this.cursors, this.KeyA);
+		
+		game.add.tween(Phase2.World.background).to( { alpha: 1 }, 6000, Phaser.Easing.Linear.None).start();
     },
     update : function() {
         this.control.update();
@@ -31,9 +35,15 @@ State.Phase2.prototype = {
         this.door.update(this.player, 15000, 0);
     },
     changeLevel : function() {
-        this.game.state.start('GameIntro4');
 		this.porta = this.game.add.audio('music-porta');
         this.porta.play();
-		Phase2.World.bgmusic.stop();	
+		Phase2.World.bgmusic.stop();
+				
+		var FadeOut = game.add.tween(Phase2.World.background).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None);
+		FadeOut.onComplete.add(function(){
+			GameOverProperties.StopMusic = null;
+			this.game.state.start('GameIntro4');
+		});
+		FadeOut.start();					
     }
 }

@@ -38,9 +38,7 @@ State.GameOver.prototype = {
 		Config.screen.resize(this.game);
 	},
 	onBack: function () {
-		"use strict";
-		GameOverProperties.StopMusic.stop();
-				
+		"use strict";				
 		var FadeOut = game.add.tween(this.sprite).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None);
 		FadeOut.onComplete.add(function(){
 			game.state.start(GameOverProperties.Phase);

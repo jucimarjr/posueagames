@@ -17,7 +17,9 @@ State.Phase1.prototype = {
         this.door.create(this, 2670, 140);
         Phase1.Trap.createTrap(Phase1.World.mymap);
         Phase1.World.createForeground();
-		GameOverProperties.StopMusic = Phase1.World.createSound();
+		if(GameOverProperties.StopMusic == null){
+			GameOverProperties.StopMusic = Phase1.World.createSound();
+		}
 
         Phase1.World.collision();
 
@@ -41,6 +43,7 @@ State.Phase1.prototype = {
 
 		var FadeOut = game.add.tween(Phase1.World.background).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None);
 		FadeOut.onComplete.add(function(){
+			GameOverProperties.StopMusic = null;
         	this.game.state.start('GameIntro3');
 		});
 		FadeOut.start();

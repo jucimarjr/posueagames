@@ -57,6 +57,7 @@ State.GameIntro2.prototype = {
 		var FadeOut = game.add.tween(this.sprite).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None);
 		FadeOut.onComplete.add(function(){
 			GameOverProperties.Phase = 'Phase1';
+			GameOverProperties.StopMusic = null;
 			game.state.start('Phase1');
 		});
 		FadeOut.start();		
