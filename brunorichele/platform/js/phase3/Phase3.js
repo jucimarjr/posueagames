@@ -12,7 +12,7 @@ State.Phase3.prototype = {
     create : function() {
         Phase3.World.createWorld();
         Phase3.World.createBackground();
-        this.player.create(500/*7140*/, 750/*240*/);
+        this.player.create(500/*7140*/, 850/*240*/);
         this.player.player.body.mass = 100;
         this.spikes.create(Phase3.World.mymap);
         this.worms.create(Phase3.World.mymap);
@@ -36,6 +36,8 @@ State.Phase3.prototype = {
         this.spikes.update(this.player);
         this.worms.update(this.player);
         this.finalDoor.update(this.player, 7320, 240);
+		
+		console.log(this.player.player.y);
     },
     changeLevel : function() {
 			this.porta = this.game.add.audio('music-porta');
