@@ -24,6 +24,8 @@ State.Phase1.prototype = {
         this.cursors = this.game.input.keyboard.createCursorKeys();
 		this.KeyA = game.input.keyboard.addKey(Phaser.Keyboard.A);
         this.control = new Control(this.game, this.player, this.cursors, this.KeyA);
+		
+		game.add.tween(Phase1.World.background).to( { alpha: 1 }, 6000, Phaser.Easing.Linear.None).start();
     },
     update : function() {
         this.control.update();

@@ -25,6 +25,7 @@ Phase1.World = {
     },
     createBackground : function() {
         this.background = this.game.add.sprite(0, 0, 'bg1fase1_test');
+		this.background.alpha = 0;
     },
     createForeground : function() {
         this.foreground = this.game.add.sprite(0, 0, 'bg2fase1_test');
