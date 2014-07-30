@@ -10,6 +10,7 @@ State.GamePlay.prototype = {
 		var playerX,playerY, fishXLeft,fishXRight, runY;
 		var fishes, lastY,lastFish;
 		var score, style,labelScore;
+		var overlap, initTap;
 	},
 	create: function () {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
@@ -18,8 +19,9 @@ State.GamePlay.prototype = {
 		runY = 40;
 		lastFish = null;
 		score = 0; style = { font: "30px Arial Bold", fill: "#ffffff", align: "center"};
+		initTap = true;
 
-		this.game.add.sprite(0, 0, 'bg');
+		bg = this.game.add.sprite(0, 0, 'bg');
 
 		this.player = this.game.add.sprite(playerX, playerY ,'player');
 		this.game.physics.enable(this.player);
@@ -37,7 +39,9 @@ State.GamePlay.prototype = {
 
 	update: function () {
 
+		overlap = false;
 		this.game.physics.arcade.overlap(this.player, fishes, this.ticar, null,this);
+
 		labelScore.setText(score);
 
 		if (cursors.left.isUp ) {
@@ -47,6 +51,11 @@ State.GamePlay.prototype = {
 			this.rightUp = true;
 		}		
 
+		if(!overlap && !initTap){
+			labelScore.setText("Game Over");
+			this.end();
+		}
+
 		if (cursors.left.isDown && this.leftUp) {		
 			this.run();
 			this.leftUp = false;
@@ -54,6 +63,7 @@ State.GamePlay.prototype = {
 			this.player.position.setTo(playerX,playerY);			
 			this.player.animations.play('ticar');			
 			ticou = true;
+			initTap = false;
 		}
 		else if(cursors.right.isDown && this.rightUp){
 			this.run();
@@ -62,6 +72,7 @@ State.GamePlay.prototype = {
 			this.player.position.setTo(Config.global.screen.width-playerX,playerY);			
 			this.player.animations.play('ticar');			
 			ticou = true;
+			initTap = false;
 		}
 	},
 
@@ -129,11 +140,12 @@ State.GamePlay.prototype = {
 			f.frame++;
 			ticou = false;
 		}
+		overlap = true;
 	},
 
 	end: function(){
-		/*this.game.state.start('End');
-		return;*/
+		//Show score
+		this.game.state.start('GamePlay');
 	},
 
     render: function (){
