@@ -10,7 +10,7 @@ https://www.apachefriends.org/pt_br/index.html
 2) Descompactar zip do jogo no diretório htdocs.
 
 3) Abrir pasta do jogo no browser (chrome de preferência).
-http://localhost/ninjs 
+http://localhost/ryokan 
 
 
 Controles
