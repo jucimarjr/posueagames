@@ -14,7 +14,7 @@ State.Phase3.prototype = {
         Phase3.World.createBackground();
         this.player.create(500/*7140*/, 750/*240*/);
         this.player.player.body.mass = 100;
-        this.spikes.create(Phase3.World.mymap, SpikeState.TWEEN);
+        this.spikes.create(Phase3.World.mymap);
         this.worms.create(Phase3.World.mymap);
         this.finalDoor.create(this, 7450, 280);
         Phase3.World.createObjects();
