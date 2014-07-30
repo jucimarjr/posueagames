@@ -42,8 +42,8 @@ Character = function(game, characterId, assetPath, assetDimensions,
         this.isAnimated = false;
     } else if (assetDimensions.length == 2) {
         this.isAnimated = true;
-    	this.width = assetDimensions[0];
-    	this.height = assetDimensions[1];
+        this.width = assetDimensions[0];
+        this.height = assetDimensions[1];
     } else {
         throw 'Bad paramater: assetDimensions';
     }
@@ -104,12 +104,12 @@ Character.prototype = {
     },
 
     setCharacterInicialValues: function () {
-		this.character.smoothed = false;
-    	this.character.body.fixedRotation = true;
-    	this.character.body.sprite.name = 'playerdrop';
-    	this.playershape = this.character.body.setCircle(18,0,4);
+        this.character.smoothed = false;
+        this.character.body.fixedRotation = true;
+        this.character.body.sprite.name = 'playerdrop';
+        this.playershape = this.character.body.setCircle(18,0,4);
 
-    	// normal state
+        // normal state
         this.character.animations.add('leftsmallnormal', [4,5,6], 10, true);
         this.character.animations.add('rightsmallnormal', [8,9,10], 10, true);
         this.character.animations.add('jumpleftsmallnormal', [3], 10, false);
@@ -121,7 +121,7 @@ Character.prototype = {
         this.character.animations.add('jumprightbignormal', [26], 10, true);
         this.character.animations.add('stopbignormal', [22], 10, true);
 
-		// energy state
+        // energy state
         this.character.animations.add('leftsmallenergy', [34,35,36], 10, true);
         this.character.animations.add('rightsmallenergy', [38,39,40], 10, true);
         this.character.animations.add('jumpleftsmallenergy', [33], 10, false);
@@ -148,21 +148,44 @@ Character.prototype = {
         // Make the drop disappear when the player dies
         this.character.animations.add('evaporate', [90, 91, 92, 93, 94],
                 10, false);
-	},
+    },
 
-	playerAnimations: function () {
-		if (this.animestate === 'jumpTop') { this.character.animations.stop(); this.character.frame = 2;}
-			else if (this.animestate === 'jumpright')  { this.character.animations.play('jumpright'+this.playersize+this.playerstate);}
-			else if (this.animestate === 'jumpleft')  { this.character.animations.play('jumpleft'+this.playersize+this.playerstate);}
-			else if (this.animestate === 'die')  { this.character.animations.stop(); this.character.frame = 6;}
-			else if (this.animestate === 'win')  { this.character.animations.stop(); this.character.frame = 7;}
-			else if (this.animestate === 'powerup') { this.character.animations.stop(); this.character.frame = 8;}
-			else if (this.animestate === 'fall') { this.character.animations.stop(); this.character.frame = 9;}
-			else if (this.animestate === 'left') { this.character.animations.play('left'+this.playersize+this.playerstate);}
-			else if (this.animestate === 'right') { this.character.animations.play('right'+this.playersize+this.playerstate);}
-			else if (this.animestate === 'evaporate') { this.character.animations.play('evaporate');}
-		else { this.character.animations.stop(); this.character.animations.play('stop'+this.playersize+this.playerstate);}
-	},
+    playerAnimations: function () {
+        if (this.animestate === 'jumpTop') {
+            this.character.animations.stop();
+            this.character.frame = 2;
+        } else if (this.animestate === 'jumpright') {
+            this.character.animations.play('jumpright' + this.playersize +
+                    this.playerstate);
+        } else if (this.animestate === 'jumpleft') {
+            this.character.animations.play('jumpleft' + this.playersize +
+                    this.playerstate);
+        } else if (this.animestate === 'die') {
+            this.character.animations.stop();
+            this.character.frame = 6;
+        } else if (this.animestate === 'win') {
+            this.character.animations.stop();
+            this.character.frame = 7;
+        } else if (this.animestate === 'powerup') {
+            this.character.animations.stop();
+            this.character.frame = 8;
+        } else if (this.animestate === 'fall') {
+            this.character.animations.stop();
+            this.character.frame = 9;
+        } else if (this.animestate === 'left') {
+            this.character.animations.play('left' + this.playersize +
+                    this.playerstate);
+        } else if (this.animestate === 'right') {
+            this.character.animations.play('right' + this.playersize +
+                    this.playerstate);
+        } else if (this.animestate === 'evaporate') {
+            this.character.animations.play('evaporate');
+        } else {
+            this.character.animations.stop();
+            this.character.animations.play('stop' + this.playersize +
+                    this.playerstate);
+        }
+    },
 
 
     /**
@@ -174,7 +197,7 @@ Character.prototype = {
      * @param {integer} speed - how fast the sprite will move to the right.
      */
     moveRight: function(speed) {
-		this.character.body.moveRight(speed);
+        this.character.body.moveRight(speed);
     },
 
     /**
@@ -186,7 +209,7 @@ Character.prototype = {
      * @param {integer} speed - how fast the sprite will move to the left.
      */
     moveLeft: function(speed) {
-		this.character.body.moveLeft(speed);
+        this.character.body.moveLeft(speed);
     },
 
     /**
@@ -199,7 +222,7 @@ Character.prototype = {
      * It must be a value bigger than 0.
      */
     jump: function(jumpHeight) {
-		this.character.body.moveUp(jumpHeight);
+        this.character.body.moveUp(jumpHeight);
     },
 
     /**
@@ -210,7 +233,7 @@ Character.prototype = {
      */
     stop: function() {
         if (this.isAnimated) {
-        	this.character.animations.stop();
+            this.character.animations.stop();
         }
         //this.character.frame = 9;
         this.character.body.velocity.x = 0;
@@ -234,8 +257,8 @@ Character.prototype = {
      * @method Character#kill
      */
     kill: function() {
-		this.character.kill();
-	},
+        this.character.kill();
+    },
 
     /**
      * Set a horizontal velocity for the character.

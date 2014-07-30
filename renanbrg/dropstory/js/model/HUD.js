@@ -75,8 +75,8 @@ HUD.prototype = {
                 styleForLife);
         this.lifeLabel.fixedToCamera = true;
 
-        this.dropAttemps = this.game.add.sprite(Config.global.screen.width - 105,
-                20, 'dropper');
+        this.dropAttemps = this.game.add.sprite(Config.global.screen.width -
+                105, 20, 'dropper');
         this.dropAttemps.animations.add('attempt1Up', [1], 10, false);
         this.dropAttemps.animations.add('attempt1Down', [0], 10, false);
         this.dropAttemps.animations.add('attempt2Up', [2], 10, false);
@@ -102,15 +102,15 @@ HUD.prototype = {
         this.game.time.advancedTiming = true;
     },
     decreaseLife: function() {
-    	this.lifeCounter--;
-    	this.lifeLabel.setText(this.lifeCounter);
+        this.lifeCounter--;
+        this.lifeLabel.setText(this.lifeCounter);
     },
-	increaseLife: function() {
-    	this.lifeCounter++;
-    	this.lifeLabel.setText(this.lifeCounter);
+    increaseLife: function() {
+        this.lifeCounter++;
+        this.lifeLabel.setText(this.lifeCounter);
     },
     getLifeCounter: function() {
-    	return this.lifeCounter;
+        return this.lifeCounter;
     },
     increaseDropBar: function() {
         this.dropCounter++;
