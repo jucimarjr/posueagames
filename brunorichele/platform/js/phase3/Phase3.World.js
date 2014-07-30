@@ -16,6 +16,8 @@ Phase3.World = {
         this.game.physics.p2.gravity.y = 1000;
         this.game.physics.p2.restitution = 0;
         this.game.world.enableBodySleeping=true;
+		
+		this.verify = null;
 
         this.mymap = this.game.add.tilemap('map3');
         mapLayer = this.mymap.createLayer('map');
@@ -39,7 +41,8 @@ Phase3.World = {
         groundLayer = this.game.physics.p2.convertCollisionObjects(this.mymap, 'ground');
     },
     collisionHole : function(player, music){
-        if (player.player.x > 7397 && (player.player.y > 230 && player.player.y < 360)){
+        if (player.player.x > 7397 && (player.player.y > 230 && player.player.y < 360) && this.verify == null){
+			this.verify = "entrou";
 			console.log("entrou")
 			player.player.kill();
 			this.porta = this.game.add.audio('music-porta');
