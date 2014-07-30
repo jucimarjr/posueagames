@@ -22,6 +22,7 @@ GameSplash = function (game) {
 };
 
 var worm = new Worm(),
+    monster = new Monster(),
 	skull = new Skull();
 GameSplash.prototype = {
 	init: function(){
@@ -58,6 +59,7 @@ GameSplash.prototype = {
 
         skull.preload();
 		worm.preload();
+		monster.preload();
 
 	    Phase2.World.game = this.game;
 	    Phase2.World.init();

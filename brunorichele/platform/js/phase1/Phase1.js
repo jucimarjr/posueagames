@@ -2,6 +2,7 @@ State.Phase1 = function(game) {
     this.game = game,
     this.player = new Player(game),
     this.door = new Door(game),
+    this.monster = monster,
     this.hands = new Hands(game);
 }
 
@@ -14,6 +15,7 @@ State.Phase1.prototype = {
         this.player.create(50, 1600);
         this.player.player.body.mass = 100;
         this.hands.create(Phase1.World.mymap);
+        this.monster.create(Phase1.World.mymap);
         this.door.create(this, 2670, 140);
         Phase1.Trap.createTrap(Phase1.World.mymap);
         Phase1.World.createForeground();
@@ -33,6 +35,7 @@ State.Phase1.prototype = {
         this.control.update();
         this.hands.update(this.player);
         this.door.update(this.player, 3000, 0);
+        this.monster.update(this.player);
         Phase1.Trap.update(this.player);
 		Phase1.World.collisionFloor(this.player);
     },

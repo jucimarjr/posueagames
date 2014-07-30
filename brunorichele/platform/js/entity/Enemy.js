@@ -23,6 +23,17 @@ var WormBase = {
     velx : 20
 }
 
+var MonsterBase = {
+    name : 'monster',
+    path : 'assets/images/enemy/monstro_200-35-4.png',
+    width : 50,
+    height : 35,
+    default : [0, 1, 2, 3],
+    objLayer : 'monster',
+    objId : 8,
+    velx : 20
+}
+
 function Enemy(enemy) {
     this.enemy = enemy,
     this.enemies;
@@ -43,6 +54,7 @@ Enemy.prototype.create = function(mymap) {
     }
 
     enemies.callAll('animations.add', 'animations', 'default', this.enemy.default, 4, true);
+    enemies.callAll('animations.play', 'animations', 'default');
 
     this.movement(enemies);
 }
@@ -92,3 +104,20 @@ function Worm() {
 }
 Worm.prototype = new Enemy();
 Worm.prototype.constructor = Worm;
+
+function Monster() {
+    Enemy.call(this, MonsterBase);
+}
+Monster.prototype = new Enemy();
+Monster.prototype.constructor = Monster;
+
+Monster.prototype.movement = function(enemies) {
+    enemies.physicsBodyType = Phaser.Physics.P2JS;
+    var i;
+    for(i = 0; i < enemies.children.length; i++) {
+        enemy = enemies.children[i];
+        game.physics.p2.enable(enemy);
+        enemy.body.fixedRotation = true;
+        enemy.body.mass = 9999;
+    }
+}
