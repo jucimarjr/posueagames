@@ -16,9 +16,12 @@ GameSplash = function (game) {
 	this.door = new Door(game);
 	this.hands = new Hands(game);
 	this.spikes = new Spikes(game);
-	this.worm = new Worm(game);
-	this.skull = new Skull(game);
+	/*this.worm = new Worm();
+	this.skull = new Skull();*/
 };
+
+var worm = new Worm(),
+	skull = new Skull();
 GameSplash.prototype = {
 	init: function(){
 		this.game.load.image('game-splash', GameSplashProperties.background);
@@ -53,6 +56,9 @@ GameSplash.prototype = {
 		this.credits.init();
 		this.howToPlay.init();
 
+        skull.preload();
+		worm.preload();
+
 	    Phase2.World.game = this.game;
 	    Phase2.World.init();
 
@@ -63,9 +69,7 @@ GameSplash.prototype = {
         Phase1.World.init();
         Phase1.Trap.game = this.game;
         Phase1.Trap.init();
-		
-		this.skull.preload();
-		this.worm.preload();
+
 		this.spikes.preload();
 		this.hands.preload();
 		this.door.preload();

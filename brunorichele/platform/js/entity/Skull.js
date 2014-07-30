@@ -2,6 +2,12 @@ function Skull(game) {
     this.game = game;
 }
 
+var TypeSkulls = {
+    easy : 0,
+    medium : 1,
+    hard : 2
+};
+
 Skull.prototype = {
     preload : function() {
         this.game.load.spritesheet('skull', 'assets/phase2/enemy/skull_260-41-4.png', 65, 41);

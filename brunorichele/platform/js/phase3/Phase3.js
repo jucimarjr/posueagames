@@ -1,7 +1,7 @@
 State.Phase3 = function(game) {
     this.game = game,
     this.player = new Player(game),
-    this.worms = new Worm(game),
+    this.worms = worm,
     this.spikes = new Spikes(game);
 }
 

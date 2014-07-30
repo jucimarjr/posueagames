@@ -13,7 +13,7 @@ game.state.add('GameIntro1', State.GameIntro1);
 game.state.add('GameIntro2', State.GameIntro2);
 game.state.add('GameIntro3', State.GameIntro3);
 game.state.add('GameIntro4', State.GameIntro4);
-game.state.add('Phase1', State.Phase1);
+game.state.add('Phase1', State.Phase3);
 game.state.add('Phase2', State.Phase2);
 game.state.add('Phase3', State.Phase3);
 game.state.start('LudusSplash');

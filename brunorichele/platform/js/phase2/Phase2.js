@@ -1,7 +1,7 @@
 State.Phase2 = function(game) {
     this.game = game,
     this.player = new Player(game),
-    this.skull = new Skull(game),
+    this.skull = skull,
     this.door = new Door(game);
 }
 
@@ -16,7 +16,7 @@ State.Phase2.prototype = {
         this.skull.create(Phase2.World.mymap);
         this.door.create(this, 14555, 700);
         Phase2.World.createObjects();
-        Phase2.World.createForeground();
+//        Phase2.World.createForeground();
 		if(GameOverProperties.StopMusic == null){
 			GameOverProperties.StopMusic = Phase2.World.createSound();
 		}
