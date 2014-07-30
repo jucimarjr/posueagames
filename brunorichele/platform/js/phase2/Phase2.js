@@ -15,7 +15,7 @@ State.Phase2.prototype = {
         this.player.create(450, 808/*14000, 790*/);
         this.player.player.body.mass = 100;
         this.skull.create(Phase2.World.mymap);
-        this.spikes.create(Phase2.World.mymap);
+        this.spikes.create(Phase2.World.mymap, SpikeState.STATIC);
         this.door.create(this, 14555, 700);
         Phase2.World.createObjects();
         Phase2.World.createForeground();
