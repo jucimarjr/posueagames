@@ -9,6 +9,7 @@ State.GamePlay.prototype = {
 		var cursors;
 		var playerX,playerY, fishXLeft,fishXRight, runY;
 		var fishes, lastY,lastFish;
+		var score, style,labelScore;
 	},
 	create: function () {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
@@ -16,6 +17,7 @@ State.GamePlay.prototype = {
 		fishXLeft = 120; fishXRight = 300;
 		runY = 40;
 		lastFish = null;
+		score = 0; style = { font: "30px Arial Bold", fill: "#ffffff", align: "center"};
 
 		this.game.add.sprite(0, 0, 'bg');
 
@@ -29,11 +31,14 @@ State.GamePlay.prototype = {
 		this.addFishes();
 		cursors = this.game.input.keyboard.createCursorKeys();
 		this.ticou = false;
+		labelScore = this.game.add.text(this.game.world.centerX, 200, score, style);
+		labelScore.anchor.set(0.5, 0);
 	},
 
 	update: function () {
 
 		this.game.physics.arcade.overlap(this.player, fishes, this.ticar, null,this);
+		labelScore.setText(score);
 
 		if (cursors.left.isUp ) {
 			this.leftUp = true;
@@ -120,7 +125,8 @@ State.GamePlay.prototype = {
 
 	ticar: function(player, f){
 		if(ticou){
-			f.frame+=1;
+			score++;
+			f.frame++;
 			ticou = false;
 		}
 	},
