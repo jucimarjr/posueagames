@@ -18,10 +18,7 @@
  <tileset firstgid="72" name="seaurchin_80-40" tilewidth="40" tileheight="40">
   <image source="spritesheets/seaurchin_80-40.png" width="80" height="40"/>
  </tileset>
- <tileset firstgid="74" name="bird" tilewidth="54" tileheight="50">
-  <image source="images/bird.jpeg" width="54" height="50"/>
- </tileset>
- <tileset firstgid="75" name="fakeplatform_160-80" tilewidth="160" tileheight="80">
+ <tileset firstgid="74" name="fakeplatform_160-80" tilewidth="160" tileheight="80">
   <image source="images/fakeplatform_160-80.png" width="160" height="80"/>
  </tileset>
  <layer name="irregularlayer" width="192" height="15">
@@ -74,9 +71,7 @@
   <object gid="10" x="6943" y="561"/>
   <object gid="10" x="5136" y="562"/>
  </objectgroup>
- <objectgroup name="bird" width="192" height="15">
-  <object gid="74" x="690" y="206"/>
- </objectgroup>
+ <objectgroup name="bird" width="192" height="15"/>
  <objectgroup name="glass-polygon" width="192" height="15">
   <object x="4403" y="263" width="115" height="17"/>
  </objectgroup>
@@ -99,23 +94,23 @@
   <object gid="72" x="7121" y="559"/>
  </objectgroup>
  <objectgroup name="fakeplatform" width="192" height="15">
-  <object gid="75" x="401" y="561"/>
-  <object gid="75" x="721" y="401"/>
-  <object gid="75" x="1682" y="320"/>
-  <object gid="75" x="1041" y="281"/>
-  <object gid="75" x="1680" y="561"/>
-  <object gid="75" x="2001" y="441"/>
-  <object gid="75" x="2642" y="601"/>
-  <object gid="75" x="3282" y="601"/>
-  <object gid="75" x="2801" y="601"/>
-  <object gid="75" x="3121" y="601"/>
-  <object gid="75" x="2322" y="441"/>
-  <object gid="75" x="2162" y="441"/>
-  <object gid="75" x="2961" y="601"/>
-  <object gid="75" x="5201" y="282"/>
-  <object gid="75" x="3722" y="242"/>
-  <object gid="75" x="4841" y="281"/>
-  <object gid="75" x="4041" y="320"/>
-  <object gid="75" x="5562" y="282"/>
+  <object gid="74" x="401" y="561"/>
+  <object gid="74" x="721" y="401"/>
+  <object gid="74" x="1682" y="320"/>
+  <object gid="74" x="1041" y="281"/>
+  <object gid="74" x="1680" y="561"/>
+  <object gid="74" x="2001" y="441"/>
+  <object gid="74" x="2642" y="601"/>
+  <object gid="74" x="3282" y="601"/>
+  <object gid="74" x="2801" y="601"/>
+  <object gid="74" x="3121" y="601"/>
+  <object gid="74" x="2322" y="441"/>
+  <object gid="74" x="2162" y="441"/>
+  <object gid="74" x="2961" y="601"/>
+  <object gid="74" x="5201" y="282"/>
+  <object gid="74" x="3722" y="242"/>
+  <object gid="74" x="4841" y="281"/>
+  <object gid="74" x="4041" y="320"/>
+  <object gid="74" x="5562" y="282"/>
  </objectgroup>
 </map>

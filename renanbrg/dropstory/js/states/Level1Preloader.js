@@ -47,9 +47,9 @@ State.Level1Preloader.prototype = {
         this.game.load.image('strawtip',
                 'assets/images/strawtip_40-40.png');
         this.game.load.image('smoke', './assets/images/smoke_32-32.png');
-        this.game.load.audio('jump','assets/waterDrop.ogg');
-        this.game.load.audio('main','assets/gotaMain.ogg');
-        this.game.load.audio('powup','assets/gotaPowerUp.ogg');
+        this.game.load.audio('jump','assets/waterdrop.ogg');
+        this.game.load.audio('main','assets/gotamain.ogg');
+        this.game.load.audio('powup','assets/gotapowerup.ogg');
         this.game.load.audio('stageclear', 'assets/victory.ogg');
         this.game.load.audio('lose', 'assets/lose.ogg');
     },

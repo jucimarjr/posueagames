@@ -38,7 +38,7 @@ State.Story.prototype = {
         //How to play image
         this.game.load.image('how-to-play', Config.howToPlay.dir);
         this.game.load.image('progress-bar', Config.gameSplash.dir.bar);
-        this.game.load.audio('som-inicio', 'assets/gotaExtra.ogg');
+        this.game.load.audio('som-inicio', 'assets/gotaextra.ogg');
     },
     create: function () {
         "use strict";

@@ -334,7 +334,7 @@ State.Level2.prototype = {
         this.fakeplatform = game.add.group();
         this.fakeplatform.enableBody = true;
         this.fakeplatform.physicsBodyType = Phaser.Physics.P2JS;
-        this.map.createFromObjects('fakeplatform', 75, 'fakeplatform', 0, true,
+        this.map.createFromObjects('fakeplatform', 74, 'fakeplatform', 0, true,
                 false, this.fakeplatform);
         this.fakeplatform.forEach(this.setupFakePlatform, this);
 

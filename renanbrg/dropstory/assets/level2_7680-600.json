@@ -576,21 +576,7 @@
         {
          "height":15,
          "name":"bird",
-         "objects":[
-                {
-                 "gid":74,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":690,
-                 "y":206
-                }],
+         "objects":[],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -862,7 +848,7 @@
          "name":"fakeplatform",
          "objects":[
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -876,7 +862,7 @@
                  "y":561
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -890,7 +876,7 @@
                  "y":401
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -904,7 +890,7 @@
                  "y":320
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -918,7 +904,7 @@
                  "y":281
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -932,7 +918,7 @@
                  "y":561
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -946,7 +932,7 @@
                  "y":441
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -960,7 +946,7 @@
                  "y":601
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -974,7 +960,7 @@
                  "y":601
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -988,7 +974,7 @@
                  "y":601
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -1002,7 +988,7 @@
                  "y":601
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -1016,7 +1002,7 @@
                  "y":441
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -1030,7 +1016,7 @@
                  "y":441
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -1044,7 +1030,7 @@
                  "y":601
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -1058,7 +1044,7 @@
                  "y":282
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -1072,7 +1058,7 @@
                  "y":242
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -1086,7 +1072,7 @@
                  "y":281
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -1100,7 +1086,7 @@
                  "y":320
                 }, 
                 {
-                 "gid":75,
+                 "gid":74,
                  "height":0,
                  "name":"",
                  "properties":
@@ -1219,21 +1205,6 @@
         }, 
         {
          "firstgid":74,
-         "image":"images\/bird.jpeg",
-         "imageheight":50,
-         "imagewidth":54,
-         "margin":0,
-         "name":"bird",
-         "properties":
-            {
-
-            },
-         "spacing":0,
-         "tileheight":50,
-         "tilewidth":54
-        }, 
-        {
-         "firstgid":75,
          "image":"images\/fakeplatform_160-80.png",
          "imageheight":80,
          "imagewidth":160,

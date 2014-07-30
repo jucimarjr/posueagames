@@ -44,9 +44,9 @@ State.Level2Preloader.prototype = {
         this.game.load.image('pausesplash', Config.pause.dir);
 
         //audios
-        this.game.load.audio('jump', 'assets/waterDrop.ogg');
-        this.game.load.audio('main', 'assets/gotaMain.ogg');
-        this.game.load.audio('powup', 'assets/gotaPowerUp.ogg');
+        this.game.load.audio('jump', 'assets/waterdrop.ogg');
+        this.game.load.audio('main', 'assets/gotamain.ogg');
+        this.game.load.audio('powup', 'assets/gotapowerup.ogg');
         this.game.load.audio('lose', 'assets/lose.ogg');
         this.game.load.audio('life', 'assets/life.ogg');
     },
