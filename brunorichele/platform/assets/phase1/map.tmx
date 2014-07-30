@@ -105,8 +105,4 @@
   <object gid="2" x="810" y="620"/>
   <object gid="2" x="1860" y="740"/>
  </objectgroup>
- <objectgroup name="monster" width="100" height="100">
-  <object gid="8" x="960" y="1180"/>
-  <object gid="8" x="2130" y="720"/>
- </objectgroup>
 </map>
