@@ -6,7 +6,8 @@ State.Story = function (game) {
     this.game = game;
     this.animationmusic = null;
     this.skipKey = null;
-    this.timer1, this.timer2, this.timer3;
+    this.timer1, this.timer2, this.timer3, this.timer4;
+    this.currentFrame;
 };
 
 State.Story.prototype = {
@@ -16,6 +17,7 @@ State.Story.prototype = {
         this.game.load.image('storyboard-1','assets/images/storyboard1_960-600.png');
         this.game.load.image('storyboard-2','assets/images/storyboard2_960-600.png');
         this.game.load.image('storyboard-3','assets/images/storyboard3_960-600.png');
+        this.game.load.image('storyboard-4','assets/images/storyboard4_960-600.png');
 
         this.game.load.image('game-splash', Config.gameSplash.dir.background);
         //Menu buttons
@@ -41,44 +43,53 @@ State.Story.prototype = {
     create: function () {
         "use strict";
 
+        this.currentFrame = 1;
         this.skipKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
         this.skipKey.onDown.add(this.skipStoryState, this);
 
         this.animationmusic = this.game.add.audio('storymusic');
         this.animationmusic.play();
-        var sprite = this.game.add.sprite(0,0, 'storyboard-1');
+        this.sprite = this.game.add.sprite(0, 0, 'storyboard-1');
 
         var self = this;
         this.timer1 = setTimeout(function() {
-            var tween = this.game.add.tween(sprite).to({alpha : 0},
-                    2000,
-                    Phaser.Easing.Linear.None).start();
+            var tween = this.game.add.tween(self.sprite).to({alpha : 0},
+                    2000, Phaser.Easing.Linear.None).start();
             tween.onComplete.add(self.startNextSplash, self);
-        }, 2000);
+        }, 2500);
 
         this.timer2 = setTimeout(function() {
-            var tween1 = this.game.add.tween(sprite).to({alpha : 0},
-                    4000,
-                    Phaser.Easing.Linear.None).start();
-            tween1.onComplete.add(self.startNextOne, self);
-        }, 4000);
-
+            var tween1 = this.game.add.tween(self.sprite).to({alpha : 0},
+                    2000, Phaser.Easing.Linear.None).start();
+            tween1.onComplete.add(self.startNextSplash, self);
+        }, 6000);
 
         this.timer3 = setTimeout(function() {
-        	self.animationmusic.stop();
-            self.game.state.start('menu-state');
-        }, 12000);
+            var tween1 = this.game.add.tween(self.sprite).to({alpha : 0},
+                    2000, Phaser.Easing.Linear.None).start();
+            tween1.onComplete.add(self.startNextSplash, self);
+        }, 10500);
+
+        this.timer4 = setTimeout(function() {
+            var tween1 = this.game.add.tween(self.sprite).to({alpha : 0},
+                    2000, Phaser.Easing.Linear.None).start();
+            tween1.onComplete.add(self.startMenu, self);
+        }, 15000);
     },
     startNextSplash: function() {
-    	var sprite2 = this.game.add.sprite(0,0, 'storyboard-2');
+        this.currentFrame++;
+        this.sprite = this.game.add.sprite(0, 0, 'storyboard-' +
+                this.currentFrame);
     },
-    startNextOne: function() {
-    	var sprite3 = this.game.add.sprite(0,0, 'storyboard-3');
+    startMenu: function() {
+        this.animationmusic.stop();
+        this.game.state.start('menu-state');
     },
     skipStoryState: function() {
         clearTimeout(this.timer1);
         clearTimeout(this.timer2);
         clearTimeout(this.timer3);
+        clearTimeout(this.timer4);
         this.game.input.keyboard.removeKey(this.skipKey);
         this.animationmusic.stop();
         this.game.state.start('menu-state');
