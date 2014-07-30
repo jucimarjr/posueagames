@@ -15,7 +15,8 @@
 
         create: function () {
             
-            this.stage.backgroundColor = '#ccc';
+            this.bg = this.game.add.tileSprite(0, 0, 960, 600, 'background_level_select');
+            this.bg.fixedToCamera = true;
 
             var style = { font: "36px pixelFont", fill: "#000000"};
 

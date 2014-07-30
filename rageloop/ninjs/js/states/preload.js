@@ -34,6 +34,14 @@
             this.game.load.spritesheet('howto_btn','assets/sprites/howto_btn_199-114.png', 199, 57);
             this.game.load.spritesheet('menu_btn','assets/sprites/menu_btn_199-114.png', 199, 57);
 
+            /*Level Select*/
+            this.game.load.image('background_level_select','assets/images/level-select/background-levels-960-600.png');
+            this.game.load.image('level_select_1','assets/images/level-select/level1_255-255.png');
+            this.game.load.image('level_select_1_hover','assets/images/level-select/level1-hover_255-255.png');
+            this.game.load.image('level_select_2','assets/images/level-select/level2_255-255.png');
+            this.game.load.image('level_select_2_hover','assets/images/level-select/level2-hover_255-255.png');
+            this.game.load.image('level_select_3','assets/images/level-select/level3_255-255.png');
+            this.game.load.image('level_select_3_hover','assets/images/level-select/level3-hover_255-255.png');
 
             this.game.load.spritesheet('restart_btn','assets/sprites/start_btn_199-114.png', 199, 57);
 
