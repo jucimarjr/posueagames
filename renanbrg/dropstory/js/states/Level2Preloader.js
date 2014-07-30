@@ -48,6 +48,7 @@ State.Level2Preloader.prototype = {
         this.game.load.audio('main', 'assets/gotaMain.ogg');
         this.game.load.audio('powup', 'assets/gotaPowerUp.ogg');
         this.game.load.audio('lose', 'assets/lose.ogg');
+        this.game.load.audio('life', 'assets/life.ogg');
     },
     create: function() {
         "use strict";
