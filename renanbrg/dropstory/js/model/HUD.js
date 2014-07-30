@@ -97,11 +97,9 @@ HUD.prototype = {
         this.pauseSprite.anchor.setTo(0.5, 0.5);
         this.pauseSprite.visible = false;
 
+        // Do not remove this line of code. It is needed in the Level 1 to move
+        // the camera when the player is passing into the straw.
         this.game.time.advancedTiming = true;
-        var styleFPS = {font: '16px Arial', fill: '#ffffff'};
-        this.fpsText = this.game.add.text(this.game.camera.width / 2, 10, '',
-                styleFPS);
-        this.fpsText.fixedToCamera = true;
     },
     decreaseLife: function() {
     	this.lifeCounter--;
@@ -132,11 +130,6 @@ HUD.prototype = {
     },
     getDropCounter: function() {
         return this.dropCounter;
-    },
-    updateFPS: function() {
-        if (this.game.time.fps !== 0) {
-            this.fpsText.setText('FPS: ' + this.game.time.fps);
-        }
     },
     showPauseImage: function() {
         this.pauseSprite.visible = true;

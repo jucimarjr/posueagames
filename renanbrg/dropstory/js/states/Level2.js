@@ -119,7 +119,6 @@ State.Level2.prototype = {
 	},
 	update: function () {
 		"use strict";
-		hud.updateFPS();
 
 		if (this.restartState || this.winState) {
             this.drop.getSpriteObject().body.velocity.x = 0;
