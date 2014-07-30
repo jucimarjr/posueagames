@@ -146,7 +146,8 @@ Character.prototype = {
         this.character.animations.add('stopbigsunscreen', [82], 10, true);
 
         // Make the drop disappear when the player dies
-        this.character.animations.add('evaporate', [90, 91, 92, 93], 10, false);
+        this.character.animations.add('evaporate', [90, 91, 92, 93, 94],
+                10, false);
 	},
 
 	playerAnimations: function () {

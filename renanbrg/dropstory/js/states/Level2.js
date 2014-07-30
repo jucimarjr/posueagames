@@ -38,7 +38,7 @@ State.Level2.prototype = {
 		// Player
 		try {
 			this.drop = new Character(this.game, 'drop',
-					'assets/spritesheets/drop_4794-60.png', [51, 60],
+					'assets/spritesheets/drop_4845-60.png', [51, 60],
                     hud.getDropCounter());
 		} catch(exception) {
 			console.log(exception.toString());
