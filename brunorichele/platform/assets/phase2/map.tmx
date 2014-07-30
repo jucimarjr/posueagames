@@ -26,16 +26,16 @@
  </objectgroup>
  <objectgroup name="skulls" width="500" height="36">
   <object gid="5" x="750" y="930"/>
-  <object gid="5" x="1200" y="930"/>
-  <object gid="5" x="1650" y="930"/>
-  <object gid="5" x="2100" y="930"/>
-  <object gid="5" x="2550" y="930"/>
-  <object gid="5" x="3000" y="930"/>
+  <object gid="5" x="1230" y="930"/>
+  <object gid="5" x="1710" y="930"/>
+  <object gid="5" x="2190" y="930"/>
+  <object gid="5" x="2670" y="930"/>
+  <object gid="5" x="3150" y="930"/>
   <object gid="5" x="7680" y="930"/>
   <object gid="5" x="7140" y="930"/>
-  <object gid="5" x="6510" y="930"/>
+  <object gid="5" x="6540" y="930"/>
   <object gid="5" x="6060" y="930"/>
-  <object gid="5" x="5370" y="930"/>
+  <object gid="5" x="5340" y="930"/>
   <object gid="5" x="4860" y="930"/>
   <object gid="5" x="4380" y="930"/>
  </objectgroup>
