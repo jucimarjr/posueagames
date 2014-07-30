@@ -36,8 +36,6 @@ State.Phase3.prototype = {
         this.spikes.update(this.player);
         this.worms.update(this.player);
         this.finalDoor.update(this.player, 7320, 240);
-		
-		console.log(this.player.player.y);
     },
     changeLevel : function() {
 			this.porta = this.game.add.audio('music-porta');
