@@ -13,6 +13,7 @@ State.Menu.prototype = {
 
         hud.preload();
         this.game.load.image('level1preloaderbg', Config.preloaderLevel1.dir);
+        this.game.load.image('level2preloaderbg', Config.preloaderLevel2.dir);
         this.game.load.spritesheet('button-back', Config.Menu.buttonBack.dir,
                 Config.Menu.buttonBack.width, Config.Menu.buttonBack.height);
     },
