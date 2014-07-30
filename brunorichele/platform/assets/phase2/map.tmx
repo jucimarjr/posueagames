@@ -24,4 +24,12 @@
   <object gid="3" x="12000" y="1080"/>
   <object gid="3" x="13500" y="1080"/>
  </objectgroup>
+ <objectgroup name="skulls" width="500" height="36">
+  <object gid="5" x="750" y="900"/>
+  <object gid="5" x="1080" y="900"/>
+  <object gid="5" x="1320" y="900"/>
+  <object gid="5" x="1500" y="900"/>
+  <object gid="5" x="2070" y="900"/>
+  <object gid="5" x="2430" y="900"/>
+ </objectgroup>
 </map>

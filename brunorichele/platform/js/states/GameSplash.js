@@ -17,6 +17,7 @@ GameSplash = function (game) {
 	this.hands = new Hands(game);
 	this.spikes = new Spikes(game);
 	this.worm = new Worm(game);
+	this.skull = new Skull(game);
 };
 GameSplash.prototype = {
 	init: function(){
@@ -54,8 +55,6 @@ GameSplash.prototype = {
 
 	    Phase2.World.game = this.game;
 	    Phase2.World.init();
-	    Phase2.Enemy.game = this.game;
-        Phase2.Enemy.init();
 
 	    Phase3.World.game = this.game;
         Phase3.World.init();
@@ -65,6 +64,7 @@ GameSplash.prototype = {
         Phase1.Trap.game = this.game;
         Phase1.Trap.init();
 		
+		this.skull.preload();
 		this.worm.preload();
 		this.spikes.preload();
 		this.hands.preload();
