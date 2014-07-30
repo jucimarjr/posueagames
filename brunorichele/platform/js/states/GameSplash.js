@@ -46,7 +46,6 @@ GameSplash.prototype = {
 		this.game.load.image('game-intro3', GameIntro3Properties.background);
 		this.game.load.image('game-intro4', GameIntro4Properties.background);				
 		this.game.load.image('game-over', GameOverProperties.background);
-		this.game.load.image('game-final', GameFinalProperties.background);
 		this.game.load.audio('music-carro', "assets/audio/carro.mp3");
 		this.game.load.audio('music-porta', "assets/audio/porta.mp3");
 
