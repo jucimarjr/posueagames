@@ -589,17 +589,38 @@
          "name":"glass-polygon",
          "objects":[
                 {
-                 "height":17,
+                 "height":0,
                  "name":"",
+                 "polyline":[
+                        {
+                         "x":0,
+                         "y":0
+                        }, 
+                        {
+                         "x":111,
+                         "y":-1
+                        }, 
+                        {
+                         "x":111,
+                         "y":15
+                        }, 
+                        {
+                         "x":1,
+                         "y":14
+                        }, 
+                        {
+                         "x":1,
+                         "y":1
+                        }],
                  "properties":
                     {
 
                     },
                  "type":"",
                  "visible":true,
-                 "width":115,
-                 "x":4403,
-                 "y":263
+                 "width":0,
+                 "x":4404,
+                 "y":265
                 }],
          "opacity":1,
          "type":"objectgroup",

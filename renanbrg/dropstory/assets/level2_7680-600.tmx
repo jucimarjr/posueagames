@@ -73,7 +73,9 @@
  </objectgroup>
  <objectgroup name="bird" width="192" height="15"/>
  <objectgroup name="glass-polygon" width="192" height="15">
-  <object x="4403" y="263" width="115" height="17"/>
+  <object x="4404" y="265">
+   <polyline points="0,0 111,-1 111,15 1,14 1,1"/>
+  </object>
  </objectgroup>
  <objectgroup name="seaurchins" width="192" height="15">
   <object gid="72" x="3662" y="264"/>
