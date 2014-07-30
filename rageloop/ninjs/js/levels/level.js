@@ -205,7 +205,9 @@
 
             if (this.nextLevel && this.itemCount == this.totalItems) {
                 setTimeout(function(){
-                    self.game.state.start(self.nextLevel);    
+                    if (self.player) {
+                        self.game.state.start(self.nextLevel);
+                    }
                 }, delay);                
             } 
         },

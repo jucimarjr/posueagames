@@ -41,7 +41,7 @@ State.Level1.prototype = {
 		// Player
 		try {
 			this.drop = new Character(this.game, 'drop',
-					'assets/spritesheets/drop_4794-60.png', [51, 60], 0);
+					'assets/spritesheets/drop_4845-60.png', [51, 60], 0);
 		} catch(exception) {
 			console.log(exception.toString());
 		}
@@ -128,8 +128,6 @@ State.Level1.prototype = {
 	},
 	update: function () {
 		"use strict";
-
-		hud.updateFPS();
 
         if (this.restartState || this.winState) {
             this.drop.getSpriteObject().body.velocity.x = 0;
