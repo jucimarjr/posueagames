@@ -55,18 +55,29 @@ Menu.prototype = {
 	},
 	create: function () {
 		"use strict";
-		var background, buttonPlay, buttonCredits, buttonHowToPlay ;
-		background = this.game.add.sprite(MenuProperties.x, MenuProperties.y, 'menu-background');
-		buttonPlay = this.game.add.button(MenuProperties.buttonPlay.x, MenuProperties.buttonPlay.y, 'button-play', this.clickPlay, this, 1, 0, 1, 0);
-		buttonPlay.anchor.setTo(MenuProperties.buttonPlay.anchor.x, MenuProperties.buttonPlay.anchor.y);
-		buttonHowToPlay = this.game.add.button(MenuProperties.buttonHowToPlay.x, MenuProperties.buttonHowToPlay.y, 'button-how-to-play', this.clickHowToPlay, this, 1, 0, 1, 0);
-		buttonHowToPlay.anchor.setTo(MenuProperties.buttonHowToPlay.anchor.x, MenuProperties.buttonHowToPlay.anchor.y);
-		buttonCredits = this.game.add.button(MenuProperties.buttonCredits.x, MenuProperties.buttonCredits.y, 'button-credits', this.clickCredits, this, 1, 0, 1, 0);
-		buttonCredits.anchor.setTo(MenuProperties.buttonCredits.anchor.x, MenuProperties.buttonCredits.anchor.y);
+		this.background = this.game.add.sprite(MenuProperties.x, MenuProperties.y, 'menu-background');
+		this.background.alpha = 0;
+				
+		this.buttonPlay = this.game.add.button(MenuProperties.buttonPlay.x, MenuProperties.buttonPlay.y, 'button-play', this.clickPlay, this, 1, 0, 1, 0);
+		this.buttonPlay.anchor.setTo(MenuProperties.buttonPlay.anchor.x, MenuProperties.buttonPlay.anchor.y);
+		this.buttonPlay.alpha = 0;
+		
+		this.buttonHowToPlay = this.game.add.button(MenuProperties.buttonHowToPlay.x, MenuProperties.buttonHowToPlay.y, 'button-how-to-play', this.clickHowToPlay, this, 1, 0, 1, 0);
+		this.buttonHowToPlay.anchor.setTo(MenuProperties.buttonHowToPlay.anchor.x, MenuProperties.buttonHowToPlay.anchor.y);
+		this.buttonHowToPlay.alpha = 0;		
+		
+		this.buttonCredits = this.game.add.button(MenuProperties.buttonCredits.x, MenuProperties.buttonCredits.y, 'button-credits', this.clickCredits, this, 1, 0, 1, 0);
+		this.buttonCredits.anchor.setTo(MenuProperties.buttonCredits.anchor.x, MenuProperties.buttonCredits.anchor.y);
+		this.buttonCredits.alpha = 0;		
 		
 		if(MenuProperties.page == null){
 			this.createSound();
 		}
+		
+		game.add.tween(this.background).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.buttonPlay).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.buttonHowToPlay).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.buttonCredits).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None).start();							
 	},
 	createSound : function(){
 		this.bgmusic = this.game.add.audio('musicmenu');
@@ -80,21 +91,42 @@ Menu.prototype = {
 	},
 	clickPlay: function () {
 		"use strict";
-		MenuProperties.page = null;
 		this.carro = this.game.add.audio('music-carro');
         this.carro.play();	
 		this.bgmusic.stop();
-		this.game.state.start('GameIntro1');
+		var FadeOut = game.add.tween(this.background).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None);
+		FadeOut.onComplete.add(function(){
+			MenuProperties.page = null;
+			game.state.start('GameIntro1');
+		});
+		FadeOut.start();
+		game.add.tween(this.buttonPlay).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.buttonHowToPlay).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.buttonCredits).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();						
 	},
 	clickHowToPlay: function () {
 		"use strict";
-		MenuProperties.page = "howtoplay";
-		this.game.state.start('HowToPlay');
+		var FadeOut = game.add.tween(this.background).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None);
+		FadeOut.onComplete.add(function(){
+			MenuProperties.page = "howtoplay";
+			game.state.start('HowToPlay');
+		});
+		FadeOut.start();
+		game.add.tween(this.buttonPlay).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.buttonHowToPlay).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.buttonCredits).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();						
 	},
 	clickCredits: function () {
 		"use strict";
-		MenuProperties.page = "credits";
-		this.game.state.start('Credits');
+		var FadeOut = game.add.tween(this.background).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None);
+		FadeOut.onComplete.add(function(){
+			MenuProperties.page = "credits";
+			game.state.start('Credits');
+		});
+		FadeOut.start();	
+		game.add.tween(this.buttonPlay).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.buttonHowToPlay).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();
+		game.add.tween(this.buttonCredits).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None).start();					
 	}	
 };
 

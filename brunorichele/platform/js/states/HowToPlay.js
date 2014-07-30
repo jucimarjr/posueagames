@@ -17,9 +17,13 @@ HowToPlay.prototype = {
 	},
 	create: function () {
 		"use strict";
-		var background = this.game.add.sprite(HowToPlayProperties.x, HowToPlayProperties.y, 'how-to-play');
+		this.background = this.game.add.sprite(HowToPlayProperties.x, HowToPlayProperties.y, 'how-to-play');
+		this.background.alpha = 0;
+		
 		var button = this.game.add.button(Config.button.back.x, Config.button.back.y, 'button-back', this.onBack, this, 1, 0, 1, 0);
 		button.anchor.setTo(Config.button.back.anchor.x, Config.button.back.anchor.y);
+		
+		game.add.tween(this.background).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None).start();
 	},
 	update: function () {
 		"use strict";
@@ -27,7 +31,11 @@ HowToPlay.prototype = {
 	},
 	onBack: function () {
 		"use strict";
-		this.game.state.start('Menu');
+		var FadeOut = game.add.tween(this.background).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None);
+		FadeOut.onComplete.add(function(){
+			game.state.start('Menu');
+		});
+		FadeOut.start();				
 	}
 };
 State.HowToPlay = HowToPlay;
