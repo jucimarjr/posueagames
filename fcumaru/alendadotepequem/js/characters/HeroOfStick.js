@@ -29,7 +29,7 @@ function HeroOfStick(game) {
 		this.hero.animations.add('walk', [ 0, 1, 2, 3 ], 10, true);
 		this.hero.animations.add('jump', [ 4, 5, 6, 7, 8, 9, 10 ], 8, false);
 		this.hero.animations.add('attack', [ 4, 5, 6, 7, 8, 9, 10 ], 18, false);
-		this.hero.animations.add('down', [ 12, 13 ], 6, false);
+		this.hero.animations.add('down', [ 4 ], 6, false);
 		this.hero.animations.add('died', [ 14, 15, 16 ], 4, true);
 		
 		// permite que a sprite tenha um corpo fisico
@@ -86,7 +86,7 @@ function HeroOfStick(game) {
 				if(this.hero.body.onFloor()) this.hero.animations.play('walk');
 				this.state = "walking";
 				this.facingLeft = false;
-			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.X)) {
 				this.hero.animations.play('attack');
 				this.state = "attacking";
 				distance = enemies.checkDistanceFromEnemy(this.hero.x,

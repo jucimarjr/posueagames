@@ -27,7 +27,7 @@ function HeroOfPower(game) {
 		this.hero.animations.add('walk', [ 7, 1, 2, 3 ], 10, true);
 		this.hero.animations.add('jump', [ 4, 5, 6, 5 , 4 ], 8, false);
 		this.hero.animations.add('power', [ 8, 9, 10, 11 ], 5, true);
-		this.hero.animations.add('down', [ 12, 13 ], 6, false);
+		this.hero.animations.add('down', [ 4 ], 6, false);
 		this.hero.animations.add('died', [ 14, 15, 16 ], 4, true);
 
 		// permite que a sprite tenha um corpo fisico
