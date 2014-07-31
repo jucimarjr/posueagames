@@ -9,7 +9,7 @@ State.GamePlay.prototype = {
 		var cursors;
 		var playerX,playerY, fishXLeft,fishXRight, runY;
 		var fishes, lastY,lastFish;
-		var score, style,labelScore;
+		var score, hScore, style,labelScore;
 		var overlap, initTap;
 	},
 	create: function () {
@@ -31,7 +31,10 @@ State.GamePlay.prototype = {
 
 		fishes = game.add.group();
 		this.addFishes();
+
+		
 		cursors = this.game.input.keyboard.createCursorKeys();
+		this.game.input.keyboard.start();
 		this.ticou = false;
 		labelScore = this.game.add.text(this.game.world.centerX, 200, score, style);
 		labelScore.anchor.set(0.5, 0);
@@ -52,7 +55,8 @@ State.GamePlay.prototype = {
 		}		
 
 		if(!overlap && !initTap){
-			labelScore.setText("Game Over");
+			//labelScore.setText("Game Over");
+			this.game.input.keyboard.stop();
 			this.end();
 		}
 
@@ -145,6 +149,27 @@ State.GamePlay.prototype = {
 
 	end: function(){
 		//Show score
+		var bgGO = this.game.add.sprite(this.game.world.centerX, 50, 'bgGameOver');
+		bgGO.anchor.set(0.5, 0);
+		if (score > localStorage.getItem("highscore")) {
+        	localStorage.setItem("highscore", score);
+        	var text = this.game.add.text(this.game.world.centerX, bgGO.y+150, 'Best ' + score, style);
+        	text.anchor.setTo(0.5, 0.5);
+        	var text2 = this.game.add.text(this.game.world.centerX, bgGO.y+250, localStorage.getItem("highscore"), style);
+        	text2.anchor.setTo(0.5, 0.5);
+    	}
+    	else {
+        	var text = this.game.add.text(this.game.world.centerX, bgGO.y+150, 'Best: ' + localStorage.getItem("highscore"), style);
+        	text.anchor.setTo(0.5, 0.5);
+        	var text2 = this.game.add.text(this.game.world.centerX, bgGO.y+200, 'Score: ' + score, style);
+        	text2.anchor.setTo(0.5, 0.5);
+    	}
+
+    	var btPlay = this.game.add.button(this.game.world.centerX, (bgGO.y + bgGO.height), 'btnPlay', this.restart, this, 1, 0, 1);
+    	btPlay.anchor.set(0.5, 0.5);
+	},
+
+	restart: function(){
 		this.game.state.start('GamePlay');
 	},
 
