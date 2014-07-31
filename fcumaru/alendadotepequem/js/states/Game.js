@@ -58,6 +58,10 @@ State.Game.prototype = {
 		this.layer.resizeWorld(); // seta o mundo com as altera��es feitas
 		map.setCollisionBetween(1, 22, true, 0); // 0 espaco
 
+		//Som do background
+		this.game.bgmusic = game.add.audio('bgmusic');
+		this.game.bgmusic.play('', 0, 1, true);
+
 //		 // clouds
 //		 this.clouds = this.game.add.tileSprite(0, 0, 4320, 2700, 'clouds');
 //		 this.clouds.autoScroll(-30, 0);
@@ -98,11 +102,11 @@ State.Game.prototype = {
 			selected.state = "dying";
 			setTimeout(this.gameOver, 2000);
 		}
-
 	},
 
 	gameOver : function () {
-		 this.game.state.start('GameOver');
+		this.game.bgmusic.stop();
+		this.game.state.start('GameOver');
 	},
 
 	render : function() {

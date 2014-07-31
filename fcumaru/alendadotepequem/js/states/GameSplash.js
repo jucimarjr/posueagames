@@ -23,6 +23,9 @@ State.GameSplash.prototype = {
 		
 		//HowToPlay
 		this.game.load.image('how-to-play', Config.howToPlay.dir);
+
+		//Som do background
+		this.game.load.audio('bgmusic', 'assets/Elbee_-_06_-_The_Indexilarm_Dimension_64.mp3');
 		
 		// GameOver
 		this.game.load.image('game-over', 'assets/images/GameOver_960_600.png');
