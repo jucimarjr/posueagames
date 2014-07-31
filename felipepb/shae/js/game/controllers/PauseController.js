@@ -127,7 +127,7 @@ Game.PauseController.prototype = {
 			this.regularPauseText.alpha = 0;
 		    this.game.paused = true;
 		} else {
-			this.redPauseText.alpha = 1
+			this.redPauseText.alpha = 1;
 			this.regularPauseText.alpha = 1;
 			this.game.paused = false;
 		}
