@@ -9,8 +9,8 @@ State.GamePlay.prototype = {
 		var cursors;
 		var playerX,playerY, fishXLeft,fishXRight, runY;
 		var fishes, lastY,lastFish;
-		var score, hScore, style,labelScore;
-		var overlap, initTap;
+		var score, style,labelScore;
+		var overlap, initTap, showEnd;
 	},
 	create: function () {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
@@ -20,6 +20,7 @@ State.GamePlay.prototype = {
 		lastFish = null;
 		score = 0; style = { font: "30px Arial Bold", fill: "#ffffff", align: "center"};
 		initTap = true;
+		showEnd = false;
 
 		bg = this.game.add.sprite(0, 0, 'bg');
 
@@ -56,8 +57,10 @@ State.GamePlay.prototype = {
 
 		if(!overlap && !initTap){
 			//labelScore.setText("Game Over");
-			this.game.input.keyboard.stop();
-			this.end();
+			if(!showEnd){
+				this.game.input.keyboard.stop();
+				this.end();
+			}
 		}
 
 		if (cursors.left.isDown && this.leftUp) {		
@@ -149,24 +152,31 @@ State.GamePlay.prototype = {
 
 	end: function(){
 		//Show score
-		var bgGO = this.game.add.sprite(this.game.world.centerX, 50, 'bgGameOver');
+		var bgGO = this.game.add.sprite(-this.game.world.centerX, 50, 'bgGameOver');
 		bgGO.anchor.set(0.5, 0);
-		if (score > localStorage.getItem("highscore")) {
+		this.game.add.tween(bgGO).to( { x: this.game.world.centerX }, 2400, Phaser.Easing.Bounce.Out, true);
+		var hScore = localStorage.getItem("highscore"); 
+		if (score > hScore) {
         	localStorage.setItem("highscore", score);
-        	var text = this.game.add.text(this.game.world.centerX, bgGO.y+150, 'Best ' + score, style);
+        	var text = this.game.add.text(this.game.world.centerX, -200, 'Best ' + score, style);
         	text.anchor.setTo(0.5, 0.5);
-        	var text2 = this.game.add.text(this.game.world.centerX, bgGO.y+250, localStorage.getItem("highscore"), style);
+        	var text2 = this.game.add.text(this.game.world.centerX, -250, 'Score: ' + score, style);
         	text2.anchor.setTo(0.5, 0.5);
     	}
     	else {
-        	var text = this.game.add.text(this.game.world.centerX, bgGO.y+150, 'Best: ' + localStorage.getItem("highscore"), style);
+        	var text = this.game.add.text(this.game.world.centerX, -200, 'Best: ' + hScore, style);
         	text.anchor.setTo(0.5, 0.5);
-        	var text2 = this.game.add.text(this.game.world.centerX, bgGO.y+200, 'Score: ' + score, style);
+        	var text2 = this.game.add.text(this.game.world.centerX, -250, 'Score: ' + score, style);
         	text2.anchor.setTo(0.5, 0.5);
     	}
 
-    	var btPlay = this.game.add.button(this.game.world.centerX, (bgGO.y + bgGO.height), 'btnPlay', this.restart, this, 1, 0, 1);
+    	this.game.add.tween(text).to( { y: 200 }, 2400, Phaser.Easing.Bounce.Out, true);
+    	this.game.add.tween(text2).to( { y: 250 }, 2400, Phaser.Easing.Bounce.Out, true);
+
+    	var btPlay = this.game.add.button(this.game.world.centerX, -(50 + bgGO.height), 'btnPlay', this.restart, this, 1, 0, 1);
     	btPlay.anchor.set(0.5, 0.5);
+    	this.game.add.tween(btPlay).to( { y: (50 + bgGO.height) }, 2400, Phaser.Easing.Bounce.Out, true);
+    	showEnd = true;
 	},
 
 	restart: function(){
