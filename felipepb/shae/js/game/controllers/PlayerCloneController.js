@@ -12,11 +12,11 @@ Game.PlayerCloneController.prototype = {
 	update: function () {
 		var playerSprite = this.gameState.player.sprite;
 		if (playerSprite) {
-			var camera = this.game.camera;
+			var world = this.game.world;
 
 			this.sprite.frameName = playerSprite.frameName;
 	        this.sprite.anchor.setTo(playerSprite.anchor.x, playerSprite.anchor.y);
-	        this.sprite.x = camera.width - playerSprite.x;
+	        this.sprite.x = world.width - playerSprite.x;
 	        this.sprite.y = playerSprite.y;
 	        this.sprite.scale.x = playerSprite.scale.x * -1;
 		}
