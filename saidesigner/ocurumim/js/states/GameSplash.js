@@ -73,6 +73,8 @@ State.GameSplash.prototype = {
 		this.game.load.image('forest2', 'assets/images/forest2.png');
 		this.game.load.image('platform2', 'assets/images/platform2.png');
 		this.game.load.image('platform3', 'assets/images/platform3.png');
+		this.game.load.image('platform4', 'assets/images/platform4.png');
+		this.game.load.image('cave', 'assets/images/cave.png');
 		this.game.load.image('clouds', 'assets/images/clouds.png');
 		this.game.load.image('ounce_tail', Config.ounce.tail.src);
 		this.game.load.image('arrow', Config.arrow.src);

@@ -7,8 +7,9 @@ State.Game = function (game) {
 	this.player = new Curumim.Player(game);
 	this.level1 = new Curumim.Level1(game, this.endOfLevelEvent);
 	this.level2 = new Curumim.Level2(game, this.endOfLevelEvent);
+	this.level3 = new Curumim.Level3(game, this.endOfLevelEvent);
 	this.currentLevel = 0;
-	this.levels = [this.level1, this.level2];
+	this.levels = [this.level1, this.level2, this.level3];
 	self = this;
 };
 State.Game.prototype = {

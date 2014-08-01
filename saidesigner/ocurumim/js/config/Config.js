@@ -120,7 +120,7 @@ Config.game = {
 
 	gravity: 800,
 	nextLevel: 2000,
-	numberOfLevels: 2
+	numberOfLevels: 3
 
 }
 
