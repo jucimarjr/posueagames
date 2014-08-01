@@ -149,9 +149,9 @@ State.Level2.prototype = {
         this.moveCrab(this.crabs.getAt(1), 330);
         this.moveCrab(this.crabs.getAt(2), 330);
         this.moveCrab(this.crabs.getAt(3), 330);
-        this.moveCrab(this.crabs.getAt(4), 300);
-        this.moveCrab(this.crabs.getAt(5), 300);
-        this.moveCrab(this.crabs.getAt(6), 300);
+        this.moveCrab(this.crabs.getAt(4), 290);
+        this.moveCrab(this.crabs.getAt(5), 290);
+        this.moveCrab(this.crabs.getAt(6), 290);
 
         if (this.haveEnergy) {
             this.smokeEmitter.x = this.drop.getSpriteObject().x;
