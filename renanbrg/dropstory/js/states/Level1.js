@@ -690,19 +690,19 @@ State.Level1.prototype = {
     moveCrab: function (crab) {
         if (crab.name == "crab1") {
             if (this.touchingLeft(crab.body)) {
-                crab.body.moveRight(300);
+                crab.body.moveRight(290);
                 crab.animations.play('walkR');
             } else if (this.touchingRight(crab.body)) {
-                crab.body.moveLeft(300);
+                crab.body.moveLeft(290);
                 crab.animations.play('walkL');
             } else {
             }
         } else {
             if (this.touchingRight(crab.body)) {
-                crab.body.moveLeft(300);
+                crab.body.moveLeft(290);
                 crab.animations.play('walkL');
             } else if (this.touchingLeft(crab.body)) {
-                crab.body.moveRight(300);
+                crab.body.moveRight(290);
                 crab.animations.play('walkR');
             }
         }

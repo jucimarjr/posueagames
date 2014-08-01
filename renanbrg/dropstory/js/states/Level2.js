@@ -102,11 +102,11 @@ State.Level2.prototype = {
                 this.fallRain, this, 3120, 0);
         this.timerEventRain[5] = game.time.events.loop(Phaser.Timer.SECOND*1.2,
                 this.fallRain, this, 3280, 0, 5);
-        this.timerEventRain[6] = game.time.events.loop(Phaser.Timer.SECOND*1.5,
+        this.timerEventRain[6] = game.time.events.loop(Phaser.Timer.SECOND*1.6,
                 this.fallRain, this, 6200, 0);
-        this.timerEventRain[7] = game.time.events.loop(Phaser.Timer.SECOND*1.3,
+        this.timerEventRain[7] = game.time.events.loop(Phaser.Timer.SECOND*1.5,
                 this.fallRain, this, 6600, 0, 7);
-        this.timerEventRain[8] = game.time.events.loop(Phaser.Timer.SECOND*1.5,
+        this.timerEventRain[8] = game.time.events.loop(Phaser.Timer.SECOND*1.6,
                 this.fallRain, this, 7040, 0);
 
         this.setupSmokeEmitter(1550, this.game.height-80);
@@ -145,10 +145,10 @@ State.Level2.prototype = {
         this.isOnAir();
         this.drop.playerAnimations();
 
-        this.moveCrab(this.crabs.getAt(0), 350);
-        this.moveCrab(this.crabs.getAt(1), 350);
-        this.moveCrab(this.crabs.getAt(2), 350);
-        this.moveCrab(this.crabs.getAt(3), 350);
+        this.moveCrab(this.crabs.getAt(0), 330);
+        this.moveCrab(this.crabs.getAt(1), 330);
+        this.moveCrab(this.crabs.getAt(2), 330);
+        this.moveCrab(this.crabs.getAt(3), 330);
         this.moveCrab(this.crabs.getAt(4), 300);
         this.moveCrab(this.crabs.getAt(5), 300);
         this.moveCrab(this.crabs.getAt(6), 300);
