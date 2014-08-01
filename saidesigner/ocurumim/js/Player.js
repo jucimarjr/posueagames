@@ -12,9 +12,14 @@ Curumim.Player = function(game)
 	this.nextBullet = 0;
 	this.powerUp = false;
 	this.canDie = true;
+	this.canControl = true;
 	this.platformVelocity = 0; 
 	this.walkingSnd;
+	this.ambienceSnd;
+	this.powerupSnd;
 	this.jumpingSnd;
+	this.shotSnd;
+
 	player = this;
 };
 
@@ -60,15 +65,25 @@ Curumim.Player.prototype =
 
     	// Sounds
 
-		this.walkingSnd = this.game.add.audio('walking', 1, false);
-		this.walkingSnd.addMarker("snd", 28, 0.2, 1, false);
-
+		this.ambienceSnd = this.game.add.audio('ambience', 0.5, true);
+		this.powerUpSnd = this.game.add.audio('powerUp', 1, true);
 		this.jumpingSnd = this.game.add.audio('jumping', 1, false);
+		this.shotSnd = this.game.add.audio('shot', 1, false);
+		this.shotSnd.addMarker("snd", 0.3, 0.4, 1, false);
+		this.walkingSnd = this.game.add.audio('walking', 1, false);
+		this.walkingSnd.addMarker("snd", 3, 0.5, 1, false);
+
+		this.playSound('ambience');
 	},
 
 	update: function() 
 	{
 		"use strict";
+
+		if (!this.canControl)
+		{
+			return;
+		}
 
 		// Score
 
@@ -82,11 +97,11 @@ Curumim.Player.prototype =
 		var velocity = Config.player.velocity.walk;
 		var animation = 'walk';
 		var jumpForce = Config.player.jump.walking_force;
-
+		
 		if (this.powerUp) 
 		{			
 			velocity = Config.player.velocity.run;
-			animation = 'run';
+			animation = 'run';			
 			jumpForce = Config.player.jump.running_force;
 		}
 		
@@ -106,6 +121,7 @@ Curumim.Player.prototype =
 		} 
 		else if (this.sprite.body.blocked.down || this.sprite.body.velocity.y == 0) 
 		{
+			this.walkingSnd.stop();			
             this.sprite.animations.stop();
             this.sprite.frame = 0;            
         }
@@ -120,6 +136,7 @@ Curumim.Player.prototype =
 				{
 					this.jumps++;
 					this.sprite.body.velocity.y = jumpForce;
+					this.walkingSnd.stop();	
 					this.playSound('jumping');					
 				}
 				this.jumpButtonPressed = true;
@@ -134,7 +151,8 @@ Curumim.Player.prototype =
 
 		if (this.game.input.keyboard.isDown(Config.player.keys.fire)) 
 		{
-			this.fireBullets();
+			this.playSound('shot');
+			this.shotBullets();			
 		}
 
         if (this.sprite.body.velocity.y !== 0) 
@@ -159,7 +177,7 @@ Curumim.Player.prototype =
 		}
 	},
 
-	fireBullets: function() 
+	shotBullets: function() 
 	{
 		if (this.game.time.now > this.nextBullet && this.bullets.countDead() > 0 && this.score.numBullets > 0) {
 
@@ -190,12 +208,19 @@ Curumim.Player.prototype =
 	{
 		this.powerUp = true;
 		var self = this;
-		setTimeout(function(){ self.powerUp = false; }, 15000);
+
+		this.ambienceSnd.stop();
+		this.playSound('powerUp');
+
+		setTimeout(function(){ 
+			self.powerUp = false; 
+			self.powerUpSnd.stop();
+			self.playSound('ambience');
+		}, 10000);
 	},
 
 	loseOneLife : function() 
 	{
-
 		if (!this.canDie) return;
 
 		this.canDie = false;
@@ -220,11 +245,18 @@ Curumim.Player.prototype =
 
 	playSound: function(sound) 
 	{
-		if (sound == 'walking')
+		if (sound == 'ambience')
 		{
-			if (!this.walkingSnd.isPlaying /*&& this.sprite.body.velocity.y == 0*/) 
+			if (!this.ambienceSnd.isPlaying) 
 	       	{
-	       		this.walkingSnd.play("snd");
+	       		this.ambienceSnd.play();
+	       	}	
+		}
+		else if (sound == 'powerUp')
+		{
+			if (!this.powerUpSnd.isPlaying) 
+	       	{
+	       		this.powerUpSnd.play();
 	       	}	
 		}
 		else if (sound == 'jumping')
@@ -234,5 +266,37 @@ Curumim.Player.prototype =
 	       		this.jumpingSnd.play();
 	       	}	
 		}
+		else if (sound == 'shot')
+		{
+			if (!this.shotSnd.isPlaying) 
+	       	{
+	       		this.shotSnd.play('snd');
+	       	}	
+		}
+		else if (sound == 'walking' && this.sprite.body.velocity.y == 0)
+		{
+			if (!this.walkingSnd.isPlaying) 
+	       	{
+	       		this.walkingSnd.play('snd');
+	       	}	
+		}
+	},
+
+	endOfPhase: function()
+	{
+		this.canControl = false;
+		this.sprite.body.velocity.x = 0;
+		this.sprite.frame = 0;
+ 		this.sprite.animations.stop();        
+		var tween = this.game.add.tween(this.sprite);
+		tween.to({ alpha: 0 }, 3000, null, true);
+	},
+
+	startOfPhase: function()
+	{
+		this.canControl = true;
+		this.sprite.alpha = 1;
+		this.sprite.x = Config.player.x;
+		this.sprite.y = Config.player.y;
 	}
 };

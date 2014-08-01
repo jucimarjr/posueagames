@@ -12,7 +12,7 @@ Curumim.Platform = function(game, spriteKey, map, mapObject, gid, animation)
 
 		var timeSeed = new Date();
 		var random = new Phaser.RandomDataGenerator([timeSeed.getTime()]);		
-		var rand = random.integerInRange(1, 10);
+		var rand = random.integerInRange(1, 100);
 
 		platform.body.velocity.x = -50;
 		if (rand % 2 == 0)
@@ -53,5 +53,10 @@ Curumim.Platform.prototype =
 	collide: function(playerSprite, platform)
 	{		
 		player.platformVelocity = platform.body.velocity.x;
+	},
+
+	destroy: function()
+	{
+		this.group.destroy();
 	}
 };

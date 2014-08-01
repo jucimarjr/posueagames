@@ -4,7 +4,7 @@ Curumim.Score = function(game)
 
 	this.numLifes = 3;
 	this.numPoints = 0;
-	this.numBullets = 0;
+	this.numBullets = 10;
 
 	this.txtLifes;
 	this.txtPoints;
@@ -83,8 +83,14 @@ Curumim.Score.prototype =
 		}
 	},
 
-	addBullets: function()
+	addBullets: function(value)
 	{
+
+		if (typeof value == 'undefined')
+		{
+			value = 10;
+		}
+
 		this.playSound('getcoin');
 
 		var text = this.game.add.text(Config.score.bullets.txt.x + 30, Config.score.bullets.txt.y, '+10', Config.score.bullets.txt.styleBig);		
@@ -94,7 +100,7 @@ Curumim.Score.prototype =
 
 	 	tween.onComplete.add(function() {
 	 		
-			this.numBullets += 10;
+			this.numBullets += value;
 			text.destroy();
 	 	}, this);
 
@@ -112,6 +118,16 @@ Curumim.Score.prototype =
 
 	 	tween.onComplete.add(function() {
 			this.numPoints++;
+
+			if (this.numPoints % 10 == 0)
+			{
+				this.addBullets(1);
+			} 
+			else if (this.numPoints % 50 == 0)
+			{
+				this.updateLife(1);
+			} 
+
 			text.destroy();			
 	 	}, this);
 

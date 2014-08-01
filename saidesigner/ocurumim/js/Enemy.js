@@ -10,7 +10,7 @@ Curumim.Enemy = function(game, spriteKey, map, mapObject, gid, walkAnimation, de
 		enemy.alive = true;
 		enemy.body.allowGravity = false;
 		enemy.body.immovable = true;
-		enemy.anchor.setTo(.5, 0);
+		enemy.anchor.setTo(.5, 0);		
 
 		enemy.animations.add('walk', walkAnimation, 10, true);
 
@@ -22,7 +22,7 @@ Curumim.Enemy = function(game, spriteKey, map, mapObject, gid, walkAnimation, de
 		var timeSeed = new Date();
 		var random = new Phaser.RandomDataGenerator([timeSeed.getTime()]);
 		var posTarget = enemy.x - 300;
-		var rand = random.integerInRange(1, 10);
+		var rand = random.integerInRange(1, 100);
 
 		if (rand % 2 == 0)
 		{			
@@ -86,5 +86,10 @@ Curumim.Enemy.prototype =
 			enemy.animations.play('walk');
 			enemy.tween.resume();
 		}, 10000);		
+	},
+
+	destroy: function() 
+	{
+		this.group.destroy();
 	}
 };

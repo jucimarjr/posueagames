@@ -5,40 +5,40 @@ Curumim.Ounce = function(game, spriteKey, map, mapObject, gid, walkAnimation)
 	this.group = game.add.group();
 	this.group.enableBody = true;
 	map.createFromObjects(mapObject, gid, spriteKey, 0, true, false, this.group);
-	this.group.forEach(function (enemy) 
+	this.group.forEach(function (ounce) 
 	{ 
-		enemy.alive = true;
-		enemy.body.allowGravity = false;
-		enemy.body.immovable = true;
-		enemy.anchor.setTo(.5, 0);
+		ounce.alive = true;
+		ounce.body.allowGravity = false;
+		ounce.body.immovable = true;
+		ounce.anchor.setTo(.5, 0);		
 
-		enemy.animations.add('walk', walkAnimation, 10, true);
-		enemy.animations.play('walk');
+		ounce.animations.add('walk', walkAnimation, 10, true);
+		ounce.animations.play('walk');
 
-		enemy.tail = this.add.sprite(enemy.body.x, enemy.body.y, 'ounce_tail');
-		enemy.dizzy = this.add.sprite(enemy.body.x, enemy.body.y, 'ounce_dizzy');
-		enemy.dizzy.animations.add('dizzy', [0, 1, 2, 3], 3, true);
-		enemy.dizzy.anchor.setTo(.5, 0);
-		enemy.dizzy.alpha = 0;
+		ounce.tail = this.add.sprite(ounce.body.x, ounce.body.y, 'ounce_tail');
+		ounce.dizzy = this.add.sprite(ounce.body.x, ounce.body.y, 'ounce_dizzy');
+		ounce.dizzy.animations.add('dizzy', [0, 1, 2, 3], 3, true);
+		ounce.dizzy.anchor.setTo(.5, 0);
+		ounce.dizzy.alpha = 0;		
 
 		var timeSeed = new Date();
 		var random = new Phaser.RandomDataGenerator([timeSeed.getTime()]);
-		var posTarget = enemy.x - 300;
-		var rand = random.integerInRange(1, 10);
+		var posTarget = ounce.x - 300;
+		var rand = random.integerInRange(1, 100);
 
 		if (rand % 2 == 0)
 		{			
-			enemy.scale.x *= -1;
-			enemy.x -= 300;
-			posTarget = enemy.x + 300;
+			ounce.scale.x *= -1;
+			ounce.x -= 300;
+			posTarget = ounce.x + 300;
 		}		
 
-		enemy.tween = this.add.tween(enemy);
-		enemy.tween.onLoop.add(function() {				
-			enemy.scale.x *= -1;
+		ounce.tween = this.add.tween(ounce);
+		ounce.tween.onLoop.add(function() {				
+			ounce.scale.x *= -1;
  		}, this);
 
-		enemy.tween.to({ x: posTarget }, 3000, null, true, 0, Number.MAX_VALUE, true);
+		ounce.tween.to({ x: posTarget }, 3000, null, true, 0, Number.MAX_VALUE, true);	
 
 	}, this.game);
 };
@@ -47,23 +47,23 @@ Curumim.Ounce.prototype =
 {
 	update: function()
 	{
-		this.group.forEach(function (enemy) 
+		this.group.forEach(function (ounce) 
 		{ 
-			if (enemy.scale.x > 0) 
+			if (ounce.scale.x > 0) 
 			{
-				enemy.tail.x = enemy.body.x + enemy.body.width - 50; 
-				enemy.tail.y = enemy.body.y - 25;
+				ounce.tail.x = ounce.body.x + ounce.body.width - 55; 
+				ounce.tail.y = ounce.body.y - 25;
 			}
 			else
 			{
-				enemy.tail.x = enemy.body.x + 50; 
-				enemy.tail.y = enemy.body.y - 25;	
+				ounce.tail.x = ounce.body.x + 55; 
+				ounce.tail.y = ounce.body.y - 25;	
 			}
 
-			enemy.tail.scale.x = enemy.scale.x;
+			ounce.tail.scale.x = ounce.scale.x;
 
-			enemy.dizzy.x = enemy.body.x + enemy.body.width / 2;
-			enemy.dizzy.y = enemy.body.y - 35;
+			ounce.dizzy.x = ounce.body.x + ounce.body.width / 2;
+			ounce.dizzy.y = ounce.body.y - 35;
 
 		}, this.game);
 
@@ -71,33 +71,43 @@ Curumim.Ounce.prototype =
 		this.game.physics.arcade.collide(player.getBullets(), this.group, this.bulletCollision, null, this);
 	},
 
-	playerCollision: function(collider, enemy)
+	playerCollision: function(collider, ounce)
 	{	
-		if (enemy.alive) 
+		if (ounce.alive) 
 		{
 			player.loseOneLife();
 		}		
 	},
 
-	bulletCollision: function(collider, enemy) 
+	bulletCollision: function(collider, ounce) 
 	{
-		if (enemy.alive) 
+		if (ounce.alive) 
 		{
-			enemy.alive = false;
-			enemy.alpha = 0;
-			enemy.tail.alpha = 0;
-			enemy.dizzy.alpha = 1;
-			enemy.dizzy.animations.play('dizzy');
-			enemy.tween.pause();
+			ounce.alive = false;
+			ounce.alpha = 0;
+			ounce.tail.alpha = 0;
+			ounce.dizzy.alpha = 1;
+			ounce.dizzy.animations.play('dizzy');
+			ounce.tween.pause();
 
 			setTimeout(function() {
-				enemy.alpha = 1;
-				enemy.tail.alpha = 1;
-				enemy.dizzy.alpha = 0; 
-				enemy.alive = true;
-				enemy.animations.play('walk');
-				enemy.tween.resume();
+				ounce.alpha = 1;
+				ounce.tail.alpha = 1;
+				ounce.dizzy.alpha = 0; 
+				ounce.alive = true;
+				ounce.animations.play('walk');
+				ounce.tween.resume();
 			}, 10000);
 		}
+	},
+
+	destroy: function()
+	{
+		this.group.forEach(function (ounce) {
+			ounce.tail.destroy();
+			ounce.dizzy.destroy();
+		});
+
+		this.group.destroy();
 	}
 };

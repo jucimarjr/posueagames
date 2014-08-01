@@ -18,6 +18,9 @@
  <tileset firstgid="23" name="insaninho" tilewidth="67" tileheight="69">
   <image source="../spritesheets/insaninho.png" width="268" height="69"/>
  </tileset>
+ <tileset firstgid="27" name="arrow" tilewidth="96" tileheight="126">
+  <image source="../images/arrow.png" width="96" height="126"/>
+ </tileset>
  <layer name="TileScene1" width="400" height="100" visible="0">
   <data encoding="base64" compression="zlib">
    eJzt3UsKgDAMBUB7/0t7AIVWMaQmM/D2UqGfpOhxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAECekf0AAAAAAAAAAPAD+usAvVkHAMhkHQKAOGMSAAAAANapswDQjT7DM8YLAAAAAAAAAACAamZ343YOQJSI+cd8BgAAsMZZCQAAAIAdqVkBAAAAAAAV6HkAAACRnDngG75VBABwZT8EAAAAAADQT/Z/Et3feS/7PYlI71Rm3AAAAADgntoYAAAAAAAAAADUdwIB0AHc
@@ -52,25 +55,23 @@
   <object name="insaninho" gid="23" x="3680" y="710"/>
   <object gid="13" x="320" y="830"/>
  </objectgroup>
- <imagelayer name="ImgScene2" width="400" height="100">
+ <imagelayer name="ImgScene2" width="400" height="100" visible="0">
   <image source="../images/platform2.png"/>
  </imagelayer>
- <layer name="TileScene2" width="400" height="100">
+ <layer name="TileScene2" width="400" height="100" visible="0">
   <data encoding="base64" compression="zlib">
    eJzt3cFuwyAMAND2/3966mHa1K4NZIZg856EJvUEBgOBtLvdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAqOT+VAAAAAAAADI6uu94vhNxNwIAAAAAAKym9T7jr8/dgQAAALCDd8/OowoQZ5W8kudANpX3KlXaAQAAAECbrGdb1c7lAABgda17cPv0MY7eT+j9vUcAAACAnbSciTg3idVyXgUAAAAwS6bfCFm5bpWJO4yTYe4FPpPHAABx7K0AmM3aA/uR6zF2mD+rtutZT1/O/v9rPYXzzsZ01z4w/gCIYg2JkW09bt1DZGsXMJc5YizPfMB/rX5+dP/1d/W6Qo+K9w1V2gEQwfwGVFd1nqvaLuh1ZS54btyb/gZmsNaQwdXfdah0d7GCq/tDXzKasQN95AvkI18BgGzsXWBPzhxo5Ux3X/ocII61lAfvW7SpHhf9D4xmnqES45iKjGuItVNORezx7BPr0Jcwhzwji9XvHlarz1lXf3fX937XUzHeo+p/dQ7InT7iAHxivuQq1msA4MiZvcLqe4xV6wW8F5WvzkJrEGcAAKjH3v6YZyGoRS7HyjA/RtWt6plkhTZkkPWMvMKYP1vnbO1cTYWx8210/bPHB3oZ56zGHHwt6+ArsXivaly8FwU/jPkY4vZKPGBP1pJX9pr9xAsAAAAAAAAA9uKdgL3oayA76xYAAMSa/TthiqIoSo0CAAAAAAAAAAAAAAAAAAAAD1+CIQSH
   </data>
  </layer>
- <objectgroup name="ObjScene2" width="400" height="100">
-  <object gid="2" x="1240" y="710"/>
-  <object gid="2" x="820" y="780"/>
+ <objectgroup name="ObjScene2" width="400" height="100" visible="0">
+  <object gid="2" x="1110" y="210"/>
   <object gid="4" x="1310" y="890"/>
   <object gid="4" x="980" y="890"/>
   <object gid="4" x="510" y="890"/>
-  <object gid="6" x="1090" y="900"/>
+  <object gid="6" x="1050" y="900"/>
   <object gid="13" x="3430" y="290"/>
   <object gid="18" x="2540" y="900"/>
-  <object gid="23" x="3180" y="700"/>
-  <object gid="3" x="3160" y="140"/>
+  <object gid="23" x="3190" y="700"/>
   <object gid="5" x="3050" y="460"/>
   <object gid="5" x="3430" y="530"/>
   <object gid="5" x="2470" y="340"/>
@@ -88,10 +89,63 @@
   <object gid="4" x="30" y="590"/>
   <object gid="4" x="30" y="630"/>
   <object gid="5" x="620" y="460"/>
-  <object gid="3" x="850" y="230"/>
+  <object gid="3" x="850" y="80"/>
   <object gid="13" x="380" y="360"/>
-  <object gid="18" x="1000" y="700"/>
-  <object gid="6" x="1170" y="900"/>
-  <object gid="6" x="1250" y="900"/>
+  <object gid="18" x="1050" y="700"/>
+  <object gid="6" x="530" y="890"/>
+  <object gid="6" x="2010" y="900"/>
+  <object gid="4" x="3720" y="720"/>
+  <object gid="4" x="3910" y="660"/>
+  <object gid="4" x="3740" y="470"/>
+  <object gid="23" x="3750" y="890"/>
+  <object gid="23" x="3660" y="890"/>
+  <object gid="4" x="1020" y="520"/>
+  <object gid="4" x="1050" y="500"/>
+  <object gid="4" x="1070" y="490"/>
+  <object gid="4" x="1100" y="480"/>
+  <object gid="4" x="1130" y="480"/>
+  <object gid="4" x="1160" y="500"/>
+  <object gid="4" x="1190" y="520"/>
+  <object gid="4" x="1210" y="540"/>
+  <object gid="13" x="750" y="180"/>
+  <object gid="5" x="1350" y="710"/>
+  <object gid="5" x="1430" y="650"/>
+  <object gid="4" x="1480" y="740"/>
+  <object gid="4" x="1600" y="740"/>
+  <object gid="4" x="1810" y="880"/>
+  <object gid="4" x="1850" y="880"/>
+  <object gid="4" x="1840" y="650"/>
+  <object gid="4" x="2070" y="610"/>
+  <object gid="5" x="2320" y="780"/>
+  <object gid="4" x="1950" y="310"/>
+  <object gid="4" x="2020" y="240"/>
+  <object gid="4" x="2140" y="300"/>
+  <object gid="4" x="2290" y="110"/>
+  <object gid="4" x="1790" y="130"/>
+  <object gid="4" x="890" y="680"/>
+  <object gid="4" x="850" y="680"/>
+  <object gid="4" x="3530" y="570"/>
+  <object gid="4" x="3360" y="580"/>
+  <object gid="4" x="3140" y="530"/>
+  <object gid="4" x="2960" y="520"/>
+  <object gid="4" x="3380" y="130"/>
+  <object gid="4" x="3350" y="100"/>
+  <object gid="4" x="3320" y="70"/>
+  <object gid="4" x="3280" y="60"/>
+  <object gid="4" x="3250" y="60"/>
+  <object gid="4" x="3220" y="70"/>
+  <object gid="4" x="3200" y="90"/>
+  <object gid="4" x="3180" y="110"/>
+  <object gid="4" x="3160" y="130"/>
+  <object name="arrow" gid="27" x="3910" y="330"/>
  </objectgroup>
+ <objectgroup name="ObjScene3" width="400" height="100" visible="0"/>
+ <layer name="TileScene3" width="400" height="100" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztwYEAAAAAw6D5U1/hAFUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwGcR4AAQ==
+  </data>
+ </layer>
+ <imagelayer name="ImgScene3" width="400" height="100">
+  <image source="../images/platform3.png"/>
+ </imagelayer>
 </map>

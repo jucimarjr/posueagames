@@ -198,7 +198,7 @@ Config.score = {
 			x : 70,
 			y : 20,
 			style : { font: "35px Bored Fjord", fill: "#99201F", align: "center" },
-			styleBig : { font: "40px Bored Fjord", fill: "orange", align: "center" }
+			styleBig : { font: "70px Bored Fjord", fill: "#1D3A0F", align: "center" }
 		}
 	},
 
@@ -226,7 +226,7 @@ Config.score = {
 			x : 660,
 			y : 20,
 			style : { font: "35px Bored Fjord", fill: "#99201F", align: "center" },
-			styleBig : { font: "40px Bored Fjord", fill: "orange", align: "center" }
+			styleBig : { font: "70px Bored Fjord", fill: "#1D3A0F", align: "center" }
 		}
 	}
 };
@@ -325,3 +325,10 @@ Config.insaninho = {
 		height: 69
 	}
 };
+
+// Arrow
+
+Config.arrow = {
+	gid: 27,
+	src : 'assets/images/arrow.png'
+}

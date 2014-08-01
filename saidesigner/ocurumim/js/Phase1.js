@@ -1,11 +1,11 @@
-Curumim.Scene = function(game) 
+Curumim.Phase1 = function(game, endOfPhaseEvent) 
 {
 	this.game = game;
+	this.endOfPhaseEvent = endOfPhaseEvent;
 	this.oldCameraX = 0;
 	this.forest;
 	this.clouds;
-	this.trees;
-	this.river;
+	this.trees;	
 	this.platform;
 	this.map;
 	this.layer;
@@ -17,29 +17,24 @@ Curumim.Scene = function(game)
 	this.ounces;
 	this.araraBlue;
 	this.insaninhos;
-	this.ambience;
+	this.arrows;
 };
 
-Curumim.Scene.prototype = 
+Curumim.Phase1.prototype = 
 {
 	create: function() 
 	{
-		this.forest = this.game.add.sprite(-1520, -400, 'forest');
+		this.forest = this.game.add.sprite(-1520, -400, 'forest2');
 		this.forest.fixedToCamera = true;
 
-		this.clouds = this.game.add.tileSprite(0, 0, 4000, 270, 'clouds');
+		this.clouds = this.game.add.tileSprite(0, 0, 4000, 238, 'clouds');
 		this.clouds.autoScroll(-50, 0);
 				
-		this.trees = this.game.add.sprite(-200, 0, 'trees');	
+		this.trees = this.game.add.sprite(-200, 0, 'trees2');	
 		this.trees.fixedToCamera = true;
 
-		this.platform = this.game.add.tileSprite(0, 0, 4000, 1000, 'platform');
+		this.platform = this.game.add.tileSprite(0, 0, 4000, 1000, 'platform2');
 
-		//this.river = this.game.add.sprite(Config.river.x, Config.river.y, 'river');	
-		//this.river.fixedToCamera = true;
-		//this.river.animations.add('animation', [0, 1], 6, true);
-		//this.river.animations.play('animation');			
-    	
  		this.map = this.game.add.tilemap('map');
 		this.map.addTilesetImage('tileset', 'tileset');
 		this.layer = this.map.createLayer('TileScene2');
@@ -67,13 +62,15 @@ Curumim.Scene.prototype =
 		this.map.createFromObjects('ObjScene2', Config.fruit.point.gid, 'fruits', Config.fruit.point.frame, true, false, this.points);
 		this.points.forEach(function (fruit){ fruit.body.allowGravity = false; fruit.anchor.setTo(.5, .5);}, this.game);
 
+		this.arrows = this.game.add.group();
+		this.arrows.enableBody = true;
+		this.map.createFromObjects('ObjScene2', Config.arrow.gid, 'arrow', 0, true, false, this.arrows);
+		this.arrows.forEach(function (arrow){ arrow.body.allowGravity = false; arrow.anchor.setTo(.5, 0);}, this.game);
+
 		this.ounces = new Curumim.Ounce(this.game, 'ounce', this.map, 'ObjScene2', Config.ounce.gid, [0, 1, 2, 3, 4]);
 		this.ants = new Curumim.Enemy(this.game, 'ant', this.map, 'ObjScene2', Config.ant.gid, [0, 1, 2, 3, 4, 5], [6]);
 		this.araraBlue = new Curumim.Platform(this.game, 'arara_azul', this.map, 'ObjScene2', Config.arara.blue.gid, [0, 1, 2, 3, 4]);
 		this.insaninhos = new Curumim.Enemy(this.game, 'insaninho', this.map, 'ObjScene2', Config.insaninho.gid, [0, 1, 2], [3]);
-
-		this.ambience = this.game.add.audio('ambience', 1, true);
-		this.ambience.play();
 	},
 
 	update: function()
@@ -83,6 +80,7 @@ Curumim.Scene.prototype =
 		this.game.physics.arcade.overlap(this.energy, player.getCollider(), this.energyCollision, null, this);
 		this.game.physics.arcade.overlap(this.bullets, player.getCollider(), this.bulletCollision, null, this);
 		this.game.physics.arcade.overlap(this.points, player.getCollider(), this.pointCollision, null, this);
+		this.game.physics.arcade.overlap(this.arrows, player.getCollider(), this.arrowCollision, null, this);
 
 		this.ants.update();
 		this.ounces.update();
@@ -104,7 +102,7 @@ Curumim.Scene.prototype =
 	lifeCollision: function(collider, life)
 	{
 		life.kill();	
-		player.score.updateLife(1);
+		player.score.updateLife(1);		
 	},
 
 	energyCollision: function(collider, energy)
@@ -123,5 +121,48 @@ Curumim.Scene.prototype =
 	{
 		point.kill();
 		player.score.addPoints();
+	},
+
+	arrowCollision: function(collider, arrow)
+	{
+		player.endOfPhase();
+		this.destroy();
+	},
+
+	fadeScene: function(fadeList)
+	{
+		for (i = 0; i < fadeList.length; i++) { 
+			var tween = this.game.add.tween(fadeList[i]);
+			tween.to({ alpha: 0 }, 3000, null, true);		    
+		}
+	},
+
+	destroy: function()
+	{
+		this.lifes.destroy();
+		this.energy.destroy();
+		this.bullets.destroy();
+		this.points.destroy();
+		this.arrows.destroy();
+		this.ounces.destroy();
+		this.ants.destroy();
+		this.araraBlue.destroy();
+		this.insaninhos.destroy();
+
+		this.fadeScene([this.platform, this.forest, this.clouds, this.trees]);
+
+		var self = this;
+
+		setTimeout(function() { 
+			self.platform.destroy();
+			self.forest.destroy();
+			self.clouds.destroy();
+			self.trees.destroy();
+			self.map.destroy();
+			self.layer.destroy();
+
+			self.endOfPhaseEvent(1);
+			
+		}, 3000);
 	}
 };
