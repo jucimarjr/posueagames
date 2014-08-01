@@ -122,26 +122,12 @@ Config.game = {
 
 }
 
-// River
-
-Config.river = {
-
-	x: 0,
-	y: 525,
-
-	sprite: {
-		src: 'assets/spritesheets/river.png', 
-		width: 960,
-		height: 75
-	}
-};
-
 // Player
 
 Config.player = {
 
-	x: 260,
-	y: 600,
+	x: 40,
+	y: 20,
 
 	sprite: {
 		src: 'assets/spritesheets/curumim.png', 
@@ -331,4 +317,10 @@ Config.insaninho = {
 Config.arrow = {
 	gid: 27,
 	src : 'assets/images/arrow.png'
+};
+
+// Walterfall
+
+Config.waterfall = {
+	src : 'assets/images/waterfall.png'
 }

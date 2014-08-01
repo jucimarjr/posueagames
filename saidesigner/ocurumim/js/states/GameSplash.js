@@ -71,12 +71,12 @@ State.GameSplash.prototype = {
 		this.game.load.image('trees2', 'assets/images/trees2.png');
 		this.game.load.image('forest2', 'assets/images/forest2.png');
 		this.game.load.image('platform2', 'assets/images/platform2.png');
+		this.game.load.image('platform3', 'assets/images/platform3.png');
 		this.game.load.image('clouds', 'assets/images/clouds.png');
 		this.game.load.image('ounce_tail', Config.ounce.tail.src);
 		this.game.load.image('arrow', Config.arrow.src);
-
-		
-		this.game.load.spritesheet('river', Config.river.sprite.src, Config.river.sprite.width, Config.river.sprite.height);
+		this.game.load.image('waterfall', Config.waterfall.src);
+			
 		this.game.load.spritesheet('fruits', Config.fruit.small.src, Config.fruit.small.width, Config.fruit.small.height);
 		this.game.load.spritesheet('fruitsBig', Config.fruit.big.src, Config.fruit.big.width, Config.fruit.big.height);
 		this.game.load.spritesheet('ounce', Config.ounce.sprite.src, Config.ounce.sprite.width, Config.ounce.sprite.height);

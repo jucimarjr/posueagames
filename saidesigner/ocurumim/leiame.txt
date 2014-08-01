@@ -1,0 +1,21 @@
+Curumim
+
+O Curumim é um jogo de plataforma desenvolvido com o Framework Phaser HTML
+
+Basicamente, o jogador deve andar pelos cenários usando as setas direcionais para andar e pular.
+
+O jogador pode coletar quatro tipos de frutas:
+   Acaí - Ganha uma vida
+   Guaraná - Fica mais veloz com mais energia
+   Cupuaçu - Ele usa o caroço do cupuaçu para atirar
+   Tucumã - Funciona como as moedas do jogo, a cada 10 tucumãs ele ganha um caroço de cupuaçu
+
+Inimigos:
+
+ Onça - Ele tem que atirar na onça deixando-a tonta por alguns segundos
+ Formiga - Ele deve pular para achatar a mesma
+ Insaninho - Bicho de gosma feito de lixo. Ele deve pular para achatar o mesmo
+
+Plataforma animada:
+
+ Arara - Ele pode pulas nas araras para alcançar coisas

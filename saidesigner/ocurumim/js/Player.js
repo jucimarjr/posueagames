@@ -65,7 +65,7 @@ Curumim.Player.prototype =
 
     	// Sounds
 
-		this.ambienceSnd = this.game.add.audio('ambience', 0.5, true);
+		this.ambienceSnd = this.game.add.audio('ambience', 1, true);
 		this.powerUpSnd = this.game.add.audio('powerUp', 1, true);
 		this.jumpingSnd = this.game.add.audio('jumping', 1, false);
 		this.shotSnd = this.game.add.audio('shot', 1, false);

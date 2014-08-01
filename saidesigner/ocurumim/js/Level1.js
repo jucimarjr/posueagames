@@ -1,4 +1,4 @@
-Curumim.Phase1 = function(game, endOfPhaseEvent) 
+Curumim.Level1 = function(game, endOfPhaseEvent) 
 {
 	this.game = game;
 	this.endOfPhaseEvent = endOfPhaseEvent;
@@ -20,7 +20,7 @@ Curumim.Phase1 = function(game, endOfPhaseEvent)
 	this.arrows;
 };
 
-Curumim.Phase1.prototype = 
+Curumim.Level1.prototype = 
 {
 	create: function() 
 	{
@@ -28,7 +28,7 @@ Curumim.Phase1.prototype =
 		this.forest.fixedToCamera = true;
 
 		this.clouds = this.game.add.tileSprite(0, 0, 4000, 238, 'clouds');
-		this.clouds.autoScroll(-50, 0);
+		this.clouds.autoScroll(-20, 0);
 				
 		this.trees = this.game.add.sprite(-200, 0, 'trees2');	
 		this.trees.fixedToCamera = true;
