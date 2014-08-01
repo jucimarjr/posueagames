@@ -52,12 +52,7 @@ Curumim.Player.prototype =
 
     	// bullets
 
-    	this.bullets = this.game.add.group();	 
-		this.bullets.enableBody = true;
-		this.bullets.createMultiple(Config.bullet.number, 'bullet');
-		this.bullets.setAll('checkWorldBounds', true);
-    	this.bullets.setAll('outOfBoundsKill', true);
-    	this.game.physics.enable(this.bullets, Phaser.Physics.ARCADE);
+    	this.createBullets();
 
     	// Score
 
@@ -282,21 +277,39 @@ Curumim.Player.prototype =
 		}
 	},
 
-	endOfPhase: function()
+	endOfLevel: function()
 	{
 		this.canControl = false;
 		this.sprite.body.velocity.x = 0;
 		this.sprite.frame = 0;
  		this.sprite.animations.stop();        
 		var tween = this.game.add.tween(this.sprite);
-		tween.to({ alpha: 0 }, 3000, null, true);
+		tween.to({ alpha: 0 }, Config.game.nextLevel, null, true);
 	},
 
-	startOfPhase: function()
+	startOfLevel: function()
 	{
 		this.canControl = true;
 		this.sprite.alpha = 1;
 		this.sprite.x = Config.player.x;
 		this.sprite.y = Config.player.y;
+	},
+
+	bringToFront: function()
+	{
+		this.sprite.bringToTop();
+		this.score.bringToFront();	
+		this.bullets.destroy();
+		this.createBullets();
+	},
+
+	createBullets: function()
+	{
+		this.bullets = this.game.add.group();	 
+		this.bullets.enableBody = true;
+		this.bullets.createMultiple(Config.bullet.number, 'bullet');
+		this.bullets.setAll('checkWorldBounds', true);
+    	this.bullets.setAll('outOfBoundsKill', true);
+    	this.game.physics.enable(this.bullets, Phaser.Physics.ARCADE);	
 	}
 };

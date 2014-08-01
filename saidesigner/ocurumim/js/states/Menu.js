@@ -34,10 +34,12 @@ State.Menu.prototype = {
 	},
 	clickHowToPlay: function () {
 		"use strict";
+		this.gameSnd.stop();
 		this.game.state.start('HowToPlay');
 	},
 	clickCredits: function () {
 		"use strict";
+		this.gameSnd.stop();
 		this.game.state.start('Credits');
 	}
 };

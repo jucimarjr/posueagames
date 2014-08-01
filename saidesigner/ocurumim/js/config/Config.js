@@ -118,7 +118,9 @@ Config.gameover = {
 
 Config.game = {
 
-	gravity: 800
+	gravity: 800,
+	nextLevel: 2000,
+	numberOfLevels: 2
 
 }
 

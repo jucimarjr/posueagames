@@ -1,4 +1,4 @@
-Curumim.Enemy = function(game, spriteKey, map, mapObject, gid, walkAnimation, deadAnimation)
+Curumim.Enemy = function(game, spriteKey, map, mapObject, gid, walkAnimation, deadAnimation, xOffset)
 {
 	this.game = game;	
 	
@@ -21,14 +21,14 @@ Curumim.Enemy = function(game, spriteKey, map, mapObject, gid, walkAnimation, de
 
 		var timeSeed = new Date();
 		var random = new Phaser.RandomDataGenerator([timeSeed.getTime()]);
-		var posTarget = enemy.x - 300;
+		var posTarget = enemy.x - xOffset;
 		var rand = random.integerInRange(1, 100);
 
 		if (rand % 2 == 0)
 		{			
 			enemy.scale.x *= -1;
-			enemy.x -= 300;
-			posTarget = enemy.x + 300;
+			enemy.x -= xOffset;
+			posTarget = enemy.x + xOffset;
 		}
 
 		enemy.animations.play('walk');

@@ -1,4 +1,4 @@
-Curumim.Ounce = function(game, spriteKey, map, mapObject, gid, walkAnimation)
+Curumim.Ounce = function(game, spriteKey, map, mapObject, gid, walkAnimation, xOffset)
 {
 	this.game = game;	
 	
@@ -23,14 +23,14 @@ Curumim.Ounce = function(game, spriteKey, map, mapObject, gid, walkAnimation)
 
 		var timeSeed = new Date();
 		var random = new Phaser.RandomDataGenerator([timeSeed.getTime()]);
-		var posTarget = ounce.x - 300;
+		var posTarget = ounce.x - xOffset;
 		var rand = random.integerInRange(1, 100);
 
 		if (rand % 2 == 0)
 		{			
 			ounce.scale.x *= -1;
-			ounce.x -= 300;
-			posTarget = ounce.x + 300;
+			ounce.x -= xOffset;
+			posTarget = ounce.x + xOffset;
 		}		
 
 		ounce.tween = this.add.tween(ounce);
@@ -51,12 +51,12 @@ Curumim.Ounce.prototype =
 		{ 
 			if (ounce.scale.x > 0) 
 			{
-				ounce.tail.x = ounce.body.x + ounce.body.width - 55; 
+				ounce.tail.x = ounce.body.x + ounce.body.width - 60; 
 				ounce.tail.y = ounce.body.y - 25;
 			}
 			else
 			{
-				ounce.tail.x = ounce.body.x + 55; 
+				ounce.tail.x = ounce.body.x + 60; 
 				ounce.tail.y = ounce.body.y - 25;	
 			}
 

@@ -1,10 +1,15 @@
 
+var self;
+
 State.Game = function (game) {
 	"use strict";
 	this.game = game;	
 	this.player = new Curumim.Player(game);
-	this.level = new Curumim.Level2(game, this.endOfPhaseEvent);
-	
+	this.level1 = new Curumim.Level1(game, this.endOfLevelEvent);
+	this.level2 = new Curumim.Level2(game, this.endOfLevelEvent);
+	this.currentLevel = 0;
+	this.levels = [this.level1, this.level2];
+	self = this;
 };
 State.Game.prototype = {
 	preload: function () {
@@ -18,7 +23,7 @@ State.Game.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
  		this.game.physics.arcade.gravity.y = Config.game.gravity;
 
- 		this.level.create();
+ 		this.level1.create();
 		this.player.create();
 	},
 
@@ -27,12 +32,18 @@ State.Game.prototype = {
 
 		Config.global.screen.resize(this.game);
 		
-		this.level.update();
+		this.levels[this.currentLevel].update();		
 		this.player.update();
 	},
 
-	endOfPhaseEvent: function(phaseNumber) 
+	endOfLevelEvent: function(nextLevel) 
 	{
-		alert(phaseNumber);
+		if (nextLevel < Config.game.numberOfLevels)
+		{
+			self.currentLevel = nextLevel;
+			self.levels[nextLevel].create();		
+			player.startOfLevel();
+			player.bringToFront();
+		}
 	}
 };

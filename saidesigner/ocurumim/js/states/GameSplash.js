@@ -12,6 +12,8 @@ State.GameSplash.prototype = {
 		var progressBar = this.game.add.sprite(0, 580, 'progress-bar');
 		this.game.load.setPreloadSprite(progressBar);
 
+		var loadingTxt = this.game.add.text(10, 582, 'Carregando...', { font: "12px Bored Fjord", fill: "#ffffff", align: "center" });				
+
 		this.game.load.onLoadComplete.add(function () {
 			this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); 
 			this.nextState();
@@ -38,7 +40,6 @@ State.GameSplash.prototype = {
 	},
 
 	loadAssets: function () {
-
 		//Menu
 		this.game.load.image('menu-background',  Config.menu.dir);
 		this.game.load.spritesheet('button-play', Config.menu.buttonPlay.dir, Config.menu.buttonPlay.width, Config.menu.buttonPlay.height);

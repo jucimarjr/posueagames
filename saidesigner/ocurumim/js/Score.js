@@ -12,29 +12,33 @@ Curumim.Score = function(game)
 
 	this.getcoinSnd;
 	this.painSnd;
+
+	this.lifes;
+	this.points;
+	this.bullets;
 };
 
 Curumim.Score.prototype = 
 {
 	create: function() 
 	{
-		var lifes = this.game.add.sprite(Config.score.lifes.img.x, Config.score.lifes.img.y, 'fruitsBig');
-		lifes.frame = Config.fruit.life.frame;
-		lifes.fixedToCamera = true;
+		this.lifes = this.game.add.sprite(Config.score.lifes.img.x, Config.score.lifes.img.y, 'fruitsBig');
+		this.lifes.frame = Config.fruit.life.frame;
+		this.lifes.fixedToCamera = true;
 
 		this.txtLifes = this.game.add.text(Config.score.lifes.txt.x, Config.score.lifes.txt.y, '', Config.score.lifes.txt.style);		
 		this.txtLifes.fixedToCamera = true;
 
-		var points = this.game.add.sprite(Config.score.points.img.x, Config.score.points.img.y, 'fruitsBig');
-		points.frame = Config.fruit.point.frame;
-		points.fixedToCamera = true;
+		this.points = this.game.add.sprite(Config.score.points.img.x, Config.score.points.img.y, 'fruitsBig');
+		this.points.frame = Config.fruit.point.frame;
+		this.points.fixedToCamera = true;
 
 		this.txtPoints = this.game.add.text(Config.score.points.txt.x, Config.score.points.txt.y, '', Config.score.points.txt.style);		
 		this.txtPoints.fixedToCamera = true;		
 
-		var bullets = this.game.add.sprite(Config.score.bullets.img.x, Config.score.bullets.img.y, 'fruitsBig');
-		bullets.frame = Config.fruit.bullet.frame;
-		bullets.fixedToCamera = true;
+		this.bullets = this.game.add.sprite(Config.score.bullets.img.x, Config.score.bullets.img.y, 'fruitsBig');
+		this.bullets.frame = Config.fruit.bullet.frame;
+		this.bullets.fixedToCamera = true;
 
 		this.txtBullets = this.game.add.text(Config.score.bullets.txt.x, Config.score.bullets.txt.y, '', Config.score.bullets.txt.style);		
 		this.txtBullets.fixedToCamera = true;		
@@ -147,5 +151,25 @@ Curumim.Score.prototype =
 				this.painSnd.play('snd');
 			}
 		}
+	},
+
+	bringToFront: function() 
+	{
+		this.lifes.bringToTop();
+		this.points.bringToTop();
+		this.bullets.bringToTop();	
+
+		this.txtLifes.destroy();
+		this.txtPoints.destroy();
+		this.txtBullets.destroy();
+
+		this.txtLifes = this.game.add.text(Config.score.lifes.txt.x, Config.score.lifes.txt.y, '', Config.score.lifes.txt.style);		
+		this.txtLifes.fixedToCamera = true;
+
+		this.txtPoints = this.game.add.text(Config.score.points.txt.x, Config.score.points.txt.y, '', Config.score.points.txt.style);		
+		this.txtPoints.fixedToCamera = true;		
+
+		this.txtBullets = this.game.add.text(Config.score.bullets.txt.x, Config.score.bullets.txt.y, '', Config.score.bullets.txt.style);		
+		this.txtBullets.fixedToCamera = true;
 	}
 }

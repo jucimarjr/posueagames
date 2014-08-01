@@ -1,11 +1,11 @@
-Curumim.Level2 = function(game, endOfPhaseEvent) 
+Curumim.Level2 = function(game, endOfLevelEvent) 
 {
 	this.game = game;
-	this.endOfPhaseEvent = endOfPhaseEvent;
+	this.endOfLevelEvent = endOfLevelEvent;
 	this.oldCameraX = 0;
 	this.forest;
 	this.clouds;
-	this.trees;	
+	this.waterfall;	
 	this.platform;
 	this.map;
 	this.layer;
@@ -30,8 +30,8 @@ Curumim.Level2.prototype =
 		this.clouds = this.game.add.tileSprite(0, 0, 4000, 238, 'clouds');
 		this.clouds.autoScroll(-20, 0);
 				
-		this.trees = this.game.add.tileSprite(0, 300, 4000, 700, 'waterfall');	
-		this.trees.autoScroll(0, 200);
+		this.waterfall = this.game.add.tileSprite(0, 300, 4000, 700, 'waterfall');	
+		this.waterfall.autoScroll(0, 200);
 
 		this.platform = this.game.add.tileSprite(0, 0, 4000, 1000, 'platform3');
 
@@ -67,10 +67,10 @@ Curumim.Level2.prototype =
 		this.map.createFromObjects('ObjScene3', Config.arrow.gid, 'arrow', 0, true, false, this.arrows);
 		this.arrows.forEach(function (arrow){ arrow.body.allowGravity = false; arrow.anchor.setTo(.5, 0);}, this.game);
 
-		this.ounces = new Curumim.Ounce(this.game, 'ounce', this.map, 'ObjScene3', Config.ounce.gid, [0, 1, 2, 3, 4]);
-		this.ants = new Curumim.Enemy(this.game, 'ant', this.map, 'ObjScene3', Config.ant.gid, [0, 1, 2, 3, 4, 5], [6]);
+		this.ounces = new Curumim.Ounce(this.game, 'ounce', this.map, 'ObjScene3', Config.ounce.gid, [0, 1, 2, 3, 4], 100);
+		this.ants = new Curumim.Enemy(this.game, 'ant', this.map, 'ObjScene3', Config.ant.gid, [0, 1, 2, 3, 4, 5], [6], 100);
 		this.araraBlue = new Curumim.Platform(this.game, 'arara_azul', this.map, 'ObjScene3', Config.arara.blue.gid, [0, 1, 2, 3, 4]);
-		this.insaninhos = new Curumim.Enemy(this.game, 'insaninho', this.map, 'ObjScene3', Config.insaninho.gid, [0, 1, 2], [3]);
+		this.insaninhos = new Curumim.Enemy(this.game, 'insaninho', this.map, 'ObjScene3', Config.insaninho.gid, [0, 1, 2], [3], 100);
 	},
 
 	update: function()
@@ -87,14 +87,14 @@ Curumim.Level2.prototype =
 		this.araraBlue.update();
 		this.insaninhos.update();
 
-		this.trees.cameraOffset.y = -this.game.camera.y;
+		this.waterfall.cameraOffset.y = -this.game.camera.y;
 		
 		if (this.oldCameraX != this.game.camera.x) 
 		{
 			var velocity = player.getVelocity() * -1;
 
 			this.forest.cameraOffset.x +=  velocity * 0.0025;
-			this.trees.cameraOffset.x +=  velocity * 0.01;
+			this.waterfall.cameraOffset.x +=  velocity * 0.01;
 			this.oldCameraX = this.game.camera.x;			
 		}
 	},
@@ -125,7 +125,7 @@ Curumim.Level2.prototype =
 
 	arrowCollision: function(collider, arrow)
 	{
-		player.endOfPhase();
+		player.endOfLevel();
 		this.destroy();
 	},
 
@@ -133,7 +133,7 @@ Curumim.Level2.prototype =
 	{
 		for (i = 0; i < fadeList.length; i++) { 
 			var tween = this.game.add.tween(fadeList[i]);
-			tween.to({ alpha: 0 }, 3000, null, true);		    
+			tween.to({ alpha: 0 }, Config.game.nextLevel, null, true);		    
 		}
 	},
 
@@ -149,7 +149,7 @@ Curumim.Level2.prototype =
 		this.araraBlue.destroy();
 		this.insaninhos.destroy();
 
-		this.fadeScene([this.platform, this.forest, this.clouds, this.trees]);
+		this.fadeScene([this.platform, this.forest, this.clouds, this.waterfall]);
 
 		var self = this;
 
@@ -157,12 +157,12 @@ Curumim.Level2.prototype =
 			self.platform.destroy();
 			self.forest.destroy();
 			self.clouds.destroy();
-			self.trees.destroy();
+			self.waterfall.destroy();
 			self.map.destroy();
 			self.layer.destroy();
 
-			self.endOfPhaseEvent(1);
+			self.endOfLevelEvent(2);
 			
-		}, 3000);
+		}, Config.game.nextLevel);
 	}
 };
