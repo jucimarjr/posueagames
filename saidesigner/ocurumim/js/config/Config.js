@@ -299,6 +299,12 @@ Config.arara = {
 			src : 'assets/spritesheets/arara_azul.png',
 			width : 100,
 			height: 78
+		},
+		collisionArea : {
+			x: 100, 
+			y: 10, 
+			offsetX: 0, 
+			offsetY: 50
 		}
 	}
 };
@@ -325,4 +331,11 @@ Config.arrow = {
 
 Config.waterfall = {
 	src : 'assets/images/waterfall.png'
+}
+
+// Rock
+
+Config.rock = {
+	gid: 28,
+	src : 'assets/images/rock.png'
 }

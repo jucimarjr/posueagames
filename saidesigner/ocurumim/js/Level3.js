@@ -13,7 +13,7 @@ Curumim.Level3 = function(game, endOfLevelEvent)
 	this.points;
 	this.ants;
 	this.ounces;
-	this.araraBlue;
+	this.rock;
 	this.insaninhos;
 	this.arrows;
 };
@@ -60,7 +60,7 @@ Curumim.Level3.prototype =
 
 		this.ounces = new Curumim.Ounce(this.game, 'ounce', this.map, 'ObjScene4', Config.ounce.gid, [0, 1, 2, 3, 4], 100);
 		this.ants = new Curumim.Enemy(this.game, 'ant', this.map, 'ObjScene4', Config.ant.gid, [0, 1, 2, 3, 4, 5], [6], 100);
-		this.araraBlue = new Curumim.Platform(this.game, 'arara_azul', this.map, 'ObjScene4', Config.arara.blue.gid, [0, 1, 2, 3, 4]);
+		this.rock = new Curumim.Platform(this.game, 'rock', this.map, 'ObjScene4', Config.rock.gid, null, false, true);
 		this.insaninhos = new Curumim.Enemy(this.game, 'insaninho', this.map, 'ObjScene4', Config.insaninho.gid, [0, 1, 2], [3], 100);
 	},
 
@@ -75,7 +75,7 @@ Curumim.Level3.prototype =
 
 		this.ants.update();
 		this.ounces.update();
-		this.araraBlue.update();
+		this.rock.update();
 		this.insaninhos.update();
 
 		this.cave.cameraOffset.y = -this.game.camera.y;
@@ -136,7 +136,7 @@ Curumim.Level3.prototype =
 		this.arrows.destroy();
 		this.ounces.destroy();
 		this.ants.destroy();
-		this.araraBlue.destroy();
+		this.rock.destroy();
 		this.insaninhos.destroy();
 
 		this.fadeScene([this.platform, this.cave]);

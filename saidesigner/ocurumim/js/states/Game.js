@@ -24,7 +24,7 @@ State.Game.prototype = {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
  		this.game.physics.arcade.gravity.y = Config.game.gravity;
 
- 		this.level1.create();
+ 		this.levels[this.currentLevel].create();
 		this.player.create();
 	},
 
@@ -42,7 +42,7 @@ State.Game.prototype = {
 		if (nextLevel < Config.game.numberOfLevels)
 		{
 			self.currentLevel = nextLevel;
-			self.levels[nextLevel].create();		
+			self.levels[nextLevel].create();
 			player.startOfLevel();
 			player.bringToFront();
 		}

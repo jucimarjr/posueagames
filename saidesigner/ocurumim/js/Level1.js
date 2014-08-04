@@ -69,7 +69,7 @@ Curumim.Level1.prototype =
 
 		this.ounces = new Curumim.Ounce(this.game, 'ounce', this.map, 'ObjScene2', Config.ounce.gid, [0, 1, 2, 3, 4], 200);
 		this.ants = new Curumim.Enemy(this.game, 'ant', this.map, 'ObjScene2', Config.ant.gid, [0, 1, 2, 3, 4, 5], [6], 200);
-		this.araraBlue = new Curumim.Platform(this.game, 'arara_azul', this.map, 'ObjScene2', Config.arara.blue.gid, [0, 1, 2, 3, 4]);
+		this.araraBlue = new Curumim.Platform(this.game, 'arara_azul', this.map, 'ObjScene2', Config.arara.blue.gid, [0, 1, 2, 3, 4], true, true, Config.arara.blue.collisionArea);
 		this.insaninhos = new Curumim.Enemy(this.game, 'insaninho', this.map, 'ObjScene2', Config.insaninho.gid, [0, 1, 2], [3], 200);
 	},
 

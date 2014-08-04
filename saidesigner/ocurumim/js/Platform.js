@@ -1,4 +1,4 @@
-Curumim.Platform = function(game, spriteKey, map, mapObject, gid, animation)
+Curumim.Platform = function(game, spriteKey, map, mapObject, gid, animation, flip, animated, collisionArea)
 {
 	this.game = game;	
 	
@@ -9,19 +9,12 @@ Curumim.Platform = function(game, spriteKey, map, mapObject, gid, animation)
 	{ 		
 		platform.body.allowGravity = false;
 		platform.body.immovable = true;
-
-		var timeSeed = new Date();
-		var random = new Phaser.RandomDataGenerator([timeSeed.getTime()]);		
-		var rand = random.integerInRange(1, 100);
-
-		platform.body.velocity.x = -50;
-		if (rand % 2 == 0)
-		{
-			platform.scale.x *= -1;
-			platform.body.velocity.x = 50;
-		}
-		
 		platform.anchor.setTo(.5, 0);
+		
+		if (typeof collisionArea != 'undefined')
+		{
+			platform.body.setSize(collisionArea.x, collisionArea.y, collisionArea.offsetX, collisionArea.offsetY);
+		}
 
 		if (typeof animation != 'undefined')
 		{
@@ -29,14 +22,33 @@ Curumim.Platform = function(game, spriteKey, map, mapObject, gid, animation)
 			platform.animations.play('animation');
 		}
 
-		platform.tween = this.add.tween(platform);
-		platform.tween.onLoop.add(function() {				
-			platform.scale.x *= -1;
-			platform.body.velocity.x *= -1;
- 		}, this);
+		if (animated)
+		{
+			var timeSeed = new Date();
+			var random = new Phaser.RandomDataGenerator([timeSeed.getTime()]);		
+			var rand = random.integerInRange(1, 100);
+
+			platform.body.velocity.x = -50;
+			if (rand % 2 == 0)
+			{
+				platform.scale.x *= -1;
+				platform.body.velocity.x = 50;
+			}
 		
-		platform.tween.to({ }, 3000, null, true, 0, Number.MAX_VALUE, true);
-		platform.body.setSize(100, 10, 0, 50);
+			platform.tween = this.add.tween(platform);
+			platform.tween.onLoop.add(function() 
+			{
+				platform.body.velocity.x *= -1;
+				if (flip)
+				{
+					platform.scale.x *= -1;				
+					//TODO: Fix the bug when is flipping player
+					//player.getCollider().scale.x *= -1;
+				}
+	 		}, this);
+			
+			platform.tween.to({ }, 3000, null, true, 0, Number.MAX_VALUE, true);
+		}
 
 	}, this.game);
 	

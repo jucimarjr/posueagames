@@ -21,6 +21,12 @@
  <tileset firstgid="27" name="arrow" tilewidth="96" tileheight="126">
   <image source="../images/arrow.png" width="96" height="126"/>
  </tileset>
+ <tileset firstgid="28" name="rock" tilewidth="95" tileheight="29">
+  <image source="../images/rock.png" width="95" height="29"/>
+ </tileset>
+ <tileset firstgid="29" name="thorn" tilewidth="101" tileheight="51">
+  <image source="../images/thorn.png" width="101" height="51"/>
+ </tileset>
  <layer name="TileScene1" width="400" height="100" visible="0">
   <data encoding="base64" compression="zlib">
    eJzt3UsKgDAMBUB7/0t7AIVWMaQmM/D2UqGfpOhxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAECekf0AAAAAAAAAAPAD+usAvVkHAMhkHQKAOGMSAAAAANapswDQjT7DM8YLAAAAAAAAAACAamZ343YOQJSI+cd8BgAAsMZZCQAAAIAdqVkBAAAAAAAV6HkAAACRnDngG75VBABwZT8EAAAAAADQT/Z/Et3feS/7PYlI71Rm3AAAAADgntoYAAAAAAAAAADUdwIB0AHc
@@ -71,7 +77,6 @@
   <object gid="6" x="1050" y="900"/>
   <object gid="13" x="3430" y="290"/>
   <object gid="18" x="2540" y="900"/>
-  <object gid="23" x="3190" y="700"/>
   <object gid="5" x="3050" y="460"/>
   <object gid="5" x="3430" y="530"/>
   <object gid="5" x="2470" y="340"/>
@@ -97,8 +102,6 @@
   <object gid="4" x="3720" y="720"/>
   <object gid="4" x="3910" y="660"/>
   <object gid="4" x="3740" y="470"/>
-  <object gid="23" x="3750" y="890"/>
-  <object gid="23" x="3660" y="890"/>
   <object gid="4" x="1020" y="520"/>
   <object gid="4" x="1050" y="500"/>
   <object gid="4" x="1070" y="490"/>
@@ -142,11 +145,9 @@
  <objectgroup name="ObjScene3" width="400" height="100" visible="0">
   <object gid="27" x="3830" y="570"/>
   <object gid="6" x="3570" y="580"/>
-  <object gid="18" x="560" y="300"/>
   <object gid="6" x="510" y="610"/>
   <object gid="6" x="670" y="530"/>
   <object gid="23" x="1910" y="570"/>
-  <object gid="2" x="2300" y="860"/>
   <object gid="4" x="2570" y="680"/>
   <object gid="4" x="2380" y="630"/>
   <object gid="4" x="2290" y="490"/>
@@ -201,7 +202,7 @@
   <object gid="5" x="2640" y="270"/>
   <object gid="5" x="2640" y="310"/>
   <object gid="3" x="3670" y="40"/>
-  <object gid="18" x="3530" y="290"/>
+  <object gid="13" x="820" y="890"/>
  </objectgroup>
  <layer name="TileScene3" width="400" height="100" visible="0">
   <data encoding="base64" compression="zlib">
@@ -211,13 +212,26 @@
  <imagelayer name="ImgScene3" width="400" height="100" visible="0">
   <image source="../images/platform3.png"/>
  </imagelayer>
- <imagelayer name="ImgScene4" width="400" height="100">
+ <imagelayer name="ImgScene4" width="400" height="100" visible="0">
   <image source="../images/platform4.png"/>
  </imagelayer>
- <layer name="TileScene4" width="400" height="100">
+ <layer name="TileScene4" width="400" height="100" visible="0">
   <data encoding="base64" compression="zlib">
    eJzt3cENwCAMBDDYf+nOAFUvkNpSBgCUD0HHGAAAAAAAAAAAAAAAAAAAAMApZqjgz1J9pj8BAAAAAAD4SvVMy9wL9AcAAAAAAKyonl25vwcAAAAAAACA+3lHAAAAAAAAAAAAAAAAAAAAAAAAAABAUvVfm/I0AQAAAAAAAAAAAAAAAAAAAAAAAAAAoJ/OmcSd13Yj55FhjwEAAAAAAAAAAAAAAAAAAABg39uclEQBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALDuAWvxAVI=
   </data>
  </layer>
- <objectgroup name="ObjScene4" width="400" height="100" visible="0"/>
+ <objectgroup name="ObjScene4" width="400" height="100">
+  <object gid="28" x="30" y="330"/>
+  <object name="rock" gid="28" x="150" y="330"/>
+  <object gid="29" x="1240" y="990"/>
+  <object gid="29" x="1350" y="990"/>
+  <object gid="29" x="1460" y="990"/>
+  <object name="thorn" gid="29" x="1570" y="990"/>
+  <object gid="29" x="1680" y="990"/>
+  <object gid="29" x="1780" y="990"/>
+  <object gid="29" x="1880" y="990"/>
+  <object gid="29" x="1980" y="990"/>
+  <object gid="28" x="1400" y="650"/>
+  <object gid="28" x="1800" y="650"/>
+ </objectgroup>
 </map>

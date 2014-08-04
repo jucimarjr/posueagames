@@ -12,7 +12,7 @@ State.GameSplash.prototype = {
 		var progressBar = this.game.add.sprite(0, 580, 'progress-bar');
 		this.game.load.setPreloadSprite(progressBar);
 
-		var loadingTxt = this.game.add.text(10, 582, 'Carregando...', { font: "12px Bored Fjord", fill: "#ffffff", align: "center" });				
+		var loadingTxt = this.game.add.text(10, 585, 'Carregando...', { font: "12px Bored Fjord", fill: "#ffffff", align: "center" });				
 
 		this.game.load.onLoadComplete.add(function () {
 			this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); 
@@ -79,6 +79,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('ounce_tail', Config.ounce.tail.src);
 		this.game.load.image('arrow', Config.arrow.src);
 		this.game.load.image('waterfall', Config.waterfall.src);
+		this.game.load.image('rock', Config.rock.src);
 			
 		this.game.load.spritesheet('fruits', Config.fruit.small.src, Config.fruit.small.width, Config.fruit.small.height);
 		this.game.load.spritesheet('fruitsBig', Config.fruit.big.src, Config.fruit.big.width, Config.fruit.big.height);

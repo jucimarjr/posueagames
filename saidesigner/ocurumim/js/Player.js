@@ -87,7 +87,7 @@ Curumim.Player.prototype =
 		// walk or run
 		
 		this.sprite.body.velocity.x = 0;
-		
+		this.platformVelocity = 0;		
 
 		var velocity = Config.player.velocity.walk;
 		var animation = 'walk';
