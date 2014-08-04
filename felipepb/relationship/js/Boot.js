@@ -1,7 +1,8 @@
 var BasicGame = {};
 
 BasicGame.Boot = function (game) {
-
+	this.ludusImage;
+    this.sponsorImage;
 };
 
 BasicGame.Boot.prototype = {
@@ -11,7 +12,9 @@ BasicGame.Boot.prototype = {
         //  Here we load the assets required for our preloader (in this case a background and a loading bar)
         this.load.image('preloaderBackground', 'assets/promo_960-600.png');
         this.load.image('preloaderBar', 'assets/hit.png');
-
+        
+        this.load.image('ludusSplash', 'assets/ludussplash_960-600.png');
+        this.load.image('sponsor', 'assets/sponsor_960-600.png');
     },
 
     create: function () {
@@ -37,9 +40,31 @@ BasicGame.Boot.prototype = {
             this.scale.pageAlignHorizontally = true;
             this.scale.setScreenSize(true);
         }
-
-        //  By this point the preloader assets have loaded to the cache, we've set the game settings
-        //  So now let's start the real preloader going
-        this.state.start('Preloader');
+        
+        this.sponsorImage = this.game.add.image(0, 0, 'sponsor');
+        this.ludusImage = this.game.add.image(0, 0, 'ludusSplash');
+        
+        var ludusImagePauseAnimation = this.game.add.tween(this.ludusImage);
+		ludusImagePauseAnimation.to(null, 3000, Phaser.Easing.Linear.None, true, 0);
+		ludusImagePauseAnimation.onComplete.add(function () {
+			var ludusImageAnimation = this.game.add.tween(this.ludusImage);
+			ludusImageAnimation.to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 0);
+            ludusImageAnimation.onComplete.add(this.onLudusImageAnimationCompleted, this);
+		}, this);
+    },
+    
+    onLudusImageAnimationCompleted: function () {
+        var sponsorImageAnimation = this.game.add.tween(this.sponsorImage);
+        sponsorImageAnimation.to(null, 2000, Phaser.Easing.Linear.None, true, 0);
+        sponsorImageAnimation.onComplete.add(this.onSponsorImageAnimationCompleted, this);
+    },
+    
+    onSponsorImageAnimationCompleted: function () {
+		var self = this;
+		Utils.fadeInScreen(this.game, 300, 300, function () {
+			//  By this point the preloader assets have loaded to the cache, we've set the game settings
+	        //  So now let's start the real preloader going
+            self.state.start('Preloader');
+        });
     }
 };
