@@ -40,5 +40,4 @@ BreakoutGame.GameSound.prototype.onBallHit = function () {
 
 BreakoutGame.GameSound.prototype.playGameWinSound = function () {
 	BreakoutGame.MonitorBeat.dying();
-}
-
+};
