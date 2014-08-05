@@ -17,6 +17,8 @@ BreakoutGame.GameScene = function (canvas, targetFPS, playerLives) {
 	this._resourcesLoadCount = 0;
 	
 	this._preloadTextures = [
+	    { path: "images/ludusSplash_600-480.png", isSpriteSheet: false },
+	    { path: "images/sponsor_600-480.png", isSpriteSheet: false },
 	    { path: "images/gamestart.png", isSpriteSheet: false },
 	    { path: "images/gameretry.png", isSpriteSheet: false },
 	    { path: "images/gamewin.png", isSpriteSheet: false },
@@ -61,26 +63,69 @@ BreakoutGame.GameScene.prototype = {
 	
 	showStartScreen: function() {
 	    var self = this;
-	    this.gameStartScreen = GameFramework.SpriteFactory.spriteFromTexture('images/gamestart.png'); 
+
+	    this.gameStartScreen = GameFramework.SpriteFactory.spriteFromTexture('images/gamestart.png');
 	    this.gameStartScreen.x(this.canvas.width / 2.0);
 	    this.gameStartScreen.y(this.canvas.height / 2.0);
 	    this.game.addGameObject(this.gameStartScreen);
-	    this.game.startGame(this.targetFPS);
+
+	    var sponsorSplash = GameFramework.SpriteFactory.spriteFromTexture('images/sponsor_600-480.png');
+	    sponsorSplash.x(this.canvas.width / 2.0);
+	    sponsorSplash.y(this.canvas.height / 2.0);
+	    this.game.addGameObject(sponsorSplash);
+
+	    var ludusSplash = GameFramework.SpriteFactory.spriteFromTexture('images/ludusSplash_600-480.png');
+	    ludusSplash.x(this.canvas.width / 2.0);
+	    ludusSplash.y(this.canvas.height / 2.0);
+	    this.game.addGameObject(ludusSplash);
 	    
-	    document.addEventListener('keydown', function (args) {
-	        if (self.player == null && args.keyCode == GameFramework.KeyCode.EnterKey) {
-	            var animation = new GameFramework.PropertyAnimation(self.gameStartScreen,
-	                                                                'opacity',
-	                                                                1.0,
-	                                                                0.0,
-	                                                                250,
-	                                                                GameFramework.Easing.Type.Linear,
-	                                                                function () {
-	                                                                    self.startGame();
-	                                                                });
-	            GameFramework.Animation.play(animation);
-	        }
+	    var splashAnimation = function(screen, callback) {
+	    	var animation = new GameFramework.PauseAnimation(
+					                2000,
+					                function () {
+										var animation = new GameFramework.PropertyAnimation(
+																screen,
+						    					                'opacity',
+						    					                1.0,
+						    					                0.0,
+						    					                500,
+						    					                GameFramework.Easing.Type.Linear,
+						    					                function () {
+						    		    							if (typeof(callback) === 'function')
+						    		    								callback();
+						    					                });
+										GameFramework.Animation.play(animation);
+			                		});
+	    	GameFramework.Animation.play(animation);
+	    };
+
+	    var showMenu = function () {
+	    	document.addEventListener('keydown', function (args) {
+		        if (self.player == null && args.keyCode == GameFramework.KeyCode.EnterKey) {
+		            var animation = new GameFramework.PropertyAnimation(self.gameStartScreen,
+		                                                                'opacity',
+		                                                                1.0,
+		                                                                0.0,
+		                                                                250,
+		                                                                GameFramework.Easing.Type.Linear,
+		                                                                function () {
+		                                                                    self.startGame();
+		                                                                    self.game.removeGameObject(ludusSplash);
+		                                                                    self.game.removeGameObject(sponsorSplash);
+		                                                                    self.game.removeGameObject(self.gameStartScreen);
+		                                                                });
+		            GameFramework.Animation.play(animation);
+		        }
+		    });
+	    };
+
+	    splashAnimation(ludusSplash, function () {
+	    	splashAnimation(sponsorSplash, function () {
+	    		showMenu();
+	    	});
 	    });
+
+	    this.game.startGame(this.targetFPS);
 	},
 	
 	showGameRetryScreen: function () {
@@ -439,4 +484,4 @@ BreakoutGame.GameScene.prototype = {
 		if (--this._resourcesLoadCount <= 0)
 			this.showStartScreen();
 	}
-}
+};
