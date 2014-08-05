@@ -13,7 +13,7 @@ BasicGame.Boot.prototype = {
         this.load.image('preloaderBackground', 'assets/promo_960-600.png');
         this.load.image('preloaderBar', 'assets/hit.png');
         
-        this.load.image('ludusSplash', 'assets/ludussplash_960-600.png');
+        this.load.image('ludusSplash', 'assets/ludusSplash_960-600.png');
         this.load.image('sponsor', 'assets/sponsor_960-600.png');
     },
 
