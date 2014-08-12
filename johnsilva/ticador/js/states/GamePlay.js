@@ -11,7 +11,7 @@ State.GamePlay.prototype = {
 		var playerX,playerY, fishXLeft,fishXRight, runY;
 		var fishes, lastY,lastFish;
 		var score, style,labelScore;
-        var barraDeTempo, timerValue,timer;//barra de tempo
+        var barraDeTempo, timerValue,timer,timerSizeBar,graphics;//barra de tempo
 		var overlap, initTap, showEnd;
         
 	},
@@ -27,13 +27,14 @@ State.GamePlay.prototype = {
 		initTap = true;
 		showEnd = false;
         
-        timerValue = 50; 
+        timerValue = 50;
+        timerSizeBar = 400;
 
+         
+    
         
-       
         
-        
-		bg = this.game.add.sprite(0, 0, 'bg');
+    bg = this.game.add.sprite(0, 0, 'bg');
 
 		this.player = this.game.add.sprite(playerX, playerY ,'player');
 		this.game.physics.enable(this.player);
@@ -56,6 +57,17 @@ State.GamePlay.prototype = {
         
         barraDeTempo = this.game.add.text(this.game.world.centerX, 50, timerValue, style);
         barraDeTempo.anchor.set(0.5,0);
+        
+        
+        graphics = game.add.graphics();//adicionando o grafico
+        graphics.lineStyle(20, 0x33FF00);
+        //graphics.drawRect(0, 0, 200, 100);
+        
+        
+
+    graphics.lineStyle(20, 0x33FF00);
+    graphics.moveTo(30,30);
+    graphics.lineTo(300, 30);//pegar pela width da tela depois
 	},
 
 	update: function () {
@@ -65,8 +77,10 @@ State.GamePlay.prototype = {
 
 		labelScore.setText(score);
         barraDeTempo.setText(timerValue);
-
+        this.desenharBarraTimer(timerValue);
         
+        //this.graphics.lineTo(timerSizeBar, 30);//pegar pela width da tela depois
+    
         
         
 		if (cursors.left.isUp ) {
@@ -114,7 +128,7 @@ State.GamePlay.prototype = {
 	},
 
     decrementTimer: function(){
-    timerValue--;
+    timerValue--*1,05;
     },
 
     
@@ -172,6 +186,12 @@ State.GamePlay.prototype = {
 			fishes.add(fish);
 		}
 	},
+    
+    
+    desenharBarraTimer:function(timerSizeBar){
+      graphics.width=timerSizeBar;
+        
+    },
 
 	ticar: function(player, f){
 		if(ticou){
