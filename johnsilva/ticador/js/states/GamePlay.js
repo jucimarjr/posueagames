@@ -5,13 +5,18 @@ State.GamePlay = function (game) {
 	this.game = game;
 };
 State.GamePlay.prototype = {
+    
 	preload: function () {
 		var cursors;
 		var playerX,playerY, fishXLeft,fishXRight, runY;
 		var fishes, lastY,lastFish;
 		var score, style,labelScore;
+        var barraDeTempo, timerValue,timer;//barra de tempo
 		var overlap, initTap, showEnd;
+        
 	},
+    
+    
 	create: function () {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		playerY = 400; playerX = 100;
@@ -21,7 +26,13 @@ State.GamePlay.prototype = {
 		score = 0; style = { font: "30px Arial Bold", fill: "#ffffff", align: "center"};
 		initTap = true;
 		showEnd = false;
+        
+        timerValue = 50; 
 
+        
+       
+        
+        
 		bg = this.game.add.sprite(0, 0, 'bg');
 
 		this.player = this.game.add.sprite(playerX, playerY ,'player');
@@ -39,6 +50,12 @@ State.GamePlay.prototype = {
 		this.ticou = false;
 		labelScore = this.game.add.text(this.game.world.centerX, 200, score, style);
 		labelScore.anchor.set(0.5, 0);
+        
+        timer = this.game.time.create(false);
+        timer.loop(200,this.decrementTimer, this);
+        
+        barraDeTempo = this.game.add.text(this.game.world.centerX, 50, timerValue, style);
+        barraDeTempo.anchor.set(0.5,0);
 	},
 
 	update: function () {
@@ -47,7 +64,11 @@ State.GamePlay.prototype = {
 		this.game.physics.arcade.overlap(this.player, fishes, this.ticar, null,this);
 
 		labelScore.setText(score);
+        barraDeTempo.setText(timerValue);
 
+        
+        
+        
 		if (cursors.left.isUp ) {
 			this.leftUp = true;
 		}
@@ -55,9 +76,10 @@ State.GamePlay.prototype = {
 			this.rightUp = true;
 		}		
 
-		if(!overlap && !initTap){
+		if(!overlap && !initTap || timerValue==0){
 			//labelScore.setText("Game Over");
 			if(!showEnd){
+                timer.stop();
 				this.game.input.keyboard.stop();
 				this.end();
 			}
@@ -72,7 +94,10 @@ State.GamePlay.prototype = {
 			ticou = true;
 			initTap = false;
 		}
-		else if(cursors.right.isDown && this.rightUp){
+        
+        
+        
+        else if(cursors.right.isDown && this.rightUp){
 			this.run();
 			this.rightUp = false;
 			this.changeSprite(1);
@@ -88,6 +113,13 @@ State.GamePlay.prototype = {
 		this.player.scale.x = (-1)*scale;
 	},
 
+    decrementTimer: function(){
+    timerValue--;
+    },
+
+    
+    
+    
 	run: function(){
 		lastY = 1000;
 		fishes.forEach(function (f){ 
@@ -144,7 +176,9 @@ State.GamePlay.prototype = {
 	ticar: function(player, f){
 		if(ticou){
 			score++;
+            timerValue++;//decrementando o timerValue
 			f.frame++;
+            timer.start();
 			ticou = false;
 		}
 		overlap = true;
