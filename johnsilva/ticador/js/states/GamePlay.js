@@ -77,10 +77,7 @@ State.GamePlay.prototype = {
 
 		labelScore.setText(score);
         barraDeTempo.setText(timerValue);
-        this.desenharBarraTimer(timerValue);
-        
-        //this.graphics.lineTo(timerSizeBar, 30);//pegar pela width da tela depois
-    
+        //this.desenharBarraTimer(timerValue);
         
         
 		if (cursors.left.isUp ) {
@@ -127,8 +124,8 @@ State.GamePlay.prototype = {
 		this.player.scale.x = (-1)*scale;
 	},
 
-    decrementTimer: function(){
-    timerValue--*1,05;
+    decrementTimer: function(decrementValue){
+    timerValue--*decrementValue;
     },
 
     
@@ -188,7 +185,7 @@ State.GamePlay.prototype = {
 	},
     
     
-    desenharBarraTimer:function(timerSizeBar){
+    desenharBarraTimer:function(timerSizeBar){//funcao que desenha o barra do timer
       graphics.width=timerSizeBar;
         
     },
@@ -199,6 +196,7 @@ State.GamePlay.prototype = {
             timerValue++;//decrementando o timerValue
 			f.frame++;
             timer.start();
+            this.decrementTimer(0,05);
 			ticou = false;
 		}
 		overlap = true;
