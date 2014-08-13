@@ -77,8 +77,7 @@ State.GamePlay.prototype = {
 
 		labelScore.setText(score);
         barraDeTempo.setText(timerValue);
-        //this.desenharBarraTimer(timerValue);
-        
+        decrementValue=1.5;//aumento do tempo de decremento
         
 		if (cursors.left.isUp ) {
 			this.leftUp = true;
@@ -124,12 +123,18 @@ State.GamePlay.prototype = {
 		this.player.scale.x = (-1)*scale;
 	},
 
-    decrementTimer: function(decrementValue){
-    timerValue--*decrementValue;
+    decrementTimer: function(){
+    timerValue--; //decrementValue;
+    console.log("valor decrementado"+decrementValue);
+    console.log("valor decrementado"+timerValue);
     },
 
     
-    
+    upLevelTest:function(){
+    if(score%10==0){//testa o up de level seguindo o score do jogador
+    console.log("up de level");
+    }
+    },
     
 	run: function(){
 		lastY = 1000;
@@ -196,8 +201,8 @@ State.GamePlay.prototype = {
             timerValue++;//decrementando o timerValue
 			f.frame++;
             timer.start();
-            this.decrementTimer(0,05);
 			ticou = false;
+            this.upLevelTest();
 		}
 		overlap = true;
 	},
