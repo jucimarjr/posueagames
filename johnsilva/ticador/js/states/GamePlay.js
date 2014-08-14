@@ -13,6 +13,7 @@ State.GamePlay.prototype = {
 		var score, style,labelScore;
         var barraDeTempo, timerValue,timer,timerSizeBar,graphics;//barra de tempo
 		var overlap, initTap, showEnd;
+        var labelLevel,LevelText;//variaveis do level
         
 	},
     
@@ -27,8 +28,9 @@ State.GamePlay.prototype = {
 		initTap = true;
 		showEnd = false;
         
-        timerValue = 50;
-        timerSizeBar = 400;
+        timerValue = 1000;
+        levelText = "Level  0";
+        
 
          
     
@@ -58,6 +60,9 @@ State.GamePlay.prototype = {
         barraDeTempo = this.game.add.text(this.game.world.centerX, 50, timerValue, style);
         barraDeTempo.anchor.set(0.5,0);
         
+        labelLevel = this.game.add.text(this.game.world.centerX,450, levelText,style);
+        labelLevel.anchor.set(0.5,0);
+        
         
         graphics = game.add.graphics();//adicionando o grafico
         graphics.lineStyle(20, 0x33FF00);
@@ -67,8 +72,10 @@ State.GamePlay.prototype = {
 
     graphics.lineStyle(20, 0x33FF00);
     graphics.moveTo(30,30);
-    graphics.lineTo(300, 30);//pegar pela width da tela depois
-	},
+    graphics.lineTo(300, 30);
+	decrementValue=10;//variavel responsavel pelo aumento do decremento do tempo, valor inicial
+    countLevelText=0;//contador do level, é concatenado com o texto
+    },
 
 	update: function () {
 
@@ -77,7 +84,7 @@ State.GamePlay.prototype = {
 
 		labelScore.setText(score);
         barraDeTempo.setText(timerValue);
-        decrementValue=1.5;//aumento do tempo de decremento
+        
         
 		if (cursors.left.isUp ) {
 			this.leftUp = true;
@@ -86,7 +93,7 @@ State.GamePlay.prototype = {
 			this.rightUp = true;
 		}		
 
-		if(!overlap && !initTap || timerValue==0){
+		if(!overlap && !initTap || timerValue<=0){
 			//labelScore.setText("Game Over");
 			if(!showEnd){
                 timer.stop();
@@ -123,18 +130,26 @@ State.GamePlay.prototype = {
 		this.player.scale.x = (-1)*scale;
 	},
 
-    decrementTimer: function(){
-    timerValue--; //decrementValue;
-    console.log("valor decrementado"+decrementValue);
-    console.log("valor decrementado"+timerValue);
+    decrementTimer: function(){//metodo que decrementa o tempo, decrement value é recebido por nivel
+    timerValue=timerValue-decrementValue; 
+    
     },
 
     
     upLevelTest:function(){
     if(score%10==0){//testa o up de level seguindo o score do jogador
-    console.log("up de level");
+    decrementValue = decrementValue+10;//valor aumentado de 10 em 10 pontos, temos que testar
+    this.upLevelText();
+        
     }
     },
+    
+    upLevelText:function(){//muda o texto do level -- poderiamos futuramente colocar uma animação
+    countLevelText++;
+    labelLevel.setText("Level " +countLevelText);
+    
+    },
+    
     
 	run: function(){
 		lastY = 1000;
@@ -189,16 +204,11 @@ State.GamePlay.prototype = {
 		}
 	},
     
-    
-    desenharBarraTimer:function(timerSizeBar){//funcao que desenha o barra do timer
-      graphics.width=timerSizeBar;
-        
-    },
 
 	ticar: function(player, f){
 		if(ticou){
 			score++;
-            timerValue++;//decrementando o timerValue
+            timerValue = timerValue+decrementValue;//incrementa no timerValue
 			f.frame++;
             timer.start();
 			ticou = false;
