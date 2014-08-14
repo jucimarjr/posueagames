@@ -84,7 +84,7 @@ State.GamePlay.prototype = {
     },
 
 	update: function () {
-		bar.scale.x -= 0.01;
+		
 		if(bar.scale.x <=0){
 			bar.scale.x = 0;
 			//this.end();
@@ -142,6 +142,7 @@ State.GamePlay.prototype = {
 
     decrementTimer: function(){//metodo que decrementa o tempo, decrement value é recebido por nivel
     	timerValue=timerValue-decrementValue;
+        bar.scale.x = timerValue/1000;   
     	if(timerValue < 0)
     		timerValue = 0;
     },
