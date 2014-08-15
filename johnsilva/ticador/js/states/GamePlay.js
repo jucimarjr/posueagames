@@ -13,8 +13,7 @@ State.GamePlay.prototype = {
 		var score, style,labelScore;
         var bar;//barra de tempo
 		var overlap, initTap, showEnd;
-        var labelLevel,levelText,countLevelText;//variaveis do level
-        
+        var labelLevel,levelText,countLevelText;//variaveis do level        
 	},
     
     
@@ -65,7 +64,7 @@ State.GamePlay.prototype = {
 
 
     	bar = game.add.graphics(100,30);
-  		bar.lineStyle(10, 0x33FF00);
+  		bar.lineStyle(20, 0x33FF00);
   		bar.moveTo(0, 0);
   		bar.lineTo(this.game.world.width-200, 0);
     
@@ -131,8 +130,6 @@ State.GamePlay.prototype = {
     	if(score%10==0){//testa o up de level seguindo o score do jogador
     		decrementValue *= 1.07;//valor aumentado em *1.5
             labelLevel.setText("Level "+ ++countLevelText);
-            
-            
     	}
     },    
     
