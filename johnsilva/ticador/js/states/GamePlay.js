@@ -11,9 +11,9 @@ State.GamePlay.prototype = {
 		var playerX,playerY, fishXLeft,fishXRight, runY;
 		var fishes, lastY,lastFish;
 		var score, style,labelScore;
-        var barraDeTempo, timerValue,timer,timerSizeBar,bar;//barra de tempo
+        var bar;//barra de tempo
 		var overlap, initTap, showEnd;
-        var labelLevel,LevelText;//variaveis do level
+        var labelLevel,levelText;//variaveis do level
         
 	},
     
@@ -28,12 +28,7 @@ State.GamePlay.prototype = {
 		initTap = true;
 		showEnd = false;
         
-        timerValue = 1000;
         levelText = "Level  0";
-        
-
-         
-    
         
         
     	bg = this.game.add.sprite(0, 0, 'bg');
@@ -52,13 +47,7 @@ State.GamePlay.prototype = {
 		this.game.input.keyboard.start();
 		this.ticou = false;
 		labelScore = this.game.add.text(this.game.world.centerX, 200, score, style);
-		labelScore.anchor.set(0.5, 0);
-        
-        timer = this.game.time.create(false);
-        timer.loop(200,this.decrementTimer, this);
-        
-        barraDeTempo = this.game.add.text(this.game.world.centerX, 50, timerValue, style);
-        barraDeTempo.anchor.set(0.5,0);
+		labelScore.anchor.set(0.5, 0);        
         
         labelLevel = this.game.add.text(this.game.world.centerX,450, levelText,style);
         labelLevel.anchor.set(0.5,0);
@@ -70,30 +59,25 @@ State.GamePlay.prototype = {
     	bar.lineTo(this.game.world.width-100, 30);
     	bar.endFill();*/
 
-		decrementValue=10;//variavel responsavel pelo aumento do decremento do tempo, valor inicial
+		decrementValue=0.001;//variavel responsavel pelo aumento ou decremento do tempo, valor inicial
     	countLevelText=0;//contador do level, é concatenado com o texto
 
 
 
-    	bar = game.add.graphics(100, 50);
-  		bar.lineStyle(10, 0x33FF00,1);
+    	bar = game.add.graphics(100,30);
+  		bar.lineStyle(10, 0x33FF00);
   		bar.moveTo(0, 0);
-  		bar.lineTo(this.game.width-100, 0);
+  		bar.lineTo(this.game.world.width-200, 0);
     
-  		bar.scale.x = 1;
+  		bar.scale.x = 0.5;
     },
 
 	update: function () {
 		
-		if(bar.scale.x <=0){
-			bar.scale.x = 0;
-			//this.end();
-		}
 		overlap = false;
 		this.game.physics.arcade.overlap(this.player, fishes, this.ticar, null,this);
 
 		labelScore.setText(score);
-        barraDeTempo.setText(timerValue);
         
         
 		if (cursors.left.isUp ) {
@@ -103,12 +87,17 @@ State.GamePlay.prototype = {
 			this.rightUp = true;
 		}		
 
-		if(!overlap && !initTap || timerValue<=0 || bar.scale.x ==0){
-			//labelScore.setText("Game Over");
+		if(!overlap && !initTap || bar.scale.x ==0){
 			if(!showEnd){
-                timer.stop();
 				this.game.input.keyboard.stop();
 				this.end();
+			}
+		}else{
+			if(initTap == false){
+				bar.scale.x -= decrementValue;
+				if(bar.scale.x <=0){
+					bar.scale.x = 0;
+				}
 			}
 		}
 
@@ -120,9 +109,7 @@ State.GamePlay.prototype = {
 			this.player.animations.play('ticar');			
 			ticou = true;
 			initTap = false;
-		}
-        
-        
+		}        
         
         else if(cursors.right.isDown && this.rightUp){
 			this.run();
@@ -132,33 +119,19 @@ State.GamePlay.prototype = {
 			this.player.animations.play('ticar');			
 			ticou = true;
 			initTap = false;
-		}
+		}		
 	},
 
 	changeSprite: function(scale){
 		this.player.scale.x = scale;
 		this.player.scale.x = (-1)*scale;
 	},
-
-    decrementTimer: function(){//metodo que decrementa o tempo, decrement value é recebido por nivel
-    	timerValue=timerValue-decrementValue;
-        bar.scale.x = timerValue/1000;   
-    	if(timerValue < 0)
-    		timerValue = 0;
-    },
     
     upLevelTest:function(){
     	if(score%10==0){//testa o up de level seguindo o score do jogador
-    		decrementValue = decrementValue+10;//valor aumentado de 10 em 10 pontos, temos que testar
-    		this.upLevelText();
+    		decrementValue *= 1.5;//valor aumentado em *1.5
     	}
-    },
-    
-    upLevelText:function(){//muda o texto do level -- poderiamos futuramente colocar uma animação
-    	countLevelText++;
-    	labelLevel.setText("Level " +countLevelText);
-    },
-    
+    },    
     
 	run: function(){
 		lastY = 1000;
@@ -217,10 +190,11 @@ State.GamePlay.prototype = {
 	ticar: function(player, f){
 		if(ticou){
 			score++;
-            timerValue = timerValue+decrementValue;//incrementa no timerValue
 			f.frame++;
-            timer.start();
 			ticou = false;
+			bar.scale.x += 10*decrementValue;
+			if(bar.scale.x > 1)
+				bar.scale.x = 1;
             this.upLevelTest();
 		}
 		overlap = true;
@@ -260,7 +234,7 @@ State.GamePlay.prototype = {
 	},
 
     render: function (){
-    	game.debug.body(this.player);
+    	//game.debug.body(this.player);
     	
     	/*fishes.forEach(function (f){ 
 			game.debug.body(f);
