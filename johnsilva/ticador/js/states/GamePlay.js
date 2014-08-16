@@ -50,6 +50,8 @@ State.GamePlay.prototype = {
         
         labelLevel = this.game.add.text(this.game.world.centerX,450, levelText,style);
         labelLevel.anchor.set(0.5,0);
+        labelLevel.alpha=0;
+        
         
         
         /*bar = game.add.graphics();//adicionando o grafico
@@ -130,6 +132,9 @@ State.GamePlay.prototype = {
     	if(score%10==0){//testa o up de level seguindo o score do jogador
     		decrementValue *= 1.07;//valor aumentado em *1.5
             labelLevel.setText("Level "+ ++countLevelText);
+            labelLevel.alpha=1;
+            this.game.add.tween(labelLevel).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);//faz o texto do level aparecer
+            
     	}
     },    
     
