@@ -74,7 +74,7 @@ State.GamePlay.prototype = {
     },
 
 	update: function () {
-		
+		Config.global.screen.resize(this.game);
 		overlap = false;
 		this.game.physics.arcade.overlap(this.player, fishes, this.ticar, null,this);
 
