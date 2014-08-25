@@ -15,13 +15,14 @@ State.GamePlay.prototype = {
 		var overlap, initTap, showEnd;
         var labelLevel,levelText,countLevelText;//variaveis do level 
         var pressLeft, pressRight;
+        var gotasEmmiter;
 	},
     
     
 	create: function () {
 		this.game.physics.startSystem(Phaser.Game.ARCADE);
 		playerY = 400; playerX = 100;
-		fishXLeft = 120; fishXRight = 300;
+		fishXLeft = 150; fishXRight = 300;
 		runY = 40;
 		lastFish = null;
 		score = 0; style = { font: "30px Arial Bold", fill: "#ffffff", align: "center"};
@@ -39,16 +40,15 @@ State.GamePlay.prototype = {
     	this.animScape = false;
     	this.animTap();
     	/*Botão de Tap*/
+		
+		fishes = game.add.group();
+		this.addFishes();
 
 		this.player = this.game.add.sprite(playerX, playerY ,'player');
 		this.game.physics.enable(this.player);
 		this.player.animations.add('ticar',[0,1,0],30,false);
 		this.player.body.setSize(this.player.width, 10, 0, 5);
 		this.player.anchor.setTo(.5, .5);
-
-		fishes = game.add.group();
-		this.addFishes();
-
 		
 		cursors = this.game.input.keyboard.createCursorKeys();
 		this.game.input.keyboard.start();
@@ -84,6 +84,14 @@ State.GamePlay.prototype = {
   		bar.lineTo(this.game.world.width-200, 0);
     
   		bar.scale.x = 0.5;
+
+  		gotasEmmiter = game.add.emitter(0, 0, 100);
+  		gotasEmmiter.makeParticles('gota');
+  		gotasEmmiter.gravity = 200;
+  		gotasEmmiter.minParticleScale = 0.1;
+		gotasEmmiter.maxParticleScale = 1;
+		/*gotasEmmiter.minRotation = 0;
+		gotasEmmiter.maxRotation = 0;*/
     },
 
 	update: function () {
@@ -225,8 +233,16 @@ State.GamePlay.prototype = {
 			if(bar.scale.x > 1)
 				bar.scale.x = 1;
             this.upLevelTest();
+            this.mostarGotas(f.x, f.y);
 		}
 		overlap = true;
+	},
+
+	mostarGotas: function(x,y){
+		gotasEmmiter.x = x;
+    	gotasEmmiter.y = y;
+
+    	gotasEmmiter.start(true, 2000, null, 10);
 	},
 
 	animTap: function(){

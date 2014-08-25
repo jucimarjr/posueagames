@@ -52,6 +52,7 @@ State.GameSplash.prototype = {
 		this.game.load.image('btnTapL', 'assets/btns/tapL_75-50.jpg', 75, 50);
 
 		this.game.load.image('bg', 'assets/bg/bg_450-600.png');
+		this.game.load.image('gota', 'assets/sprites/gota_17-17.png');
 		
 		//this.game.load.audio('jumpSound', Config.audio.jump);
 
