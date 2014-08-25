@@ -13,7 +13,7 @@ var Config = {
 				if(!game.device.desktop){
 					game.scale.setExactFit();
 					game.scale.refresh();
-					document.getElementById('everything').style.width = '100%';
+					document.getElementById('game_div').style.width = '100%';
 				}
 			}
 		}

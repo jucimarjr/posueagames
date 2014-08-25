@@ -7,7 +7,7 @@ State.GamePlay = function (game) {
 State.GamePlay.prototype = {
     
 	preload: function () {
-		var cursors;
+		var cursors, tapR, tapL;
 		var playerX,playerY, fishXLeft,fishXRight, runY;
 		var fishes, lastY,lastFish;
 		var score, style,labelScore;
@@ -25,12 +25,17 @@ State.GamePlay.prototype = {
 		lastFish = null;
 		score = 0; style = { font: "30px Arial Bold", fill: "#ffffff", align: "center"};
 		initTap = true;
-		showEnd = false;
+		showEnd = false;        
+        levelText = "Level  0";       
         
-        levelText = "Level  0";
-        
-        
-    	bg = this.game.add.sprite(0, 0, 'bg');
+        /*Botão de Tap*/
+    	this.game.add.sprite(0, 0, 'bg');
+    	tapR = this.game.add.sprite(this.game.world.centerX + 100, this.game.world.height-100, 'btnTapR');
+    	tapR.anchor.setTo(.5, .5);
+    	tapL = this.game.add.sprite(this.game.world.centerX - 100, this.game.world.height-100, 'btnTapL');
+    	tapL.anchor.setTo(.5, .5);
+    	this.animTap();
+    	/*Botão de Tap*/
 
 		this.player = this.game.add.sprite(playerX, playerY ,'player');
 		this.game.physics.enable(this.player);
@@ -78,9 +83,13 @@ State.GamePlay.prototype = {
 		overlap = false;
 		this.game.physics.arcade.overlap(this.player, fishes, this.ticar, null,this);
 
-		labelScore.setText(score);
-        
-        
+		labelScore.setText(score);        
+
+		if(!initTap){
+			tapL.reset(-100,-100);
+			tapR.reset(-100,-100);
+		}
+
 		if (cursors.left.isUp ) {
 			this.leftUp = true;
 		}
@@ -203,6 +212,11 @@ State.GamePlay.prototype = {
             this.upLevelTest();
 		}
 		overlap = true;
+	},
+
+	animTap: function(){
+		this.game.add.tween(tapL).to( { x: tapL.x-35 }, 500, Phaser.Easing.Linear.None, true, 0, 500,true);
+		this.game.add.tween(tapR).to( { x: tapR.x+35 }, 500, Phaser.Easing.Linear.None, true, 0, 500,true);
 	},
 
 	end: function(){

@@ -48,7 +48,9 @@ State.GameSplash.prototype = {
 		//Btn
 		this.game.load.spritesheet('btnPlay', 'assets/btns/play_100-70.png', 100, 70, 2);
 		this.game.load.image('bgGameOver', 'assets/btns/gameover_350-280.png');
-		
+		this.game.load.image('btnTapR', 'assets/btns/tapR_75-50.jpg', 75, 50);
+		this.game.load.image('btnTapL', 'assets/btns/tapL_75-50.jpg', 75, 50);
+
 		this.game.load.image('bg', 'assets/bg/bg_450-600.png');
 		
 		//this.game.load.audio('jumpSound', Config.audio.jump);
