@@ -34,6 +34,7 @@ State.GamePlay.prototype = {
     	tapR.anchor.setTo(.5, .5);
     	tapL = this.game.add.sprite(this.game.world.centerX - 100, this.game.world.height-100, 'btnTapL');
     	tapL.anchor.setTo(.5, .5);
+    	this.animScape = false;
     	this.animTap();
     	/*Botão de Tap*/
 
@@ -85,9 +86,8 @@ State.GamePlay.prototype = {
 
 		labelScore.setText(score);        
 
-		if(!initTap){
-			tapL.reset(-100,-100);
-			tapR.reset(-100,-100);
+		if(!initTap && !this.animScape){
+			this.animTapScape();
 		}
 
 		if (cursors.left.isUp ) {
@@ -98,12 +98,12 @@ State.GamePlay.prototype = {
 		}		
 
 		if(!overlap && !initTap || bar.scale.x ==0){
-			if(!showEnd){
+			if(!showEnd){				
 				this.game.input.keyboard.stop();
 				this.end();
 			}
 		}else{
-			if(initTap == false){
+			if(!initTap){
 				bar.scale.x -= decrementValue;
 				if(bar.scale.x <=0){
 					bar.scale.x = 0;
@@ -217,6 +217,12 @@ State.GamePlay.prototype = {
 	animTap: function(){
 		this.game.add.tween(tapL).to( { x: tapL.x-35 }, 500, Phaser.Easing.Linear.None, true, 0, 500,true);
 		this.game.add.tween(tapR).to( { x: tapR.x+35 }, 500, Phaser.Easing.Linear.None, true, 0, 500,true);
+	},
+
+	animTapScape: function(){		
+		this.game.add.tween(tapL).to( { y: this.game.world.height + 100 }, 500, Phaser.Easing.Bounce.Out, true, 0, 0,false);
+		this.game.add.tween(tapR).to( { y: this.game.world.height + 100 }, 500, Phaser.Easing.Bounce.Out, true, 0, 0,false);
+		this.animScape = true;
 	},
 
 	end: function(){
