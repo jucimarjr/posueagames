@@ -13,7 +13,8 @@ State.GamePlay.prototype = {
 		var score, style,labelScore;
         var bar;//barra de tempo
 		var overlap, initTap, showEnd;
-        var labelLevel,levelText,countLevelText;//variaveis do level        
+        var labelLevel,levelText,countLevelText;//variaveis do level 
+        var pressLeft, pressRight;
 	},
     
     
@@ -26,7 +27,8 @@ State.GamePlay.prototype = {
 		score = 0; style = { font: "30px Arial Bold", fill: "#ffffff", align: "center"};
 		initTap = true;
 		showEnd = false;        
-        levelText = "Level  0";       
+        levelText = "Level  0";
+        this.gameOver = false; 
         
         /*Botão de Tap*/
     	this.game.add.sprite(0, 0, 'bg');
@@ -50,6 +52,11 @@ State.GamePlay.prototype = {
 		
 		cursors = this.game.input.keyboard.createCursorKeys();
 		this.game.input.keyboard.start();
+		pressRight = false;
+    	pressLeft = false;
+		this.game.input.onDown.add(this.touch, this);
+    	this.game.input.onUp.add(this.noTouch, this);
+
 		this.ticou = false;
 		labelScore = this.game.add.text(this.game.world.centerX, 200, score, style);
 		labelScore.anchor.set(0.5, 0);        
@@ -98,7 +105,8 @@ State.GamePlay.prototype = {
 		}		
 
 		if(!overlap && !initTap || bar.scale.x ==0){
-			if(!showEnd){				
+			if(!showEnd){
+				this.gameOver = true;				
 				this.game.input.keyboard.stop();
 				this.end();
 			}
@@ -111,7 +119,12 @@ State.GamePlay.prototype = {
 			}
 		}
 
-		if (cursors.left.isDown && this.leftUp) {		
+		if(this.gameOver){
+			pressLeft = false;
+			pressRight = false;
+		}
+
+		if ( (pressLeft || cursors.left.isDown) && this.leftUp) {		
 			this.run();
 			this.leftUp = false;
 			this.changeSprite(-1);
@@ -119,9 +132,10 @@ State.GamePlay.prototype = {
 			this.player.animations.play('ticar');			
 			ticou = true;
 			initTap = false;
+			pressLeft = false;
 		}        
         
-        else if(cursors.right.isDown && this.rightUp){
+        else if( (pressRight || cursors.right.isDown) && this.rightUp){
 			this.run();
 			this.rightUp = false;
 			this.changeSprite(1);
@@ -129,6 +143,7 @@ State.GamePlay.prototype = {
 			this.player.animations.play('ticar');			
 			ticou = true;
 			initTap = false;
+			pressRight = false;
 		}		
 	},
 
@@ -256,6 +271,18 @@ State.GamePlay.prototype = {
 
 	restart: function(){
 		this.game.state.start('GamePlay');
+	},
+
+	touch: function(pointer) {
+		if (pointer.x < this.game.world.centerX)
+        	pressLeft = true;
+        else
+        	pressRight = true;
+	},
+
+	noTouch: function() {
+    	pressLeft = false;
+    	pressRight = false;
 	},
 
     render: function (){
