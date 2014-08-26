@@ -261,18 +261,20 @@ State.GamePlay.prototype = {
 		var bgGO = this.game.add.sprite(-this.game.world.centerX, 50, 'bgGameOver');
 		bgGO.anchor.set(0.5, 0);
 		this.game.add.tween(bgGO).to( { x: this.game.world.centerX }, 2400, Phaser.Easing.Bounce.Out, true);
+		var text;
+		var text2;
 		var hScore = localStorage.getItem("highscore"); 
 		if (score > hScore) {
         	localStorage.setItem("highscore", score);
-        	var text = this.game.add.text(this.game.world.centerX, -200, 'Best ' + score, style);
+        	text = this.game.add.text(this.game.world.centerX, -200, 'Best ' + score, style);
         	text.anchor.setTo(0.5, 0.5);
-        	var text2 = this.game.add.text(this.game.world.centerX, -250, 'Score: ' + score, style);
+        	text2 = this.game.add.text(this.game.world.centerX, -250, 'Score: ' + score, style);
         	text2.anchor.setTo(0.5, 0.5);
     	}
     	else {
-        	var text = this.game.add.text(this.game.world.centerX, -200, 'Best: ' + hScore, style);
+        	text = this.game.add.text(this.game.world.centerX, -200, 'Best: ' + hScore, style);
         	text.anchor.setTo(0.5, 0.5);
-        	var text2 = this.game.add.text(this.game.world.centerX, -250, 'Score: ' + score, style);
+        	text2 = this.game.add.text(this.game.world.centerX, -250, 'Score: ' + score, style);
         	text2.anchor.setTo(0.5, 0.5);
     	}
 
