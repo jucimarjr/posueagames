@@ -85,13 +85,13 @@ State.GamePlay.prototype = {
     
   		bar.scale.x = 0.5;
 
-  		gotasEmmiter = game.add.emitter(0, 0, 100);
+  		gotasEmmiter = this.game.add.emitter(0, 0, 100);
   		gotasEmmiter.makeParticles('gota');
   		gotasEmmiter.gravity = 200;
   		gotasEmmiter.minParticleScale = 0.1;
 		gotasEmmiter.maxParticleScale = 1;
-		/*gotasEmmiter.minRotation = 0;
-		gotasEmmiter.maxRotation = 0;*/
+		gotasEmmiter.minRotation = 0;
+		gotasEmmiter.maxRotation = 0;
     },
 
 	update: function () {
@@ -302,7 +302,7 @@ State.GamePlay.prototype = {
 	},
 
     render: function (){
-    	//game.debug.body(this.player);
+    	game.debug.body(this.player);
     	
     	/*fishes.forEach(function (f){ 
 			game.debug.body(f);
