@@ -165,7 +165,7 @@ State.GamePlay.prototype = {
     upLevelTest:function(){
     	this.levelScore ++;
     	if(this.levelScore==this.maxScoreByLevel){//testa o up de level seguindo o score do jogador
-    		decrementValue *= 1.07;//valor aumentado em *1.7
+    		decrementValue *= 1.07;//valor aumentado em *1.07
             labelLevel.setText("Level "+ ++countLevelText);
             labelLevel.alpha=1;
             this.game.add.tween(labelLevel).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);//faz o texto do level aparecer
