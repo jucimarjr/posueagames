@@ -21,8 +21,8 @@ var Config = {
 };
 
 //LudusSplash
-Config.ludusSplash = {
-	dir: 'assets/images/LudusSplash_960-600.png',
+Config.tucandeiraSplash = {
+	dir: 'assets/images/TucandeiraSplash_450-600.png',
 	x: 0,
 	y: 0,
 	millis: 2000,
