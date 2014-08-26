@@ -29,7 +29,9 @@ State.GamePlay.prototype = {
 		initTap = true;
 		showEnd = false;        
         levelText = "Level  0";
-        this.gameOver = false; 
+        this.gameOver = false;
+        this.maxScoreByLevel = 0;
+        this.levelScore = 0;
         
         /*Botão de Tap*/
     	this.game.add.sprite(0, 0, 'bg');
@@ -161,12 +163,13 @@ State.GamePlay.prototype = {
 	},
     
     upLevelTest:function(){
-    	if(score%10==0){//testa o up de level seguindo o score do jogador
-    		decrementValue *= 1.07;//valor aumentado em *1.5
+    	this.levelScore ++;
+    	if(this.levelScore==this.maxScoreByLevel){//testa o up de level seguindo o score do jogador
+    		decrementValue *= 1.07;//valor aumentado em *1.7
             labelLevel.setText("Level "+ ++countLevelText);
             labelLevel.alpha=1;
             this.game.add.tween(labelLevel).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);//faz o texto do level aparecer
-            
+            this.levelScore = 0;
     	}
     },    
     
@@ -199,12 +202,18 @@ State.GamePlay.prototype = {
 	addFishes: function(){
 		for(var i=0;i<25;i++){
 			var rnd = this.game.rnd.integerInRange(1, 10);			
-			if(rnd <= 2)
+			if(rnd <= 2){
 				this.fishRnd = 'fish2';
-			else if(rnd <= 5)
+				this.maxScoreByLevel +=1;
+			}
+			else if(rnd <= 5){
 				this.fishRnd = 'fish3';
-			else if(rnd <= 10)
+				this.maxScoreByLevel +=2;
+			}
+			else if(rnd <= 10){
 				this.fishRnd = 'fish4';
+				this.maxScoreByLevel +=2;
+			}
 
 			var fish = this.game.add.sprite(-200, 200, this.fishRnd);
 			fish.frame = 0;
