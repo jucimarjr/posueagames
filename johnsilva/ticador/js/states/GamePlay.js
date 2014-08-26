@@ -270,25 +270,25 @@ State.GamePlay.prototype = {
 		var bgGO = this.game.add.sprite(-this.game.world.centerX, 50, 'bgGameOver');
 		bgGO.anchor.set(0.5, 0);
 		this.game.add.tween(bgGO).to( { x: this.game.world.centerX }, 2400, Phaser.Easing.Bounce.Out, true);
-		var text;
-		var text2;
+		var bestScoreText;
+		var scoreText;
 		var hScore = localStorage.getItem("highscore"); 
 		if (score > hScore) {
         	localStorage.setItem("highscore", score);
-        	text = this.game.add.text(this.game.world.centerX, -200, 'Best ' + score, style);
-        	text.anchor.setTo(0.5, 0.5);
-        	text2 = this.game.add.text(this.game.world.centerX, -250, 'Score: ' + score, style);
-        	text2.anchor.setTo(0.5, 0.5);
+        	bestScoreText = this.game.add.text(this.game.world.centerX, -200, 'Best ' + score, style);
+        	bestScoreText.anchor.setTo(0.5, 0.5);
+        	scoreText = this.game.add.text(this.game.world.centerX, -250, 'Score: ' + score, style);
+        	scoreText.anchor.setTo(0.5, 0.5);
     	}
     	else {
-        	text = this.game.add.text(this.game.world.centerX, -200, 'Best: ' + hScore, style);
-        	text.anchor.setTo(0.5, 0.5);
-        	text2 = this.game.add.text(this.game.world.centerX, -250, 'Score: ' + score, style);
-        	text2.anchor.setTo(0.5, 0.5);
+        	bestScoreText = this.game.add.text(this.game.world.centerX, -200, 'Best: ' + hScore, style);
+        	bestScoreText.anchor.setTo(0.5, 0.5);
+        	scoreText = this.game.add.text(this.game.world.centerX, -250, 'Score: ' + score, style);
+        	scoreText.anchor.setTo(0.5, 0.5);
     	}
 
-    	this.game.add.tween(text).to( { y: 200 }, 2400, Phaser.Easing.Bounce.Out, true);
-    	this.game.add.tween(text2).to( { y: 250 }, 2400, Phaser.Easing.Bounce.Out, true);
+    	this.game.add.tween(bestScoreText).to( { y: 200 }, 2400, Phaser.Easing.Bounce.Out, true);
+    	this.game.add.tween(scoreText).to( { y: 250 }, 2400, Phaser.Easing.Bounce.Out, true);
 
     	var btPlay = this.game.add.button(this.game.world.centerX, -(50 + bgGO.height), 'btnPlay', this.restart, this, 1, 0, 1);
     	btPlay.anchor.set(0.5, 0.5);
@@ -313,7 +313,7 @@ State.GamePlay.prototype = {
 	},
 
     render: function (){
-    	game.debug.body(this.player);
+    	//game.debug.body(this.player);
     	
     	/*fishes.forEach(function (f){ 
 			game.debug.body(f);
