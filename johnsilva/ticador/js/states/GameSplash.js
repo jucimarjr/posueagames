@@ -7,10 +7,9 @@ State.GameSplash = function (game) {
 State.GameSplash.prototype = {
 	preload: function () {
 		"use strict";
-		var progressBar = this.game.add.sprite(0, 500, 'progress-bar');
-		//this.load.setPreloadSprite(progressBar);
-
-		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game-splash');
+		var sprite = this.game.add.sprite(Config.gameSplash.x, Config.gameSplash.y, 'game_splash');
+		var progressBar = this.game.add.sprite(0, 500, 'progress_bar');
+		//this.load.setPreloadSprite(progressBar);		
 		this.game.load.setPreloadSprite(progressBar);
 		this.game.load.onLoadComplete.add(function () {
 			this.game.add.tween(sprite).to({alpha : 0}, Config.gameSplash.millis, Phaser.Easing.Linear.None).start(); 
@@ -51,8 +50,8 @@ State.GameSplash.prototype = {
 		this.game.load.image('btnTapR', 'assets/btns/tapR_75-50.jpg', 75, 50);
 		this.game.load.image('btnTapL', 'assets/btns/tapL_75-50.jpg', 75, 50);
 
-		this.game.load.image('bg', 'assets/bg/bg_450-600.png');
-		this.game.load.image('gota', 'assets/sprites/gota_17-17.png');
+		this.game.load.image('bg', 'assets/bg/bg_450-600.png', 450, 600);
+		this.game.load.image('gota', 'assets/sprites/gota_17-17.png', 17, 17);
 		
 		//this.game.load.audio('jumpSound', Config.audio.jump);
 

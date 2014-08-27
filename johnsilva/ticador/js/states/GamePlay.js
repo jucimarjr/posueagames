@@ -16,6 +16,7 @@ State.GamePlay.prototype = {
         var labelLevel,levelText,countLevelText;//variaveis do level 
         var pressLeft, pressRight;
         var gotasEmmiter;
+        var labelBestScore, labelFinalScore, bgGO, btnPlay; 
 	},
     
     
@@ -66,9 +67,24 @@ State.GamePlay.prototype = {
         labelLevel = this.game.add.text(this.game.world.centerX,450, levelText,style);
         labelLevel.anchor.set(0.5,0);
         labelLevel.alpha=0;
-        
-        
-        
+
+        /*Game Over*/
+        bgGO = this.game.add.sprite(-this.game.world.centerX, 50, 'bgGameOver');
+		bgGO.anchor.set(0.5, 0);
+
+        labelBestScore = this.game.add.text(this.game.world.centerX,-200, "",style);
+        labelBestScore.anchor.set(0.5,0);
+        labelBestScore.alpha=0;
+
+        labelFinalScore = this.game.add.text(this.game.world.centerX,-250, "",style);
+        labelFinalScore.anchor.set(0.5,0);
+        labelFinalScore.alpha=0;
+
+        btnPlay = this.game.add.button(this.game.world.centerX, -(50 + bgGO.height), 'btnPlay', this.restart, this, 1, 0, 1);
+    	btnPlay.anchor.set(0.5, 0.5);
+        /*Game Over*/
+
+
         /*bar = game.add.graphics();//adicionando o grafico
     	bar.lineStyle(20, 0x33FF00);
     	bar.moveTo(100,30);
@@ -266,33 +282,22 @@ State.GamePlay.prototype = {
 	},
 
 	end: function(){
-		//Show score
-		var bgGO = this.game.add.sprite(-this.game.world.centerX, 50, 'bgGameOver');
-		bgGO.anchor.set(0.5, 0);
 		this.game.add.tween(bgGO).to( { x: this.game.world.centerX }, 2400, Phaser.Easing.Bounce.Out, true);
-		var bestScoreText;
-		var scoreText;
+
 		var hScore = localStorage.getItem("highscore"); 
 		if (score > hScore) {
-        	localStorage.setItem("highscore", score);
-        	bestScoreText = this.game.add.text(this.game.world.centerX, -200, 'Best ' + score, style);
-        	bestScoreText.anchor.setTo(0.5, 0.5);
-        	scoreText = this.game.add.text(this.game.world.centerX, -250, 'Score: ' + score, style);
-        	scoreText.anchor.setTo(0.5, 0.5);
+			hScore = score;
+        	localStorage.setItem("highscore", hScore);       	
     	}
-    	else {
-        	bestScoreText = this.game.add.text(this.game.world.centerX, -200, 'Best: ' + hScore, style);
-        	bestScoreText.anchor.setTo(0.5, 0.5);
-        	scoreText = this.game.add.text(this.game.world.centerX, -250, 'Score: ' + score, style);
-        	scoreText.anchor.setTo(0.5, 0.5);
-    	}
+    	labelBestScore.setText('Best: ' + hScore);
+    	labelBestScore.alpha = 1;
+    	labelFinalScore.setText('Score: ' + score);
+    	labelFinalScore.alpha = 1;
 
-    	this.game.add.tween(bestScoreText).to( { y: 200 }, 2400, Phaser.Easing.Bounce.Out, true);
-    	this.game.add.tween(scoreText).to( { y: 250 }, 2400, Phaser.Easing.Bounce.Out, true);
-
-    	var btPlay = this.game.add.button(this.game.world.centerX, -(50 + bgGO.height), 'btnPlay', this.restart, this, 1, 0, 1);
-    	btPlay.anchor.set(0.5, 0.5);
-    	this.game.add.tween(btPlay).to( { y: (50 + bgGO.height) }, 2400, Phaser.Easing.Bounce.Out, true);
+    	this.game.add.tween(labelBestScore).to( { y: 200 }, 2400, Phaser.Easing.Bounce.Out, true);
+    	this.game.add.tween(labelFinalScore).to( { y: 250 }, 2400, Phaser.Easing.Bounce.Out, true);
+    	
+    	this.game.add.tween(btnPlay).to( { y: (50 + bgGO.height) }, 2400, Phaser.Easing.Bounce.Out, true);
     	showEnd = true;
 	},
 

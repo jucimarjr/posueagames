@@ -9,20 +9,21 @@ var State = {
 State.LudusSplash.prototype = {
 	preload: function () {
 		"use strict";
-		this.game.load.image('tucandeira-splash', Config.tucandeiraSplash.dir);
+		//this.game.load.image('tucandeira_splash', Config.tucandeiraSplash.dir, Config.global.screen.width, Config.global.screen.height);
 		//GameSplash
-		this.game.load.image('game-splash', Config.gameSplash.dir.background);
-		this.game.load.image('progress-bar', Config.gameSplash.dir.bar);
+		this.game.load.image('game_splash', Config.gameSplash.dir.background, Config.global.screen.width, Config.global.screen.height);
+		this.game.load.image('progress_bar', Config.gameSplash.dir.bar, 960,30);
 	},
 	create: function () {
 		"use strict";
-		var sprite = this.game.add.sprite(Config.tucandeiraSplash.x, Config.tucandeiraSplash.y, 'tucandeira-splash');
+		/*var sprite = this.game.add.sprite(Config.tucandeiraSplash.x, Config.tucandeiraSplash.y, 'tucandeira_splash');
 		setTimeout(function () {
 			this.game.add.tween(sprite).to({alpha : 0}, Config.tucandeiraSplash.millis, Phaser.Easing.Linear.None).start();
 		}, Config.tucandeiraSplash.millis);
 		setTimeout(function () {
-			this.game.state.start('SponsorSplash');
-		}, Config.tucandeiraSplash.nextState);
+			this.game.state.start('SponsorSplash');			
+		}, Config.tucandeiraSplash.nextState);*/
+		this.game.state.start('GameSplash');
 	},
 	update: function () {
 		"use strict";

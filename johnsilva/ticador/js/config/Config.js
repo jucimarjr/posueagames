@@ -41,7 +41,7 @@ Config.sponsorSplash = {
 //GameSplash
 Config.gameSplash = {
 	dir: {
-		background: 'assets/images/GameSplash_960-600.jpg',
+		background: 'assets/images/GameSplash_450-600.jpg',
 		bar: 'assets/images/ProgressBar_960-30.png'
 	},
 	x: 0,
