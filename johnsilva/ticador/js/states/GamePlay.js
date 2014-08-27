@@ -33,6 +33,7 @@ State.GamePlay.prototype = {
         this.gameOver = false;
         this.maxScoreByLevel = 0;
         this.levelScore = 0;
+        this.ticou = false;
         
         /*Botão de Tap*/
     	this.game.add.sprite(0, 0, 'bg');
@@ -44,29 +45,36 @@ State.GamePlay.prototype = {
     	this.animTap();
     	/*Botão de Tap*/
 		
+		/*Add os peixes*/
 		fishes = game.add.group();
 		this.addFishes();
+		/*Add os peixes*/
 
+		/*Player*/
 		this.player = this.game.add.sprite(playerX, playerY ,'player');
 		this.game.physics.enable(this.player);
 		this.player.animations.add('ticar',[0,1,0],30,false);
 		this.player.body.setSize(this.player.width, 10, 0, 5);
 		this.player.anchor.setTo(.5, .5);
-		
+		/*Player*/
+
+		/*Teclado e Touch*/
 		cursors = this.game.input.keyboard.createCursorKeys();
 		this.game.input.keyboard.start();
 		pressRight = false;
     	pressLeft = false;
 		this.game.input.onDown.add(this.touch, this);
     	this.game.input.onUp.add(this.noTouch, this);
-
-		this.ticou = false;
+    	/*Teclado e Touch*/
+		
+		/*Score e Level*/
 		labelScore = this.game.add.text(this.game.world.centerX, 200, score, style);
 		labelScore.anchor.set(0.5, 0);        
         
         labelLevel = this.game.add.text(this.game.world.centerX,450, levelText,style);
         labelLevel.anchor.set(0.5,0);
         labelLevel.alpha=0;
+        /*Score e Level*/
 
         /*Game Over*/
         bgGO = this.game.add.sprite(-this.game.world.centerX, 50, 'bgGameOver');
@@ -91,18 +99,18 @@ State.GamePlay.prototype = {
     	bar.lineTo(this.game.world.width-100, 30);
     	bar.endFill();*/
 
+    	/*Barra de Tempo*/
 		decrementValue=0.001;//variavel responsavel pelo aumento ou decremento do tempo, valor inicial
     	countLevelText=0;//contador do level, é concatenado com o texto
-
-
-
     	bar = game.add.graphics(100,30);
   		bar.lineStyle(20, 0x33FF00);
   		bar.moveTo(0, 0);
-  		bar.lineTo(this.game.world.width-200, 0);
-    
+  		bar.lineTo(this.game.world.width-200, 0);    
+  		bar.endFill();
   		bar.scale.x = 0.5;
+		/*Barra de Tempo*/
 
+		/*Animação da escama ao ticar*/
   		gotasEmmiter = this.game.add.emitter(0, 0, 100);
   		gotasEmmiter.makeParticles('gota');
   		gotasEmmiter.gravity = 200;
@@ -110,6 +118,7 @@ State.GamePlay.prototype = {
 		gotasEmmiter.maxParticleScale = 1;
 		gotasEmmiter.minRotation = 0;
 		gotasEmmiter.maxRotation = 0;
+		/*Animação da escama ao ticar*/
     },
 
 	update: function () {
