@@ -267,12 +267,12 @@ State.GamePlay.prototype = {
 			if(bar.scale.x > 1)
 				bar.scale.x = 1;
             this.upLevelTest();
-            this.mostarGotas(f.x, f.y);
+            this.escamar(f.x, f.y);
 		}
 		overlap = true;
 	},
 
-	mostarGotas: function(x,y){
+	escamar: function(x,y){
 		gotasEmmiter.x = x;
     	gotasEmmiter.y = y;
 
