@@ -16,7 +16,7 @@ State.GamePlay.prototype = {
         var labelLevel,levelText,countLevelText;//variaveis do level 
         var pressLeft, pressRight;
         var gotasEmmiter;
-        var labelBestScore, labelFinalScore, bgGO, btnPlay; 
+        //var labelBestScore, labelFinalScore, btnPlay; 
 	},
     
     
@@ -75,23 +75,6 @@ State.GamePlay.prototype = {
         labelLevel.anchor.set(0.5,0);
         labelLevel.alpha=0;
         /*Score e Level*/
-
-        /*Game Over*/
-        bgGO = this.game.add.sprite(-this.game.world.centerX, 50, 'bgGameOver');
-		bgGO.anchor.set(0.5, 0);
-
-        labelBestScore = this.game.add.text(this.game.world.centerX,-200, "",style);
-        labelBestScore.anchor.set(0.5,0);
-        labelBestScore.alpha=0;
-
-        labelFinalScore = this.game.add.text(this.game.world.centerX,-250, "",style);
-        labelFinalScore.anchor.set(0.5,0);
-        labelFinalScore.alpha=0;
-
-        btnPlay = this.game.add.button(this.game.world.centerX, -(50 + bgGO.height), 'btnPlay', this.restart, this, 1, 0, 1);
-    	btnPlay.anchor.set(0.5, 0.5);
-        /*Game Over*/
-
 
         /*bar = game.add.graphics();//adicionando o grafico
     	bar.lineStyle(20, 0x33FF00);
@@ -291,27 +274,9 @@ State.GamePlay.prototype = {
 	},
 
 	end: function(){
-		this.game.add.tween(bgGO).to( { x: this.game.world.centerX }, 2400, Phaser.Easing.Bounce.Out, true);
-
-		var hScore = localStorage.getItem("highscore"); 
-		if (score > hScore) {
-			hScore = score;
-        	localStorage.setItem("highscore", hScore);       	
-    	}
-    	labelBestScore.setText('Best: ' + hScore);
-    	labelBestScore.alpha = 1;
-    	labelFinalScore.setText('Score: ' + score);
-    	labelFinalScore.alpha = 1;
-
-    	this.game.add.tween(labelBestScore).to( { y: 200 }, 2400, Phaser.Easing.Bounce.Out, true);
-    	this.game.add.tween(labelFinalScore).to( { y: 250 }, 2400, Phaser.Easing.Bounce.Out, true);
-    	
-    	this.game.add.tween(btnPlay).to( { y: (50 + bgGO.height) }, 2400, Phaser.Easing.Bounce.Out, true);
     	showEnd = true;
-	},
-
-	restart: function(){
-		this.game.state.start('GamePlay');
+    	this.go = new GameOver(this.game, style, score);
+    	this.go.show();
 	},
 
 	touch: function(pointer) {
