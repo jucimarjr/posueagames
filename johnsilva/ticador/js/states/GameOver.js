@@ -9,6 +9,7 @@ GameOver = function (game, style, score) {
 	this.labelBestScore;
 	this.labelFinalScore;
 	this.btnPlay;
+	this.btnPlayer;
 };
 
 GameOver.prototype = {
@@ -33,9 +34,14 @@ GameOver.prototype = {
     	this.game.add.tween(this.labelBestScore).to( { y: 200 }, 2400, Phaser.Easing.Bounce.Out, true);
     	this.game.add.tween(this.labelFinalScore).to( { y: 250 }, 2400, Phaser.Easing.Bounce.Out, true);    	
 
-    	this.btnPlay = this.game.add.button(this.game.world.centerX, -(50 + this.bgGO.height), 'btnPlay', this.restart, this, 1, 0, 1);
-    	this.btnPlay.anchor.set(0.5, 0.5);
-    	this.game.add.tween(this.btnPlay).to( { y: (50 + this.bgGO.height) }, 2400, Phaser.Easing.Bounce.Out, true);
+    	this.btnPlay = this.game.add.button(this.game.world.centerX, this.game.world.height, 'btnPlay', this.restart, this, 1, 0, 1);
+    	this.btnPlay.anchor.set(0.5,0);
+
+    	this.btnPlayer = this.game.add.button(this.btnPlay.x+this.btnPlay.width+10, this.game.world.height, 'btnPlayer', this.restart, this, 1, 0, 1);
+    	this.btnPlayer.anchor.set(0.5,0);
+
+    	this.game.add.tween(this.btnPlay).to( { y: this.btnPlay.y-this.btnPlay.height }, 1000, Phaser.Easing.Bounce.Out, true);
+    	this.game.add.tween(this.btnPlayer).to( { y: this.btnPlayer.y-this.btnPlayer.height }, 1000, Phaser.Easing.Bounce.Out, true);
 	},
 	restart: function(){
 		this.game.state.start('GamePlay');

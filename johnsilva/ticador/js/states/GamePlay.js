@@ -15,8 +15,7 @@ State.GamePlay.prototype = {
 		var overlap, initTap, showEnd;
         var labelLevel,levelText,countLevelText;//variaveis do level 
         var pressLeft, pressRight;
-        var gotasEmmiter;
-        //var labelBestScore, labelFinalScore, btnPlay; 
+        this.gotasEmmiter;
 	},
     
     
@@ -94,13 +93,13 @@ State.GamePlay.prototype = {
 		/*Barra de Tempo*/
 
 		/*Animação da escama ao ticar*/
-  		gotasEmmiter = this.game.add.emitter(0, 0, 100);
-  		gotasEmmiter.makeParticles('gota');
-  		gotasEmmiter.gravity = 200;
-  		gotasEmmiter.minParticleScale = 0.1;
-		gotasEmmiter.maxParticleScale = 1;
-		gotasEmmiter.minRotation = 0;
-		gotasEmmiter.maxRotation = 0;
+  		this.gotasEmmiter = this.game.add.emitter(0, 0, 100);
+  		this.gotasEmmiter.makeParticles('gota');
+  		this.gotasEmmiter.gravity = 200;
+  		this.gotasEmmiter.minParticleScale = 0.1;
+		this.gotasEmmiter.maxParticleScale = 1;
+		this.gotasEmmiter.minRotation = 0;
+		this.gotasEmmiter.maxRotation = 0;
 		/*Animação da escama ao ticar*/
     },
 
@@ -256,10 +255,9 @@ State.GamePlay.prototype = {
 	},
 
 	escamar: function(x,y){
-		gotasEmmiter.x = x;
-    	gotasEmmiter.y = y;
-
-    	gotasEmmiter.start(true, 2000, null, 10);
+		this.gotasEmmiter.x = x;
+    	this.gotasEmmiter.y = y;
+    	this.gotasEmmiter.start(true, 2000, null, 10);
 	},
 
 	animTap: function(){
