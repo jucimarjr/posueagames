@@ -33,8 +33,8 @@ State.GameSplash.prototype = {
 		this.game.load.spritesheet('fish4', 'assets/sprites/fish4_90-120-4.png',90,120,4);
 
 		//Btn
-		this.game.load.spritesheet('btnPlay', 'assets/btns/play_100-70.png', 100, 70);
-		this.game.load.spritesheet('btnPlayer', 'assets/btns/btnPlayer_100-70.png', 100, 70);
+		this.game.load.spritesheet('btnPlay', 'assets/btns/play_100-70.png', 100, 70, 2);
+		this.game.load.spritesheet('btnPlayer', 'assets/btns/btnPlayer_100-70.png', 100, 70, 2);
 		this.game.load.image('bgGameOver', 'assets/btns/gameover_350-280.png',350,280);
 		this.game.load.image('btnTapR', 'assets/btns/tapR_75-50.jpg', 75, 50);
 		this.game.load.image('btnTapL', 'assets/btns/tapL_75-50.jpg', 75, 50);
