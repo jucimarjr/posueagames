@@ -27,7 +27,10 @@ State.GameSplash.prototype = {
 		this.game.load.audio('menu-audio', Config.audio.menu);*/
 
 		//Game
-		this.game.load.spritesheet('player', 'assets/sprites/player_200-160-2.png', 200,160,2);		
+		this.game.load.spritesheet('player1', 'assets/sprites/player_200-160-2.png', 200,160,2);
+		this.game.load.spritesheet('player2', 'assets/sprites/player2_200-160-2.png', 200,160,2);
+		this.game.load.spritesheet('player3', 'assets/sprites/player3_200-160-2.png', 200,160,2);
+
 		this.game.load.spritesheet('fish2', 'assets/sprites/fish2_90-40-2.png',90,40,2);
 		this.game.load.spritesheet('fish3', 'assets/sprites/fish3_90-80-3.png',90,80,3);
 		this.game.load.spritesheet('fish4', 'assets/sprites/fish4_90-120-4.png',90,120,4);
@@ -38,10 +41,18 @@ State.GameSplash.prototype = {
 		this.game.load.image('bgGameOver', 'assets/btns/gameover_350-280.png',350,280);
 		this.game.load.image('btnTapR', 'assets/btns/tapR_75-50.jpg', 75, 50);
 		this.game.load.image('btnTapL', 'assets/btns/tapL_75-50.jpg', 75, 50);
-
+		this.game.load.image('btnSeta', 'assets/btns/seta_100-70.png', 100, 70);
+		this.game.load.image('btnSelect', 'assets/btns/select_100-70.png', 100, 70);
 		this.game.load.image('bg', 'assets/bg/bg_450-600.png', 450, 600);
+
+
 		this.game.load.image('gota', 'assets/sprites/gota_17-17.png', 17, 17);
-		
+
+		var op = localStorage.getItem("player");
+		if(op)
+			Config.player.op = op;
+		else
+			localStorage.setItem("player", 1);
 		//this.game.load.audio('jumpSound', Config.audio.jump);
 
 	},

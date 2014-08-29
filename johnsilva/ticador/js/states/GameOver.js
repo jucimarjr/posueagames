@@ -1,8 +1,9 @@
 /*global State, Config*/
 
-GameOver = function (game) {
+GameOver = function (game, player, style, score) {
 	"use strict";
 	this.game = game;
+	this.player = player;
 	this.style = style;
 	this.score = score;
 	this.bgGO;
@@ -20,7 +21,7 @@ GameOver.prototype = {
 		var hScore = localStorage.getItem("highscore"); 
 		if (this.score > hScore) {
 			hScore = this.score;
-        	localStorage.setItem("highscore", hScore);       	
+        	localStorage.setItem("highscore", hScore);
     	}
 
     	this.labelBestScore = this.game.add.text(this.game.world.centerX,-200, 'Best: ' + hScore, this.style);
@@ -64,5 +65,7 @@ GameOver.prototype = {
 
 	selectPlayer: function(){
 		this.removeAnimations();
+		this.sp = new SelectPlayer(this.game, this.player);
+    	this.sp.show();
 	}
 };

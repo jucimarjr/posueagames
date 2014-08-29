@@ -16,6 +16,7 @@ State.GamePlay.prototype = {
         var labelLevel,levelText,countLevelText;//variaveis do level 
         var pressLeft, pressRight;
         this.gotasEmmiter;
+        this.player;
 	},
     
     
@@ -50,7 +51,7 @@ State.GamePlay.prototype = {
 		/*Add os peixes*/
 
 		/*Player*/
-		this.player = this.game.add.sprite(playerX, playerY ,'player');
+		this.player = this.game.add.sprite(playerX, playerY ,'player'+Config.player.op);
 		this.game.physics.enable(this.player);
 		this.player.animations.add('ticar',[0,1,0],30,false);
 		this.player.body.setSize(this.player.width, 10, 0, 5);
@@ -62,8 +63,9 @@ State.GamePlay.prototype = {
 		this.game.input.keyboard.start();
 		pressRight = false;
     	pressLeft = false;
-		this.game.input.onDown.add(this.touch, this);
-    	this.game.input.onUp.add(this.noTouch, this);
+		/*this.game.input.onDown.add(this.touch, this);
+    	this.game.input.onUp.add(this.noTouch, this);*/
+    	this.game.input.onTap.add(this.touch, this);
     	/*Teclado e Touch*/
 		
 		/*Score e Level*/
@@ -271,10 +273,10 @@ State.GamePlay.prototype = {
 		this.animScape = true;
 	},
 
-	end: function(){
-    	showEnd = true;
-    	this.go = new GameOver(this.game, style, score);
+	end: function(){    	
+    	this.go = new GameOver(this.game, this.player, style, score);
     	this.go.show();
+    	showEnd = true;
 	},
 
 	touch: function(pointer) {
@@ -284,10 +286,10 @@ State.GamePlay.prototype = {
         	pressRight = true;
 	},
 
-	noTouch: function() {
+	/*noTouch: function() {
     	pressLeft = false;
     	pressRight = false;
-	},
+	},*/
 
     render: function (){
     	//game.debug.body(this.player);

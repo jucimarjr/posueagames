@@ -119,3 +119,6 @@ Config.audio = {
 	cp: 'assets/audio/cp.mp3'
 };
 
+Config.player = {
+	op: 1
+};
