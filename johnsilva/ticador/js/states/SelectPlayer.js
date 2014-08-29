@@ -29,7 +29,7 @@ SelectPlayer.prototype = {
 		this.game.add.tween(this.setaDir).to( { y: this.setaDir.y-this.setaDir.height }, 2400, Phaser.Easing.Bounce.Out, true);
 		this.game.add.tween(this.setaEsq).to( { y: this.setaEsq	.y-this.setaDir.height }, 2400, Phaser.Easing.Bounce.Out, true);
 	},
-	
+
 	select: function(){
 		localStorage.setItem("player", Config.player.op);
 		this.game.state.start('GamePlay');
@@ -37,14 +37,14 @@ SelectPlayer.prototype = {
 
 	prevPlayer: function(){
 		Config.player.op-=1;
-		if(Config.player.op <0)
+		if(Config.player.op < 1)
 			Config.player.op = 3;
 		this.player.loadTexture('player'+Config.player.op, 0);
 	},
 
 	nextPlayer: function(){
 		Config.player.op+=1;
-		if(Config.player.op >3)
+		if(Config.player.op > 3)
 			Config.player.op = 1;
 		this.player.loadTexture('player'+Config.player.op, 0);
 	}

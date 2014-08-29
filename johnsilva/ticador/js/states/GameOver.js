@@ -15,8 +15,8 @@ GameOver = function (game, player, style, score) {
 
 GameOver.prototype = {
 	show: function () {
-		this.bgGO = this.game.add.sprite(-this.game.world.centerX, 50, 'bgGameOver');
-		this.bgGO.anchor.set(0.5, 0);		
+		this.bgGO = this.game.add.sprite(-100, 50, 'bgGameOver');
+		this.bgGO.anchor.set(1, 0);		
 
 		var hScore = localStorage.getItem("highscore"); 
 		if (this.score > hScore) {
@@ -39,8 +39,9 @@ GameOver.prototype = {
     	this.startAnimations();
 	},
 
-	startAnimations: function(){
+	startAnimations: function(){		
 		this.game.add.tween(this.bgGO).to( { x: this.game.world.centerX }, 2400, Phaser.Easing.Bounce.Out, true);
+		this.bgGO.anchor.set(0.5, 0);
 
     	this.game.add.tween(this.labelBestScore).to( { y: 200 }, 2400, Phaser.Easing.Bounce.Out, true);
     	this.game.add.tween(this.labelFinalScore).to( { y: 250 }, 2400, Phaser.Easing.Bounce.Out, true);
@@ -49,8 +50,9 @@ GameOver.prototype = {
     	this.game.add.tween(this.btnPlayer).to( { y: this.btnPlayer.y-this.btnPlayer.height }, 1000, Phaser.Easing.Bounce.Out, true);    	
 	},
 
-	removeAnimations: function(){
-		this.game.add.tween(this.bgGO).to( { x: this.bgGO.x*(-1) }, 2400, Phaser.Easing.Bounce.Out, true);
+	removeAnimations: function(){		
+		this.game.add.tween(this.bgGO).to( { x: -100 }, 2400, Phaser.Easing.Bounce.Out, true);
+		this.bgGO.anchor.set(1, 0);
 
     	this.game.add.tween(this.labelBestScore).to( { y: -200 }, 2400, Phaser.Easing.Bounce.Out, true);
     	this.game.add.tween(this.labelFinalScore).to( { y: -250 }, 2400, Phaser.Easing.Bounce.Out, true);
